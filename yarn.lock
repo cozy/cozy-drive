@@ -5108,10 +5108,10 @@ cozy-doctypes@^1.77.0:
     lodash "4.17.19"
     prop-types "^15.7.2"
 
-cozy-doctypes@^1.77.1:
-  version "1.77.1"
-  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.77.1.tgz#37056740aad9712d305f8dc5146796427096e5a4"
-  integrity sha512-BfDQxWcXQEGRNrauMvh1mOjiED2o1EWRLpoJroWrikptUUYzGvwaE5IvPFcwTO1lH1u/DtXWCg40EGWH0kw+ag==
+cozy-doctypes@^1.79.0:
+  version "1.79.0"
+  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.79.0.tgz#b7176f79ebb917fa37bcf1ced847f0aeefc02c5f"
+  integrity sha512-//pxegY6SwK0ndhzannFxP6ivIHtaMeJAUxweIZ8Id2YQDuTcDvijmJ2lKhjUkXedjco+Yeu21exZDnxiILTYQ==
   dependencies:
     cozy-logger "^1.7.0"
     date-fns "1.30.1"
@@ -5314,16 +5314,16 @@ cozy-scripts@5.1.1:
     webpack-dev-server "3.10.3"
     webpack-merge "4.2.2"
 
-cozy-sharing@2.12.0:
-  version "2.12.0"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-2.12.0.tgz#5bd71a105028cb795b9a3e60adc3d7755309f90b"
-  integrity sha512-5YHaLZdzDoVgjDc60NyLSM7T4/PNs10zpe3hRqrKrleV+YOnDJdfFj/VIm/zRZ9vT+Dx2A6chdBvE8pw8R4iAw==
+cozy-sharing@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-3.1.0.tgz#f2dd4f24f13815807118a233f03072a9ef32282e"
+  integrity sha512-/SE9Bd0ijwUBodL7GGx1N/mA7Dpjjy0ysDLuw+f9vj0efaVlgsdiAMU/xhwRin0hIXymrHJKc5TgiQKVW7hAow==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     classnames "^2.2.6"
     copy-text-to-clipboard "^2.1.1"
     cozy-device-helper "^1.12.0"
-    cozy-doctypes "^1.77.1"
+    cozy-doctypes "^1.79.0"
     lodash "^4.17.19"
     react-autosuggest "^9.4.3"
     react-tooltip "^3.11.1"
@@ -5384,10 +5384,10 @@ cozy-ui@35.22.0:
     react-select "2.2.0"
     react-swipeable-views "0.13.3"
 
-cozy-ui@45.3.0:
-  version "45.3.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-45.3.0.tgz#c1d4c8afddcdc959b4643d6a13596ec40fcfbfdb"
-  integrity sha512-4NseTUFKCM6px+T8NQsY7Y1AlcHPRzKTJI+HX/MjAwqU8qB4Qvu7IGmrLnFnDdDyAWpGlAPf4xJ88bhE1P/uzw==
+cozy-ui@45.4.0:
+  version "45.4.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-45.4.0.tgz#92a702989e2c130402dad18f3196bda1e11e7d1c"
+  integrity sha512-weGMuaOuifW6a6n3cSIB7Rv2+eQEVLbyirOHENElwLoBovJ9WcZZwtRHNQ8u5hhFEw9SmK+6R3DaHuVlYlKAZw==
   dependencies:
     "@babel/runtime" "^7.3.4"
     "@popperjs/core" "^2.4.4"
