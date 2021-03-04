@@ -421,7 +421,8 @@
     "error": {
       "open_with": {
         "offline": "You should be connected to open this file",
-        "noapp": "No application on your device can open this file with mime type: %{fileMime} "
+        "noapp": "No application on your device can open this file with mime type: %{fileMime} ",
+        "missing": "This file is missing"
       },
       "make_available_offline": {
         "offline": "You should be connected to open this file",
@@ -522,7 +523,8 @@
       }
     },
     "actions": {
-      "download": "Download"
+      "download": "Download",
+      "forward": "Forward"
     },
     "loading": {
       "error": "This file could not be loaded. Do you have a working internet connection right now?",

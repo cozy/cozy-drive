@@ -13,6 +13,7 @@ import palette from 'cozy-ui/transpiled/react/palette'
 import Fallback from 'drive/web/modules/viewer/Fallback'
 import { showPanel } from './helpers'
 import PanelContent from './Panel/PanelContent'
+import FooterContent from './Footer/FooterContent'
 
 export const FilesViewerLoading = () => (
   <Overlay>
@@ -141,6 +142,9 @@ class FilesViewer extends Component {
             panelInfoProps={{
               showPanel,
               PanelContent
+            }}
+            footerProps={{
+              FooterContent
             }}
           />
         </Overlay>
