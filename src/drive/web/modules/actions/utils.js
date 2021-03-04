@@ -1,13 +1,14 @@
 import { models } from 'cozy-client'
-import { receiveQueryResult } from 'cozy-client/dist/store'
-import { isMobileApp, isIOS } from 'cozy-device-helper'
-import Alerter from 'cozy-ui/transpiled/react/Alerter'
-import { isReferencedByAlbum } from 'drive/web/modules/drive/files' // TODO move to cozy-client models
-import { forceFileDownload } from 'cozy-stack-client/dist/utils'
 import {
   saveFileWithCordova,
   saveAndOpenWithCordova
-} from 'drive/mobile/lib/filesystem'
+} from 'cozy-client/dist/models/fsnative'
+import { receiveQueryResult } from 'cozy-client/dist/store'
+import { isMobileApp, isIOS } from 'cozy-device-helper'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import { forceFileDownload } from 'cozy-stack-client/dist/utils'
+
+import { isReferencedByAlbum } from 'drive/web/modules/drive/files' // TODO move to cozy-client models
 
 const { file: fileModel } = models
 const { isDirectory } = fileModel
