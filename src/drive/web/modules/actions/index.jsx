@@ -1,18 +1,26 @@
 import React from 'react'
+
 import { models } from 'cozy-client'
 import { ShareModal } from 'cozy-sharing'
+import { isIOSApp, isMobileApp } from 'cozy-device-helper'
+import { EditDocumentQualification } from 'cozy-scanner'
 import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
+import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
+import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
+import RenameIcon from 'cozy-ui/transpiled/react/Icons/Rename'
+import MovetoIcon from 'cozy-ui/transpiled/react/Icons/Moveto'
+import QualifyIcon from 'cozy-ui/transpiled/react/Icons/Qualify'
+import HistoryIcon from 'cozy-ui/transpiled/react/Icons/History'
+import RestoreIcon from 'cozy-ui/transpiled/react/Icons/Restore'
+import LinkOutIcon from 'cozy-ui/transpiled/react/Icons/LinkOut'
 
 import DeleteConfirm from 'drive/web/modules/drive/DeleteConfirm'
 import MoveModal from 'drive/web/modules/move/MoveModal'
-import { EditDocumentQualification } from 'cozy-scanner'
 import ShareMenuItem from 'drive/web/modules/drive/ShareMenuItem'
 import MakeAvailableOfflineMenuItem from 'drive/web/modules/drive/MakeAvailableOfflineMenuItem'
 import DestroyConfirm from 'drive/web/modules/trash/components/DestroyConfirm'
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
-import Icon from 'cozy-ui/transpiled/react/Icon'
-
-import { isIOSApp, isMobileApp } from 'cozy-device-helper'
 import { startRenamingAsync } from 'drive/web/modules/drive/rename'
 
 const { file: fileModel } = models
@@ -66,7 +74,7 @@ export const download = ({ client }) => {
               onClick={() => {
                 return exportFilesNative(client, props.files)
               }}
-              left={<Icon icon="download" />}
+              left={<Icon icon={DownloadIcon} />}
             >
               {t('SelectionBar.sendto')}
             </ActionMenuItem>
@@ -83,7 +91,7 @@ export const download = ({ client }) => {
               onClick={() => {
                 return downloadFiles(client, props.files)
               }}
-              left={<Icon icon="download" />}
+              left={<Icon icon={DownloadIcon} />}
             >
               {t('SelectionBar.download')}
             </ActionMenuItem>
@@ -133,7 +141,7 @@ export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
               />
             )
           }
-          left={<Icon icon="trash" color="var(--dangerColor)" />}
+          left={<Icon icon={TrashIcon} color="var(--dangerColor)" />}
         >
           <span className="u-danger">{t('SelectionBar.trash')}</span>
         </ActionMenuItem>
@@ -152,7 +160,7 @@ export const open = ({ client }) => {
       return (
         <ActionMenuItem
           onClick={() => openFileWith(client, props.files[0])}
-          left={<Icon icon="link-out" />}
+          left={<Icon icon={LinkOutIcon} />}
         >
           {t('SelectionBar.openWith')}
         </ActionMenuItem>
@@ -171,7 +179,7 @@ export const rename = ({ hasWriteAccess, dispatch }) => {
       return (
         <ActionMenuItem
           onClick={() => dispatch(startRenamingAsync(props.files[0]))}
-          left={<Icon icon="rename" />}
+          left={<Icon icon={RenameIcon} />}
         >
           {t('SelectionBar.rename')}
         </ActionMenuItem>
@@ -193,7 +201,7 @@ export const move = ({ canMove, pushModal, popModal }) => {
           onClick={() =>
             pushModal(<MoveModal entries={props.files} onClose={popModal} />)
           }
-          left={<Icon icon="moveto" />}
+          left={<Icon icon={MovetoIcon} />}
         >
           {t('SelectionBar.moveto')}
         </ActionMenuItem>
@@ -234,7 +242,7 @@ export const qualify = ({ pushModal, popModal }) => {
               />
             )
           }
-          left={<Icon icon="qualify" />}
+          left={<Icon icon={QualifyIcon} />}
         >
           {t('SelectionBar.qualify')}
         </ActionMenuItem>
@@ -273,7 +281,7 @@ export const versions = ({ router, location }) => {
               `${location.pathname}/file/${props.files[0].id}/revision`
             )
           }}
-          left={<Icon icon="history" />}
+          left={<Icon icon={HistoryIcon} />}
         >
           {t('SelectionBar.history')}
         </ActionMenuItem>
@@ -308,7 +316,7 @@ export const restore = ({ refresh, client }) => {
             await restoreFiles(client, props.files)
             refresh()
           }}
-          left={<Icon icon="restore" />}
+          left={<Icon icon={RestoreIcon} />}
         >
           {t('SelectionBar.restore')}
         </ActionMenuItem>
@@ -330,7 +338,7 @@ export const destroy = ({ pushModal, popModal }) => {
           onClick={() =>
             pushModal(<DestroyConfirm files={props.files} onClose={popModal} />)
           }
-          left={<Icon icon="trash" color="var(--dangerColor)" />}
+          left={<Icon icon={TrashIcon} color="var(--dangerColor)" />}
         >
           <span className="u-danger">{t('SelectionBar.destroy')}</span>
         </ActionMenuItem>
