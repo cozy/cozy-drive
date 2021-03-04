@@ -2,7 +2,7 @@ import React from 'react'
 
 import { models } from 'cozy-client'
 import { ShareModal } from 'cozy-sharing'
-import { isIOSApp, isMobileApp } from 'cozy-device-helper'
+import { isIOSApp, isMobileApp, isIOS } from 'cozy-device-helper'
 import { EditDocumentQualification } from 'cozy-scanner'
 import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
@@ -14,7 +14,8 @@ import MovetoIcon from 'cozy-ui/transpiled/react/Icons/Moveto'
 import QualifyIcon from 'cozy-ui/transpiled/react/Icons/Qualify'
 import HistoryIcon from 'cozy-ui/transpiled/react/Icons/History'
 import RestoreIcon from 'cozy-ui/transpiled/react/Icons/Restore'
-import LinkOutIcon from 'cozy-ui/transpiled/react/Icons/LinkOut'
+import ReplyIcon from 'cozy-ui/transpiled/react/Icons/Reply'
+import ShareIosIcon from 'cozy-ui/transpiled/react/Icons/ShareIos'
 
 import DeleteConfirm from 'drive/web/modules/drive/DeleteConfirm'
 import MoveModal from 'drive/web/modules/move/MoveModal'
@@ -23,6 +24,7 @@ import MakeAvailableOfflineMenuItem from 'drive/web/modules/drive/MakeAvailableO
 import DestroyConfirm from 'drive/web/modules/trash/components/DestroyConfirm'
 import { startRenamingAsync } from 'drive/web/modules/drive/rename'
 
+const ForwardIcon = isIOS() ? ShareIosIcon : ReplyIcon
 const { file: fileModel } = models
 const { isFile } = fileModel
 
@@ -160,9 +162,9 @@ export const open = ({ client }) => {
       return (
         <ActionMenuItem
           onClick={() => openFileWith(client, props.files[0])}
-          left={<Icon icon={LinkOutIcon} />}
+          left={<Icon icon={ForwardIcon} />}
         >
-          {t('SelectionBar.openWith')}
+          {t('SelectionBar.forward')}
         </ActionMenuItem>
       )
     }
