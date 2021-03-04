@@ -13,7 +13,7 @@ import { isMobileApp } from 'cozy-device-helper'
 import {
   saveAndOpenWithCordova,
   saveFileWithCordova
-} from 'drive/mobile/lib/filesystem'
+} from 'cozy-client/dist/models/fsnative'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
 jest.mock('drive/web/modules/navigation/AppRoute', () => ({
@@ -29,8 +29,8 @@ jest.mock('cozy-device-helper', () => ({
   isMobileApp: jest.fn()
 }))
 
-jest.mock('drive/mobile/lib/filesystem', () => ({
-  ...jest.requireActual('drive/mobile/lib/filesystem'),
+jest.mock('cozy-client/dist/models/fsnative', () => ({
+  ...jest.requireActual('cozy-client/dist/models/fsnative'),
   saveAndOpenWithCordova: jest.fn(),
   saveFileWithCordova: jest.fn()
 }))

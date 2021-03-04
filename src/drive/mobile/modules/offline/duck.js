@@ -2,11 +2,14 @@ import {
   saveFileWithCordova,
   openOfflineFile,
   deleteOfflineFile
-} from 'drive/mobile/lib/filesystem'
+} from 'cozy-client/dist/models/fsnative'
 import { isMobileApp } from 'cozy-device-helper'
-import { openFileWith } from 'drive/web/modules/actions/utils'
+
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
+
+import { openFileWith } from 'drive/web/modules/actions/utils'
 import logger from 'lib/logger'
+
 const MAKE_AVAILABLE_OFFLINE = 'MAKE_AVAILABLE_OFFLINE'
 const UNDO_MAKE_AVAILABLE_OFFLINE = 'UNDO_MAKE_AVAILABLE_OFFLINE'
 
