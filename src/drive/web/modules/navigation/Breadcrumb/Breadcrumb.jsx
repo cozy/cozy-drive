@@ -2,8 +2,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
+
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import Icon from 'cozy-ui/transpiled/react/Icon'
+import RightIcon from 'cozy-ui/transpiled/react/Icons/Right'
 
 import styles from 'drive/web/modules/navigation/Breadcrumb/breadcrumb.styl'
 
@@ -77,7 +79,10 @@ export class Breadcrumb extends Component {
                   <span className={styles['fil-path-link-name']}>
                     {folder.name}
                   </span>
-                  <Icon icon="right" className={styles['fil-path-separator']} />
+                  <Icon
+                    icon={RightIcon}
+                    className={styles['fil-path-separator']}
+                  />
                 </span>
               )
             } else {

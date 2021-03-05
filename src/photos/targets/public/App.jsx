@@ -2,18 +2,22 @@ import React, { Component } from 'react'
 import flatten from 'lodash/flatten'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
+
 import { Query } from 'cozy-client'
 import { Button, Menu, MenuItem, Icon, Spinner } from 'cozy-ui/transpiled/react'
 import palette from 'cozy-ui/transpiled/react/palette'
 import { Main } from 'cozy-ui/transpiled/react/Layout'
+import CloudIcon from 'cozy-ui/transpiled/react/Icons/Cloud'
+import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 
 import Selection from 'photos/ducks/selection'
 import { MoreButton, CozyHomeLink } from 'components/Button'
 import getHomeLinkHref from 'components/Button/getHomeLinkHref'
 import PhotoBoard from 'photos/components/PhotoBoard'
-import styles from './index.styl'
 import { ALBUM_QUERY } from '../../../../src/photos/ducks/albums/index'
 import ErrorUnsharedComponent from 'photos/components/ErrorUnshared'
+
+import styles from './index.styl'
 
 export class App extends Component {
   static contextTypes = {
@@ -95,7 +99,7 @@ export class App extends Component {
                       data-test-id="album-public-download"
                       className={styles['pho-public-download']}
                       onClick={() => this.onDownload(selected)}
-                      icon="download"
+                      icon={DownloadIcon}
                       size="normal"
                       label={t('Toolbar.album_download')}
                     />
@@ -111,14 +115,14 @@ export class App extends Component {
                         onSelect={() =>
                           (window.location = getHomeLinkHref('sharing-photos'))
                         }
-                        icon={<Icon icon="cloud" />}
+                        icon={<Icon icon={CloudIcon} />}
                       >
                         {t('Share.create-cozy')}
                       </MenuItem>
                       <MenuItem
                         data-test-id="album-public-download-mobile"
                         onSelect={() => this.onDownload(selected)}
-                        icon={<Icon icon="download" />}
+                        icon={<Icon icon={DownloadIcon} />}
                       >
                         {t('Toolbar.album_download')}
                       </MenuItem>

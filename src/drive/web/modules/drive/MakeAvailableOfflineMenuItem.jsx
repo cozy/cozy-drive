@@ -1,10 +1,12 @@
 import React, { useCallback } from 'react'
 import { connect } from 'react-redux'
+
 import { useClient } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import Switch from 'cozy-ui/transpiled/react/MuiCozyTheme/Switch'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
+import PhoneDownloadIcon from 'cozy-ui/transpiled/react/Icons/PhoneDownload'
 
 import {
   isAvailableOffline,
@@ -32,7 +34,7 @@ const MakeAvailableOfflineMenuItem = connect(
   return (
     <ActionMenuItem
       {...rest}
-      left={<Icon icon="phone-download" />}
+      left={<Icon icon={PhoneDownloadIcon} />}
       right={
         <Switch
           id={'offline-switch'}

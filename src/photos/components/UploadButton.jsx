@@ -1,7 +1,9 @@
 import cx from 'classnames'
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import { Icon, FileInput } from 'cozy-ui/transpiled/react'
+import UploadIcon from 'cozy-ui/transpiled/react/Icons/Upload'
 
 import button from '../styles/toolbar.styl'
 
@@ -16,7 +18,7 @@ const UploadButton = ({ label, inMenu, disabled, onUpload, className }) => (
     value={[]} // always erase the value to be able to re-upload the same file
   >
     <span>
-      {!inMenu && <Icon icon="upload" />}
+      {!inMenu && <Icon icon={UploadIcon} />}
       <span>{label}</span>
     </span>
   </FileInput>

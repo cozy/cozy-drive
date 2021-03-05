@@ -2,6 +2,7 @@
 import React, { useState, useCallback, useContext } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+
 import { useClient } from 'cozy-client'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
@@ -9,16 +10,16 @@ import Button from 'cozy-ui/transpiled/react/Button'
 import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
+import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
+
 import { ModalContext } from 'drive/lib/ModalContext'
+import { emptyTrash } from 'drive/web/modules/actions/utils'
+import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
+import SelectableItem from '../drive/Toolbar/selectable/SelectableItem'
 import { MoreButton } from 'components/Button'
 import EmptyTrashConfirm from './components/EmptyTrashConfirm'
-import { emptyTrash } from 'drive/web/modules/actions/utils'
-
-import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 
 import styles from 'drive/styles/toolbar.styl'
-
-import SelectableItem from '../drive/Toolbar/selectable/SelectableItem'
 
 export const Toolbar = ({
   t,
@@ -65,7 +66,7 @@ export const Toolbar = ({
             <>
               <ActionMenuItem
                 onClick={onEmptyTrash}
-                left={<Icon icon="trash" color="var(--pomegranate)" />}
+                left={<Icon icon={TrashIcon} color="var(--pomegranate)" />}
               >
                 <span className="u-pomegranate">
                   {t('toolbar.empty_trash')}
@@ -91,7 +92,7 @@ export const Toolbar = ({
           theme="danger-outline"
           onClick={onEmptyTrash}
           disabled={disabled || selectionModeActive}
-          icon="trash"
+          icon={TrashIcon}
           label={t('toolbar.empty_trash')}
         />
       )}

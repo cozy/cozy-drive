@@ -1,6 +1,8 @@
 import React from 'react'
 import classNames from 'classnames'
+
 import { ButtonLink, Menu, MenuItem, Icon } from 'cozy-ui/transpiled/react'
+import AlbumAddIcon from 'cozy-ui/transpiled/react/Icons/AlbumAdd'
 
 import { MoreButton } from 'components/Button'
 
@@ -17,7 +19,7 @@ const AlbumsToolbar = ({ t, router }) => (
         data-test-id="album-add"
         theme="secondary"
         href="#/albums/new"
-        icon="album-add"
+        icon={AlbumAddIcon}
         label={t('Toolbar.album_new')}
       />
     </div>
@@ -28,7 +30,7 @@ const AlbumsToolbar = ({ t, router }) => (
     >
       <MenuItem
         onSelect={() => router.push('/albums/new')}
-        icon={<Icon icon="album-add" />}
+        icon={<Icon icon={AlbumAddIcon} />}
       >
         {t('Toolbar.album_new')}
       </MenuItem>

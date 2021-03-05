@@ -1,10 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
+
+import { showModal } from 'react-cozy-helpers'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
+import LinkIcon from 'cozy-ui/transpiled/react/Icons/Link'
+
 import ShortcutCreationModal from './ShortcutCreationModalConnected'
-import { showModal } from 'react-cozy-helpers'
 
 const CreateShortcutWrapper = ({ openModal }) => {
   const { t } = useI18n()
@@ -12,7 +15,7 @@ const CreateShortcutWrapper = ({ openModal }) => {
   return (
     <ActionMenuItem
       data-test-id="create-a-shortcut"
-      left={<Icon icon="link" />}
+      left={<Icon icon={LinkIcon} />}
       onClick={openModal}
     >
       {t('toolbar.menu_create_shortcut')}

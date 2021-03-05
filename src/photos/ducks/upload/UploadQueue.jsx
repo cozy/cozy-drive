@@ -1,10 +1,16 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
+
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { Icon, Spinner } from 'cozy-ui/transpiled/react'
 import palette from 'cozy-ui/stylus/settings/palette.json'
+import CrossIcon from 'cozy-ui/transpiled/react/Icons/Cross'
+import WarningIcon from 'cozy-ui/transpiled/react/Icons/Warning'
+import CheckIcon from 'cozy-ui/transpiled/react/Icons/Check'
+
 import { CozyFile } from 'models'
+
 import styles from './styles.styl'
 import {
   getUploadQueue,
@@ -29,21 +35,15 @@ const Item = translate()(({ file, status }) => {
       )
       break
     case 'cancel':
-      statusIcon = (
-        <Icon className="u-ml-half" icon="cross" color={palette['monza']} />
-      )
+      statusIcon = <Icon className="u-ml-half u-warn" icon={CrossIcon} />
       break
     case 'failed':
     case 'conflict':
     case 'network':
-      statusIcon = (
-        <Icon className="u-ml-half" icon="warning" color={palette['monza']} />
-      )
+      statusIcon = <Icon className="u-ml-half u-warn" icon={WarningIcon} />
       break
     case 'loaded':
-      statusIcon = (
-        <Icon className="u-ml-half" icon="check" color={palette['emerald']} />
-      )
+      statusIcon = <Icon className="u-ml-half u-valid" icon={CheckIcon} />
       break
     case 'pending':
     default:

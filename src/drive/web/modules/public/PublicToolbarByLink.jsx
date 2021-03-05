@@ -2,25 +2,25 @@
 const { BarRight } = cozy.bar
 
 import React, { useCallback, useState } from 'react'
+
+import { useClient } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
-
 import { Button, ButtonLink, Icon } from 'cozy-ui/transpiled/react'
 import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
-import { useClient } from 'cozy-client'
+import DotsIcon from 'cozy-ui/transpiled/react/Icons/Dots'
+
 import getHomeLinkHref from 'components/Button/getHomeLinkHref'
 import CozyHomeLinkIcon from 'components/Button/CozyHomeLinkIcon'
 import { SharingBannerByLink } from 'components/sharing/PublicBanner'
-
-import { DownloadFilesButton } from './DownloadButton'
-
 import SelectableItem from 'drive/web/modules/drive/Toolbar/selectable/SelectableItem'
 import AddFolderItem from 'drive/web/modules/drive/Toolbar/components/AddFolderItem'
 import UploadItem from 'drive/web/modules/drive/Toolbar/components/UploadItem'
 import CreateShortcut from 'drive/web/modules/drive/Toolbar/components/CreateShortcut'
-
 import { downloadFiles } from 'drive/web/modules/actions/utils'
+
+import { DownloadFilesButton } from './DownloadButton'
 
 const isFilesIsFile = files => files.length === 1 && files[0].type === 'file'
 
@@ -44,7 +44,7 @@ const MoreButton = ({ disabled, onClick }) => {
       disabled={disabled}
       onClick={onClick}
       extension="narrow"
-      icon="dots"
+      icon={DotsIcon}
       iconOnly
       label={t('Toolbar.more')}
     />

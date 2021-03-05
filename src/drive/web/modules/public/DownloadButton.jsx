@@ -3,11 +3,12 @@ import PropTypes from 'prop-types'
 
 import { useClient } from 'cozy-client'
 import { Button, useI18n } from 'cozy-ui/transpiled/react'
+import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 
 import { downloadFiles } from 'drive/web/modules/actions/utils'
 
 const DownloadButton = ({ onDownload, ...props }) => (
-  <Button onClick={() => onDownload()} icon="download" {...props} />
+  <Button onClick={() => onDownload()} icon={DownloadIcon} {...props} />
 )
 
 export default DownloadButton

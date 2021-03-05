@@ -1,11 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+
+import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
 import { translate } from 'cozy-ui/transpiled/react'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import FileInput from 'cozy-ui/transpiled/react/FileInput'
-import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
+import UploadIcon from 'cozy-ui/transpiled/react/Icons/Upload'
 
 import { uploadFiles } from 'drive/web/modules/navigation/duck'
 import toolbarContainer from '../toolbar'
@@ -22,7 +24,7 @@ const UploadItem = ({ t, isDisabled, onUpload }) => (
     onClick={e => e.stopPropagation()}
   >
     <ActionMenuItem
-      left={<Icon icon="upload" />}
+      left={<Icon icon={UploadIcon} />}
       onClick={e => e.stopPropagation()}
     >
       {t('toolbar.menu_upload')}
