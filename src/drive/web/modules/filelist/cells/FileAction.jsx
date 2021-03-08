@@ -5,6 +5,7 @@ import { TableCell } from 'cozy-ui/transpiled/react/Table'
 import Button from 'cozy-ui/transpiled/react/Button'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import palette from 'cozy-ui/transpiled/react/palette'
+import DotsIcon from 'cozy-ui/transpiled/react/Icons/Dots'
 
 import styles from 'drive/styles/filelist.styl'
 
@@ -27,7 +28,7 @@ const FileAction = forwardRef(function FileAction(
           extension="narrow"
           icon={
             <Icon
-              icon="dots"
+              icon={DotsIcon}
               color={palette.charcoalGrey}
               width="17"
               height="17"

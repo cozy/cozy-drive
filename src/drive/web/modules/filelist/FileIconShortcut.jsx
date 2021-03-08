@@ -1,7 +1,9 @@
 import React from 'react'
+
 import { useClient, useFetchShortcut } from 'cozy-client'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import palette from 'cozy-ui/transpiled/react/palette'
+import GlobeIcon from 'cozy-ui/transpiled/react/Icons/Globe'
 
 const FileIconShortcut = ({ file, size = 32 }) => {
   const client = useClient()
@@ -16,7 +18,7 @@ const FileIconShortcut = ({ file, size = 32 }) => {
           display: !shortcutImg ? 'block' : 'none'
         }}
       >
-        <Icon icon="globe" size={size} color={palette.coolGrey} />
+        <Icon icon={GlobeIcon} size={size} color={palette.coolGrey} />
       </div>
     </>
   )

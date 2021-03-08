@@ -2,9 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import { Icon, FileInput } from 'cozy-ui/transpiled/react'
 
 import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
+import { Icon, FileInput } from 'cozy-ui/transpiled/react'
+import UploadIcon from 'cozy-ui/transpiled/react/Icons/Upload'
+
 import { uploadFiles } from 'drive/web/modules/navigation/duck'
 
 const UploadButton = ({ label, disabled, onUpload, className }) => (
@@ -18,7 +20,7 @@ const UploadButton = ({ label, disabled, onUpload, className }) => (
     value={[]} // always erase the value to be able to re-upload the same file
   >
     <span>
-      <Icon icon="upload" />
+      <Icon icon={UploadIcon} />
       <span>{label}</span>
     </span>
   </FileInput>

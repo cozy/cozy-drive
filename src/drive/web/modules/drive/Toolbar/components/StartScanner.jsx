@@ -1,9 +1,12 @@
 import React, { useContext } from 'react'
+
+import { SCANNER_UPLOADING } from 'cozy-scanner'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
-import { SCANNER_UPLOADING } from 'cozy-scanner'
+import CameraIcon from 'cozy-ui/transpiled/react/Icons/Camera'
+
 import { ScannerContext } from './ScanWrapper'
 
 const StartScanner = ({ t }) => {
@@ -37,7 +40,7 @@ const StartScanner = ({ t }) => {
         trackEvent()
         actionOnClick()
       }}
-      left={<Icon icon="camera" />}
+      left={<Icon icon={CameraIcon} />}
     >
       {t('Scan.scan_a_doc')}
     </ActionMenuItem>

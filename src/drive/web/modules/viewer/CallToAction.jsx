@@ -1,15 +1,19 @@
 import React, { Component } from 'react'
-import Icon from 'cozy-ui/transpiled/react/Icon'
+
 import { withClient } from 'cozy-client'
 import localforage from 'localforage'
+import palette from 'cozy-ui/transpiled/react/palette'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import CrossIcon from 'cozy-ui/transpiled/react/Icons/Cross'
+
 import {
   isClientAlreadyInstalled,
   isLinux,
   NOVIEWER_DESKTOP_CTA
 } from 'components/pushClient'
-import styles from './styles.styl'
 import Config from 'drive/config/config.json'
-import palette from 'cozy-ui/transpiled/react/palette'
+
+import styles from './styles.styl'
 
 class CallToAction extends Component {
   state = {
@@ -45,7 +49,7 @@ class CallToAction extends Component {
         <Icon
           className={styles['pho-viewer-noviewer-cta-cross']}
           color={palette.white}
-          icon="cross"
+          icon={CrossIcon}
           onClick={this.markAsSeen}
         />
         <h3>{t('Viewer.noviewer.cta.saveTime')}</h3>

@@ -1,12 +1,18 @@
 import React, { Component } from 'react'
-import { Menu, MenuItem, Icon, withBreakpoints } from 'cozy-ui/transpiled/react'
-import { MoreButton } from 'components/Button'
+
 import { ShareButton, SharedRecipients, SharedDocument } from 'cozy-sharing'
 import { RecipientsAvatars } from 'cozy-sharing/dist/components/Recipient'
+import { Menu, MenuItem, Icon, withBreakpoints } from 'cozy-ui/transpiled/react'
+import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'
+import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
+import RenameIcon from 'cozy-ui/transpiled/react/Icons/Rename'
+import AlbumAddIcon from 'cozy-ui/transpiled/react/Icons/AlbumAdd'
+import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
 
-import styles from 'photos/styles/toolbar.styl'
+import { MoreButton } from 'components/Button'
 
 import CheckboxIcon from 'photos/assets/icons/icon-checkbox.svg'
+import styles from 'photos/styles/toolbar.styl'
 
 class AlbumToolbar extends Component {
   render() {
@@ -56,7 +62,7 @@ class AlbumToolbar extends Component {
           {!sharedWithMe && (
             <MenuItem
               className={'u-hide--desk'}
-              icon={<Icon icon="share" />}
+              icon={<Icon icon={ShareIcon} />}
               onSelect={() => shareAlbum(album)}
             >
               <SharedDocument docId={album.id}>
@@ -81,13 +87,13 @@ class AlbumToolbar extends Component {
           <MenuItem
             data-test-id="menu-download-album"
             onSelect={downloadAlbum}
-            icon={<Icon icon="download" />}
+            icon={<Icon icon={DownloadIcon} />}
           >
             {t('Toolbar.menu.download_album')}
           </MenuItem>
           <MenuItem
             data-test-id="menu-rename-album"
-            icon={<Icon icon="rename" />}
+            icon={<Icon icon={RenameIcon} />}
             onSelect={onRename}
           >
             {t('Toolbar.menu.rename_album')}
@@ -95,7 +101,7 @@ class AlbumToolbar extends Component {
           {!readOnly && (
             <MenuItem
               data-test-id="menu-add-photos-to-album"
-              icon={<Icon icon="album-add" />}
+              icon={<Icon icon={AlbumAddIcon} />}
               onSelect={() => router.push(`${router.location.pathname}/edit`)}
             >
               {t('Toolbar.menu.add_photos')}
@@ -114,7 +120,7 @@ class AlbumToolbar extends Component {
             <MenuItem
               data-test-id="menu-delete-album"
               className={styles['pho-action-delete']}
-              icon={<Icon icon="trash" />}
+              icon={<Icon icon={TrashIcon} />}
               onSelect={deleteAlbum}
             >
               {t('Toolbar.menu.album_delete')}

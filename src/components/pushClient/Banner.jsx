@@ -10,6 +10,8 @@ import Banner from 'cozy-ui/transpiled/react/Banner'
 import Button, { ButtonLink } from 'cozy-ui/transpiled/react/Button'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import palette from 'cozy-ui/transpiled/react/palette'
+import DeviceLaptopIcon from 'cozy-ui/transpiled/react/Icons/DeviceLaptop'
+import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 
 import {
   track,
@@ -72,14 +74,14 @@ class BannerClient extends Component {
       <div className={styles['coz-banner-client']}>
         <Banner
           inline
-          icon={<Icon icon="device-laptop" size="100%" />}
+          icon={<Icon icon={DeviceLaptopIcon} size="100%" />}
           text={t(text)}
           bgcolor={palette['paleGrey']}
           buttonOne={
             <ButtonLink
               href={t(link)}
               theme="text"
-              icon="download"
+              icon={DownloadIcon}
               label={t('Nav.banner-btn-client')}
               onClick={() => this.markAsSeen('banner')}
             />

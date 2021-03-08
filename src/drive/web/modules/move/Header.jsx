@@ -10,6 +10,7 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 import Card from 'cozy-ui/transpiled/react/Card'
 import palette from 'cozy-ui/stylus/settings/palette.json'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import CrossIcon from 'cozy-ui/transpiled/react/Icons/Cross'
 
 import DriveIcon from 'drive/assets/icons/icon-drive.svg'
 
@@ -52,7 +53,7 @@ const Header = ({ entries, onClose, title, subTitle }) => {
           label="back"
         >
           <Icon
-            icon="cross"
+            icon={CrossIcon}
             width="14"
             height="14"
             color={palette['coolGrey']}

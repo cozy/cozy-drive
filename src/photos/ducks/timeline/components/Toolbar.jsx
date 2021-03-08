@@ -3,7 +3,9 @@ import styles from '../../../styles/toolbar.styl'
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+
 import { Menu, MenuItem, Icon } from 'cozy-ui/transpiled/react'
+import UploadIcon from 'cozy-ui/transpiled/react/Icons/Upload'
 
 import UploadButton from '../../../components/UploadButton'
 import { MoreButton } from 'components/Button'
@@ -17,7 +19,7 @@ const MoreMenu = ({ t, disabled, uploadPhotos, selectItems }) => (
     className={styles['pho-toolbar-menu']}
     component={<MoreButton />}
   >
-    <MenuItem icon={<Icon icon="upload" />} className={'u-hide--desk'}>
+    <MenuItem icon={<Icon icon={UploadIcon} />} className={'u-hide--desk'}>
       <UploadButton
         onUpload={uploadPhotos}
         disabled={disabled}

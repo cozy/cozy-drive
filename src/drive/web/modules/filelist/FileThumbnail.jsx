@@ -10,6 +10,7 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { TableCell } from 'cozy-ui/transpiled/react/Table'
+import LinkIcon from 'cozy-ui/transpiled/react/Icons/Link'
 
 import FileIcon from 'drive/web/modules/filelist/FileIcon'
 import SharingShortcutBadge from 'drive/web/modules/filelist/SharingShortcutBadge'
@@ -33,7 +34,7 @@ const FileThumbnail = ({ file, size, isInSyncFromSharing }) => {
     >
       {isSimpleFile && <FileIcon file={file} size={size} />}
       {isRegularShortcut && (
-        <InfosBadge badgeContent={<Icon icon="link" size={10} />}>
+        <InfosBadge badgeContent={<Icon icon={LinkIcon} size={10} />}>
           <FileIcon file={file} size={size} />
         </InfosBadge>
       )}

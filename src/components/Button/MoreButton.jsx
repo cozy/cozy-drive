@@ -1,6 +1,8 @@
 import React from 'react'
+
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import { Button } from 'cozy-ui/transpiled/react'
+import DotsIcon from 'cozy-ui/transpiled/react/Icons/Dots'
 
 import styles from './index.styl'
 
@@ -14,7 +16,7 @@ const MoreButton = ({ disabled, onClick }) => {
       disabled={disabled}
       onClick={onClick}
       extension="narrow"
-      icon="dots"
+      icon={DotsIcon}
       iconOnly
       label={t('Toolbar.more')}
     />

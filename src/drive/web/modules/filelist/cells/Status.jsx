@@ -5,6 +5,7 @@ import { SharedStatus, ShareModal } from 'cozy-sharing'
 import { TableCell } from 'cozy-ui/transpiled/react/Table'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import palette from 'cozy-ui/transpiled/react/palette'
+import PhoneDownloadIcon from 'cozy-ui/transpiled/react/Icons/PhoneDownload'
 
 import HammerComponent from '../HammerComponent'
 
@@ -60,7 +61,7 @@ const Status = ({
           !disabled && (
             <span className={styles['fil-content-offline']}>
               <Icon
-                icon="phone-download"
+                icon={PhoneDownloadIcon}
                 color={palette.white}
                 width="14"
                 height="14"
