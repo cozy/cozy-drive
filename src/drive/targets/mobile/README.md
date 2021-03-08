@@ -14,9 +14,18 @@
 ### Android
 
 - Android SDK >= 25.0.0 to deploy on android
-- JDK 1.8
+  - Install Android Studio
+  - Go to SDK Manager (Create new project if necessary)
+  - Install SDK (edit Android SDK location if necessary - should be `~/Library/Android/sdk`)
+  - Accept license agreements by running: `~/Library/Android/sdk/tools/bin/sdkmanager --licenses`
+- JDK 8
+  - on macOS: `brew tap adoptopenjdk/openjdk && brew install --cask adoptopenjdk8`
 - Gradle
-- Define your JAVA_HOME
+  - on macOS: `brew install gradle`
+- Define your ANDROID_HOME
+  - Add `export ANDROID_HOME="$HOME/Library/Android/sdk"` in your `.zshrc` or `.bashrc`
+Define your JAVA_HOME
+  - Add `export JAVA_HOME=$(/usr/libexec/java_home)` in your `.zshrc` or `.bashrc` file
 
 ### iOS
 
