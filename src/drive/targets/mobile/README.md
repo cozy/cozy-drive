@@ -24,7 +24,7 @@
   - on macOS: `brew install gradle`
 - Define your ANDROID_HOME
   - Add `export ANDROID_HOME="$HOME/Library/Android/sdk"` in your `.zshrc` or `.bashrc`
-Define your JAVA_HOME
+- Define your JAVA_HOME
   - Add `export JAVA_HOME=$(/usr/libexec/java_home)` in your `.zshrc` or `.bashrc` file
 
 ### iOS
