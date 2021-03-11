@@ -2,7 +2,7 @@ import React from 'react'
 
 import { models } from 'cozy-client'
 import { ShareModal } from 'cozy-sharing'
-import { isIOSApp, isMobileApp, isIOS } from 'cozy-device-helper'
+import { isIOSApp, isMobileApp } from 'cozy-device-helper'
 import { EditDocumentQualification } from 'cozy-scanner'
 import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
@@ -16,6 +16,8 @@ import HistoryIcon from 'cozy-ui/transpiled/react/Icons/History'
 import RestoreIcon from 'cozy-ui/transpiled/react/Icons/Restore'
 import ReplyIcon from 'cozy-ui/transpiled/react/Icons/Reply'
 import ShareIosIcon from 'cozy-ui/transpiled/react/Icons/ShareIos'
+import LinkOutIcon from 'cozy-ui/transpiled/react/Icons/LinkOut'
+import EyeIcon from 'cozy-ui/transpiled/react/Icons/Eye'
 
 import DeleteConfirm from 'drive/web/modules/drive/DeleteConfirm'
 import MoveModal from 'drive/web/modules/move/MoveModal'
@@ -24,7 +26,6 @@ import MakeAvailableOfflineMenuItem from 'drive/web/modules/drive/MakeAvailableO
 import DestroyConfirm from 'drive/web/modules/trash/components/DestroyConfirm'
 import { startRenamingAsync } from 'drive/web/modules/drive/rename'
 
-const ForwardIcon = isIOS() ? ShareIosIcon : ReplyIcon
 const { file: fileModel } = models
 const { isFile } = fileModel
 
@@ -68,7 +69,7 @@ export const download = ({ client }) => {
           )
         },
         action: files => exportFilesNative(client, files),
-        label: 'sendto',
+        label: 'forwardTo',
         Component: function Download(props) {
           const { t } = useI18n()
           return (
@@ -76,9 +77,9 @@ export const download = ({ client }) => {
               onClick={() => {
                 return exportFilesNative(client, props.files)
               }}
-              left={<Icon icon={DownloadIcon} />}
+              left={<Icon icon={isIOSApp() ? ShareIosIcon : ReplyIcon} />}
             >
-              {t('SelectionBar.sendto')}
+              {t('SelectionBar.forwardTo')}
             </ActionMenuItem>
           )
         }
@@ -162,9 +163,11 @@ export const open = ({ client }) => {
       return (
         <ActionMenuItem
           onClick={() => openFileWith(client, props.files[0])}
-          left={<Icon icon={ForwardIcon} />}
+          left={<Icon icon={isIOSApp() ? EyeIcon : LinkOutIcon} />}
         >
-          {t('SelectionBar.forward')}
+          {isIOSApp()
+            ? t('SelectionBar.applePreview')
+            : t('SelectionBar.openWith')}
         </ActionMenuItem>
       )
     }
