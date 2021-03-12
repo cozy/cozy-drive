@@ -238,12 +238,14 @@
     "rename": "Rename",
     "restore": "Restore",
     "close": "Close",
+    "openWith": "Open with...",
+    "applePreview": "Apple preview",
     "forward": "Forward",
+    "forwardTo": "Forward to...",
     "moveto": "Move to…",
     "phone-download": "Make available offline",
     "qualify": "Categorize",
-    "history": "History",
-    "sendto": "Send to..."
+    "history": "History"
   },
   "deleteconfirmation": {
     "title": "Delete this element? |||| Delete these elements?",

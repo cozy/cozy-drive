@@ -222,7 +222,7 @@ describe('useActions', () => {
 
       it('is visible for a single file on iOS', () => {
         global.window.cordova = { platformId: 'ios' }
-        const downloadAction = getAction('sendto')
+        const downloadAction = getAction('forwardTo')
         expect(
           downloadAction.displayCondition([{ id: 'abc', type: 'file' }])
         ).toBe(true)
@@ -245,7 +245,7 @@ describe('useActions', () => {
 
       it('is visible if only files are selected on android', () => {
         global.window.cordova = { platformId: 'android' }
-        const downloadAction = getAction('sendto')
+        const downloadAction = getAction('forwardTo')
         expect(
           downloadAction.displayCondition([
             { id: 'abc', type: 'file' },
@@ -261,7 +261,7 @@ describe('useActions', () => {
       })
 
       it('export files to the device when activated', () => {
-        const downloadAction = getAction('sendto')
+        const downloadAction = getAction('forwardTo')
         const mockDocuments = [
           { id: 'abc', name: 'my-file.md' },
           { id: 'def', name: 'my-file-2.md' }
