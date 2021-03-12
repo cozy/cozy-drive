@@ -115,6 +115,7 @@ On iOS:
 - Open the project in Xcode : `open "src/drive/targets/mobile/platforms/ios/Cozy Drive.xcodeproj"`
 - Select "Cozy Drive" app and the device you want
 - Click "Play" button
+⚠️ Be sure you have only one `ShareExt` in your `TARGETS` (you can check this in the main screen of Xcode)
 
 ## :lock: Create Release
 
