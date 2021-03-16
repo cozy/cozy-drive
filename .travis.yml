@@ -76,13 +76,13 @@ jobs:
       before_cache:
         - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
         - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-      cache:
-        yarn: true
-        directories:
-          - node_modules
-          - $HOME/.gradle/caches/
-          - $HOME/.gradle/wrapper/
-          - $HOME/.android/build-cache
+      # cache:
+      #   yarn: true
+      #   directories:
+      #     - node_modules
+      #     - $HOME/.gradle/caches/
+      #     - $HOME/.gradle/wrapper/
+      #     - $HOME/.android/build-cache
       env:
         - COZY_APP_SLUG=drive
       before_install:
