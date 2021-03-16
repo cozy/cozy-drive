@@ -13,7 +13,7 @@ jest.mock('cozy-device-helper', () => ({
   isMobileApp: jest.fn()
 }))
 
-const file = {
+const staticFile = {
   id: 'fileId',
   name: 'Demo.pdf'
 }
@@ -23,7 +23,8 @@ const client = createMockClient({})
 const setup = ({
   byDocId = { fileId: {} },
   isOwner = false,
-  isMobileAppValue = false
+  isMobileAppValue = false,
+  file
 } = {}) => {
   const mockSharingContext = {
     byDocId,
@@ -35,7 +36,7 @@ const setup = ({
 
   const root = render(
     <AppLike client={client} sharingContextValue={mockSharingContext}>
-      <FooterContent file={file} />
+      <FooterContent file={file || staticFile} toolbarRef={{}} />
     </AppLike>
   )
 
@@ -85,5 +86,14 @@ describe('FooterContent', () => {
 
     expect(getByText('Shared'))
     expect(queryByText('Share')).toBeFalsy()
+  })
+
+  it('should show bottom sheet for file with certification or konnector', () => {
+    const { root } = setup({
+      file: { metadata: { carbonCopy: true }, ...staticFile }
+    })
+    const { getByTestId } = root
+
+    expect(getByTestId('bottomSheet-header')).toBeTruthy()
   })
 })
