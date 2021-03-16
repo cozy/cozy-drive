@@ -69,6 +69,7 @@ jobs:
         - COZY_APP_SLUG=photos
     - name: "Drive android"
       stage: "build"
+      <<: *node
       language: android
       android:
         components:
@@ -76,20 +77,20 @@ jobs:
       before_cache:
         - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
         - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-      cache:
-        yarn: true
-        directories:
-          - node_modules
-          - $HOME/.gradle/caches/
-          - $HOME/.gradle/wrapper/
-          - $HOME/.android/build-cache
+      # cache:
+      #   yarn: true
+      #   directories:
+      #     - node_modules
+      #     - $HOME/.gradle/caches/
+      #     - $HOME/.gradle/wrapper/
+      #     - $HOME/.android/build-cache
       env:
         - COZY_APP_SLUG=drive
       before_install:
         - yes | sdkmanager "platforms;android-27" # see https://github.com/travis-ci/travis-ci/issues/8874#issuecomment-350350607
         - scripts/decrypt.sh
         - scripts/signing.sh
-        - curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+        - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
         - sudo apt-get install nodejs
         - sudo apt-get install build-essential
         - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.22.4
