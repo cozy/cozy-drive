@@ -9,9 +9,9 @@
 - ImageMagick
   - on macOS: `brew install imagemagick`
 - Cordova v7 CLI
-  - `npm install cordova@7 -g`
+  - `yarn add cordova@7 -g`
 
-### Android
+#### Android
 
 - Android SDK >= 25.0.0 to deploy on android
   - Install Android Studio
@@ -30,7 +30,7 @@
   - Add `export PATH="$ANDROID_HOME/build-tools:$PATH"` in your `.zshrc` or `.bashrc` file
 
 
-### iOS
+#### iOS
 
 - Xcode >= 8.1
 
@@ -105,20 +105,21 @@ yarn start:drive:mobile
 #### Standalone mode
 
 - Open your browser with web-security CORS disabled
-- launch `$ yarn start:mobile:standalone`
-- Go to localhost:8084 in your browser and open the console
-- Follow the onboarding and after giving your cozy URL, click on the link logged in the console
+- launch `$ yarn start:drive:standalone`
+- Go to localhost:8888 in your browser, or check the `Dev assets` in the top of the yarn console
+- Follow the onboarding and after giving your cozy URL, click on the link logged in the bottom of the console
 - Log yourself, accept permissions and copy the url you've been redirected to.
 - Return to your previous tab and paste the url in the prompt (be quick, or take your time, whatever, because the prompt may be blocked when it pops if you're still on the permissions tab)
 
-## Launch the simulator
+## :iphone: Launch the simulator
 
 On iOS:
 
 - Open the project in Xcode : `open "src/drive/targets/mobile/platforms/ios/Cozy Drive.xcodeproj"`
 - Select "Cozy Drive" app and the device you want
 - Click "Play" button
-⚠️ Be sure you have only one `ShareExt` in your `TARGETS` (you can check this in the main screen of Xcode)
+
+:warning: Be sure you have only one `ShareExt` in your `TARGETS` (you can check this in the main screen of Xcode)
 
 ## :lock: Create Release
 
@@ -127,30 +128,33 @@ On iOS:
 Create these folders:
 
 ```
-$ mkdir src/drive/targets/mobile/keys
-$ mkdir src/drive/targets/mobile/keys/android
-$ mkdir src/drive/targets/mobile/build
-$ mkdir src/drive/targets/mobile/build/android
+$ mkdir -p src/drive/targets/mobile/keys/android && mkdir -p src/drive/targets/mobile/build/android
 ```
 
-You must have this files:
+You must have this files in `src/drive/targets/mobile/keys/android`:
 
-- keys/android/cozy-drive-release-key.jks (and the password)
-- keys/android/key.json
+- cozy-drive-release-key.jks
+- key.json
 
-To generate a signed APK on `src/drive/targets/mobile/build/android/` and publish on Google Play:
+:warning: You must also have the password associated with `cozy-drive-release-key.jks`
 
-```
-$ npm run buildsigned:drive:android
-$ npm run publish:drive:android
-```
-
-Or if you want to publish the release on the beta track:
+To generate a signed APK on `src/drive/targets/mobile/build/android/`
 
 ```
-$ npm run buildsigned:drive:android
-$ npm run publishbeta:drive:android
+$ yarn buildsigned:drive:android
 ```
+
+To publish on Google Play:
+
+- Manually:
+  - Go to [Google Play Console](https://play.google.com/console) and select `Drive` app
+  - To publish an internal testing version: go to `Release > Testing > Internal testing`
+  - Now you have to `Create a new release`, then `Save`, `Review release` and finally `Start rollout`
+
+- Automatically:
+  - a beta version (on beta track): `yarn publishbeta:drive:android`
+  - a release version: `yarn publish:drive:android`
+
 
 ### iOS
 
@@ -158,8 +162,10 @@ Open XCode and sign in to your Apple account. This account should be part of the
 Once you have the certificates, change the projects signing process to use these certificates and run:
 
 ```
-$ npm run publish:drive:ios
+$ yarn publish:drive:ios
 ```
+
+# For further informations
 
 ## :rainbow: Icons & Splashscreen
 
