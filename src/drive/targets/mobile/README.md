@@ -26,6 +26,9 @@
   - Add `export ANDROID_HOME="$HOME/Library/Android/sdk"` in your `.zshrc` or `.bashrc`
 - Define your JAVA_HOME
   - Add `export JAVA_HOME=$(/usr/libexec/java_home)` in your `.zshrc` or `.bashrc` file
+- Add Android build-tools in your Path
+  - Add `export PATH="$ANDROID_HOME/build-tools:$PATH"` in your `.zshrc` or `.bashrc` file
+
 
 ### iOS
 
