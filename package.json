@@ -44,7 +44,7 @@
     "version:drive:manifest": "replace '\\d+\\.\\d+\\.\\d+' $npm_package_version ./src/drive/targets/manifest.webapp",
     "version:drive:config": "replace 'version=\"\\d+\\.\\d+\\.\\d+\"' 'version=\"'$npm_package_version'\"' ./src/drive/targets/mobile/config.xml",
     "version:drive:iosbuild": "replace 'CFBundleVersion=\"\\d+\\.\\d+\\.\\d+.\\d+\"' 'CFBundleVersion=\"'$npm_package_version'.0\"' ./src/drive/targets/mobile/config.xml",
-    "version:drive:androidbuild": "replace 'android-versionCode=\"\\d+\"' 'android-versionCode=\"'${npm_package_version//\\./}'000\"' ./src/drive/targets/mobile/config.xml",
+    "version:drive:androidbuild": "replace 'android-versionCode=\"\\d+\"' 'android-versionCode=\"'${npm_package_version//\\./}'0000\"' ./src/drive/targets/mobile/config.xml",
     "version:drive:useragent": "replace 'value=\"(.+)\\d+\\.\\d+\\.\\d+\"' 'value=\"$1'$npm_package_version'\"' ./src/drive/targets/mobile/config.xml",
     "version:drive": "npm-run-all --parallel 'version:drive:*'",
     "version:photos": "replace '\\d+\\.\\d+\\.\\d+' $npm_package_version ./src/photos/targets/manifest.webapp"
