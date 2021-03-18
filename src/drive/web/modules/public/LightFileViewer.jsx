@@ -1,16 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import PublicToolbar from './PublicToolbar'
 import Viewer from 'drive/web/modules/viewer/PublicViewer'
 import SharingBanner from 'drive/web/modules/public/SharingBanner'
 
 import styles from 'drive/web/modules/viewer/barviewer.styl'
 
-const LightFileViewer = ({ files, isFile }) => (
+const LightFileViewer = ({ files }) => (
   <div className={styles['viewer-wrapper-with-bar']}>
     <SharingBanner />
-    <PublicToolbar files={files} isFile={isFile} />
     <div className={'u-pos-relative u-h-100'}>
       <Viewer
         files={files}

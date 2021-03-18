@@ -1,4 +1,3 @@
-/* global cozy */
 import React, { useState, useCallback } from 'react'
 
 import { useClient } from 'cozy-client'
@@ -12,9 +11,8 @@ import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import { MoreButton } from 'components/Button'
 import SelectableItem from 'drive/web/modules/drive/Toolbar/selectable/SelectableItem'
 import { downloadFiles } from 'drive/web/modules/actions/utils'
+import CozyBarRightMobile from 'drive/web/modules/public/CozyBarRightMobile'
 import { DownloadFilesButton } from './DownloadButton'
-
-const { BarRight } = cozy.bar
 
 const openExternalLink = url => (window.location = url)
 
@@ -82,7 +80,7 @@ const PublicToolbarCozyToCozy = ({
   const { isMobile } = useBreakpoints()
 
   return (
-    <BarRight>
+    <CozyBarRightMobile>
       <BarContextProvider client={client} t={t} store={client.store}>
         {!isMobile && (
           <div className="u-m-auto">
@@ -98,7 +96,7 @@ const PublicToolbarCozyToCozy = ({
           />
         </div>
       </BarContextProvider>
-    </BarRight>
+    </CozyBarRightMobile>
   )
 }
 

@@ -1,6 +1,3 @@
-/* global cozy */
-const { BarRight } = cozy.bar
-
 import React, { useCallback, useState } from 'react'
 
 import { useClient } from 'cozy-client'
@@ -18,6 +15,7 @@ import AddFolderItem from 'drive/web/modules/drive/Toolbar/components/AddFolderI
 import UploadItem from 'drive/web/modules/drive/Toolbar/components/UploadItem'
 import CreateShortcut from 'drive/web/modules/drive/Toolbar/components/CreateShortcut'
 import { downloadFiles } from 'drive/web/modules/actions/utils'
+import CozyBarRightMobile from 'drive/web/modules/public/CozyBarRightMobile'
 
 import { DownloadFilesButton } from './DownloadButton'
 
@@ -119,7 +117,7 @@ const PublicToolbarByLink = ({
     isMobile || (!isFile && files.length > 0) || hasWriteAccess
 
   return (
-    <BarRight>
+    <CozyBarRightMobile>
       <BarContextProvider client={client} t={t} store={client.store}>
         {!isMobile && (
           <>
@@ -142,7 +140,7 @@ const PublicToolbarByLink = ({
           </div>
         )}
       </BarContextProvider>
-    </BarRight>
+    </CozyBarRightMobile>
   )
 }
 

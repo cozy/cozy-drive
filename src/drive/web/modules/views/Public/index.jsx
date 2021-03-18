@@ -168,20 +168,22 @@ const PublicFolderView = ({
       <Main isPublic={true}>
         <ModalStack />
         <ModalManager />
-        <PublicToolbar
-          files={files}
-          hasWriteAccess={hasWritePermissions}
-          refreshFolderContent={refreshFolderContent}
-        />
         <SharingBanner />
         <div className="u-pt-2">
           <FolderViewHeader>
             {currentFolderId && (
-              <FolderViewBreadcrumb
-                getBreadcrumbPath={geTranslatedBreadcrumbPath}
-                currentFolderId={currentFolderId}
-                navigateToFolder={navigateToFolder}
-              />
+              <>
+                <FolderViewBreadcrumb
+                  getBreadcrumbPath={geTranslatedBreadcrumbPath}
+                  currentFolderId={currentFolderId}
+                  navigateToFolder={navigateToFolder}
+                />
+                <PublicToolbar
+                  files={files}
+                  hasWriteAccess={hasWritePermissions}
+                  refreshFolderContent={refreshFolderContent}
+                />
+              </>
             )}
           </FolderViewHeader>
           <Content>
