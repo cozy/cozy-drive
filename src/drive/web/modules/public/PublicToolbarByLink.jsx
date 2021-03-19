@@ -13,6 +13,7 @@ import SelectableItem from 'drive/web/modules/drive/Toolbar/selectable/Selectabl
 import AddFolderItem from 'drive/web/modules/drive/Toolbar/components/AddFolderItem'
 import UploadItem from 'drive/web/modules/drive/Toolbar/components/UploadItem'
 import CreateShortcut from 'drive/web/modules/drive/Toolbar/components/CreateShortcut'
+import UploadButtonItem from 'drive/web/modules/drive/Toolbar/components/UploadButtonItem'
 import { downloadFiles } from 'drive/web/modules/actions/utils'
 import CozyBarRightMobile from 'drive/web/modules/public/CozyBarRightMobile'
 
@@ -108,9 +109,16 @@ const PublicToolbarByLink = ({
     <CozyBarRightMobile>
       <BarContextProvider client={client} t={t} store={client.store}>
         {!isMobile && (
-          <div className="u-m-auto">
-            <DownloadFilesButton files={files} />
-          </div>
+          <>
+            <div className="u-m-auto">
+              {hasWriteAccess && (
+                <UploadButtonItem onUploaded={refreshFolderContent} />
+              )}
+            </div>
+            <div className="u-m-auto">
+              <DownloadFilesButton files={files} />
+            </div>
+          </>
         )}
         {shouldDisplayMoreMenu && (
           <div className="u-m-auto">
