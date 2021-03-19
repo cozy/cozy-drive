@@ -8,6 +8,7 @@ import { CozyFile } from 'models'
 //see https://github.com/cozy/cozy-client/pull/571
 import { doUpload } from 'cozy-scanner/dist/ScannerUpload'
 
+import { logException } from 'drive/lib/reporter'
 import UploadQueue from './UploadQueue'
 
 export { UploadQueue }
@@ -150,9 +151,11 @@ export const processNextFile = (
   }
 
   const item = getUploadQueue(getState()).find(i => i.status === PENDING)
+
   if (!item) {
     return dispatch(onQueueEmpty(queueCompletedCallback))
   }
+
   const { file, entry, isDirectory } = item
   try {
     dispatch({ type: UPLOAD_FILE, file })
@@ -202,6 +205,9 @@ export const processNextFile = (
     }
     if (error) {
       logger.warn(error)
+      logException(
+        `Upload module catches an error when executing processNextFile(): ${error}`
+      )
       const statusError = {
         409: CONFLICT,
         413: QUOTA
@@ -295,7 +301,7 @@ const uploadFile = async (client, file, dirID, options = {}) => {
  * @param {Object} client - A CozyClient instance
  * @param {Object} file - The uploaded javascript File object
  * @param {string} path - The file's path in the cozy
- * @param {{onUploadProgress}} options 
+ * @param {{onUploadProgress}} options
  * @return {Object} - The updated io.cozy.files
  */
 export const overwriteFile = async (client, file, path, options = {}) => {
@@ -415,5 +421,10 @@ const extractFilesEntries = items => {
       results.push({ file: item, isDirectory: false, entry: null })
     }
   }
+
+  if (results.length === 0) {
+    logger.warn('Upload module files entries extraction: no file entry')
+  }
+
   return results
 }
