@@ -7,12 +7,13 @@ import { compose } from 'redux'
 
 import toolbarContainer from '../toolbar'
 
-const UploadButtonItem = ({ t, displayedFolder, isDisabled }) => (
+const UploadButtonItem = ({ t, displayedFolder, isDisabled, onUploaded }) => (
   <UploadButton
     disabled={isDisabled}
     displayedFolder={displayedFolder}
     label={t('toolbar.item_upload')}
     className={classNames(styles['c-btn'], 'u-hide--mob')}
+    onUploaded={onUploaded}
   />
 )
 
