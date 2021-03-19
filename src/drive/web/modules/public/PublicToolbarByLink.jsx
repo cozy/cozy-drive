@@ -4,12 +4,11 @@ import { useClient } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
-import { Button, ButtonLink, Icon } from 'cozy-ui/transpiled/react'
+import { Button, Icon } from 'cozy-ui/transpiled/react'
 import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import DotsIcon from 'cozy-ui/transpiled/react/Icons/Dots'
 
 import getHomeLinkHref from 'components/Button/getHomeLinkHref'
-import CozyHomeLinkIcon from 'components/Button/CozyHomeLinkIcon'
 import SelectableItem from 'drive/web/modules/drive/Toolbar/selectable/SelectableItem'
 import AddFolderItem from 'drive/web/modules/drive/Toolbar/components/AddFolderItem'
 import UploadItem from 'drive/web/modules/drive/Toolbar/components/UploadItem'
@@ -21,17 +20,6 @@ import { DownloadFilesButton } from './DownloadButton'
 
 const isFilesIsFile = files => files.length === 1 && files[0].type === 'file'
 
-const CreateCozyButton = ({ from, size }) => {
-  const { t } = useI18n()
-  return (
-    <ButtonLink
-      label={t('Share.create-cozy')}
-      icon={CozyHomeLinkIcon}
-      href={getHomeLinkHref(from)}
-      size={size}
-    />
-  )
-}
 const MoreButton = ({ disabled, onClick }) => {
   const { t } = useI18n()
   return (
@@ -120,14 +108,9 @@ const PublicToolbarByLink = ({
     <CozyBarRightMobile>
       <BarContextProvider client={client} t={t} store={client.store}>
         {!isMobile && (
-          <>
-            <div className="u-m-auto">
-              <DownloadFilesButton files={files} />
-            </div>
-            <div className="u-m-auto">
-              <CreateCozyButton from="sharing-drive" />
-            </div>
-          </>
+          <div className="u-m-auto">
+            <DownloadFilesButton files={files} />
+          </div>
         )}
         {shouldDisplayMoreMenu && (
           <div className="u-m-auto">
