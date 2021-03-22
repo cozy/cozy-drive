@@ -12,11 +12,11 @@ import { isIOSApp } from 'cozy-device-helper'
 import { Document } from 'cozy-doctypes'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
+import logger from 'lib/logger'
 import configureStore from 'drive/store/configureStore'
 import { loadState } from 'drive/store/persistedState'
 import { startBackgroundService } from 'drive/mobile/lib/background'
-import { configureReporter } from 'drive/lib/reporter'
-
+import { configureReporter, logException } from 'drive/lib/reporter'
 import {
   startTracker,
   useHistoryForTracker,
@@ -194,28 +194,27 @@ class InitAppMobile {
    * when the user shares something to Cozy-Drive
    */
   openWith = () => {
-    //!TODO Remove this after a few weeks (5/12/19)
-    //it's just here to have a few logs in sentry if needed
     function initSuccess() {
-      //eslint-disable-next-line
-      console.log('init success!')
+      console.log('openWith init success!') // eslint-disable-line no-console
     }
     function initError(err) {
-      //eslint-disable-next-line
-      console.log('init failed: ' + err)
+      logException(`openWith init failed: ${err}`)
     }
 
     cordova.openwith && cordova.openwith.init(initSuccess, initError)
     cordova.openwith && cordova.openwith.addHandler(this.openWithHandler)
   }
-  //We write the items in localStorage and then push
-  //to a specific route
+
+  /**
+   * We write the items in localStorage and then push to a specific route
+   */
   openWithHandler = async intent => {
     //We prefer to remove previous imported items if no
     //imported in order to create a new fresh import
     try {
       await localforage.removeItem('importedFiles')
     } catch (e) {
+      logger.error(`openWithHandler can't remove item: ${e}`)
       return Alerter.error('ImportToDrive.error')
     }
     if (intent.items && intent.items.length > 0) {
@@ -223,10 +222,12 @@ class InitAppMobile {
         await localforage.setItem('importedFiles', intent.items)
         hashHistory.push('/uploadfrommobile')
       } catch (error) {
+        logger.error(`openWithHandler can't set item: ${error}`)
         Alerter.error('ImportToDrive.error')
       }
     }
   }
+
   migrateToCozyAuth = async () => {
     const store = await this.getStore()
     const oauthOptions = getClientSettings(store.getState())
@@ -242,9 +243,9 @@ class InitAppMobile {
         token
       })
     }
-
     return
   }
+
   startApplication = async () => {
     if (this.stardedApp) return
 

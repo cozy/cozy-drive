@@ -2,7 +2,10 @@ import InitAppMobile from './InitAppMobile'
 import { render } from 'react-dom'
 import localforage from 'localforage'
 import { hashHistory } from 'react-router'
+
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
+
+import logger from 'lib/logger'
 
 jest.mock('drive/mobile/lib/cozy-helper', () => {
   return {
@@ -27,6 +30,12 @@ jest.mock('react-dom', () => {
 jest.mock('localforage')
 jest.mock('react-router', () => ({ hashHistory: { push: jest.fn() } }))
 jest.mock('cozy-ui/transpiled/react/Alerter')
+jest.mock('drive/lib/reporter', () => ({
+  logException: jest.fn(),
+  configureReporter: jest.fn()
+}))
+logger.error = jest.fn()
+
 describe('App initialize', () => {
   beforeAll(() => {
     global.__DEVELOPMENT__ = false
@@ -100,6 +109,7 @@ describe('App initialize', () => {
       )
       expect(hashHistory.push).toHaveBeenCalledWith('/uploadfrommobile')
     })
+
     it('should call an Alerter if something goes wrong', async () => {
       const app = new InitAppMobile()
       const intent = { items: [{ file: '1' }, { file: '2' }] }
@@ -107,6 +117,7 @@ describe('App initialize', () => {
       await app.openWithHandler(intent)
       expect(Alerter.error).toHaveBeenCalled()
     })
+
     it('should call an Alerter if we cant remove Item first time', async () => {
       const app = new InitAppMobile()
       const intent = { items: [{ file: '1' }, { file: '2' }] }

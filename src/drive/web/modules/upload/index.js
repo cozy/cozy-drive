@@ -323,23 +323,33 @@ export const uploadFilesFromNative = (
     type: ADD_TO_UPLOAD_QUEUE,
     files: files
   })
-  //!TODO Promise.All
-  for (let i = 0; i < files.length; i++) {
-    await doUpload(
-      files[i].file.fileUrl,
-      null,
-      files[i].file.name,
-      folderId,
-      'rename',
-      files[i].file.type
-    )
-    dispatch(removeFileToUploadQueue(files[i].file))
+
+  //!TODO Promise.All to use parallelization
+  for (const file of files) {
+    try {
+      await doUpload(
+        file.file.fileUrl,
+        null,
+        file.file.name,
+        folderId,
+        'rename',
+        file.file.type
+      )
+      dispatch(removeFileToUploadQueue(file.file))
+    } catch (error) {
+      logger.error(
+        `Uploading files from native failed with file ${file.file}: ${error}`
+      )
+    }
   }
+
   if (uploadFilesSuccessCallback) uploadFilesSuccessCallback()
 }
+
 export const removeFileToUploadQueue = file => async dispatch => {
   dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file, isUpdate: true })
 }
+
 export const addToUploadQueue = (
   files,
   dirID,
