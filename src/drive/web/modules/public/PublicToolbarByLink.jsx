@@ -13,7 +13,6 @@ import DotsIcon from 'cozy-ui/transpiled/react/Icons/Dots'
 
 import getHomeLinkHref from 'components/Button/getHomeLinkHref'
 import CozyHomeLinkIcon from 'components/Button/CozyHomeLinkIcon'
-import { SharingBannerByLink } from 'components/sharing/PublicBanner'
 import SelectableItem from 'drive/web/modules/drive/Toolbar/selectable/SelectableItem'
 import AddFolderItem from 'drive/web/modules/drive/Toolbar/components/AddFolderItem'
 import UploadItem from 'drive/web/modules/drive/Toolbar/components/UploadItem'
@@ -105,6 +104,7 @@ const MoreMenu = ({
     </>
   )
 }
+
 const PublicToolbarByLink = ({
   files,
   hasWriteAccess,
@@ -117,38 +117,32 @@ const PublicToolbarByLink = ({
 
   const shouldDisplayMoreMenu =
     isMobile || (!isFile && files.length > 0) || hasWriteAccess
-  const [isOpened, setIsOpened] = useState(true)
-  const onClose = useCallback(() => setIsOpened(false), [setIsOpened])
 
   return (
-    <>
-      {isOpened && <SharingBannerByLink onClose={onClose} />}
-
-      <BarRight>
-        <BarContextProvider client={client} t={t} store={client.store}>
-          {!isMobile && (
-            <>
-              <div className="u-m-auto">
-                <DownloadFilesButton files={files} />
-              </div>
-              <div className="u-m-auto">
-                <CreateCozyButton from="sharing-drive" />
-              </div>
-            </>
-          )}
-          {shouldDisplayMoreMenu && (
+    <BarRight>
+      <BarContextProvider client={client} t={t} store={client.store}>
+        {!isMobile && (
+          <>
             <div className="u-m-auto">
-              <MoreMenu
-                hasWriteAccess={hasWriteAccess}
-                refreshFolderContent={refreshFolderContent}
-                isMobile={isMobile}
-                files={files}
-              />
+              <DownloadFilesButton files={files} />
             </div>
-          )}
-        </BarContextProvider>
-      </BarRight>
-    </>
+            <div className="u-m-auto">
+              <CreateCozyButton from="sharing-drive" />
+            </div>
+          </>
+        )}
+        {shouldDisplayMoreMenu && (
+          <div className="u-m-auto">
+            <MoreMenu
+              hasWriteAccess={hasWriteAccess}
+              refreshFolderContent={refreshFolderContent}
+              isMobile={isMobile}
+              files={files}
+            />
+          </div>
+        )}
+      </BarContextProvider>
+    </BarRight>
   )
 }
 

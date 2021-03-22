@@ -20,17 +20,19 @@ import FolderViewHeader from '../Folder/FolderViewHeader'
 import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
 import PublicToolbar from 'drive/web/modules/public/PublicToolbar'
+import SharingBanner from 'drive/web/modules/public/SharingBanner'
 import PublicViewer from 'drive/web/modules/viewer/PublicViewer'
 import {
   getCurrentFolderId,
   getDisplayedFolder,
   getParentFolder
 } from 'drive/web/modules/selectors'
-import usePublicFilesQuery from './usePublicFilesQuery'
-import usePublicWritePermissions from './usePublicWritePermissions'
 import { hasMetadataAttribute } from 'drive/web/modules/drive/files'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
+
+import usePublicFilesQuery from './usePublicFilesQuery'
+import usePublicWritePermissions from './usePublicWritePermissions'
 
 const getBreadcrumbPath = (t, displayedFolder, parentFolder) =>
   uniqBy(
@@ -160,6 +162,7 @@ const PublicFolderView = ({
     displayedFolder => getBreadcrumbPath(t, displayedFolder, parentFolder),
     [t, parentFolder]
   )
+
   return (
     <>
       <Main isPublic={true}>
@@ -170,6 +173,7 @@ const PublicFolderView = ({
           hasWriteAccess={hasWritePermissions}
           refreshFolderContent={refreshFolderContent}
         />
+        <SharingBanner />
         <div className="u-pt-2">
           <FolderViewHeader>
             {currentFolderId && (

@@ -9,10 +9,8 @@ import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 
-import SelectableItem from 'drive/web/modules/drive/Toolbar/selectable/SelectableItem'
-
 import { MoreButton } from 'components/Button'
-import { SharingBannerCozyToCozy } from 'components/sharing/PublicBanner'
+import SelectableItem from 'drive/web/modules/drive/Toolbar/selectable/SelectableItem'
 import { downloadFiles } from 'drive/web/modules/actions/utils'
 import { DownloadFilesButton } from './DownloadButton'
 
@@ -77,44 +75,30 @@ const MoreMenu = ({
 const PublicToolbarCozyToCozy = ({
   discoveryLink,
   files,
-  isSharingShortcutCreated,
-  sharing
+  isSharingShortcutCreated
 }) => {
   const { t } = useI18n()
   const client = useClient()
   const { isMobile } = useBreakpoints()
 
-  const [isOpened, setIsOpened] = useState(true)
-  const onClose = useCallback(() => setIsOpened(false), [setIsOpened])
-
   return (
-    <>
-      {isOpened && (
-        <SharingBannerCozyToCozy
-          isSharingShortcutCreated={isSharingShortcutCreated}
-          sharing={sharing}
-          discoveryLink={discoveryLink}
-          onClose={onClose}
-        />
-      )}
-      <BarRight>
-        <BarContextProvider client={client} t={t} store={client.store}>
-          {!isMobile && (
-            <div className="u-m-auto">
-              <DownloadFilesButton files={files} />
-            </div>
-          )}
+    <BarRight>
+      <BarContextProvider client={client} t={t} store={client.store}>
+        {!isMobile && (
           <div className="u-m-auto">
-            <MoreMenu
-              files={files}
-              discoveryLink={discoveryLink}
-              isSharingShortcutCreated={isSharingShortcutCreated}
-              isMobile={isMobile}
-            />
+            <DownloadFilesButton files={files} />
           </div>
-        </BarContextProvider>
-      </BarRight>
-    </>
+        )}
+        <div className="u-m-auto">
+          <MoreMenu
+            files={files}
+            discoveryLink={discoveryLink}
+            isSharingShortcutCreated={isSharingShortcutCreated}
+            isMobile={isMobile}
+          />
+        </div>
+      </BarContextProvider>
+    </BarRight>
   )
 }
 
