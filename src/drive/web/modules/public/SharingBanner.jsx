@@ -1,12 +1,12 @@
 import React, { useState, useCallback } from 'react'
+import PropTypes from 'prop-types'
 
 import {
   SharingBannerByLink,
   SharingBannerCozyToCozy
 } from 'components/sharing/PublicBanner'
-import { useSharingInfos } from 'drive/web/modules/public/useSharingInfos'
 
-const SharingBanner = () => {
+const SharingBanner = ({ sharingInfos }) => {
   const [isOpened, setIsOpened] = useState(true)
   const onClose = useCallback(() => setIsOpened(false), [setIsOpened])
 
@@ -15,7 +15,7 @@ const SharingBanner = () => {
     discoveryLink,
     sharing,
     isSharingShortcutCreated
-  } = useSharingInfos()
+  } = sharingInfos
 
   return (
     !loading &&
@@ -31,6 +31,10 @@ const SharingBanner = () => {
       />
     ))
   )
+}
+
+SharingBanner.propTypes = {
+  sharingInfos: PropTypes.object
 }
 
 export default SharingBanner

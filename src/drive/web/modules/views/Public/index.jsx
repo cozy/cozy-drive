@@ -21,6 +21,7 @@ import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
 import PublicToolbar from 'drive/web/modules/public/PublicToolbar'
 import SharingBanner from 'drive/web/modules/public/SharingBanner'
+import { useSharingInfos } from 'drive/web/modules/public/useSharingInfos'
 import PublicViewer from 'drive/web/modules/viewer/PublicViewer'
 import {
   getCurrentFolderId,
@@ -66,6 +67,8 @@ const PublicFolderView = ({
 }) => {
   const client = useClient()
   const { isMobile } = useBreakpoints()
+
+  const sharingInfos = useSharingInfos()
 
   const [viewerOpened, setViewerOpened] = useState(false)
   const [currentViewerIndex, setCurrentViewerIndex] = useState(null)
@@ -168,7 +171,7 @@ const PublicFolderView = ({
       <Main isPublic={true}>
         <ModalStack />
         <ModalManager />
-        <SharingBanner />
+        <SharingBanner sharingInfos={sharingInfos} />
         <div className="u-pt-2">
           <FolderViewHeader>
             {currentFolderId && (
@@ -182,6 +185,7 @@ const PublicFolderView = ({
                   files={files}
                   hasWriteAccess={hasWritePermissions}
                   refreshFolderContent={refreshFolderContent}
+                  sharingInfos={sharingInfos}
                 />
               </>
             )}
