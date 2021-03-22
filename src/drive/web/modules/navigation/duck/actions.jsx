@@ -4,11 +4,14 @@ import { isDirectory } from 'drive/web/modules/drive/files'
 import { addToUploadQueue } from 'drive/web/modules/upload'
 import { showModal } from 'react-cozy-helpers'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
+
+import logger from 'lib/logger'
 import QuotaAlert from 'drive/web/modules/upload/QuotaAlert'
 import {
   getCurrentFolderId,
   getFolderContent
 } from 'drive/web/modules/selectors'
+import { logException } from 'drive/lib/reporter'
 
 export const SORT_FOLDER = 'SORT_FOLDER'
 
@@ -70,11 +73,14 @@ const uploadQueueProcessed = (
   const createdCount = created.length
   const updatedCount = updated.length
   if (quotas.length > 0) {
+    logger.warn(`Upload module triggers a quota alert: ${quotas}`)
     // quota errors have their own modal instead of a notification
     dispatch(showModal(<QuotaAlert />))
   } else if (networkErrors.length > 0) {
+    logger.warn(`Upload module triggers a network error: ${networkErrors}`)
     Alerter.info('upload.alert.network')
   } else if (errors.length > 0) {
+    logException(`Upload module triggers an error: ${errors}`)
     Alerter.info('upload.alert.errors')
   } else if (updatedCount > 0 && createdCount > 0 && conflictCount > 0) {
     Alerter.success('upload.alert.success_updated_conflicts', {

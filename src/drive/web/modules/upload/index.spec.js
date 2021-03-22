@@ -1,6 +1,8 @@
 import { CozyFile } from 'cozy-doctypes'
+
 import flag from 'cozy-flags'
 import { doUpload } from 'cozy-scanner/dist/ScannerUpload'
+import logger from 'lib/logger'
 
 import {
   processNextFile,
@@ -14,6 +16,10 @@ import {
 
 jest.mock('cozy-doctypes')
 jest.mock('cozy-flags')
+jest.mock('drive/lib/reporter', () => ({
+  logException: jest.fn()
+}))
+logger.warn = jest.fn()
 
 jest.mock('cozy-scanner/dist/ScannerUpload', () => ({
   ...require.requireActual('cozy-scanner/dist/ScannerUpload'),
