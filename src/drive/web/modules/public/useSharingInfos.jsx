@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react'
 
-import { useClient, Q, models } from 'cozy-client'
+import { useClient, models } from 'cozy-client'
+import { getQueryParameter } from 'react-cozy-helpers'
 
 import logger from 'lib/logger'
-import { getQueryParameter } from 'react-cozy-helpers'
+import { buildSharingsByIdQuery } from 'drive/web/modules/queries'
 
 const getSharingId = permission => {
   const sourceId = permission.data.attributes.source_id
   const sharingId = sourceId.split('/')[1]
   return sharingId
 }
+
 export const useSharingInfos = () => {
   const client = useClient()
 
@@ -28,6 +30,7 @@ export const useSharingInfos = () => {
           const response = await client
             .collection('io.cozy.permissions')
             .fetchOwnPermissions()
+
           const isSharingShortcutCreated = models.permission.isShortcutCreatedOnTheRecipientCozy(
             response
           )
@@ -37,9 +40,11 @@ export const useSharingInfos = () => {
           const link = client
             .collection('io.cozy.sharings')
             .getDiscoveryLink(sharingId, sharecode)
+          const sharingsByIdQuery = buildSharingsByIdQuery(sharingId)
           const { data: sharing } = await client.query(
-            Q('io.cozy.sharings').getById(sharingId)
+            sharingsByIdQuery.definition
           )
+
           setDiscoveryLink(link)
           setIsSharingSharingcutCreated(isSharingShortcutCreated)
           setSharing(sharing)
@@ -49,6 +54,7 @@ export const useSharingInfos = () => {
           setLoading(false)
         }
       }
+
       if (window.location.pathname === '/preview') {
         loadSharingDiscoveryLink()
       } else {
@@ -57,6 +63,7 @@ export const useSharingInfos = () => {
     },
     [client]
   )
+
   return {
     sharing,
     loading,

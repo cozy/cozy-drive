@@ -283,6 +283,14 @@ export const buildFileWithSpecificMetadataAttributeQuery = ({
   }
 })
 
+export const buildSharingsByIdQuery = sharingId => ({
+  definition: Q('io.cozy.sharings').getById(sharingId),
+  options: {
+    as: `io.cozy.sharings/${sharingId}`,
+    fetchPolicy: defaultFetchPolicy
+  }
+})
+
 export {
   buildDriveQuery,
   buildRecentQuery,
