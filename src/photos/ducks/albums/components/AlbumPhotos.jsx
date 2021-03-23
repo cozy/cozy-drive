@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 
+import { withClient } from 'cozy-client'
+
 import { showModal } from 'react-cozy-helpers'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
@@ -25,9 +27,6 @@ class AlbumPhotos extends Component {
   state = {
     editing: false,
     showAddAlbumModal: false
-  }
-  static contextTypes = {
-    client: PropTypes.object.isRequired
   }
   showAddAlbumModal = () => {
     this.setState(state => ({ ...state, showAddAlbumModal: true }))
@@ -61,7 +60,7 @@ class AlbumPhotos extends Component {
   //!TODO Hack. We should not use 99999 as limit.
   downloadAlbum = async () => {
     const { album } = this.props
-    const allPhotos = await this.context.client
+    const allPhotos = await this.props.client
       .getStackClient()
       .collection('io.cozy.files')
       .findReferencedBy(
@@ -71,13 +70,13 @@ class AlbumPhotos extends Component {
         },
         { limit: 99999 }
       )
-    this.context.client
+    this.props.client
       .collection('io.cozy.files')
       .downloadArchive(allPhotos.data.map(({ _id }) => _id), album.name)
   }
 
   downloadPhotos = photos => {
-    this.context.client
+    this.props.client
       .collection('io.cozy.files')
       .downloadArchive(photos.map(({ _id }) => _id), 'selected')
   }
@@ -228,5 +227,6 @@ export default flow(
     mapDispatchToProps
   ),
   withRouter,
+  withClient,
   translate()
 )(AlbumPhotos)

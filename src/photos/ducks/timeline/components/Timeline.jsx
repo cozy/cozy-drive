@@ -20,6 +20,7 @@ import {
   REF_PHOTOS,
   REF_UPLOAD
 } from 'folder-references'
+import { withClient } from 'cozy-client'
 
 const getUploadDir = async (client, t) => {
   const referencedFolders = await getReferencedFolders(client, REF_UPLOAD)
@@ -47,8 +48,6 @@ class Timeline extends Component {
     showAddAlbumModal: false
   }
   static contextTypes = {
-    t: PropTypes.func.isRequired,
-    client: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired
   }
 
@@ -61,7 +60,7 @@ class Timeline extends Component {
 
   uploadPhotos = async photos => {
     const { uploadPhoto } = this.props
-    const { client, t } = this.context
+    const { client, t } = this.props
     const uploadDirId = await getUploadDir(client, t)
 
     this.dispatch(
@@ -70,7 +69,7 @@ class Timeline extends Component {
   }
 
   downloadPhotos = photos => {
-    this.context.client
+    this.props.client
       .collection('io.cozy.files')
       .downloadArchive(photos.map(({ _id }) => _id), 'selected')
   }
@@ -153,4 +152,4 @@ class Timeline extends Component {
   }
 }
 
-export default translate()(Timeline)
+export default translate()(withClient(Timeline))
