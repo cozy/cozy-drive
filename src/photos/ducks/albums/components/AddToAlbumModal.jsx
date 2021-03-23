@@ -2,8 +2,9 @@ import styles from '../../../styles/addToAlbum.styl'
 
 import React, { Component } from 'react'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import Modal, { ModalSection } from 'cozy-ui/transpiled/react/Modal'
 import classNames from 'classnames'
+import { Dialog } from 'cozy-ui/transpiled/react/CozyDialogs'
+import Divider from 'cozy-ui/transpiled/react/MuiCozyTheme/Divider'
 
 import CreateAlbumForm from './CreateAlbumForm'
 import SelectAlbumsForm from './SelectAlbumsForm'
@@ -26,33 +27,40 @@ class AddToAlbumModal extends Component {
       fetchStatus === 'pending' || fetchStatus === 'loading'
 
     return (
-      <Modal title={t('Albums.add_photos.title')} secondaryAction={onDismiss}>
-        <ModalSection className={styles['coz-modal-section']}>
-          <div className={classNames(styles['coz-create-album'])}>
-            <CreateAlbumForm
-              onSubmitNewAlbum={name =>
-                createAlbum(name, photos)
-                  .then(onDismiss)
-                  .then(onSuccess)
-              }
-            />
-          </div>
-          {isFetchingAlbums ? (
-            <Loading loadingType="albums_fetching" />
-          ) : data && data.length > 0 ? (
-            <div className={classNames(styles['coz-select-album'])}>
-              <SelectAlbumsForm
-                albums={{ data, fetchStatus }}
-                onSubmitSelectedAlbum={album =>
-                  addPhotos(album, photos)
+      <Dialog
+        open={true}
+        onClose={onDismiss}
+        title={t('Albums.add_photos.title')}
+        content={
+          <div>
+            <div>
+              <CreateAlbumForm
+                onSubmitNewAlbum={name =>
+                  createAlbum(name, photos)
                     .then(onDismiss)
                     .then(onSuccess)
                 }
               />
+              <Divider className="u-ml-0 u-maw-100 u-mt-1" />
+              {isFetchingAlbums && <Loading loadingType="albums_fetching" />}
+              {!isFetchingAlbums &&
+                data &&
+                data.length > 0 && (
+                  <div className={classNames(styles['coz-select-album'])}>
+                    <SelectAlbumsForm
+                      albums={{ data, fetchStatus }}
+                      onSubmitSelectedAlbum={album =>
+                        addPhotos(album, photos)
+                          .then(onDismiss)
+                          .then(onSuccess)
+                      }
+                    />
+                  </div>
+                )}
             </div>
-          ) : null}
-        </ModalSection>
-      </Modal>
+          </div>
+        }
+      />
     )
   }
 }
