@@ -82,8 +82,7 @@ class AlbumPhotos extends Component {
   }
   closeModal = () => {
     this.setState({
-      displayModal: false,
-      component: null
+      displayModal: false
     })
   }
 
@@ -110,33 +109,33 @@ class AlbumPhotos extends Component {
       )
     })
   }
-
-  leaveAlbum = () => {
+  renderQuitConfirm = () => {
     const { t, router, album, deleteAlbum, leaveAlbum } = this.props
-
+    return (
+      <QuitConfirm
+        t={t}
+        albumName={album.name}
+        onClose={this.closeModal}
+        confirm={() =>
+          leaveAlbum(album)
+            .then(() => {
+              this.closeModal()
+              deleteAlbum(album)
+            })
+            .then(() => {
+              router.replace('albums')
+              Alerter.success('Albums.quit_album.success', {
+                name: album.name
+              })
+            })
+            .catch(() => Alerter.error('Albums.quit_album.error.generic'))
+        }
+      />
+    )
+  }
+  leaveAlbum = () => {
     this.setState({
-      displayModal: true,
-      component: (
-        <QuitConfirm
-          t={t}
-          albumName={album.name}
-          onClose={this.closeModal}
-          confirm={() =>
-            leaveAlbum(album)
-              .then(() => {
-                this.closeModal()
-                deleteAlbum(album)
-              })
-              .then(() => {
-                router.replace('albums')
-                Alerter.success('Albums.quit_album.success', {
-                  name: album.name
-                })
-              })
-              .catch(() => Alerter.error('Albums.quit_album.error.generic'))
-          }
-        />
-      )
+      displayModal: true
     })
   }
 
@@ -194,7 +193,7 @@ class AlbumPhotos extends Component {
                   />
                 </Topbar>
               )}
-            {this.state.displayModal && this.state.component}
+            {this.state.displayModal && this.renderQuitConfirm()}
             {this.state.showAddAlbumModal && (
               <AddToAlbumModal
                 onDismiss={this.hideAddAlbumModal}
