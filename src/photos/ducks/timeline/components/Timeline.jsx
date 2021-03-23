@@ -76,27 +76,32 @@ class Timeline extends Component {
   closeModal = () => {
     this.setState({
       displayModal: false,
-      component: null
+      selected: null,
+      clearSelection: null
     })
   }
-
+  showDeleteConfirm = () => {
+    const { selected, clearSelection } = this.state
+    return (
+      <DeleteConfirm
+        t={this.props.t}
+        count={selected.length}
+        related={belongsToAlbums(selected)}
+        onClose={this.closeModal}
+        confirm={async () => {
+          await Promise.all(selected.map(p => this.props.deletePhoto(p))).then(
+            clearSelection
+          )
+          this.closeModal()
+        }}
+      />
+    )
+  }
   deletePhotos = (selected, clearSelection) => {
     this.setState({
       displayModal: true,
-      component: (
-        <DeleteConfirm
-          t={this.props.t}
-          count={selected.length}
-          related={belongsToAlbums(selected)}
-          onClose={this.closeModal}
-          confirm={async () => {
-            await Promise.all(
-              selected.map(p => this.props.deletePhoto(p))
-            ).then(clearSelection)
-            this.closeModal()
-          }}
-        />
-      )
+      selected,
+      clearSelection
     })
   }
 
@@ -128,7 +133,7 @@ class Timeline extends Component {
               />
             </Topbar>
             <Content>
-              {this.state.displayModal && this.state.component}
+              {this.state.displayModal && this.showDeleteConfirm()}
               {this.state.showAddAlbumModal && (
                 <AddToAlbumModal
                   onDismiss={this.hideAddAlbumModal}
