@@ -33,7 +33,6 @@ describe('RealTimeQueries', () => {
           document: { id: 'mock-created', type: 'file' },
           mutationType: 'CREATE_DOCUMENT'
         },
-        mutationId: 1,
         response: {
           data: {
             _type: 'io.cozy.files',
@@ -47,41 +46,43 @@ describe('RealTimeQueries', () => {
     )
 
     realtimeCallbacks['updated']({ id: 'mock-updated', type: 'file' })
-    expect(client.dispatch).toHaveBeenCalledWith({
-      definition: {
-        document: { id: 'mock-updated', type: 'file' },
-        mutationType: 'UPDATE_DOCUMENT'
-      },
-      mutationId: 2,
-      response: {
-        data: {
-          _type: 'io.cozy.files',
-          type: 'file',
-          id: 'mock-updated',
-          _id: 'mock-updated'
-        }
-      },
-      type: 'RECEIVE_MUTATION_RESULT'
-    })
+    expect(client.dispatch).toHaveBeenCalledWith(
+      expect.objectContaining({
+        definition: {
+          document: { id: 'mock-updated', type: 'file' },
+          mutationType: 'UPDATE_DOCUMENT'
+        },
+        response: {
+          data: {
+            _type: 'io.cozy.files',
+            type: 'file',
+            id: 'mock-updated',
+            _id: 'mock-updated'
+          }
+        },
+        type: 'RECEIVE_MUTATION_RESULT'
+      })
+    )
 
     realtimeCallbacks['deleted']({ id: 'mock-deleted', type: 'file' })
-    expect(client.dispatch).toHaveBeenCalledWith({
-      definition: {
-        document: { id: 'mock-deleted', type: 'file', _deleted: true },
-        mutationType: 'DELETE_DOCUMENT'
-      },
-      mutationId: 3,
-      response: {
-        data: {
-          _deleted: true,
-          _type: 'io.cozy.files',
-          type: 'file',
-          id: 'mock-deleted',
-          _id: 'mock-deleted'
-        }
-      },
-      type: 'RECEIVE_MUTATION_RESULT'
-    })
+    expect(client.dispatch).toHaveBeenCalledWith(
+      expect.objectContaining({
+        definition: {
+          document: { id: 'mock-deleted', type: 'file', _deleted: true },
+          mutationType: 'DELETE_DOCUMENT'
+        },
+        response: {
+          data: {
+            _deleted: true,
+            _type: 'io.cozy.files',
+            type: 'file',
+            id: 'mock-deleted',
+            _id: 'mock-deleted'
+          }
+        },
+        type: 'RECEIVE_MUTATION_RESULT'
+      })
+    )
 
     unmount()
     expect(client.plugins.realtime.unsubscribe).toHaveBeenCalledTimes(3)
