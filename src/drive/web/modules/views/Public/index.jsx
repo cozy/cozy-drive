@@ -20,17 +20,20 @@ import FolderViewHeader from '../Folder/FolderViewHeader'
 import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
 import PublicToolbar from 'drive/web/modules/public/PublicToolbar'
+import SharingBanner from 'drive/web/modules/public/SharingBanner'
+import { useSharingInfos } from 'drive/web/modules/public/useSharingInfos'
 import PublicViewer from 'drive/web/modules/viewer/PublicViewer'
 import {
   getCurrentFolderId,
   getDisplayedFolder,
   getParentFolder
 } from 'drive/web/modules/selectors'
-import usePublicFilesQuery from './usePublicFilesQuery'
-import usePublicWritePermissions from './usePublicWritePermissions'
 import { hasMetadataAttribute } from 'drive/web/modules/drive/files'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
+
+import usePublicFilesQuery from './usePublicFilesQuery'
+import usePublicWritePermissions from './usePublicWritePermissions'
 
 const getBreadcrumbPath = (t, displayedFolder, parentFolder) =>
   uniqBy(
@@ -64,6 +67,8 @@ const PublicFolderView = ({
 }) => {
   const client = useClient()
   const { isMobile } = useBreakpoints()
+
+  const sharingInfos = useSharingInfos()
 
   const [viewerOpened, setViewerOpened] = useState(false)
   const [currentViewerIndex, setCurrentViewerIndex] = useState(null)
@@ -160,24 +165,29 @@ const PublicFolderView = ({
     displayedFolder => getBreadcrumbPath(t, displayedFolder, parentFolder),
     [t, parentFolder]
   )
+
   return (
     <>
       <Main isPublic={true}>
         <ModalStack />
         <ModalManager />
-        <PublicToolbar
-          files={files}
-          hasWriteAccess={hasWritePermissions}
-          refreshFolderContent={refreshFolderContent}
-        />
+        <SharingBanner sharingInfos={sharingInfos} />
         <div className="u-pt-2">
           <FolderViewHeader>
             {currentFolderId && (
-              <FolderViewBreadcrumb
-                getBreadcrumbPath={geTranslatedBreadcrumbPath}
-                currentFolderId={currentFolderId}
-                navigateToFolder={navigateToFolder}
-              />
+              <>
+                <FolderViewBreadcrumb
+                  getBreadcrumbPath={geTranslatedBreadcrumbPath}
+                  currentFolderId={currentFolderId}
+                  navigateToFolder={navigateToFolder}
+                />
+                <PublicToolbar
+                  files={files}
+                  hasWriteAccess={hasWritePermissions}
+                  refreshFolderContent={refreshFolderContent}
+                  sharingInfos={sharingInfos}
+                />
+              </>
             )}
           </FolderViewHeader>
           <Content>

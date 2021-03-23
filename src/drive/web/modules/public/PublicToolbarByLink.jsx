@@ -1,40 +1,26 @@
-/* global cozy */
-const { BarRight } = cozy.bar
-
 import React, { useCallback, useState } from 'react'
 
 import { useClient } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
-import { Button, ButtonLink, Icon } from 'cozy-ui/transpiled/react'
+import { Button, Icon } from 'cozy-ui/transpiled/react'
 import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import DotsIcon from 'cozy-ui/transpiled/react/Icons/Dots'
 
 import getHomeLinkHref from 'components/Button/getHomeLinkHref'
-import CozyHomeLinkIcon from 'components/Button/CozyHomeLinkIcon'
-import { SharingBannerByLink } from 'components/sharing/PublicBanner'
 import SelectableItem from 'drive/web/modules/drive/Toolbar/selectable/SelectableItem'
 import AddFolderItem from 'drive/web/modules/drive/Toolbar/components/AddFolderItem'
 import UploadItem from 'drive/web/modules/drive/Toolbar/components/UploadItem'
 import CreateShortcut from 'drive/web/modules/drive/Toolbar/components/CreateShortcut'
+import UploadButtonItem from 'drive/web/modules/drive/Toolbar/components/UploadButtonItem'
 import { downloadFiles } from 'drive/web/modules/actions/utils'
+import CozyBarRightMobile from 'drive/web/modules/public/CozyBarRightMobile'
 
 import { DownloadFilesButton } from './DownloadButton'
 
 const isFilesIsFile = files => files.length === 1 && files[0].type === 'file'
 
-const CreateCozyButton = ({ from, size }) => {
-  const { t } = useI18n()
-  return (
-    <ButtonLink
-      label={t('Share.create-cozy')}
-      icon={CozyHomeLinkIcon}
-      href={getHomeLinkHref(from)}
-      size={size}
-    />
-  )
-}
 const MoreButton = ({ disabled, onClick }) => {
   const { t } = useI18n()
   return (
@@ -105,6 +91,7 @@ const MoreMenu = ({
     </>
   )
 }
+
 const PublicToolbarByLink = ({
   files,
   hasWriteAccess,
@@ -117,38 +104,34 @@ const PublicToolbarByLink = ({
 
   const shouldDisplayMoreMenu =
     isMobile || (!isFile && files.length > 0) || hasWriteAccess
-  const [isOpened, setIsOpened] = useState(true)
-  const onClose = useCallback(() => setIsOpened(false), [setIsOpened])
 
   return (
-    <>
-      {isOpened && <SharingBannerByLink onClose={onClose} />}
-
-      <BarRight>
-        <BarContextProvider client={client} t={t} store={client.store}>
-          {!isMobile && (
-            <>
-              <div className="u-m-auto">
-                <DownloadFilesButton files={files} />
-              </div>
-              <div className="u-m-auto">
-                <CreateCozyButton from="sharing-drive" />
-              </div>
-            </>
-          )}
-          {shouldDisplayMoreMenu && (
+    <CozyBarRightMobile>
+      <BarContextProvider client={client} t={t} store={client.store}>
+        {!isMobile && (
+          <>
             <div className="u-m-auto">
-              <MoreMenu
-                hasWriteAccess={hasWriteAccess}
-                refreshFolderContent={refreshFolderContent}
-                isMobile={isMobile}
-                files={files}
-              />
+              {hasWriteAccess && (
+                <UploadButtonItem onUploaded={refreshFolderContent} />
+              )}
             </div>
-          )}
-        </BarContextProvider>
-      </BarRight>
-    </>
+            <div className="u-m-auto">
+              <DownloadFilesButton files={files} />
+            </div>
+          </>
+        )}
+        {shouldDisplayMoreMenu && (
+          <div className="u-m-auto">
+            <MoreMenu
+              hasWriteAccess={hasWriteAccess}
+              refreshFolderContent={refreshFolderContent}
+              isMobile={isMobile}
+              files={files}
+            />
+          </div>
+        )}
+      </BarContextProvider>
+    </CozyBarRightMobile>
   )
 }
 

@@ -4,9 +4,12 @@ import snarkdown from 'snarkdown'
 
 import { useClient } from 'cozy-client'
 import Banner from 'cozy-ui/transpiled/react/Banner'
-import Button from 'cozy-ui/transpiled/react/Button'
+import Button, { ButtonLink } from 'cozy-ui/transpiled/react/Button'
 import palette from 'cozy-ui/transpiled/react/palette'
 import { useI18n } from 'cozy-ui/transpiled/react'
+
+import CozyHomeLinkIcon from 'components/Button/CozyHomeLinkIcon'
+import getHomeLinkHref from 'components/Button/getHomeLinkHref'
 
 import styles from './publicBanner.styl'
 
@@ -127,6 +130,7 @@ const SharingBannerByLinkText = () => {
     </span>
   )
 }
+
 const SharingBannerByLink = ({ onClose }) => {
   const { t } = useI18n()
   return (
@@ -134,6 +138,14 @@ const SharingBannerByLink = ({ onClose }) => {
       bgcolor={palette['paleGrey']}
       text={<SharingBannerByLinkText />}
       buttonOne={
+        <ButtonLink
+          theme="text"
+          label={t('Share.create-cozy')}
+          icon={CozyHomeLinkIcon}
+          href={getHomeLinkHref('sharing-drive')}
+        />
+      }
+      buttonTwo={
         <Button
           theme="text"
           label={t('Share.banner.close')}
