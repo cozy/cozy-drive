@@ -7,7 +7,6 @@ import { Content } from 'cozy-ui/transpiled/react/Layout'
 import Topbar from '../../../components/Topbar'
 import Toolbar from './Toolbar'
 import DeleteConfirm from './DeleteConfirm'
-import confirm from '../../../lib/confirm'
 import PhotoBoard from '../../../components/PhotoBoard'
 
 import { addToUploadQueue } from '../../upload'
@@ -74,18 +73,32 @@ class Timeline extends Component {
       .downloadArchive(photos.map(({ _id }) => _id), 'selected')
   }
 
-  deletePhotos = (selected, clearSelection) =>
-    confirm(
-      <DeleteConfirm
-        t={this.context.t}
-        count={selected.length}
-        related={belongsToAlbums(selected)}
-      />,
-      () =>
-        Promise.all(selected.map(p => this.props.deletePhoto(p))).then(
-          clearSelection
-        )
-    )
+  closeModal = () => {
+    this.setState({
+      displayModal: false,
+      component: null
+    })
+  }
+
+  deletePhotos = (selected, clearSelection) => {
+    this.setState({
+      displayModal: true,
+      component: (
+        <DeleteConfirm
+          t={this.props.t}
+          count={selected.length}
+          related={belongsToAlbums(selected)}
+          onClose={this.closeModal}
+          confirm={async () => {
+            await Promise.all(
+              selected.map(p => this.props.deletePhoto(p))
+            ).then(clearSelection)
+            this.closeModal()
+          }}
+        />
+      )
+    })
+  }
 
   dispatch(action) {
     return this.context.store.dispatch(action)
@@ -115,6 +128,7 @@ class Timeline extends Component {
               />
             </Topbar>
             <Content>
+              {this.state.displayModal && this.state.component}
               {this.state.showAddAlbumModal && (
                 <AddToAlbumModal
                   onDismiss={this.hideAddAlbumModal}

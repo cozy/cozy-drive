@@ -2,9 +2,10 @@ import styles from '../styles/confirms.styl'
 import classNames from 'classnames'
 
 import React from 'react'
-import Modal from 'cozy-ui/transpiled/react/Modal'
+import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
+import Button from 'cozy-ui/transpiled/react/Button'
 
-const QuitConfirm = ({ t, confirm, abort }) => {
+const QuitConfirm = ({ t, confirm, onClose }) => {
   const confirmationTexts = ['forbidden'].map(type => (
     <p
       key={`key_quit_${type}`}
@@ -13,17 +14,26 @@ const QuitConfirm = ({ t, confirm, abort }) => {
       {t(`quitconfirmation.${type}`)}
     </p>
   ))
-
   return (
-    <Modal
+    <ConfirmDialog
+      open={true}
+      onClose={onClose}
       title={t('quitconfirmation.title')}
-      description={confirmationTexts}
-      secondaryType="secondary"
-      secondaryText={t('quitconfirmation.cancel')}
-      secondaryAction={abort}
-      primaryType="danger"
-      primaryText={t('quitconfirmation.quit')}
-      primaryAction={confirm}
+      content={confirmationTexts}
+      actions={
+        <>
+          <Button
+            theme="secondary"
+            onClick={onClose}
+            label={t('quitconfirmation.cancel')}
+          />
+          <Button
+            theme="danger"
+            label={t('quitconfirmation.quit')}
+            onClick={confirm}
+          />
+        </>
+      }
     />
   )
 }

@@ -1,9 +1,11 @@
 import styles from '../../../styles/confirms.styl'
 import classNames from 'classnames'
 import React from 'react'
-import Modal from 'cozy-ui/transpiled/react/Modal'
 
-const DeleteConfirm = ({ t, count, confirm, abort, related }) => {
+import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
+import Button from 'cozy-ui/transpiled/react/Button'
+
+const DeleteConfirm = ({ t, count, confirm, onClose, related }) => {
   let types = ['trash', 'restore', 'shared']
   if (related === true) {
     types.push('related')
@@ -18,15 +20,25 @@ const DeleteConfirm = ({ t, count, confirm, abort, related }) => {
   ))
 
   return (
-    <Modal
+    <ConfirmDialog
+      open={true}
+      onClose={onClose}
       title={t('timeline.DeleteConfirm.title', count)}
-      description={deleteConfirmationTexts}
-      secondaryType="secondary"
-      secondaryText={t('timeline.DeleteConfirm.cancel')}
-      secondaryAction={abort}
-      primaryType="danger"
-      primaryText={t('timeline.DeleteConfirm.delete')}
-      primaryAction={confirm}
+      content={deleteConfirmationTexts}
+      actions={
+        <>
+          <Button
+            theme="secondary"
+            onClick={onClose}
+            label={t('timeline.DeleteConfirm.cancel')}
+          />
+          <Button
+            theme="danger"
+            label={t('timeline.DeleteConfirm.delete')}
+            onClick={confirm}
+          />
+        </>
+      }
     />
   )
 }

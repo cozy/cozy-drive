@@ -2,9 +2,10 @@ import styles from '../styles/confirms.styl'
 import classNames from 'classnames'
 
 import React from 'react'
-import Modal from 'cozy-ui/transpiled/react/Modal'
+import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
+import Button from 'cozy-ui/transpiled/react/Button'
 
-const DestroyConfirm = ({ t, confirm, abort }) => {
+const DestroyConfirm = ({ t, confirm, onClose }) => {
   const confirmationTexts = ['forbidden', 'eye', 'link'].map(type => (
     <p
       className={classNames(styles['fil-confirm-text'], styles[`icon-${type}`])}
@@ -13,18 +14,26 @@ const DestroyConfirm = ({ t, confirm, abort }) => {
       {t(`destroyconfirmation.${type}`)}
     </p>
   ))
-
   return (
-    <Modal
+    <ConfirmDialog
+      open={true}
+      onClose={onClose}
       title={t('destroyconfirmation.title')}
-      description={confirmationTexts}
-      secondaryType="secondary"
-      dismissAction={abort}
-      secondaryText={t('destroyconfirmation.cancel')}
-      secondaryAction={abort}
-      primaryType="danger"
-      primaryText={t('destroyconfirmation.delete')}
-      primaryAction={confirm}
+      content={confirmationTexts}
+      actions={
+        <>
+          <Button
+            theme="secondary"
+            onClick={onClose}
+            label={t('destroyconfirmation.cancel')}
+          />
+          <Button
+            theme="danger"
+            label={t('destroyconfirmation.delete')}
+            onClick={confirm}
+          />
+        </>
+      }
     />
   )
 }
