@@ -4,16 +4,16 @@
 
 ### :wrench: Requirements
 
-- Node v10
-  - on macOS: `brew install node@10 && brew link node@10`
+- Node 12
+  - on macOS: `brew install node@12 && brew link node@12`
 - ImageMagick
   - on macOS: `brew install imagemagick`
-- Cordova v7 CLI
-  - `yarn add cordova@7 -g`
+- Cordova 8.1.2 CLI - [documentation here](https://cordova.apache.org/docs/en/8.x/reference/cordova-cli/index.html)
+  - `yarn add cordova@8.1.2 -g`
 
 #### Android
 
-- Android SDK >= 25.0.0 to deploy on android
+- Android SDK 30.0.3
   - Install Android Studio
   - Go to SDK Manager (Create new project if necessary)
   - Install SDK (edit Android SDK location if necessary - should be `~/Library/Android/sdk`)
@@ -27,8 +27,15 @@
 - Define your JAVA_HOME
   - Add `export JAVA_HOME=$(/usr/libexec/java_home)` in your `.zshrc` or `.bashrc` file
 - Add Android build-tools in your Path
-  - Add `export PATH="$ANDROID_HOME/build-tools:$PATH"` in your `.zshrc` or `.bashrc` file
+  - Add `export PATH="$ANDROID_HOME/build-tools/$(ls $ANDROID_HOME/build-tools | sort -V | tail -n 1):$PATH"` in your `.zshrc` or `.bashrc` file
+  - Adding `export PATH="$ANDROID_HOME/platform-tools:$PATH"` can be useful too to get tools such as `adb`, but not necessary
 
+
+#### Android > 9
+
+To build for android version > 9 you need to add a specific config line in `config.xml`
+
+- Inside `<edit-config file="app/src/main/AndroidManifest.xml" [...]></edit-config>`, add `<application android:usesCleartextTraffic="true" />`
 
 #### iOS
 
@@ -45,12 +52,18 @@ $ yarn build:drive:mobile
 $ yarn prepare:drive:mobile
 ```
 
+If it's not a fresh install, remove old folders first :
+
+```sh
+$ rm -f src/drive/targets/mobile/yarn.lock && rm -rf src/drive/targets/mobile/node_modules && rm -rf src/drive/targets/mobile/build && rm -rf src/drive/targets/mobile/platforms && rm -rf src/drive/targets/mobile/plugins && rm -rf src/drive/targets/mobile/www && rm -rf src/drive/targets/mobile/ul_web_hooks
+```
+
 ### :helicopter: Run
 
 After that, you need to run to build native and js files and deploy them on the simulator :
 
 ```sh
-yarn run:drive:[android || ios]
+$ yarn run:drive:[android || ios]
 ```
 
 You can also do that manually :
@@ -93,13 +106,13 @@ $ yarn watch:drive:mobile
 You need to export your local host IP address
 
 ```sh
-export DEV_HOST=[YOUR_LOCAL_IP_ADDRESS]
+$ export DEV_HOST=[YOUR_LOCAL_IP_ADDRESS]
 ```
 
 Then you have to watch in `hot` mode:
 
 ```sh
-yarn start:drive:mobile
+$ yarn start:drive:mobile
 ```
 
 #### Standalone mode
@@ -123,47 +136,91 @@ On iOS:
 
 ## :lock: Create Release
 
+### Get translations first
+
+Before building the application, you need to get the translations:
+
+```sh
+$ yarn tx
+```
+
 ### Android
 
-Create these folders:
+#### Requirements
 
+You must have `cozy-drive-release-key.jks` and `key.json` in `src/drive/targets/mobile/keys/android`
+
+Assuming your password folder is `~/.password-store` and Drive folder is `~/workspace/cozy-drive`
+
+```sh
+$ mkdir -p ~/workspace/cozy-drive/src/drive/targets/mobile/keys/android/
+$ cd ~/.password-store
+$ pass Mobile/Android/fastlane/cozy-drive-release-key.jks > ~/workspace/cozy-drive/src/drive/targets/mobile/keys/android/cozy-drive-release-key.jks
+$ pass Mobile/Android/fastlane/key.json > ~/workspace/cozy-drive/src/drive/targets/mobile/keys/android/key.json
 ```
-$ mkdir -p src/drive/targets/mobile/keys/android && mkdir -p src/drive/targets/mobile/build/android
+
+and the password associated with `cozy-drive-release-key.jks`
+
+```sh
+$ pass Mobile/Android/fastlane/jks-passphrase
 ```
 
-You must have this files in `src/drive/targets/mobile/keys/android`:
+#### Generate a signed APK
 
-- cozy-drive-release-key.jks
-- key.json
-
-:warning: You must also have the password associated with `cozy-drive-release-key.jks`
-
-To generate a signed APK on `src/drive/targets/mobile/build/android/`
-
-```
+```sh
 $ yarn buildsigned:drive:android
 ```
 
-To publish on Google Play:
+The signed APK will be generated here: `src/drive/targets/mobile/build/android/cozy-drive.apk`
 
-- Manually:
-  - Go to [Google Play Console](https://play.google.com/console) and select `Drive` app
-  - To publish an internal testing version: go to `Release > Testing > Internal testing`
-  - Now you have to `Create a new release`, then `Save`, `Review release` and finally `Start rollout`
+#### Publish a test version on Google Play
 
-- Automatically:
-  - a beta version (on beta track): `yarn publishbeta:drive:android`
-  - a release version: `yarn publish:drive:android`
+- Go to [Google Play Console](https://play.google.com/console) and select `Drive` app
+- To publish an internal testing version: go to `Release > Testing > Internal testing`
+- Now you have to `Create a new release`, upload your APK, then `Save`, `Review release` and finally `Start rollout`
 
+#### Publish a new release
+
+- If the internal testing version is validated, go to [Google Play Console](https://play.google.com/console) then `Release > Testing > Internal testing`. For the release you want to publish, click `Promote release` and select `Production`
+- Check that the version of the chosen APK is the right one
+- Add the `Release notes` in English and French : take example on the previous version on [Google Play](https://play.google.com/store/apps/details?id=io.cozy.drive.mobile) or in the Google Play Console
+- Click `Review release`
 
 ### iOS
 
-Open XCode and sign in to your Apple account. This account should be part of the Cozy team with the proper access rights so you can download the Cozy Cloud signing certificates.
-Once you have the certificates, change the projects signing process to use these certificates and run:
+Be sure you have `run` at least once, then open the project in Xcode:
 
+```sh
+$ yarn run:drive:ios
+$ open "src/drive/targets/mobile/platforms/ios/Cozy Drive.xcodeproj"
 ```
-$ yarn publish:drive:ios
-```
+#### Xcode configuration
+
+- In `General` tab, check the `Version` and `Build version` for the Cozy Drive and ShareExt targets. They must be the same as in the `config.xml`. If not, restart Xcode.
+- Next to the "play button", select `Drive > Build - Any iOS Device`
+- For `Cozy Drive` and `ShareExt` targets, in `Signing & Capabilities > Signing`: (for debug and release)
+  - check `Automatically manage signing`
+  - in `Team` select `Cozy Cloud`
+- For `Cozy Drive` and `ShareExt` targets, in `Signing & Capabilities > App Groups`: (add it if not present)
+  - check `groupe.io.cozy.drive.mobile.shareextension`
+- For `Cozy Drive project`, `Cozy Drive` and `ShareExt` targets, in `Build Settings > Signing`:
+  - in `Code Signing Identity` select `Apple Developpment`
+  - in `Signing Style` and `Provisioning Profile` select `Automatic`
+
+#### Build and Publish a test version on App Store
+
+- In Xcode menu, select `Product` then `Archive`. When the build is finished, select it, click `Distribute App` then `App Store Connect > Upload > Accept receiving symbolicated reports > Automatic signin`
+- Check the ShareExt is present then click `Upload`
+- Go to [App Store Connect](https://appstoreconnect.apple.com/) and `My apps > Cozy Drive > TestFlight` to verify the upload has worked properly
+
+#### Publish a new release
+
+- In the [App Store Connect](https://appstoreconnect.apple.com/), click the "+" button near `App iOS`
+- Add the changelog in English and French : take example on the previous version on [App Store](https://apps.apple.com/us/app/cozy-drive/id1224102389) or in the App Store Connect
+- Add the desired `Build`
+- Click `Submit for verification`
+- After the verification is done by Apple, you will have to publish yourself manually
+
 
 # For further informations
 
