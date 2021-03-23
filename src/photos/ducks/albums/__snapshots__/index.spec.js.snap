@@ -17,7 +17,7 @@ exports[`Album view should show a spinner when no album can be loaded 1`] = `
 `;
 
 exports[`Album view should show an album when loaded 1`] = `
-<withI18n(withRouter(Connect(AlbumPhotos)))
+<withI18n(withClient(withRouter(Connect(AlbumPhotos))))
   album={
     Object {
       "photos": Object {
