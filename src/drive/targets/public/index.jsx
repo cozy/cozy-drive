@@ -121,7 +121,7 @@ const init = async () => {
                 <ModalContextProvider>
                   {isFile ? (
                     <PublicLayout>
-                      <LightFileViewer files={[data]} isFile={true} />
+                      <LightFileViewer files={[data]} />
                     </PublicLayout>
                   ) : (
                     <Router history={hashHistory}>

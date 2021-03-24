@@ -25,7 +25,6 @@ const LightFileViewer = ({ files }) => {
 }
 
 LightFileViewer.propTypes = {
-  files: PropTypes.array.isRequired,
-  isFile: PropTypes.bool.isRequired
+  files: PropTypes.array.isRequired
 }
 export default LightFileViewer
