@@ -17,28 +17,24 @@ const PublicToolbar = ({
     isSharingShortcutCreated
   } = sharingInfos
 
+  if (loading) return null
   return (
-    <>
-      {loading && null}
-      {!loading &&
-        !discoveryLink && (
-          <PublicToolbarByLink
-            files={files}
-            hasWriteAccess={hasWriteAccess}
-            refreshFolderContent={refreshFolderContent}
-          />
-        )}
-
-      {!loading &&
-        discoveryLink && (
-          <PublicToolbarCozyToCozy
-            discoveryLink={discoveryLink}
-            files={files}
-            isSharingShortcutCreated={isSharingShortcutCreated}
-            sharing={sharing}
-          />
-        )}
-    </>
+    <div data-testid="public-toolbar">
+      {!discoveryLink ? (
+        <PublicToolbarByLink
+          files={files}
+          hasWriteAccess={hasWriteAccess}
+          refreshFolderContent={refreshFolderContent}
+        />
+      ) : (
+        <PublicToolbarCozyToCozy
+          discoveryLink={discoveryLink}
+          files={files}
+          isSharingShortcutCreated={isSharingShortcutCreated}
+          sharing={sharing}
+        />
+      )}
+    </div>
   )
 }
 
