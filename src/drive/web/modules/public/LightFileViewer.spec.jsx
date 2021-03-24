@@ -26,9 +26,9 @@ const setup = () => {
 }
 
 describe('LightFileViewer', () => {
-  describe('on Mobile', () => {
+  describe('on Mobile and Tablet', () => {
     beforeAll(() => {
-      useBreakpoints.mockReturnValue({ isMobile: true })
+      useBreakpoints.mockReturnValue({ isDesktop: false })
     })
 
     it('should have the sharing banner and public toolbar but no viewer toolbar', () => {
@@ -43,7 +43,7 @@ describe('LightFileViewer', () => {
 
   describe('on Desktop', () => {
     beforeAll(() => {
-      useBreakpoints.mockReturnValue({ isMobile: false })
+      useBreakpoints.mockReturnValue({ isDesktop: true })
     })
 
     it('should have the sharing banner and viewer toolbar but no public toolbar', () => {

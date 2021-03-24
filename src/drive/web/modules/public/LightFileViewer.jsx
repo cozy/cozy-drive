@@ -12,17 +12,21 @@ import styles from 'drive/web/modules/viewer/barviewer.styl'
 
 const LightFileViewer = ({ files }) => {
   const sharingInfos = useSharingInfos()
-  const { isMobile } = useBreakpoints()
+  const { isDesktop } = useBreakpoints()
 
   return (
     <div className={styles['viewer-wrapper-with-bar']}>
       <SharingBanner sharingInfos={sharingInfos} />
-      {isMobile && <PublicToolbar files={files} sharingInfos={sharingInfos} />}
+      {!isDesktop && (
+        <div className="u-mt-1 u-mr-1">
+          <PublicToolbar files={files} sharingInfos={sharingInfos} />
+        </div>
+      )}
       <div className={'u-pos-relative u-h-100'}>
         <Viewer
           files={files}
           currentIndex={0}
-          toolbarProps={{ showToolbar: !isMobile }}
+          toolbarProps={{ showToolbar: isDesktop }}
         />
       </div>
     </div>
