@@ -17,19 +17,22 @@ const SharingBanner = ({ sharingInfos }) => {
     isSharingShortcutCreated
   } = sharingInfos
 
+  if (loading) return null
   return (
-    !loading &&
-    isOpened &&
-    (!discoveryLink ? (
-      <SharingBannerByLink onClose={onClose} />
-    ) : (
-      <SharingBannerCozyToCozy
-        isSharingShortcutCreated={isSharingShortcutCreated}
-        sharing={sharing}
-        discoveryLink={discoveryLink}
-        onClose={onClose}
-      />
-    ))
+    isOpened && (
+      <div data-testid="sharingBanner">
+        {!discoveryLink ? (
+          <SharingBannerByLink onClose={onClose} />
+        ) : (
+          <SharingBannerCozyToCozy
+            isSharingShortcutCreated={isSharingShortcutCreated}
+            sharing={sharing}
+            discoveryLink={discoveryLink}
+            onClose={onClose}
+          />
+        )}
+      </div>
+    )
   )
 }
 
