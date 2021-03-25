@@ -1,11 +1,12 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 
 import { createMockClient } from 'cozy-client'
 import { isMobileApp } from 'cozy-device-helper'
 
 import AppLike from 'test/components/AppLike'
 
+import * as utils from 'drive/web/modules/actions/utils'
 import FooterContent from './FooterContent'
 
 jest.mock('cozy-device-helper', () => ({
@@ -62,6 +63,10 @@ describe('FooterContent', () => {
 
     expect(getByText('Forward'))
     expect(queryByText('Download')).toBeFalsy()
+
+    const spy = jest.spyOn(utils, 'exportFilesNative')
+    fireEvent.click(getByText('Forward'))
+    expect(spy).toHaveBeenCalled()
   })
 
   it('should show "share" if the file is not shared', () => {
