@@ -18,9 +18,7 @@ import { AddToAlbumModal } from '..'
 
 import PhotoBoard from 'photos/components/PhotoBoard'
 import Topbar from 'photos/components/Topbar'
-
 import DestroyConfirm from 'photos/components/DestroyConfirm'
-import QuitConfirm from 'photos/components/QuitConfirm'
 import Selection from '../../selection'
 class AlbumPhotos extends Component {
   state = {
@@ -80,7 +78,7 @@ class AlbumPhotos extends Component {
       .collection('io.cozy.files')
       .downloadArchive(photos.map(({ _id }) => _id), 'selected')
   }
-  closeModal = () => {
+  closeDestroyConfirmModal = () => {
     this.setState({
       displayModalDestroyConfirm: false
     })
@@ -92,7 +90,7 @@ class AlbumPhotos extends Component {
       <DestroyConfirm
         t={t}
         albumName={album.name}
-        onClose={this.closeModal}
+        onClose={this.closeDestroyConfirmModal}
         confirm={() =>
           deleteAlbum(album)
             .then(() => {
@@ -109,37 +107,6 @@ class AlbumPhotos extends Component {
   deleteAlbum = () => {
     this.setState({
       displayModalDestroyConfirm: true
-    })
-  }
-  renderQuitConfirm = () => {
-    const { t, router, album, deleteAlbum } = this.props
-    return (
-      <QuitConfirm
-        t={t}
-        albumName={album.name}
-        onClose={this.closeModal}
-        confirm={() => {
-          this.closeQuitConfirmModal()
-          deleteAlbum(album)
-            .then(() => {
-              router.replace('albums')
-              Alerter.success('Albums.quit_album.success', {
-                name: album.name
-              })
-            })
-            .catch(() => Alerter.error('Albums.quit_album.error.generic'))
-        }}
-      />
-    )
-  }
-  closeQuitConfirmModal = () => {
-    this.setState({
-      quitConfirmModal: false
-    })
-  }
-  leaveAlbum = () => {
-    this.setState({
-      quitConfirmModal: true
     })
   }
 
@@ -192,12 +159,10 @@ class AlbumPhotos extends Component {
                     onRename={this.editAlbumName}
                     downloadAlbum={this.downloadAlbum}
                     deleteAlbum={this.deleteAlbum}
-                    leaveAlbum={this.leaveAlbum}
                     shareAlbum={shareAlbum}
                   />
                 </Topbar>
               )}
-            {this.state.quitConfirmModal && this.renderQuitConfirm()}
             {this.state.displayModalDestroyConfirm &&
               this.renderDestroyConfirm()}
             {this.state.showAddAlbumModal && (

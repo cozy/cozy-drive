@@ -26,7 +26,6 @@ class AlbumToolbar extends Component {
       disabled = false,
       downloadAlbum,
       deleteAlbum,
-      // leaveAlbum,
       selectItems,
       onRename,
       breakpoints: { isMobile },
