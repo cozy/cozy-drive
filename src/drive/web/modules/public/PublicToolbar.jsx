@@ -19,7 +19,7 @@ const PublicToolbar = ({
 
   if (loading) return null
   return (
-    <div data-testid="public-toolbar">
+    <div className="u-flex u-flex-justify-end" data-testid="public-toolbar">
       {!discoveryLink ? (
         <PublicToolbarByLink
           files={files}

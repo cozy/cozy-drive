@@ -13,6 +13,7 @@ import SelectableItem from 'drive/web/modules/drive/Toolbar/selectable/Selectabl
 import { downloadFiles } from 'drive/web/modules/actions/utils'
 import CozyBarRightMobile from 'drive/web/modules/public/CozyBarRightMobile'
 import { DownloadFilesButton } from './DownloadButton'
+import { isFilesIsFile } from './PublicToolbarByLink'
 
 const openExternalLink = url => (window.location = url)
 
@@ -76,25 +77,24 @@ const PublicToolbarCozyToCozy = ({
   isSharingShortcutCreated
 }) => {
   const { t } = useI18n()
+  const isFile = isFilesIsFile(files)
   const client = useClient()
   const { isMobile } = useBreakpoints()
+
+  const shouldDisplayMoreMenu = isMobile || (!isFile && files.length > 0)
 
   return (
     <CozyBarRightMobile>
       <BarContextProvider client={client} t={t} store={client.store}>
-        {!isMobile && (
-          <div className="u-m-auto">
-            <DownloadFilesButton files={files} />
-          </div>
-        )}
-        <div className="u-m-auto">
+        {!isMobile && <DownloadFilesButton files={files} />}
+        {shouldDisplayMoreMenu && (
           <MoreMenu
             files={files}
             discoveryLink={discoveryLink}
             isSharingShortcutCreated={isSharingShortcutCreated}
             isMobile={isMobile}
           />
-        </div>
+        )}
       </BarContextProvider>
     </CozyBarRightMobile>
   )

@@ -19,7 +19,8 @@ import CozyBarRightMobile from 'drive/web/modules/public/CozyBarRightMobile'
 
 import { DownloadFilesButton } from './DownloadButton'
 
-const isFilesIsFile = files => files.length === 1 && files[0].type === 'file'
+export const isFilesIsFile = files =>
+  files.length === 1 && files[0].type === 'file'
 
 const MoreButton = ({ disabled, onClick }) => {
   const { t } = useI18n()
@@ -110,25 +111,19 @@ const PublicToolbarByLink = ({
       <BarContextProvider client={client} t={t} store={client.store}>
         {!isMobile && (
           <>
-            <div className="u-m-auto">
-              {hasWriteAccess && (
-                <UploadButtonItem onUploaded={refreshFolderContent} />
-              )}
-            </div>
-            <div className="u-m-auto">
-              <DownloadFilesButton files={files} />
-            </div>
+            {hasWriteAccess && (
+              <UploadButtonItem onUploaded={refreshFolderContent} />
+            )}
+            <DownloadFilesButton files={files} />
           </>
         )}
         {shouldDisplayMoreMenu && (
-          <div className="u-m-auto">
-            <MoreMenu
-              hasWriteAccess={hasWriteAccess}
-              refreshFolderContent={refreshFolderContent}
-              isMobile={isMobile}
-              files={files}
-            />
-          </div>
+          <MoreMenu
+            hasWriteAccess={hasWriteAccess}
+            refreshFolderContent={refreshFolderContent}
+            isMobile={isMobile}
+            files={files}
+          />
         )}
       </BarContextProvider>
     </CozyBarRightMobile>
