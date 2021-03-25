@@ -96,6 +96,7 @@ const BottomSheetWrapper = ({
       fullHeight={false}
       onIndexChange={snapIndex => handleOnIndexChange(snapIndex)}
       styles={{ root: styles.root }}
+      threshold={0}
     >
       <div ref={innerContentRef}>
         <div
