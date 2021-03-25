@@ -82,46 +82,45 @@ class AlbumPhotos extends Component {
   }
   closeModal = () => {
     this.setState({
-      displayModal: false
+      displayModalDestroyConfirm: false
     })
   }
-
-  deleteAlbum = () => {
+  renderDestroyConfirm = () => {
     const { t, router, album, deleteAlbum } = this.props
-    this.setState({
-      displayModal: true,
-      component: (
-        <DestroyConfirm
-          t={t}
-          albumName={album.name}
-          onClose={this.closeModal}
-          confirm={() =>
-            deleteAlbum(album)
-              .then(() => {
-                router.replace('albums')
-                Alerter.success('Albums.remove_album.success', {
-                  name: album.name
-                })
+
+    return (
+      <DestroyConfirm
+        t={t}
+        albumName={album.name}
+        onClose={this.closeModal}
+        confirm={() =>
+          deleteAlbum(album)
+            .then(() => {
+              router.replace('albums')
+              Alerter.success('Albums.remove_album.success', {
+                name: album.name
               })
-              .catch(() => Alerter.error('Albums.remove_album.error.generic'))
-          }
-        />
-      )
+            })
+            .catch(() => Alerter.error('Albums.remove_album.error.generic'))
+        }
+      />
+    )
+  }
+  deleteAlbum = () => {
+    this.setState({
+      displayModalDestroyConfirm: true
     })
   }
   renderQuitConfirm = () => {
-    const { t, router, album, deleteAlbum, leaveAlbum } = this.props
+    const { t, router, album, deleteAlbum } = this.props
     return (
       <QuitConfirm
         t={t}
         albumName={album.name}
         onClose={this.closeModal}
-        confirm={() =>
-          leaveAlbum(album)
-            .then(() => {
-              this.closeModal()
-              deleteAlbum(album)
-            })
+        confirm={() => {
+          this.closeQuitConfirmModal()
+          deleteAlbum(album)
             .then(() => {
               router.replace('albums')
               Alerter.success('Albums.quit_album.success', {
@@ -129,13 +128,18 @@ class AlbumPhotos extends Component {
               })
             })
             .catch(() => Alerter.error('Albums.quit_album.error.generic'))
-        }
+        }}
       />
     )
   }
+  closeQuitConfirmModal = () => {
+    this.setState({
+      quitConfirmModal: false
+    })
+  }
   leaveAlbum = () => {
     this.setState({
-      displayModal: true
+      quitConfirmModal: true
     })
   }
 
@@ -193,7 +197,9 @@ class AlbumPhotos extends Component {
                   />
                 </Topbar>
               )}
-            {this.state.displayModal && this.renderQuitConfirm()}
+            {this.state.quitConfirmModal && this.renderQuitConfirm()}
+            {this.state.displayModalDestroyConfirm &&
+              this.renderDestroyConfirm()}
             {this.state.showAddAlbumModal && (
               <AddToAlbumModal
                 onDismiss={this.hideAddAlbumModal}
