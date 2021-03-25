@@ -80,7 +80,7 @@ class AlbumPhotos extends Component {
   }
   closeDestroyConfirmModal = () => {
     this.setState({
-      displayModalDestroyConfirm: false
+      displayDestroyConfirmModal: false
     })
   }
   renderDestroyConfirm = () => {
@@ -106,7 +106,7 @@ class AlbumPhotos extends Component {
   }
   deleteAlbum = () => {
     this.setState({
-      displayModalDestroyConfirm: true
+      displayDestroyConfirmModal: true
     })
   }
 
@@ -163,7 +163,7 @@ class AlbumPhotos extends Component {
                   />
                 </Topbar>
               )}
-            {this.state.displayModalDestroyConfirm &&
+            {this.state.displayDestroyConfirmModal &&
               this.renderDestroyConfirm()}
             {this.state.showAddAlbumModal && (
               <AddToAlbumModal
