@@ -34,6 +34,7 @@ import logger from 'lib/logger'
 
 import App from 'components/App/App'
 import ExternalRedirect from 'drive/web/modules/navigation/ExternalRedirect'
+import StyledApp from 'drive/web/modules/drive/StyledApp'
 
 const initCozyBar = (data, client) => {
   if (
@@ -57,7 +58,9 @@ const initCozyBar = (data, client) => {
 const renderError = (lang, root) =>
   render(
     <I18n lang={lang} dictRequire={lang => require(`drive/locales/${lang}`)}>
-      <ErrorShare errorType={`public_unshared`} />
+      <StyledApp>
+        <ErrorShare errorType={`public_unshared`} />
+      </StyledApp>
     </I18n>,
     root
   )
