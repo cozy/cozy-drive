@@ -1,9 +1,10 @@
 import React from 'react'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import { Empty } from 'cozy-ui/transpiled/react'
 import EmptyIcon from 'components/icons/icon-cloud-wrong.svg'
 
-export const ErrorShare = ({ t, errorType }) => {
+export const ErrorShare = ({ errorType }) => {
+  const { t } = useI18n()
   return (
     <Empty
       data-test-id="empty-share"
@@ -14,4 +15,4 @@ export const ErrorShare = ({ t, errorType }) => {
   )
 }
 
-export default translate()(ErrorShare)
+export default ErrorShare
