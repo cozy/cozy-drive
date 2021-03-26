@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react'
 import { BottomSheet } from 'mui-bottom-sheet'
 import { makeStyles } from '@material-ui/core/styles'
 
+import flag from 'cozy-flags'
+
 const useStyles = ({ isTopPosition }) => ({
   root: {
     borderTopLeftRadius: '1rem',
@@ -28,9 +30,15 @@ const useClasses = makeStyles(theme => ({
     width: '4rem',
     height: '0.25rem',
     borderRadius: '99px',
-    backgroundColor: theme.palette.divider
+    backgroundColor: theme.palette.text.secondary
   }
 }))
+
+export const defaultBottomSheetSpringConfig = {
+  tension: 165,
+  friction: 17,
+  clamp: true
+}
 
 const BottomSheetWrapper = ({
   file,
@@ -54,12 +62,11 @@ const BottomSheetWrapper = ({
       const maxHeight = toolbar
         ? window.innerHeight - toolbar.offsetHeight
         : window.innerHeight
-      const mediumHeight = maxHeight * 0.33
+      const mediumHeight = Math.round(maxHeight * 0.33)
       const actionButtonsHeight = parseFloat(
         getComputedStyle(actionButtonsRef.current).getPropertyValue('height')
       )
-      // this is the margin of action buttons without bottomSheet
-      const actionButtonsBottomMargin = 7
+      const actionButtonsBottomMargin = 16
       const minHeight =
         headerRef.current.offsetHeight +
         actionButtonsHeight +
@@ -96,6 +103,24 @@ const BottomSheetWrapper = ({
       fullHeight={false}
       onIndexChange={snapIndex => handleOnIndexChange(snapIndex)}
       styles={{ root: styles.root }}
+      threshold={0}
+      // springConfig doc : https://www.react-spring.io/docs/hooks/api
+      springConfig={{
+        tension:
+          typeof flag('viewer-bottomSheet-tension') === 'number'
+            ? flag('viewer-bottomSheet-tension')
+            : defaultBottomSheetSpringConfig.tension,
+        friction:
+          typeof flag('viewer-bottomSheet-friction') === 'number'
+            ? flag('viewer-bottomSheet-friction')
+            : defaultBottomSheetSpringConfig.friction,
+        clamp:
+          typeof flag('viewer-bottomSheet-clamp') === 'boolean'
+            ? flag('viewer-bottomSheet-clamp')
+            : defaultBottomSheetSpringConfig.clamp
+      }}
+      disabledClosing={true}
+      snapPointSeekerMode="next"
     >
       <div ref={innerContentRef}>
         <div
