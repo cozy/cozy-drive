@@ -18,4 +18,7 @@ export const initFlags = () => {
 
 const flagsList = () => {
   flag('switcher', true)
+  flag('viewer-bottomSheet-tension')
+  flag('viewer-bottomSheet-friction')
+  flag('viewer-bottomSheet-clamp')
 }

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react'
 import { BottomSheet } from 'mui-bottom-sheet'
 import { makeStyles } from '@material-ui/core/styles'
 
+import flag from 'cozy-flags'
+
 const useStyles = ({ isTopPosition }) => ({
   root: {
     borderTopLeftRadius: '1rem',
@@ -31,6 +33,12 @@ const useClasses = makeStyles(theme => ({
     backgroundColor: theme.palette.text.secondary
   }
 }))
+
+export const defaultBottomSheetSpringConfig = {
+  tension: 165,
+  friction: 17,
+  clamp: true
+}
 
 const BottomSheetWrapper = ({
   file,
@@ -98,9 +106,18 @@ const BottomSheetWrapper = ({
       threshold={0}
       // springConfig doc : https://www.react-spring.io/docs/hooks/api
       springConfig={{
-        tension: 165,
-        friction: 17,
-        clamp: true
+        tension:
+          typeof flag('viewer-bottomSheet-tension') === 'number'
+            ? flag('viewer-bottomSheet-tension')
+            : defaultBottomSheetSpringConfig.tension,
+        friction:
+          typeof flag('viewer-bottomSheet-friction') === 'number'
+            ? flag('viewer-bottomSheet-friction')
+            : defaultBottomSheetSpringConfig.friction,
+        clamp:
+          typeof flag('viewer-bottomSheet-clamp') === 'boolean'
+            ? flag('viewer-bottomSheet-clamp')
+            : defaultBottomSheetSpringConfig.clamp
       }}
       disabledClosing={true}
       snapPointSeekerMode="next"
