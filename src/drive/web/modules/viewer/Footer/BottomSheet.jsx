@@ -28,7 +28,7 @@ const useClasses = makeStyles(theme => ({
     width: '4rem',
     height: '0.25rem',
     borderRadius: '99px',
-    backgroundColor: theme.palette.divider
+    backgroundColor: theme.palette.text.secondary
   }
 }))
 
@@ -54,12 +54,11 @@ const BottomSheetWrapper = ({
       const maxHeight = toolbar
         ? window.innerHeight - toolbar.offsetHeight
         : window.innerHeight
-      const mediumHeight = maxHeight * 0.33
+      const mediumHeight = Math.round(maxHeight * 0.33)
       const actionButtonsHeight = parseFloat(
         getComputedStyle(actionButtonsRef.current).getPropertyValue('height')
       )
-      // this is the margin of action buttons without bottomSheet
-      const actionButtonsBottomMargin = 7
+      const actionButtonsBottomMargin = 16
       const minHeight =
         headerRef.current.offsetHeight +
         actionButtonsHeight +
@@ -97,6 +96,14 @@ const BottomSheetWrapper = ({
       onIndexChange={snapIndex => handleOnIndexChange(snapIndex)}
       styles={{ root: styles.root }}
       threshold={0}
+      // springConfig doc : https://www.react-spring.io/docs/hooks/api
+      springConfig={{
+        tension: 165,
+        friction: 17,
+        clamp: true
+      }}
+      disabledClosing={true}
+      snapPointSeekerMode="next"
     >
       <div ref={innerContentRef}>
         <div
