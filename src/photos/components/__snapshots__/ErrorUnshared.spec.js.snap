@@ -8,7 +8,7 @@ exports[`ErrorUnshared should match the snapshot 1`] = `
   <Main
     className="u-pt-1-half"
   >
-    <withI18n(ErrorShare)
+    <ErrorShare
       errorType="public_album_unshared"
     />
   </Main>
