@@ -116,7 +116,7 @@
     "cozy-device-helper": "1.11.0",
     "cozy-doctypes": "1.78.0",
     "cozy-flags": "1.11.0",
-    "cozy-harvest-lib": "5.1.0",
+    "cozy-harvest-lib": "5.3.1",
     "cozy-logger": "1.6.0",
     "cozy-pouch-link": "15.6.0",
     "cozy-realtime": "3.12.2",
