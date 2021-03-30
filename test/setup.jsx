@@ -46,7 +46,9 @@ const getStoreStateWhenViewingFolder = folderId => {
 }
 
 export const setupStoreAndClient = ({ initialStoreState } = {}) => {
-  const client = new CozyClient({})
+  const client = new CozyClient({
+    store: false
+  })
 
   const store = configureStore({
     client,
