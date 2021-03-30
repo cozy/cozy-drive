@@ -71,7 +71,8 @@ export const initClient = url => {
     oauth: getOauthOptions(),
     appMetadata,
     schema,
-    links: [pouchLink, stackLink]
+    links: [pouchLink, stackLink],
+    store: false
   })
 }
 

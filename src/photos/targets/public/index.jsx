@@ -41,7 +41,8 @@ async function init() {
     uri: cozyUrl,
     token: sharecode,
     appMetadata,
-    schema: doctypes
+    schema: doctypes,
+    store: false
   })
 
   client.registerPlugin(RealtimePlugin)

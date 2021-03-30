@@ -78,7 +78,8 @@ const init = async () => {
     uri: cozyUrl,
     token: sharecode,
     appMetadata,
-    schema
+    schema,
+    store: false
   })
   registerClientPlugins(client)
 
