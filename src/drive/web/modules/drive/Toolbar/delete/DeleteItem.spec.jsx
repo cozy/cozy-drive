@@ -1,8 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import CozyClient from 'cozy-client'
-import configureStore from 'drive/store/configureStore'
 import AppLike from 'test/components/AppLike'
+import { setupStoreAndClient } from 'test/setup'
 import DeleteItem from './DeleteItem'
 import { EnhancedDeleteConfirm } from './delete'
 import {
@@ -21,16 +20,13 @@ jest.mock('drive/web/modules/actions/utils', () => ({
 
 describe('DeleteItem', () => {
   const setup = () => {
-    const client = new CozyClient()
     const displayedFolder = {
       _id: 'displayed-folder-id',
       name: 'My Folder'
     }
     getDisplayedFolder.mockReturnValue(displayedFolder)
     getCurrentFolderId.mockReturnValue(displayedFolder._id)
-    const store = configureStore({
-      client
-    })
+    const { client, store } = setupStoreAndClient({})
 
     jest.spyOn(store, 'dispatch')
     const onLeave = jest.fn()
