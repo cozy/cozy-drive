@@ -3,6 +3,7 @@ import { Provider } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import { CozyProvider } from 'cozy-client'
+import CozyDevtools from 'cozy-client/dist/devtools'
 import SharingProvider from 'cozy-sharing'
 import { I18n } from 'cozy-ui/transpiled/react/I18n'
 import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
@@ -23,6 +24,9 @@ const App = props => {
                 <ModalContextProvider>
                   <BreakpointsProvider>
                     <StyledApp>{props.children}</StyledApp>
+                    {process.env.NODE_ENV !== 'production' ? (
+                      <CozyDevtools />
+                    ) : null}
                   </BreakpointsProvider>
                 </ModalContextProvider>
               </ThumbnailSizeContextProvider>
