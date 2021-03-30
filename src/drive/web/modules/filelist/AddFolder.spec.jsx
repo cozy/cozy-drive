@@ -1,11 +1,10 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import AppLike from 'test/components/AppLike'
+import { setupStoreAndClient } from 'test/setup'
 import AddFolder, { AddFolder as DumbAddFolder } from './AddFolder'
-import CozyClient from 'cozy-client'
 import flag from 'cozy-flags'
 import { createFolder } from 'drive/web/modules/navigation/duck/actions'
-import configureStore from 'drive/store/configureStore'
 const originalFlag = jest.requireActual('cozy-flags')
 
 jest.mock('drive/web/modules/navigation/duck/actions', () => ({
@@ -16,10 +15,7 @@ jest.mock('cozy-flags', () => jest.fn())
 
 describe('AddFolder', () => {
   const setup = () => {
-    const client = new CozyClient({})
-    const store = configureStore({
-      client: client
-    })
+    const { client, store } = setupStoreAndClient({})
     jest.spyOn(client, 'create').mockResolvedValue({})
     const root = mount(
       <AppLike client={client} store={store}>
