@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import compose from 'lodash/flowRight'
+import { RemoveScroll } from 'react-remove-scroll'
 
 import { withClient, Q } from 'cozy-client'
 import { isIOSApp } from 'cozy-device-helper'
@@ -132,22 +133,24 @@ class FilesViewer extends Component {
       const viewerIndex = hasCurrentIndex ? currentIndex : 0
 
       return (
-        <Overlay>
-          <Viewer
-            files={viewerFiles}
-            currentIndex={viewerIndex}
-            onChangeRequest={this.onChange}
-            onCloseRequest={this.onClose}
-            renderFallbackExtraContent={file => <Fallback file={file} t={t} />}
-            panelInfoProps={{
-              showPanel,
-              PanelContent
-            }}
-            footerProps={{
-              FooterContent
-            }}
-          />
-        </Overlay>
+        <RemoveScroll>
+          <Overlay>
+            <Viewer
+              files={viewerFiles}
+              currentIndex={viewerIndex}
+              onChangeRequest={this.onChange}
+              onCloseRequest={this.onClose}
+              renderFallbackExtraContent={file => <Fallback file={file} t={t} />}
+              panelInfoProps={{
+                showPanel,
+                PanelContent
+              }}
+              footerProps={{
+                FooterContent
+              }}
+            />
+          </Overlay>
+        </RemoveScroll>
       )
     }
   }
