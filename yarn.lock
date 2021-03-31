@@ -5192,10 +5192,10 @@ cozy-client@16.10.2:
     sift "^6.0.0"
     url-search-params-polyfill "^7.0.0"
 
-cozy-client@20.2.1:
-  version "20.2.1"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-20.2.1.tgz#60792cc20502616729d2d87bf04317e19336906a"
-  integrity sha512-ljhmuD1+Z15R6RGm2Y7q1FfZmG7+hvOc3zj/uAdtY5VMTMbo4gTtIAOGm6E9QN3kw31Yr4FqVpKyKGNzc/0QNg==
+cozy-client@20.3.0:
+  version "20.3.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-20.3.0.tgz#4f460e31afe2df723f4a8f30edc6efbe6c3435e4"
+  integrity sha512-zRNfXk/JRDWgzxvnw4wQICFp2xZtsBztMtHkKiA1gGCDHz53SojsGd3V8k7OhbOVMaSxG/RWxPXZiPfPqkFsmA==
   dependencies:
     "@cozy/minilog" "1.0.0"
     "@types/jest" "^26.0.20"
