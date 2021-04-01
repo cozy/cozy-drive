@@ -140,7 +140,9 @@ class FilesViewer extends Component {
               currentIndex={viewerIndex}
               onChangeRequest={this.onChange}
               onCloseRequest={this.onClose}
-              renderFallbackExtraContent={file => <Fallback file={file} t={t} />}
+              renderFallbackExtraContent={file => (
+                <Fallback file={file} t={t} />
+              )}
               panelInfoProps={{
                 showPanel,
                 PanelContent
