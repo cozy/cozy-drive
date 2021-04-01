@@ -10,6 +10,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 import get from 'lodash/get'
+import { RemoveScroll } from 'react-remove-scroll'
 
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
@@ -19,6 +20,7 @@ import Overlay from 'cozy-ui/transpiled/react/Overlay'
 
 import { showPanel } from './helpers'
 import PanelContent from './Panel/PanelContent'
+import FooterContent from './Footer/FooterContent'
 import Fallback from 'drive/web/modules/viewer/Fallback'
 
 const FileNotFoundError = translate()(({ t }) => (
@@ -71,21 +73,26 @@ export class FileOpener extends Component {
         {fileNotFound && <FileNotFoundError />}
         {!loading &&
           !fileNotFound && (
-            <Overlay>
-              <Viewer
-                files={[file]}
-                currentIndex={0}
-                onChangeRequest={() => {}}
-                onCloseRequest={() => service.terminate()}
-                renderFallbackExtraContent={file => (
-                  <Fallback file={file} t={t} />
-                )}
-                panelInfoProps={{
-                  showPanel,
-                  PanelContent
-                }}
-              />
-            </Overlay>
+            <RemoveScroll>
+              <Overlay>
+                <Viewer
+                  files={[file]}
+                  currentIndex={0}
+                  onChangeRequest={() => {}}
+                  onCloseRequest={() => service.terminate()}
+                  renderFallbackExtraContent={file => (
+                    <Fallback file={file} t={t} />
+                  )}
+                  panelInfoProps={{
+                    showPanel,
+                    PanelContent
+                  }}
+                  footerProps={{
+                    FooterContent
+                  }}
+                />
+              </Overlay>
+            </RemoveScroll>
           )}
       </div>
     )

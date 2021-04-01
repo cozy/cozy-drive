@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react'
 import { connect } from 'react-redux'
+import { makeStyles } from '@material-ui/core/styles'
 
 import { useClient } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
@@ -13,6 +14,12 @@ import {
   toggleAvailableOffline
 } from 'drive/mobile/modules/offline/duck'
 
+const useStyles = makeStyles(() => ({
+  sizeSmall: {
+    marginTop: '-0.2rem'
+  }
+}))
+
 const MakeAvailableOfflineMenuItem = connect(
   (state, ownProps) => ({
     checked: isAvailableOffline(state, ownProps.file.id)
@@ -24,6 +31,7 @@ const MakeAvailableOfflineMenuItem = connect(
 )(({ checked, toggleOfflineAvailability, ...rest }) => {
   const { t } = useI18n()
   const client = useClient()
+  const styles = useStyles()
   const onToggle = useCallback(
     e => {
       e.stopPropagation()
@@ -31,6 +39,7 @@ const MakeAvailableOfflineMenuItem = connect(
     },
     [client, toggleOfflineAvailability]
   )
+
   return (
     <ActionMenuItem
       {...rest}
@@ -40,8 +49,9 @@ const MakeAvailableOfflineMenuItem = connect(
           id={'offline-switch'}
           checked={checked}
           onClick={ev => onToggle(ev)}
+          size="small"
           classes={{
-            switchBase: 'u-h-half'
+            sizeSmall: styles.sizeSmall
           }}
         />
       }

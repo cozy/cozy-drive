@@ -232,12 +232,6 @@
     "eye": "Your photos won't be deleted.",
     "link": "If you have shared it, people won't be able to access it."
   },
-  "quitconfirmation": {
-    "title": "Permanently leave and delete this shared album?",
-    "cancel": "Cancel",
-    "quit": "Leave & delete",
-    "forbidden": "You won't be able to access this album or selection anymore."
-  },
   "timeline": {
     "DeleteConfirm": {
       "title": "Delete this element? |||| Delete these elements?",

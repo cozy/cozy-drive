@@ -5298,10 +5298,10 @@ cozy-doctypes@^1.79.0:
     lodash "4.17.19"
     prop-types "^15.7.2"
 
-cozy-doctypes@^1.80.0:
-  version "1.80.0"
-  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.80.0.tgz#7404052ebf1fa93bcadd260a33f9be63fbf21cbe"
-  integrity sha512-JunkigMB3u2fF5DDnHFmTcs5O8HNq1Z3jN9sCAd+6iiQcjqB0wFGN7s6NiQYwt7jSgJhb09TbSNTrr5DCc6VxA==
+cozy-doctypes@^1.81.0:
+  version "1.81.0"
+  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.81.0.tgz#27a5eefdac269c4058ba3dade240620835208bdf"
+  integrity sha512-JLocUEqt40/6N3mM3IosVfS0XhOPW0NDDtLaXtMRzR2a0WMHzQVRZLfUbtvYljvXu46lYylUVQQU1zdmg76XHw==
   dependencies:
     cozy-logger "^1.7.0"
     date-fns "^1.30.1"
@@ -5330,17 +5330,16 @@ cozy-flags@^2.6.0:
   dependencies:
     microee "^0.0.6"
 
-cozy-harvest-lib@5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-harvest-lib/-/cozy-harvest-lib-5.1.0.tgz#b3c10a3d66356b3f2a1688e5adbb2364ccda238a"
-  integrity sha512-1dT1WetxZyr+oaVblPiUhhbaJM8i+NpvLUj01FTFbgnv8NQd8sX6/9GcNX4Ykar0caEqN+ziX8n6Uf/I63YwLQ==
+cozy-harvest-lib@5.3.1:
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/cozy-harvest-lib/-/cozy-harvest-lib-5.3.1.tgz#b1fd5d20307a6ab8c7cd2beebde29eb170922882"
+  integrity sha512-aFYJ/NSfDDvamjU21oOQGOdX8bMnabnb7U6NmQYzzwJoqz8qkUq7pruDgy5VRrov90ISNmk37XR/j0TlcOTOhQ==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     "@sentry/browser" "^6.0.1"
     cozy-bi-auth "0.0.19"
-    cozy-doctypes "^1.80.0"
+    cozy-doctypes "^1.81.0"
     cozy-logger "^1.7.0"
-    cozy-ui "^45.3.0"
     date-fns "^1.30.1"
     final-form "^4.18.5"
     lodash "^4.17.19"
@@ -5354,11 +5353,6 @@ cozy-interapp@0.4.9:
   version "0.4.9"
   resolved "https://registry.yarnpkg.com/cozy-interapp/-/cozy-interapp-0.4.9.tgz#5ef68d54755cc99c3e154e5a4646b68cbe5f16fd"
   integrity sha512-skyjrewnMu5zMfST7vTNGl3jsuWae1Iwfdev6pW9RLgb58M7oBSpsIa3ofRANv5tx0XVQDVSEzWvbFQ84WJPSg==
-
-cozy-interapp@0.5.4:
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/cozy-interapp/-/cozy-interapp-0.5.4.tgz#2573f1800f073c84c289267d04234954d88eae0c"
-  integrity sha512-f0UaKpBkRUnIKgAWND0e1IwfTTINjizlgDmfQwX3aMyWp8t9wX0xkNFn53TSyKUoBUnfovrclS3hm9fngjEp7A==
 
 cozy-interapp@^0.5.4:
   version "0.5.7"
@@ -5598,27 +5592,6 @@ cozy-ui@47.6.0:
     react-remove-scroll "^2.4.0"
     react-select "^2.2.0"
     react-swipeable-views "^0.13.3"
-
-cozy-ui@^45.3.0:
-  version "45.5.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-45.5.0.tgz#1c8ead05e514ab996c80921df1c7b53cfda0fb91"
-  integrity sha512-m/BYLrwQB6I11drZ3nAic+8ZRldca8EoWwA/EK+AdP3OHF+anSgDfI3UDujC2HUdHq45ja7PX38C2puHxW+Ofw==
-  dependencies:
-    "@babel/runtime" "^7.3.4"
-    "@popperjs/core" "^2.4.4"
-    classnames "^2.2.5"
-    cozy-interapp "0.5.4"
-    date-fns "^1.28.5"
-    hammerjs "^2.0.8"
-    intersection-observer "0.11.0"
-    node-polyglot "^2.2.2"
-    normalize.css "^7.0.0"
-    react-markdown "^4.0.8"
-    react-pdf "^4.0.5"
-    react-popper "^2.2.3"
-    react-remove-scroll "^2.4.0"
-    react-select "2.2.0"
-    react-swipeable-views "0.13.3"
 
 create-ecdh@^4.0.0:
   version "4.0.4"
@@ -11618,9 +11591,9 @@ ms@2.1.2, ms@^2.0.0, ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
-"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.5":
-  version "1.0.5"
-  resolved "https://github.com/cozy/mui-bottom-sheet.git#6eea2e5bfb0b648bd47c4a09e6fce91348e4a3a2"
+"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.6":
+  version "1.0.6"
+  resolved "https://github.com/cozy/mui-bottom-sheet.git#494c40416ecde95732c864f9b921e7e545075aa5"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
     jest-environment-jsdom-sixteen "^1.0.3"
@@ -14216,6 +14189,17 @@ react-remove-scroll@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/react-remove-scroll/-/react-remove-scroll-2.4.0.tgz#190c16eb508c5927595935499e8f5dd9ab0e75cf"
   integrity sha512-BZIO3GaEs0Or1OhA5C//n1ibUP1HdjJmqUVUsOCMxwoIpaCocbB9TFKwHOkBa/nyYy3slirqXeiPYGwdSDiseA==
+  dependencies:
+    react-remove-scroll-bar "^2.1.0"
+    react-style-singleton "^2.1.0"
+    tslib "^1.0.0"
+    use-callback-ref "^1.2.3"
+    use-sidecar "^1.0.1"
+
+react-remove-scroll@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/react-remove-scroll/-/react-remove-scroll-2.4.1.tgz#e0af6126621083a5064591d367291a81b2d107f5"
+  integrity sha512-K7XZySEzOHMTq7dDwcHsZA6Y7/1uX5RsWhRXVYv8rdh+y9Qz2nMwl9RX/Mwnj/j7JstCGmxyfyC0zbVGXYh3mA==
   dependencies:
     react-remove-scroll-bar "^2.1.0"
     react-style-singleton "^2.1.0"
