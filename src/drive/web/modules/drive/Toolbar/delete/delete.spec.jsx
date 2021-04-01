@@ -1,8 +1,7 @@
 import React from 'react'
 import AppLike from 'test/components/AppLike'
 import { mount } from 'enzyme'
-import CozyClient from 'cozy-client'
-import configureStore from 'drive/store/configureStore'
+import { setupStoreAndClient } from 'test/setup'
 import { EnhancedDeleteConfirm } from './delete'
 import DeleteConfirm from '../../DeleteConfirm'
 
@@ -13,10 +12,7 @@ describe('EnhancedDeleteConfirm', () => {
       name: 'My folder',
       dir_id: 'parent-folder-id'
     }
-    const client = new CozyClient({})
-    const store = configureStore({
-      client
-    })
+    const { client, store } = setupStoreAndClient({})
     const mockSharingContext = {
       hasWriteAccess: () => true,
       getRecipients: () => [],

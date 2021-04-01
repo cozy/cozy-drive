@@ -29,7 +29,8 @@ const setupApp = memoize(() => {
     uri: cozyUrl,
     token: data.cozyToken,
     appMetadata,
-    schema
+    schema,
+    store: false
   })
 
   if (!Document.cozyClient) {
