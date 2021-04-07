@@ -119,7 +119,7 @@ const init = async () => {
       initCozyBar(dataset)
       render(
         <App lang={lang} polyglot={polyglot} client={client} store={store}>
-          <SharingProvider>
+           <SharingProvider doctype="io.cozy.files" documentType="Files">
             <BreakpointsProvider>
               <ThumbnailSizeContextProvider>
                 <ModalContextProvider>
