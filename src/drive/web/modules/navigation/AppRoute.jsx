@@ -21,6 +21,7 @@ import TrashFolderView from '../views/Trash/TrashFolderView'
 import SharingsView from '../views/Sharings'
 import SharingsFilesViewer from '../views/Sharings/FilesViewerSharings'
 import SharingsFolderView from '../views/Sharings/SharingsFolderView'
+import OnlyOfficeView from '../views/OnlyOffice'
 
 import FilesViewerRecent from '../views/Recent/FilesViewerRecent'
 // To keep in sync with AppRoute below, used to extract params
@@ -39,7 +40,8 @@ export const routes = [
   '/sharings/file/:fileId/revision',
   '/trash/:folderId/file/:fileId',
   '/trash/:folderId',
-  '/file/:fileId'
+  '/file/:fileId',
+  '/onlyoffice/:fileId'
 ]
 
 const RootComponent = routerProps => (
@@ -95,6 +97,8 @@ const AppRoute = (
           <Route path="file/:fileId/revision" component={FileHistory} />
         </Route>
       </Route>
+
+      <Route path="onlyoffice/:fileId" component={OnlyOfficeView} />
 
       {__TARGET__ === 'mobile' && (
         <Route path="settings" component={Settings} />
