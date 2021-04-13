@@ -4,7 +4,7 @@ import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { Layout as LayoutUI } from 'cozy-ui/transpiled/react/Layout'
 import Sidebar from 'cozy-ui/transpiled/react/Sidebar'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
-import flag, { FlagSwitcher } from 'cozy-flags'
+import FlagSwitcher from 'cozy-flags/dist/FlagSwitcher'
 
 import { initFlags } from 'lib/flags'
 import Nav from 'drive/web/modules/navigation/Nav'
@@ -19,7 +19,7 @@ initFlags()
 
 const Layout = ({ t, children }) => (
   <LayoutUI>
-    {flag('switcher') && <FlagSwitcher />}
+    <FlagSwitcher />
     <Sidebar className="u-flex-justify-between">
       <Nav />
       <div>
