@@ -6,6 +6,7 @@ import 'whatwg-fetch'
 import React from 'react'
 import { render } from 'react-dom'
 
+import SharingProvider from 'cozy-sharing'
 import { getQueryParameter } from 'react-cozy-helpers'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
@@ -45,11 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
       dictRequire={lang => require(`drive/locales/${lang}`)}
     >
       <CozyProvider client={client}>
-        <BreakpointsProvider>
-          <StyledApp>
-            <IntentHandler intentId={intent} />
-          </StyledApp>
-        </BreakpointsProvider>
+        <SharingProvider doctype="io.cozy.files" documentType="Files">
+          <BreakpointsProvider>
+            <StyledApp>
+              <IntentHandler intentId={intent} />
+            </StyledApp>
+          </BreakpointsProvider>
+        </SharingProvider>
       </CozyProvider>
     </I18n>,
     root
