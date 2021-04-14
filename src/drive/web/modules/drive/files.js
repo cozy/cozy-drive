@@ -6,6 +6,21 @@ const FILE_TYPE = 'file'
 const DIR_TYPE = 'directory'
 export const ALBUMS_DOCTYPE = 'io.cozy.photos.albums'
 export const isFile = file => file && file.type === FILE_TYPE
+
+/**
+ * Whether the file should be opened by only office
+ * We want to be consistent with the stack so we check the class attributes
+ * But we want to exclude .txt and .md because the Viewer can already show them
+ * @param {object} file - io.cozy.file document
+ * @returns {boolean}
+ */
+export const shouldBeOpenedByOnlyOffice = file =>
+  !file.name.endsWith('.txt') &&
+  !file.name.endsWith('.md') &&
+  (file.class === 'text' ||
+    file.class === 'spreadsheet' ||
+    file.class === 'slide')
+
 export const isDirectory = file => file && file.type === DIR_TYPE
 
 export const isReferencedByAlbum = file => {

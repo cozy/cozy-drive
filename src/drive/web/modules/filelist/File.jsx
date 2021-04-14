@@ -61,13 +61,13 @@ const File = props => {
     onCheckboxToggle(attributes, selected)
   }
 
-  const open = (e, attributes) => {
+  const open = (event, attributes) => {
     const { onFolderOpen, onFileOpen, isAvailableOffline } = props
-    e.stopPropagation()
+    event.stopPropagation()
     if (isDirectory(attributes)) {
       onFolderOpen(attributes.id)
     } else {
-      onFileOpen(attributes, isAvailableOffline)
+      onFileOpen({ event, file: attributes, isAvailableOffline })
     }
   }
 
