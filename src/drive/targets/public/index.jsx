@@ -7,19 +7,14 @@ import { render } from 'react-dom'
 import 'cozy-ui/transpiled/react/stylesheet.css'
 
 import { Router, Route, Redirect, hashHistory } from 'react-router'
+import { getQueryParameter } from 'react-cozy-helpers'
 import CozyClient, { models } from 'cozy-client'
-import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
-
-import { ThumbnailSizeContextProvider } from 'drive/lib/ThumbnailSizeContext'
-import { ModalContextProvider } from 'drive/lib/ModalContext'
-
 import { I18n, initTranslation } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
-import SharingProvider from 'cozy-sharing'
+import getSharedDocument from 'cozy-sharing/dist/getSharedDocument'
 
-import { getQueryParameter } from 'react-cozy-helpers'
 import registerClientPlugins from 'drive/lib/registerClientPlugins'
-
+import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 import { schema } from 'drive/lib/doctypes'
 import configureStore from 'drive/store/configureStore'
 import PublicLayout from 'drive/web/modules/public/PublicLayout'
@@ -27,11 +22,8 @@ import PublicFolderView from 'drive/web/modules/views/Public'
 import LightFileViewer from 'drive/web/modules/public/LightFileViewer'
 import FileHistory from 'components/FileHistory'
 import ErrorShare from 'components/Error/ErrorShare'
-import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
-import getSharedDocument from 'cozy-sharing/dist/getSharedDocument'
 import appMetadata from 'drive/appMetadata'
 import logger from 'lib/logger'
-
 import App from 'components/App/App'
 import ExternalRedirect from 'drive/web/modules/navigation/ExternalRedirect'
 
@@ -115,42 +107,22 @@ const init = async () => {
       initCozyBar(dataset)
       render(
         <App lang={lang} polyglot={polyglot} client={client} store={store}>
-          <SharingProvider>
-            <BreakpointsProvider>
-              <ThumbnailSizeContextProvider>
-                <ModalContextProvider>
-                  {isFile ? (
-                    <PublicLayout>
-                      <LightFileViewer files={[data]} />
-                    </PublicLayout>
-                  ) : (
-                    <Router history={hashHistory}>
-                      <Route component={PublicLayout}>
-                        <Redirect
-                          from="/files/:folderId"
-                          to="/folder/:folderId"
-                        />
-                        <Route
-                          path="folder(/:folderId)"
-                          component={PublicFolderView}
-                        >
-                          <Route
-                            path="file/:fileId/revision"
-                            component={FileHistory}
-                          />
-                        </Route>
-                      </Route>
-                      <Route
-                        path="external/:fileId"
-                        component={ExternalRedirect}
-                      />
-                      <Redirect from="/*" to={`folder/${sharedDocumentId}`} />
-                    </Router>
-                  )}
-                </ModalContextProvider>
-              </ThumbnailSizeContextProvider>
-            </BreakpointsProvider>
-          </SharingProvider>
+          {isFile ? (
+            <PublicLayout>
+              <LightFileViewer files={[data]} />
+            </PublicLayout>
+          ) : (
+            <Router history={hashHistory}>
+              <Route component={PublicLayout}>
+                <Redirect from="/files/:folderId" to="/folder/:folderId" />
+                <Route path="folder(/:folderId)" component={PublicFolderView}>
+                  <Route path="file/:fileId/revision" component={FileHistory} />
+                </Route>
+              </Route>
+              <Route path="external/:fileId" component={ExternalRedirect} />
+              <Redirect from="/*" to={`folder/${sharedDocumentId}`} />
+            </Router>
+          )}
         </App>,
         root
       )
