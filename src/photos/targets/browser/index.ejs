@@ -32,6 +32,7 @@
     data-cozy-icon-path="{{.IconPath}}"
     data-cozy-tracking="{{.Tracking}}"
     data-cozy-subdomain-type="{{.SubDomain}}"
+    data-cozy-flags="{{.Flags}}"
   ></div>
   <% _.forEach(htmlWebpackPlugin.files.js, function(file) { %>
   <script src="<%- file %>"></script>

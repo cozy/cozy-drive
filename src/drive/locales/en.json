@@ -695,5 +695,11 @@
     "filename_error_ends": "The name should end with .url",
     "needs_info": "Shorcut needs at least an url and a filename",
     "url_badformat": "Your url is not in the right format"
+  },
+  "OnlyOffice": {
+    "Error": {
+      "title": "Something goes wrong",
+      "text": "Please try to reload the page"
+    }
   }
 }

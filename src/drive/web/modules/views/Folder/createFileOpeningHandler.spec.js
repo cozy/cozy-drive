@@ -1,11 +1,17 @@
 import { createMockClient } from 'cozy-client'
 import { generateFile } from 'test/generate'
 import { openLocalFile } from 'drive/mobile/modules/offline/duck'
+import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
 
 import createFileOpeningHandler from './createFileOpeningHandler'
 
 jest.mock('drive/mobile/modules/offline/duck', () => ({
   openLocalFile: jest.fn()
+}))
+
+jest.mock('drive/web/modules/views/OnlyOffice/helpers', () => ({
+  ...jest.requireActual('drive/web/modules/views/OnlyOffice/helpers'),
+  isOnlyOfficeEnabled: jest.fn()
 }))
 
 describe('createFileOpeningHandler', () => {
@@ -14,6 +20,7 @@ describe('createFileOpeningHandler', () => {
   const navigateToFile = jest.fn()
   const replaceCurrentUrl = jest.fn()
   const openInNewTab = jest.fn()
+  const routeTo = jest.fn()
   const isFlatDomain = true
 
   client.getStackClient = jest.fn(() => client)
@@ -28,12 +35,14 @@ describe('createFileOpeningHandler', () => {
     type: 'file',
     ext: '.cozy-note'
   })
+
   noteFile.metadata = {
     content: '',
     schema: '',
     title: '',
     version: ''
   }
+
   const shortcutFile = generateFile({
     prefix: 'cozy',
     i: 2,
@@ -41,6 +50,9 @@ describe('createFileOpeningHandler', () => {
     ext: '.url'
   })
   shortcutFile.class = 'shortcut'
+
+  const onlyofficeFile = generateFile({ i: 3 })
+  onlyofficeFile.class = 'slide'
 
   const notAvailableOffline = false
 
@@ -51,23 +63,28 @@ describe('createFileOpeningHandler', () => {
       dispatch,
       navigateToFile,
       replaceCurrentUrl,
-      openInNewTab
+      openInNewTab,
+      routeTo
     })
 
-  it('opens an offline file', async () => {
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  it('should open an offline file', async () => {
     const availableOffline = true
     const handler = setup()
-    await handler(genericFile, availableOffline)
+    await handler({ file: genericFile, availableOffline })
     expect(openLocalFile).toHaveBeenCalledWith(genericFile)
   })
 
-  it('navigates to a normal file', async () => {
+  it('should navigate to a normal file', async () => {
     const handler = setup()
-    await handler(genericFile, notAvailableOffline)
+    await handler({ file: genericFile, notAvailableOffline })
     expect(navigateToFile).toHaveBeenCalledWith(genericFile)
   })
 
-  it('redirects to the notes app', async () => {
+  it('should redirect to the notes app', async () => {
     client.fetchURL.mockResolvedValue({
       data: {
         note_id: 'note-id',
@@ -79,17 +96,58 @@ describe('createFileOpeningHandler', () => {
       }
     })
     const handler = setup()
-    await handler(noteFile, notAvailableOffline)
+    await handler({ file: noteFile, notAvailableOffline })
     expect(replaceCurrentUrl).toHaveBeenCalledWith(
       'https://cozy-tools-notes.cloud/public/?id=note-id&sharecode=sharecode&username=public+note#/'
     )
   })
 
-  it('opens a shortcut in a new tab', async () => {
+  it('should open a shortcut in a new tab', async () => {
     const handler = setup()
-    await handler(shortcutFile, notAvailableOffline)
+    await handler({ file: shortcutFile, notAvailableOffline })
     expect(openInNewTab).toHaveBeenCalledWith(
       `http://cozy-drive.tools/#/external/${shortcutFile.id}`
     )
+  })
+
+  it('should redirect to the file for an onlyoffice document with onlyoffice activated', async () => {
+    isOnlyOfficeEnabled.mockReturnValue(true)
+    const handler = setup()
+    await handler({ event: {}, file: onlyofficeFile, notAvailableOffline })
+
+    expect(openInNewTab).not.toHaveBeenCalled()
+    expect(replaceCurrentUrl).not.toHaveBeenCalled()
+    expect(routeTo).toHaveBeenCalledWith(`/onlyoffice/${onlyofficeFile.id}`)
+    expect(navigateToFile).not.toHaveBeenCalled()
+  })
+
+  it('should open the onlyoffice file in a new tab with onlyoffice activated and key pressed when clicking the link', async () => {
+    isOnlyOfficeEnabled.mockReturnValue(true)
+    const events = [{ ctrlKey: true }, { metaKey: true }, { shiftKey: true }]
+    const handler = setup()
+
+    for (const event of events) {
+      await handler({
+        event,
+        file: onlyofficeFile,
+        notAvailableOffline
+      })
+
+      expect(openInNewTab).toHaveBeenCalled()
+      expect(replaceCurrentUrl).not.toHaveBeenCalled()
+      expect(routeTo).not.toHaveBeenCalled()
+      expect(navigateToFile).not.toHaveBeenCalled()
+      jest.clearAllMocks()
+    }
+  })
+
+  it('should navigate to the file for an onlyoffice document with onlyoffice not activated', async () => {
+    isOnlyOfficeEnabled.mockReturnValue(false)
+    const handler = setup()
+    await handler({ event: {}, file: onlyofficeFile, notAvailableOffline })
+
+    expect(openInNewTab).not.toHaveBeenCalled()
+    expect(replaceCurrentUrl).not.toHaveBeenCalled()
+    expect(navigateToFile).toHaveBeenCalled()
   })
 })

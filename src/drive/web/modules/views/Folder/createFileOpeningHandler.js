@@ -1,8 +1,14 @@
 import { models, Q } from 'cozy-client'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { isMobileApp } from 'cozy-device-helper'
+
 import { openLocalFile } from 'drive/mobile/modules/offline/duck'
 import generateShortcutUrl from 'drive/web/modules/views/Folder/generateShortcutUrl'
+import { shouldBeOpenedByOnlyOffice } from 'drive/web/modules/drive/files'
+import {
+  isOnlyOfficeEnabled,
+  makeOnlyOfficeFileRoute
+} from 'drive/web/modules/views/OnlyOffice/helpers'
 
 const createFileOpeningHandler = ({
   client,
@@ -10,8 +16,9 @@ const createFileOpeningHandler = ({
   dispatch,
   navigateToFile,
   replaceCurrentUrl,
-  openInNewTab
-}) => async (file, availableOffline) => {
+  openInNewTab,
+  routeTo
+}) => async ({ event, file, availableOffline }) => {
   if (availableOffline) {
     return dispatch(openLocalFile(file))
   }
@@ -38,6 +45,12 @@ const createFileOpeningHandler = ({
       replaceCurrentUrl(await models.note.fetchURL(client, file))
     } catch (e) {
       Alerter.error('alert.offline')
+    }
+  } else if (isOnlyOfficeEnabled() && shouldBeOpenedByOnlyOffice(file)) {
+    if (event.ctrlKey || event.metaKey || event.shiftKey) {
+      openInNewTab(makeOnlyOfficeFileRoute(file))
+    } else {
+      routeTo(makeOnlyOfficeFileRoute(file, true))
     }
   } else {
     navigateToFile(file)

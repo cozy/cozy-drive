@@ -7,6 +7,8 @@ import { isSharingShortcut } from 'cozy-client/dist/models/file'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 import { ThumbnailSizeContext } from 'drive/lib/ThumbnailSizeContext'
+import { useRouter } from 'drive/lib/RouterContext'
+import AcceptingSharingContext from 'drive/lib/AcceptingSharingContext'
 import { FileList } from 'drive/web/modules/filelist/FileList'
 import { ConnectedFileListBody as FileListBody } from 'drive/web/modules/filelist/FileListBody'
 import AddFolder from 'drive/web/modules/filelist/AddFolder'
@@ -21,7 +23,6 @@ import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import SelectionBar from 'drive/web/modules/selection/SelectionBar'
 import { TRASH_DIR_ID } from 'drive/constants/config'
 import createFileOpeningHandler from 'drive/web/modules/views/Folder/createFileOpeningHandler'
-import AcceptingSharingContext from 'drive/lib/AcceptingSharingContext'
 import { useSyncingFakeFile } from './useSyncingFakeFile'
 import { isReferencedByShareInSharingContext } from 'drive/web/modules/views/Folder/syncHelpers'
 
@@ -41,6 +42,7 @@ const FolderViewBody = ({
   refreshFolderContent = null,
   extraColumns
 }) => {
+  const { router } = useRouter()
   const { isDesktop } = useBreakpoints()
   const client = useClient()
   const { isBigThumbnail, toggleThumbnailSize } = useContext(
@@ -63,17 +65,18 @@ const FolderViewBody = ({
   const dispatch = useDispatch()
 
   const handleFileOpen = useCallback(
-    (attributes, isAvailableOffline) => {
+    ({ event, file, isAvailableOffline }) => {
       return createFileOpeningHandler({
         client,
         isFlatDomain,
         dispatch,
         navigateToFile,
         replaceCurrentUrl: url => (window.location.href = url),
-        openInNewTab: url => window.open(url, '_blank')
-      })(attributes, isAvailableOffline)
+        openInNewTab: url => window.open(url, '_blank'),
+        routeTo: url => router.push(url)
+      })({ event, file, isAvailableOffline })
     },
-    [client, dispatch, navigateToFile, isFlatDomain]
+    [client, dispatch, navigateToFile, isFlatDomain, router]
   )
 
   const isInError = queryResults.some(query => query.fetchStatus === 'failed')

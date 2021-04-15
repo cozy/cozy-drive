@@ -2,6 +2,7 @@ import flag from 'cozy-flags'
 
 export const initFlags = () => {
   let activateFlags = flag('switcher') === true ? true : false
+
   if (process.env.NODE_ENV !== 'production' && flag('switcher') === null) {
     activateFlags = true
   }

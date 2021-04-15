@@ -2,6 +2,12 @@ import React, { Component } from 'react'
 import Hammer from '@egjs/hammerjs'
 import propagating from 'propagating-hammerjs'
 
+import { shouldBeOpenedByOnlyOffice } from 'drive/web/modules/drive/files'
+import {
+  isOnlyOfficeEnabled,
+  makeOnlyOfficeFileRoute
+} from 'drive/web/modules/views/OnlyOffice/helpers'
+
 import styles from './fileopener.styl'
 
 const getParentDiv = element => {
@@ -90,8 +96,30 @@ class FileOpener extends Component {
   render() {
     const { file, children } = this.props
 
+    if (isOnlyOfficeEnabled() && shouldBeOpenedByOnlyOffice(file)) {
+      return (
+        <a
+          data-testid="onlyoffice-link"
+          className={`${styles['file-opener']} ${styles['file-opener__a']}`}
+          ref={this.myRef}
+          id={file.id}
+          href={makeOnlyOfficeFileRoute(file)}
+          onClick={ev => {
+            ev.preventDefault()
+          }}
+        >
+          {children}
+        </a>
+      )
+    }
+
     return (
-      <span className={styles['file-opener']} ref={this.myRef} id={file.id}>
+      <span
+        data-testid="not-onlyoffice-span"
+        className={styles['file-opener']}
+        ref={this.myRef}
+        id={file.id}
+      >
         {children}
       </span>
     )
