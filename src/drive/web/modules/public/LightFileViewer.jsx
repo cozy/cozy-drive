@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import cx from 'classnames'
 
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
@@ -12,15 +13,17 @@ import styles from 'drive/web/modules/viewer/barviewer.styl'
 
 const LightFileViewer = ({ files }) => {
   const sharingInfos = useSharingInfos()
-  const { isDesktop } = useBreakpoints()
+  const { isDesktop, isMobile } = useBreakpoints()
 
   return (
     <div className={styles['viewer-wrapper-with-bar']}>
       <SharingBanner sharingInfos={sharingInfos} />
       {!isDesktop && (
-        <div className="u-mt-1 u-mr-1">
-          <PublicToolbar files={files} sharingInfos={sharingInfos} />
-        </div>
+        <PublicToolbar
+          className={cx({ 'u-mt-1 u-mr-1': !isMobile })}
+          files={files}
+          sharingInfos={sharingInfos}
+        />
       )}
       <div className={'u-pos-relative u-h-100'}>
         <Viewer
