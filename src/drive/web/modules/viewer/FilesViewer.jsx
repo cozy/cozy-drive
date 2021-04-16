@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import compose from 'lodash/flowRight'
 import { RemoveScroll } from 'react-remove-scroll'
+import { withRouter } from 'react-router'
 
 import { withClient, Q } from 'cozy-client'
 import { isIOSApp } from 'cozy-device-helper'
@@ -12,6 +13,10 @@ import { translate } from 'cozy-ui/transpiled/react/I18n'
 import palette from 'cozy-ui/transpiled/react/palette'
 
 import Fallback from 'drive/web/modules/viewer/Fallback'
+import {
+  isOnlyOfficeEnabled,
+  makeOnlyOfficeFileRoute
+} from 'drive/web/modules/views/OnlyOffice/helpers'
 import { showPanel } from './helpers'
 import PanelContent from './Panel/PanelContent'
 import FooterContent from './Footer/FooterContent'
@@ -120,7 +125,7 @@ class FilesViewer extends Component {
   }
 
   render() {
-    const { t, files } = this.props
+    const { t, files, router } = this.props
     const currentIndex = this.getCurrentIndex()
 
     // If we can't find the file, we fallback to the (potentially loading)
@@ -143,6 +148,10 @@ class FilesViewer extends Component {
               renderFallbackExtraContent={file => (
                 <Fallback file={file} t={t} />
               )}
+              onlyOfficeProps={{
+                isEnabled: isOnlyOfficeEnabled(),
+                opener: file => router.push(makeOnlyOfficeFileRoute(file, true))
+              }}
               panelInfoProps={{
                 showPanel,
                 PanelContent
@@ -160,5 +169,6 @@ class FilesViewer extends Component {
 
 export default compose(
   withClient,
+  withRouter,
   translate()
 )(FilesViewer)

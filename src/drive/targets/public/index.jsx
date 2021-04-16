@@ -33,6 +33,7 @@ import OnlyOfficeView from 'drive/web/modules/views/OnlyOffice'
 import appMetadata from 'drive/appMetadata'
 import ExternalRedirect from 'drive/web/modules/navigation/ExternalRedirect'
 import StyledApp from 'drive/web/modules/drive/StyledApp'
+import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
 
 const initCozyBar = (data, client) => {
   if (
@@ -122,9 +123,22 @@ const init = async () => {
               <ThumbnailSizeContextProvider>
                 <ModalContextProvider>
                   {isFile ? (
-                    <PublicLayout>
-                      <LightFileViewer files={[data]} />
-                    </PublicLayout>
+                    <Router history={hashHistory}>
+                      <Route
+                        path="/"
+                        component={() => (
+                          <PublicLayout>
+                            <LightFileViewer files={[data]} />
+                          </PublicLayout>
+                        )}
+                      />
+                      {isOnlyOfficeEnabled() && (
+                        <Route
+                          path="onlyoffice/:fileId"
+                          component={OnlyOfficeView}
+                        />
+                      )}
+                    </Router>
                   ) : (
                     <Router history={hashHistory}>
                       <Route component={PublicLayout}>
@@ -142,10 +156,12 @@ const init = async () => {
                           />
                         </Route>
                       </Route>
-                      <Route
-                        path="onlyoffice/:fileId"
-                        component={OnlyOfficeView}
-                      />
+                      {isOnlyOfficeEnabled() && (
+                        <Route
+                          path="onlyoffice/:fileId"
+                          component={OnlyOfficeView}
+                        />
+                      )}
                       <Route
                         path="external/:fileId"
                         component={ExternalRedirect}

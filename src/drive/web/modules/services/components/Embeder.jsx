@@ -1,9 +1,12 @@
 import React from 'react'
+import { Router, Route, hashHistory } from 'react-router'
 
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import IconSprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 
 import FileOpenerExternal from 'drive/web/modules/viewer/FileOpenerExternal'
+import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
+import OnlyOfficeView from 'drive/web/modules/views/OnlyOffice'
 
 class Embeder extends React.Component {
   constructor(props) {
@@ -40,7 +43,20 @@ class Embeder extends React.Component {
           <pre className="u-error">{this.state.error.toString()}</pre>
         )}
         {this.state.fileId && (
-          <FileOpenerExternal service={service} fileId={this.state.fileId} />
+          <Router history={hashHistory}>
+            <Route
+              path="/"
+              component={() => (
+                <FileOpenerExternal
+                  service={service}
+                  fileId={this.state.fileId}
+                />
+              )}
+            />
+            {isOnlyOfficeEnabled() && (
+              <Route path="onlyoffice/:fileId" component={OnlyOfficeView} />
+            )}
+          </Router>
         )}
         <IconSprite />
       </div>
