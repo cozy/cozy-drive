@@ -5077,12 +5077,12 @@ cosmiconfig@^6.0.0:
     path-type "^4.0.0"
     yaml "^1.7.2"
 
-cozy-authentication@^2.0.5:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/cozy-authentication/-/cozy-authentication-2.3.2.tgz#6fe5c359a25d44713e7f9a3dfa7fc4ff18519312"
-  integrity sha512-Vi6ZCMt8BUGvmsP8UBJO9OLE26WKKMZG7G/DEZRq5x74IiqdWmTi1Fz9srTESQjRjcc5Q02VxYqs7gbu+scyJQ==
+cozy-authentication@2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/cozy-authentication/-/cozy-authentication-2.6.1.tgz#c21e190b65a1cd8cd837728790ea397957c5c9bb"
+  integrity sha512-1C2Dr/YAwgP5mSTNfClQLH3fJ86fFtattevzxyBRJe+4aTYVXIHf+7mK2S+8bYUb3JkKvbICe5YEfEzqHE615A==
   dependencies:
-    cozy-device-helper "^1.10.3"
+    cozy-device-helper "^1.12.0"
     localforage "1.7.3"
     prop-types "15.7.2"
     snarkdown "1.2.2"
@@ -5251,19 +5251,19 @@ cozy-device-helper@1.8.0:
   dependencies:
     lodash "4.17.15"
 
-cozy-device-helper@^1.10.3, cozy-device-helper@^1.7.3:
-  version "1.10.3"
-  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.10.3.tgz#c2ee5b9891b7865d97125ad7e71a1f7af9c639c6"
-  integrity sha512-n1GR1X6D00e6G0b4GD0PpMDbvbxltAboVLN2RWfYURg0bOlVb2QC7ay6WrIlGHc+rVVY8FPBvuV/87A3vEEuiQ==
-  dependencies:
-    lodash "4.17.19"
-
 cozy-device-helper@^1.12.0:
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.12.0.tgz#619a24b0d3caf2d3f616a1524daef7c7b71eab7a"
   integrity sha512-7pFbltgkD8rSO0PEf8pd6aBB37RUnNYH7fb3pkbcvo5rk4quCfSLREV94gZwXxowzP4vjZcAumTM09DfI42mJA==
   dependencies:
     lodash "^4.17.19"
+
+cozy-device-helper@^1.7.3:
+  version "1.10.3"
+  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.10.3.tgz#c2ee5b9891b7865d97125ad7e71a1f7af9c639c6"
+  integrity sha512-n1GR1X6D00e6G0b4GD0PpMDbvbxltAboVLN2RWfYURg0bOlVb2QC7ay6WrIlGHc+rVVY8FPBvuV/87A3vEEuiQ==
+  dependencies:
+    lodash "4.17.19"
 
 cozy-doctypes@1.78.0:
   version "1.78.0"
