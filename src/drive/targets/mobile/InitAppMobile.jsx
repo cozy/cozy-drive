@@ -141,17 +141,22 @@ class InitAppMobile {
     if (this.isStarting === true) {
       return
     }
-    this.isStarting = true
-    const store = await this.getStore()
-    this.startApplication()
-    await this.appReady
-    this.getPolyglot()
-    this.openWith()
-    if (isBackgroundServiceParameter()) {
-      startBackgroundService()
+
+    try {
+      this.isStarting = true
+      const store = await this.getStore()
+      this.startApplication()
+      await this.appReady
+      this.getPolyglot()
+      this.openWith()
+      if (isBackgroundServiceParameter()) {
+        startBackgroundService()
+      }
+      store.dispatch(backupImages())
+      if (navigator && navigator.splashscreen) navigator.splashscreen.hide()
+    } catch (e) {
+      logger.error(`onDeviceReady catches : ${e}`)
     }
-    store.dispatch(backupImages())
-    if (navigator && navigator.splashscreen) navigator.splashscreen.hide()
   }
 
   onResume = async () => {

@@ -15,6 +15,7 @@ jest.mock('drive/mobile/lib/cozy-helper', () => {
 })
 jest.mock('drive/lib/registerClientPlugins', () => jest.fn())
 jest.mock('drive/store/configureStore')
+jest.mock('drive/store/persistedState')
 jest.mock('drive/lib/reporter')
 jest.mock(
   'drive/mobile/modules/authorization/DriveMobileRouter',
@@ -54,6 +55,7 @@ describe('App initialize', () => {
     await appStarting
     expect(startApplicationSpy).toHaveBeenCalled()
   })
+
   it('should inform us when the app is started', async () => {
     const app = new InitAppMobile()
     const appStarting = app.initialize()
@@ -61,6 +63,7 @@ describe('App initialize', () => {
     const result = await appStarting
     expect(result).toBe(true)
   })
+
   it('should not restart the app while its starting', async () => {
     const app = new InitAppMobile()
     const startApplicationSpy = jest.spyOn(app, 'startApplication')
@@ -75,6 +78,7 @@ describe('App initialize', () => {
     await appStarting
     expect(startApplicationSpy).toHaveBeenCalledTimes(1)
   })
+
   it('should only start the app once', async () => {
     const app = new InitAppMobile()
 
@@ -88,6 +92,7 @@ describe('App initialize', () => {
     await app.startApplication()
     expect(render).toHaveBeenCalledTimes(1)
   })
+
   describe('openWith', () => {
     it('should call removeItem and not setItem when intent is empty', async () => {
       const app = new InitAppMobile()
