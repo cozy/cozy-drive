@@ -62,10 +62,11 @@ const saveOfflineFileCopy = async (file, client) => {
   if (!isMobileApp() || !window.cordova.file) {
     return
   }
+
   try {
     const response = await client
       .collection('io.cozy.files')
-      .fetchFileContent(file.id)
+      .fetchFileContentById(file.id)
     const blob = await response.blob()
     const filename = file.id
     saveFileWithCordova(blob, filename)

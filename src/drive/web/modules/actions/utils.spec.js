@@ -175,7 +175,7 @@ describe('openFileWith', () => {
     isMobileApp.mockReturnValue(true)
 
     mockClient.collection = jest.fn().mockReturnValue(mockClient)
-    mockClient.fetchFileContent = jest.fn().mockReturnValue({
+    mockClient.fetchFileContentById = jest.fn().mockReturnValue({
       blob: blobMock
     })
 
@@ -190,7 +190,7 @@ describe('openFileWith', () => {
   it('opens the file with cordova', async () => {
     blobMock.mockReturnValue('fake file blob')
     await openFileWith(mockClient, file)
-    expect(mockClient.fetchFileContent).toHaveBeenCalledWith(file.id)
+    expect(mockClient.fetchFileContentById).toHaveBeenCalledWith(file.id)
     expect(saveAndOpenWithCordova).toHaveBeenCalledWith('fake file blob', file)
   })
 
@@ -205,7 +205,7 @@ describe('openFileWith', () => {
 
   it('errors when it fails to download the file', async () => {
     expect.assertions(2)
-    mockClient.fetchFileContent = jest.fn().mockRejectedValue('nope')
+    mockClient.fetchFileContentById = jest.fn().mockRejectedValue('nope')
     try {
       await openFileWith(mockClient, file)
     } catch (e) {
@@ -234,7 +234,7 @@ describe('exportFilesNative', () => {
     jest.resetAllMocks()
 
     mockClient.collection = jest.fn().mockReturnValue(mockClient)
-    mockClient.fetchFileContent = jest.fn().mockReturnValue({
+    mockClient.fetchFileContentById = jest.fn().mockReturnValue({
       blob: jest.fn().mockReturnValue()
     })
     saveFileWithCordova.mockReturnValue({
@@ -253,13 +253,13 @@ describe('exportFilesNative', () => {
     await exportFilesNative(mockClient, files, 'files.zip')
 
     files.forEach(file =>
-      expect(mockClient.fetchFileContent).toHaveBeenCalledWith(file.id)
+      expect(mockClient.fetchFileContentById).toHaveBeenCalledWith(file.id)
     )
     expect(exportMock).toHaveBeenCalled()
   })
 
   it('reports an error', async () => {
-    mockClient.fetchFileContent.mockRejectedValue('nope')
+    mockClient.fetchFileContentById.mockRejectedValue('nope')
     await exportFilesNative(mockClient, files, 'files.zip')
     expect(Alerter.error).toHaveBeenCalled()
   })
