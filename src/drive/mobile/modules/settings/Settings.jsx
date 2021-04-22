@@ -3,6 +3,8 @@
 import React, { Component } from 'react'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import { RealTimeQueries } from 'cozy-client'
+
 import Main from 'drive/web/modules/layout/Main'
 
 import DebugTools from './components/DebugTools'
@@ -12,7 +14,6 @@ import MediaBackup from './components/MediaBackup'
 import Unlink from './components/Unlink'
 import FeedbackForm from './components/FeedbackForm'
 import ScrollToTop from 'drive/web/modules/navigation/ScrollToTop'
-import RealTimeQueries from 'drive/lib/RealTimeQueries'
 import styles from './styles.styl'
 
 const { BarCenter } = cozy.bar
