@@ -16,7 +16,7 @@
     <platform name="android">
         <preference name="android-minSdkVersion" value="21" />
         <preference name="StatusBarBackgroundColor" value="#D6D8DA" />
-        <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+        <preference name="AndroidPersistentFileLocation" value="Internal" />
         <preference name="AndroidLaunchMode" value="singleTask" />
         <allow-intent href="market:*" />
         <custom-config-file parent="./application/activity/[@android:name='MainActivity']" target="AndroidManifest.xml">

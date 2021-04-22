@@ -9,7 +9,7 @@ const dispatchChange = (document, mutationDefinitionCreator, client) => {
   const options = {}
   client.dispatch(
     receiveMutationResult(
-      client.generateId(),
+      client.generateRandomId(),
       response,
       options,
       mutationDefinitionCreator(document)
