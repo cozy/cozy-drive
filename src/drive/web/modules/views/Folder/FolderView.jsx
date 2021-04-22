@@ -1,12 +1,9 @@
 import React from 'react'
-
-import { ModalStack } from 'drive/lib/ModalContext'
-
-import Main from 'drive/web/modules/layout/Main'
+import { RealTimeQueries } from 'cozy-client'
 
 import { ModalManager } from 'react-cozy-helpers'
-
-import RealTimeQueries from 'drive/lib/RealTimeQueries'
+import { ModalStack } from 'drive/lib/ModalContext'
+import Main from 'drive/web/modules/layout/Main'
 
 const FolderView = ({ children }) => {
   return (
