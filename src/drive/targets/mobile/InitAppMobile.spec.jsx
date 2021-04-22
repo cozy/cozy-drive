@@ -16,7 +16,6 @@ jest.mock('drive/mobile/lib/cozy-helper', () => {
 jest.mock('drive/lib/registerClientPlugins', () => jest.fn())
 jest.mock('drive/store/configureStore')
 jest.mock('drive/store/persistedState')
-jest.mock('drive/lib/reporter')
 jest.mock(
   'drive/mobile/modules/authorization/DriveMobileRouter',
   () => () => {}
