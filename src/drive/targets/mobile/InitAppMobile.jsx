@@ -1,20 +1,20 @@
 /* global __DEVELOPMENT__, cordova */
 
 import 'whatwg-fetch'
+
 import React from 'react'
 import { render } from 'react-dom'
 import { hashHistory } from 'react-router'
 import localforage from 'localforage'
-import { saveState } from 'drive/store/persistedState'
 
-import { initTranslation } from 'cozy-ui/transpiled/react/I18n'
 import { isIOSApp } from 'cozy-device-helper'
 import { Document } from 'cozy-doctypes'
+import { initTranslation } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
-import logger from 'lib/logger'
+import { saveState, loadState } from 'drive/store/persistedState'
 import configureStore from 'drive/store/configureStore'
-import { loadState } from 'drive/store/persistedState'
+import logger from 'lib/logger'
 import { startBackgroundService } from 'drive/mobile/lib/background'
 import { configureReporter, logException } from 'drive/lib/reporter'
 import {

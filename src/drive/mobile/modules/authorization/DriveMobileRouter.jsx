@@ -2,22 +2,24 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Proptypes from 'prop-types'
 import localForage from 'localforage'
+
 import { MobileRouter } from 'cozy-authentication'
 import { getUniversalLinkDomain } from 'cozy-ui/transpiled/react/AppLinker'
 import { withClient } from 'cozy-client'
+import { IconSprite } from 'cozy-ui/transpiled/react/'
+
 import AppRoute from 'drive/web/modules/navigation/AppRoute'
 import { setUrl } from 'drive/mobile/modules/settings/duck'
 import { restoreCozyClientJs, initBar } from 'drive/mobile/lib/cozy-helper'
-import { IconSprite } from 'cozy-ui/transpiled/react/'
-
 import { unlink } from './duck/index'
 import { saveCredentials } from './sagas'
 import { setCozyUrl } from 'drive/lib/reporter'
 import { ONBOARDED_ITEM } from 'drive/mobile/modules/onboarding/OnBoarding'
 import { PROTOCOL, SOFTWARE_NAME } from 'drive/mobile/lib/constants'
 import appMetadata from 'drive/appMetadata'
+import migrateOfflineFiles from 'drive/targets/mobile/migrations/migrationOfflineFiles'
+import appBooted from 'drive/targets/mobile'
 
-import appBooted from '../../../targets/mobile/'
 class DriveMobileRouter extends Component {
   state = {
     isAppBooted: false
@@ -46,11 +48,17 @@ class DriveMobileRouter extends Component {
 
   afterAuthentication = async () => {
     const { client } = this.props
+
     await this.initClientAndBar(client)
     const oauthClient = client.getStackClient()
     oauthClient.onTokenRefresh = async () => {
       await this.initClientAndBar(client)
     }
+
+    // needed to support android 11
+    // added in cozy-drive v1.35.0
+    await migrateOfflineFiles(client)
+
     //Check if we have something in the localStorage to see if
     //we need to redirect to /onboarding
     const alreadyOnboarded = await localForage.getItem(ONBOARDED_ITEM)
