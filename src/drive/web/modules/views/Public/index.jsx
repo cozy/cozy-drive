@@ -3,6 +3,7 @@ import { connect, useDispatch } from 'react-redux'
 import { ModalManager } from 'react-cozy-helpers'
 import get from 'lodash/get'
 import uniqBy from 'lodash/uniqBy'
+import cx from 'classnames'
 
 import { useClient, models } from 'cozy-client'
 import { SharingContext } from 'cozy-sharing'
@@ -172,7 +173,7 @@ const PublicFolderView = ({
         <ModalStack />
         <ModalManager />
         <SharingBanner sharingInfos={sharingInfos} />
-        <div className="u-pt-2">
+        <div className={cx({ 'u-pt-2': !isMobile })}>
           <FolderViewHeader>
             {currentFolderId && (
               <>

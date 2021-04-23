@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import cx from 'classnames'
 
 import PublicToolbarByLink from './PublicToolbarByLink'
 import PublicToolbarCozyToCozy from './PublicToolbarCozyToCozy'
@@ -8,7 +9,8 @@ const PublicToolbar = ({
   hasWriteAccess,
   refreshFolderContent,
   files,
-  sharingInfos
+  sharingInfos,
+  className
 }) => {
   const {
     loading,
@@ -19,7 +21,10 @@ const PublicToolbar = ({
 
   if (loading) return null
   return (
-    <div className="u-flex u-flex-justify-end" data-testid="public-toolbar">
+    <div
+      className={cx('u-flex u-flex-justify-end', className)}
+      data-testid="public-toolbar"
+    >
       {!discoveryLink ? (
         <PublicToolbarByLink
           files={files}
@@ -44,7 +49,8 @@ PublicToolbar.propTypes = {
   hasWriteAccess: PropTypes.bool,
   // refreshFolderContent is not required if we're displaying only one file or in a cozy to cozy sharing
   refreshFolderContent: PropTypes.func,
-  sharingInfos: PropTypes.object
+  sharingInfos: PropTypes.object,
+  className: PropTypes.string
 }
 
 export default PublicToolbar

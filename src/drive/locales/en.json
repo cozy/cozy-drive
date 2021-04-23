@@ -518,6 +518,7 @@
     "noviewer": {
       "download": "Download this file",
       "openWith": "Open with...",
+      "openInOnlyOffice": "Open with Only Office",
       "cta": {
         "saveTime": "Save some time!",
         "installDesktop": "Install the synchronization tool for your computer",

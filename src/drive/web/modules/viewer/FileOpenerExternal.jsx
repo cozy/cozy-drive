@@ -18,10 +18,14 @@ import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Viewer from 'cozy-ui/transpiled/react/Viewer'
 import Overlay from 'cozy-ui/transpiled/react/Overlay'
 
+import Fallback from 'drive/web/modules/viewer/Fallback'
+import {
+  isOnlyOfficeEnabled,
+  makeOnlyOfficeFileRoute
+} from 'drive/web/modules/views/OnlyOffice/helpers'
 import { showPanel } from './helpers'
 import PanelContent from './Panel/PanelContent'
 import FooterContent from './Footer/FooterContent'
-import Fallback from 'drive/web/modules/viewer/Fallback'
 
 const FileNotFoundError = translate()(({ t }) => (
   <pre className="u-error">{t('FileOpenerExternal.fileNotFoundError')}</pre>
@@ -65,7 +69,7 @@ export class FileOpener extends Component {
 
   render() {
     const { file, loading, fileNotFound } = this.state
-    const { t, service } = this.props
+    const { t, service, router } = this.props
 
     return (
       <div className="u-pos-absolute u-w-100 u-h-100 u-bg-charcoalGrey">
@@ -83,6 +87,11 @@ export class FileOpener extends Component {
                   renderFallbackExtraContent={file => (
                     <Fallback file={file} t={t} />
                   )}
+                  onlyOfficeProps={{
+                    isEnabled: isOnlyOfficeEnabled(),
+                    opener: file =>
+                      router.push(makeOnlyOfficeFileRoute(file, true))
+                  }}
                   panelInfoProps={{
                     showPanel,
                     PanelContent
