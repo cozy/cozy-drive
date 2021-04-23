@@ -35,15 +35,15 @@ const Item = translate()(({ file, status }) => {
       )
       break
     case 'cancel':
-      statusIcon = <Icon className="u-ml-half u-warn" icon={CrossIcon} />
+      statusIcon = <Icon className="u-ml-half u-warning" icon={CrossIcon} />
       break
     case 'failed':
     case 'conflict':
     case 'network':
-      statusIcon = <Icon className="u-ml-half u-warn" icon={WarningIcon} />
+      statusIcon = <Icon className="u-ml-half u-warning" icon={WarningIcon} />
       break
     case 'loaded':
-      statusIcon = <Icon className="u-ml-half u-valid" icon={CheckIcon} />
+      statusIcon = <Icon className="u-ml-half u-success" icon={CheckIcon} />
       break
     case 'pending':
     default:
