@@ -1,3 +1,5 @@
+import localforage from 'localforage'
+
 import {
   saveFileWithCordova,
   openOfflineFile,
@@ -27,7 +29,7 @@ export default (state = [], action = {}) => {
 }
 
 const markAsAvailableOffline = id => ({ type: MAKE_AVAILABLE_OFFLINE, id })
-const markAsUnavailableOffline = id => ({
+export const markAsUnavailableOffline = id => ({
   type: UNDO_MAKE_AVAILABLE_OFFLINE,
   id
 })
@@ -58,14 +60,15 @@ const makeAvailableOffline = (file, client) => async dispatch => {
   dispatch(markAsAvailableOffline(file.id))
 }
 
-const saveOfflineFileCopy = async (file, client) => {
+export const saveOfflineFileCopy = async (file, client) => {
   if (!isMobileApp() || !window.cordova.file) {
     return
   }
+
   try {
     const response = await client
       .collection('io.cozy.files')
-      .fetchFileContent(file.id)
+      .fetchFileContentById(file.id)
     const blob = await response.blob()
     const filename = file.id
     saveFileWithCordova(blob, filename)
@@ -108,4 +111,9 @@ export const updateOfflineFileCopyIfNecessary = (
   ) {
     await saveOfflineFileCopy(file, client)
   }
+}
+
+export const addFileIdToLocalStorageItem = async (key, value) => {
+  const oldValue = (await localforage.getItem(key)) || []
+  await localforage.setItem(key, [...oldValue, value])
 }

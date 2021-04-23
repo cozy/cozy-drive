@@ -123,7 +123,7 @@ export const exportFilesNative = async (client, files, filename) => {
   const downloadAllFiles = files.map(async file => {
     const response = await client
       .collection('io.cozy.files')
-      .fetchFileContent(file.id)
+      .fetchFileContentById(file.id)
 
     const blob = await response.blob()
     const filenameToUse = filename ? filename : file.name
@@ -182,7 +182,7 @@ export const openFileWith = async (client, file) => {
     try {
       fileData = await client
         .collection('io.cozy.files')
-        .fetchFileContent(file.id)
+        .fetchFileContentById(file.id)
     } catch (error) {
       Alerter.error(openFileDownloadError(error))
       throw error
