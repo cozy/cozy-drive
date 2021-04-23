@@ -87,11 +87,37 @@ exports[`AlbumsView displays an empty Component 1`] = `
     <svg
       class="styles__c-empty-img___2GC4d styles__icon___23x3R"
       height="100%"
+      viewBox="0 0 32 32"
       width="100%"
     >
-      <use
-        href="#icon-0"
-      />
+      <g
+        fill="none"
+        fill-rule="evenodd"
+        transform="translate(0 3)"
+      >
+        <rect
+          fill="#8EE39B"
+          height="26"
+          rx="2"
+          width="32"
+        />
+        <path
+          d="M0 20l6.29-6.29a.999.999 0 011.416-.004L11 17l8.294-8.294a1.003 1.003 0 011.412 0L32 20v4.002C32 25.106 31.11 26 29.998 26H2.002A2.002 2.002 0 010 24.002V20z"
+          fill="#1EC737"
+        />
+        <circle
+          cx="8"
+          cy="7"
+          fill="#FFF"
+          r="3"
+        />
+        <path
+          d="M11 16l-5.5 5.5L11 16z"
+          stroke="#8EE39B"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </g>
     </svg>
     <h3
       class="MuiTypography-root MuiTypography-h3 MuiTypography-colorTextPrimary MuiTypography-gutterBottom"

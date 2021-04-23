@@ -8,10 +8,10 @@ import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 import RenameIcon from 'cozy-ui/transpiled/react/Icons/Rename'
 import AlbumAddIcon from 'cozy-ui/transpiled/react/Icons/AlbumAdd'
 import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
+import CheckboxIcon from 'cozy-ui/transpiled/react/Icons/CheckSquare'
 
 import { MoreButton } from 'components/Button'
 
-import CheckboxIcon from 'photos/assets/icons/icon-checkbox.svg'
 import styles from 'photos/styles/toolbar.styl'
 
 class AlbumToolbar extends Component {

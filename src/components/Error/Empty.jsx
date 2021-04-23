@@ -1,10 +1,10 @@
 import React from 'react'
+
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Empty from 'cozy-ui/transpiled/react/Empty'
-
-import DriveIcon from 'drive/assets/icons/icon-type-folder.svg'
-import PhotosIcon from 'photos/assets/icons/icon-main-app.svg'
-import TrashIcon from 'drive/assets/icons/icon-trash-big.svg'
+import DriveIcon from 'cozy-ui/transpiled/react/Icons/FileTypeFolder'
+import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
+import PhotosIcon from 'cozy-ui/transpiled/react/Icons/FileTypeImage'
 
 const EmptyIcon = {
   drive: DriveIcon,

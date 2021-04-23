@@ -11,8 +11,7 @@ import Card from 'cozy-ui/transpiled/react/Card'
 import palette from 'cozy-ui/stylus/settings/palette.json'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import CrossIcon from 'cozy-ui/transpiled/react/Icons/Cross'
-
-import DriveIcon from 'drive/assets/icons/icon-drive.svg'
+import DriveIcon from 'cozy-ui/transpiled/react/Icons/FileTypeFolder'
 
 const HeaderIlustration = ({ count }) => {
   return count > 1 ? (
