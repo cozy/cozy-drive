@@ -8,7 +8,7 @@ import { CozyFile } from 'models'
 import logger from 'lib/logger'
 import { RefreshableSharings } from 'cozy-sharing'
 import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
-import Modal from 'cozy-ui/transpiled/react/Modal'
+import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
@@ -154,68 +154,76 @@ export class MoveModal extends React.Component {
   }
 
   render() {
-    const { onClose, entries, t } = this.props
+    const { onClose, entries } = this.props
     const { folderId, isMoveInProgress } = this.state
     const contentQuery = buildMoveOrImportQuery(folderId)
     const folderQuery = buildOnlyFolderQuery(folderId)
+
     return (
-      <Modal
-        size={'xlarge'}
-        closable={false}
-        overflowHidden
-        mobileFullscreen
-        into="body"
-        aria-label={t('Move.modalTitle')}
-        className={'u-mih-100'}
-      >
-        <Header entries={entries} onClose={onClose} />
-        <Query
-          query={folderQuery.definition()}
-          fetchPolicy={folderQuery.options.fetchPolicy}
-          as={folderQuery.options.as}
-          key={`breadcrumb-${folderId}`}
-        >
-          {({ data, fetchStatus }) => (
-            <Topbar
-              navigateTo={this.navigateTo}
-              currentDir={data}
-              fetchStatus={fetchStatus}
-            />
-          )}
-        </Query>
-        <Query
-          query={contentQuery.definition()}
-          fetchPolicy={contentQuery.options.fetchPolicy}
-          as={contentQuery.options.as}
-          key={`content-${folderId}`}
-        >
-          {({ data, fetchStatus, hasMore, fetchMore }) => {
-            return (
-              <Explorer>
-                <Loader fetchStatus={fetchStatus} hasNoData={data.length === 0}>
-                  <FileList
-                    files={data}
-                    targets={entries}
-                    navigateTo={this.navigateTo}
-                  />
-                  <LoadMore hasMore={hasMore} fetchMore={fetchMore} />
-                </Loader>
-              </Explorer>
-            )
-          }}
-        </Query>
-        <RefreshableSharings>
-          {({ refresh }) => (
-            <Footer
-              onConfirm={() => this.moveEntries(refresh)}
-              onClose={onClose}
-              targets={entries}
-              currentDirId={folderId}
-              isMoving={isMoveInProgress}
-            />
-          )}
-        </RefreshableSharings>
-      </Modal>
+      <FixedDialog
+        open
+        onClose={onClose}
+        size="large"
+        classes={{ paper: 'u-h-100' }}
+        title={
+          <>
+            <Header entries={entries} />
+            <Query
+              query={folderQuery.definition()}
+              fetchPolicy={folderQuery.options.fetchPolicy}
+              as={folderQuery.options.as}
+              key={`breadcrumb-${folderId}`}
+            >
+              {({ data, fetchStatus }) => (
+                <Topbar
+                  navigateTo={this.navigateTo}
+                  currentDir={data}
+                  fetchStatus={fetchStatus}
+                />
+              )}
+            </Query>
+          </>
+        }
+        content={
+          <Query
+            query={contentQuery.definition()}
+            fetchPolicy={contentQuery.options.fetchPolicy}
+            as={contentQuery.options.as}
+            key={`content-${folderId}`}
+          >
+            {({ data, fetchStatus, hasMore, fetchMore }) => {
+              return (
+                <Explorer>
+                  <Loader
+                    fetchStatus={fetchStatus}
+                    hasNoData={data.length === 0}
+                  >
+                    <FileList
+                      files={data}
+                      targets={entries}
+                      navigateTo={this.navigateTo}
+                    />
+                    <LoadMore hasMore={hasMore} fetchMore={fetchMore} />
+                  </Loader>
+                </Explorer>
+              )
+            }}
+          </Query>
+        }
+        actions={
+          <RefreshableSharings>
+            {({ refresh }) => (
+              <Footer
+                onConfirm={() => this.moveEntries(refresh)}
+                onClose={onClose}
+                targets={entries}
+                currentDirId={folderId}
+                isMoving={isMoveInProgress}
+              />
+            )}
+          </RefreshableSharings>
+        }
+      />
     )
   }
 }

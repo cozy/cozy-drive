@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { ModalFooter, ModalButtons } from 'cozy-ui/transpiled/react/Modal'
 import Button from 'cozy-ui/transpiled/react/Button'
 
 const areTargetsInCurrentDir = (targets, currentDirId) => {
@@ -27,18 +26,17 @@ const Footer = (
   const secondaryText = secondaryTextAction
     ? secondaryTextAction
     : t('Move.cancel')
+
   return (
-    <ModalFooter>
-      <ModalButtons>
-        <Button label={secondaryText} theme="secondary" onClick={onClose} />
-        <Button
-          label={primaryText}
-          onClick={onConfirm}
-          disabled={areTargetsInCurrentDir(targets, currentDirId) || isMoving}
-          busy={isMoving}
-        />
-      </ModalButtons>
-    </ModalFooter>
+    <>
+      <Button label={secondaryText} theme="secondary" onClick={onClose} />
+      <Button
+        label={primaryText}
+        onClick={onConfirm}
+        disabled={areTargetsInCurrentDir(targets, currentDirId) || isMoving}
+        busy={isMoving}
+      />
+    </>
   )
 }
 
