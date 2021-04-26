@@ -534,7 +534,7 @@
       "retry": "Retry"
     },
     "error": {
-      "noapp": "No application found to handle this file.",
+      "noapp": "No application on your device can handle this file.",
       "generic": "An error occurred when opening this file, please try again.",
       "noNetwork": "You're currently offline."
     },
