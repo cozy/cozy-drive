@@ -7,7 +7,7 @@ import { DialogContent } from 'cozy-ui/transpiled/react/Dialog'
 import View from 'drive/web/modules/views/OnlyOffice/View'
 import Error from 'drive/web/modules/views/OnlyOffice/Error'
 import Loading from 'drive/web/modules/views/OnlyOffice/Loading'
-import Header from 'drive/web/modules/views/OnlyOffice/Header'
+import Title from 'drive/web/modules/views/OnlyOffice/Title'
 
 export const Editor = ({ fileId }) => {
   const { data, fetchStatus } = useFetchJSON('GET', `/office/${fileId}/open`)
@@ -29,7 +29,7 @@ export const Editor = ({ fileId }) => {
 
   return (
     <>
-      <Header />
+      <Title />
       <DialogContent className="u-p-0">
         <View
           id={new URL(serverUrl).hostname}

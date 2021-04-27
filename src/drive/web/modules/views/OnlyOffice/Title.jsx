@@ -4,6 +4,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import { DialogTitle } from 'cozy-ui/transpiled/react/Dialog'
 import Divider from 'cozy-ui/transpiled/react/MuiCozyTheme/Divider'
 
+import Toolbar from 'drive/web/modules/views/OnlyOffice/Toolbar'
+
 const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
@@ -13,23 +15,22 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const Header = () => {
+const Title = () => {
   const styles = useStyles()
 
   return (
     <>
       <DialogTitle
-        data-testid="onlyoffice-toolbar"
+        data-testid="onlyoffice-title"
         disableTypography
         className="u-ellipsis"
         classes={styles}
       >
-        {/* TODO: to be modified with real stuff */}
-        <div>title</div>
+        <Toolbar />
       </DialogTitle>
       <Divider />
     </>
   )
 }
 
-export default Header
+export default Title
