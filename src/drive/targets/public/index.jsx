@@ -8,29 +8,24 @@ import 'cozy-ui/transpiled/react/stylesheet.css'
 
 import { Router, Route, Redirect, hashHistory } from 'react-router'
 import { getQueryParameter } from 'react-cozy-helpers'
-
-import SharingProvider from 'cozy-sharing'
-import getSharedDocument from 'cozy-sharing/dist/getSharedDocument'
 import CozyClient, { models } from 'cozy-client'
-import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { I18n, initTranslation } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import getSharedDocument from 'cozy-sharing/dist/getSharedDocument'
 
-import logger from 'lib/logger'
-import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
-import FileHistory from 'components/FileHistory'
-import ErrorShare from 'components/Error/ErrorShare'
-import App from 'components/App/App'
-import { ThumbnailSizeContextProvider } from 'drive/lib/ThumbnailSizeContext'
-import { ModalContextProvider } from 'drive/lib/ModalContext'
 import registerClientPlugins from 'drive/lib/registerClientPlugins'
+import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 import { schema } from 'drive/lib/doctypes'
 import configureStore from 'drive/store/configureStore'
 import PublicLayout from 'drive/web/modules/public/PublicLayout'
-import LightFileViewer from 'drive/web/modules/public/LightFileViewer'
 import PublicFolderView from 'drive/web/modules/views/Public'
+import LightFileViewer from 'drive/web/modules/public/LightFileViewer'
+import FileHistory from 'components/FileHistory'
+import ErrorShare from 'components/Error/ErrorShare'
 import OnlyOfficeView from 'drive/web/modules/views/OnlyOffice'
 import appMetadata from 'drive/appMetadata'
+import logger from 'lib/logger'
+import App from 'components/App/App'
 import ExternalRedirect from 'drive/web/modules/navigation/ExternalRedirect'
 import StyledApp from 'drive/web/modules/drive/StyledApp'
 import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
@@ -118,61 +113,35 @@ const init = async () => {
       initCozyBar(dataset)
       render(
         <App lang={lang} polyglot={polyglot} client={client} store={store}>
-          <SharingProvider doctype="io.cozy.files" documentType="Files">
-            <BreakpointsProvider>
-              <ThumbnailSizeContextProvider>
-                <ModalContextProvider>
-                  {isFile ? (
-                    <Router history={hashHistory}>
-                      <Route
-                        path="/"
-                        component={() => (
-                          <PublicLayout>
-                            <LightFileViewer files={[data]} />
-                          </PublicLayout>
-                        )}
-                      />
-                      {isOnlyOfficeEnabled() && (
-                        <Route
-                          path="onlyoffice/:fileId"
-                          component={OnlyOfficeView}
-                        />
-                      )}
-                    </Router>
-                  ) : (
-                    <Router history={hashHistory}>
-                      <Route component={PublicLayout}>
-                        <Redirect
-                          from="/files/:folderId"
-                          to="/folder/:folderId"
-                        />
-                        <Route
-                          path="folder(/:folderId)"
-                          component={PublicFolderView}
-                        >
-                          <Route
-                            path="file/:fileId/revision"
-                            component={FileHistory}
-                          />
-                        </Route>
-                      </Route>
-                      {isOnlyOfficeEnabled() && (
-                        <Route
-                          path="onlyoffice/:fileId"
-                          component={OnlyOfficeView}
-                        />
-                      )}
-                      <Route
-                        path="external/:fileId"
-                        component={ExternalRedirect}
-                      />
-                      <Redirect from="/*" to={`folder/${sharedDocumentId}`} />
-                    </Router>
-                  )}
-                </ModalContextProvider>
-              </ThumbnailSizeContextProvider>
-            </BreakpointsProvider>
-          </SharingProvider>
+          {isFile ? (
+            <Router history={hashHistory}>
+              <Route
+                path="/"
+                component={() => (
+                  <PublicLayout>
+                    <LightFileViewer files={[data]} />
+                  </PublicLayout>
+                )}
+              />
+              {isOnlyOfficeEnabled() && (
+                <Route path="onlyoffice/:fileId" component={OnlyOfficeView} />
+              )}
+            </Router>
+          ) : (
+            <Router history={hashHistory}>
+              <Route component={PublicLayout}>
+                <Redirect from="/files/:folderId" to="/folder/:folderId" />
+                <Route path="folder(/:folderId)" component={PublicFolderView}>
+                  <Route path="file/:fileId/revision" component={FileHistory} />
+                </Route>
+              </Route>
+              {isOnlyOfficeEnabled() && (
+                <Route path="onlyoffice/:fileId" component={OnlyOfficeView} />
+              )}
+              <Route path="external/:fileId" component={ExternalRedirect} />
+              <Redirect from="/*" to={`folder/${sharedDocumentId}`} />
+            </Router>
+          )}
         </App>,
         root
       )
