@@ -37,10 +37,10 @@ const Header = ({ entries, onClose, title, subTitle }) => {
           <HeaderIlustration count={entries.length} />
         </Img>
         <Bd>
-          <Typography variant="h6" ellipsis>
+          <Typography variant="h6" noWrap>
             {entries.length !== 1 ? titleToUse : entries[0].name}
           </Typography>
-          <Typography variant="caption" color="textSecondary" ellipsis>
+          <Typography variant="caption" color="textSecondary" noWrap>
             {subTitleToUse}
           </Typography>
         </Bd>
