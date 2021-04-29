@@ -33,7 +33,6 @@ export const getOauthOptions = () => {
 
 export const initClient = url => {
   const stackLink = new StackLink()
-
   const pouchLinkOptions = {
     doctypes: [DOCTYPE_FILES],
     doctypesReplicationOptions: {
@@ -49,6 +48,14 @@ export const initClient = url => {
           buildRecentQuery(),
           buildFolderQuery('io.cozy.files.root-dir')
         ]
+      }
+    },
+    pouch: {
+      plugins: [require('pouchdb-adapter-indexeddb').default],
+      options: {
+        adapter: 'indexeddb',
+        location: 'default',
+        revs_limit: 1
       }
     },
     initialSync: true
