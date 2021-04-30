@@ -5402,10 +5402,10 @@ cozy-pouch-link@22.0.0:
     pouchdb-browser "^7.0.0"
     pouchdb-find "^7.0.0"
 
-cozy-realtime@3.12.2:
-  version "3.12.2"
-  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-3.12.2.tgz#f9afb1957b77f6caa35c096fa2505c7067a9d3c1"
-  integrity sha512-xoTeJp4qFd3jVBRRuxh21a5PWTnKJEu2jR4/+J3V1HB/UbQ3CJhJC93NwaHWPLNpur5IoNPBMjXno4RFYPEoeQ==
+cozy-realtime@3.13.0:
+  version "3.13.0"
+  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-3.13.0.tgz#aea05fbae2b941005f33b298bbe3fb3943d8faba"
+  integrity sha512-DxG/rV1Kw7FO5bYbBLBxQkEJIDBVhqs/xHRGSqYu4ShkQGR+FCrNB9hWSK3b8nGCS/xcskTZvvS+n765QW/MIg==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     cozy-device-helper "^1.12.0"
