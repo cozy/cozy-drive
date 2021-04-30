@@ -119,7 +119,7 @@
     "cozy-harvest-lib": "5.3.1",
     "cozy-logger": "1.6.0",
     "cozy-pouch-link": "22.0.0",
-    "cozy-realtime": "3.12.2",
+    "cozy-realtime": "3.13.0",
     "cozy-scanner": "1.1.1",
     "cozy-scripts": "5.1.1",
     "cozy-sharing": "3.3.3",
