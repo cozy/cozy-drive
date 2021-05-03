@@ -144,7 +144,7 @@ export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
               />
             )
           }
-          left={<Icon icon={TrashIcon} className="u-error" />}
+          left={<Icon icon={TrashIcon} color="var(--errorColor)" />}
         >
           <span className="u-error">{t('SelectionBar.trash')}</span>
         </ActionMenuItem>
@@ -343,7 +343,7 @@ export const destroy = ({ pushModal, popModal }) => {
           onClick={() =>
             pushModal(<DestroyConfirm files={props.files} onClose={popModal} />)
           }
-          left={<Icon icon={TrashIcon} className="u-error" />}
+          left={<Icon icon={TrashIcon} color="var(--errorColor)" />}
         >
           <span className="u-error">{t('SelectionBar.destroy')}</span>
         </ActionMenuItem>
