@@ -66,11 +66,9 @@ export const Toolbar = ({
             <>
               <ActionMenuItem
                 onClick={onEmptyTrash}
-                left={<Icon icon={TrashIcon} color="var(--pomegranate)" />}
+                left={<Icon icon={TrashIcon} color="var(--errorColor)" />}
               >
-                <span className="u-pomegranate">
-                  {t('toolbar.empty_trash')}
-                </span>
+                <span className="u-error">{t('toolbar.empty_trash')}</span>
               </ActionMenuItem>
               <hr />
             </>
