@@ -1,13 +1,29 @@
-import React from 'react'
+import React, { createContext, useState } from 'react'
 
 import Dialog from 'cozy-ui/transpiled/react/Dialog'
 
 import Editor from 'drive/web/modules/views/OnlyOffice/Editor'
 
-const OnlyOffice = props => {
+export const OnlyOfficeContext = createContext()
+
+const OnlyOfficeProvider = ({ fileId, isPublic, children }) => {
+  const [isReadOnly, setIsReadOnly] = useState()
+
+  return (
+    <OnlyOfficeContext.Provider
+      value={{ fileId, isPublic, isReadOnly, setIsReadOnly }}
+    >
+      {children}
+    </OnlyOfficeContext.Provider>
+  )
+}
+
+const OnlyOffice = ({ params: { fileId }, isPublic }) => {
   return (
     <Dialog open={true} fullScreen transitionDuration={0}>
-      <Editor fileId={props.params.fileId} />
+      <OnlyOfficeProvider fileId={fileId} isPublic={isPublic}>
+        <Editor />
+      </OnlyOfficeProvider>
     </Dialog>
   )
 }
