@@ -29,6 +29,7 @@ import App from 'components/App/App'
 import ExternalRedirect from 'drive/web/modules/navigation/ExternalRedirect'
 import StyledApp from 'drive/web/modules/drive/StyledApp'
 import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
+import { shouldBeOpenedByOnlyOffice } from 'drive/web/modules/drive/files'
 
 const initCozyBar = (data, client) => {
   if (
@@ -103,6 +104,7 @@ const init = async () => {
       .get(sharedDocumentId)
     const isFile = data && data.type === 'file'
     const isNote = models.file.isNote(data)
+
     if (isNote) {
       try {
         window.location.href = await models.note.fetchURL(client, data)
@@ -115,17 +117,23 @@ const init = async () => {
         <App lang={lang} polyglot={polyglot} client={client} store={store}>
           {isFile ? (
             <Router history={hashHistory}>
-              <Route
-                path="/"
-                component={() => (
-                  <PublicLayout>
-                    <LightFileViewer files={[data]} />
-                  </PublicLayout>
+              <Route component={PublicLayout}>
+                {isOnlyOfficeEnabled() && (
+                  <Route
+                    path="onlyoffice/:fileId"
+                    component={props => (
+                      <OnlyOfficeView {...props} isPublic={true} />
+                    )}
+                  />
                 )}
-              />
-              {isOnlyOfficeEnabled() && (
-                <Route path="onlyoffice/:fileId" component={OnlyOfficeView} />
-              )}
+                {shouldBeOpenedByOnlyOffice(data) && (
+                  <Redirect from="/" to={`onlyoffice/${data.id}`} />
+                )}
+                <Route
+                  path="/"
+                  component={() => <LightFileViewer files={[data]} />}
+                />
+              </Route>
             </Router>
           ) : (
             <Router history={hashHistory}>
@@ -134,10 +142,15 @@ const init = async () => {
                 <Route path="folder(/:folderId)" component={PublicFolderView}>
                   <Route path="file/:fileId/revision" component={FileHistory} />
                 </Route>
+                {isOnlyOfficeEnabled() && (
+                  <Route
+                    path="onlyoffice/:fileId"
+                    component={props => (
+                      <OnlyOfficeView {...props} isPublic={true} />
+                    )}
+                  />
+                )}
               </Route>
-              {isOnlyOfficeEnabled() && (
-                <Route path="onlyoffice/:fileId" component={OnlyOfficeView} />
-              )}
               <Route path="external/:fileId" component={ExternalRedirect} />
               <Redirect from="/*" to={`folder/${sharedDocumentId}`} />
             </Router>
