@@ -6,11 +6,10 @@ import classNames from 'classnames'
 
 import { Menu, MenuItem, Icon } from 'cozy-ui/transpiled/react'
 import UploadIcon from 'cozy-ui/transpiled/react/Icons/Upload'
+import CheckboxIcon from 'cozy-ui/transpiled/react/Icons/CheckSquare'
 
 import UploadButton from '../../../components/UploadButton'
 import { MoreButton } from 'components/Button'
-
-import CheckboxIcon from 'photos/assets/icons/icon-checkbox.svg'
 
 const MoreMenu = ({ t, disabled, uploadPhotos, selectItems }) => (
   <Menu
