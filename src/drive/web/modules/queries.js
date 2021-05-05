@@ -291,6 +291,32 @@ export const buildSharingsByIdQuery = sharingId => ({
   }
 })
 
+export const buildFileByIdQuery = fileId => ({
+  definition: () => Q('io.cozy.files').getById(fileId),
+  options: {
+    as: `io.cozy.files/${fileId}`,
+    fetchPolicy: defaultFetchPolicy,
+    singleDocData: true
+  }
+})
+
+export const buildAppsQuery = () => ({
+  definition: Q('io.cozy.apps'),
+  options: {
+    as: `io.cozy.apps`,
+    fetchPolicy: defaultFetchPolicy
+  }
+})
+
+export const buildSettingsByIdQuery = id => ({
+  definition: Q('io.cozy.settings').getById(id),
+  options: {
+    as: `io.cozy.settings/${id}`,
+    fetchPolicy: defaultFetchPolicy,
+    singleDocData: true
+  }
+})
+
 export {
   buildDriveQuery,
   buildRecentQuery,
