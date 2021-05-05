@@ -7,7 +7,7 @@ import { setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
 
 import RecentViewWithProvider from './index'
-import { useFilesQueryWithPath } from './useFilesQueryWithPath'
+import { useFilesQueryWithPath } from 'drive/web/modules/views/hooks'
 import { generateFileFixtures, getByTextWithMarkup } from '../testUtils'
 
 jest.mock('components/pushClient')
@@ -24,8 +24,8 @@ jest.mock(
       return <div>FileHistory stub</div>
     }
 )
-jest.mock('./useFilesQueryWithPath', () => ({
-  ...jest.requireActual('./useFilesQueryWithPath'),
+jest.mock('drive/web/modules/views/hooks', () => ({
+  ...jest.requireActual('drive/web/modules/views/hooks'),
   useFilesQueryWithPath: jest.fn()
 }))
 

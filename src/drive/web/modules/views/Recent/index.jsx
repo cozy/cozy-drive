@@ -28,7 +28,7 @@ import {
   buildRecentQuery,
   buildRecentWithMetadataAttributeQuery
 } from 'drive/web/modules/queries'
-import { useFilesQueryWithPath } from './useFilesQueryWithPath'
+import { useFilesQueryWithPath } from 'drive/web/modules/views/hooks'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
 

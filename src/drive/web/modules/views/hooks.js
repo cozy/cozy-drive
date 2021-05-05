@@ -1,8 +1,13 @@
-import { useQuery } from 'cozy-client'
 import get from 'lodash/get'
 import uniq from 'lodash/uniq'
 import keyBy from 'lodash/keyBy'
-import { buildParentsByIdsQuery } from 'drive/web/modules/queries'
+
+import { isQueryLoading, useQuery } from 'cozy-client'
+
+import {
+  buildParentsByIdsQuery,
+  buildFileByIdQuery
+} from 'drive/web/modules/queries'
 import { TRASH_DIR_ID } from 'drive/constants/config'
 
 export const isFileNotTrashed = file =>
@@ -31,5 +36,27 @@ export const useFilesQueryWithPath = query => {
       ...file,
       displayedPath: get(parentsDocsById[file.dir_id], 'path')
     }))
+  }
+}
+
+export const useFileWithPath = fileId => {
+  const fileQuery = buildFileByIdQuery(fileId)
+  const fileResult = useQuery(fileQuery.definition, fileQuery.options)
+  const resultData = fileResult.data
+  const dirId = resultData ? resultData.dir_id : {}
+
+  const parentQuery = buildFileByIdQuery(dirId)
+  const parentResult = useQuery(parentQuery.definition, parentQuery.options)
+  const parentData = parentResult.data
+
+  if (isQueryLoading(fileResult) || isQueryLoading(parentResult)) {
+    return { data: null }
+  }
+
+  return {
+    data: {
+      ...resultData,
+      displayedPath: parentData ? parentData.path : undefined
+    }
   }
 }
