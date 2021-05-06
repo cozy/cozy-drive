@@ -1,12 +1,12 @@
 import React, { useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 
-const View = ({ id, apiUrl, config }) => {
+const View = ({ id, apiUrl, docEditorConfig }) => {
   const initEditor = useCallback(
     () => {
-      new window.DocsAPI.DocEditor('onlyOfficeEditor', config)
+      new window.DocsAPI.DocEditor('onlyOfficeEditor', docEditorConfig)
     },
-    [config]
+    [docEditorConfig]
   )
 
   useEffect(
@@ -31,7 +31,7 @@ const View = ({ id, apiUrl, config }) => {
 View.propTypes = {
   id: PropTypes.string.isRequired,
   apiUrl: PropTypes.string.isRequired,
-  config: PropTypes.object.isRequired
+  docEditorConfig: PropTypes.object.isRequired
 }
 
 export default View

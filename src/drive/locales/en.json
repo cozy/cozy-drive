@@ -701,6 +701,10 @@
     "Error": {
       "title": "Something goes wrong",
       "text": "Please try to reload the page"
+    },
+    "readOnly": {
+      "title": "Read only",
+      "tooltip": "You are only authorized to view this document. Contact the owner to obtain writing privileges."
     }
   }
 }

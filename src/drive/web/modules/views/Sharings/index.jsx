@@ -29,7 +29,7 @@ import {
   buildSharingsQuery,
   buildSharingsWithMetadataAttributeQuery
 } from 'drive/web/modules/queries'
-import { useFilesQueryWithPath } from '../Recent/useFilesQueryWithPath'
+import { useFilesQueryWithPath } from 'drive/web/modules/views/hooks'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
 

@@ -8,7 +8,7 @@ import AppLike from 'test/components/AppLike'
 
 import { SharingsView } from './index'
 import { generateFileFixtures, getByTextWithMarkup } from '../testUtils'
-import { useFilesQueryWithPath } from '../Recent/useFilesQueryWithPath'
+import { useFilesQueryWithPath } from 'drive/web/modules/views/hooks'
 
 jest.mock('components/pushClient')
 jest.mock(
@@ -24,8 +24,8 @@ jest.mock('cozy-client/dist/hooks/useQuery', () =>
     data: []
   }))
 )
-jest.mock('../Recent/useFilesQueryWithPath', () => ({
-  ...jest.requireActual('../Recent/useFilesQueryWithPath'),
+jest.mock('drive/web/modules/views/hooks', () => ({
+  ...jest.requireActual('drive/web/modules/views/hooks'),
   useFilesQueryWithPath: jest.fn()
 }))
 
