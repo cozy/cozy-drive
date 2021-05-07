@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import CozyClient from 'cozy-client'
-import { CozyFile } from 'cozy-doctypes'
+import { CozyFile } from 'models'
 
 import { MoveModal } from './MoveModal'
 

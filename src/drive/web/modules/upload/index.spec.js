@@ -1,4 +1,4 @@
-import { CozyFile } from 'cozy-doctypes'
+import { CozyFile } from 'models'
 
 import flag from 'cozy-flags'
 import { doUpload } from 'cozy-scanner/dist/ScannerUpload'
