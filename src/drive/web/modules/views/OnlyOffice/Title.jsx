@@ -12,7 +12,7 @@ import Toolbar from 'drive/web/modules/views/OnlyOffice/Toolbar'
 const useStyles = makeStyles(() => ({
   root: {
     width: 'calc(100% - 1rem)',
-    height: '3rem'
+    height: '3.5rem'
   }
 }))
 

@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
-import Spinner from 'cozy-ui/transpiled/react/Spinner'
-import { CozyFile } from 'cozy-doctypes'
-import styles from 'drive/styles/filenameinput.styl'
+import cx from 'classnames'
 
+import { CozyFile } from 'models'
+import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { Dialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Button from 'cozy-ui/transpiled/react/Button'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
+
+import styles from 'drive/styles/filenameinput.styl'
 
 const ENTER_KEY = 13
 const ESC_KEY = 27
@@ -29,7 +31,9 @@ class FilenameInput extends Component {
   }
 
   handleKeyDown(e) {
-    if (e.keyCode === ENTER_KEY && !valueIsEmpty(this.state.value)) {
+    const { value } = this.state
+
+    if (e.keyCode === ENTER_KEY && !valueIsEmpty(value)) {
       this.setState({ hasBeenSubmitedOrAborted: true })
       this.submit()
     } else if (e.keyCode === ESC_KEY) {
@@ -39,22 +43,28 @@ class FilenameInput extends Component {
   }
 
   handleChange(e) {
+    const { onChange } = this.props
+
     const value = e.target.value
     this.setState({ value })
-    this.props.onChange && this.props.onChange(value)
+    onChange && onChange(value)
   }
 
   handleBlur() {
+    const { hasBeenSubmitedOrAborted, value } = this.state
+
     // On top of "normal" blurs, the event happens all the time after a submit or an abort, because this component is removed from the DOM while having the focus.
     // we want to do things only on "normal" blurs, *not* after a submit/abort
-    if (!this.state.hasBeenSubmitedOrAborted) {
+    if (!hasBeenSubmitedOrAborted) {
       // when it's a regular blur, we want to abort, except is the value is non-empty
-      if (valueIsEmpty(this.state.value)) this.abort(true)
+      if (valueIsEmpty(value)) this.abort(true)
       else this.submit()
     }
   }
 
   submit() {
+    const { value } = this.state
+
     this.setState({ working: true, error: false })
     if (!this.fileNameOnMount) this.save()
     const previousExtension = CozyFile.splitFilename({
@@ -62,7 +72,7 @@ class FilenameInput extends Component {
       type: 'file'
     }).extension
     const newExtension = CozyFile.splitFilename({
-      name: this.state.value,
+      name: value,
       type: 'file'
     }).extension
     if (previousExtension !== newExtension) {
@@ -71,10 +81,14 @@ class FilenameInput extends Component {
       this.save()
     }
   }
+
   save = async () => {
-    if (!this.props.onSubmit) return
+    const { onSubmit } = this.props
+    const { value } = this.state
+
+    if (!onSubmit) return
     try {
-      await this.props.onSubmit(this.state.value)
+      await onSubmit(value)
     } catch (e) {
       this.setState({
         working: false,
@@ -82,12 +96,18 @@ class FilenameInput extends Component {
       })
     }
   }
+
   abort(accidental = false) {
-    if (this.state.isModalOpened) this.setState({ isModalOpened: false })
-    this.props.onAbort && this.props.onAbort(accidental)
+    const { isModalOpened } = this.state
+    const { onAbort } = this.props
+
+    if (isModalOpened) this.setState({ isModalOpened: false })
+    onAbort && onAbort(accidental)
   }
+
   handleFocus() {
     const { name } = this.props
+
     const { filename } = CozyFile.splitFilename({ name, type: 'file' })
     //Since we're mounting the component and focusing it at the same time
     // let's add a small timeout to be sure the ref is populated
@@ -96,11 +116,16 @@ class FilenameInput extends Component {
         this.textInput.current.setSelectionRange(0, filename.length)
     }, 5)
   }
+
   render() {
-    const { value, working, error } = this.state
-    const { t } = this.props
+    const { value, working, error, isModalOpened } = this.state
+    const { t, className } = this.props
+
     return (
-      <div data-testid="name-input" className={styles['fil-file-name-input']}>
+      <div
+        data-testid="name-input"
+        className={cx(styles['fil-file-name-input'], className)}
+      >
         <input
           type="text"
           value={value}
@@ -116,7 +141,7 @@ class FilenameInput extends Component {
         {working && <Spinner />}
         <Dialog
           onClose={this.abort}
-          opened={this.state.isModalOpened}
+          open={isModalOpened}
           title={t('RenameModal.title')}
           content={t('RenameModal.description')}
           actions={

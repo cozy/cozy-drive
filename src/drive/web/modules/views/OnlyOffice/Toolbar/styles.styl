@@ -1,9 +1,18 @@
 @require 'tools/mixins.styl'
 
-.separator {
+.separator
     height 1.75rem
     width rem(1)
     margin-left .75rem
     margin-right .75rem
     background-color var(--dividerColor)
-}
+
+.fileName
+    width 40%
+
+.filename-renameInput
+    display block
+    max-width 90%
+
+    input[type=text]
+        padding rem(2) rem(4)

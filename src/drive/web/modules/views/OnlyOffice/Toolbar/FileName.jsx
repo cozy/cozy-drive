@@ -1,22 +1,54 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router'
+import { makeStyles } from '@material-ui/core/styles'
 
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
 
-import styles from 'drive/styles/filelist.styl'
+import { RenameInput } from 'drive/web/modules/drive/RenameInput'
+
+import filelistStyles from 'drive/styles/filelist.styl'
+import styles from './styles.styl'
+
+const useStyles = makeStyles(() => ({
+  name: {
+    marginBottom: '3px'
+  }
+}))
 
 const FileName = ({ fileWithPath }) => {
+  const muiStyles = useStyles()
+  const { isMobile } = useBreakpoints()
+  const [isRenaming, setIsRenaming] = useState(false)
+
   return (
-    <div className="u-ml-1 u-ml-half-s u-ellipsis">
-      <Typography variant="h6" noWrap>
-        {fileWithPath.name}
-      </Typography>
+    <div className={`${styles['fileName']} u-ml-1 u-ml-half-s u-ellipsis`}>
+      {isRenaming ? (
+        <Typography variant="h6" noWrap>
+          <RenameInput
+            className={styles['filename-renameInput']}
+            file={fileWithPath}
+            withoutExtension
+            refreshFolderContent={() => setIsRenaming(false)}
+            onAbort={() => setIsRenaming(false)}
+          />
+        </Typography>
+      ) : (
+        <Typography
+          className={muiStyles.name}
+          variant="h6"
+          noWrap
+          {...!isMobile && { onClick: () => setIsRenaming(true) }}
+        >
+          {fileWithPath.name}
+        </Typography>
+      )}
       {fileWithPath.displayedPath && (
         <Link
           to={`/folder/${fileWithPath.dir_id}`}
-          className={styles['fil-file-path']}
+          className={filelistStyles['fil-file-path']}
         >
           <Typography variant="caption">
             <MidEllipsis text={fileWithPath.displayedPath} />
