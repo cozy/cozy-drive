@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { useClient } from 'cozy-client'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
+import { CozyFile } from 'models'
 import FilenameInput from 'drive/web/modules/filelist/FilenameInput'
 import { abortRenaming } from './rename'
 
@@ -17,12 +18,23 @@ const updateFileNameQuery = async (client, file, newName) => {
   })
 }
 
-export const RenameInput = ({ onAbort, file, refreshFolderContent }) => {
+export const RenameInput = ({
+  onAbort,
+  file,
+  refreshFolderContent,
+  className,
+  withoutExtension
+}) => {
   const client = useClient()
+  const { filename, extension } = CozyFile.splitFilename(file)
+  const name = withoutExtension ? filename : file.name
+
   return (
     <FilenameInput
-      name={file.name}
-      onSubmit={async newName => {
+      className={className}
+      name={name}
+      onSubmit={async newValue => {
+        const newName = withoutExtension ? newValue + extension : newValue
         try {
           await updateFileNameQuery(client, file, newName)
           if (refreshFolderContent) refreshFolderContent()
