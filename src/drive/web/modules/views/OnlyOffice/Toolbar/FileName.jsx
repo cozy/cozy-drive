@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router'
 import { makeStyles } from '@material-ui/core/styles'
@@ -7,6 +7,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
 
+import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
 import { RenameInput } from 'drive/web/modules/drive/RenameInput'
 
 import filelistStyles from 'drive/styles/filelist.styl'
@@ -21,7 +22,9 @@ const useStyles = makeStyles(() => ({
 const FileName = ({ fileWithPath }) => {
   const muiStyles = useStyles()
   const { isMobile } = useBreakpoints()
+  const { isReadOnly } = useContext(OnlyOfficeContext)
   const [isRenaming, setIsRenaming] = useState(false)
+  const isRenamable = !isMobile && !isReadOnly
 
   return (
     <div className={`${styles['fileName']} u-ml-1 u-ml-half-s u-ellipsis`}>
@@ -40,7 +43,7 @@ const FileName = ({ fileWithPath }) => {
           className={muiStyles.name}
           variant="h6"
           noWrap
-          {...!isMobile && { onClick: () => setIsRenaming(true) }}
+          {...isRenamable && { onClick: () => setIsRenaming(true) }}
         >
           {fileWithPath.name}
         </Typography>
