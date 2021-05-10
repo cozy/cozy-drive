@@ -8,42 +8,47 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import Button from 'cozy-ui/transpiled/react/Button'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { translate } from 'cozy-ui/transpiled/react'
-import Modal from 'cozy-ui/transpiled/react/Modal'
+import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
+import Typography from 'cozy-ui/transpiled/react/Typography'
 
-import tosIcon from 'drive/mobile/assets/icons/icon-tos.svg'
 import { unlink, getClientSettings } from './duck'
-
-import styles from './styles.styl'
+import tosIcon from 'drive/mobile/assets/icons/icon-tos.svg'
 
 const TosUpdatedModal = translate()(({ t, newTosLink, onAccept, onRefuse }) => {
   const updatedDetails = snarkdown(
     t('TOS.updated.detail', { link: newTosLink })
   )
+
   return (
-    <Modal closable={false}>
-      <Modal.ModalHeader />
-      <Modal.ModalDescription className={styles['tosupdated']}>
-        <Icon icon={tosIcon} width={96} height={96} />
-        <h2 className={styles['tosupdated-title']}>{t('TOS.updated.title')}</h2>
-        <div
-          className={styles['tosupdated-desc']}
-          dangerouslySetInnerHTML={{ __html: updatedDetails }}
-        />
-        <Button
-          extension="full"
-          label={t('TOS.updated.cta')}
-          onClick={onAccept}
-        />
-        <Button
-          subtle
-          size="small"
-          extension="full"
-          style={{ marginTop: '1.5rem' }}
-          label={t('TOS.updated.disconnect')}
-          onClick={onRefuse}
-        />
-      </Modal.ModalDescription>
-    </Modal>
+    <ConfirmDialog
+      open
+      content={
+        <>
+          <Typography align="center" paragraph>
+            <Icon icon={tosIcon} width={96} height={96} />
+          </Typography>
+          <Typography variant="h3" align="center" paragraph>
+            {t('TOS.updated.title')}
+          </Typography>
+          <Typography variant="body1" paragraph>
+            <div dangerouslySetInnerHTML={{ __html: updatedDetails }} />
+          </Typography>
+        </>
+      }
+      actionsLayout="column"
+      actions={
+        <>
+          <Button
+            subtle
+            size="small"
+            className="u-mt-1"
+            label={t('TOS.updated.disconnect')}
+            onClick={onRefuse}
+          />
+          <Button label={t('TOS.updated.cta')} onClick={onAccept} />
+        </>
+      }
+    />
   )
 })
 
@@ -109,6 +114,7 @@ class UserActionRequired extends Component {
   render() {
     const { warnings } = this.state
     if (warnings.length === 0) return null
+
     const tosUpdated = warnings.find(w => w.code === 'tos-updated')
     if (tosUpdated) {
       return (
