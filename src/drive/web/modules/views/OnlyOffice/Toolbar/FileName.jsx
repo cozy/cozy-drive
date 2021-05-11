@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router'
 import { makeStyles } from '@material-ui/core/styles'
+import cx from 'classnames'
 
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import Typography from 'cozy-ui/transpiled/react/Typography'
@@ -13,9 +14,17 @@ import { RenameInput } from 'drive/web/modules/drive/RenameInput'
 import filelistStyles from 'drive/styles/filelist.styl'
 import styles from './styles.styl'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   name: {
-    marginBottom: '3px'
+    margin: '1px 0 3px 1px'
+  },
+  renamable: {
+    '&:hover': {
+      margin: '0 0 2px',
+      border: `1px solid ${theme.palette.text.secondary}`,
+      borderRadius: '2px',
+      cursor: 'text'
+    }
   }
 }))
 
@@ -40,7 +49,9 @@ const FileName = ({ fileWithPath }) => {
         </Typography>
       ) : (
         <Typography
-          className={muiStyles.name}
+          className={cx(muiStyles.name, {
+            [`${muiStyles.renamable}`]: isRenamable
+          })}
           variant="h6"
           noWrap
           {...isRenamable && { onClick: () => setIsRenaming(true) }}
