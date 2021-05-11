@@ -131,6 +131,8 @@ export const officeDocParam = {
   data: {
     type: 'io.cozy.office.url',
     id: '32e07d806f9b0139c541543d7eb8149c',
+    class: 'text',
+    name: 'Letter.docx',
     attributes: {
       document_id: '32e07d806f9b0139c541543d7eb8149c',
       subdomain: 'flat',

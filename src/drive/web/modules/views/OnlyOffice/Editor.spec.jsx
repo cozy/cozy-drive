@@ -63,7 +63,7 @@ describe('Editor', () => {
     expect(getByText('Something goes wrong')).toBeTruthy()
   })
 
-  it('should show the title and the container view if the doc is undefined', () => {
+  it('should show the title and the container view', () => {
     useFetchJSON.mockReturnValue({
       fetchStatus: 'loaded',
       data: officeDocParam
