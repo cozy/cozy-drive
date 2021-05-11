@@ -5,13 +5,13 @@ import cx from 'classnames'
 import filesize from 'filesize'
 import get from 'lodash/get'
 
+import { isDirectory } from 'cozy-client/dist/models/file'
 import { isIOSApp } from 'cozy-device-helper'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 import { TableRow } from 'cozy-ui/transpiled/react/Table'
 
 import { ActionMenuWithHeader } from 'drive/web/modules/actionmenu/ActionMenuWithHeader'
-import { isDirectory } from 'drive/web/modules/drive/files'
 import FileThumbnail from 'drive/web/modules/filelist/FileThumbnail'
 import {
   toggleItemSelection,

@@ -29,7 +29,6 @@ import {
   getDisplayedFolder,
   getParentFolder
 } from 'drive/web/modules/selectors'
-import { hasMetadataAttribute } from 'drive/web/modules/drive/files'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
 
@@ -86,7 +85,7 @@ const PublicFolderView = ({
   const extraColumns = useExtraColumns({
     columnsNames: extraColumnsNames,
     conditionBuilder: ({ files, attribute }) =>
-      files.some(file => hasMetadataAttribute({ file, attribute })),
+      files.some(file => models.file.hasMetadataAttribute({ file, attribute })),
     files
   })
 

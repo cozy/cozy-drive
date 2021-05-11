@@ -4,7 +4,6 @@ import { isMobileApp } from 'cozy-device-helper'
 
 import { openLocalFile } from 'drive/mobile/modules/offline/duck'
 import generateShortcutUrl from 'drive/web/modules/views/Folder/generateShortcutUrl'
-import { shouldBeOpenedByOnlyOffice } from 'drive/web/modules/drive/files'
 import {
   isOnlyOfficeEnabled,
   makeOnlyOfficeFileRoute
@@ -46,7 +45,10 @@ const createFileOpeningHandler = ({
     } catch (e) {
       Alerter.error('alert.offline')
     }
-  } else if (isOnlyOfficeEnabled() && shouldBeOpenedByOnlyOffice(file)) {
+  } else if (
+    isOnlyOfficeEnabled() &&
+    models.file.shouldBeOpenedByOnlyOffice(file)
+  ) {
     if (event.ctrlKey || event.metaKey || event.shiftKey) {
       openInNewTab(makeOnlyOfficeFileRoute(file))
     } else {

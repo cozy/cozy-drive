@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import Hammer from '@egjs/hammerjs'
 import propagating from 'propagating-hammerjs'
 
-import { shouldBeOpenedByOnlyOffice } from 'drive/web/modules/drive/files'
+import { shouldBeOpenedByOnlyOffice } from 'cozy-client/dist/models/file'
+
 import {
   isOnlyOfficeEnabled,
   makeOnlyOfficeFileRoute

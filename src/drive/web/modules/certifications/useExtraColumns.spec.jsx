@@ -1,11 +1,9 @@
 import React from 'react'
 import { renderHook } from '@testing-library/react-hooks'
 
-import { createMockClient } from 'cozy-client'
+import { createMockClient, models } from 'cozy-client'
 
 import AppLike from 'test/components/AppLike'
-
-import { hasMetadataAttribute } from 'drive/web/modules/drive/files'
 
 import { useExtraColumns } from './useExtraColumns'
 
@@ -89,7 +87,7 @@ describe('useExtraColumns : queryBuilder', () => {
 
 describe('useExtraColumns : conditionBuilder', () => {
   const conditionBuilder = ({ files, attribute }) =>
-    files.some(file => hasMetadataAttribute({ file, attribute }))
+    files.some(file => models.file.hasMetadataAttribute({ file, attribute }))
 
   it('should return empty array if no files', async () => {
     const { result } = setup({
