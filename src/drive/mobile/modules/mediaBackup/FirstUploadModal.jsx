@@ -1,30 +1,44 @@
 import React, { Component } from 'react'
-import Modal, { ModalContent } from 'cozy-ui/transpiled/react/Modal'
+import { connect } from 'react-redux'
+import { isIOSApp } from 'cozy-device-helper'
+
+import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Button from 'cozy-ui/transpiled/react/Button'
-import { connect } from 'react-redux'
+import Typography from 'cozy-ui/transpiled/react/Typography'
+
 import withPersistentState from 'drive/mobile/lib/withPersistentState'
-import { isIOSApp } from 'cozy-device-helper'
 
 const MINIMUM_LONG_UPLOAD_FILES_COUNT = 50
 
 const FirstUploadModal = translate()(({ t, onClose }) => (
-  <Modal title={t('mobile.first_sync.title')} withCross={false} into="body">
-    <ModalContent>
-      <h4>{t('mobile.first_sync.tips')}</h4>
-      <ul>
-        <li>{t('mobile.first_sync.tip_wifi')}</li>
-        <li>{t('mobile.first_sync.tip_bed')}</li>
-        {isIOSApp() && <li>{t('mobile.first_sync.tip_lock')}</li>}
-      </ul>
-      <p>{t('mobile.first_sync.result')}</p>
+  <ConfirmDialog
+    open
+    onClose={onClose}
+    title={t('mobile.first_sync.title')}
+    content={
+      <>
+        <Typography variant="h6">{t('mobile.first_sync.tips')}</Typography>
+        <Typography variant="body1" paragraph>
+          <ul>
+            <li>{t('mobile.first_sync.tip_wifi')}</li>
+            <li>{t('mobile.first_sync.tip_bed')}</li>
+            {isIOSApp() && <li>{t('mobile.first_sync.tip_lock')}</li>}
+          </ul>
+        </Typography>
+        <Typography variant="body1" paragraph>
+          {t('mobile.first_sync.result')}
+        </Typography>
+      </>
+    }
+    actions={
       <Button
         onClick={onClose}
         extension="full"
         label={t('mobile.first_sync.button')}
       />
-    </ModalContent>
-  </Modal>
+    }
+  />
 ))
 
 const showOnceOnUpload = WrappedComponent => {

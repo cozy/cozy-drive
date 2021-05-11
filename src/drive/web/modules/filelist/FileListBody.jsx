@@ -9,10 +9,10 @@ import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 
 import styles from 'drive/styles/filelist.styl'
 
-export const FileListBody = ({ children, selectionModeActive }) => (
+export const FileListBody = ({ className, children, selectionModeActive }) => (
   <TableBody
     data-test-id="fil-content-body"
-    className={cx(styles['fil-content-body'], {
+    className={cx(className, styles['fil-content-body'], {
       [styles['fil-content-body--selectable']]: selectionModeActive
     })}
   >

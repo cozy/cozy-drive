@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-
 import compose from 'lodash/flowRight'
+
 import { withClient } from 'cozy-client'
-import Modal, { ModalContent } from 'cozy-ui/transpiled/react/Modal'
+import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import { Button } from 'cozy-ui/transpiled/react/Button'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 
-import styles from '../styles.styl'
 import { logInfo } from 'drive/lib/reporter'
 import appMetadata from 'drive/appMetadata'
+
+import styles from '../styles.styl'
 
 const FEEDBACK_EMAIL = 'contact@cozycloud.cc'
 
@@ -66,24 +67,32 @@ class FeedbackForm extends Component {
   render() {
     const { onClose, t } = this.props
     const { sending } = this.state
+
     return (
-      <Modal
-        title={t('mobile.rating.feedback.title')}
-        dismissAction={() => {
+      <ConfirmDialog
+        open
+        onClose={() => {
           this.clearInput()
           onClose(false)
         }}
-      >
-        <ModalContent className={styles['feedback-form']}>
-          <form className={'coz-form'} onSubmit={this.submitForm}>
+        title={t('mobile.rating.feedback.title')}
+        content={
+          <form
+            className={`${styles['feedback-form']} u-mt-0`}
+            onSubmit={this.submitForm}
+          >
             <textarea
-              className={styles['feedback-text']}
+              className={`${
+                styles['feedback-text']
+              } u-bxz u-p-1 u-mb-1 u-w-100`}
               placeholder={t('mobile.rating.email.placeholder')}
               ref={this.registerElement.bind(this)}
             />
-            <div className={styles['button-block']}>
+            <div className="u-flex">
               <Button
                 theme={'secondary'}
+                extension="full"
+                className="u-mr-half"
                 onClick={e => {
                   e.preventDefault()
                   this.clearInput()
@@ -91,11 +100,16 @@ class FeedbackForm extends Component {
                 }}
                 label={t('mobile.rating.feedback.no')}
               />
-              <Button busy={sending} label={t('mobile.rating.feedback.yes')} />
+              <Button
+                busy={sending}
+                extension="full"
+                className="u-ml-half"
+                label={t('mobile.rating.feedback.yes')}
+              />
             </div>
           </form>
-        </ModalContent>
-      </Modal>
+        }
+      />
     )
   }
 }

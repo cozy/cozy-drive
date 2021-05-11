@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Modal, { ModalContent } from 'cozy-ui/transpiled/react/Modal'
+
+import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import Button from 'cozy-ui/transpiled/react/Button'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
@@ -8,8 +9,6 @@ import { translate } from 'cozy-ui/transpiled/react/I18n'
 import withPersistentState from '../../lib/withPersistentState'
 import { SOFTWARE_NAME, APP_STORE_ID, APP_MARKET_ID } from '../../lib/constants'
 import FeedbackForm from './components/FeedbackForm'
-
-import styles from './styles.styl'
 
 const SCREEN_ENJOY = 'SCREEN_ENJOY'
 const SCREEN_FEEDBACK = 'SCREEN_FEEDBACK'
@@ -84,21 +83,25 @@ const EnjoyCozy = props => {
   const { onReply, t } = props
 
   return (
-    <Modal title={t('mobile.rating.enjoy.title')} withCross={false}>
-      <ModalContent>
-        <div className={styles['button-block']}>
+    <ConfirmDialog
+      open
+      title={t('mobile.rating.enjoy.title')}
+      actions={
+        <>
           <Button
             theme={'secondary'}
+            extension="full"
             onClick={() => onReply(false)}
             label={t('mobile.rating.enjoy.no')}
           />
           <Button
+            extension="full"
             onClick={() => onReply(true)}
             label={t('mobile.rating.enjoy.yes')}
           />
-        </div>
-      </ModalContent>
-    </Modal>
+        </>
+      }
+    />
   )
 }
 
@@ -199,6 +202,7 @@ const withBootDelay = (WrappedComponent, showAfterBoots) => {
       )
     }
   }
+
   WithBootDelay.displayName = `WithBootDelay(${WrappedComponent.displayName ||
     WrappedComponent.name ||
     'Component'})`
@@ -209,6 +213,7 @@ const DelayedRatingModal = withBootDelay(
   translate()(RatingModal),
   PROMPT_AFTER_BOOTS
 )
+
 const PersistentRatingModal = withPersistentState(
   DelayedRatingModal,
   'DelayedRatingModal'

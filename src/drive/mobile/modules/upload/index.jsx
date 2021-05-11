@@ -5,14 +5,12 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
-import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { Query } from 'cozy-client'
-
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { translate } from 'cozy-ui/transpiled/react'
-import Modal from 'cozy-ui/transpiled/react/Modal'
+import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 
 import { uploadFilesFromNative } from 'drive/web/modules/upload'
-
 import { ROOT_DIR_ID } from 'drive/constants/config'
 import Header from 'drive/web/modules/move/Header'
 import Explorer from 'drive/web/modules/move/Explorer'
@@ -88,68 +86,74 @@ export class DumbUpload extends Component {
     const folderQuery = buildOnlyFolderQuery(folderId)
 
     return (
-      <Modal
-        size={'xlarge'}
-        closable={false}
-        overflowHidden
-        mobileFullscreen
-        into="body"
-        aria-label={t('Move.modalTitle')}
-        className={'u-mih-100'}
-      >
-        <Header
-          entries={items}
-          onClose={this.onClose}
-          title={t('ImportToDrive.title', { smart_count: items.length })}
-          subTitle={t('ImportToDrive.to')}
-        />
-        <Query
-          query={folderQuery.definition()}
-          fetchPolicy={folderQuery.options.fetchPolicy}
-          as={folderQuery.options.as}
-          key={`breadcrumb-${folderId}`}
-        >
-          {({ data, fetchStatus }) => (
-            <Topbar
-              navigateTo={this.navigateTo}
-              currentDir={data}
-              fetchStatus={fetchStatus}
+      <FixedDialog
+        open
+        onClose={this.onClose}
+        size="large"
+        classes={{ paper: 'u-h-100' }}
+        title={
+          <>
+            <Header
+              entries={items}
+              title={t('ImportToDrive.title', { smart_count: items.length })}
+              subTitle={t('ImportToDrive.to')}
             />
-          )}
-        </Query>
-        <Query
-          key={`content-${folderId}`}
-          query={contentQuery.definition()}
-          fetchPolicy={contentQuery.options.fetchPolicy}
-          as={contentQuery.options.as}
-        >
-          {({ data, fetchStatus, hasMore, fetchMore }) => {
-            return (
-              <Explorer>
-                <Loader fetchStatus={fetchStatus} hasNoData={data.length === 0}>
-                  <div>
-                    <FileList
-                      files={data}
-                      targets={items}
-                      navigateTo={this.navigateTo}
-                    />
-                    <LoadMore hasMore={hasMore} fetchMore={fetchMore} />
-                  </div>
-                </Loader>
-              </Explorer>
-            )
-          }}
-        </Query>
-        <Footer
-          onConfirm={() => this.uploadFiles()}
-          onClose={this.onClose}
-          targets={items}
-          currentDirId={folderId}
-          isMoving={uploadInProgress}
-          primaryTextAction={t('ImportToDrive.action')}
-          secondaryTextAction={t('ImportToDrive.cancel')}
-        />
-      </Modal>
+            <Query
+              query={folderQuery.definition()}
+              fetchPolicy={folderQuery.options.fetchPolicy}
+              as={folderQuery.options.as}
+              key={`breadcrumb-${folderId}`}
+            >
+              {({ data, fetchStatus }) => (
+                <Topbar
+                  navigateTo={this.navigateTo}
+                  currentDir={data}
+                  fetchStatus={fetchStatus}
+                />
+              )}
+            </Query>
+          </>
+        }
+        content={
+          <Query
+            key={`content-${folderId}`}
+            query={contentQuery.definition()}
+            fetchPolicy={contentQuery.options.fetchPolicy}
+            as={contentQuery.options.as}
+          >
+            {({ data, fetchStatus, hasMore, fetchMore }) => {
+              return (
+                <Explorer>
+                  <Loader
+                    fetchStatus={fetchStatus}
+                    hasNoData={data.length === 0}
+                  >
+                    <div>
+                      <FileList
+                        files={data}
+                        targets={items}
+                        navigateTo={this.navigateTo}
+                      />
+                      <LoadMore hasMore={hasMore} fetchMore={fetchMore} />
+                    </div>
+                  </Loader>
+                </Explorer>
+              )
+            }}
+          </Query>
+        }
+        actions={
+          <Footer
+            onConfirm={() => this.uploadFiles()}
+            onClose={this.onClose}
+            targets={items}
+            currentDirId={folderId}
+            isMoving={uploadInProgress}
+            primaryTextAction={t('ImportToDrive.action')}
+            secondaryTextAction={t('ImportToDrive.cancel')}
+          />
+        }
+      />
     )
   }
 }
