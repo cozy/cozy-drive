@@ -3,7 +3,8 @@ import { render } from '@testing-library/react'
 
 import { createMockClient } from 'cozy-client'
 
-import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
+import { isOnlyOfficeEditorSupported } from 'drive/web/modules/views/OnlyOffice/helpers'
+
 import AppLike from 'test/components/AppLike'
 import { generateFile } from 'test/generate'
 
@@ -11,7 +12,7 @@ import FileOpener, { getParentLink } from './FileOpener'
 
 jest.mock('drive/web/modules/views/OnlyOffice/helpers', () => ({
   ...jest.requireActual('drive/web/modules/views/OnlyOffice/helpers'),
-  isOnlyOfficeEnabled: jest.fn()
+  isOnlyOfficeEditorSupported: jest.fn()
 }))
 
 const client = createMockClient({})
@@ -29,13 +30,11 @@ const setup = ({ file }) => {
 
 describe('FileOpener', () => {
   afterEach(() => {
-    file.class = ''
     jest.clearAllMocks()
   })
 
-  it('should show a link to onlyoffice document if feature flag is enabled', () => {
-    isOnlyOfficeEnabled.mockReturnValue(true)
-    file.class = 'slide'
+  it('should show a link to onlyoffice document if Only Office is supported', () => {
+    isOnlyOfficeEditorSupported.mockReturnValue(true)
 
     const { root } = setup({ file })
     const { queryByTestId } = root
@@ -44,29 +43,8 @@ describe('FileOpener', () => {
     expect(queryByTestId('not-onlyoffice-span')).toBeFalsy()
   })
 
-  it('should show a regular span if the feature flag is disabled', () => {
-    isOnlyOfficeEnabled.mockReturnValue(false)
-    file.class = 'slide'
-
-    const { root } = setup({ file })
-    const { queryByTestId } = root
-
-    expect(queryByTestId('onlyoffice-link')).toBeFalsy()
-    expect(queryByTestId('not-onlyoffice-span')).toBeTruthy()
-  })
-
-  it('should show a regular span if the document is not an onlyoffice one even if the feature flag is enabled', () => {
-    isOnlyOfficeEnabled.mockReturnValue(true)
-
-    const { root } = setup({ file })
-    const { queryByTestId } = root
-
-    expect(queryByTestId('onlyoffice-link')).toBeFalsy()
-    expect(queryByTestId('not-onlyoffice-span')).toBeTruthy()
-  })
-
-  it('should show a regular span if the document is not an onlyoffice one', () => {
-    isOnlyOfficeEnabled.mockReturnValue(false)
+  it('should show a regular span if Only Office is not supported', () => {
+    isOnlyOfficeEditorSupported.mockReturnValue(false)
 
     const { root } = setup({ file })
     const { queryByTestId } = root
