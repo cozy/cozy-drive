@@ -1,9 +1,11 @@
 import React from 'react'
-import { ShareButton } from 'cozy-sharing'
 import cx from 'classnames'
 
-import styles from './styles.styl'
+import { ShareButton } from 'cozy-sharing'
+
 import shareContainer from './share'
+import styles from './styles.styl'
+
 const ShareButtonWithProps = ({ displayedFolder, share, isDisabled }) => {
   return (
     <ShareButton
