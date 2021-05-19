@@ -20,7 +20,12 @@ const client = createMockClient({})
 
 const setup = () => {
   const root = render(
-    <AppLike client={client}>
+    <AppLike
+      client={client}
+      routerContextValue={{
+        router: { location: { pathname: '/onlyoffice/fileId' } }
+      }}
+    >
       <OnlyOfficeContext.Provider
         value={{
           fileId: '123',
