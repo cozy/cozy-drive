@@ -21,6 +21,10 @@ const Title = () => {
   const sharingInfos = useSharingInfos()
   const styles = useStyles()
 
+  // The sharing banner need to be shown only on the first arrival
+  // and not after browsing inside a folder
+  const showSharingBanner = isPublic && window.history.length <= 1
+
   return (
     <>
       <DialogTitle
@@ -32,7 +36,7 @@ const Title = () => {
         <Toolbar />
       </DialogTitle>
       <Divider />
-      {isPublic && <SharingBanner sharingInfos={sharingInfos} />}
+      {showSharingBanner && <SharingBanner sharingInfos={sharingInfos} />}
     </>
   )
 }
