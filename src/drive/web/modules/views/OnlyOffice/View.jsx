@@ -1,12 +1,25 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import Error from 'drive/web/modules/views/OnlyOffice/Error'
+
 const View = ({ id, apiUrl, docEditorConfig }) => {
+  const [isError, setIsError] = useState(false)
+
   const initEditor = useCallback(
     () => {
       new window.DocsAPI.DocEditor('onlyOfficeEditor', docEditorConfig)
     },
     [docEditorConfig]
+  )
+
+  const handleError = useCallback(
+    () => {
+      const scriptNode = document.getElementById(id)
+      scriptNode && scriptNode.remove()
+      setIsError(true)
+    },
+    [setIsError, id]
   )
 
   useEffect(
@@ -19,13 +32,14 @@ const View = ({ id, apiUrl, docEditorConfig }) => {
       script.src = apiUrl
       script.async = true
       script.onload = () => initEditor()
+      script.onerror = () => handleError()
 
       document.body.appendChild(script)
     },
-    [id, apiUrl, initEditor]
+    [id, apiUrl, initEditor, handleError]
   )
 
-  return <div id="onlyOfficeEditor" />
+  return isError ? <Error /> : <div id="onlyOfficeEditor" />
 }
 
 View.propTypes = {
@@ -34,4 +48,4 @@ View.propTypes = {
   docEditorConfig: PropTypes.object.isRequired
 }
 
-export default View
+export default React.memo(View)
