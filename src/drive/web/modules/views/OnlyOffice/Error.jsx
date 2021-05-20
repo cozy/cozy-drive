@@ -1,28 +1,52 @@
-import React from 'react'
+import React, { useContext, useMemo, useCallback } from 'react'
+import { RemoveScroll } from 'react-remove-scroll'
 
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
-import Empty from 'cozy-ui/transpiled/react/Empty'
-import CozyIcon from 'cozy-ui/transpiled/react/Icons/Cozy'
-import { DialogContent } from 'cozy-ui/transpiled/react/Dialog'
+import { isQueryLoading, useQuery } from 'cozy-client'
+import Overlay from 'cozy-ui/transpiled/react/Overlay'
+import Viewer from 'cozy-ui/transpiled/react/Viewer'
+import Spinner from 'cozy-ui/transpiled/react/Spinner'
 
-import Title from 'drive/web/modules/views/OnlyOffice/Title'
+import { showPanel } from 'drive/web/modules/viewer/helpers'
+import PanelContent from 'drive/web/modules/viewer/Panel/PanelContent'
+import FooterContent from 'drive/web/modules/viewer/Footer/FooterContent'
+import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
+import { buildFileByIdQuery } from 'drive/web/modules/queries'
 
 const Error = () => {
-  const { t } = useI18n()
+  const { fileId } = useContext(OnlyOfficeContext)
+  const handleOnClose = useCallback(() => window.history.back(), [])
+
+  const fileQuery = useMemo(() => buildFileByIdQuery(fileId), [fileId])
+  const fileResult = useQuery(fileQuery.definition, fileQuery.options)
+  const files = useMemo(() => [fileResult.data], [fileResult])
+
+  if (isQueryLoading(fileResult)) {
+    return (
+      <Spinner
+        className="u-flex u-flex-items-center u-flex-justify-center u-flex-grow-1"
+        size="xxlarge"
+      />
+    )
+  }
 
   return (
-    <>
-      <Title />
-      <DialogContent className="u-flex u-flex-items-center u-flex-justify-center">
-        <Empty
-          layout={false}
-          icon={CozyIcon}
-          title={t('OnlyOffice.Error.title')}
-          text={t('OnlyOffice.Error.text')}
+    <RemoveScroll>
+      <Overlay>
+        <Viewer
+          files={files}
+          currentIndex={0}
+          onCloseRequest={handleOnClose}
+          panelInfoProps={{
+            showPanel,
+            PanelContent
+          }}
+          footerProps={{
+            FooterContent
+          }}
         />
-      </DialogContent>
-    </>
+      </Overlay>
+    </RemoveScroll>
   )
 }
 
-export default Error
+export default React.memo(Error)

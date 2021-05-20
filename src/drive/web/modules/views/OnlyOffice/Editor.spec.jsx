@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 
-import { createMockClient } from 'cozy-client'
+import { createMockClient, useQuery } from 'cozy-client'
 import useFetchJSON from 'cozy-client/dist/hooks/useFetchJSON'
 
 import AppLike from 'test/components/AppLike'
@@ -15,6 +15,8 @@ jest.mock('cozy-client/dist/hooks/useFetchJSON', () => ({
   default: jest.fn(),
   useFetchJSON: jest.fn()
 }))
+
+jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 
 const client = createMockClient({})
 
@@ -57,15 +59,17 @@ describe('Editor', () => {
     expect(queryByTestId('onlyoffice-title')).toBeFalsy()
   })
 
-  it('should show the title and an error if the doc is undefined', () => {
+  it('should not show the title but the CozyUi Viewer instead', () => {
     useFetchJSON.mockReturnValue({ fetchStatus: 'error', data: undefined })
+    useQuery.mockReturnValue(officeDocParam)
 
     const { root } = setup()
-    const { queryByTestId, getByText } = root
+    const { queryByTestId, getAllByText } = root
 
     expect(queryByTestId('onlyoffice-content-spinner')).toBeFalsy()
-    expect(queryByTestId('onlyoffice-title')).toBeTruthy()
-    expect(getByText('Something goes wrong')).toBeTruthy()
+    expect(queryByTestId('onlyoffice-title')).toBeFalsy()
+    expect(queryByTestId('viewer-toolbar')).toBeTruthy()
+    expect(getAllByText('Download')).toBeTruthy()
   })
 
   it('should show the title and the container view', () => {
@@ -73,6 +77,7 @@ describe('Editor', () => {
       fetchStatus: 'loaded',
       data: officeDocParam
     })
+    useQuery.mockReturnValue(officeDocParam)
 
     const { root } = setup()
     const { container, queryByTestId } = root
