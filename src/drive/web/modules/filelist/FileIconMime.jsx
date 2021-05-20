@@ -1,8 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
+import { isDirectory } from 'cozy-client/dist/models/file'
 import { Icon } from 'cozy-ui/transpiled/react'
+
 import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
-import { isDirectory } from 'drive/web/modules/drive/files'
 
 const FileIcon = ({ file, size = 32 }) => (
   <Icon

@@ -65,7 +65,7 @@ const FolderViewBody = ({
   const dispatch = useDispatch()
 
   const handleFileOpen = useCallback(
-    ({ event, file, isAvailableOffline }) => {
+    ({ event, file, isAvailableOffline, isShared, isSharedWithMe }) => {
       return createFileOpeningHandler({
         client,
         isFlatDomain,
@@ -74,7 +74,7 @@ const FolderViewBody = ({
         replaceCurrentUrl: url => (window.location.href = url),
         openInNewTab: url => window.open(url, '_blank'),
         routeTo: url => router.push(url)
-      })({ event, file, isAvailableOffline })
+      })({ event, file, isAvailableOffline, isShared, isSharedWithMe })
     },
     [client, dispatch, navigateToFile, isFlatDomain, router]
   )

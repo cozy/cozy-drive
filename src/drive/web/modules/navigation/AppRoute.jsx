@@ -10,7 +10,6 @@ import Layout from 'drive/web/modules/layout/Layout'
 import FileOpenerExternal from 'drive/web/modules/viewer/FileOpenerExternal'
 import FileHistory from 'components/FileHistory'
 import UploadFromMobile from 'drive/mobile/modules/upload'
-import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
 
 import ExternalRedirect from './ExternalRedirect'
 import Index from './Index'
@@ -42,7 +41,8 @@ export const routes = [
   '/trash/:folderId/file/:fileId',
   '/trash/:folderId',
   '/file/:fileId',
-  '/onlyoffice/:fileId'
+  '/onlyoffice/:fileId',
+  '/onlyoffice/:fileId/fromSharing'
 ]
 
 const RootComponent = routerProps => (
@@ -99,9 +99,8 @@ const AppRoute = (
         </Route>
       </Route>
 
-      {isOnlyOfficeEnabled() && (
-        <Route path="onlyoffice/:fileId" component={OnlyOfficeView} />
-      )}
+      <Route path="onlyoffice/:fileId" component={OnlyOfficeView} />
+      <Route path="onlyoffice/:fileId/fromSharing" component={OnlyOfficeView} />
 
       {__TARGET__ === 'mobile' && (
         <Route path="settings" component={Settings} />

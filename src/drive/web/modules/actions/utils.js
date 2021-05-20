@@ -1,17 +1,12 @@
-import { models } from 'cozy-client'
 import {
   saveFileWithCordova,
   saveAndOpenWithCordova
 } from 'cozy-client/dist/models/fsnative'
+import { isDirectory, isReferencedByAlbum } from 'cozy-client/dist/models/file'
 import { receiveQueryResult } from 'cozy-client/dist/store'
 import { isMobileApp, isIOS } from 'cozy-device-helper'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { forceFileDownload } from 'cozy-stack-client/dist/utils'
-
-import { isReferencedByAlbum } from 'drive/web/modules/drive/files' // TODO move to cozy-client models
-
-const { file: fileModel } = models
-const { isDirectory } = fileModel
 
 export const isAnyFileReferencedByAlbum = files => {
   for (let i = 0, l = files.length; i < l; ++i) {

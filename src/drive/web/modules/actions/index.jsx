@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { models } from 'cozy-client'
+import { isFile } from 'cozy-client/dist/models/file'
 import { ShareModal } from 'cozy-sharing'
 import { isIOSApp, isMobileApp } from 'cozy-device-helper'
 import { EditDocumentQualification } from 'cozy-scanner'
@@ -25,9 +25,6 @@ import ShareMenuItem from 'drive/web/modules/drive/ShareMenuItem'
 import MakeAvailableOfflineMenuItem from 'drive/web/modules/drive/MakeAvailableOfflineMenuItem'
 import DestroyConfirm from 'drive/web/modules/trash/components/DestroyConfirm'
 import { startRenamingAsync } from 'drive/web/modules/drive/rename'
-
-const { file: fileModel } = models
-const { isFile } = fileModel
 
 import {
   isAnyFileReferencedByAlbum,

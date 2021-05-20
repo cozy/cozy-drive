@@ -1,10 +1,10 @@
 import React from 'react'
 
-import { isDirectory } from 'drive/web/modules/drive/files'
-import { addToUploadQueue } from 'drive/web/modules/upload'
+import { isDirectory } from 'cozy-client/dist/models/file'
 import { showModal } from 'react-cozy-helpers'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
+import { addToUploadQueue } from 'drive/web/modules/upload'
 import logger from 'lib/logger'
 import QuotaAlert from 'drive/web/modules/upload/QuotaAlert'
 import {

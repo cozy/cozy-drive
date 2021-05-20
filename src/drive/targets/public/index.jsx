@@ -29,7 +29,6 @@ import App from 'components/App/App'
 import ExternalRedirect from 'drive/web/modules/navigation/ExternalRedirect'
 import StyledApp from 'drive/web/modules/drive/StyledApp'
 import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
-import { shouldBeOpenedByOnlyOffice } from 'drive/web/modules/drive/files'
 
 const initCozyBar = (data, client) => {
   if (
@@ -126,7 +125,7 @@ const init = async () => {
                     )}
                   />
                 )}
-                {shouldBeOpenedByOnlyOffice(data) && (
+                {models.file.shouldBeOpenedByOnlyOffice(data) && (
                   <Redirect from="/" to={`onlyoffice/${data.id}`} />
                 )}
                 <Route

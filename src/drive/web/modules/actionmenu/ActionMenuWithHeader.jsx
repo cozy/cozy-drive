@@ -1,6 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 
+import { isDirectory } from 'cozy-client/dist/models/file'
 import { getBoundT } from 'cozy-scanner'
 import ActionMenu, {
   ActionMenuHeader
@@ -11,7 +12,6 @@ import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import QualifyIcon from 'cozy-ui/transpiled/react/Icons/Qualify'
 
 import { CozyFile } from 'models'
-import { isDirectory } from 'drive/web/modules/drive/files'
 import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
 import { ActionsItems } from './ActionsItems'
 

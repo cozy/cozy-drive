@@ -1,8 +1,9 @@
-import React, { useContext } from 'react'
+import React, { useContext, useCallback } from 'react'
 
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 
+import { useRouter } from 'drive/lib/RouterContext'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
 import { useFileWithPath } from 'drive/web/modules/views/hooks'
 import HomeIcon from 'drive/web/modules/views/OnlyOffice/Toolbar/HomeIcon'
@@ -17,8 +18,21 @@ const Toolbar = () => {
   const { isMobile } = useBreakpoints()
   const { fileId, isPublic, isReadOnly } = useContext(OnlyOfficeContext)
   const { data } = useFileWithPath(fileId)
+  const { router } = useRouter()
 
-  const showBackButton = window.history.length > 1
+  const isFromSharing = router.location.pathname.endsWith('/fromSharing')
+
+  // The condition is different in the case of a only office file that has been shared with us.
+  // In this case there is a double redirection (one to know that the file is a share, the other
+  // to open it on the host instance), so there is an additional entry in the history.
+  const showBackButton = isFromSharing
+    ? window.history.length > 2
+    : window.history.length > 1
+
+  const handleOnClick = useCallback(
+    () => (isFromSharing ? router.go(-2) : router.goBack()),
+    [isFromSharing, router]
+  )
 
   if (!data) {
     return <Spinner className="u-flex u-flex-justify-center u-flex-grow-1" />
@@ -39,7 +53,7 @@ const Toolbar = () => {
             <Separator />
           </>
         )}
-        {showBackButton && <BackButton />}
+        {showBackButton && <BackButton onClick={handleOnClick} />}
         {!isMobile && <FileIcon fileWithPath={data} />}
         <FileName fileWithPath={data} />
       </div>

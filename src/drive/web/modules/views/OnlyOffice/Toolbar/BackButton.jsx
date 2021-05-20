@@ -4,16 +4,14 @@ import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import PreviousIcon from 'cozy-ui/transpiled/react/Icons/Previous'
 
-import { useRouter } from 'drive/lib/RouterContext'
-
-const BackButton = () => {
-  const { router } = useRouter()
-
+const _BackButton = ({ onClick }) => {
   return (
-    <IconButton onClick={() => router.goBack()}>
+    <IconButton onClick={onClick} data-testid="onlyoffice-backButton">
       <Icon icon={PreviousIcon} />
     </IconButton>
   )
 }
+
+const BackButton = React.memo(_BackButton)
 
 export default BackButton

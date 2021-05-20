@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 import get from 'lodash/get'
 
 import { useClient } from 'cozy-client'
+import { isDirectory } from 'cozy-client/dist/models/file'
 
 import { TableCell } from 'cozy-ui/transpiled/react/Table'
 import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
@@ -12,7 +13,6 @@ import AppIcon from 'cozy-ui/transpiled/react/AppIcon'
 import CarbonCopyIcon from 'cozy-ui/transpiled/react/Icons/CarbonCopy'
 
 import RenameInput from 'drive/web/modules/drive/RenameInput'
-import { isDirectory } from 'drive/web/modules/drive/files'
 import { CozyFile } from 'models'
 
 import styles from 'drive/styles/filelist.styl'

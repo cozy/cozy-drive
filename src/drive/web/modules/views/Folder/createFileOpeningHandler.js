@@ -4,9 +4,8 @@ import { isMobileApp } from 'cozy-device-helper'
 
 import { openLocalFile } from 'drive/mobile/modules/offline/duck'
 import generateShortcutUrl from 'drive/web/modules/views/Folder/generateShortcutUrl'
-import { shouldBeOpenedByOnlyOffice } from 'drive/web/modules/drive/files'
 import {
-  isOnlyOfficeEnabled,
+  isOnlyOfficeEditorSupported,
   makeOnlyOfficeFileRoute
 } from 'drive/web/modules/views/OnlyOffice/helpers'
 
@@ -18,13 +17,18 @@ const createFileOpeningHandler = ({
   replaceCurrentUrl,
   openInNewTab,
   routeTo
-}) => async ({ event, file, availableOffline }) => {
+}) => async ({ event, file, availableOffline, isShared, isSharedWithMe }) => {
   if (availableOffline) {
     return dispatch(openLocalFile(file))
   }
 
   const isNote = models.file.isNote(file)
   const isShortcut = models.file.isShortcut(file)
+  const isOnlyOffice = isOnlyOfficeEditorSupported({
+    file,
+    isShared,
+    isSharedWithMe
+  })
 
   if (isShortcut) {
     if (isMobileApp()) {
@@ -46,7 +50,7 @@ const createFileOpeningHandler = ({
     } catch (e) {
       Alerter.error('alert.offline')
     }
-  } else if (isOnlyOfficeEnabled() && shouldBeOpenedByOnlyOffice(file)) {
+  } else if (isOnlyOffice) {
     if (event.ctrlKey || event.metaKey || event.shiftKey) {
       openInNewTab(makeOnlyOfficeFileRoute(file))
     } else {

@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import Hammer from '@egjs/hammerjs'
 import propagating from 'propagating-hammerjs'
 
-import { shouldBeOpenedByOnlyOffice } from 'drive/web/modules/drive/files'
 import {
-  isOnlyOfficeEnabled,
+  isOnlyOfficeEditorSupported,
   makeOnlyOfficeFileRoute
 } from 'drive/web/modules/views/OnlyOffice/helpers'
 
@@ -94,9 +93,9 @@ class FileOpener extends Component {
   }
 
   render() {
-    const { file, children } = this.props
+    const { file, children, isShared, isSharedWithMe } = this.props
 
-    if (isOnlyOfficeEnabled() && shouldBeOpenedByOnlyOffice(file)) {
+    if (isOnlyOfficeEditorSupported({ file, isShared, isSharedWithMe })) {
       return (
         <a
           data-testid="onlyoffice-link"
