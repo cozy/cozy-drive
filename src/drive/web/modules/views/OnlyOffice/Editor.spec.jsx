@@ -27,6 +27,10 @@ const setup = () => {
       routerContextValue={{
         router: { location: { pathname: '/onlyoffice/fileId' } }
       }}
+      sharingContextValue={{
+        byDocId: {},
+        documentType: 'Files'
+      }}
     >
       <OnlyOfficeContext.Provider
         value={{
