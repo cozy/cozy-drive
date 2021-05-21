@@ -1,6 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 import cx from 'classnames'
 
 import { TableBody } from 'cozy-ui/transpiled/react/Table'
@@ -9,23 +8,19 @@ import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 
 import styles from 'drive/styles/filelist.styl'
 
-export const FileListBody = ({ className, children, selectionModeActive }) => (
-  <TableBody
-    data-test-id="fil-content-body"
-    className={cx(className, styles['fil-content-body'], {
-      [styles['fil-content-body--selectable']]: selectionModeActive
-    })}
-  >
-    {children}
-  </TableBody>
-)
+const FileListBody = ({ className, children }) => {
+  const selectionModeActive = useSelector(isSelectionBarVisible)
 
-FileListBody.propTypes = {
-  selectionModeActive: PropTypes.bool
+  return (
+    <TableBody
+      data-test-id="fil-content-body"
+      className={cx(className, styles['fil-content-body'], {
+        [styles['fil-content-body--selectable']]: selectionModeActive
+      })}
+    >
+      {children}
+    </TableBody>
+  )
 }
 
-const mapStateToProps = state => ({
-  selectionModeActive: isSelectionBarVisible(state)
-})
-
-export const ConnectedFileListBody = connect(mapStateToProps)(FileListBody)
+export default FileListBody
