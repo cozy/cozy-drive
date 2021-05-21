@@ -24,10 +24,14 @@ const setup = ({
         router: { location: { pathname } },
         history: jest.fn()
       }}
+      sharingContextValue={{
+        byDocId: { '123': {} },
+        documentType: 'Files'
+      }}
     >
       <OnlyOfficeContext.Provider
         value={{
-          fileId: '123',
+          fileId: officeDocParam.id,
           isPublic: 'false',
           isReadOnly,
           setIsReadOnly: jest.fn()

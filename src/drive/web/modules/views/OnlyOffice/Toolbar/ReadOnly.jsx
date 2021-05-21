@@ -11,7 +11,7 @@ const ReadOnly = () => {
 
   return (
     <Tooltip title={t('OnlyOffice.readOnly.tooltip')}>
-      <span className="u-flex">
+      <span className="u-flex u-mr-1">
         <Icon
           icon={LockIcon}
           className="u-mr-half"

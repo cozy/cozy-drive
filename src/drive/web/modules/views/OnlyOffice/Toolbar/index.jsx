@@ -13,6 +13,7 @@ import BackButton from 'drive/web/modules/views/OnlyOffice/Toolbar/BackButton'
 import FileIcon from 'drive/web/modules/views/OnlyOffice/Toolbar/FileIcon'
 import FileName from 'drive/web/modules/views/OnlyOffice/Toolbar/FileName'
 import ReadOnly from 'drive/web/modules/views/OnlyOffice/Toolbar/ReadOnly'
+import Sharing from 'drive/web/modules/views/OnlyOffice/Toolbar/Sharing'
 
 const Toolbar = () => {
   const { isMobile } = useBreakpoints()
@@ -58,6 +59,7 @@ const Toolbar = () => {
         <FileName fileWithPath={data} />
       </div>
       {!isMobile && isReadOnly && <ReadOnly />}
+      <Sharing fileWithPath={data} />
     </>
   )
 }
