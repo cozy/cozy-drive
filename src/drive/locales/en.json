@@ -50,7 +50,8 @@
     "empty_trash": "Empty trash",
     "share": "Share",
     "trash": "Remove",
-    "leave": "Leave shared folder & delete it"
+    "leave": "Leave shared folder & delete it",
+    "menu_add": "Add"
   },
   "Share": {
     "status": {
