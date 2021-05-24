@@ -1,6 +1,6 @@
 /* global __TARGET__ */
 
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback, useContext, useMemo } from 'react'
 import { connect, useDispatch } from 'react-redux'
 import get from 'lodash/get'
 import uniqBy from 'lodash/uniqBy'
@@ -42,12 +42,13 @@ import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
 
-import FolderView from '../Folder/FolderView'
-import FolderViewHeader from '../Folder/FolderViewHeader'
-import FolderViewBody from '../Folder/FolderViewBody'
-import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
-
-import { useTrashRedirect } from './useTrashRedirect'
+import FolderView from 'drive/web/modules/views/Folder/FolderView'
+import FolderViewHeader from 'drive/web/modules/views/Folder/FolderViewHeader'
+import FolderViewBody from 'drive/web/modules/views/Folder/FolderViewBody'
+import FolderViewBreadcrumb from 'drive/web/modules/views/Folder/FolderViewBreadcrumb'
+import { useTrashRedirect } from 'drive/web/modules/views/Drive/useTrashRedirect'
+import Fab from 'drive/web/modules/drive/Fab'
+import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
 
 const getBreadcrumbPath = (t, displayedFolder) =>
   uniqBy(
@@ -179,6 +180,7 @@ const DriveView = ({
     displayedFolder => getBreadcrumbPath(t, displayedFolder),
     [t]
   )
+  const isFabActive = useMemo(() => isMobile, [isMobile])
 
   return (
     <FolderView>
@@ -216,7 +218,17 @@ const DriveView = ({
           canSort
           currentFolderId={currentFolderId}
           extraColumns={extraColumns}
+          isFabActive={isFabActive}
         />
+        {isFabActive && (
+          <AddMenuProvider
+            canCreateFolder={true}
+            canUpload={true}
+            disabled={isLoading || isInError || isPending}
+          >
+            <Fab />
+          </AddMenuProvider>
+        )}
         {children}
       </Dropzone>
     </FolderView>

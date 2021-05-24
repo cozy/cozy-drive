@@ -1,27 +1,27 @@
 /* global cozy */
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import cx from 'classnames'
 
+import { withClient } from 'cozy-client'
 import SharingProvider, { SharedDocument } from 'cozy-sharing'
-import PropTypes from 'prop-types'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
-
 import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
-import { withClient } from 'cozy-client'
+
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
+import { getCurrentFolderId } from 'drive/web/modules/selectors'
+
+import AddButton from 'drive/web/modules/drive/Toolbar/components/AddButton'
+import InsideRegularFolder from 'drive/web/modules/drive/Toolbar/components/InsideRegularFolder'
+import MoreMenu from 'drive/web/modules/drive/Toolbar/components/MoreMenu'
+import ShareButton from 'drive/web/modules/drive/Toolbar/share/ShareButton'
+import SharedRecipients from 'drive/web/modules/drive/Toolbar/share/SharedRecipients'
+import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
 
 import styles from 'drive/styles/toolbar.styl'
-import { getCurrentFolderId } from 'drive/web/modules/selectors'
-import InsideRegularFolder from 'drive/web/modules/drive/Toolbar/components/InsideRegularFolder'
-
-import UploadButtonItem from './components/UploadButtonItem'
-import MoreMenu from './components/MoreMenu'
-
-import ShareButton from './share/ShareButton'
-import SharedRecipients from './share/SharedRecipients'
 
 class Toolbar extends Component {
   static contextTypes = {
@@ -58,7 +58,6 @@ class Toolbar extends Component {
       canUpload,
       canCreateFolder,
       hasWriteAccess,
-      isShared,
       breakpoints: { isMobile },
       client
     } = this.props
@@ -75,9 +74,14 @@ class Toolbar extends Component {
         className={cx(styles['fil-toolbar-files'], 'u-flex-items-center')}
         role="toolbar"
       >
-        {!isShared &&
-          canUpload &&
-          hasWriteAccess && <UploadButtonItem disabled={isDisabled} />}
+        <AddMenuProvider
+          canCreateFolder={canCreateFolder}
+          canUpload={canUpload}
+          disabled={isDisabled}
+        >
+          <AddButton />
+        </AddMenuProvider>
+
         <InsideRegularFolder>
           <SharedRecipients />
         </InsideRegularFolder>
@@ -96,20 +100,13 @@ class Toolbar extends Component {
               <SharingProvider doctype="io.cozy.files" documentType="Files">
                 <MoreMenu
                   isDisabled={isDisabled}
-                  canCreateFolder={canCreateFolder}
-                  canUpload={canUpload}
                   hasWriteAccess={hasWriteAccess}
                 />
               </SharingProvider>
             </BarContextProvider>
           </BarRight>
         ) : (
-          <MoreMenu
-            isDisabled={isDisabled}
-            canCreateFolder={canCreateFolder}
-            canUpload={canUpload}
-            hasWriteAccess={hasWriteAccess}
-          />
+          <MoreMenu isDisabled={isDisabled} hasWriteAccess={hasWriteAccess} />
         )}
       </div>
     )
@@ -133,14 +130,8 @@ const ToolbarWithSharingContext = props => {
   ) : (
     <SharedDocument docId={props.folderId}>
       {sharingProps => {
-        const { isShared, hasWriteAccess } = sharingProps
-        return (
-          <Toolbar
-            {...props}
-            hasWriteAccess={hasWriteAccess}
-            isShared={isShared}
-          />
-        )
+        const { hasWriteAccess } = sharingProps
+        return <Toolbar {...props} hasWriteAccess={hasWriteAccess} />
       }}
     </SharedDocument>
   )
