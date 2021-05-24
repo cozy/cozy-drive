@@ -1,106 +1,83 @@
 import React, { useState, useCallback } from 'react'
 
-import { MoreButton } from 'components/Button'
-import { isMobileApp } from 'cozy-device-helper'
+import { isMobileApp, isIOSApp } from 'cozy-device-helper'
 import ActionMenu from 'cozy-ui/transpiled/react/ActionMenu'
-import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
-import { isIOSApp } from 'cozy-device-helper'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
+import { MoreButton } from 'components/Button'
 import InsideRegularFolder from 'drive/web/modules/drive/Toolbar/components/InsideRegularFolder'
+import DeleteItem from 'drive/web/modules/drive/Toolbar/delete/DeleteItem'
+import SelectableItem from 'drive/web/modules/drive/Toolbar/selectable/SelectableItem'
+import ShareItem from 'drive/web/modules/drive/Toolbar/share/ShareItem'
+import DownloadButtonItem from 'drive/web/modules/drive/Toolbar/components/DownloadButtonItem'
 
-import UploadItem from './UploadItem'
-import DeleteItem from '../delete/DeleteItem'
-import SelectableItem from '../selectable/SelectableItem'
-import AddFolderItem from './AddFolderItem'
-import CreateNoteItem from './CreateNoteItem'
-import CreateShortcut from './CreateShortcut'
-import DownloadButtonItem from './DownloadButtonItem'
-import ShareItem from '../share/ShareItem'
-import StartScanner from './StartScanner'
-import ScanWrapper from './ScanWrapper'
+export const openMenu = setMenuVisible => {
+  if (window.StatusBar && isIOSApp()) {
+    window.StatusBar.backgroundColorByHexString('#989AA0')
+  }
+  setMenuVisible(true)
+}
 
-const MoreMenu = ({
-  isDisabled,
-  canCreateFolder,
-  canUpload,
-  hasWriteAccess,
-  breakpoints: { isMobile }
-}) => {
+export const closeMenu = setMenuVisible => {
+  if (window.StatusBar && isIOSApp()) {
+    window.StatusBar.backgroundColorByHexString('#FFFFFF')
+  }
+  setMenuVisible(false)
+}
+
+export const toggleMenu = (menuIsVisible, setMenuVisible) => {
+  if (menuIsVisible) return closeMenu(setMenuVisible)
+  openMenu(setMenuVisible)
+}
+
+const MoreMenu = ({ isDisabled, hasWriteAccess }) => {
   const [menuIsVisible, setMenuVisible] = useState(false)
   const anchorRef = React.createRef()
+  const { isMobile } = useBreakpoints()
 
-  const openMenu = useCallback(
-    () => {
-      if (window.StatusBar && isIOSApp()) {
-        window.StatusBar.backgroundColorByHexString('#989AA0')
-      }
-      setMenuVisible(true)
-    },
-    [setMenuVisible]
+  const handleToggle = useCallback(
+    () => toggleMenu(menuIsVisible, setMenuVisible),
+    [menuIsVisible, setMenuVisible]
   )
-  const closeMenu = useCallback(
-    () => {
-      if (window.StatusBar && isIOSApp()) {
-        window.StatusBar.backgroundColorByHexString('#FFFFFF')
-      }
-      setMenuVisible(false)
-    },
-    [setMenuVisible]
-  )
-  const toggleMenu = useCallback(
-    () => {
-      if (menuIsVisible) return closeMenu()
-      openMenu()
-    },
-    [closeMenu, openMenu, menuIsVisible]
-  )
+  const handleClose = useCallback(() => closeMenu(setMenuVisible), [
+    setMenuVisible
+  ])
 
   return (
     <div>
       <div ref={anchorRef}>
-        <MoreButton onClick={toggleMenu} disabled={isDisabled} />
+        <MoreButton onClick={handleToggle} disabled={isDisabled} />
       </div>
-      <ScanWrapper>
-        {menuIsVisible && (
-          <ActionMenu
-            placement="bottom-end"
-            anchorElRef={anchorRef}
-            onClose={closeMenu}
-            autoclose
-          >
-            {canCreateFolder && hasWriteAccess && <AddFolderItem />}
-            {hasWriteAccess && <CreateNoteItem />}
-            {hasWriteAccess && <CreateShortcut />}
-            {canUpload &&
-              hasWriteAccess && <UploadItem disabled={isDisabled} />}
-            {isMobileApp() &&
-              canUpload &&
-              hasWriteAccess && (
-                <StartScanner insideMoreMenu disabled={isDisabled} />
-              )}
-            {hasWriteAccess && <hr />}
-            {isMobile && (
-              <InsideRegularFolder>
-                <ShareItem />
-              </InsideRegularFolder>
-            )}
-            {!isMobileApp() && (
-              <InsideRegularFolder>
-                <DownloadButtonItem />
-              </InsideRegularFolder>
-            )}
-            <SelectableItem />
-            {hasWriteAccess && (
-              <InsideRegularFolder>
-                <hr />
-                <DeleteItem />
-              </InsideRegularFolder>
-            )}
-          </ActionMenu>
-        )}
-      </ScanWrapper>
+      {menuIsVisible && (
+        <ActionMenu
+          anchorElRef={anchorRef}
+          onClose={handleClose}
+          autoclose={true}
+          popperOptions={{
+            strategy: 'fixed'
+          }}
+        >
+          {isMobile && (
+            <InsideRegularFolder>
+              <ShareItem />
+            </InsideRegularFolder>
+          )}
+          {!isMobileApp() && (
+            <InsideRegularFolder>
+              <DownloadButtonItem />
+            </InsideRegularFolder>
+          )}
+          <SelectableItem />
+          {hasWriteAccess && (
+            <InsideRegularFolder>
+              <hr />
+              <DeleteItem />
+            </InsideRegularFolder>
+          )}
+        </ActionMenu>
+      )}
     </div>
   )
 }
 
-export default withBreakpoints()(MoreMenu)
+export default React.memo(MoreMenu)
