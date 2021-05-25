@@ -19,7 +19,7 @@ const CarbonCopyIcon = ({ file }) => {
   if (hasElectronicSafe) {
     return <Icon icon={CheckIcon} />
   }
-  return <AppIcon app={konnectorName} />
+  return <AppIcon app={konnectorName} type="konnector" />
 }
 
 const CarbonCopy = ({ file }) => {

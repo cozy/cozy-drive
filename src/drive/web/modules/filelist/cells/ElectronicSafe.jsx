@@ -24,7 +24,7 @@ const ElectronicSafe = ({ file }) => {
         <CertificationTooltip
           body={t('table.tooltip.electronicSafe.title')}
           caption={t('table.tooltip.electronicSafe.caption')}
-          content={<AppIcon app={konnectorName} />}
+          content={<AppIcon app={konnectorName} type="konnector" />}
         />
       ) : (
         '—'
