@@ -16,7 +16,9 @@ import Sharing from 'drive/web/modules/views/OnlyOffice/Toolbar/Sharing'
 
 const Toolbar = () => {
   const { isMobile } = useBreakpoints()
-  const { fileId, isPublic, isReadOnly } = useContext(OnlyOfficeContext)
+  const { fileId, isPublic, isReadOnly, isEditorReady } = useContext(
+    OnlyOfficeContext
+  )
   const { data: fileWithPath } = useFileWithPath(fileId)
   const { router } = useRouter()
 
@@ -55,7 +57,7 @@ const Toolbar = () => {
         <FileName fileWithPath={fileWithPath} />
       </div>
       {!isMobile && isReadOnly && <ReadOnly />}
-      <Sharing fileWithPath={fileWithPath} />
+      {isEditorReady && <Sharing fileWithPath={fileWithPath} />}
     </>
   )
 }
