@@ -4,6 +4,10 @@ import 'cozy-ui/transpiled/react/stylesheet.css'
 // eslint-disable-next-line no-unused-vars
 import mainStyles from 'drive/styles/main.styl'
 
+// Uncomment to activate why-did-you-render
+// https://github.com/welldone-software/why-did-you-render
+// import './wdyr'
+
 import 'whatwg-fetch'
 import React from 'react'
 import { render } from 'react-dom'
