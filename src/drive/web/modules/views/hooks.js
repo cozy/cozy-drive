@@ -50,6 +50,7 @@ export const useFileWithPath = fileId => {
   const parentData = parentResult.data
 
   return {
+    ...fileResult,
     data: {
       ...resultData,
       displayedPath: parentData ? parentData.path : undefined
