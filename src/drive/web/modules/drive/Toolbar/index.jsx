@@ -74,20 +74,22 @@ class Toolbar extends Component {
         className={cx(styles['fil-toolbar-files'], 'u-flex-items-center')}
         role="toolbar"
       >
-        <AddMenuProvider
-          canCreateFolder={canCreateFolder}
-          canUpload={canUpload}
-          disabled={isDisabled}
-        >
-          <AddButton />
-        </AddMenuProvider>
-
         <InsideRegularFolder>
           <SharedRecipients />
         </InsideRegularFolder>
         <InsideRegularFolder>
           <ShareButton isDisabled={isDisabled} />
         </InsideRegularFolder>
+
+        {hasWriteAccess && (
+          <AddMenuProvider
+            canCreateFolder={canCreateFolder}
+            canUpload={canUpload}
+            disabled={isDisabled}
+          >
+            <AddButton />
+          </AddMenuProvider>
+        )}
 
         {isMobile ? (
           <BarRight>
