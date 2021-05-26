@@ -10,12 +10,10 @@ import DotsIcon from 'cozy-ui/transpiled/react/Icons/Dots'
 
 import getHomeLinkHref from 'components/Button/getHomeLinkHref'
 import SelectableItem from 'drive/web/modules/drive/Toolbar/selectable/SelectableItem'
-import AddFolderItem from 'drive/web/modules/drive/Toolbar/components/AddFolderItem'
-import UploadItem from 'drive/web/modules/drive/Toolbar/components/UploadItem'
-import CreateShortcut from 'drive/web/modules/drive/Toolbar/components/CreateShortcut'
-import UploadButtonItem from 'drive/web/modules/drive/Toolbar/components/UploadButtonItem'
 import { downloadFiles } from 'drive/web/modules/actions/utils'
 import CozyBarRightMobile from 'drive/web/modules/public/CozyBarRightMobile'
+import AddButton from 'drive/web/modules/drive/Toolbar/components/AddButton'
+import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
 
 import { DownloadFilesButton } from './DownloadButton'
 
@@ -37,12 +35,7 @@ const MoreButton = ({ disabled, onClick }) => {
     />
   )
 }
-const MoreMenu = ({
-  files,
-  hasWriteAccess,
-  refreshFolderContent,
-  isMobile
-}) => {
+const MoreMenu = ({ files, isMobile }) => {
   const { t } = useI18n()
   const client = useClient()
   const anchorRef = React.createRef()
@@ -81,11 +74,6 @@ const MoreMenu = ({
               {t('toolbar.menu_download')}
             </ActionMenuItem>
           )}
-          {hasWriteAccess && <AddFolderItem />}
-          {hasWriteAccess && (
-            <CreateShortcut onCreated={refreshFolderContent} />
-          )}
-          {hasWriteAccess && <UploadItem onUploaded={refreshFolderContent} />}
           {files.length > 1 && <SelectableItem />}
         </ActionMenu>
       )}
@@ -112,7 +100,13 @@ const PublicToolbarByLink = ({
         {!isMobile && (
           <>
             {hasWriteAccess && (
-              <UploadButtonItem onUploaded={refreshFolderContent} />
+              <AddMenuProvider
+                canCreateFolder={true}
+                canUpload={true}
+                refreshFolderContent={refreshFolderContent}
+              >
+                <AddButton />
+              </AddMenuProvider>
             )}
             <DownloadFilesButton files={files} />
           </>

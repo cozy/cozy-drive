@@ -5,7 +5,7 @@ import { showModal } from 'react-cozy-helpers'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import LinkIcon from 'cozy-ui/transpiled/react/Icons/Link'
+import DeviceBrowserIcon from 'cozy-ui/transpiled/react/Icons/DeviceBrowser'
 
 import ShortcutCreationModal from './ShortcutCreationModalConnected'
 
@@ -15,7 +15,7 @@ const CreateShortcutWrapper = ({ openModal }) => {
   return (
     <ActionMenuItem
       data-test-id="create-a-shortcut"
-      left={<Icon icon={LinkIcon} />}
+      left={<Icon icon={DeviceBrowserIcon} />}
       onClick={openModal}
     >
       {t('toolbar.menu_create_shortcut')}

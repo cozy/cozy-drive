@@ -5,7 +5,7 @@ import { Table } from 'cozy-ui/transpiled/react/Table'
 
 import FileListHeader from 'drive/web/modules/filelist/FileListHeader'
 import MobileFileListHeader from 'drive/web/modules/filelist/MobileFileListHeader'
-import { ConnectedFileListBody as FileListBody } from 'drive/web/modules/filelist/FileListBody'
+import FileListBody from 'drive/web/modules/filelist/FileListBody'
 
 const Explorer = ({ children }) => (
   <Table role="table">

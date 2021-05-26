@@ -6,6 +6,8 @@ import SharingProvider from 'cozy-sharing'
 import { I18n } from 'cozy-ui/transpiled/react/I18n'
 import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
+import FabProvider from 'drive/lib/FabProvider'
+
 import StyledApp from 'drive/web/modules/drive/StyledApp'
 
 const DriveProvider = ({ client, lang, polyglot, dictRequire, children }) => {
@@ -14,7 +16,9 @@ const DriveProvider = ({ client, lang, polyglot, dictRequire, children }) => {
       <CozyProvider client={client}>
         <SharingProvider doctype="io.cozy.files" documentType="Files">
           <BreakpointsProvider>
-            <StyledApp>{children}</StyledApp>
+            <FabProvider>
+              <StyledApp>{children}</StyledApp>
+            </FabProvider>
           </BreakpointsProvider>
         </SharingProvider>
       </CozyProvider>

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from 'react'
+import React, { useState, useCallback, useContext, useEffect } from 'react'
 import { connect, useDispatch } from 'react-redux'
 import { ModalManager } from 'react-cozy-helpers'
 import get from 'lodash/get'
@@ -31,6 +31,9 @@ import {
 } from 'drive/web/modules/selectors'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
+import Fab from 'drive/web/modules/drive/Fab'
+import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
+import { FabContext } from 'drive/lib/FabProvider'
 
 import usePublicFilesQuery from './usePublicFilesQuery'
 import usePublicWritePermissions from './usePublicWritePermissions'
@@ -67,6 +70,7 @@ const PublicFolderView = ({
 }) => {
   const client = useClient()
   const { isMobile } = useBreakpoints()
+  const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)
 
   const sharingInfos = useSharingInfos()
 
@@ -166,6 +170,19 @@ const PublicFolderView = ({
     [t, parentFolder]
   )
 
+  useEffect(
+    () => {
+      if (hasWritePermissions) {
+        setIsFabDisplayed(isMobile)
+        return () => {
+          // to not have this set to false on other views after using this view
+          setIsFabDisplayed(false)
+        }
+      }
+    },
+    [setIsFabDisplayed, isMobile, hasWritePermissions]
+  )
+
   return (
     <>
       <Main isPublic={true}>
@@ -202,6 +219,15 @@ const PublicFolderView = ({
               canUpload={hasWritePermissions}
               extraColumns={extraColumns}
             />
+            {isFabDisplayed && (
+              <AddMenuProvider
+                canCreateFolder={hasWritePermissions}
+                canUpload={hasWritePermissions}
+                refreshFolderContent={refreshFolderContent}
+              >
+                <Fab noSidebar={true} />
+              </AddMenuProvider>
+            )}
             {viewerOpened &&
               viewableFiles.length > 0 && (
                 <Overlay>

@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 
 import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
-import { Icon, FileInput } from 'cozy-ui/transpiled/react'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import FileInput from 'cozy-ui/transpiled/react/FileInput'
 import UploadIcon from 'cozy-ui/transpiled/react/Icons/Upload'
 
 import { uploadFiles } from 'drive/web/modules/navigation/duck'

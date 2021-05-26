@@ -57,6 +57,7 @@ export const CertificationsIcons = ({ attributes }) => {
               app={slug}
               className={styles['fil-file-certifications--icon']}
               fetchIcon={fetchIcon}
+              type="konnector"
             />
           </span>
         ))}
@@ -66,6 +67,7 @@ export const CertificationsIcons = ({ attributes }) => {
             app={slug}
             className={styles['fil-file-certifications--icon']}
             fetchIcon={fetchIcon}
+            type="konnector"
           />
         </span>
       )}

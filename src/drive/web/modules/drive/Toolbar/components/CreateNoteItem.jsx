@@ -11,7 +11,7 @@ import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { generateUniversalLink } from 'cozy-ui/transpiled/react/AppLinker/native'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import NoteIcon from 'cozy-ui/transpiled/react/Icons/Note'
+import IconNote from 'cozy-ui/transpiled/react/Icons/FileTypeNote'
 
 import toolbarContainer from 'drive/web/modules/drive/Toolbar/toolbar'
 
@@ -47,7 +47,7 @@ const CreateNoteItem = ({ client, t, displayedFolder }) => {
   return (
     <ActionMenuItem
       data-test-id="create-a-note"
-      left={<Icon icon={NoteIcon} />}
+      left={<Icon icon={IconNote} />}
       onClick={async () => {
         if (notesAppUrl === undefined) return
         if (notesAppIsInstalled) {
