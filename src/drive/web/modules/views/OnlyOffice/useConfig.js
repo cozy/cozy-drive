@@ -12,7 +12,9 @@ import {
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
 
 const useConfig = () => {
-  const { fileId, isReadOnly, setIsReadOnly } = useContext(OnlyOfficeContext)
+  const { fileId, isReadOnly, setIsReadOnly, setIsEditorReady } = useContext(
+    OnlyOfficeContext
+  )
   const [config, setConfig] = useState()
 
   const queryResult = useFetchJSON('GET', `/office/${fileId}/open`)
@@ -44,7 +46,13 @@ const useConfig = () => {
           setIsReadOnly(isOnlyOfficeReadOnly(data))
         }
 
-        setConfig(makeConfig(data))
+        setConfig(
+          makeConfig(data, {
+            events: {
+              onAppReady: () => setIsEditorReady(true)
+            }
+          })
+        )
       }
     },
     [
@@ -54,7 +62,8 @@ const useConfig = () => {
       isReadOnly,
       setIsReadOnly,
       config,
-      setConfig
+      setConfig,
+      setIsEditorReady
     ]
   )
 

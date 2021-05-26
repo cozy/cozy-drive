@@ -8,10 +8,18 @@ export const OnlyOfficeContext = createContext()
 
 const OnlyOfficeProvider = ({ fileId, isPublic, children }) => {
   const [isReadOnly, setIsReadOnly] = useState()
+  const [isEditorReady, setIsEditorReady] = useState(false)
 
   return (
     <OnlyOfficeContext.Provider
-      value={{ fileId, isPublic, isReadOnly, setIsReadOnly }}
+      value={{
+        fileId,
+        isPublic,
+        isReadOnly,
+        setIsReadOnly,
+        isEditorReady,
+        setIsEditorReady
+      }}
     >
       {children}
     </OnlyOfficeContext.Provider>
