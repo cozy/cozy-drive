@@ -1,7 +1,6 @@
 import React, { useContext, useCallback } from 'react'
 
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
-import Spinner from 'cozy-ui/transpiled/react/Spinner'
 
 import { useRouter } from 'drive/lib/RouterContext'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
@@ -34,10 +33,6 @@ const Toolbar = () => {
     () => (isFromSharing ? router.go(-2) : router.goBack()),
     [isFromSharing, router]
   )
-
-  if (!fileWithPath) {
-    return <Spinner className="u-flex u-flex-justify-center u-flex-grow-1" />
-  }
 
   return (
     <>

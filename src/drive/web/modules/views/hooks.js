@@ -2,7 +2,7 @@ import get from 'lodash/get'
 import uniq from 'lodash/uniq'
 import keyBy from 'lodash/keyBy'
 
-import { isQueryLoading, useQuery } from 'cozy-client'
+import { useQuery } from 'cozy-client'
 
 import {
   buildParentsByIdsQuery,
@@ -48,10 +48,6 @@ export const useFileWithPath = fileId => {
   const parentQuery = buildFileByIdQuery(dirId)
   const parentResult = useQuery(parentQuery.definition, parentQuery.options)
   const parentData = parentResult.data
-
-  if (isQueryLoading(fileResult) || isQueryLoading(parentResult)) {
-    return { data: null }
-  }
 
   return {
     data: {
