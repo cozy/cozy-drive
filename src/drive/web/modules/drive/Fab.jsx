@@ -11,12 +11,13 @@ const useStyles = makeStyles(() => ({
   root: {
     position: 'fixed',
     right: '1rem',
-    bottom: 'calc(var(--sidebarHeight) + 1rem)'
+    bottom: ({ noSidebar }) =>
+      noSidebar ? '1rem' : 'calc(var(--sidebarHeight) + 1rem)'
   }
 }))
 
-export const Fab = () => {
-  const styles = useStyles()
+export const Fab = ({ noSidebar }) => {
+  const styles = useStyles({ noSidebar })
   const { anchorRef, handleToggle, isDisabled } = useContext(AddMenuContext)
 
   return (
