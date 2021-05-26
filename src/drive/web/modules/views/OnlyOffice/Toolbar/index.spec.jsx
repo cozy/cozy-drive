@@ -14,7 +14,7 @@ jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 const client = createMockClient({})
 
 const setup = ({
-  isReadOnly = false,
+  isEditorReadOnly = false,
   pathname = '/onlyoffice/fileId'
 } = {}) => {
   const root = render(
@@ -33,8 +33,8 @@ const setup = ({
         value={{
           fileId: officeDocParam.id,
           isPublic: 'false',
-          isReadOnly,
-          setIsReadOnly: jest.fn()
+          isEditorReadOnly,
+          setIsEditorReadOnly: jest.fn()
         }}
       >
         <Toolbar />
@@ -54,7 +54,7 @@ describe('Toolbar', () => {
     it('should be able to rename the file if not in readOnly mode', () => {
       useQuery.mockReturnValue(officeDocParam)
 
-      const { root } = setup({ isReadOnly: false })
+      const { root } = setup({ isEditorReadOnly: false })
       const { getByText, getByRole } = root
 
       fireEvent.click(getByText(officeDocParam.data.name))
@@ -64,7 +64,7 @@ describe('Toolbar', () => {
     it('should not be able to rename the file in readOnly mode', () => {
       useQuery.mockReturnValue(officeDocParam)
 
-      const { root } = setup({ isReadOnly: true })
+      const { root } = setup({ isEditorReadOnly: true })
       const { getByText, queryByRole } = root
 
       fireEvent.click(getByText(officeDocParam.data.name))

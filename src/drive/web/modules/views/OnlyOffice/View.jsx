@@ -1,14 +1,28 @@
-import React, { useEffect, useCallback, useState } from 'react'
+import React, { useEffect, useCallback, useState, useContext } from 'react'
 import PropTypes from 'prop-types'
+import cx from 'classnames'
+
+import Spinner from 'cozy-ui/transpiled/react/Spinner'
 
 import Error from 'drive/web/modules/views/OnlyOffice/Error'
+import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
+
+const forceIframesHeight = value => {
+  const iframes = document.getElementsByTagName('iframe')
+
+  for (const iframe of iframes) {
+    iframe.style.height = value
+  }
+}
 
 const View = ({ id, apiUrl, docEditorConfig }) => {
   const [isError, setIsError] = useState(false)
+  const { isEditorReady } = useContext(OnlyOfficeContext)
 
   const initEditor = useCallback(
     () => {
       new window.DocsAPI.DocEditor('onlyOfficeEditor', docEditorConfig)
+      forceIframesHeight('0')
     },
     [docEditorConfig]
   )
@@ -39,7 +53,28 @@ const View = ({ id, apiUrl, docEditorConfig }) => {
     [id, apiUrl, initEditor, handleError]
   )
 
-  return isError ? <Error /> : <div id="onlyOfficeEditor" />
+  useEffect(
+    () => {
+      isEditorReady && forceIframesHeight('100%')
+    },
+    [isEditorReady]
+  )
+
+  if (isError) return <Error />
+
+  return (
+    <>
+      {!isEditorReady && (
+        <Spinner
+          className={cx(
+            'u-flex u-flex-items-center u-flex-justify-center u-flex-grow-1'
+          )}
+          size="xxlarge"
+        />
+      )}
+      <div id="onlyOfficeEditor" />
+    </>
+  )
 }
 
 View.propTypes = {

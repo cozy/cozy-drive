@@ -31,9 +31,9 @@ const useStyles = makeStyles(theme => ({
 const FileName = ({ fileWithPath }) => {
   const muiStyles = useStyles()
   const { isMobile } = useBreakpoints()
-  const { isReadOnly } = useContext(OnlyOfficeContext)
+  const { isEditorReadOnly } = useContext(OnlyOfficeContext)
   const [isRenaming, setIsRenaming] = useState(false)
-  const isRenamable = !isMobile && !isReadOnly
+  const isRenamable = !isMobile && !isEditorReadOnly
 
   return (
     <div className={`${styles['fileName']} u-ml-1 u-ml-half-s u-ellipsis`}>

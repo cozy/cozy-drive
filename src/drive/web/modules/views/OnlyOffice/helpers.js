@@ -28,7 +28,7 @@ export const isOnlyOfficeEditorSupported = ({
  */
 export const isSharedWithMe = ({ data }) => data.attributes.sharecode
 
-export const makeConfig = ({ data }) => {
+export const makeConfig = ({ data }, options) => {
   const onlyOffice = data.attributes.onlyoffice
   const serverUrl = onlyOffice.url
   const apiUrl = `${serverUrl}/web-apps/apps/api/documents/api.js`
@@ -38,7 +38,8 @@ export const makeConfig = ({ data }) => {
     document: onlyOffice.document,
     editorConfig: onlyOffice.editor,
     token: onlyOffice.token,
-    documentType: onlyOffice.documentType
+    documentType: onlyOffice.documentType,
+    ...options
   }
 
   return { serverUrl, apiUrl, docEditorConfig }

@@ -7,11 +7,19 @@ import Editor from 'drive/web/modules/views/OnlyOffice/Editor'
 export const OnlyOfficeContext = createContext()
 
 const OnlyOfficeProvider = ({ fileId, isPublic, children }) => {
-  const [isReadOnly, setIsReadOnly] = useState()
+  const [isEditorReadOnly, setIsEditorReadOnly] = useState()
+  const [isEditorReady, setIsEditorReady] = useState(false)
 
   return (
     <OnlyOfficeContext.Provider
-      value={{ fileId, isPublic, isReadOnly, setIsReadOnly }}
+      value={{
+        fileId,
+        isPublic,
+        isEditorReadOnly,
+        setIsEditorReadOnly,
+        isEditorReady,
+        setIsEditorReady
+      }}
     >
       {children}
     </OnlyOfficeContext.Provider>

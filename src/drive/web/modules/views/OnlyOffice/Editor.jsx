@@ -20,7 +20,7 @@ export const Editor = () => {
   return (
     <>
       <Title />
-      <DialogContent className="u-p-0">
+      <DialogContent className="u-flex u-flex-column u-p-0">
         <View
           id={new URL(serverUrl).hostname}
           apiUrl={apiUrl}
