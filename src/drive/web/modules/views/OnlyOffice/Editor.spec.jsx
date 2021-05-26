@@ -36,8 +36,8 @@ const setup = () => {
         value={{
           fileId: '123',
           isPublic: 'false',
-          isReadOnly: false,
-          setIsReadOnly: jest.fn()
+          isEditorReadOnly: false,
+          setIsEditorReadOnly: jest.fn()
         }}
       >
         <Editor />
