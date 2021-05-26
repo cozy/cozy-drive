@@ -55,7 +55,8 @@ const Toolbar = () => {
           </>
         )}
         {showBackButton && <BackButton onClick={handleOnClick} />}
-        {!isMobile && <FileIcon fileWithPath={fileWithPath} />}
+        {!isMobile &&
+          fileWithPath.class && <FileIcon fileClass={fileWithPath.class} />}
         <FileName fileWithPath={fileWithPath} />
       </div>
       {!isMobile && isReadOnly && <ReadOnly />}
