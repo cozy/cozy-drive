@@ -16,7 +16,8 @@ import StartScanner from 'drive/web/modules/drive/Toolbar/components/StartScanne
 export const ActionMenuContent = ({
   isDisabled,
   canCreateFolder,
-  canUpload
+  canUpload,
+  refreshFolderContent
 }) => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
@@ -33,10 +34,10 @@ export const ActionMenuContent = ({
       )}
       {canCreateFolder && <AddFolderItem />}
       <CreateNoteItem />
-      <CreateShortcut />
+      <CreateShortcut onCreated={refreshFolderContent} />
       {canUpload && <hr />}
       {canUpload && (
-        <UploadItem disabled={isDisabled} />
+        <UploadItem disabled={isDisabled} onUploaded={refreshFolderContent} />
       )}
       {isMobileApp() && canUpload && <StartScanner disabled={isDisabled} />}
     </>
@@ -48,7 +49,8 @@ const AddMenu = ({
   handleClose,
   isDisabled,
   canCreateFolder,
-  canUpload
+  canUpload,
+  refreshFolderContent
 }) => {
   return (
     <ScanWrapper>
@@ -64,6 +66,7 @@ const AddMenu = ({
           isDisabled={isDisabled}
           canCreateFolder={canCreateFolder}
           canUpload={canUpload}
+          refreshFolderContent={refreshFolderContent}
         />
       </ActionMenu>
     </ScanWrapper>

@@ -20,6 +20,7 @@ const AddMenuProvider = ({
   disabled,
   canCreateFolder,
   canUpload,
+  refreshFolderContent,
   children
 }) => {
   const [menuIsVisible, setMenuVisible] = useState(false)
@@ -49,6 +50,7 @@ const AddMenuProvider = ({
           handleClose={handleClose}
           canCreateFolder={canCreateFolder}
           canUpload={canUpload}
+          refreshFolderContent={refreshFolderContent}
         />
       )}
     </AddMenuContext.Provider>
