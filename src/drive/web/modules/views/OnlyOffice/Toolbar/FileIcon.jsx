@@ -12,14 +12,12 @@ const FileTypeIcon = {
   text: FileTypeTextIcon
 }
 
-const FileIcon = ({ fileWithPath }) => {
-  const fileClass = fileWithPath.class
-
+const FileIcon = ({ fileClass }) => {
   return <Icon className="u-ml-half" icon={FileTypeIcon[fileClass]} size={32} />
 }
 
 FileIcon.propTypes = {
-  fileWithPath: PropTypes.object.isRequired
+  fileClass: PropTypes.string.isRequired
 }
 
 export default FileIcon

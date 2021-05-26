@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react'
 
 import { ShareButton, ShareModal, SharedRecipients } from 'cozy-sharing'
 
-const _Sharing = ({ fileWithPath }) => {
+const Sharing = ({ fileWithPath }) => {
   const [showShareModal, setShowShareModal] = useState(false)
 
   const toggleShareModal = useCallback(() => setShowShareModal(v => !v), [
@@ -29,6 +29,4 @@ const _Sharing = ({ fileWithPath }) => {
   )
 }
 
-const Sharing = React.memo(_Sharing)
-
-export default Sharing
+export default React.memo(Sharing)

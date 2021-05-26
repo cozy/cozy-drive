@@ -1,7 +1,6 @@
 import React, { useContext, useCallback } from 'react'
 
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
-import Spinner from 'cozy-ui/transpiled/react/Spinner'
 
 import { useRouter } from 'drive/lib/RouterContext'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
@@ -18,7 +17,7 @@ import Sharing from 'drive/web/modules/views/OnlyOffice/Toolbar/Sharing'
 const Toolbar = () => {
   const { isMobile } = useBreakpoints()
   const { fileId, isPublic, isReadOnly } = useContext(OnlyOfficeContext)
-  const { data } = useFileWithPath(fileId)
+  const { data: fileWithPath } = useFileWithPath(fileId)
   const { router } = useRouter()
 
   const isFromSharing = router.location.pathname.endsWith('/fromSharing')
@@ -34,10 +33,6 @@ const Toolbar = () => {
     () => (isFromSharing ? router.go(-2) : router.goBack()),
     [isFromSharing, router]
   )
-
-  if (!data) {
-    return <Spinner className="u-flex u-flex-justify-center u-flex-grow-1" />
-  }
 
   return (
     <>
@@ -55,11 +50,12 @@ const Toolbar = () => {
           </>
         )}
         {showBackButton && <BackButton onClick={handleOnClick} />}
-        {!isMobile && <FileIcon fileWithPath={data} />}
-        <FileName fileWithPath={data} />
+        {!isMobile &&
+          fileWithPath.class && <FileIcon fileClass={fileWithPath.class} />}
+        <FileName fileWithPath={fileWithPath} />
       </div>
       {!isMobile && isReadOnly && <ReadOnly />}
-      <Sharing fileWithPath={data} />
+      <Sharing fileWithPath={fileWithPath} />
     </>
   )
 }

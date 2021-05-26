@@ -79,12 +79,14 @@ describe('useFileWithPath', () => {
     jest.clearAllMocks()
   })
 
-  it('should return null data while all queries are not finished', () => {
+  it('should return default data while all queries are not finished', () => {
     useQuery
       .mockReturnValueOnce({ data: null, fetchStatus: 'loading' })
       .mockReturnValue({ data: null, fetchStatus: 'loading' })
 
-    expect(useFileWithPath('fakeId')).toMatchObject({ data: null })
+    expect(useFileWithPath('fakeId')).toMatchObject({
+      data: { displayedPath: undefined }
+    })
 
     useQuery.mockClear()
 
@@ -92,7 +94,9 @@ describe('useFileWithPath', () => {
       .mockReturnValueOnce({ data: { id: 'fakeId' }, fetchStatus: 'loaded' })
       .mockReturnValue({ data: null, fetchStatus: 'loading' })
 
-    expect(useFileWithPath('fakeId')).toMatchObject({ data: null })
+    expect(useFileWithPath('fakeId')).toMatchObject({
+      data: { displayedPath: undefined }
+    })
 
     useQuery.mockClear()
 
@@ -100,7 +104,9 @@ describe('useFileWithPath', () => {
       .mockReturnValueOnce({ data: null, fetchStatus: 'loading' })
       .mockReturnValue({ data: { path: '/path' }, fetchStatus: 'loaded' })
 
-    expect(useFileWithPath('fakeId')).toMatchObject({ data: null })
+    expect(useFileWithPath('fakeId')).toMatchObject({
+      data: { displayedPath: '/path' }
+    })
   })
 
   it('should return data with undefined displayedPath if no parent path', () => {
