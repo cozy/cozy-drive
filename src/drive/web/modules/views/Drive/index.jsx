@@ -1,6 +1,6 @@
 /* global __TARGET__ */
 
-import React, { useCallback, useContext, useMemo } from 'react'
+import React, { useCallback, useContext, useEffect } from 'react'
 import { connect, useDispatch } from 'react-redux'
 import get from 'lodash/get'
 import uniqBy from 'lodash/uniqBy'
@@ -41,6 +41,7 @@ import {
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
+import { FabContext } from 'drive/lib/FabProvider'
 
 import FolderView from 'drive/web/modules/views/Folder/FolderView'
 import FolderViewHeader from 'drive/web/modules/views/Folder/FolderViewHeader'
@@ -85,6 +86,7 @@ const DriveView = ({
   displayedFolder
 }) => {
   const { isMobile } = useBreakpoints()
+  const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)
 
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
     isMobile,
@@ -180,7 +182,19 @@ const DriveView = ({
     displayedFolder => getBreadcrumbPath(t, displayedFolder),
     [t]
   )
-  const isFabActive = useMemo(() => isMobile, [isMobile])
+
+  useEffect(
+    () => {
+      if (canWriteToCurrentFolder) {
+        setIsFabDisplayed(isMobile)
+        return () => {
+          // to not have this set to false on other views after using this view
+          setIsFabDisplayed(false)
+        }
+      }
+    },
+    [setIsFabDisplayed, isMobile, canWriteToCurrentFolder]
+  )
 
   return (
     <FolderView>
@@ -218,9 +232,8 @@ const DriveView = ({
           canSort
           currentFolderId={currentFolderId}
           extraColumns={extraColumns}
-          isFabActive={isFabActive}
         />
-        {isFabActive && (
+        {isFabDisplayed && (
           <AddMenuProvider
             canCreateFolder={true}
             canUpload={true}

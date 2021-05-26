@@ -12,6 +12,7 @@ import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoin
 import { ModalContext } from 'drive/lib/ModalContext'
 import { RouterContext } from 'drive/lib/RouterContext'
 import { AcceptingSharingProvider } from 'drive/lib/AcceptingSharingContext'
+import FabProvider from 'drive/lib/FabProvider'
 
 const mockStore = createStore(() => ({
   mobile: {
@@ -70,7 +71,7 @@ const AppLike = ({
                   <ModalContext.Provider
                     value={modalContextValue || mockModalContextValue}
                   >
-                    {children}
+                    <FabProvider>{children}</FabProvider>
                   </ModalContext.Provider>
                 </BreakpointsProvider>
               </ThumbnailSizeContextProvider>

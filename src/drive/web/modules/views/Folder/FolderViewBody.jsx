@@ -40,8 +40,7 @@ const FolderViewBody = ({
   navigateToFolder,
   navigateToFile,
   refreshFolderContent = null,
-  extraColumns,
-  isFabActive = false
+  extraColumns
 }) => {
   const { router } = useRouter()
   const { isDesktop } = useBreakpoints()
@@ -146,7 +145,7 @@ const FolderViewBody = ({
             />
           </>
         )}
-        <FileListBody selectionModeActive={false} isFabActive={isFabActive}>
+        <FileListBody selectionModeActive={false}>
           <AddFolder
             refreshFolderContent={refreshFolderContent}
             extraColumns={extraColumns}
