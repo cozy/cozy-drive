@@ -1,5 +1,8 @@
 import flag from 'cozy-flags'
 import { models } from 'cozy-client'
+import FileTypeSheetIcon from 'cozy-ui/transpiled/react/Icons/FileTypeSheet'
+import FileTypeSlideIcon from 'cozy-ui/transpiled/react/Icons/FileTypeSlide'
+import FileTypeTextIcon from 'cozy-ui/transpiled/react/Icons/FileTypeText'
 
 export const isOnlyOfficeEnabled = () => flag('drive.onlyoffice.enabled')
 
@@ -45,7 +48,17 @@ export const makeConfig = ({ data }, options) => {
   return { serverUrl, apiUrl, docEditorConfig }
 }
 
-// use to mock fn in tests
+export const makeOnlyOfficeIconByClass = fileClass => {
+  const iconByClass = {
+    spreadsheet: FileTypeSheetIcon,
+    slide: FileTypeSlideIcon,
+    text: FileTypeTextIcon
+  }
+
+  return iconByClass[fileClass]
+}
+
+// used to mock fn in tests
 const helpers = {
   isOnlyOfficeEnabled
 }
