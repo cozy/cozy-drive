@@ -58,6 +58,30 @@ export const makeOnlyOfficeIconByClass = fileClass => {
   return iconByClass[fileClass]
 }
 
+export const makeExtByClass = fileClass => {
+  const extByClass = {
+    text: 'docx',
+    spreadsheet: 'xlsx',
+    slide: 'pptx'
+  }
+
+  return extByClass[fileClass]
+}
+
+export const makeMimeByClass = fileClass => {
+  // see https://developer.mozilla.org/fr/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
+  const mimeByClass = {
+    text:
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    spreadsheet:
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    slide:
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+  }
+
+  return mimeByClass[fileClass]
+}
+
 // used to mock fn in tests
 const helpers = {
   isOnlyOfficeEnabled
