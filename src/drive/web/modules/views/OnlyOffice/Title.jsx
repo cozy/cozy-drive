@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { DialogTitle } from 'cozy-ui/transpiled/react/Dialog'
 import Divider from 'cozy-ui/transpiled/react/MuiCozyTheme/Divider'
 
+import { useRouter } from 'drive/lib/RouterContext'
 import SharingBanner from 'drive/web/modules/public/SharingBanner'
 import { useSharingInfos } from 'drive/web/modules/public/useSharingInfos'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
@@ -20,10 +21,16 @@ const Title = () => {
   const { isPublic } = useContext(OnlyOfficeContext)
   const sharingInfos = useSharingInfos()
   const styles = useStyles()
+  const { router } = useRouter()
+
+  const isFromSharing = router.location.pathname.endsWith('/fromSharing')
 
   // The sharing banner need to be shown only on the first arrival
   // and not after browsing inside a folder
-  const showSharingBanner = isPublic && window.history.length <= 1
+  // When it comes from sharing, we add two entries in the history (one for the doc, one for the redirection)
+  const showSharingBanner =
+    (isPublic && window.history.length <= 1) ||
+    (isFromSharing && window.history.length <= 3)
 
   return (
     <>
