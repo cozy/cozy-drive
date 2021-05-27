@@ -21,8 +21,10 @@ if (isDrive) configurationFiles.push(require('./webpack/drive.config.js'))
 
 if (isDrive && target === 'mobile')
   configurationFiles.push(require('./webpack/mobile.config.js'))
+
 if (target !== 'mobile')
   configurationFiles.push(require('./webpack/appicon.config.js'))
+
 const extraConfig = {
   module: {
     rules: [
