@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from 'react'
+import React, { useContext, useCallback, useMemo } from 'react'
 
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
@@ -22,14 +22,19 @@ const Toolbar = () => {
   const { data: fileWithPath } = useFileWithPath(fileId)
   const { router } = useRouter()
 
-  const isFromSharing = router.location.pathname.endsWith('/fromSharing')
+  const isFromSharing = useMemo(
+    () => router.location.pathname.endsWith('/fromSharing'),
+    [router]
+  )
 
   // The condition is different in the case of a only office file that has been shared with us.
   // In this case there is a double redirection (one to know that the file is a share, the other
   // to open it on the host instance), so there is an additional entry in the history.
-  const showBackButton = isFromSharing
-    ? window.history.length > 2
-    : window.history.length > 1
+  const showBackButton = useMemo(
+    () =>
+      isFromSharing ? window.history.length > 2 : window.history.length > 1,
+    [isFromSharing]
+  )
 
   const handleOnClick = useCallback(
     () => (isFromSharing ? router.go(-2) : router.goBack()),
@@ -62,4 +67,4 @@ const Toolbar = () => {
   )
 }
 
-export default Toolbar
+export default React.memo(Toolbar)
