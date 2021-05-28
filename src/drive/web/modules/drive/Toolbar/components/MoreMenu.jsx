@@ -54,7 +54,7 @@ const MoreMenu = ({ isDisabled, hasWriteAccess }) => {
           onClose={handleClose}
           autoclose={true}
           popperOptions={{
-            strategy: 'fixed'
+            placement: 'bottom-end'
           }}
         >
           {isMobile && (
