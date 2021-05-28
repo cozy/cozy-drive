@@ -284,7 +284,8 @@
     "increase": "Increase your disk space"
   },
   "loading": {
-    "message": "Loading"
+    "message": "Loading",
+    "onlyOfficeCreateInProgress": "Creating the current file..."
   },
   "empty": {
     "title": "You don’t have any files in this folder.",
@@ -711,6 +712,11 @@
     "readOnly": {
       "title": "Read only",
       "tooltip": "You are only authorized to view this document. Contact the owner to obtain writing privileges."
+    },
+    "createFileName": {
+      "text": "New text document",
+      "spreadsheet": "New spreadsheet",
+      "slide": "New presentation"
     }
   }
 }
