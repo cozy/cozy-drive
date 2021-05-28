@@ -7,24 +7,7 @@ import {
   buildAppsQuery,
   buildSettingsByIdQuery
 } from 'drive/web/modules/queries'
-
-// TODO: use this method from cozy-client instead
-const computeHomeApp = ({ apps, context }) => {
-  const defaultRedirection =
-    context && context.attributes && context.attributes.default_redirection
-  let homeApp = null
-
-  if (!defaultRedirection) {
-    homeApp = apps.find(app => app.slug === 'home')
-  } else {
-    const slugRegexp = /^([^/]+)\/.*/
-    const matches = defaultRedirection.match(slugRegexp)
-    const defaultAppSlug = matches && matches[1]
-    homeApp = apps.find(app => app.slug === defaultAppSlug)
-  }
-
-  return homeApp
-}
+import { computeHomeApp } from 'drive/web/modules/views/OnlyOffice/Toolbar/helpers'
 
 const HomeLinker = ({ children }) => {
   const client = useClient()
