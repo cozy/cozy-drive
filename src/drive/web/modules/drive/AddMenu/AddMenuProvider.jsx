@@ -7,6 +7,9 @@ import React, {
 } from 'react'
 import { useSelector } from 'react-redux'
 
+import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
+
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 import {
   closeMenu,
@@ -25,6 +28,7 @@ const AddMenuProvider = ({
 }) => {
   const [menuIsVisible, setMenuVisible] = useState(false)
   const selectionModeActive = useSelector(isSelectionBarVisible)
+  const isOffline = useBrowserOffline()
   const anchorRef = useRef()
 
   const handleClose = useCallback(() => closeMenu(setMenuVisible), [
@@ -41,8 +45,21 @@ const AddMenuProvider = ({
     selectionModeActive
   ])
 
+  const handleOfflineClick = useCallback(e => {
+    e.stopPropagation()
+    Alerter.error('alert.offline')
+  }, [])
+
   return (
-    <AddMenuContext.Provider value={{ anchorRef, handleToggle, isDisabled }}>
+    <AddMenuContext.Provider
+      value={{
+        anchorRef,
+        handleToggle,
+        isDisabled,
+        isOffline,
+        handleOfflineClick
+      }}
+    >
       {children}
       {menuIsVisible && (
         <AddMenu
