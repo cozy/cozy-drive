@@ -34,7 +34,7 @@
   },
   "toolbar": {
     "item_upload": "Upload",
-    "menu_upload": "Import files",
+    "menu_upload": "Upload files",
     "item_more": "More",
     "menu_new_folder": "Folder",
     "menu_select": "Select items",
@@ -51,7 +51,12 @@
     "share": "Share",
     "trash": "Remove",
     "leave": "Leave shared folder & delete it",
-    "menu_add": "Add"
+    "menu_add": "Add",
+    "menu_onlyOffice": {
+      "text": "Text document",
+      "spreadsheet": "Spreadsheet",
+      "slide": "Presentation"
+    }
   },
   "Share": {
     "status": {

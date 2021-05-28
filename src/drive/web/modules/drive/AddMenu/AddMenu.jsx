@@ -12,6 +12,8 @@ import CreateNoteItem from 'drive/web/modules/drive/Toolbar/components/CreateNot
 import CreateShortcut from 'drive/web/modules/drive/Toolbar/components/CreateShortcut'
 import UploadItem from 'drive/web/modules/drive/Toolbar/components/UploadItem'
 import StartScanner from 'drive/web/modules/drive/Toolbar/components/StartScanner'
+import CreateOnlyOfficeItem from 'drive/web/modules/drive/Toolbar/components/CreateOnlyOfficeItem'
+import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
 
 export const ActionMenuContent = ({
   isDisabled,
@@ -34,6 +36,14 @@ export const ActionMenuContent = ({
       )}
       {canCreateFolder && <AddFolderItem />}
       <CreateNoteItem />
+      {canUpload &&
+        isOnlyOfficeEnabled() && (
+          <>
+            <CreateOnlyOfficeItem fileClass="text" />
+            <CreateOnlyOfficeItem fileClass="spreadsheet" />
+            <CreateOnlyOfficeItem fileClass="slide" />
+          </>
+        )}
       <CreateShortcut onCreated={refreshFolderContent} />
       {canUpload && <hr />}
       {canUpload && (
