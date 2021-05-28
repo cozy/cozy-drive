@@ -39,13 +39,18 @@ export const useFilesQueryWithPath = query => {
   }
 }
 
+// TODO: when https://github.com/cozy/cozy-client/pull/947 is merged
+// remove the [] tricks on dirId and Array.isArray(dirId) on parentQuery
+// and use enabled param instead in parentResult query
 export const useFileWithPath = fileId => {
   const fileQuery = buildFileByIdQuery(fileId)
   const fileResult = useQuery(fileQuery.definition, fileQuery.options)
   const resultData = fileResult.data
-  const dirId = resultData ? resultData.dir_id : {}
+  const dirId = resultData ? resultData.dir_id : []
 
-  const parentQuery = buildFileByIdQuery(dirId)
+  const parentQuery = Array.isArray(dirId)
+    ? buildParentsByIdsQuery(dirId)
+    : buildFileByIdQuery(dirId)
   const parentResult = useQuery(parentQuery.definition, parentQuery.options)
   const parentData = parentResult.data
 
