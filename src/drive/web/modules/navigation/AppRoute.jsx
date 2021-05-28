@@ -44,6 +44,7 @@ export const routes = [
   '/file/:fileId',
   '/onlyoffice/:fileId',
   '/onlyoffice/:fileId/fromSharing',
+  '/onlyoffice/:fileId/fromCreate',
   '/onlyoffice/create/:folderId/:fileClass'
 ]
 
@@ -103,6 +104,7 @@ const AppRoute = (
 
       <Route path="onlyoffice/:fileId" component={OnlyOfficeView} />
       <Route path="onlyoffice/:fileId/fromSharing" component={OnlyOfficeView} />
+      <Route path="onlyoffice/:fileId/fromCreate" component={OnlyOfficeView} />
       <Route
         path="onlyoffice/create/:folderId/:fileClass"
         component={OnlyOfficeCreateView}
