@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Hammer from '@egjs/hammerjs'
 import propagating from 'propagating-hammerjs'
 
@@ -55,74 +55,83 @@ const enableTouchEvents = ev => {
   return true
 }
 
-class FileOpener extends Component {
-  constructor(props) {
-    super(props)
-    this.myRef = React.createRef()
-  }
+const FileOpener = ({
+  file,
+  disabled,
+  actionMenuVisible,
+  toggle,
+  open,
+  selectionModeActive,
+  isRenaming,
+  isShared,
+  isSharedWithMe,
+  children
+}) => {
+  const rowRef = useRef()
 
-  componentDidMount() {
-    this.gesturesHandler = propagating(new Hammer(this.myRef.current))
-    this.gesturesHandler.on('tap onpress singletap', ev => {
-      //don't read the props to early. Read them only in the callback
-      const {
-        file,
-        disabled,
-        actionMenuVisible,
-        toggle,
-        open,
-        selectionModeActive,
-        isRenaming
-      } = this.props
-      if (actionMenuVisible || disabled) return
-      if (enableTouchEvents(ev)) {
-        ev.preventDefault() // prevent a ghost click
-        if (ev.type === 'onpress' || selectionModeActive) {
-          ev.srcEvent.stopImmediatePropagation()
-          toggle(ev.srcEvent)
-        } else {
-          ev.srcEvent.stopImmediatePropagation()
-          if (!isRenaming) open(ev.srcEvent, file)
+  useEffect(
+    () => {
+      if (!rowRef || !rowRef.current) return
+
+      const gesturesHandler = propagating(new Hammer(rowRef.current))
+
+      gesturesHandler.on('tap onpress singletap', ev => {
+        if (actionMenuVisible || disabled) return
+        if (enableTouchEvents(ev)) {
+          ev.preventDefault() // prevent a ghost click
+          if (ev.type === 'onpress' || selectionModeActive) {
+            ev.srcEvent.stopImmediatePropagation()
+            toggle(ev.srcEvent)
+          } else {
+            ev.srcEvent.stopImmediatePropagation()
+            if (!isRenaming) open(ev.srcEvent, file)
+          }
         }
+      })
+
+      return () => {
+        gesturesHandler && gesturesHandler.destroy()
       }
-    })
-  }
+    },
+    [
+      rowRef,
+      file,
+      disabled,
+      actionMenuVisible,
+      toggle,
+      open,
+      selectionModeActive,
+      isRenaming
+    ]
+  )
 
-  componentWillUnmount() {
-    this.gesturesHandler && this.gesturesHandler.destroy()
-  }
-
-  render() {
-    const { file, children, isShared, isSharedWithMe } = this.props
-
-    if (isOnlyOfficeEditorSupported({ file, isShared, isSharedWithMe })) {
-      return (
-        <a
-          data-testid="onlyoffice-link"
-          className={`${styles['file-opener']} ${styles['file-opener__a']}`}
-          ref={this.myRef}
-          id={file.id}
-          href={makeOnlyOfficeFileRoute(file)}
-          onClick={ev => {
-            ev.preventDefault()
-          }}
-        >
-          {children}
-        </a>
-      )
-    }
-
+  if (isOnlyOfficeEditorSupported({ file, isShared, isSharedWithMe })) {
     return (
-      <span
-        data-testid="not-onlyoffice-span"
-        className={styles['file-opener']}
-        ref={this.myRef}
+      <a
+        data-testid="onlyoffice-link"
+        className={`${styles['file-opener']} ${styles['file-opener__a']}`}
+        ref={rowRef}
         id={file.id}
+        href={makeOnlyOfficeFileRoute(file)}
+        onClick={ev => {
+          ev.preventDefault()
+        }}
       >
         {children}
-      </span>
+      </a>
     )
   }
+
+  return (
+    <span
+      data-testid="not-onlyoffice-span"
+      className={styles['file-opener']}
+      ref={rowRef}
+      id={file.id}
+    >
+      {children}
+    </span>
+  )
 }
 
 export default FileOpener
