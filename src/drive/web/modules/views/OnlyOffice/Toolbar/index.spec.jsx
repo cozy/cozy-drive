@@ -10,12 +10,18 @@ import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
 import Toolbar from 'drive/web/modules/views/OnlyOffice/Toolbar'
 
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
+jest.mock('drive/web/modules/views/OnlyOffice/Toolbar/helpers', () => ({
+  ...jest.requireActual('drive/web/modules/views/OnlyOffice/Toolbar/helpers'),
+  computeHomeApp: jest.fn(() => ({}))
+}))
 
 const client = createMockClient({})
+client.stackClient.uri = 'http://cozy.tools'
 
 const setup = ({
   isEditorReadOnly = false,
-  pathname = '/onlyoffice/fileId'
+  pathname = '/onlyoffice/fileId',
+  isPublic = false
 } = {}) => {
   const root = render(
     <AppLike
@@ -32,9 +38,10 @@ const setup = ({
       <OnlyOfficeContext.Provider
         value={{
           fileId: officeDocParam.id,
-          isPublic: 'false',
+          isPublic,
           isEditorReadOnly,
-          setIsEditorReadOnly: jest.fn()
+          setIsEditorReadOnly: jest.fn(),
+          isEditorReady: true
         }}
       >
         <Toolbar />
@@ -69,6 +76,26 @@ describe('Toolbar', () => {
 
       fireEvent.click(getByText(officeDocParam.data.name))
       expect(queryByRole('textbox')).toBeFalsy()
+    })
+  })
+
+  describe('Sharing', () => {
+    it('should show sharing button in not public views', () => {
+      useQuery.mockReturnValue(officeDocParam)
+
+      const { root } = setup({ isPublic: false })
+      const { queryByTestId } = root
+
+      expect(queryByTestId('onlyoffice-sharing-button')).toBeTruthy()
+    })
+
+    it('should not show sharing button in public views', () => {
+      useQuery.mockReturnValue(officeDocParam)
+
+      const { root } = setup({ isPublic: true })
+      const { queryByTestId } = root
+
+      expect(queryByTestId('onlyoffice-sharing-button')).toBeFalsy()
     })
   })
 

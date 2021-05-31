@@ -57,7 +57,7 @@ const Toolbar = () => {
         <FileName fileWithPath={fileWithPath} />
       </div>
       {!isMobile && isEditorReadOnly && <ReadOnly />}
-      {isEditorReady && <Sharing fileWithPath={fileWithPath} />}
+      {!isPublic && isEditorReady && <Sharing fileWithPath={fileWithPath} />}
     </>
   )
 }

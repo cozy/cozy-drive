@@ -16,7 +16,11 @@ const Sharing = ({ fileWithPath }) => {
         size={32}
         onClick={toggleShareModal}
       />
-      <ShareButton docId={fileWithPath.id} onClick={toggleShareModal} />
+      <ShareButton
+        data-testid="onlyoffice-sharing-button"
+        docId={fileWithPath.id}
+        onClick={toggleShareModal}
+      />
       {showShareModal && (
         <ShareModal
           document={fileWithPath}

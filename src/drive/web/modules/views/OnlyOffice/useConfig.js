@@ -16,7 +16,8 @@ const useConfig = () => {
     fileId,
     isEditorReadOnly,
     setIsEditorReadOnly,
-    setIsEditorReady
+    setIsEditorReady,
+    isPublic
   } = useContext(OnlyOfficeContext)
   const [config, setConfig] = useState()
 
@@ -26,7 +27,7 @@ const useConfig = () => {
   useEffect(
     () => {
       if (!isQueryLoading(queryResult) && fetchStatus !== 'error' && !config) {
-        if (isSharedWithMe(data)) {
+        if (!isPublic && isSharedWithMe(data)) {
           const {
             protocol,
             instance,
@@ -66,7 +67,8 @@ const useConfig = () => {
       setIsEditorReadOnly,
       config,
       setConfig,
-      setIsEditorReady
+      setIsEditorReady,
+      isPublic
     ]
   )
 
