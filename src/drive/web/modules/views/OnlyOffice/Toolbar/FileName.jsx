@@ -59,16 +59,18 @@ const FileName = ({ fileWithPath }) => {
           {fileWithPath.name}
         </Typography>
       )}
-      {fileWithPath.displayedPath && (
-        <Link
-          to={`/folder/${fileWithPath.dir_id}`}
-          className={filelistStyles['fil-file-path']}
-        >
-          <Typography variant="caption">
-            <MidEllipsis text={fileWithPath.displayedPath} />
-          </Typography>
-        </Link>
-      )}
+      {fileWithPath.displayedPath &&
+        !isMobile && (
+          <Link
+            data-testid="onlyoffice-filename-path"
+            to={`/folder/${fileWithPath.dir_id}`}
+            className={filelistStyles['fil-file-path']}
+          >
+            <Typography variant="caption">
+              <MidEllipsis text={fileWithPath.displayedPath} />
+            </Typography>
+          </Link>
+        )}
     </div>
   )
 }

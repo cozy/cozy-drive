@@ -68,6 +68,30 @@ describe('Toolbar', () => {
     jest.clearAllMocks()
   })
 
+  describe('FileName', () => {
+    it('should show the path', () => {
+      useQuery
+        .mockReturnValueOnce(officeDocParam)
+        .mockReturnValue({ ...officeDocParam, data: { path: '/path' } })
+
+      const { root } = setup({ isMobile: false })
+      const { queryByTestId } = root
+
+      expect(queryByTestId('onlyoffice-filename-path')).toBeTruthy()
+    })
+
+    it('should not show the path on mobile', () => {
+      useQuery
+        .mockReturnValueOnce(officeDocParam)
+        .mockReturnValue({ ...officeDocParam, data: { path: '/path' } })
+
+      const { root } = setup({ isMobile: true })
+      const { queryByTestId } = root
+
+      expect(queryByTestId('onlyoffice-filename-path')).toBeFalsy()
+    })
+  })
+
   describe('Renaming', () => {
     it('should be able to rename the file if not in readOnly mode', () => {
       useQuery.mockReturnValue(officeDocParam)
