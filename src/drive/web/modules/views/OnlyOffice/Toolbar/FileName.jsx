@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router'
 import { makeStyles } from '@material-ui/core/styles'
@@ -35,6 +35,11 @@ const FileName = ({ fileWithPath }) => {
   const [isRenaming, setIsRenaming] = useState(false)
   const isRenamable = !isMobile && !isEditorReadOnly
 
+  const onRename = useCallback(() => setIsRenaming(true), [setIsRenaming])
+  const onRenameFinished = useCallback(() => setIsRenaming(false), [
+    setIsRenaming
+  ])
+
   return (
     <div className={`${styles['fileName']} u-ml-1 u-ml-half-s u-ellipsis`}>
       {isRenaming ? (
@@ -43,8 +48,8 @@ const FileName = ({ fileWithPath }) => {
             className={styles['filename-renameInput']}
             file={fileWithPath}
             withoutExtension
-            refreshFolderContent={() => setIsRenaming(false)}
-            onAbort={() => setIsRenaming(false)}
+            refreshFolderContent={onRenameFinished}
+            onAbort={onRenameFinished}
           />
         </Typography>
       ) : (
@@ -54,7 +59,7 @@ const FileName = ({ fileWithPath }) => {
           })}
           variant="h6"
           noWrap
-          {...isRenamable && { onClick: () => setIsRenaming(true) }}
+          onClick={isRenamable && onRename}
         >
           {fileWithPath.name}
         </Typography>
@@ -79,4 +84,4 @@ FileName.propTypes = {
   fileWithPath: PropTypes.object.isRequired
 }
 
-export default FileName
+export default React.memo(FileName)
