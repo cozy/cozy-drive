@@ -2,6 +2,7 @@ import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
 
 import { createMockClient, useQuery } from 'cozy-client'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 import AppLike from 'test/components/AppLike'
 import { officeDocParam } from 'test/data'
@@ -9,6 +10,12 @@ import { officeDocParam } from 'test/data'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
 import Toolbar from 'drive/web/modules/views/OnlyOffice/Toolbar'
 
+jest.mock('cozy-ui/transpiled/react/hooks/useBreakpoints', () => ({
+  ...jest.requireActual('cozy-ui/transpiled/react/hooks/useBreakpoints'),
+  __esModule: true,
+  default: jest.fn(),
+  useBreakpoints: jest.fn()
+}))
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 jest.mock('drive/web/modules/views/OnlyOffice/Toolbar/helpers', () => ({
   ...jest.requireActual('drive/web/modules/views/OnlyOffice/Toolbar/helpers'),
@@ -21,8 +28,11 @@ client.stackClient.uri = 'http://cozy.tools'
 const setup = ({
   isEditorReadOnly = false,
   isPublic = false,
-  isFromSharing = false
+  isFromSharing = false,
+  isMobile = false
 } = {}) => {
+  useBreakpoints.mockReturnValue({ isMobile })
+
   const root = render(
     <AppLike
       client={client}
@@ -97,6 +107,18 @@ describe('Toolbar', () => {
       const { queryByTestId } = root
 
       expect(queryByTestId('onlyoffice-sharing-button')).toBeFalsy()
+    })
+
+    describe('Sharing on mobile', () => {
+      it('should show only sharing icon on mobile', () => {
+        useQuery.mockReturnValue(officeDocParam)
+
+        const { root } = setup({ isPublic: false, isMobile: true })
+        const { queryByTestId } = root
+
+        expect(queryByTestId('onlyoffice-sharing-button')).toBeFalsy()
+        expect(queryByTestId('onlyoffice-sharing-icon')).toBeTruthy()
+      })
     })
   })
 
