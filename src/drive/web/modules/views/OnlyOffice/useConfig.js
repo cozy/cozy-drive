@@ -32,31 +32,36 @@ const useConfig = () => {
             protocol,
             instance,
             document_id,
-            subdomain
+            subdomain,
+            sharecode
           } = data.data.attributes
+
+          const searchParams = [['sharecode', sharecode]]
+          searchParams.push(['isOnlyOfficeDocShared', true])
+          searchParams.push(['onlyOfficeDocId', document_id])
 
           const link = generateWebLink({
             cozyUrl: `${protocol}://${instance}`,
-            pathname: '',
-            hash: `/onlyoffice/${document_id}/fromSharing`,
+            searchParams,
+            pathname: '/public/',
             slug: 'drive',
             subDomainType: subdomain
           })
 
-          return (window.location = link)
-        }
+          window.location = link
+        } else {
+          if (isEditorReadOnly !== isOnlyOfficeReadOnly(data)) {
+            setIsEditorReadOnly(isOnlyOfficeReadOnly(data))
+          }
 
-        if (isEditorReadOnly !== isOnlyOfficeReadOnly(data)) {
-          setIsEditorReadOnly(isOnlyOfficeReadOnly(data))
+          setConfig(
+            makeConfig(data, {
+              events: {
+                onAppReady: () => setIsEditorReady(true)
+              }
+            })
+          )
         }
-
-        setConfig(
-          makeConfig(data, {
-            events: {
-              onAppReady: () => setIsEditorReady(true)
-            }
-          })
-        )
       }
     },
     [
