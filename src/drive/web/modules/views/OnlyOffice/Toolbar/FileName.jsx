@@ -33,7 +33,6 @@ const FileName = ({ fileWithPath }) => {
   const { isMobile } = useBreakpoints()
   const { isEditorReadOnly } = useContext(OnlyOfficeContext)
   const [isRenaming, setIsRenaming] = useState(false)
-  const isRenamable = !isMobile && !isEditorReadOnly
 
   const onRename = useCallback(() => setIsRenaming(true), [setIsRenaming])
   const onRenameFinished = useCallback(() => setIsRenaming(false), [
@@ -41,7 +40,11 @@ const FileName = ({ fileWithPath }) => {
   ])
 
   return (
-    <div className={`${styles['fileName']} u-ml-1 u-ml-half-s u-ellipsis`}>
+    <div
+      className={`${
+        styles['fileName']
+      } u-mh-1 u-mh-half-s u-ellipsis u-flex-grow-1`}
+    >
       {isRenaming ? (
         <Typography variant="h6" noWrap>
           <RenameInput
@@ -55,11 +58,11 @@ const FileName = ({ fileWithPath }) => {
       ) : (
         <Typography
           className={cx(muiStyles.name, {
-            [`${muiStyles.renamable}`]: isRenamable
+            [`${muiStyles.renamable}`]: !isEditorReadOnly
           })}
           variant="h6"
           noWrap
-          onClick={isRenamable && onRename}
+          onClick={!isEditorReadOnly && onRename}
         >
           {fileWithPath.name}
         </Typography>

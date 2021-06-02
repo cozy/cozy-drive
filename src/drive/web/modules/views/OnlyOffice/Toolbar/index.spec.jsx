@@ -112,6 +112,18 @@ describe('Toolbar', () => {
       fireEvent.click(getByText(officeDocParam.data.name))
       expect(queryByRole('textbox')).toBeFalsy()
     })
+
+    describe('Renaming on mobile', () => {
+      it('should be able to rename the file if not in readOnly mode', () => {
+        useQuery.mockReturnValue(officeDocParam)
+
+        const { root } = setup({ isEditorReadOnly: false, isMobile: true })
+        const { getByText, getByRole } = root
+
+        fireEvent.click(getByText(officeDocParam.data.name))
+        expect(getByRole('textbox').value).toBe(officeDocParam.data.name)
+      })
+    })
   })
 
   describe('Sharing', () => {
