@@ -1,11 +1,16 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import cx from 'classnames'
 import filesize from 'filesize'
 import get from 'lodash/get'
 
-import { SharedDocument } from 'cozy-sharing'
+import { useClient } from 'cozy-client'
+import {
+  SharedDocument,
+  SharingContext,
+  useFetchDocumentPath
+} from 'cozy-sharing'
 import { isDirectory } from 'cozy-client/dist/models/file'
 import { isIOSApp } from 'cozy-device-helper'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
@@ -68,7 +73,8 @@ const File = props => {
       onFileOpen,
       isAvailableOffline,
       isShared,
-      isSharedWithMe
+      isSharedWithMe,
+      hasSharedParent
     } = props
     event.stopPropagation()
     if (isDirectory(attributes)) {
@@ -79,7 +85,8 @@ const File = props => {
         file: attributes,
         isAvailableOffline,
         isShared,
-        isSharedWithMe
+        isSharedWithMe,
+        hasSharedParent
       })
     }
   }
@@ -103,7 +110,8 @@ const File = props => {
     extraColumns,
     breakpoints: { isExtraLarge, isMobile },
     isShared,
-    isSharedWithMe
+    isSharedWithMe,
+    hasSharedParent
   } = props
 
   const isImage = attributes.class === 'image'
@@ -145,6 +153,7 @@ const File = props => {
         isRenaming={isRenaming}
         isShared={isShared}
         isSharedWithMe={isSharedWithMe}
+        hasSharedParent={hasSharedParent}
       >
         <FileThumbnail
           file={attributes}
@@ -243,6 +252,12 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const FileWithSharingContext = props => {
+  const client = useClient()
+  const { hasSharedParent: hasSharedParentFn } = useContext(SharingContext)
+  const documentPath = useFetchDocumentPath(client, props.attributes)
+
+  const hasSharedParent = documentPath && hasSharedParentFn(documentPath)
+
   return (
     <SharedDocument docId={props.attributes.id}>
       {sharingProps => {
@@ -252,6 +267,7 @@ const FileWithSharingContext = props => {
             {...props}
             isShared={isShared}
             isSharedWithMe={isSharedWithMe}
+            hasSharedParent={hasSharedParent}
           />
         )
       }}
