@@ -16,16 +16,16 @@ import Sharing from 'drive/web/modules/views/OnlyOffice/Toolbar/Sharing'
 
 const Toolbar = () => {
   const { isMobile } = useBreakpoints()
-  const { fileId, isPublic, isEditorReadOnly, isEditorReady } = useContext(
-    OnlyOfficeContext
-  )
+  const {
+    fileId,
+    isPublic,
+    isFromSharing,
+    isEditorReadOnly,
+    isEditorReady
+  } = useContext(OnlyOfficeContext)
   const { data: fileWithPath } = useFileWithPath(fileId)
   const { router } = useRouter()
 
-  const isFromSharing = useMemo(
-    () => router.location.pathname.endsWith('/fromSharing'),
-    [router]
-  )
   const isFromCreate = useMemo(
     () => router.location.pathname.endsWith('/fromCreate'),
     [router]
@@ -34,7 +34,6 @@ const Toolbar = () => {
     isFromSharing,
     isFromCreate
   ])
-
   // The condition is different in the case of a only office file that has been shared with us.
   // In this case there is a double redirection (one to know that the file is a share, the other
   // to open it on the host instance), so there is an additional entry in the history.
