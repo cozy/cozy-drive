@@ -34,7 +34,7 @@
   },
   "toolbar": {
     "item_upload": "Upload",
-    "menu_upload": "Import files",
+    "menu_upload": "Upload files",
     "item_more": "More",
     "menu_new_folder": "Folder",
     "menu_select": "Select items",
@@ -51,7 +51,12 @@
     "share": "Share",
     "trash": "Remove",
     "leave": "Leave shared folder & delete it",
-    "menu_add": "Add"
+    "menu_add": "Add",
+    "menu_onlyOffice": {
+      "text": "Text document",
+      "spreadsheet": "Spreadsheet",
+      "slide": "Presentation"
+    }
   },
   "Share": {
     "status": {
@@ -279,7 +284,8 @@
     "increase": "Increase your disk space"
   },
   "loading": {
-    "message": "Loading"
+    "message": "Loading",
+    "onlyOfficeCreateInProgress": "Creating the current file..."
   },
   "empty": {
     "title": "You don’t have any files in this folder.",
@@ -706,6 +712,11 @@
     "readOnly": {
       "title": "Read only",
       "tooltip": "You are only authorized to view this document. Contact the owner to obtain writing privileges."
+    },
+    "createFileName": {
+      "text": "New text document",
+      "spreadsheet": "New spreadsheet",
+      "slide": "New presentation"
     }
   }
 }

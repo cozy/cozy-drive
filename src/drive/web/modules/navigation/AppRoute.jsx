@@ -22,6 +22,7 @@ import SharingsView from '../views/Sharings'
 import SharingsFilesViewer from '../views/Sharings/FilesViewerSharings'
 import SharingsFolderView from '../views/Sharings/SharingsFolderView'
 import OnlyOfficeView from '../views/OnlyOffice'
+import OnlyOfficeCreateView from '../views/OnlyOffice/Create'
 
 import FilesViewerRecent from '../views/Recent/FilesViewerRecent'
 // To keep in sync with AppRoute below, used to extract params
@@ -42,7 +43,9 @@ export const routes = [
   '/trash/:folderId',
   '/file/:fileId',
   '/onlyoffice/:fileId',
-  '/onlyoffice/:fileId/fromSharing'
+  '/onlyoffice/:fileId/fromSharing',
+  '/onlyoffice/:fileId/fromCreate',
+  '/onlyoffice/create/:folderId/:fileClass'
 ]
 
 const RootComponent = routerProps => (
@@ -101,6 +104,11 @@ const AppRoute = (
 
       <Route path="onlyoffice/:fileId" component={OnlyOfficeView} />
       <Route path="onlyoffice/:fileId/fromSharing" component={OnlyOfficeView} />
+      <Route path="onlyoffice/:fileId/fromCreate" component={OnlyOfficeView} />
+      <Route
+        path="onlyoffice/create/:folderId/:fileClass"
+        component={OnlyOfficeCreateView}
+      />
 
       {__TARGET__ === 'mobile' && (
         <Route path="settings" component={Settings} />

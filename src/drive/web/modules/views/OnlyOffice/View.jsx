@@ -1,6 +1,5 @@
 import React, { useEffect, useCallback, useState, useContext } from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
 
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 
@@ -66,9 +65,7 @@ const View = ({ id, apiUrl, docEditorConfig }) => {
     <>
       {!isEditorReady && (
         <Spinner
-          className={cx(
-            'u-flex u-flex-items-center u-flex-justify-center u-flex-grow-1'
-          )}
+          className="u-flex u-flex-items-center u-flex-justify-center u-flex-grow-1"
           size="xxlarge"
         />
       )}

@@ -1,5 +1,8 @@
 import flag from 'cozy-flags'
 import { models } from 'cozy-client'
+import FileTypeSheetIcon from 'cozy-ui/transpiled/react/Icons/FileTypeSheet'
+import FileTypeSlideIcon from 'cozy-ui/transpiled/react/Icons/FileTypeSlide'
+import FileTypeTextIcon from 'cozy-ui/transpiled/react/Icons/FileTypeText'
 
 export const isOnlyOfficeEnabled = () => flag('drive.onlyoffice.enabled')
 
@@ -45,7 +48,41 @@ export const makeConfig = ({ data }, options) => {
   return { serverUrl, apiUrl, docEditorConfig }
 }
 
-// use to mock fn in tests
+export const makeOnlyOfficeIconByClass = fileClass => {
+  const iconByClass = {
+    spreadsheet: FileTypeSheetIcon,
+    slide: FileTypeSlideIcon,
+    text: FileTypeTextIcon
+  }
+
+  return iconByClass[fileClass]
+}
+
+export const makeExtByClass = fileClass => {
+  const extByClass = {
+    text: 'docx',
+    spreadsheet: 'xlsx',
+    slide: 'pptx'
+  }
+
+  return extByClass[fileClass]
+}
+
+export const makeMimeByClass = fileClass => {
+  // see https://developer.mozilla.org/fr/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
+  const mimeByClass = {
+    text:
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    spreadsheet:
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    slide:
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+  }
+
+  return mimeByClass[fileClass]
+}
+
+// used to mock fn in tests
 const helpers = {
   isOnlyOfficeEnabled
 }

@@ -18,19 +18,29 @@ const useStyles = makeStyles(() => ({
 
 export const Fab = ({ noSidebar }) => {
   const styles = useStyles({ noSidebar })
-  const { anchorRef, handleToggle, isDisabled } = useContext(AddMenuContext)
+  const {
+    anchorRef,
+    handleToggle,
+    isDisabled,
+    handleOfflineClick,
+    isOffline
+  } = useContext(AddMenuContext)
 
   return (
-    <UiFab
+    <div
       ref={anchorRef}
-      classes={{ root: styles.root }}
-      color="primary"
-      aria-label="add"
-      onClick={handleToggle}
-      disabled={isDisabled}
+      className={styles.root}
+      onClick={isOffline && handleOfflineClick}
     >
-      <Icon icon={PlusIcon} />
-    </UiFab>
+      <UiFab
+        color="primary"
+        aria-label="add"
+        onClick={handleToggle}
+        disabled={isDisabled || isOffline}
+      >
+        <Icon icon={PlusIcon} />
+      </UiFab>
+    </div>
   )
 }
 
