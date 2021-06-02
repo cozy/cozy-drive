@@ -30,7 +30,7 @@ const useCreateFile = (folderId, fileClass) => {
       const doCreate = async () => {
         try {
           const {
-            data: newFile
+            data: createdFile
           } = await CozyFile.uploadFileWithConflictStrategy(
             fileName,
             fileUrl,
@@ -40,7 +40,7 @@ const useCreateFile = (folderId, fileClass) => {
             fileMime
           )
           setStatus('loaded')
-          setFileId(newFile.id)
+          setFileId(createdFile.id)
         } catch (error) {
           logger.error(`Creating Only Office file failed: ${error}`)
           setStatus('error')
