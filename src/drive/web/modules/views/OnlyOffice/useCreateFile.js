@@ -28,21 +28,33 @@ const useCreateFile = (folderId, fileClass) => {
   useEffect(
     () => {
       const doCreate = async () => {
+        const reader = new FileReader()
+        reader.onloadend = async () => {
+          try {
+            const {
+              data: createdFile
+            } = await CozyFile.uploadFileWithConflictStrategy(
+              fileName,
+              reader.result,
+              folderId,
+              'rename',
+              null,
+              fileMime
+            )
+            setStatus('loaded')
+            setFileId(createdFile.id)
+          } catch (error) {
+            logger.error(`Creating Only Office file failed: ${error}`)
+            setStatus('error')
+          }
+        }
+
         try {
-          const {
-            data: createdFile
-          } = await CozyFile.uploadFileWithConflictStrategy(
-            fileName,
-            fileUrl,
-            folderId,
-            'rename',
-            null,
-            fileMime
-          )
-          setStatus('loaded')
-          setFileId(createdFile.id)
+          const res = await fetch(fileUrl)
+          const data = await res.blob()
+          reader.readAsArrayBuffer(data)
         } catch (error) {
-          logger.error(`Creating Only Office file failed: ${error}`)
+          logger.error(`Fetching Only Office template file failed: ${error}`)
           setStatus('error')
         }
       }
