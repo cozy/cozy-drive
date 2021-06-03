@@ -122,6 +122,50 @@ describe('Toolbar', () => {
     })
   })
 
+  describe('Read only', () => {
+    it('should show text and icon if editor is read only', () => {
+      useQuery.mockReturnValue(officeDocParam)
+
+      const { root } = setup({ isEditorReadOnly: true, isMobile: false })
+      const { queryByTestId } = root
+
+      expect(queryByTestId('onlyoffice-readonly-icon')).toBeTruthy()
+      expect(queryByTestId('onlyoffice-readonly-text')).toBeTruthy()
+    })
+
+    it('should not show text and icon if editor is not read only', () => {
+      useQuery.mockReturnValue(officeDocParam)
+
+      const { root } = setup({ isEditorReadOnly: false, isMobile: false })
+      const { queryByTestId } = root
+
+      expect(queryByTestId('onlyoffice-readonly-icon')).toBeFalsy()
+      expect(queryByTestId('onlyoffice-readonly-text')).toBeFalsy()
+    })
+
+    describe('Read only on mobile', () => {
+      it('should show only icon if editor is read only', () => {
+        useQuery.mockReturnValue(officeDocParam)
+
+        const { root } = setup({ isEditorReadOnly: true, isMobile: true })
+        const { queryByTestId } = root
+
+        expect(queryByTestId('onlyoffice-readonly-icon-only')).toBeTruthy()
+        expect(queryByTestId('onlyoffice-readonly-text')).toBeFalsy()
+      })
+
+      it('should not show text and icon if editor is not read only', () => {
+        useQuery.mockReturnValue(officeDocParam)
+
+        const { root } = setup({ isEditorReadOnly: false, isMobile: true })
+        const { queryByTestId } = root
+
+        expect(queryByTestId('onlyoffice-readonly-icon')).toBeFalsy()
+        expect(queryByTestId('onlyoffice-readonly-text')).toBeFalsy()
+      })
+    })
+  })
+
   describe('Back Button', () => {
     describe('with default history', () => {
       it('should not show the back button', () => {
