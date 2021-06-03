@@ -65,6 +65,7 @@ const FileOpener = ({
   isRenaming,
   isShared,
   isSharedWithMe,
+  hasSharedParent,
   children
 }) => {
   const rowRef = useRef()
@@ -105,7 +106,14 @@ const FileOpener = ({
     ]
   )
 
-  if (isOnlyOfficeEditorSupported({ file, isShared, isSharedWithMe })) {
+  if (
+    isOnlyOfficeEditorSupported({
+      file,
+      isShared,
+      isSharedWithMe,
+      hasSharedParent
+    })
+  ) {
     return (
       <a
         data-testid="onlyoffice-link"

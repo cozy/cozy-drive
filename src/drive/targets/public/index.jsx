@@ -63,7 +63,11 @@ const init = async () => {
   const lang = document.documentElement.getAttribute('lang') || 'en'
   const root = document.querySelector('[role=application]')
   const dataset = root.dataset
-  const { sharecode } = getQueryParameter()
+  const {
+    sharecode,
+    isOnlyOfficeDocShared,
+    onlyOfficeDocId
+  } = getQueryParameter()
 
   const protocol = window.location ? window.location.protocol : 'https:'
   const cozyUrl = `${protocol}//${dataset.cozyDomain}`
@@ -98,9 +102,12 @@ const init = async () => {
   try {
     const sharedDocumentId = await getSharedDocument(client)
 
+    // In the case of a shared folder, we want to get the id of the only office file,
+    // not the id of the shared document (that is the folder)
     const { data } = await client
       .collection('io.cozy.files')
-      .get(sharedDocumentId)
+      .get(isOnlyOfficeDocShared ? onlyOfficeDocId : sharedDocumentId)
+
     const isFile = data && data.type === 'file'
     const isNote = models.file.isNote(data)
 
@@ -118,15 +125,21 @@ const init = async () => {
             <Router history={hashHistory}>
               <Route component={PublicLayout}>
                 {isOnlyOfficeEnabled() && (
-                  <Route
-                    path="onlyoffice/:fileId"
-                    component={props => (
-                      <OnlyOfficeView {...props} isPublic={true} />
+                  <>
+                    <Route
+                      path="onlyoffice/:fileId"
+                      component={props => (
+                        <OnlyOfficeView
+                          {...props}
+                          isPublic={true}
+                          isFromSharing={isOnlyOfficeDocShared}
+                        />
+                      )}
+                    />
+                    {models.file.shouldBeOpenedByOnlyOffice(data) && (
+                      <Redirect from="/" to={`onlyoffice/${data.id}`} />
                     )}
-                  />
-                )}
-                {models.file.shouldBeOpenedByOnlyOffice(data) && (
-                  <Redirect from="/" to={`onlyoffice/${data.id}`} />
+                  </>
                 )}
                 <Route
                   path="/"
@@ -142,6 +155,7 @@ const init = async () => {
                   <Route path="file/:fileId/revision" component={FileHistory} />
                 </Route>
                 {isOnlyOfficeEnabled() && (
+                  // Used to open an only office file inside a folder shared by link
                   <Route
                     path="onlyoffice/:fileId"
                     component={props => (

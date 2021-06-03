@@ -15,10 +15,12 @@ export const isOnlyOfficeReadOnly = ({ data }) =>
 export const isOnlyOfficeEditorSupported = ({
   file,
   isShared,
-  isSharedWithMe
+  isSharedWithMe,
+  hasSharedParent
 }) =>
   models.file.shouldBeOpenedByOnlyOffice(file) &&
   (isSharedWithMe ||
+    hasSharedParent ||
     (isShared && !isSharedWithMe && helpers.isOnlyOfficeEnabled()) ||
     (!isShared && helpers.isOnlyOfficeEnabled()))
 

@@ -19,6 +19,7 @@ const mockStore = createStore(() => ({
     url: 'cozy-url://'
   }
 }))
+
 export const TestI18n = ({ children }) => {
   return (
     <I18n lang={'en'} dictRequire={() => langEn}>
@@ -31,7 +32,8 @@ const mockSharingContextValue = {
   refresh: jest.fn(),
   hasWriteAccess: jest.fn(),
   getRecipients: jest.fn(),
-  getSharingLink: jest.fn()
+  getSharingLink: jest.fn(),
+  hasSharedParent: jest.fn()
 }
 
 const mockRouterContextValue = {

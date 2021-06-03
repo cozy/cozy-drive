@@ -17,7 +17,14 @@ const createFileOpeningHandler = ({
   replaceCurrentUrl,
   openInNewTab,
   routeTo
-}) => async ({ event, file, availableOffline, isShared, isSharedWithMe }) => {
+}) => async ({
+  event,
+  file,
+  availableOffline,
+  isShared,
+  isSharedWithMe,
+  hasSharedParent
+}) => {
   if (availableOffline) {
     return dispatch(openLocalFile(file))
   }
@@ -27,7 +34,8 @@ const createFileOpeningHandler = ({
   const isOnlyOffice = isOnlyOfficeEditorSupported({
     file,
     isShared,
-    isSharedWithMe
+    isSharedWithMe,
+    hasSharedParent
   })
 
   if (isShortcut) {

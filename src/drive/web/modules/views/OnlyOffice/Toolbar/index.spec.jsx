@@ -20,14 +20,14 @@ client.stackClient.uri = 'http://cozy.tools'
 
 const setup = ({
   isEditorReadOnly = false,
-  pathname = '/onlyoffice/fileId',
-  isPublic = false
+  isPublic = false,
+  isFromSharing = false
 } = {}) => {
   const root = render(
     <AppLike
       client={client}
       routerContextValue={{
-        router: { location: { pathname } },
+        router: { location: { pathname: `/onlyoffice/${officeDocParam.id}` } },
         history: jest.fn()
       }}
       sharingContextValue={{
@@ -39,6 +39,7 @@ const setup = ({
         value={{
           fileId: officeDocParam.id,
           isPublic,
+          isFromSharing,
           isEditorReadOnly,
           setIsEditorReadOnly: jest.fn(),
           isEditorReady: true
@@ -114,7 +115,7 @@ describe('Toolbar', () => {
       it('should not show the back button in sharing from cozy to cozy', () => {
         useQuery.mockReturnValue(officeDocParam)
 
-        const { root } = setup({ pathname: '/onlyoffice/fileId/fromSharing' })
+        const { root } = setup({ isFromSharing: true })
         const { queryByTestId } = root
 
         expect(window.history.length).toBe(1)
@@ -140,7 +141,7 @@ describe('Toolbar', () => {
       it('should not show the back button in sharing from cozy to cozy', () => {
         useQuery.mockReturnValue(officeDocParam)
 
-        const { root } = setup({ pathname: '/onlyoffice/fileId/fromSharing' })
+        const { root } = setup({ isFromSharing: true })
         const { queryByTestId } = root
 
         expect(window.history.length).toBe(2)
@@ -166,7 +167,7 @@ describe('Toolbar', () => {
       it('should show the back button in sharing from cozy to cozy', () => {
         useQuery.mockReturnValue(officeDocParam)
 
-        const { root } = setup({ pathname: '/onlyoffice/fileId/fromSharing' })
+        const { root } = setup({ isFromSharing: true })
         const { queryByTestId } = root
 
         expect(window.history.length).toBe(3)
