@@ -17,7 +17,7 @@ export const AddButton = () => {
   } = useContext(AddMenuContext)
 
   return (
-    <div ref={anchorRef} onClick={isOffline && handleOfflineClick}>
+    <div ref={anchorRef} onClick={isOffline ? handleOfflineClick : undefined}>
       <Button
         onClick={handleToggle}
         disabled={isDisabled || isOffline}
