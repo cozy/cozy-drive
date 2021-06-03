@@ -30,7 +30,7 @@ export const Fab = ({ noSidebar }) => {
     <div
       ref={anchorRef}
       className={styles.root}
-      onClick={isOffline && handleOfflineClick}
+      onClick={isOffline ? handleOfflineClick : undefined}
     >
       <UiFab
         color="primary"
