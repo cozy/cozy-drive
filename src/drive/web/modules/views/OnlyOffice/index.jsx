@@ -6,7 +6,13 @@ import Editor from 'drive/web/modules/views/OnlyOffice/Editor'
 
 export const OnlyOfficeContext = createContext()
 
-const OnlyOfficeProvider = ({ fileId, isPublic, isFromSharing, children }) => {
+const OnlyOfficeProvider = ({
+  fileId,
+  isPublic,
+  isFromSharing,
+  isInSharedFolder,
+  children
+}) => {
   const [isEditorReadOnly, setIsEditorReadOnly] = useState()
   const [isEditorReady, setIsEditorReady] = useState(false)
 
@@ -16,6 +22,7 @@ const OnlyOfficeProvider = ({ fileId, isPublic, isFromSharing, children }) => {
         fileId,
         isPublic,
         isFromSharing,
+        isInSharedFolder,
         isEditorReadOnly,
         setIsEditorReadOnly,
         isEditorReady,
@@ -27,13 +34,19 @@ const OnlyOfficeProvider = ({ fileId, isPublic, isFromSharing, children }) => {
   )
 }
 
-const OnlyOffice = ({ params: { fileId }, isPublic, isFromSharing }) => {
+const OnlyOffice = ({
+  params: { fileId },
+  isPublic,
+  isFromSharing,
+  isInSharedFolder
+}) => {
   return (
     <Dialog open={true} fullScreen transitionDuration={0}>
       <OnlyOfficeProvider
         fileId={fileId}
         isPublic={isPublic}
         isFromSharing={isFromSharing}
+        isInSharedFolder={isInSharedFolder}
       >
         <Editor />
       </OnlyOfficeProvider>
