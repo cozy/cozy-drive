@@ -7,7 +7,8 @@ import { generateWebLink } from 'cozy-client'
 import {
   isOnlyOfficeReadOnly,
   makeConfig,
-  isSharedWithMe
+  shouldBeOpenedOnOtherInstance,
+  isOnlyOfficeEnabled
 } from 'drive/web/modules/views/OnlyOffice/helpers'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
 
@@ -20,14 +21,22 @@ const useConfig = () => {
     isPublic
   } = useContext(OnlyOfficeContext)
   const [config, setConfig] = useState()
+  const [status, setStatus] = useState('loading')
 
   const queryResult = useFetchJSON('GET', `/office/${fileId}/open`)
   const { data, fetchStatus } = queryResult
 
   useEffect(
     () => {
+      setStatus(fetchStatus)
+    },
+    [fetchStatus]
+  )
+
+  useEffect(
+    () => {
       if (!isQueryLoading(queryResult) && fetchStatus !== 'error' && !config) {
-        if (!isPublic && isSharedWithMe(data)) {
+        if (!isPublic && shouldBeOpenedOnOtherInstance(data)) {
           const {
             protocol,
             instance,
@@ -49,7 +58,7 @@ const useConfig = () => {
           })
 
           window.location = link
-        } else {
+        } else if (isOnlyOfficeEnabled()) {
           if (isEditorReadOnly !== isOnlyOfficeReadOnly(data)) {
             setIsEditorReadOnly(isOnlyOfficeReadOnly(data))
           }
@@ -61,6 +70,8 @@ const useConfig = () => {
               }
             })
           )
+        } else {
+          setStatus('error')
         }
       }
     },
@@ -77,7 +88,7 @@ const useConfig = () => {
     ]
   )
 
-  return { config, status: fetchStatus }
+  return { config, status }
 }
 
 export default useConfig
