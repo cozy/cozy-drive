@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
 import { DialogTitle } from 'cozy-ui/transpiled/react/Dialog'
@@ -7,6 +7,7 @@ import Divider from 'cozy-ui/transpiled/react/MuiCozyTheme/Divider'
 import SharingBanner from 'drive/web/modules/public/SharingBanner'
 import { useSharingInfos } from 'drive/web/modules/public/useSharingInfos'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
+import { showSharingBanner } from 'drive/web/modules/views/OnlyOffice/helpers'
 import Toolbar from 'drive/web/modules/views/OnlyOffice/Toolbar'
 
 const useStyles = makeStyles(() => ({
@@ -17,15 +18,21 @@ const useStyles = makeStyles(() => ({
 }))
 
 const Title = () => {
-  const { isPublic, isFromSharing } = useContext(OnlyOfficeContext)
+  const { isPublic, isFromSharing, isInSharedFolder } = useContext(
+    OnlyOfficeContext
+  )
   const sharingInfos = useSharingInfos()
   const styles = useStyles()
 
-  // The sharing banner need to be shown only on the first arrival
-  // and not after browsing inside a folder
-  // When it comes from sharing, we don't want the banner at all
-  const showSharingBanner =
-    !isFromSharing && isPublic && window.history.length <= 1
+  const showBanner = useMemo(
+    () =>
+      showSharingBanner({
+        isPublic,
+        isFromSharing,
+        isInSharedFolder
+      }),
+    [isPublic, isFromSharing, isInSharedFolder]
+  )
 
   return (
     <>
@@ -38,9 +45,9 @@ const Title = () => {
         <Toolbar />
       </DialogTitle>
       <Divider />
-      {showSharingBanner && <SharingBanner sharingInfos={sharingInfos} />}
+      {showBanner && <SharingBanner sharingInfos={sharingInfos} />}
     </>
   )
 }
 
-export default Title
+export default React.memo(Title)
