@@ -1,17 +1,17 @@
 import { createMockClient } from 'cozy-client'
+import { shouldBeOpenedByOnlyOffice } from 'cozy-client/dist/models/file'
+
 import { generateFile } from 'test/generate'
 import { openLocalFile } from 'drive/mobile/modules/offline/duck'
-import { isOnlyOfficeEditorSupported } from 'drive/web/modules/views/OnlyOffice/helpers'
-
 import createFileOpeningHandler from './createFileOpeningHandler'
 
 jest.mock('drive/mobile/modules/offline/duck', () => ({
   openLocalFile: jest.fn()
 }))
 
-jest.mock('drive/web/modules/views/OnlyOffice/helpers', () => ({
-  ...jest.requireActual('drive/web/modules/views/OnlyOffice/helpers'),
-  isOnlyOfficeEditorSupported: jest.fn()
+jest.mock('cozy-client/dist/models/file', () => ({
+  ...jest.requireActual('cozy-client/dist/models/file'),
+  shouldBeOpenedByOnlyOffice: jest.fn()
 }))
 
 describe('createFileOpeningHandler', () => {
@@ -111,7 +111,7 @@ describe('createFileOpeningHandler', () => {
   })
 
   it('should redirect to the file for an onlyoffice document with onlyoffice activated', async () => {
-    isOnlyOfficeEditorSupported.mockReturnValue(true)
+    shouldBeOpenedByOnlyOffice.mockReturnValue(true)
     const handler = setup()
     await handler({ event: {}, file: onlyofficeFile, notAvailableOffline })
 
@@ -122,7 +122,7 @@ describe('createFileOpeningHandler', () => {
   })
 
   it('should open the onlyoffice file in a new tab with onlyoffice activated and key pressed when clicking the link', async () => {
-    isOnlyOfficeEditorSupported.mockReturnValue(true)
+    shouldBeOpenedByOnlyOffice.mockReturnValue(true)
     const events = [{ ctrlKey: true }, { metaKey: true }, { shiftKey: true }]
     const handler = setup()
 
@@ -142,7 +142,7 @@ describe('createFileOpeningHandler', () => {
   })
 
   it('should navigate to the file for an onlyoffice document with onlyoffice not activated', async () => {
-    isOnlyOfficeEditorSupported.mockReturnValue(false)
+    shouldBeOpenedByOnlyOffice.mockReturnValue(false)
     const handler = setup()
     await handler({ event: {}, file: onlyofficeFile, notAvailableOffline })
 

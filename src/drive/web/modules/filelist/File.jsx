@@ -1,16 +1,10 @@
-import React, { useState, useRef, useContext } from 'react'
+import React, { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import cx from 'classnames'
 import filesize from 'filesize'
 import get from 'lodash/get'
 
-import { useClient } from 'cozy-client'
-import {
-  SharedDocument,
-  SharingContext,
-  useFetchDocumentPath
-} from 'cozy-sharing'
 import { isDirectory } from 'cozy-client/dist/models/file'
 import { isIOSApp } from 'cozy-device-helper'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
@@ -68,14 +62,7 @@ const File = props => {
   }
 
   const open = (event, attributes) => {
-    const {
-      onFolderOpen,
-      onFileOpen,
-      isAvailableOffline,
-      isShared,
-      isSharedWithMe,
-      hasSharedParent
-    } = props
+    const { onFolderOpen, onFileOpen, isAvailableOffline } = props
     event.stopPropagation()
     if (isDirectory(attributes)) {
       onFolderOpen(attributes.id)
@@ -83,10 +70,7 @@ const File = props => {
       onFileOpen({
         event,
         file: attributes,
-        isAvailableOffline,
-        isShared,
-        isSharedWithMe,
-        hasSharedParent
+        isAvailableOffline
       })
     }
   }
@@ -108,10 +92,7 @@ const File = props => {
     refreshFolderContent,
     isInSyncFromSharing,
     extraColumns,
-    breakpoints: { isExtraLarge, isMobile },
-    isShared,
-    isSharedWithMe,
-    hasSharedParent
+    breakpoints: { isExtraLarge, isMobile }
   } = props
 
   const isImage = attributes.class === 'image'
@@ -151,9 +132,6 @@ const File = props => {
         open={open}
         toggle={toggle}
         isRenaming={isRenaming}
-        isShared={isShared}
-        isSharedWithMe={isSharedWithMe}
-        hasSharedParent={hasSharedParent}
       >
         <FileThumbnail
           file={attributes}
@@ -251,32 +229,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(toggleItemSelection(file, selected))
 })
 
-const FileWithSharingContext = props => {
-  const client = useClient()
-  const { hasSharedParent: hasSharedParentFn } = useContext(SharingContext)
-  const documentPath = useFetchDocumentPath(client, props.attributes)
-
-  const hasSharedParent = documentPath && hasSharedParentFn(documentPath)
-
-  return (
-    <SharedDocument docId={props.attributes.id}>
-      {sharingProps => {
-        const { isShared, isSharedWithMe } = sharingProps
-        return (
-          <File
-            {...props}
-            isShared={isShared}
-            isSharedWithMe={isSharedWithMe}
-            hasSharedParent={hasSharedParent}
-          />
-        )
-      }}
-    </SharedDocument>
-  )
-}
-FileWithSharingContext.displayName = 'FileWithSharingContext'
-
-export const DumbFile = withBreakpoints()(translate()(FileWithSharingContext))
+export const DumbFile = withBreakpoints()(translate()(File))
 
 export const FileWithSelection = connect(
   mapStateToProps,
