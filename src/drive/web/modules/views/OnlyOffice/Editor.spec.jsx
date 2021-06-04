@@ -7,6 +7,7 @@ import useFetchJSON from 'cozy-client/dist/hooks/useFetchJSON'
 import AppLike from 'test/components/AppLike'
 import { officeDocParam } from 'test/data'
 
+import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
 import Editor from 'drive/web/modules/views/OnlyOffice/Editor'
 
@@ -14,6 +15,11 @@ jest.mock('cozy-client/dist/hooks/useFetchJSON', () => ({
   __esModule: true,
   default: jest.fn(),
   useFetchJSON: jest.fn()
+}))
+
+jest.mock('drive/web/modules/views/OnlyOffice/helpers', () => ({
+  ...jest.requireActual('drive/web/modules/views/OnlyOffice/helpers'),
+  isOnlyOfficeEnabled: jest.fn()
 }))
 
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
@@ -63,7 +69,7 @@ describe('Editor', () => {
     expect(queryByTestId('onlyoffice-title')).toBeFalsy()
   })
 
-  it('should not show the title but the CozyUi Viewer instead', () => {
+  it('should not show the title but the CozyUi Viewer instead if stack returns an error', () => {
     useFetchJSON.mockReturnValue({ fetchStatus: 'error', data: undefined })
     useQuery.mockReturnValue(officeDocParam)
 
@@ -82,6 +88,7 @@ describe('Editor', () => {
       data: officeDocParam
     })
     useQuery.mockReturnValue(officeDocParam)
+    isOnlyOfficeEnabled.mockReturnValue(true)
 
     const { root } = setup()
     const { container, queryByTestId } = root
@@ -89,5 +96,22 @@ describe('Editor', () => {
     expect(queryByTestId('onlyoffice-content-spinner')).toBeFalsy()
     expect(queryByTestId('onlyoffice-title')).toBeTruthy()
     expect(container.querySelector('#onlyOfficeEditor')).toBeTruthy()
+  })
+
+  it('should show the CozyUi Viewer if the only office server is not installed', () => {
+    useFetchJSON.mockReturnValue({
+      fetchStatus: 'loaded',
+      data: officeDocParam
+    })
+    useQuery.mockReturnValue(officeDocParam)
+    isOnlyOfficeEnabled.mockReturnValue(false)
+
+    const { root } = setup()
+    const { queryByTestId, getAllByText } = root
+
+    expect(queryByTestId('onlyoffice-content-spinner')).toBeFalsy()
+    expect(queryByTestId('onlyoffice-title')).toBeFalsy()
+    expect(queryByTestId('viewer-toolbar')).toBeTruthy()
+    expect(getAllByText('Download')).toBeTruthy()
   })
 })

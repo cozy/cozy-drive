@@ -12,13 +12,13 @@ export const isOnlyOfficeReadOnly = ({ data }) =>
   data.attributes.onlyoffice.editor.mode === 'view'
 
 /**
- * Returns true in case of sharing without being the owner.
- * Returns false otherwise (sharing with being the owner, or no sharing at all).
+ * Returns true in case of the document is shared and should be opened on another instance.
  * See https://docs.cozy.io/en/cozy-stack/office/#get-officeidopen
  * @param {object} params - Result of `/office/fileId/open`
  * @returns {boolean}
  */
-export const isSharedWithMe = ({ data }) => data.attributes.sharecode
+export const shouldBeOpenedOnOtherInstance = ({ data }) =>
+  data.attributes.sharecode
 
 export const makeConfig = ({ data }, options) => {
   const onlyOffice = data.attributes.onlyoffice
