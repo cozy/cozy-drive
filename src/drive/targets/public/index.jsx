@@ -155,11 +155,15 @@ const init = async () => {
                   <Route path="file/:fileId/revision" component={FileHistory} />
                 </Route>
                 {isOnlyOfficeEnabled() && (
-                  // Used to open an only office file inside a folder shared by link
+                  // Used to open an only office file inside a shared folder
                   <Route
                     path="onlyoffice/:fileId"
                     component={props => (
-                      <OnlyOfficeView {...props} isPublic={true} />
+                      <OnlyOfficeView
+                        {...props}
+                        isPublic={true}
+                        isInSharedFolder={true}
+                      />
                     )}
                   />
                 )}
