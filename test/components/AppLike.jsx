@@ -32,8 +32,7 @@ const mockSharingContextValue = {
   refresh: jest.fn(),
   hasWriteAccess: jest.fn(),
   getRecipients: jest.fn(),
-  getSharingLink: jest.fn(),
-  hasSharedParent: jest.fn()
+  getSharingLink: jest.fn()
 }
 
 const mockRouterContextValue = {

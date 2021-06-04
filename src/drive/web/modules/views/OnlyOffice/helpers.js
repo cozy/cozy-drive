@@ -1,5 +1,4 @@
 import flag from 'cozy-flags'
-import { models } from 'cozy-client'
 import FileTypeSheetIcon from 'cozy-ui/transpiled/react/Icons/FileTypeSheet'
 import FileTypeSlideIcon from 'cozy-ui/transpiled/react/Icons/FileTypeSlide'
 import FileTypeTextIcon from 'cozy-ui/transpiled/react/Icons/FileTypeText'
@@ -11,18 +10,6 @@ export const makeOnlyOfficeFileRoute = (file, isWithRouter) =>
 
 export const isOnlyOfficeReadOnly = ({ data }) =>
   data.attributes.onlyoffice.editor.mode === 'view'
-
-export const isOnlyOfficeEditorSupported = ({
-  file,
-  isShared,
-  isSharedWithMe,
-  hasSharedParent
-}) =>
-  models.file.shouldBeOpenedByOnlyOffice(file) &&
-  (isSharedWithMe ||
-    hasSharedParent ||
-    (isShared && !isSharedWithMe && helpers.isOnlyOfficeEnabled()) ||
-    (!isShared && helpers.isOnlyOfficeEnabled()))
 
 /**
  * Returns true in case of sharing without being the owner.
@@ -83,10 +70,3 @@ export const makeMimeByClass = fileClass => {
 
   return mimeByClass[fileClass]
 }
-
-// used to mock fn in tests
-const helpers = {
-  isOnlyOfficeEnabled
-}
-
-export default helpers

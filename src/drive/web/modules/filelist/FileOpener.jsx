@@ -2,10 +2,9 @@ import React, { useEffect, useRef } from 'react'
 import Hammer from '@egjs/hammerjs'
 import propagating from 'propagating-hammerjs'
 
-import {
-  isOnlyOfficeEditorSupported,
-  makeOnlyOfficeFileRoute
-} from 'drive/web/modules/views/OnlyOffice/helpers'
+import { models } from 'cozy-client'
+
+import { makeOnlyOfficeFileRoute } from 'drive/web/modules/views/OnlyOffice/helpers'
 
 import styles from './fileopener.styl'
 
@@ -63,9 +62,6 @@ const FileOpener = ({
   open,
   selectionModeActive,
   isRenaming,
-  isShared,
-  isSharedWithMe,
-  hasSharedParent,
   children
 }) => {
   const rowRef = useRef()
@@ -106,14 +102,7 @@ const FileOpener = ({
     ]
   )
 
-  if (
-    isOnlyOfficeEditorSupported({
-      file,
-      isShared,
-      isSharedWithMe,
-      hasSharedParent
-    })
-  ) {
+  if (models.file.shouldBeOpenedByOnlyOffice(file)) {
     return (
       <a
         data-testid="onlyoffice-link"

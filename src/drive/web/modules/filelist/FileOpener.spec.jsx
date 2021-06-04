@@ -3,16 +3,16 @@ import { render } from '@testing-library/react'
 
 import { createMockClient } from 'cozy-client'
 
-import { isOnlyOfficeEditorSupported } from 'drive/web/modules/views/OnlyOffice/helpers'
+import { shouldBeOpenedByOnlyOffice } from 'cozy-client/dist/models/file'
 
 import AppLike from 'test/components/AppLike'
 import { generateFile } from 'test/generate'
 
 import FileOpener, { getParentLink } from './FileOpener'
 
-jest.mock('drive/web/modules/views/OnlyOffice/helpers', () => ({
-  ...jest.requireActual('drive/web/modules/views/OnlyOffice/helpers'),
-  isOnlyOfficeEditorSupported: jest.fn()
+jest.mock('cozy-client/dist/models/file', () => ({
+  ...jest.requireActual('cozy-client/dist/models/file'),
+  shouldBeOpenedByOnlyOffice: jest.fn()
 }))
 
 const client = createMockClient({})
@@ -34,7 +34,7 @@ describe('FileOpener', () => {
   })
 
   it('should show a link to onlyoffice document if Only Office is supported', () => {
-    isOnlyOfficeEditorSupported.mockReturnValue(true)
+    shouldBeOpenedByOnlyOffice.mockReturnValue(true)
 
     const { root } = setup({ file })
     const { queryByTestId } = root
@@ -44,7 +44,7 @@ describe('FileOpener', () => {
   })
 
   it('should show a regular span if Only Office is not supported', () => {
-    isOnlyOfficeEditorSupported.mockReturnValue(false)
+    shouldBeOpenedByOnlyOffice.mockReturnValue(false)
 
     const { root } = setup({ file })
     const { queryByTestId } = root
