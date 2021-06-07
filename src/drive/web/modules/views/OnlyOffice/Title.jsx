@@ -10,10 +10,11 @@ import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
 import { showSharingBanner } from 'drive/web/modules/views/OnlyOffice/helpers'
 import Toolbar from 'drive/web/modules/views/OnlyOffice/Toolbar'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   root: {
     width: 'calc(100% - 1rem)',
-    height: '3.5rem'
+    height: '3.5rem',
+    backgroundColor: theme.palette.background.paper
   }
 }))
 
@@ -35,7 +36,7 @@ const Title = () => {
   )
 
   return (
-    <>
+    <div style={{ zIndex: '1' }}>
       <DialogTitle
         data-testid="onlyoffice-title"
         disableTypography
@@ -46,7 +47,7 @@ const Title = () => {
       </DialogTitle>
       <Divider />
       {showBanner && <SharingBanner sharingInfos={sharingInfos} />}
-    </>
+    </div>
   )
 }
 
