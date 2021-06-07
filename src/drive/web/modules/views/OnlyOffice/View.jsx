@@ -8,9 +8,10 @@ import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import Error from 'drive/web/modules/views/OnlyOffice/Error'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
 import ReadOnlyFab from 'drive/web/modules/views/OnlyOffice/ReadOnlyFab'
+import { FRAME_EDITOR_NAME } from 'drive/web/modules/views/OnlyOffice/config'
 
 const forceIframeHeight = value => {
-  const iframe = document.getElementsByName('frameEditor')[0]
+  const iframe = document.getElementsByName(FRAME_EDITOR_NAME)[0]
   if (iframe) iframe.style.height = value
 }
 

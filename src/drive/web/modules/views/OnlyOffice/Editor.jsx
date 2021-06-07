@@ -9,6 +9,7 @@ import View from 'drive/web/modules/views/OnlyOffice/View'
 import Error from 'drive/web/modules/views/OnlyOffice/Error'
 import Loading from 'drive/web/modules/views/OnlyOffice/Loading'
 import Title from 'drive/web/modules/views/OnlyOffice/Title'
+import { DEFAULT_EDITOR_TOOLBAR_HEIGHT } from 'drive/web/modules/views/OnlyOffice/config'
 
 export const Editor = () => {
   const { config, status } = useConfig()
@@ -23,7 +24,7 @@ export const Editor = () => {
     flag('drive.onlyoffice.editorToolbarHeight')
   )
     ? flag('drive.onlyoffice.editorToolbarHeight')
-    : 68
+    : DEFAULT_EDITOR_TOOLBAR_HEIGHT
 
   return (
     <>

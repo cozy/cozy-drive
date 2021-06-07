@@ -41,13 +41,13 @@ const Title = () => {
     [isPublic, isFromSharing, isInSharedFolder]
   )
 
-  const hideToolbar =
+  const hideDialogToolbar =
     (isMobile || flag('drive.onlyoffice.forceReadOnlyOnDesktop')) &&
     !isEditorForcedReadOnly
 
   return (
-    <div style={{ zIndex: '1' }}>
-      {!hideToolbar && (
+    <div style={{ zIndex: 'var(--zIndex-nav)' }}>
+      {!hideDialogToolbar && (
         <>
           <DialogTitle
             data-testid="onlyoffice-title"
