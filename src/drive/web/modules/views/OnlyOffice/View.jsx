@@ -6,12 +6,9 @@ import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import Error from 'drive/web/modules/views/OnlyOffice/Error'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
 
-const forceIframesHeight = value => {
-  const iframes = document.getElementsByTagName('iframe')
-
-  for (const iframe of iframes) {
-    iframe.style.height = value
-  }
+const forceIframeHeight = value => {
+  const iframe = document.getElementsByName('frameEditor')[0]
+  if (iframe) iframe.style.height = value
 }
 
 const View = ({ id, apiUrl, docEditorConfig }) => {
@@ -21,7 +18,7 @@ const View = ({ id, apiUrl, docEditorConfig }) => {
   const initEditor = useCallback(
     () => {
       new window.DocsAPI.DocEditor('onlyOfficeEditor', docEditorConfig)
-      forceIframesHeight('0')
+      forceIframeHeight('0')
     },
     [docEditorConfig]
   )
@@ -54,7 +51,9 @@ const View = ({ id, apiUrl, docEditorConfig }) => {
 
   useEffect(
     () => {
-      isEditorReady && forceIframesHeight('100%')
+      if (isEditorReady) {
+        forceIframeHeight('100%')
+      }
     },
     [isEditorReady]
   )
