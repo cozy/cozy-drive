@@ -22,4 +22,6 @@ const flagsList = () => {
   flag('viewer-bottomSheet-tension')
   flag('viewer-bottomSheet-friction')
   flag('viewer-bottomSheet-clamp')
+  flag('drive.onlyoffice.forceReadOnlyOnDesktop')
+  flag('drive.onlyoffice.editorToolbarHeight')
 }
