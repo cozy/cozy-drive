@@ -1,5 +1,7 @@
 import React, { createContext, useState } from 'react'
 
+import flag from 'cozy-flags'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import Dialog from 'cozy-ui/transpiled/react/Dialog'
 
 import Editor from 'drive/web/modules/views/OnlyOffice/Editor'
@@ -13,8 +15,12 @@ const OnlyOfficeProvider = ({
   isInSharedFolder,
   children
 }) => {
+  const { isMobile } = useBreakpoints()
   const [isEditorReadOnly, setIsEditorReadOnly] = useState()
   const [isEditorReady, setIsEditorReady] = useState(false)
+  const [isEditorForcedReadOnly, setIsEditorForcedReadOnly] = useState(
+    isMobile || flag('drive.onlyoffice.forceReadOnlyOnDesktop')
+  )
 
   return (
     <OnlyOfficeContext.Provider
@@ -26,7 +32,9 @@ const OnlyOfficeProvider = ({
         isEditorReadOnly,
         setIsEditorReadOnly,
         isEditorReady,
-        setIsEditorReady
+        setIsEditorReady,
+        isEditorForcedReadOnly,
+        setIsEditorForcedReadOnly
       }}
     >
       {children}

@@ -1,27 +1,29 @@
 import React, { useEffect, useCallback, useState, useContext } from 'react'
 import PropTypes from 'prop-types'
 
+import flag from 'cozy-flags'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 
 import Error from 'drive/web/modules/views/OnlyOffice/Error'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
+import ReadOnlyFab from 'drive/web/modules/views/OnlyOffice/ReadOnlyFab'
+import { FRAME_EDITOR_NAME } from 'drive/web/modules/views/OnlyOffice/config'
 
-const forceIframesHeight = value => {
-  const iframes = document.getElementsByTagName('iframe')
-
-  for (const iframe of iframes) {
-    iframe.style.height = value
-  }
+const forceIframeHeight = value => {
+  const iframe = document.getElementsByName(FRAME_EDITOR_NAME)[0]
+  if (iframe) iframe.style.height = value
 }
 
 const View = ({ id, apiUrl, docEditorConfig }) => {
   const [isError, setIsError] = useState(false)
-  const { isEditorReady } = useContext(OnlyOfficeContext)
+  const { isEditorReady, isEditorReadOnly } = useContext(OnlyOfficeContext)
+  const { isMobile } = useBreakpoints()
 
   const initEditor = useCallback(
     () => {
       new window.DocsAPI.DocEditor('onlyOfficeEditor', docEditorConfig)
-      forceIframesHeight('0')
+      forceIframeHeight('0')
     },
     [docEditorConfig]
   )
@@ -54,10 +56,17 @@ const View = ({ id, apiUrl, docEditorConfig }) => {
 
   useEffect(
     () => {
-      isEditorReady && forceIframesHeight('100%')
+      if (isEditorReady) {
+        forceIframeHeight('100%')
+      }
     },
     [isEditorReady]
   )
+
+  const showReadOnlyFab =
+    isEditorReady &&
+    !isEditorReadOnly &&
+    (isMobile || flag('drive.onlyoffice.forceReadOnlyOnDesktop'))
 
   if (isError) return <Error />
 
@@ -70,6 +79,7 @@ const View = ({ id, apiUrl, docEditorConfig }) => {
         />
       )}
       <div id="onlyOfficeEditor" />
+      {showReadOnlyFab && <ReadOnlyFab />}
     </>
   )
 }
