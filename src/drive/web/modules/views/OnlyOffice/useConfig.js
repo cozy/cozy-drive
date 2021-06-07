@@ -17,7 +17,8 @@ const useConfig = () => {
     isEditorReadOnly,
     setIsEditorReadOnly,
     setIsEditorReady,
-    isPublic
+    isPublic,
+    isEditorForcedReadOnly
   } = useContext(OnlyOfficeContext)
   const [config, setConfig] = useState()
   const [status, setStatus] = useState('loading')
@@ -30,6 +31,13 @@ const useConfig = () => {
       setStatus(fetchStatus)
     },
     [fetchStatus]
+  )
+
+  useEffect(
+    () => {
+      setConfig()
+    },
+    [isEditorForcedReadOnly]
   )
 
   useEffect(
@@ -68,7 +76,10 @@ const useConfig = () => {
           const docEditorConfig = {
             // complete config doc : https://api.onlyoffice.com/editors/advanced
             document: onlyOffice.document,
-            editorConfig: onlyOffice.editor,
+            editorConfig: {
+              ...onlyOffice.editor,
+              mode: isEditorForcedReadOnly ? 'view' : onlyOffice.editor.mode
+            },
             token: onlyOffice.token,
             documentType: onlyOffice.documentType,
             events: {
@@ -91,7 +102,8 @@ const useConfig = () => {
       config,
       setConfig,
       setIsEditorReady,
-      isPublic
+      isPublic,
+      isEditorForcedReadOnly
     ]
   )
 
