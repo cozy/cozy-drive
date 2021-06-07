@@ -1,6 +1,8 @@
 import React, { useContext, useMemo } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
+import flag from 'cozy-flags'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { DialogTitle } from 'cozy-ui/transpiled/react/Dialog'
 import Divider from 'cozy-ui/transpiled/react/MuiCozyTheme/Divider'
 
@@ -19,11 +21,15 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Title = () => {
-  const { isPublic, isFromSharing, isInSharedFolder } = useContext(
-    OnlyOfficeContext
-  )
+  const {
+    isPublic,
+    isFromSharing,
+    isInSharedFolder,
+    isEditorForcedReadOnly
+  } = useContext(OnlyOfficeContext)
   const sharingInfos = useSharingInfos()
   const styles = useStyles()
+  const { isMobile } = useBreakpoints()
 
   const showBanner = useMemo(
     () =>
@@ -35,17 +41,25 @@ const Title = () => {
     [isPublic, isFromSharing, isInSharedFolder]
   )
 
+  const hideToolbar =
+    (isMobile || flag('drive.onlyoffice.forceReadOnlyOnDesktop')) &&
+    !isEditorForcedReadOnly
+
   return (
     <div style={{ zIndex: '1' }}>
-      <DialogTitle
-        data-testid="onlyoffice-title"
-        disableTypography
-        className="u-ellipsis u-flex u-flex-items-center u-p-0 u-pr-1"
-        classes={styles}
-      >
-        <Toolbar />
-      </DialogTitle>
-      <Divider />
+      {!hideToolbar && (
+        <>
+          <DialogTitle
+            data-testid="onlyoffice-title"
+            disableTypography
+            className="u-ellipsis u-flex u-flex-items-center u-p-0 u-pr-1"
+            classes={styles}
+          >
+            <Toolbar />
+          </DialogTitle>
+          <Divider />
+        </>
+      )}
       {showBanner && <SharingBanner sharingInfos={sharingInfos} />}
     </div>
   )
