@@ -48,7 +48,7 @@ import FolderViewHeader from 'drive/web/modules/views/Folder/FolderViewHeader'
 import FolderViewBody from 'drive/web/modules/views/Folder/FolderViewBody'
 import FolderViewBreadcrumb from 'drive/web/modules/views/Folder/FolderViewBreadcrumb'
 import { useTrashRedirect } from 'drive/web/modules/views/Drive/useTrashRedirect'
-import Fab from 'drive/web/modules/drive/Fab'
+import FabWithMenuContext from 'drive/web/modules/drive/FabWithMenuContext'
 import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
 
 const getBreadcrumbPath = (t, displayedFolder) =>
@@ -239,7 +239,7 @@ const DriveView = ({
             canUpload={true}
             disabled={isLoading || isInError || isPending}
           >
-            <Fab />
+            <FabWithMenuContext />
           </AddMenuProvider>
         )}
         {children}
