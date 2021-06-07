@@ -1,8 +1,10 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 
+import flag from 'cozy-flags'
 import { createMockClient, useQuery } from 'cozy-client'
 import useFetchJSON from 'cozy-client/dist/hooks/useFetchJSON'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 import AppLike from 'test/components/AppLike'
 import { officeDocParam } from 'test/data'
@@ -22,11 +24,23 @@ jest.mock('drive/web/modules/views/OnlyOffice/helpers', () => ({
   isOnlyOfficeEnabled: jest.fn()
 }))
 
+jest.mock('cozy-ui/transpiled/react/hooks/useBreakpoints', () => ({
+  ...jest.requireActual('cozy-ui/transpiled/react/hooks/useBreakpoints'),
+  __esModule: true,
+  default: jest.fn(),
+  useBreakpoints: jest.fn()
+}))
+
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
+
+jest.mock('cozy-flags')
 
 const client = createMockClient({})
 
-const setup = () => {
+const setup = ({ isMobile = false, forceReadOnlyOnDesktop = false } = {}) => {
+  useBreakpoints.mockReturnValue({ isMobile })
+  flag.mockReturnValue(forceReadOnlyOnDesktop)
+
   const root = render(
     <AppLike
       client={client}
@@ -43,7 +57,9 @@ const setup = () => {
           fileId: '123',
           isPublic: 'false',
           isEditorReadOnly: false,
-          setIsEditorReadOnly: jest.fn()
+          setIsEditorReadOnly: jest.fn(),
+          isEditorReady: true,
+          isEditorForcedReadOnly: false
         }}
       >
         <Editor />
@@ -57,6 +73,7 @@ const setup = () => {
 describe('Editor', () => {
   afterEach(() => {
     jest.clearAllMocks()
+    document.body.innerHTML = '' // used to reset document.getElementById(id) present in View
   })
 
   it('should not show the title but a spinner if the doc is not loaded', () => {
@@ -90,12 +107,47 @@ describe('Editor', () => {
     useQuery.mockReturnValue(officeDocParam)
     isOnlyOfficeEnabled.mockReturnValue(true)
 
-    const { root } = setup()
+    const { root } = setup({ isMobile: false })
     const { container, queryByTestId } = root
 
     expect(queryByTestId('onlyoffice-content-spinner')).toBeFalsy()
     expect(queryByTestId('onlyoffice-title')).toBeTruthy()
     expect(container.querySelector('#onlyOfficeEditor')).toBeTruthy()
+    expect(queryByTestId('onlyoffice-readonlyfab')).toBeFalsy()
+  })
+
+  it('should show the readOnlyFab on mobile', () => {
+    useFetchJSON.mockReturnValue({
+      fetchStatus: 'loaded',
+      data: officeDocParam
+    })
+    useQuery.mockReturnValue(officeDocParam)
+    isOnlyOfficeEnabled.mockReturnValue(true)
+
+    const { root } = setup({ isMobile: true })
+    const { container, queryByTestId } = root
+
+    expect(queryByTestId('onlyoffice-content-spinner')).toBeFalsy()
+    expect(queryByTestId('onlyoffice-title')).toBeTruthy()
+    expect(container.querySelector('#onlyOfficeEditor')).toBeTruthy()
+    expect(queryByTestId('onlyoffice-readonlyfab')).toBeTruthy()
+  })
+
+  it('should show the readOnlyFab on desktop if forceReadOnlyOnDesktop is true', () => {
+    useFetchJSON.mockReturnValue({
+      fetchStatus: 'loaded',
+      data: officeDocParam
+    })
+    useQuery.mockReturnValue(officeDocParam)
+    isOnlyOfficeEnabled.mockReturnValue(true)
+
+    const { root } = setup({ isMobile: false, forceReadOnlyOnDesktop: true })
+    const { container, queryByTestId } = root
+
+    expect(queryByTestId('onlyoffice-content-spinner')).toBeFalsy()
+    expect(queryByTestId('onlyoffice-title')).toBeTruthy()
+    expect(container.querySelector('#onlyOfficeEditor')).toBeTruthy()
+    expect(queryByTestId('onlyoffice-readonlyfab')).toBeTruthy()
   })
 
   it('should show the CozyUi Viewer if the only office server is not installed', () => {
