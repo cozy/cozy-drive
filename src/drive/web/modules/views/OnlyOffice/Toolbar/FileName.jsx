@@ -62,7 +62,7 @@ const FileName = ({ fileWithPath }) => {
           })}
           variant="h6"
           noWrap
-          onClick={!isEditorReadOnly && onRename}
+          onClick={!isEditorReadOnly ? onRename : undefined}
         >
           {fileWithPath.name}
         </Typography>

@@ -1,8 +1,10 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 
+import flag from 'cozy-flags'
 import { createMockClient, useQuery } from 'cozy-client'
 import useFetchJSON from 'cozy-client/dist/hooks/useFetchJSON'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 import AppLike from 'test/components/AppLike'
 import { officeDocParam } from 'test/data'
@@ -22,11 +24,27 @@ jest.mock('drive/web/modules/views/OnlyOffice/helpers', () => ({
   isOnlyOfficeEnabled: jest.fn()
 }))
 
+jest.mock('cozy-ui/transpiled/react/hooks/useBreakpoints', () => ({
+  ...jest.requireActual('cozy-ui/transpiled/react/hooks/useBreakpoints'),
+  __esModule: true,
+  default: jest.fn(),
+  useBreakpoints: jest.fn()
+}))
+
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
+
+jest.mock('cozy-flags')
 
 const client = createMockClient({})
 
-const setup = () => {
+const setup = ({
+  isMobile = false,
+  forceReadOnlyOnDesktop = false,
+  isEditorForcedReadOnly = false
+} = {}) => {
+  useBreakpoints.mockReturnValue({ isMobile })
+  flag.mockReturnValue(forceReadOnlyOnDesktop)
+
   const root = render(
     <AppLike
       client={client}
@@ -43,7 +61,9 @@ const setup = () => {
           fileId: '123',
           isPublic: 'false',
           isEditorReadOnly: false,
-          setIsEditorReadOnly: jest.fn()
+          setIsEditorReadOnly: jest.fn(),
+          isEditorReady: true,
+          isEditorForcedReadOnly
         }}
       >
         <Editor />
@@ -57,6 +77,7 @@ const setup = () => {
 describe('Editor', () => {
   afterEach(() => {
     jest.clearAllMocks()
+    document.body.innerHTML = '' // used to reset document.getElementById(id) present in View
   })
 
   it('should not show the title but a spinner if the doc is not loaded', () => {
@@ -82,7 +103,7 @@ describe('Editor', () => {
     expect(getAllByText('Download')).toBeTruthy()
   })
 
-  it('should show the title and the container view', () => {
+  it('should show the title and the container view if the only office server is installed', () => {
     useFetchJSON.mockReturnValue({
       fetchStatus: 'loaded',
       data: officeDocParam
@@ -113,5 +134,199 @@ describe('Editor', () => {
     expect(queryByTestId('onlyoffice-title')).toBeFalsy()
     expect(queryByTestId('viewer-toolbar')).toBeTruthy()
     expect(getAllByText('Download')).toBeTruthy()
+  })
+
+  describe('Title', () => {
+    describe('on mobile', () => {
+      it('should hide title for forceReadOnlyOnDesktop false and isEditorForcedReadOnly false', () => {
+        useFetchJSON.mockReturnValue({
+          fetchStatus: 'loaded',
+          data: officeDocParam
+        })
+        useQuery.mockReturnValue(officeDocParam)
+        isOnlyOfficeEnabled.mockReturnValue(true)
+
+        const { root } = setup({
+          isMobile: true,
+          forceReadOnlyOnDesktop: false,
+          isEditorForcedReadOnly: false
+        })
+        const { queryByTestId } = root
+
+        expect(queryByTestId('onlyoffice-title')).toBeFalsy()
+      })
+
+      it('should hide title for forceReadOnlyOnDesktop true and isEditorForcedReadOnly false', () => {
+        useFetchJSON.mockReturnValue({
+          fetchStatus: 'loaded',
+          data: officeDocParam
+        })
+        useQuery.mockReturnValue(officeDocParam)
+        isOnlyOfficeEnabled.mockReturnValue(true)
+
+        const { root } = setup({
+          isMobile: true,
+          forceReadOnlyOnDesktop: true,
+          isEditorForcedReadOnly: false
+        })
+        const { queryByTestId } = root
+
+        expect(queryByTestId('onlyoffice-title')).toBeFalsy()
+      })
+
+      it('should show title for forceReadOnlyOnDesktop false and isEditorForcedReadOnly true', () => {
+        useFetchJSON.mockReturnValue({
+          fetchStatus: 'loaded',
+          data: officeDocParam
+        })
+        useQuery.mockReturnValue(officeDocParam)
+        isOnlyOfficeEnabled.mockReturnValue(true)
+
+        const { root } = setup({
+          isMobile: true,
+          forceReadOnlyOnDesktop: false,
+          isEditorForcedReadOnly: true
+        })
+        const { queryByTestId } = root
+
+        expect(queryByTestId('onlyoffice-title')).toBeTruthy()
+      })
+
+      it('should show title for forceReadOnlyOnDesktop true and isEditorForcedReadOnly true', () => {
+        useFetchJSON.mockReturnValue({
+          fetchStatus: 'loaded',
+          data: officeDocParam
+        })
+        useQuery.mockReturnValue(officeDocParam)
+        isOnlyOfficeEnabled.mockReturnValue(true)
+
+        const { root } = setup({
+          isMobile: true,
+          forceReadOnlyOnDesktop: true,
+          isEditorForcedReadOnly: true
+        })
+        const { queryByTestId } = root
+
+        expect(queryByTestId('onlyoffice-title')).toBeTruthy()
+      })
+    })
+
+    describe('on desktop', () => {
+      it('should hide title for forceReadOnlyOnDesktop true and isEditorForcedReadOnly false', () => {
+        useFetchJSON.mockReturnValue({
+          fetchStatus: 'loaded',
+          data: officeDocParam
+        })
+        useQuery.mockReturnValue(officeDocParam)
+        isOnlyOfficeEnabled.mockReturnValue(true)
+
+        const { root } = setup({
+          isMobile: false,
+          forceReadOnlyOnDesktop: true,
+          isEditorForcedReadOnly: false
+        })
+        const { queryByTestId } = root
+
+        expect(queryByTestId('onlyoffice-title')).toBeFalsy()
+      })
+
+      it('should show title for forceReadOnlyOnDesktop true and isEditorForcedReadOnly true', () => {
+        useFetchJSON.mockReturnValue({
+          fetchStatus: 'loaded',
+          data: officeDocParam
+        })
+        useQuery.mockReturnValue(officeDocParam)
+        isOnlyOfficeEnabled.mockReturnValue(true)
+
+        const { root } = setup({
+          isMobile: false,
+          forceReadOnlyOnDesktop: true,
+          isEditorForcedReadOnly: true
+        })
+        const { queryByTestId } = root
+
+        expect(queryByTestId('onlyoffice-title')).toBeTruthy()
+      })
+
+      it('should show title for forceReadOnlyOnDesktop false and isEditorForcedReadOnly true', () => {
+        useFetchJSON.mockReturnValue({
+          fetchStatus: 'loaded',
+          data: officeDocParam
+        })
+        useQuery.mockReturnValue(officeDocParam)
+        isOnlyOfficeEnabled.mockReturnValue(true)
+
+        const { root } = setup({
+          isMobile: false,
+          forceReadOnlyOnDesktop: false,
+          isEditorForcedReadOnly: true
+        })
+        const { queryByTestId } = root
+
+        expect(queryByTestId('onlyoffice-title')).toBeTruthy()
+      })
+
+      it('should show title for forceReadOnlyOnDesktop false and isEditorForcedReadOnly false', () => {
+        useFetchJSON.mockReturnValue({
+          fetchStatus: 'loaded',
+          data: officeDocParam
+        })
+        useQuery.mockReturnValue(officeDocParam)
+        isOnlyOfficeEnabled.mockReturnValue(true)
+
+        const { root } = setup({
+          isMobile: false,
+          forceReadOnlyOnDesktop: false,
+          isEditorForcedReadOnly: false
+        })
+        const { queryByTestId } = root
+
+        expect(queryByTestId('onlyoffice-title')).toBeTruthy()
+      })
+    })
+  })
+
+  describe('ReadOnlyFab', () => {
+    it('should show the readOnlyFab on mobile', () => {
+      useFetchJSON.mockReturnValue({
+        fetchStatus: 'loaded',
+        data: officeDocParam
+      })
+      useQuery.mockReturnValue(officeDocParam)
+      isOnlyOfficeEnabled.mockReturnValue(true)
+
+      const { root } = setup({ isMobile: true })
+      const { queryByTestId } = root
+
+      expect(queryByTestId('onlyoffice-readonlyfab')).toBeTruthy()
+    })
+
+    it('should not show the readOnlyFab on desktop', () => {
+      useFetchJSON.mockReturnValue({
+        fetchStatus: 'loaded',
+        data: officeDocParam
+      })
+      useQuery.mockReturnValue(officeDocParam)
+      isOnlyOfficeEnabled.mockReturnValue(true)
+
+      const { root } = setup({ isMobile: false, forceReadOnlyOnDesktop: false })
+      const { queryByTestId } = root
+
+      expect(queryByTestId('onlyoffice-readonlyfab')).toBeFalsy()
+    })
+
+    it('should show the readOnlyFab on desktop if forceReadOnlyOnDesktop is true', () => {
+      useFetchJSON.mockReturnValue({
+        fetchStatus: 'loaded',
+        data: officeDocParam
+      })
+      useQuery.mockReturnValue(officeDocParam)
+      isOnlyOfficeEnabled.mockReturnValue(true)
+
+      const { root } = setup({ isMobile: false, forceReadOnlyOnDesktop: true })
+      const { queryByTestId } = root
+
+      expect(queryByTestId('onlyoffice-readonlyfab')).toBeTruthy()
+    })
   })
 })

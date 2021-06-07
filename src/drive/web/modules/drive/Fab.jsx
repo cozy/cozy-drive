@@ -1,11 +1,8 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
 import UiFab from 'cozy-ui/transpiled/react/Fab'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import PlusIcon from 'cozy-ui/transpiled/react/Icons/Plus'
-
-import { AddMenuContext } from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -16,31 +13,14 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-export const Fab = ({ noSidebar }) => {
+// TODO: should be in cozy-ui
+const Fab = ({ noSidebar, icon, ...rest }) => {
   const styles = useStyles({ noSidebar })
-  const {
-    anchorRef,
-    handleToggle,
-    isDisabled,
-    handleOfflineClick,
-    isOffline
-  } = useContext(AddMenuContext)
 
   return (
-    <div
-      ref={anchorRef}
-      className={styles.root}
-      onClick={isOffline ? handleOfflineClick : undefined}
-    >
-      <UiFab
-        color="primary"
-        aria-label="add"
-        onClick={handleToggle}
-        disabled={isDisabled || isOffline}
-      >
-        <Icon icon={PlusIcon} />
-      </UiFab>
-    </div>
+    <UiFab className={styles.root} {...rest}>
+      <Icon icon={icon} />
+    </UiFab>
   )
 }
 

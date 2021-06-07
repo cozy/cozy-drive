@@ -31,7 +31,7 @@ import {
 } from 'drive/web/modules/selectors'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
-import Fab from 'drive/web/modules/drive/Fab'
+import FabWithMenuContext from 'drive/web/modules/drive/FabWithMenuContext'
 import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
 import { FabContext } from 'drive/lib/FabProvider'
 
@@ -225,7 +225,7 @@ const PublicFolderView = ({
                 canUpload={hasWritePermissions}
                 refreshFolderContent={refreshFolderContent}
               >
-                <Fab noSidebar={true} />
+                <FabWithMenuContext noSidebar={true} />
               </AddMenuProvider>
             )}
             {viewerOpened &&
