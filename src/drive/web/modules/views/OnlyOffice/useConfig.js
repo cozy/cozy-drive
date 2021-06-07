@@ -6,7 +6,6 @@ import { generateWebLink } from 'cozy-client'
 
 import {
   isOnlyOfficeReadOnly,
-  makeConfig,
   shouldBeOpenedOnOtherInstance,
   isOnlyOfficeEnabled
 } from 'drive/web/modules/views/OnlyOffice/helpers'
@@ -63,13 +62,21 @@ const useConfig = () => {
             setIsEditorReadOnly(isOnlyOfficeReadOnly(data))
           }
 
-          setConfig(
-            makeConfig(data, {
-              events: {
-                onAppReady: () => setIsEditorReady(true)
-              }
-            })
-          )
+          const onlyOffice = data.data.attributes.onlyoffice
+          const serverUrl = onlyOffice.url
+          const apiUrl = `${serverUrl}web-apps/apps/api/documents/api.js`
+          const docEditorConfig = {
+            // complete config doc : https://api.onlyoffice.com/editors/advanced
+            document: onlyOffice.document,
+            editorConfig: onlyOffice.editor,
+            token: onlyOffice.token,
+            documentType: onlyOffice.documentType,
+            events: {
+              onAppReady: () => setIsEditorReady(true)
+            }
+          }
+
+          setConfig({ serverUrl, apiUrl, docEditorConfig })
         } else {
           setStatus('error')
         }

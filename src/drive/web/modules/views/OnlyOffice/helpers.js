@@ -20,23 +20,6 @@ export const isOnlyOfficeReadOnly = ({ data }) =>
 export const shouldBeOpenedOnOtherInstance = ({ data }) =>
   data.attributes.sharecode
 
-export const makeConfig = ({ data }, options) => {
-  const onlyOffice = data.attributes.onlyoffice
-  const serverUrl = onlyOffice.url
-  const apiUrl = `${serverUrl}/web-apps/apps/api/documents/api.js`
-
-  // complete config doc : https://api.onlyoffice.com/editors/advanced
-  const docEditorConfig = {
-    document: onlyOffice.document,
-    editorConfig: onlyOffice.editor,
-    token: onlyOffice.token,
-    documentType: onlyOffice.documentType,
-    ...options
-  }
-
-  return { serverUrl, apiUrl, docEditorConfig }
-}
-
 export const makeOnlyOfficeIconByClass = fileClass => {
   const iconByClass = {
     spreadsheet: FileTypeSheetIcon,
