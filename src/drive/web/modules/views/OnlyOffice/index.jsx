@@ -12,6 +12,7 @@ const OnlyOfficeProvider = ({
   fileId,
   isPublic,
   isFromSharing,
+  username,
   isInSharedFolder,
   children
 }) => {
@@ -28,6 +29,7 @@ const OnlyOfficeProvider = ({
         fileId,
         isPublic,
         isFromSharing,
+        username,
         isInSharedFolder,
         isEditorReadOnly,
         setIsEditorReadOnly,
@@ -46,6 +48,7 @@ const OnlyOffice = ({
   params: { fileId },
   isPublic,
   isFromSharing,
+  username,
   isInSharedFolder
 }) => {
   return (
@@ -54,6 +57,7 @@ const OnlyOffice = ({
         fileId={fileId}
         isPublic={isPublic}
         isFromSharing={isFromSharing}
+        username={username}
         isInSharedFolder={isInSharedFolder}
       >
         <Editor />

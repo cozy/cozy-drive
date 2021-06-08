@@ -7,7 +7,8 @@ import { generateWebLink } from 'cozy-client'
 import {
   isOnlyOfficeReadOnly,
   shouldBeOpenedOnOtherInstance,
-  isOnlyOfficeEnabled
+  isOnlyOfficeEnabled,
+  makeName
 } from 'drive/web/modules/views/OnlyOffice/helpers'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
 
@@ -18,6 +19,7 @@ const useConfig = () => {
     setIsEditorReadOnly,
     setIsEditorReady,
     isPublic,
+    username,
     isEditorForcedReadOnly
   } = useContext(OnlyOfficeContext)
   const [config, setConfig] = useState()
@@ -49,12 +51,14 @@ const useConfig = () => {
             instance,
             document_id,
             subdomain,
-            sharecode
+            sharecode,
+            public_name
           } = data.data.attributes
 
           const searchParams = [['sharecode', sharecode]]
           searchParams.push(['isOnlyOfficeDocShared', true])
           searchParams.push(['onlyOfficeDocId', document_id])
+          if (public_name) searchParams.push(['username', public_name])
 
           const link = generateWebLink({
             cozyUrl: `${protocol}://${instance}`,
@@ -70,18 +74,26 @@ const useConfig = () => {
             setIsEditorReadOnly(isOnlyOfficeReadOnly(data))
           }
 
-          const onlyOffice = data.data.attributes.onlyoffice
-          const serverUrl = onlyOffice.url
-          const apiUrl = `${serverUrl}web-apps/apps/api/documents/api.js`
+          const { attributes } = data.data
+          const { onlyoffice, public_name } = attributes
+          const name = makeName({
+            isPublic,
+            username,
+            public_name
+          })
+
+          const serverUrl = onlyoffice.url
+          const apiUrl = `${serverUrl}/web-apps/apps/api/documents/api.js`
           const docEditorConfig = {
             // complete config doc : https://api.onlyoffice.com/editors/advanced
-            document: onlyOffice.document,
+            document: onlyoffice.document,
             editorConfig: {
-              ...onlyOffice.editor,
-              mode: isEditorForcedReadOnly ? 'view' : onlyOffice.editor.mode
+              ...onlyoffice.editor,
+              mode: isEditorForcedReadOnly ? 'view' : onlyoffice.editor.mode,
+              user: { name }
             },
-            token: onlyOffice.token,
-            documentType: onlyOffice.documentType,
+            token: onlyoffice.token,
+            documentType: onlyoffice.documentType,
             events: {
               onAppReady: () => setIsEditorReady(true)
             }
@@ -103,7 +115,8 @@ const useConfig = () => {
       setConfig,
       setIsEditorReady,
       isPublic,
-      isEditorForcedReadOnly
+      isEditorForcedReadOnly,
+      username
     ]
   )
 
