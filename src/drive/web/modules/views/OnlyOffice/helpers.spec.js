@@ -1,4 +1,74 @@
-import { showSharingBanner } from 'drive/web/modules/views/OnlyOffice/helpers'
+import {
+  showSharingBanner,
+  makeUsername
+} from 'drive/web/modules/views/OnlyOffice/helpers'
+
+describe('makeUsername', () => {
+  it('should return undefined public route', () => {
+    expect(
+      makeUsername({
+        isPublic: true,
+        publicNameFromSharing: 'bob',
+        public_name: 'alice'
+      })
+    ).toBe(undefined)
+    expect(
+      makeUsername({
+        isPublic: true,
+        publicNameFromSharing: undefined,
+        public_name: 'alice'
+      })
+    ).toBe(undefined)
+    expect(
+      makeUsername({
+        isPublic: true,
+        publicNameFromSharing: 'bob',
+        public_name: undefined
+      })
+    ).toBe(undefined)
+    expect(
+      makeUsername({
+        isPublic: true,
+        publicNameFromSharing: undefined,
+        public_name: undefined
+      })
+    ).toBe(undefined)
+  })
+
+  it('should return the public name if no sharing recipient', () => {
+    expect(
+      makeUsername({
+        isPublic: false,
+        publicNameFromSharing: undefined,
+        public_name: undefined
+      })
+    ).toBe(undefined)
+    expect(
+      makeUsername({
+        isPublic: false,
+        publicNameFromSharing: undefined,
+        public_name: 'alice'
+      })
+    ).toBe('alice')
+  })
+
+  it('should return the name of the sharing recipient if present', () => {
+    expect(
+      makeUsername({
+        isPublic: false,
+        publicNameFromSharing: 'bob',
+        public_name: 'alice'
+      })
+    ).toBe('bob')
+    expect(
+      makeUsername({
+        isPublic: false,
+        publicNameFromSharing: 'bob',
+        public_name: undefined
+      })
+    ).toBe('bob')
+  })
+})
 
 describe('showSharingBanner', () => {
   describe('for 1 entry in history', () => {
