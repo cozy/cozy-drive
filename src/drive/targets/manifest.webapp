@@ -155,11 +155,6 @@
       "selector": "worker",
       "values": ["sendmail"]
     },
-    "sharings": {
-      "description": "Required to have access to the sharings in realtime",
-      "type": "io.cozy.sharings",
-      "verbs": ["GET"]
-    },
     "konnectors": {
       "description": "Required to display additional information in the viewer for files automatically retrieved by services",
       "type": "io.cozy.konnectors",
