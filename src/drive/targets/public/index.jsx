@@ -66,7 +66,8 @@ const init = async () => {
   const {
     sharecode,
     isOnlyOfficeDocShared,
-    onlyOfficeDocId
+    onlyOfficeDocId,
+    username
   } = getQueryParameter()
 
   const protocol = window.location ? window.location.protocol : 'https:'
@@ -132,6 +133,7 @@ const init = async () => {
                         <OnlyOfficeView
                           {...props}
                           isPublic={true}
+                          username={username}
                           isFromSharing={isOnlyOfficeDocShared}
                         />
                       )}
