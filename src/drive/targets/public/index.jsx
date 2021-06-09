@@ -9,6 +9,7 @@ import 'cozy-ui/transpiled/react/stylesheet.css'
 import { Router, Route, Redirect, hashHistory } from 'react-router'
 import { getQueryParameter } from 'react-cozy-helpers'
 import CozyClient, { models } from 'cozy-client'
+import { Document } from 'cozy-doctypes'
 import { I18n, initTranslation } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import getSharedDocument from 'cozy-sharing/dist/getSharedDocument'
@@ -81,6 +82,10 @@ const init = async () => {
     store: false
   })
   registerClientPlugins(client)
+
+  if (!Document.cozyClient) {
+    Document.registerClient(client)
+  }
 
   configureReporter()
   setCozyUrl(cozyUrl)
