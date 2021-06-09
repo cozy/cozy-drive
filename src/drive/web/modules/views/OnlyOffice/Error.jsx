@@ -5,7 +5,9 @@ import { isQueryLoading, useQuery } from 'cozy-client'
 import Overlay from 'cozy-ui/transpiled/react/Overlay'
 import Viewer from 'cozy-ui/transpiled/react/Viewer'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
+import Oops from 'components/Error/Oops'
 import { showPanel } from 'drive/web/modules/viewer/helpers'
 import PanelContent from 'drive/web/modules/viewer/Panel/PanelContent'
 import FooterContent from 'drive/web/modules/viewer/Footer/FooterContent'
@@ -13,6 +15,7 @@ import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
 import { buildFileByIdQuery } from 'drive/web/modules/queries'
 
 const Error = () => {
+  const { t } = useI18n()
   const { fileId } = useContext(OnlyOfficeContext)
   const handleOnClose = useCallback(() => window.history.back(), [])
 
@@ -27,6 +30,10 @@ const Error = () => {
         size="xxlarge"
       />
     )
+  }
+
+  if (fileResult.fetchStatus === 'failed') {
+    return <Oops title={t('error.open_file')} />
   }
 
   return (
