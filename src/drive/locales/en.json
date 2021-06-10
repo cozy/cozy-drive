@@ -295,6 +295,7 @@
   },
   "error": {
     "open_folder": "Something went wrong when opening the folder.",
+    "open_file": "Something went wrong when opening the file.",
     "button": {
       "reload": "Refresh now"
     },
