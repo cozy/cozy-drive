@@ -24,6 +24,12 @@ jest.mock('drive/web/modules/views/OnlyOffice/Toolbar/helpers', () => ({
 
 const client = createMockClient({})
 client.stackClient.uri = 'http://cozy.tools'
+client.plugins = {
+  realtime: {
+    subscribe: () => {},
+    unsubscribe: () => {}
+  }
+}
 
 const setup = ({
   isEditorReadOnly = false,

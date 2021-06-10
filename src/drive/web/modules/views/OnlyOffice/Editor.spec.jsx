@@ -36,6 +36,12 @@ jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 jest.mock('cozy-flags')
 
 const client = createMockClient({})
+client.plugins = {
+  realtime: {
+    subscribe: () => {},
+    unsubscribe: () => {}
+  }
+}
 
 const setup = ({
   isMobile = false,

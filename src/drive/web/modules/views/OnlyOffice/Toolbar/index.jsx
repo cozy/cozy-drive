@@ -1,7 +1,9 @@
 import React, { useContext, useCallback, useMemo } from 'react'
 
+import { RealTimeQueries } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
+import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 import { useRouter } from 'drive/lib/RouterContext'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
 import { useFileWithPath } from 'drive/web/modules/views/hooks'
@@ -52,6 +54,7 @@ const Toolbar = () => {
 
   return (
     <>
+      <RealTimeQueries doctype={DOCTYPE_FILES} />
       <div className="u-flex u-flex-items-center u-flex-grow-1 u-ellipsis">
         {!isMobile && (
           <>
