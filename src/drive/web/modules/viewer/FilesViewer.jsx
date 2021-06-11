@@ -10,6 +10,7 @@ import Viewer from 'cozy-ui/transpiled/react/Viewer'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import palette from 'cozy-ui/transpiled/react/palette'
 
+import useUpdateDocumentTitle from 'drive/web/modules/views/useUpdateDocumentTitle'
 import { useRouter } from 'drive/lib/RouterContext'
 import Fallback from 'drive/web/modules/viewer/Fallback'
 import {
@@ -49,6 +50,7 @@ const styleStatusBar = switcher => {
  */
 
 const FilesViewer = ({ filesQuery, files, fileId, onClose, onChange }) => {
+  useUpdateDocumentTitle(fileId)
   const [currentFile, setCurrentFile] = useState(null)
   const [fetchingMore, setFetchingMore] = useState(false)
 
