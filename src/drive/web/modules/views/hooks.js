@@ -39,15 +39,22 @@ export const useFilesQueryWithPath = query => {
   }
 }
 
-// TODO: when https://github.com/cozy/cozy-client/pull/947 is merged
-// remove the [] tricks on dirId and Array.isArray(dirId) on parentQuery
-// and use enabled param instead in parentResult query
-export const useFileWithPath = fileId => {
-  const fileQuery = buildFileByIdQuery(fileId)
+// TODO: since https://github.com/cozy/cozy-client/pull/947 is merged
+// remove the tricks on useQueries and use 'enabled' param instead.
+// Be aware for now a query with 'enabled' true remains in 'pending' status
+// so fetchStatus test should be used carefully especially with 'loaded' values
+export const useFileWithPath = docId => {
+  // trick here to get loaded fetchStatus with an undefined docId
+  const fileQuery = docId
+    ? buildFileByIdQuery(docId)
+    : buildParentsByIdsQuery([])
   const fileResult = useQuery(fileQuery.definition, fileQuery.options)
   const resultData = fileResult.data
-  const dirId = resultData ? resultData.dir_id : []
 
+  // trick here to return an empty array and use it in buildParentsByIdsQuery if no dirId
+  const dirId = resultData && resultData.dir_id ? resultData.dir_id : []
+
+  // same trick as for fileQuery
   const parentQuery = Array.isArray(dirId)
     ? buildParentsByIdsQuery(dirId)
     : buildFileByIdQuery(dirId)
