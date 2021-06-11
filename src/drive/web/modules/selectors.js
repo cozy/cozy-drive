@@ -1,8 +1,10 @@
 import maxBy from 'lodash/maxBy'
 import get from 'lodash/get'
+
 import { getDocumentFromState } from 'cozy-client/dist/store'
-import { getMirrorQueryId, parseFolderQueryId } from './queries'
+
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
+import { getMirrorQueryId, parseFolderQueryId } from './queries'
 
 export const getCurrentFolderId = rootState => {
   if (get(rootState, 'router.params.folderId')) {
