@@ -56,6 +56,11 @@ export const useFileWithPath = fileId => {
 
   return {
     ...fileResult,
+    fetchStatus:
+      fileResult.fetchStatus === 'loaded' &&
+      (parentResult && parentResult.fetchStatus === 'loaded')
+        ? 'loaded'
+        : 'loading',
     data: {
       ...resultData,
       displayedPath: parentData ? parentData.path : undefined
