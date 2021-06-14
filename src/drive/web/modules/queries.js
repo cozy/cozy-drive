@@ -118,13 +118,14 @@ const buildParentsByIdsQuery = ids => ({
   }
 })
 
-const buildSharingsQuery = ids => ({
+const buildSharingsQuery = ({ ids, enabled = true }) => ({
   definition: () =>
     Q('io.cozy.files')
       .getByIds(ids)
       .sortBy([{ type: 'asc' }, { name: 'asc' }]),
   options: {
     as: `sharings-by-ids-${ids.join('')}`,
+    enabled,
     fetchPolicy: defaultFetchPolicy
   }
 })
