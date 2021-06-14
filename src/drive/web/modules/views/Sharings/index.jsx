@@ -1,7 +1,7 @@
-import React, { useCallback, useContext } from 'react'
+import React, { useContext, useCallback, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { useClient } from 'cozy-client'
+import { useClient, hasQueryBeenLoaded } from 'cozy-client'
 import { SharingContext } from 'cozy-sharing'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
@@ -32,6 +32,7 @@ import {
 import { useFilesQueryWithPath } from 'drive/web/modules/views/hooks'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
+import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlaceholder'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
@@ -40,6 +41,7 @@ export const SharingsView = ({
   router,
   location,
   sharedDocumentIds = [],
+  allLoaded = true,
   children
 }) => {
   const { t } = useI18n()
@@ -57,7 +59,10 @@ export const SharingsView = ({
     sharedDocumentIds
   })
 
-  const query = buildSharingsQuery(sharedDocumentIds)
+  const query = useMemo(
+    () => buildSharingsQuery({ ids: sharedDocumentIds, enabled: allLoaded }),
+    [sharedDocumentIds.length, allLoaded]
+  )
   const result = useFilesQueryWithPath(query)
 
   const navigateToFolder = useCallback(
@@ -101,16 +106,22 @@ export const SharingsView = ({
         <Breadcrumb path={[{ name: t('breadcrumb.title_sharings') }]} />
         <Toolbar canUpload={false} canCreateFolder={false} />
       </FolderViewHeader>
-      <FolderViewBody
-        navigateToFolder={navigateToFolder}
-        navigateToFile={navigateToFile}
-        actions={actions}
-        queryResults={[result]}
-        canSort={false}
-        withFilePath={true}
-        extraColumns={extraColumns}
-      />
-      {children}
+      {!allLoaded && !hasQueryBeenLoaded(result) ? (
+        <FileListRowsPlaceholder />
+      ) : (
+        <>
+          <FolderViewBody
+            navigateToFolder={navigateToFolder}
+            navigateToFile={navigateToFile}
+            actions={actions}
+            queryResults={[result]}
+            canSort={false}
+            withFilePath={true}
+            extraColumns={extraColumns}
+          />
+          {children}
+        </>
+      )}
     </FolderView>
   )
 }

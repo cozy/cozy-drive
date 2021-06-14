@@ -17,7 +17,7 @@ const FilesViewerWithQuery = ({
   currentFolderId,
   ...props
 }) => {
-  const filesQuery = buildSharingsQuery(sharedDocumentIds)
+  const filesQuery = buildSharingsQuery({ ids: sharedDocumentIds })
   const results = useQuery(filesQuery.definition, filesQuery.options)
   const { router } = useRouter()
   if (results.data) {

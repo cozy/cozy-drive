@@ -4,8 +4,12 @@ import SharedDocuments from 'cozy-sharing/dist/components/SharedDocuments'
 const withSharedDocumentIds = BaseComponent => {
   const WrapperComponent = props => (
     <SharedDocuments>
-      {({ sharedDocuments }) => (
-        <BaseComponent {...props} sharedDocumentIds={sharedDocuments} />
+      {({ sharedDocuments, allLoaded }) => (
+        <BaseComponent
+          {...props}
+          sharedDocumentIds={sharedDocuments}
+          allLoaded={allLoaded}
+        />
       )}
     </SharedDocuments>
   )
