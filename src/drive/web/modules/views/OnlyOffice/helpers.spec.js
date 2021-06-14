@@ -4,41 +4,75 @@ import {
 } from 'drive/web/modules/views/OnlyOffice/helpers'
 
 describe('makeName', () => {
-  it('should return undefined public route', () => {
-    expect(
-      makeName({
-        isPublic: true,
-        username: 'bob',
-        public_name: 'alice'
-      })
-    ).toBe(undefined)
-    expect(
-      makeName({
-        isPublic: true,
-        username: undefined,
-        public_name: 'alice'
-      })
-    ).toBe(undefined)
-    expect(
-      makeName({
-        isPublic: true,
-        username: 'bob',
-        public_name: undefined
-      })
-    ).toBe(undefined)
-    expect(
-      makeName({
-        isPublic: true,
-        username: undefined,
-        public_name: undefined
-      })
-    ).toBe(undefined)
+  describe('for public route', () => {
+    it('should return undefined if it is not an accepted document from cozy to cozy sharing', () => {
+      expect(
+        makeName({
+          isPublic: true,
+          isFromSharing: false,
+          username: 'bob',
+          public_name: 'alice'
+        })
+      ).toBe(undefined)
+      expect(
+        makeName({
+          isPublic: true,
+          isFromSharing: false,
+          username: undefined,
+          public_name: 'alice'
+        })
+      ).toBe(undefined)
+      expect(
+        makeName({
+          isPublic: true,
+          isFromSharing: false,
+          username: 'bob',
+          public_name: undefined
+        })
+      ).toBe(undefined)
+      expect(
+        makeName({
+          isPublic: true,
+          isFromSharing: false,
+          username: undefined,
+          public_name: undefined
+        })
+      ).toBe(undefined)
+    })
+
+    it('should return the name of the sharing recipient for a document shared from cozy to cozy', () => {
+      expect(
+        makeName({
+          isPublic: true,
+          isFromSharing: true,
+          username: 'bob',
+          public_name: 'alice'
+        })
+      ).toBe('bob')
+      expect(
+        makeName({
+          isPublic: true,
+          isFromSharing: true,
+          username: 'bob',
+          public_name: undefined
+        })
+      ).toBe('bob')
+      expect(
+        makeName({
+          isPublic: true,
+          isFromSharing: true,
+          username: undefined,
+          public_name: undefined
+        })
+      ).toBe(undefined)
+    })
   })
 
   it('should return the public name if no sharing recipient', () => {
     expect(
       makeName({
         isPublic: false,
+        isFromSharing: false,
         username: undefined,
         public_name: undefined
       })
@@ -46,6 +80,7 @@ describe('makeName', () => {
     expect(
       makeName({
         isPublic: false,
+        isFromSharing: false,
         username: undefined,
         public_name: 'alice'
       })
@@ -56,6 +91,7 @@ describe('makeName', () => {
     expect(
       makeName({
         isPublic: false,
+        isFromSharing: false,
         username: 'bob',
         public_name: 'alice'
       })
@@ -63,6 +99,7 @@ describe('makeName', () => {
     expect(
       makeName({
         isPublic: false,
+        isFromSharing: false,
         username: 'bob',
         public_name: undefined
       })

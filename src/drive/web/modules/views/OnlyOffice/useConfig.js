@@ -20,7 +20,8 @@ const useConfig = () => {
     setIsEditorReady,
     isPublic,
     username,
-    isEditorForcedReadOnly
+    isEditorForcedReadOnly,
+    isFromSharing
   } = useContext(OnlyOfficeContext)
   const [config, setConfig] = useState()
   const [status, setStatus] = useState('loading')
@@ -78,6 +79,7 @@ const useConfig = () => {
           const { onlyoffice, public_name } = attributes
           const name = makeName({
             isPublic,
+            isFromSharing,
             username,
             public_name
           })
@@ -116,7 +118,8 @@ const useConfig = () => {
       setIsEditorReady,
       isPublic,
       isEditorForcedReadOnly,
-      username
+      username,
+      isFromSharing
     ]
   )
 
