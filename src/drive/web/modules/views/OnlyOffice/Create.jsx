@@ -17,7 +17,7 @@ const Create = ({ params: { folderId, fileClass } }) => {
   }
 
   if (status === 'loaded' && fileId) {
-    return router.push(`/onlyOffice/${fileId}/fromCreate`)
+    return router.push(`/onlyoffice/${fileId}/fromCreate`)
   }
 
   return (

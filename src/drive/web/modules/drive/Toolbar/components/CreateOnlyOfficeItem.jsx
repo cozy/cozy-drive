@@ -18,7 +18,7 @@ const CreateOnlyOfficeItem = ({ fileClass }) => {
   ])
 
   const handleClick = useCallback(
-    () => router.push(`/onlyOffice/create/${folderId}/${fileClass}`),
+    () => router.push(`/onlyoffice/create/${folderId}/${fileClass}`),
     [router, fileClass, folderId]
   )
 
