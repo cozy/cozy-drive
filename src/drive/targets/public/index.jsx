@@ -24,12 +24,13 @@ import LightFileViewer from 'drive/web/modules/public/LightFileViewer'
 import FileHistory from 'components/FileHistory'
 import ErrorShare from 'components/Error/ErrorShare'
 import OnlyOfficeView from 'drive/web/modules/views/OnlyOffice'
+import OnlyOfficeCreateView from 'drive/web/modules/views/OnlyOffice/Create'
+import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
 import appMetadata from 'drive/appMetadata'
 import logger from 'lib/logger'
 import App from 'components/App/App'
 import ExternalRedirect from 'drive/web/modules/navigation/ExternalRedirect'
 import StyledApp from 'drive/web/modules/drive/StyledApp'
-import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
 
 const initCozyBar = (data, client) => {
   if (
@@ -127,58 +128,69 @@ const init = async () => {
       initCozyBar(dataset)
       render(
         <App lang={lang} polyglot={polyglot} client={client} store={store}>
-          {isFile ? (
-            <Router history={hashHistory}>
-              <Route component={PublicLayout}>
-                {isOnlyOfficeEnabled() && (
-                  <>
-                    <Route
-                      path="onlyoffice/:fileId"
-                      component={props => (
-                        <OnlyOfficeView
-                          {...props}
-                          isPublic={true}
-                          username={username}
-                          isFromSharing={isOnlyOfficeDocShared}
-                        />
-                      )}
-                    />
-                    {models.file.shouldBeOpenedByOnlyOffice(data) && (
-                      <Redirect from="/" to={`onlyoffice/${data.id}`} />
-                    )}
-                  </>
-                )}
-                <Route
-                  path="/"
-                  component={() => <LightFileViewer files={[data]} />}
-                />
-              </Route>
-            </Router>
-          ) : (
-            <Router history={hashHistory}>
-              <Route component={PublicLayout}>
-                <Redirect from="/files/:folderId" to="/folder/:folderId" />
-                <Route path="folder(/:folderId)" component={PublicFolderView}>
-                  <Route path="file/:fileId/revision" component={FileHistory} />
-                </Route>
-                {isOnlyOfficeEnabled() && (
-                  // Used to open an only office file inside a shared folder
+          <Router history={hashHistory}>
+            <Route component={PublicLayout}>
+              {isOnlyOfficeEnabled() && (
+                <>
                   <Route
                     path="onlyoffice/:fileId"
                     component={props => (
                       <OnlyOfficeView
                         {...props}
                         isPublic={true}
-                        isInSharedFolder={true}
+                        username={username}
+                        isFromSharing={isOnlyOfficeDocShared}
+                        isInSharedFolder={!isFile}
                       />
                     )}
                   />
-                )}
-              </Route>
-              <Route path="external/:fileId" component={ExternalRedirect} />
-              <Redirect from="/*" to={`folder/${sharedDocumentId}`} />
-            </Router>
-          )}
+                  <Route
+                    path="onlyoffice/:fileId/fromCreate"
+                    component={props => (
+                      <OnlyOfficeView
+                        {...props}
+                        isPublic={true}
+                        isInSharedFolder={!isFile}
+                      />
+                    )}
+                  />
+                  <Route
+                    path="onlyoffice/create/:folderId/:fileClass"
+                    component={OnlyOfficeCreateView}
+                  />
+                  {models.file.shouldBeOpenedByOnlyOffice(data) && (
+                    <Redirect from="/" to={`onlyoffice/${data.id}`} />
+                  )}
+                </>
+              )}
+
+              {isFile && (
+                <Route
+                  path="/"
+                  component={() => <LightFileViewer files={[data]} />}
+                />
+              )}
+
+              {!isFile && (
+                <>
+                  <Redirect from="/files/:folderId" to="/folder/:folderId" />
+                  <Route path="folder(/:folderId)" component={PublicFolderView}>
+                    <Route
+                      path="file/:fileId/revision"
+                      component={FileHistory}
+                    />
+                  </Route>
+                </>
+              )}
+            </Route>
+
+            {!isFile && (
+              <>
+                <Route path="external/:fileId" component={ExternalRedirect} />
+                <Redirect from="/*" to={`folder/${sharedDocumentId}`} />
+              </>
+            )}
+          </Router>
         </App>,
         root
       )
