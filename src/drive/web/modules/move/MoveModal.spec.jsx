@@ -54,7 +54,8 @@ describe('MoveModal component', () => {
       entries,
       onClose: onCloseSpy,
       sharingState,
-      t: tSpy
+      t: tSpy,
+      classes: { paper: {} }
     }
     return shallow(<MoveModal {...props} />)
   }
