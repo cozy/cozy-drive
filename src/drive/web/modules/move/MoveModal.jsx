@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+import { withStyles } from '@material-ui/core/styles'
 
 import { Query, cancelable, withClient, Q } from 'cozy-client'
 import { CozyFile } from 'models'
@@ -27,6 +28,24 @@ import {
   buildMoveOrImportQuery,
   buildOnlyFolderQuery
 } from 'drive/web/modules/queries'
+
+const styles = theme => ({
+  paper: {
+    height: '100%',
+    '& .MuiDialogContent-root': {
+      padding: '0'
+    },
+    '& .MuiDialogTitle-root': {
+      padding: '0',
+      [theme.breakpoints.down('sm')]: {
+        // back button
+        '& .MuiButtonBase-root': {
+          display: 'none'
+        }
+      }
+    }
+  }
+})
 
 export class MoveModal extends React.Component {
   constructor(props) {
@@ -154,7 +173,7 @@ export class MoveModal extends React.Component {
   }
 
   render() {
-    const { onClose, entries } = this.props
+    const { onClose, entries, classes } = this.props
     const { folderId, isMoveInProgress } = this.state
     const contentQuery = buildMoveOrImportQuery(folderId)
     const folderQuery = buildOnlyFolderQuery(folderId)
@@ -164,7 +183,9 @@ export class MoveModal extends React.Component {
         open
         onClose={onClose}
         size="large"
-        classes={{ paper: 'u-h-100' }}
+        classes={{
+          paper: classes.paper
+        }}
         title={
           <>
             <Header entries={entries} />
@@ -245,5 +266,6 @@ export default compose(
   connect(mapStateToProps),
   translate(),
   withClient,
-  withSharingState
+  withSharingState,
+  withStyles(styles)
 )(MoveModal)
