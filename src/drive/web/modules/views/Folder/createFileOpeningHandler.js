@@ -14,8 +14,8 @@ const createFileOpeningHandler = ({
   replaceCurrentUrl,
   openInNewTab,
   routeTo
-}) => async ({ event, file, availableOffline }) => {
-  if (availableOffline) {
+}) => async ({ event, file, isAvailableOffline }) => {
+  if (isAvailableOffline) {
     return dispatch(openLocalFile(file))
   }
 
