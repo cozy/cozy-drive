@@ -18,16 +18,16 @@ import { hashHistory } from 'react-router'
 
 const setupApp = memoize(() => {
   const root = document.querySelector('[role=application]')
-  const data = root.dataset
+  const data = JSON.parse(root.dataset.cozy)
 
   const protocol = window.location ? window.location.protocol : 'https:'
-  const cozyUrl = `${protocol}//${data.cozyDomain}`
+  const cozyUrl = `${protocol}//${data.domain}`
 
   configureReporter()
   setCozyUrl(cozyUrl)
   const client = new CozyClient({
     uri: cozyUrl,
-    token: data.cozyToken,
+    token: data.token,
     appMetadata,
     schema,
     store: false
@@ -36,7 +36,7 @@ const setupApp = memoize(() => {
   if (!Document.cozyClient) {
     Document.registerClient(client)
   }
-  const locale = data.cozyLocale
+  const locale = data.locale
   registerClientPlugins(client)
   const polyglot = initTranslation(locale, lang =>
     require(`drive/locales/${lang}`)
@@ -51,15 +51,15 @@ const setupApp = memoize(() => {
 
   cozy.client.init({
     cozyURL: cozyUrl,
-    token: data.cozyToken
+    token: data.token
   })
 
   cozy.bar.init({
-    appName: data.cozyAppName,
-    appEditor: data.cozyAppEditor,
+    appName: data.app.name,
+    appEditor: data.app.editor,
     cozyClient: client,
-    iconPath: data.cozyIconPath,
-    lang: data.cozyLocale,
+    iconPath: data.app.icon,
+    lang: data.locale,
     replaceTitleOnMobile: false
   })
 

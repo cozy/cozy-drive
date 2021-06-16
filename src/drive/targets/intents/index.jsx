@@ -17,30 +17,30 @@ import IntentHandler from 'drive/web/modules/services'
 
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.getElementById('main')
-  const data = root.dataset
+  const data = JSON.parse(root.dataset.cozy)
 
   const protocol = window.location ? window.location.protocol : 'https:'
-  const cozyUrl = `${protocol}//${data.cozyDomain}`
+  const cozyUrl = `${protocol}//${data.domain}`
 
   const { intent } = getQueryParameter()
 
   const client = new CozyClient({
     uri: cozyUrl,
-    token: data.cozyToken,
+    token: data.token,
     appMetadata,
     schema
   })
 
   cozy.client.init({
     cozyURL: cozyUrl,
-    token: data.cozyToken
+    token: data.token
   })
   registerClientPlugins(client)
 
   render(
     <DriveProvider
       client={client}
-      lang={data.cozyLocale}
+      lang={data.locale}
       dictRequire={lang => require(`drive/locales/${lang}`)}
     >
       <IntentHandler intentId={intent} />

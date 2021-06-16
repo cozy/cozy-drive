@@ -33,18 +33,13 @@ import ExternalRedirect from 'drive/web/modules/navigation/ExternalRedirect'
 import StyledApp from 'drive/web/modules/drive/StyledApp'
 
 const initCozyBar = (data, client) => {
-  if (
-    data.cozyAppName &&
-    data.cozyAppEditor &&
-    data.cozyIconPath &&
-    data.cozyLocale
-  ) {
+  if (data.app.name && data.app.editor && data.app.icon && data.locale) {
     cozy.bar.init({
-      appName: data.cozyAppName,
-      appEditor: data.cozyAppEditor,
+      appName: data.app.name,
+      appEditor: data.app.editor,
       cozyClient: client,
-      iconPath: data.cozyIconPath,
-      lang: data.cozyLocale,
+      iconPath: data.app.icon,
+      lang: data.locale,
       replaceTitleOnMobile: true,
       isPublic: true
     })
@@ -64,7 +59,7 @@ const renderError = (lang, root) =>
 const init = async () => {
   const lang = document.documentElement.getAttribute('lang') || 'en'
   const root = document.querySelector('[role=application]')
-  const dataset = root.dataset
+  const dataset = JSON.parse(root.dataset.cozy)
   const {
     sharecode,
     isOnlyOfficeDocShared,

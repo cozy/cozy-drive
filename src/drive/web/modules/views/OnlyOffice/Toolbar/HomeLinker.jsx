@@ -28,7 +28,7 @@ const HomeLinker = ({ children }) => {
   const homeHref = generateWebLink({
     cozyUrl: client.getStackClient().uri,
     slug: homeSlug,
-    subDomainType: client.getInstanceOptions().cozySubdomainType
+    subDomainType: client.getInstanceOptions().subdomain
   })
 
   return (
