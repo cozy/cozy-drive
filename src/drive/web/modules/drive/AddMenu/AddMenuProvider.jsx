@@ -16,6 +16,7 @@ import {
   toggleMenu
 } from 'drive/web/modules/drive/Toolbar/components/MoreMenu'
 import AddMenu from 'drive/web/modules/drive/AddMenu/AddMenu'
+import ScanWrapper from 'drive/web/modules/drive/Toolbar/components/ScanWrapper'
 
 export const AddMenuContext = createContext()
 
@@ -61,15 +62,17 @@ const AddMenuProvider = ({
       }}
     >
       {children}
-      {menuIsVisible && (
-        <AddMenu
-          anchorRef={anchorRef}
-          handleClose={handleClose}
-          canCreateFolder={canCreateFolder}
-          canUpload={canUpload}
-          refreshFolderContent={refreshFolderContent}
-        />
-      )}
+      <ScanWrapper>
+        {menuIsVisible && (
+          <AddMenu
+            anchorRef={anchorRef}
+            handleClose={handleClose}
+            canCreateFolder={canCreateFolder}
+            canUpload={canUpload}
+            refreshFolderContent={refreshFolderContent}
+          />
+        )}
+      </ScanWrapper>
     </AddMenuContext.Provider>
   )
 }
