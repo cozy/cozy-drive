@@ -35,13 +35,13 @@ const loggerMiddleware = createLogger()
 
 const setupAppContext = memoize(() => {
   const root = document.querySelector('[role=application]')
-  const data = root.dataset
+  const data = JSON.parse(root.dataset.cozy)
   const lang = document.documentElement.getAttribute('lang') || 'en'
   const protocol = window.location ? window.location.protocol : 'https:'
   const cozyUrl = `${protocol}//${data.cozyDomain}`
   const client = new CozyClient({
     uri: cozyUrl,
-    token: data.cozyToken,
+    token: data.token,
     appMetadata,
     schema: doctypes,
     store: false
@@ -50,7 +50,7 @@ const setupAppContext = memoize(() => {
   // We still need to init cozy-client-js for the Uploader
   cozy.client.init({
     cozyURL: cozyUrl,
-    token: data.cozyToken
+    token: data.token
   })
 
   configureReporter()
@@ -74,12 +74,12 @@ const setupAppContext = memoize(() => {
     composeEnhancers(applyMiddleware.apply(this, middlewares))
   )
   client.setStore(store)
-  const locale = data.cozyLocale
+  const locale = data.locale
   cozy.bar.init({
-    appName: data.cozyAppName,
-    appEditor: data.cozyAppEditor,
+    appName: data.app.name,
+    appEditor: data.app.editor,
     cozyClient: client,
-    iconPath: data.cozyIconPath,
+    iconPath: data.app.icon,
     lang: lang,
     replaceTitleOnMobile: true
   })

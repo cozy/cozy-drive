@@ -33,10 +33,10 @@ document.addEventListener('DOMContentLoaded', init)
 async function init() {
   const lang = document.documentElement.getAttribute('lang') || 'en'
   const root = document.querySelector('[role=application]')
-  const data = root.dataset
+  const data = JSON.parse(root.dataset.cozy)
   const { sharecode } = getQueryParameter()
   const protocol = window.location ? window.location.protocol : 'https:'
-  const cozyUrl = `${protocol}//${data.cozyDomain}`
+  const cozyUrl = `${protocol}//${data.domain}`
   const client = new CozyClient({
     uri: cozyUrl,
     token: sharecode,
@@ -58,18 +58,13 @@ async function init() {
 
   let app = null
   client.setStore(store)
-  if (
-    data.cozyAppName &&
-    data.cozyAppEditor &&
-    data.cozyIconPath &&
-    data.cozyLocale
-  ) {
+  if (data.app.name && data.app.editor && data.app.icon && data.locale) {
     cozy.bar.init({
-      appName: data.cozyAppName,
-      appEditor: data.cozyAppEditor,
+      appName: data.app.name,
+      appEditor: data.app.editor,
       cozyClient: client,
-      iconPath: data.cozyIconPath,
-      lang: data.cozyLocale,
+      iconPath: data.app.icon,
+      lang: data.locale,
       replaceTitleOnMobile: true,
       isPublic: true
     })
