@@ -22,7 +22,7 @@ jest.mock('drive/lib/reporter', () => ({
 logger.warn = jest.fn()
 
 jest.mock('cozy-scanner/dist/ScannerUpload', () => ({
-  ...require.requireActual('cozy-scanner/dist/ScannerUpload'),
+  ...jest.requireActual('cozy-scanner/dist/ScannerUpload'),
   doUpload: jest.fn()
 }))
 
