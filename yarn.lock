@@ -5498,10 +5498,10 @@ cozy-scripts@5.1.1:
     webpack-dev-server "3.10.3"
     webpack-merge "4.2.2"
 
-cozy-sharing@3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-3.4.0.tgz#8e0c596d5bc74d0fe439e8e850d5431858997537"
-  integrity sha512-8FuMUdBmnpKq9c+DmywT6ipUHBiDgkM+OiF8KMpwcz9DgH48TFzfbwm5QcKX8kz7/JSROjNqDEy0eA8Wff/Z3g==
+cozy-sharing@3.4.2:
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-3.4.2.tgz#cfb07aa25fd36b70c01e919fc495b09119b6bea6"
+  integrity sha512-isTPwxdDMgu43CgSDLnMGPLVxYZAnfuZ+dhkAGojvbcWUlvWPfDoSmuInZJx5aH3B6rFAzzNFx8gC/V3z9LW5A==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     classnames "^2.2.6"
