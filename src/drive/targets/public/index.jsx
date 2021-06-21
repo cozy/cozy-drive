@@ -120,7 +120,7 @@ const init = async () => {
         Alerter.error('alert.offline')
       }
     } else {
-      initCozyBar(dataset)
+      initCozyBar(dataset, client)
       render(
         <App lang={lang} polyglot={polyglot} client={client} store={store}>
           <Router history={hashHistory}>
