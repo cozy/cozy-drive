@@ -175,16 +175,12 @@ const init = async () => {
                       component={FileHistory}
                     />
                   </Route>
+
+                  <Route path="external/:fileId" component={ExternalRedirect} />
+                  <Redirect from="/*" to={`folder/${sharedDocumentId}`} />
                 </>
               )}
             </Route>
-
-            {!isFile && (
-              <>
-                <Route path="external/:fileId" component={ExternalRedirect} />
-                <Redirect from="/*" to={`folder/${sharedDocumentId}`} />
-              </>
-            )}
           </Router>
         </App>,
         root
