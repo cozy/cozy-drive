@@ -38,7 +38,7 @@ const setupAppContext = memoize(() => {
   const data = JSON.parse(root.dataset.cozy)
   const lang = document.documentElement.getAttribute('lang') || 'en'
   const protocol = window.location ? window.location.protocol : 'https:'
-  const cozyUrl = `${protocol}//${data.cozyDomain}`
+  const cozyUrl = `${protocol}//${data.domain}`
   const client = new CozyClient({
     uri: cozyUrl,
     token: data.token,
