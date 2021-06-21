@@ -106,7 +106,7 @@ export const SharingsView = ({
         <Breadcrumb path={[{ name: t('breadcrumb.title_sharings') }]} />
         <Toolbar canUpload={false} canCreateFolder={false} />
       </FolderViewHeader>
-      {!allLoaded && !hasQueryBeenLoaded(result) ? (
+      {!allLoaded || !hasQueryBeenLoaded(result) ? (
         <FileListRowsPlaceholder />
       ) : (
         <>
