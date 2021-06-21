@@ -68,7 +68,7 @@ const init = async () => {
   } = getQueryParameter()
 
   const protocol = window.location ? window.location.protocol : 'https:'
-  const cozyUrl = `${protocol}//${dataset.cozyDomain}`
+  const cozyUrl = `${protocol}//${dataset.domain}`
 
   const client = new CozyClient({
     uri: cozyUrl,
@@ -91,7 +91,7 @@ const init = async () => {
     token: sharecode
   })
 
-  const polyglot = initTranslation(dataset.cozyLocale, lang =>
+  const polyglot = initTranslation(dataset.locale, lang =>
     require(`drive/locales/${lang}`)
   )
 
