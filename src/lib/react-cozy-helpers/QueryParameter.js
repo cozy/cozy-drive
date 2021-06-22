@@ -1,5 +1,5 @@
 const arrToObj = (obj = {}, [key, val = true]) => {
-  obj[key] = val
+  obj[key] = decodeURIComponent(val)
   return obj
 }
 
