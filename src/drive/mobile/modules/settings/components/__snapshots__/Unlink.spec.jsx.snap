@@ -12,11 +12,6 @@ exports[`Unlink should render the Component 1`] = `
       },
     }
   }
-  clientSettings={
-    Object {
-      "data": "foo",
-    }
-  }
   t={
     [MockFunction] {
       "calls": Array [

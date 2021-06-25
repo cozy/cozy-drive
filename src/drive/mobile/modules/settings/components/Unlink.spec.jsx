@@ -18,17 +18,7 @@ describe('Unlink', () => {
 
   const unlink = jest.fn()
   const t = jest.fn(s => s)
-  const clientSettings = {
-    data: 'foo'
-  }
-  const comp = mount(
-    <Unlink
-      t={t}
-      unlink={unlink}
-      clientSettings={clientSettings}
-      client={client}
-    />
-  )
+  const comp = mount(<Unlink t={t} unlink={unlink} client={client} />)
 
   afterEach(() => {
     jest.restoreAllMocks()
@@ -42,6 +32,6 @@ describe('Unlink', () => {
     const button = comp.find('Button')
     button.prop('onClick')()
 
-    expect(unlink).toHaveBeenCalledWith(client, clientSettings)
+    expect(unlink).toHaveBeenCalledWith(client)
   })
 })
