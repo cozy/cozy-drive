@@ -2,7 +2,9 @@ import manifest from 'drive/targets/manifest.webapp'
 
 const appMetadata = {
   slug: manifest.slug,
-  version: manifest.version
+  version: manifest.version,
+  name: manifest.name,
+  prefix: manifest.name_prefix
 }
 
 export default appMetadata
