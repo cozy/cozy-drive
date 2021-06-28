@@ -1,22 +1,22 @@
-import React, { Component } from 'react'
-import compose from 'lodash/flowRight'
+import React, { useCallback, useEffect, useState, useMemo } from 'react'
 import { RemoveScroll } from 'react-remove-scroll'
-import { withRouter } from 'react-router'
 
-import { withClient, Q } from 'cozy-client'
+import { Q, useClient } from 'cozy-client'
 import { isIOSApp } from 'cozy-device-helper'
 import logger from 'lib/logger'
 import Overlay from 'cozy-ui/transpiled/react/Overlay'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import Viewer from 'cozy-ui/transpiled/react/Viewer'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import palette from 'cozy-ui/transpiled/react/palette'
 
+import { useRouter } from 'drive/lib/RouterContext'
 import Fallback from 'drive/web/modules/viewer/Fallback'
 import {
   isOnlyOfficeEnabled,
   makeOnlyOfficeFileRoute
 } from 'drive/web/modules/views/OnlyOffice/helpers'
+
 import { showPanel } from './helpers'
 import PanelContent from './Panel/PanelContent'
 import FooterContent from './Footer/FooterContent'
@@ -27,6 +27,18 @@ export const FilesViewerLoading = () => (
   </Overlay>
 )
 
+const styleStatusBar = switcher => {
+  if (window.StatusBar && isIOSApp()) {
+    if (switcher) {
+      window.StatusBar.backgroundColorByHexString('#32363F')
+      window.StatusBar.styleLightContent()
+    } else {
+      window.StatusBar.backgroundColorByHexString('#FFFFFF')
+      window.StatusBar.styleDefault()
+    }
+  }
+}
+
 /**
  * Shows a set of files through cozy-ui's Viewer
  *
@@ -35,140 +47,153 @@ export const FilesViewerLoading = () => (
  * - If the file to show is not present in the query results, will call
  *   fetchMore() on the query
  */
-class FilesViewer extends Component {
-  state = {
-    currentFile: null
-  }
 
-  _mounted = false
-  componentWillMount() {
-    if (window.StatusBar && isIOSApp()) {
-      window.StatusBar.backgroundColorByHexString('#32363F')
-      window.StatusBar.styleLightContent()
+const FilesViewer = ({ filesQuery, files, fileId, onClose, onChange }) => {
+  const [currentFile, setCurrentFile] = useState(null)
+  const [fetchingMore, setFetchingMore] = useState(false)
+
+  const client = useClient()
+  const { t } = useI18n()
+  const { router } = useRouter()
+
+  const handleOnClose = useCallback(
+    () => {
+      if (onClose) {
+        onClose()
+      }
+    },
+    [onClose]
+  )
+
+  const handleOnChange = useCallback(
+    nextFile => {
+      if (onChange) {
+        onChange(nextFile.id)
+      }
+    },
+    [onChange]
+  )
+
+  const getCurrentIndex = useCallback(
+    () => files.findIndex(f => f.id === fileId),
+    [files, fileId]
+  )
+
+  useEffect(() => {
+    styleStatusBar(true)
+
+    return () => {
+      styleStatusBar(false)
     }
-  }
-  componentDidMount() {
-    this._mounted = true
-    this.fetchFileIfNecessary()
-    this.fetchMoreIfNecessary()
-  }
+  }, [])
 
-  componentWillReceiveProps() {
-    this.fetchMoreIfNecessary()
-  }
+  useEffect(() => {
+    let isMounted = true
 
-  componentWillUnmount() {
-    this._mounted = false
-    if (window.StatusBar && isIOSApp()) {
-      window.StatusBar.backgroundColorByHexString('#FFFFFF')
-      window.StatusBar.styleDefault()
-    }
-  }
+    // If we can't find the file in the loaded files, that's probably because the user
+    // is trying to open a direct link to a file that wasn't in the first 50 files of
+    // the containing folder (it comes from a fetchMore...) ; we load the file attributes
+    // directly as a contingency measure
+    const fetchFileIfNecessary = async () => {
+      if (getCurrentIndex() !== -1) return
+      if (currentFile && isMounted) {
+        setCurrentFile(null)
+      }
 
-  // If we can't find the file in the loaded files, that's probably because the user
-  // is trying to open a direct link to a file that wasn't in the first 50 files of
-  // the containing folder (it comes from a fetchMore...) ; we load the file attributes
-  // directly as a contingency measure
-  async fetchFileIfNecessary() {
-    if (this.getCurrentIndex() !== -1) return
-    if (this.state.currentFile && this._mounted) {
-      this.setState({ currentFile: null })
+      try {
+        const { data } = await client.query(Q('io.cozy.files').getById(fileId))
+        isMounted && setCurrentFile(data)
+      } catch (e) {
+        logger.warn("can't find the file")
+        handleOnClose()
+      }
     }
 
-    const { fileId, client } = this.props
-    try {
-      const { data } = await client.query(Q('io.cozy.files').getById(fileId))
-      this.setState({
-        currentFile: data
-      })
-    } catch (e) {
-      logger.warn("can't find the file")
-      this.onClose()
-    }
-  }
+    fetchFileIfNecessary()
 
-  async fetchMoreIfNecessary() {
-    if (this.fetchingMore) {
-      return
+    return () => {
+      isMounted = false
     }
-    this.fetchingMore = true
-    try {
-      const { files, fileId, filesQuery } = this.props
-      const fileCount = filesQuery.count
+  }, [])
+
+  useEffect(
+    () => {
+      let isMounted = true
+
       // If we get close of the last file fetched, but we know there are more in the folder
       // (it shouldn't happen in /recent), we fetch more files
-      const currentIndex = files.findIndex(f => f.id === fileId)
+      const fetchMoreIfNecessary = async () => {
+        if (fetchingMore) return
 
-      if (files.length !== fileCount && files.length - currentIndex <= 5) {
-        await filesQuery.fetchMore()
+        setFetchingMore(true)
+        try {
+          const fileCount = filesQuery.count
+
+          const currentIndex = files.findIndex(f => f.id === fileId)
+
+          if (
+            files.length !== fileCount &&
+            files.length - currentIndex <= 5 &&
+            isMounted
+          ) {
+            await filesQuery.fetchMore()
+          }
+        } finally {
+          setFetchingMore(false)
+        }
       }
-    } finally {
-      this.fetchingMore = false
-    }
+
+      fetchMoreIfNecessary()
+
+      return () => {
+        isMounted = false
+      }
+    },
+    [fetchingMore, filesQuery.count, files.length, fileId]
+  )
+
+  const currentIndex = useMemo(() => getCurrentIndex(), [getCurrentIndex])
+  const hasCurrentIndex = useMemo(() => currentIndex != -1, [currentIndex])
+  const viewerFiles = useMemo(() => (hasCurrentIndex ? files : [currentFile]), [
+    hasCurrentIndex,
+    files,
+    currentFile
+  ])
+  const viewerIndex = useMemo(() => (hasCurrentIndex ? currentIndex : 0), [
+    hasCurrentIndex,
+    currentIndex
+  ])
+
+  // If we can't find the file, we fallback to the (potentially loading)
+  // direct stat made by the viewer
+  if (currentIndex === -1 && !currentFile) {
+    return <FilesViewerLoading />
   }
 
-  onClose = () => {
-    if (this.props.onClose) {
-      this.props.onClose()
-    }
-  }
-
-  onChange = nextFile => {
-    if (this.props.onChange) {
-      this.props.onChange(nextFile.id)
-    }
-  }
-
-  getCurrentIndex() {
-    const { files, fileId } = this.props
-    return files.findIndex(f => f.id === fileId)
-  }
-
-  render() {
-    const { t, files, router } = this.props
-    const currentIndex = this.getCurrentIndex()
-
-    // If we can't find the file, we fallback to the (potentially loading)
-    // direct stat made by the viewer
-    if (currentIndex === -1 && !this.state.currentFile) {
-      return <FilesViewerLoading />
-    } else {
-      const hasCurrentIndex = currentIndex != -1
-      const viewerFiles = hasCurrentIndex ? files : [this.state.currentFile]
-      const viewerIndex = hasCurrentIndex ? currentIndex : 0
-
-      return (
-        <RemoveScroll>
-          <Overlay>
-            <Viewer
-              files={viewerFiles}
-              currentIndex={viewerIndex}
-              onChangeRequest={this.onChange}
-              onCloseRequest={this.onClose}
-              renderFallbackExtraContent={file => (
-                <Fallback file={file} t={t} />
-              )}
-              onlyOfficeProps={{
-                isEnabled: isOnlyOfficeEnabled(),
-                opener: file => router.push(makeOnlyOfficeFileRoute(file, true))
-              }}
-              panelInfoProps={{
-                showPanel,
-                PanelContent
-              }}
-              footerProps={{
-                FooterContent
-              }}
-            />
-          </Overlay>
-        </RemoveScroll>
-      )
-    }
-  }
+  return (
+    <RemoveScroll>
+      <Overlay>
+        <Viewer
+          files={viewerFiles}
+          currentIndex={viewerIndex}
+          onChangeRequest={handleOnChange}
+          onCloseRequest={handleOnClose}
+          renderFallbackExtraContent={file => <Fallback file={file} t={t} />}
+          onlyOfficeProps={{
+            isEnabled: isOnlyOfficeEnabled(),
+            opener: file => router.push(makeOnlyOfficeFileRoute(file, true))
+          }}
+          panelInfoProps={{
+            showPanel,
+            PanelContent
+          }}
+          footerProps={{
+            FooterContent
+          }}
+        />
+      </Overlay>
+    </RemoveScroll>
+  )
 }
 
-export default compose(
-  withClient,
-  withRouter,
-  translate()
-)(FilesViewer)
+export default React.memo(FilesViewer)
