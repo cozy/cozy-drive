@@ -60,7 +60,9 @@ const setupApp = memoize(() => {
     cozyClient: client,
     iconPath: data.app.icon,
     lang: data.locale,
-    replaceTitleOnMobile: false
+    replaceTitleOnMobile: false,
+    appSlug: data.app.slug,
+    appNamePrefix: data.app.prefix
   })
 
   if (shouldEnableTracking() && getTracker()) {
