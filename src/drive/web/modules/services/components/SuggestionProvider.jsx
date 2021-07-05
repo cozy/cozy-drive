@@ -2,7 +2,7 @@
 import React from 'react'
 import FuzzyPathSearch from '../FuzzyPathSearch'
 import { getFileMimetype } from 'drive/lib/getFileMimetype'
-import { models } from 'cozy-client'
+import { withClient, models } from 'cozy-client'
 
 const TYPE_DIRECTORY = 'directory'
 
@@ -48,6 +48,7 @@ class SuggestionProvider extends React.Component {
 
   // fetches pretty much all the files and preloads FuzzyPathSearch
   async indexFiles() {
+    const { client } = this.props
     return new Promise(async resolve => {
       const resp = await cozy.client.fetchJSON(
         'GET',
@@ -64,10 +65,12 @@ class SuggestionProvider extends React.Component {
       const notOrphans = file =>
         folders.find(folder => folder._id === file.dir_id) !== undefined
 
-      const normalizedFiles = files
+      const normalizedFilesPrevious = files
         .filter(notInTrash)
         .filter(notOrphans)
-        .map(file => {
+
+      const normalizedFiles = await Promise.all(
+        normalizedFilesPrevious.map(async file => {
           const isDir = file.type === TYPE_DIRECTORY
           const dirId = isDir ? file._id : file.dir_id
           const urlToFolder = `${window.location.origin}/#/folder/${dirId}`
@@ -77,9 +80,15 @@ class SuggestionProvider extends React.Component {
             path = file.path
             url = urlToFolder
           } else {
-            const parentDir = folders.find(folder => folder._id === file.dir_id)
-            path = parentDir && parentDir.path ? parentDir.path : ''
-            url = `${urlToFolder}/file/${file._id}`
+            if (models.file.isNote(file)) {
+              url = await models.note.fetchURL(client, file)
+            } else {
+              const parentDir = folders.find(
+                folder => folder._id === file.dir_id
+              )
+              path = parentDir && parentDir.path ? parentDir.path : ''
+              url = `${urlToFolder}/file/${file._id}`
+            }
           }
 
           return {
@@ -90,6 +99,7 @@ class SuggestionProvider extends React.Component {
             icon: getIconUrl(file)
           }
         })
+      )
 
       this.fuzzyPathSearch = new FuzzyPathSearch(normalizedFiles)
       this.hasIndexedFiles = true
@@ -129,4 +139,4 @@ function getIconUrl(file) {
   }' x='0' y='0' width='32' height='32'/></svg>`.replace(/#/g, '%23')
 }
 
-export default SuggestionProvider
+export default withClient(SuggestionProvider)
