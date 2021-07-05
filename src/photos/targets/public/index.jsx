@@ -66,7 +66,9 @@ async function init() {
       iconPath: data.app.icon,
       lang: data.locale,
       replaceTitleOnMobile: true,
-      isPublic: true
+      isPublic: true,
+      appSlug: data.app.slug,
+      appNamePrefix: data.app.prefix
     })
   }
   try {

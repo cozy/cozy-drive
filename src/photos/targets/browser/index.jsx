@@ -81,7 +81,9 @@ const setupAppContext = memoize(() => {
     cozyClient: client,
     iconPath: data.app.icon,
     lang: lang,
-    replaceTitleOnMobile: true
+    replaceTitleOnMobile: true,
+    appSlug: data.app.slug,
+    appNamePrefix: data.app.prefix
   })
   return { store, locale, client, history, root }
 })
