@@ -16,7 +16,7 @@ const useCreateFile = (folderId, fileClass) => {
 
   const fileExt = useMemo(() => makeExtByClass(fileClass), [fileClass])
   const fileMime = useMemo(() => makeMimeByClass(fileClass), [fileClass])
-  const fileUrl = useMemo(() => `/onlyoffice/${fileClass}.${fileExt}`, [
+  const fileUrl = useMemo(() => `/onlyOffice/${fileClass}.${fileExt}`, [
     fileClass,
     fileExt
   ])
