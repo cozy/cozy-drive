@@ -4,15 +4,15 @@ import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import { Button } from 'cozy-ui/transpiled/react/Button'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
-export const MigrateAdapter = ({ shouldMigrateAdapter }) => {
+export const MigrateAdapter = ({ handleMigrateModaleAnswer }) => {
   const { t } = useI18n()
 
   const onClose = () => {
-    shouldMigrateAdapter(false)
+    handleMigrateModaleAnswer(false)
   }
 
   const onConfirm = async () => {
-    shouldMigrateAdapter(true)
+    handleMigrateModaleAnswer(true)
   }
 
   return (
