@@ -89,25 +89,24 @@ const notCompatibleError = () => {
 
 // SERVICE
 
-const backgroundService = () =>
-  new Promise(resolve => {
-    logger.log('BackgroundFetch initiated')
+const backgroundService = async () => {
+  logger.log('BackgroundFetch initiated')
 
-    loadState()
-      .then(persistedState => {
-        const cozyURL = persistedState.mobile.settings.serverUrl
-        configureReporter()
-        const client = initClient(cozyURL)
-        const store = configureStore({
-          client,
-          t: getTranslateFunction(),
-          initialState: persistedState
-        })
-        return store.dispatch(startMediaBackup())
-      })
-      .then(resolve)
-      .catch(resolve)
-  })
+  try {
+    const persistedState = await loadState()
+    const cozyURL = persistedState.mobile.settings.serverUrl
+    configureReporter()
+    const client = await initClient(cozyURL)
+    const store = configureStore({
+      client,
+      t: getTranslateFunction(),
+      initialState: persistedState
+    })
+    return store.dispatch(startMediaBackup())
+  } catch {
+    return
+  }
+}
 
 // ANDROID
 
