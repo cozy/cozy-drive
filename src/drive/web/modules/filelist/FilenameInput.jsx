@@ -6,6 +6,7 @@ import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { Dialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Button from 'cozy-ui/transpiled/react/Button'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { isDirectory } from 'cozy-client/dist/models/file'
 
 import styles from 'drive/styles/filenameinput.styl'
 
@@ -64,19 +65,23 @@ class FilenameInput extends Component {
 
   submit() {
     const { value } = this.state
-
+    const { file } = this.props
     this.setState({ working: true, error: false })
     if (!this.fileNameOnMount) this.save()
-    const previousExtension = CozyFile.splitFilename({
-      name: this.fileNameOnMount,
-      type: 'file'
-    }).extension
-    const newExtension = CozyFile.splitFilename({
-      name: value,
-      type: 'file'
-    }).extension
-    if (previousExtension !== newExtension) {
-      this.setState({ isModalOpened: true })
+    if (file && !isDirectory(file)) {
+      const previousExtension = CozyFile.splitFilename({
+        name: this.fileNameOnMount,
+        type: 'file'
+      }).extension
+      const newExtension = CozyFile.splitFilename({
+        name: value,
+        type: 'file'
+      }).extension
+      if (previousExtension !== newExtension) {
+        this.setState({ isModalOpened: true })
+      } else {
+        this.save()
+      }
     } else {
       this.save()
     }
