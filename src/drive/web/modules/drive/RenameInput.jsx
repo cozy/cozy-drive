@@ -33,6 +33,7 @@ export const RenameInput = ({
     <FilenameInput
       className={className}
       name={name}
+      file={file}
       onSubmit={async newValue => {
         const newName = withoutExtension ? newValue + extension : newValue
         try {
