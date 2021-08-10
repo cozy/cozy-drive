@@ -90,7 +90,7 @@
         <ios-team-id value="3AKXFMV43J" />
     </universal-links>
     <engine name="ios" spec="~4.5.5" />
-    <engine name="android" spec="^9.1.0" />
+    <engine name="android" spec="^7.1.4" />
     <plugin name="cordova-plugin-splashscreen" spec="https://github.com/cozy/cordova-plugin-splashscreen.git#e10cadcd07b613f745370ba023ac0c52cf415648" />
     <plugin name="cordova-plugin-whitelist" spec="1.3.2" />
     <plugin name="cordova-plugin-inappbrowser" spec="1.7.0" />
