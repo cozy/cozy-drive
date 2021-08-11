@@ -108,7 +108,7 @@ const PublicToolbarByLink = ({
                 <AddButton />
               </AddMenuProvider>
             )}
-            <DownloadFilesButton files={files} />
+            {files.length > 0 && <DownloadFilesButton files={files} />}
           </>
         )}
         {shouldDisplayMoreMenu && (

@@ -56,14 +56,15 @@ const MoreMenu = ({
               : t('toolbar.add_to_mine')}
           </ActionMenuItem>
 
-          {isMobile && (
-            <ActionMenuItem
-              onClick={() => downloadFiles(client, files)}
-              left={<Icon icon={'download'} />}
-            >
-              {t('toolbar.menu_download')}
-            </ActionMenuItem>
-          )}
+          {isMobile &&
+            files.length > 0 && (
+              <ActionMenuItem
+                onClick={() => downloadFiles(client, files)}
+                left={<Icon icon={'download'} />}
+              >
+                {t('toolbar.menu_download')}
+              </ActionMenuItem>
+            )}
           {files.length > 1 && <SelectableItem />}
         </ActionMenu>
       )}
@@ -86,7 +87,7 @@ const PublicToolbarCozyToCozy = ({
   return (
     <CozyBarRightMobile>
       <BarContextProvider client={client} t={t} store={client.store}>
-        {!isMobile && <DownloadFilesButton files={files} />}
+        {!isMobile && files.length > 0 && <DownloadFilesButton files={files} />}
         {shouldDisplayMoreMenu && (
           <MoreMenu
             files={files}
