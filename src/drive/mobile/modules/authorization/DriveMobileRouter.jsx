@@ -99,11 +99,13 @@ class DriveMobileRouter extends Component {
       const newAdapterPlugin = getAdapterPlugin('indexeddb')
       const plugins = [oldAdapterPlugin, newAdapterPlugin]
       await pouchLink.migrateAdapter({
-        from: oldAdapter,
-        to: 'indexeddb',
+        fromAdapter: oldAdapter,
+        toAdapter: 'indexeddb',
         url,
         plugins
       })
+      // Reload page to benefit from new adapter
+      window.location.reload()
     }
   }
 
