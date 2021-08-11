@@ -104,6 +104,7 @@ const PublicToolbarByLink = ({
                 canCreateFolder={true}
                 canUpload={true}
                 refreshFolderContent={refreshFolderContent}
+                isPublic={true}
               >
                 <AddButton />
               </AddMenuProvider>
