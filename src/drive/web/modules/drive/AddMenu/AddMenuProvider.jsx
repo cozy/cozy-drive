@@ -25,7 +25,8 @@ const AddMenuProvider = ({
   canCreateFolder,
   canUpload,
   refreshFolderContent,
-  children
+  children,
+  isPublic
 }) => {
   const [menuIsVisible, setMenuVisible] = useState(false)
   const selectionModeActive = useSelector(isSelectionBarVisible)
@@ -58,7 +59,8 @@ const AddMenuProvider = ({
         handleToggle,
         isDisabled,
         isOffline,
-        handleOfflineClick
+        handleOfflineClick,
+        isPublic
       }}
     >
       {children}
@@ -70,6 +72,7 @@ const AddMenuProvider = ({
             canCreateFolder={canCreateFolder}
             canUpload={canUpload}
             refreshFolderContent={refreshFolderContent}
+            isPublic={isPublic}
           />
         )}
       </ScanWrapper>

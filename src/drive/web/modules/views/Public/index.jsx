@@ -224,6 +224,7 @@ const PublicFolderView = ({
                 canCreateFolder={hasWritePermissions}
                 canUpload={hasWritePermissions}
                 refreshFolderContent={refreshFolderContent}
+                isPublic={true}
               >
                 <FabWithMenuContext noSidebar={true} />
               </AddMenuProvider>

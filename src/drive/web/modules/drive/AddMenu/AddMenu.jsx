@@ -18,7 +18,8 @@ export const ActionMenuContent = ({
   isDisabled,
   canCreateFolder,
   canUpload,
-  refreshFolderContent
+  refreshFolderContent,
+  isPublic
 }) => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
@@ -34,7 +35,7 @@ export const ActionMenuContent = ({
         </>
       )}
       {canCreateFolder && <AddFolderItem />}
-      <CreateNoteItem />
+      {!isPublic && <CreateNoteItem />}
       {canUpload &&
         isOnlyOfficeEnabled() && (
           <>
@@ -59,7 +60,8 @@ const AddMenu = ({
   isDisabled,
   canCreateFolder,
   canUpload,
-  refreshFolderContent
+  refreshFolderContent,
+  isPublic
 }) => {
   return (
     <ActionMenu
@@ -75,6 +77,7 @@ const AddMenu = ({
         canCreateFolder={canCreateFolder}
         canUpload={canUpload}
         refreshFolderContent={refreshFolderContent}
+        isPublic={isPublic}
       />
     </ActionMenu>
   )
