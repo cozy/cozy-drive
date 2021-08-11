@@ -111,14 +111,17 @@ class FilenameInput extends Component {
   }
 
   handleFocus() {
-    const { name } = this.props
+    const { name, file } = this.props
 
     const { filename } = CozyFile.splitFilename({ name, type: 'file' })
     //Since we're mounting the component and focusing it at the same time
     // let's add a small timeout to be sure the ref is populated
     setTimeout(() => {
       if (this.textInput.current)
-        this.textInput.current.setSelectionRange(0, filename.length)
+        this.textInput.current.setSelectionRange(
+          0,
+          isDirectory(file) ? name.length : filename.length
+        )
     }, 5)
   }
 
