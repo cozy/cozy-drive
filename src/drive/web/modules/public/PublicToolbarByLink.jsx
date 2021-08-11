@@ -91,8 +91,7 @@ const PublicToolbarByLink = ({
   const client = useClient()
   const { isMobile } = useBreakpoints()
 
-  const shouldDisplayMoreMenu =
-    isMobile || (!isFile && files.length > 0) || hasWriteAccess
+  const shouldDisplayMoreMenu = isMobile || (!isFile && files.length > 0)
 
   return (
     <CozyBarRightMobile>
