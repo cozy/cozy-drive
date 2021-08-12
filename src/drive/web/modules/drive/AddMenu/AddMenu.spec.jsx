@@ -1,19 +1,15 @@
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
+import { act } from '@testing-library/react'
 
 import { isMobileApp } from 'cozy-device-helper'
 
 import { setupFolderContent, mockCozyClientRequestQuery } from 'test/setup'
-
+import { useAppLinkWithStoreFallback } from 'cozy-client'
 import ScanWrapper from 'drive/web/modules/drive/Toolbar/components/ScanWrapper'
 import AppLike from 'test/components/AppLike'
 import { ActionMenuContent } from './AddMenu'
-
-// CreateNoteItem uses async hooks which produces act() warning in tests
-jest.mock(
-  'drive/web/modules/drive/Toolbar/components/CreateNoteItem',
-  () => () => null
-)
+jest.mock('cozy-client/dist/hooks/useAppLinkWithStoreFallback', () => jest.fn())
 
 jest.mock('cozy-device-helper', () => ({
   ...jest.requireActual('cozy-device-helper'),
@@ -22,21 +18,31 @@ jest.mock('cozy-device-helper', () => ({
 
 mockCozyClientRequestQuery()
 
-const setup = async ({ folderId = 'directory-foobar0' } = {}) => {
+const setup = async (
+  { folderId = 'directory-foobar0' } = {},
+  {
+    isDisabled = false,
+    canCreateFolder = false,
+    canUpload = true,
+    hasWriteAccess = true,
+    isPublic = false
+  } = {}
+) => {
   const { client, store } = await setupFolderContent({
     folderId
   })
 
-  client.stackClient.uri = 'http://cozy.tools'
+  client.stackClient.uri = 'http://cozy.localhost'
 
   const root = render(
     <AppLike client={client} store={store}>
       <ScanWrapper>
         <ActionMenuContent
-          isDisabled={false}
-          canCreateFolder={false}
-          canUpload={true}
-          hasWriteAccess={true}
+          isDisabled={isDisabled}
+          canCreateFolder={canCreateFolder}
+          canUpload={canUpload}
+          hasWriteAccess={hasWriteAccess}
+          isPublic={isPublic}
         />
       </ScanWrapper>
     </AppLike>
@@ -59,6 +65,9 @@ describe('AddMenu', () => {
         }),
         cleanup: jest.fn()
       }
+      useAppLinkWithStoreFallback.mockReturnValue({
+        fetchStatus: 'loaded'
+      })
     })
 
     afterAll(() => {
@@ -67,32 +76,71 @@ describe('AddMenu', () => {
 
     it('opens and closes the scanner', async () => {
       isMobileApp.mockReturnValue(true)
-      const { root } = await setup()
-      const { getByText, queryByText } = root
+      await act(async () => {
+        const { root } = await setup()
+        const { getByText, queryByText } = root
 
-      // opens the scanner
-      fireEvent.click(getByText('Scan a doc'))
-      expect(queryByText('Save the doc')).not.toBeNull()
+        // opens the scanner
+        fireEvent.click(getByText('Scan a doc'))
+        expect(queryByText('Save the doc')).not.toBeNull()
 
-      // closes the scanner
-      fireEvent.click(getByText('Cancel'))
-      expect(queryByText('Save the doc')).toBeNull()
+        // closes the scanner
+        fireEvent.click(getByText('Cancel'))
+        expect(queryByText('Save the doc')).toBeNull()
+      })
     })
 
     it('is not displayed outside of a folder', async () => {
       isMobileApp.mockReturnValue(true)
-      const { root } = await setup({ folderId: null })
-      const { queryByText } = root
+      await act(async () => {
+        const { root } = await setup({ folderId: null })
+        const { queryByText } = root
 
-      expect(queryByText('Scan a doc')).toBeNull()
+        expect(queryByText('Scan a doc')).toBeNull()
+      })
     })
 
     it('is not displayed on desktop', async () => {
       isMobileApp.mockReturnValue(false)
-      const { root } = await setup()
-      const { queryByText } = root
+      await act(async () => {
+        const { root } = await setup()
+        const { queryByText } = root
 
-      expect(queryByText('Scan a doc')).toBeNull()
+        expect(queryByText('Scan a doc')).toBeNull()
+      })
+    })
+  })
+
+  describe('Menu', () => {
+    beforeAll(() => {
+      useAppLinkWithStoreFallback.mockReturnValue({
+        fetchStatus: 'loaded'
+      })
+    })
+    it('does not display createNote on public Page', async () => {
+      isMobileApp.mockReturnValue(true)
+
+      await act(async () => {
+        const { root } = await setup(
+          { folderId: 'directory-foobar0' },
+          { isPublic: true }
+        )
+        const { queryByText } = root
+        expect(queryByText('Note')).toBeNull()
+      })
+    })
+
+    it('displays createNote on private Page', async () => {
+      isMobileApp.mockReturnValue(true)
+
+      await act(async () => {
+        const { root } = await setup(
+          { folderId: 'directory-foobar0' },
+          { isPublic: false }
+        )
+        const { queryByText } = root
+        expect(queryByText('Note')).toBeTruthy()
+      })
     })
   })
 })
