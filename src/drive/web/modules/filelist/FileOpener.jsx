@@ -72,11 +72,11 @@ const FileOpener = ({
 
       const gesturesHandler = propagating(new Hammer(rowRef.current))
 
-      gesturesHandler.on('tap onpress singletap', ev => {
+      gesturesHandler.on('tap press singletap', ev => {
         if (actionMenuVisible || disabled) return
         if (enableTouchEvents(ev)) {
           ev.preventDefault() // prevent a ghost click
-          if (ev.type === 'onpress' || selectionModeActive) {
+          if (ev.type === 'press' || selectionModeActive) {
             ev.srcEvent.stopImmediatePropagation()
             toggle(ev.srcEvent)
           } else {
