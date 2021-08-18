@@ -2,6 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 
 import { withClient } from 'cozy-client'
+import { Intents } from 'cozy-interapp'
 
 import { Modal, Button } from 'cozy-ui/transpiled/react'
 import styles from 'drive/styles/intentbutton.styl'
@@ -54,7 +55,8 @@ class IntentButton extends React.Component {
 class Intent extends React.Component {
   componentDidMount() {
     const { action, docType, data, client } = this.props
-    client.intents
+    const intents = new Intents({ client })
+    intents
       .create(action, docType, {
         ...data,
         exposeIntentFrameRemoval: true

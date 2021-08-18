@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { withClient } from 'cozy-client'
+import { Intents } from 'cozy-interapp'
 
 import Embeder from './Embeder'
 import URLGetter from './URLGetter'
@@ -23,12 +24,12 @@ class IntentHandler extends React.Component {
 
   async startService() {
     const { intentId, client } = this.props
-
     let component
     let service
     let intent
     try {
-      service = await client.intents.createService(intentId, window)
+      const intents = new Intents({ client })
+      service = await intents.createService(intentId, window)
       intent = service.getIntent()
 
       if (
