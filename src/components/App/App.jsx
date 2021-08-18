@@ -7,10 +7,15 @@ import { ThumbnailSizeContextProvider } from 'drive/lib/ThumbnailSizeContext'
 import { ModalContextProvider } from 'drive/lib/ModalContext'
 import { AcceptingSharingProvider } from 'drive/lib/AcceptingSharingContext'
 
-const App = ({ store, client, lang, polyglot, children }) => {
+const App = ({ store, client, vaultClient, lang, polyglot, children }) => {
   return (
     <Provider store={store}>
-      <DriveProvider client={client} lang={lang} polyglot={polyglot}>
+      <DriveProvider
+        client={client}
+        vaultClient={vaultClient}
+        lang={lang}
+        polyglot={polyglot}
+      >
         <AcceptingSharingProvider>
           <ThumbnailSizeContextProvider>
             <ModalContextProvider>{children}</ModalContextProvider>

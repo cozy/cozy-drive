@@ -92,7 +92,6 @@ const init = async () => {
     cozyURL: cozyUrl,
     token: sharecode
   })
-
   const polyglot = initTranslation(dataset.locale, lang =>
     require(`drive/locales/${lang}`)
   )
