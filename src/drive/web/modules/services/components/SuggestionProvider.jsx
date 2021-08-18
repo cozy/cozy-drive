@@ -51,9 +51,7 @@ class SuggestionProvider extends React.Component {
     const { client } = this.props
     return new Promise(async resolve => {
       const resp = await client.collection('io.cozy.files').all({ limit: null })
-      const files = resp.rows
-        .filter(row => !row.doc.hasOwnProperty('views'))
-        .map(row => ({ id: row.id, ...row.doc }))
+      const files = resp.data
 
       const folders = files.filter(file => file.type === TYPE_DIRECTORY)
 
