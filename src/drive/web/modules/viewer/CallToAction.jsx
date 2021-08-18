@@ -58,6 +58,7 @@ class CallToAction extends Component {
             <a
               //eslint-disable-next-line react/jsx-no-target-blank
               target="_blank"
+              rel="noopener"
               href={t(
                 isLinux() ? 'Nav.link-client' : 'Nav.link-client-desktop'
               )}
