@@ -8,3 +8,4 @@
 
 ## 🔧 Tech
 * Add CodeQL in order to scan the code🚫
+* Add rel noopener on target blank link
