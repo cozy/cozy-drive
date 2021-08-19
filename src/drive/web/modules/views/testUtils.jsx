@@ -24,3 +24,7 @@ export const getByTextWithMarkup = (getByText, text) => {
     return hasText(node) && childrenDontHaveText
   })
 }
+
+// We need this because MidEllipsis uses control characters (invisible formatting characters)
+// For the purpose of testing it is simpler to strip them from the computed paths
+export const removeNonASCII = str => str.replace(/[^\x20-\x7E]/g, '')
