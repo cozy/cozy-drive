@@ -142,15 +142,17 @@ export const processNextFile = (
   queueCompletedCallback,
   dirID,
   sharingState
-) => async (dispatch, getState, { client }) => {
+) => async (dispatch, getState, { client, vaultClient }) => {
   let error = null
   if (!client) {
     throw new Error(
       'Upload module needs a cozy-client instance to work. This instance should be made available by using the extraArgument function of redux-thunk'
     )
   }
+  console.log('vault client for upload : ', vaultClient)
 
   const item = getUploadQueue(getState()).find(i => i.status === PENDING)
+  console.log('item : ', item)
 
   if (!item) {
     return dispatch(onQueueEmpty(queueCompletedCallback))
@@ -160,21 +162,24 @@ export const processNextFile = (
   try {
     dispatch({ type: UPLOAD_FILE, file })
     if (entry && isDirectory) {
-      const newDir = await uploadDirectory(client, entry, dirID)
+      console.log('lets upload dir')
+      const newDir = await uploadDirectory(client, entry, dirID, {
+        vaultClient
+      })
       fileUploadedCallback(newDir)
     } else {
-      const uploadedFile = await uploadFile(
-        client,
-        file,
-        dirID,
-        flag('drive.upload.with-progress')
-          ? {
-              onUploadProgress: event => {
-                dispatch(uploadProgress(file, event))
-              }
+      const withProgress = flag('drive.upload.with-progress')
+        ? {
+            onUploadProgress: event => {
+              dispatch(uploadProgress(file, event))
             }
-          : {}
-      )
+          }
+        : {}
+      console.log('lets upload file')
+      const uploadedFile = await uploadFile(client, file, dirID, {
+        vaultClient,
+        ...withProgress
+      })
 
       fileUploadedCallback(uploadedFile)
     }
@@ -233,7 +238,7 @@ export const processNextFile = (
 
 const getFileFromEntry = entry => new Promise(resolve => entry.file(resolve))
 
-const uploadDirectory = async (client, directory, dirID) => {
+const uploadDirectory = async (client, directory, dirID, { vaultClient }) => {
   const newDir = await createFolder(client, directory.name, dirID)
   const dirReader = directory.createReader()
   return new Promise(resolve => {
@@ -242,9 +247,9 @@ const uploadDirectory = async (client, directory, dirID) => {
         const entry = entries[i]
         if (entry.isFile) {
           const file = await getFileFromEntry(entry)
-          await uploadFile(client, file, newDir.id)
+          await uploadFile(client, file, newDir.id, { vaultClient })
         } else if (entry.isDirectory) {
-          await uploadDirectory(client, entry, newDir.id)
+          await uploadDirectory(client, entry, newDir.id, { vaultClient })
         }
       }
       resolve(newDir)
@@ -290,10 +295,27 @@ const uploadFile = async (client, file, dirID, options = {}) => {
     }
   }
   const onUploadProgress = options.onUploadProgress
-  const resp = await client
+  const vaultClient = options.vaultClient
+  //TODO check if encrypted dir and if vault is unlock
+  const fr = new FileReader()
+  fr.onload = async () => {
+    console.log('lets encrypt file')
+    const encryptedFile = await vaultClient.encryptFile(fr.result)
+    const resp = await client
+      .collection('io.cozy.files')
+      .createFile(encryptedFile, {
+        name: file.name,
+        dirId: dirID,
+        onUploadProgress
+      })
+    return resp.data
+  }
+  fr.readAsArrayBuffer(file)
+  /*const resp = await client
     .collection('io.cozy.files')
     .createFile(file, { dirId: dirID, onUploadProgress })
-  return resp.data
+    
+  return resp.data*/
 }
 
 /*

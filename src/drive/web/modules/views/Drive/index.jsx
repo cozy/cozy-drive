@@ -130,6 +130,7 @@ const DriveView = ({
 
   const navigateToFolder = useCallback(
     folderId => {
+      console.log('navigate to folder id : ', folderId)
       router.push(`/folder/${folderId}`)
     },
     [router]
