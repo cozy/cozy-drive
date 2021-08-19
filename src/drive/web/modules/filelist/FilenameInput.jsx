@@ -67,7 +67,7 @@ class FilenameInput extends Component {
     const { value } = this.state
     const { file } = this.props
     this.setState({ working: true, error: false })
-    if (!this.fileNameOnMount) this.save()
+    if (!this.fileNameOnMount) return this.save()
     if (file && !isDirectory(file)) {
       const previousExtension = CozyFile.splitFilename({
         name: this.fileNameOnMount,
