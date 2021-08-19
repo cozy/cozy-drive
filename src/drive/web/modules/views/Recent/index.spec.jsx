@@ -8,7 +8,11 @@ import AppLike from 'test/components/AppLike'
 
 import RecentViewWithProvider from './index'
 import { useFilesQueryWithPath } from 'drive/web/modules/views/hooks'
-import { generateFileFixtures, getByTextWithMarkup } from '../testUtils'
+import {
+  generateFileFixtures,
+  getByTextWithMarkup,
+  removeNonASCII
+} from '../testUtils'
 
 jest.mock('components/pushClient')
 jest.mock('cozy-client/dist/hooks/useQuery', () =>
@@ -101,7 +105,7 @@ describe('Recent View', () => {
     )
     //check the path to the parent's folder
     const linkElement0 = fileRow0.getElementsByClassName('fil-file-path')[0]
-    expect(linkElement0.textContent).toEqual(path)
+    expect(removeNonASCII(linkElement0.textContent)).toEqual(path)
 
     expect(linkElement0.href.endsWith(`#/folder/${dir_id}`)).toBe(true)
 
@@ -110,7 +114,9 @@ describe('Recent View', () => {
     const el1 = getByText(`foobar1`)
     const parentDiv1 = el1.closest('.fil-file')
     expect(
-      parentDiv1.getElementsByClassName('fil-file-path')[0].textContent
+      removeNonASCII(
+        parentDiv1.getElementsByClassName('fil-file-path')[0].textContent
+      )
     ).toEqual(path)
 
     // navigates  to the history view
