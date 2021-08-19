@@ -61,6 +61,7 @@ class CallToAction extends Component {
               href={t(
                 isLinux() ? 'Nav.link-client' : 'Nav.link-client-desktop'
               )}
+              rel="noopener"
             >
               {t('Viewer.noviewer.cta.installDesktop')}
             </a>
