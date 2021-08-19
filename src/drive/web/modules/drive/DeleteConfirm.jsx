@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useClient } from 'cozy-client'
 import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Button from 'cozy-ui/transpiled/react/Button'
@@ -40,9 +40,11 @@ export const DeleteConfirm = ({
   const { t } = useI18n()
   const fileCount = files.length
   const client = useClient()
+  const [isDeleting, setDeleting] = useState(false)
 
   const onDelete = useCallback(
     async () => {
+      setDeleting(true)
       await trashFiles(client, files)
       afterConfirmation()
       onClose()
@@ -71,6 +73,7 @@ export const DeleteConfirm = ({
             label={t('deleteconfirmation.cancel')}
           />
           <Button
+            busy={isDeleting}
             theme="danger"
             label={t('deleteconfirmation.delete')}
             onClick={onDelete}
