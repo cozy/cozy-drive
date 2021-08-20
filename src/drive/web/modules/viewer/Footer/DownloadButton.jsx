@@ -2,18 +2,23 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { useClient } from 'cozy-client'
+import { useVaultClient } from 'cozy-keys-lib'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 import Button from 'cozy-ui/transpiled/react/Button'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
+import { downloadFile } from '../helpers'
+
 const DownloadButton = ({ file }) => {
   const { t } = useI18n()
   const client = useClient()
+  const vaultClient = useVaultClient()
 
   const handleClick = async file => {
+    console.log('handle dl click')
     try {
-      await client.collection('io.cozy.files').download(file)
+      await downloadFile(client, vaultClient, file)
     } catch (error) {
       Alerter.info('Viewer.error.generic')
     }

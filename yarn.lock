@@ -5296,7 +5296,7 @@ cozy-jobs-cli@1.15.9:
     pretty "2.0.0"
     strip-json-comments "3.1.1"
 
-cozy-keys-lib@^3.9.0:
+cozy-keys-lib@3.9.0:
   version "3.9.0"
   resolved "https://registry.yarnpkg.com/cozy-keys-lib/-/cozy-keys-lib-3.9.0.tgz#a1c2af3e73d67b782eae4b0953e04992eac57e2f"
   integrity sha512-bjNjcsa2OHL6H2BMiOymaHNCk2UbKJq6J17T0fhBB8kJ9xtY8M4xjbe/PVmrZOyZgvXYWJmCHaVgDFjA43rdcw==

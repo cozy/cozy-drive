@@ -20,6 +20,7 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(({ selectionModeActive, actions, ...rest }) => {
+  console.log('actions : ', actions)
   const convertedActions = driveActionsToSelectionBarActions(actions)
   const style = selectionModeActive ? {} : { display: 'none' }
   return (

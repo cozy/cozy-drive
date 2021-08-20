@@ -56,6 +56,8 @@ export const downloadFiles = async (client, files) => {
     }
   } else {
     const ids = files.map(f => f.id)
+    // TODO how to create archive with several encrypted files?
+    // Looks feasible on client side: https://stackoverflow.com/questions/8608724/how-to-zip-files-using-javascript
     const href = await client
       .collection('io.cozy.files')
       .getArchiveLinkByIds(ids)
