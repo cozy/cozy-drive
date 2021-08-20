@@ -5,6 +5,8 @@
 
 ## 🔧 Tech
 * Use `<SharingBannerPlugin />` and `useSharingInfos()` from `cozy-sharing` instead of internal components
+* Fixed an error in Search result when the result contained at least one Cozy Note
+
 
 # 1.37.0
 ## 🐛 Bug Fixes

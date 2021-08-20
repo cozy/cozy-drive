@@ -81,13 +81,11 @@ class SuggestionProvider extends React.Component {
             path = file.path
             url = urlToFolder
           } else {
+            const parentDir = folders.find(folder => folder._id === file.dir_id)
+            path = parentDir && parentDir.path ? parentDir.path : ''
             if (models.file.isNote(file)) {
               url = await models.note.fetchURL(client, file)
             } else {
-              const parentDir = folders.find(
-                folder => folder._id === file.dir_id
-              )
-              path = parentDir && parentDir.path ? parentDir.path : ''
               url = `${urlToFolder}/file/${file._id}`
             }
           }
