@@ -42,14 +42,9 @@ const enableTouchEvents = ev => {
     return false
   }
 
-  // remove events when they are on the file's path, because it's a different behavior
-  const parentLink = getParentLink(ev.target)
-  if (
-    parentLink &&
-    parentLink.className.indexOf(styles['fil-file-path']) >= 0
-  ) {
-    return false
-  }
+  // We need to filter here, is the event target the FileOpener or a link INSIDE the FileOpener?
+  // Assuming the FileOpener itself will never be inside an anchor, we can use the following guard
+  if (ev.srcEvent.target.closest('a')) return false
 
   return true
 }
