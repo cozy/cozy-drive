@@ -33,6 +33,8 @@ jest.mock('drive/web/modules/views/hooks', () => ({
   useFilesQueryWithPath: jest.fn()
 }))
 
+const Folder = () => <div>Folder</div>
+
 const setup = () => {
   const { store, client } = setupStoreAndClient()
 
@@ -48,10 +50,12 @@ const setup = () => {
   const rendered = render(
     <AppLike client={client} store={store}>
       <Router history={hashHistory}>
+        <Redirect from="/folder" to="/folder" />
         <Redirect from="/" to="/recent" />
         <Route path="/recent" component={RecentViewWithProvider}>
           <Route path="file/:fileId/revision" component={FileHistory} />
         </Route>
+        <Route path="/folder/:dirId" component={Folder} />
       </Router>
     </AppLike>
   )
@@ -62,7 +66,7 @@ describe('Recent View', () => {
   it('tests the recent view', async () => {
     const nbFiles = 2
     const path = '/test'
-    const dir_id = 'dirIdParent'
+    const dir_id = '123'
     const updated_at = '2020-05-14T10:33:31.365224+02:00'
 
     const filesFixture = generateFileFixtures({
@@ -122,7 +126,16 @@ describe('Recent View', () => {
     // navigates  to the history view
     const historyItem = getByText('History')
     fireEvent.click(historyItem)
-
     await expect(findByText('FileHistory stub')).resolves.toBeTruthy()
+
+    hashHistory.goBack()
+
+    // Navigate to foldier view, not file view
+    fireEvent.click(linkElement0)
+    await expect(findByText('Folder')).resolves.toBeTruthy()
+
+    // Going back to recent view, not file view
+    hashHistory.goBack()
+    await expect(findByText('Recent')).resolves.toBeTruthy()
   })
 })
