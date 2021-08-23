@@ -35,7 +35,7 @@ const configureStore = options => {
     middlewares.push(createTrackerMiddleware())
   }
 
-  if (options.logger !== false) {
+  if (options.logger === true) {
     middlewares.push(createLogger(loggerOptions()))
   }
 
