@@ -129,6 +129,7 @@ const FileName = ({
             ) : (
               <Link
                 to={`/folder/${attributes.dir_id}`}
+                // Please do not modify the className as it is used in event handling, see FileOpener#46
                 className={styles['fil-file-path']}
               >
                 <MidEllipsis text={attributes.displayedPath} />
