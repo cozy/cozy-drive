@@ -12,7 +12,8 @@ import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'
 import FilenameInput from 'drive/web/modules/filelist/FilenameInput'
 import {
   isTypingNewFolderName,
-  hideNewFolderInput
+  hideNewFolderInput,
+  isEncryptedFolder
 } from 'drive/web/modules/filelist/duck'
 import { createFolder } from 'drive/web/modules/navigation/duck'
 import FileThumbnail from 'drive/web/modules/filelist/FileThumbnail'
@@ -76,13 +77,24 @@ const mapStateToProps = state => ({
   visible: isTypingNewFolderName(state)
 })
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  onSubmit: name => {
-    return dispatch(createFolder(ownProps.client, name)).then(() => {
-      if (ownProps.refreshFolderContent) ownProps.refreshFolderContent()
-      return dispatch(hideNewFolderInput())
+const createFolderAfterSubmit = (ownProps, name) => async (
+  dispatch,
+  getState
+) => {
+  const state = getState()
+  const isEncrypted = isEncryptedFolder(state)
+  return dispatch(
+    createFolder(ownProps.client, ownProps.vaultClient, name, {
+      isEncryptedFolder: isEncrypted
     })
-  },
+  ).then(() => {
+    if (ownProps.refreshFolderContent) ownProps.refreshFolderContent()
+    return dispatch(hideNewFolderInput())
+  })
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  onSubmit: name => dispatch(createFolderAfterSubmit(ownProps, name)),
   onAbort: accidental => {
     if (accidental) {
       Alerter.info('alert.folder_abort')

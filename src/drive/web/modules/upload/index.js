@@ -149,10 +149,8 @@ export const processNextFile = (
       'Upload module needs a cozy-client instance to work. This instance should be made available by using the extraArgument function of redux-thunk'
     )
   }
-  console.log('vault client for upload : ', vaultClient)
 
   const item = getUploadQueue(getState()).find(i => i.status === PENDING)
-  console.log('item : ', item)
 
   if (!item) {
     return dispatch(onQueueEmpty(queueCompletedCallback))
@@ -162,7 +160,6 @@ export const processNextFile = (
   try {
     dispatch({ type: UPLOAD_FILE, file })
     if (entry && isDirectory) {
-      console.log('lets upload dir')
       const newDir = await uploadDirectory(client, entry, dirID, {
         vaultClient
       })
@@ -175,7 +172,6 @@ export const processNextFile = (
             }
           }
         : {}
-      console.log('lets upload file')
       const uploadedFile = await uploadFile(client, file, dirID, {
         vaultClient,
         ...withProgress
@@ -296,10 +292,10 @@ const uploadFile = async (client, file, dirID, options = {}) => {
   }
   const onUploadProgress = options.onUploadProgress
   const vaultClient = options.vaultClient
-  //TODO check if encrypted dir and if vault is unlock
+  // TODO check if encrypted dir and if vault is unlock
+  // TODO use web worker
   const fr = new FileReader()
   fr.onload = async () => {
-    console.log('lets encrypt file')
     const encryptedFile = await vaultClient.encryptFile(fr.result)
     const resp = await client
       .collection('io.cozy.files')

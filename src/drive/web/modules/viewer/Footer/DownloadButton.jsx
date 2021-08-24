@@ -16,7 +16,6 @@ const DownloadButton = ({ file }) => {
   const vaultClient = useVaultClient()
 
   const handleClick = async file => {
-    console.log('handle dl click')
     try {
       await downloadFile(client, vaultClient, file)
     } catch (error) {

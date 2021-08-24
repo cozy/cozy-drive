@@ -134,7 +134,12 @@ const doesFolderExistByName = (state, parentFolderId, name) => {
 /**
  * Creates a folder in the current view
  */
-export const createFolder = (client, name) => {
+export const createFolder = (
+  client,
+  vaultClient,
+  name,
+  { isEncryptedFolder = false }
+) => {
   return async (dispatch, getState) => {
     const state = getState()
     const currentFolderId = getCurrentFolderId(state)
@@ -146,11 +151,18 @@ export const createFolder = (client, name) => {
     }
 
     try {
-      await client.create('io.cozy.files', {
+      const dir = await client.create('io.cozy.files', {
         name: name,
         dirId: currentFolderId,
         type: 'directory'
       })
+      if (isEncryptedFolder) {
+        const key = await vaultClient.generateEncryptionKey()
+        await client.create('io.cozy.files.encryption', {
+          dirID: dir.data._id,
+          key: key.encryptedKey
+        })
+      }
     } catch (err) {
       if (err.response && err.response.status === HTTP_CODE_CONFLICT) {
         Alerter.error('alert.folder_name', { folderName: name })

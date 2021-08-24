@@ -7,6 +7,7 @@ import ActionMenu from 'cozy-ui/transpiled/react/ActionMenu'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 
 import AddFolderItem from 'drive/web/modules/drive/Toolbar/components/AddFolderItem'
+import AddEncryptedFolderItem from 'drive/web/modules/drive/Toolbar/components/AddEncryptedFolderItem'
 import CreateNoteItem from 'drive/web/modules/drive/Toolbar/components/CreateNoteItem'
 import CreateShortcut from 'drive/web/modules/drive/Toolbar/components/CreateShortcut'
 import UploadItem from 'drive/web/modules/drive/Toolbar/components/UploadItem'
@@ -34,7 +35,12 @@ export const ActionMenuContent = ({
           <hr />
         </>
       )}
-      {canCreateFolder && <AddFolderItem />}
+      {canCreateFolder ? (
+        <>
+          <AddFolderItem />
+          <AddEncryptedFolderItem />
+        </>
+      ) : null}
       {!isPublic && <CreateNoteItem />}
       {canUpload &&
         isOnlyOfficeEnabled() && (

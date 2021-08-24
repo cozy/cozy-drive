@@ -12,6 +12,7 @@ import thunkMiddleware from 'redux-thunk'
 import createRootReducer from './rootReducer'
 import { ANALYTICS_URL, getReporterConfiguration } from 'drive/lib/reporter'
 import { connectStoreToHistory } from './connectedRouter'
+import { findLastKey } from 'lodash'
 
 /**
  * Creates the redux store
@@ -26,9 +27,12 @@ import { connectStoreToHistory } from './connectedRouter'
  * @return {ReduxStore}
  */
 const configureStore = options => {
-  const { client, t, initialState = {}, history } = options
+  const { client, vaultClient, t, initialState = {}, history } = options
 
-  const middlewares = [thunkMiddleware.withExtraArgument({ client, t })]
+  // TODO pass vautClient to all configureStore calls
+  const middlewares = [
+    thunkMiddleware.withExtraArgument({ client, vaultClient, t })
+  ]
   if (__TARGET__ === 'mobile' && !__DEVELOPMENT__) {
     middlewares.push(RavenMiddleWare(ANALYTICS_URL, getReporterConfiguration()))
   }
