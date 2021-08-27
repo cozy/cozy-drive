@@ -54,7 +54,7 @@ describe('createFileOpeningHandler', () => {
   const onlyofficeFile = generateFile({ i: 3 })
   onlyofficeFile.class = 'slide'
 
-  const setup = () =>
+  const setup = ({ isOnlyOfficeEnabled } = { isOnlyOfficeEnabled: true }) =>
     createFileOpeningHandler({
       client,
       isFlatDomain,
@@ -62,7 +62,8 @@ describe('createFileOpeningHandler', () => {
       navigateToFile,
       replaceCurrentUrl,
       openInNewTab,
-      routeTo
+      routeTo,
+      isOnlyOfficeEnabled
     })
 
   afterEach(() => {
@@ -120,6 +121,13 @@ describe('createFileOpeningHandler', () => {
     expect(replaceCurrentUrl).not.toHaveBeenCalled()
     expect(routeTo).toHaveBeenCalledWith(`/onlyoffice/${onlyofficeFile.id}`)
     expect(navigateToFile).not.toHaveBeenCalled()
+  })
+
+  it('should redirect to the file for an onlyoffice document with onlyoffice deactivated', async () => {
+    shouldBeOpenedByOnlyOffice.mockReturnValue(true)
+    const handler = setup({ isOnlyOfficeEnabled: false })
+    await handler({ file: onlyofficeFile, isAvailableOffline: false })
+    expect(navigateToFile).toHaveBeenCalledWith(onlyofficeFile)
   })
 
   it('should open the onlyoffice file in a new tab with onlyoffice activated and key pressed when clicking the link', async () => {

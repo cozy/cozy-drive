@@ -13,7 +13,8 @@ const createFileOpeningHandler = ({
   navigateToFile,
   replaceCurrentUrl,
   openInNewTab,
-  routeTo
+  routeTo,
+  isOnlyOfficeEnabled
 }) => async ({ event, file, isAvailableOffline }) => {
   if (isAvailableOffline) {
     return dispatch(openLocalFile(file))
@@ -43,7 +44,7 @@ const createFileOpeningHandler = ({
     } catch (e) {
       Alerter.error('alert.offline')
     }
-  } else if (isOnlyOffice) {
+  } else if (isOnlyOffice && isOnlyOfficeEnabled) {
     if (event.ctrlKey || event.metaKey || event.shiftKey) {
       openInNewTab(makeOnlyOfficeFileRoute(file))
     } else {
