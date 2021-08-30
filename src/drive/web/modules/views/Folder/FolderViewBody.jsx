@@ -25,6 +25,7 @@ import { TRASH_DIR_ID } from 'drive/constants/config'
 import createFileOpeningHandler from 'drive/web/modules/views/Folder/createFileOpeningHandler'
 import { useSyncingFakeFile } from './useSyncingFakeFile'
 import { isReferencedByShareInSharingContext } from 'drive/web/modules/views/Folder/syncHelpers'
+import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
 
 // TODO: extraColumns is then passed to 'FileListHeader', 'AddFolder',
 // and 'File' (this one from a 'syncingFakeFile' and a normal file).
@@ -73,7 +74,8 @@ const FolderViewBody = ({
         navigateToFile,
         replaceCurrentUrl: url => (window.location.href = url),
         openInNewTab: url => window.open(url, '_blank'),
-        routeTo: url => router.push(url)
+        routeTo: url => router.push(url),
+        isOnlyOfficeEnabled: isOnlyOfficeEnabled()
       })({
         event,
         file,
