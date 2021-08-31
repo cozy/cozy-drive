@@ -5,7 +5,7 @@ import { setupStoreAndClient } from 'test/setup'
 import AddFolder, { AddFolder as DumbAddFolder } from './AddFolder'
 import flag from 'cozy-flags'
 import { createFolder } from 'drive/web/modules/navigation/duck/actions'
-const originalFlag = jest.requireActual('cozy-flags')
+const originalFlag = jest.requireActual('cozy-flags').default
 
 jest.mock('drive/web/modules/navigation/duck/actions', () => ({
   createFolder: jest.fn(() => async () => {})
