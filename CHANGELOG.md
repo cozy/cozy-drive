@@ -1,3 +1,9 @@
+# 1.37.1
+
+## 🐛 Bug Fixes
+
+* Fixed OnlyOffice shared files links when user hasn't OnlyOffice activated
+
 # 1.37.0
 
 ## 🐛 Bug Fixes
