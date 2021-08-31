@@ -32,6 +32,7 @@ describe('AddFolder', () => {
         if (name === 'drive.client-migration.enabled') {
           return true
         } else {
+          console.log('original flag : ', originalFlag)
           return originalFlag.apply(this, arguments)
         }
       })

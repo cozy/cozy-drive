@@ -19,16 +19,19 @@ const forceFileDownload = (href, filename) => {
   document.body.removeChild(element)
 }
 
-export const downloadFile = async (client, vaultClient, file) => {
-  // TODO check if file encrypted
+export const downloadFile = async (
+  client,
+  file,
+  { vaultClient, encryptionKey }
+) => {
   // TODO check vaultclient
-  const encrypted = true
-  if (encrypted) {
+  if (encryptionKey) {
+    console.log('download file with enc keyu ; ', encryptionKey)
     const resp = await client
       .collection('io.cozy.files')
       .fetchFileContentById(file._id)
     const cipher = await resp.arrayBuffer()
-    const decryptedFile = await vaultClient.decryptFile(cipher)
+    const decryptedFile = await vaultClient.decryptFile(cipher, encryptionKey)
     const url = URL.createObjectURL(
       new Blob([decryptedFile], { type: file.type })
     )

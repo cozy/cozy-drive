@@ -9,6 +9,7 @@ import { isMobileApp } from 'cozy-device-helper'
 import { openLocalFileCopy } from 'drive/mobile/modules/offline/duck'
 
 import { downloadFile } from './helpers'
+import { getEncryptionKey } from 'drive/web/modules/selectors'
 
 class AsyncActionButton extends React.Component {
   state = {
@@ -59,20 +60,25 @@ const OpenWithCordovaButton = connect(
   />
 ))
 
-const DownloadButton = ({ t, file }) => {
+const DownloadButton = ({ t, file, encryptionKey }) => {
+  console.log('download button in no viewer')
   const client = useClient()
   const vaultClient = useVaultClient()
   return (
     <Button
-      onClick={() => downloadFile(client, vaultClient, file)}
+      onClick={() => downloadFile(client, file, { vaultClient, encryptionKey })}
       label={t('Viewer.noviewer.download')}
     />
   )
 }
 
-const NoViewerButton = ({ file, t }) => {
+const NoViewerButton = ({ file, t, encryptionKey }) => {
   if (isMobileApp()) return <OpenWithCordovaButton t={t} file={file} />
-  else return <DownloadButton t={t} file={file} />
+  else return <DownloadButton t={t} file={file} encryptionKey={encryptionKey} />
 }
 
-export default NoViewerButton
+const mapStateToProps = state => ({
+  encryptionKey: getEncryptionKey(state)
+})
+
+export default connect(mapStateToProps)(NoViewerButton)

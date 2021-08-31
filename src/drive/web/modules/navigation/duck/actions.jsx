@@ -38,6 +38,7 @@ export const uploadFiles = (
   files,
   dirId,
   sharingState,
+  encryptionKey,
   fileUploadedCallback = () => null
 ) => dispatch => {
   dispatch(
@@ -45,6 +46,7 @@ export const uploadFiles = (
       files,
       dirId,
       sharingState, // used to know if files are shared for conflicts management
+      encryptionKey,
       fileUploadedCallback,
       (loaded, quotas, conflicts, networkErrors, errors, updated) =>
         dispatch(
@@ -151,22 +153,41 @@ export const createFolder = (
     }
 
     try {
-      const dir = await client.create('io.cozy.files', {
-        name: name,
-        dirId: currentFolderId,
-        type: 'directory'
-      })
-      if (isEncryptedFolder) {
-        const key = await vaultClient.generateEncryptionKey()
-        await client.create('io.cozy.files.encryption', {
-          dirID: dir.data._id,
-          key: key.encryptedKey
+      if (!isEncryptedFolder) {
+        await client.create('io.cozy.files', {
+          name: name,
+          dirId: currentFolderId,
+          type: 'directory'
         })
+      } else {
+        // TODO: the relationship is a has-many-file, which is quite confusing and poorly documented
+        // Also, the has-many-file is made for albums, we might have problems in fetchMore for instance:
+        // https://github.com/cozy/cozy-client/blob/3872bb4981ead5ba7775c7b72cff1bf47bcdeed7/packages/cozy-client/src/associations/HasManyFiles.js#L25
+        const dirData = {
+          name: name,
+          dirId: currentFolderId,
+          type: 'directory'
+        }
+        const { data: dir } = await client.create('io.cozy.files', dirData)
+        //await client.save({ ...encryption, dir_id: dir._id })
+
+        const docId = `io.cozy.files/${dir._id}` //TODO use const io.cozy.files
+        const key = await vaultClient.generateEncryptionKey()
+        const { data: encryption } = await client.create(
+          'io.cozy.files.encryption',
+          {
+            _id: docId,
+            key: key.encryptedKey.encryptedString
+          }
+        )
+        const hydratedDir = client.hydrateDocument(dir)
+        hydratedDir.encryption.addById(encryption._id)
       }
     } catch (err) {
       if (err.response && err.response.status === HTTP_CODE_CONFLICT) {
         Alerter.error('alert.folder_name', { folderName: name })
       } else {
+        console.log(err)
         Alerter.error('alert.folder_generic')
       }
       throw err

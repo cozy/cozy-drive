@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux'
 import flag from 'cozy-flags'
+import { get } from 'lodash'
+import { Q } from 'cozy-client'
 
 import logger from 'lib/logger'
 import { CozyFile } from 'models'
@@ -141,8 +143,10 @@ export const processNextFile = (
   fileUploadedCallback,
   queueCompletedCallback,
   dirID,
-  sharingState
+  sharingState,
+  encryptionKey
 ) => async (dispatch, getState, { client, vaultClient }) => {
+  console.log('upload with enc key : ', encryptionKey)
   let error = null
   if (!client) {
     throw new Error(
@@ -174,6 +178,7 @@ export const processNextFile = (
         : {}
       const uploadedFile = await uploadFile(client, file, dirID, {
         vaultClient,
+        encryptionKey,
         ...withProgress
       })
 
@@ -227,7 +232,8 @@ export const processNextFile = (
       fileUploadedCallback,
       queueCompletedCallback,
       dirID,
-      sharingState
+      sharingState,
+      encryptionKey
     )
   )
 }
@@ -261,6 +267,15 @@ const createFolder = async (client, name, dirID) => {
   return resp.data
 }
 
+const getEncryptionInfo = async (client, dirID) => {
+  const dir = await client.query(
+    Q('io.cozy.files')
+      .getById(dirID)
+      .include(['encryption'])
+  )
+  return dir.included && dir.included.length > 0 ? dir.included[0] : null
+}
+
 const uploadFile = async (client, file, dirID, options = {}) => {
   /** We have a bug with Chrome returning SPDY_ERROR_PROTOCOL.
    * This is certainly caused by the couple HTTP2 / HAProxy / CozyStack
@@ -290,28 +305,39 @@ const uploadFile = async (client, file, dirID, options = {}) => {
       }
     }
   }
+
   const onUploadProgress = options.onUploadProgress
-  const vaultClient = options.vaultClient
-  // TODO check if encrypted dir and if vault is unlock
-  // TODO use web worker
-  const fr = new FileReader()
-  fr.onload = async () => {
-    const encryptedFile = await vaultClient.encryptFile(fr.result)
+  const encryptionKey = options.encryptionKey
+  //const encryption = await getEncryptionInfo(client, dirID)
+  if (encryptionKey) {
+    // TODO use web worker
+    const vaultClient = options.vaultClient
+    const fr = new FileReader()
+    fr.onload = async () => {
+      // TODO: need to pass encryption dir enc key
+      const encryptedFile = await vaultClient.encryptFile(
+        fr.result,
+        encryptionKey
+      )
+      const resp = await client
+        .collection('io.cozy.files')
+        .createFile(encryptedFile, {
+          name: file.name,
+          dirId: dirID,
+          onUploadProgress
+        })
+      return resp.data
+    }
+    fr.readAsArrayBuffer(file)
+  } else {
     const resp = await client
       .collection('io.cozy.files')
-      .createFile(encryptedFile, {
-        name: file.name,
-        dirId: dirID,
-        onUploadProgress
-      })
+      .createFile(file, { dirId: dirID, onUploadProgress })
+
     return resp.data
   }
-  fr.readAsArrayBuffer(file)
-  /*const resp = await client
-    .collection('io.cozy.files')
-    .createFile(file, { dirId: dirID, onUploadProgress })
-    
-  return resp.data*/
+
+  // TODO check if encrypted dir and if vault is unlock
 }
 
 /*
@@ -372,6 +398,7 @@ export const addToUploadQueue = (
   files,
   dirID,
   sharingState,
+  encryptionKey,
   fileUploadedCallback,
   queueCompletedCallback
 ) => async dispatch => {
@@ -384,7 +411,8 @@ export const addToUploadQueue = (
       fileUploadedCallback,
       queueCompletedCallback,
       dirID,
-      sharingState
+      sharingState,
+      encryptionKey
     )
   )
 }

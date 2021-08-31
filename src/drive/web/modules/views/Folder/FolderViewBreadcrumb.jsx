@@ -5,16 +5,16 @@ import { MobileAwareBreadcrumb as Breadcrumb } from 'drive/web/modules/navigatio
 import { buildFolderQuery } from 'drive/web/modules/queries'
 
 const FolderViewBreadcrumb = ({
-  currentFolderId,
+  currentFolder,
   getBreadcrumbPath,
   navigateToFolder
 }) => {
-  const currentFolderQuery = buildFolderQuery(currentFolderId)
+  /*const currentFolderQuery = buildFolderQuery(currentFolderId)
   const currentFolderQueryResults = useQuery(
     currentFolderQuery.definition,
     currentFolderQuery.options
   )
-  const currentFolder = get(currentFolderQueryResults, 'data[0]')
+  const currentFolder = get(currentFolderQueryResults, 'data[0]')*/
   const path = currentFolder ? getBreadcrumbPath(currentFolder) : []
 
   const onBreadcrumbClick = useCallback(({ id }) => navigateToFolder(id), [

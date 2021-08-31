@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 import { useClient } from 'cozy-client'
 import { useVaultClient } from 'cozy-keys-lib'
@@ -9,15 +10,17 @@ import Button from 'cozy-ui/transpiled/react/Button'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
 import { downloadFile } from '../helpers'
+import { getEncryptionKey } from 'drive/web/modules/selectors'
 
-const DownloadButton = ({ file }) => {
+const DownloadButton = ({ file, encryptionKey }) => {
   const { t } = useI18n()
   const client = useClient()
   const vaultClient = useVaultClient()
 
+  console.log('encryption key in dl button component: ', encryptionKey)
   const handleClick = async file => {
     try {
-      await downloadFile(client, vaultClient, file)
+      await downloadFile(client, file, { vaultClient, encryptionKey })
     } catch (error) {
       Alerter.info('Viewer.error.generic')
     }
@@ -34,8 +37,12 @@ const DownloadButton = ({ file }) => {
   )
 }
 
+const mapStateToProps = state => ({
+  encryptionKey: getEncryptionKey(state)
+})
+
 DownloadButton.propTypes = {
   file: PropTypes.object.isRequired
 }
 
-export default DownloadButton
+export default connect(mapStateToProps)(DownloadButton)

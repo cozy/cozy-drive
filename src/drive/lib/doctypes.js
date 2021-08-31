@@ -8,6 +8,7 @@ export const DOCTYPE_PHOTOS_SETTINGS = 'io.cozy.photos.settings'
 export const DOCTYPE_APPS = 'io.cozy.apps'
 export const DOCTYPE_CONTACTS_VERSION = 2
 
+// TODO: the has-many-files is very confusing, and the doc unclear :(
 export const schema = {
   files: {
     doctype: DOCTYPE_FILES,
@@ -15,6 +16,10 @@ export const schema = {
       old_versions: {
         type: 'has-many',
         doctype: 'io.cozy.files.versions'
+      },
+      encryption: {
+        type: 'io.cozy.files:has-many',
+        doctype: 'io.cozy.files.encryption'
       }
     }
   },

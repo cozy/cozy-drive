@@ -32,6 +32,7 @@ import RatingModal from 'drive/mobile/modules/settings/RatingModal'
 import FirstUploadModal from 'drive/mobile/modules/mediaBackup/FirstUploadModal'
 import {
   buildDriveQuery,
+  buildFolderQuery,
   buildFileWithSpecificMetadataAttributeQuery
 } from 'drive/web/modules/queries'
 import {
@@ -116,11 +117,18 @@ const DriveView = ({
     sortAttribute: sortOrder.attribute,
     sortOrder: sortOrder.order
   })
+  const currentFolderQuery = buildFolderQuery(currentFolderId)
 
   const foldersResult = useQuery(folderQuery.definition, folderQuery.options)
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
+  const currentFolderResult = useQuery(
+    currentFolderQuery.definition,
+    currentFolderQuery.options
+  )
 
   const allResults = [foldersResult, filesResult]
+  const currentFolder = get(currentFolderResult, 'data[0]')
+  const encryptionKey = get(currentFolder, 'encryption.data[0].key')
 
   const isInError = allResults.some(result => result.fetchStatus === 'failed')
   const isLoading = allResults.some(
@@ -203,7 +211,7 @@ const DriveView = ({
         {currentFolderId && (
           <FolderViewBreadcrumb
             getBreadcrumbPath={geTranslatedBreadcrumbPath}
-            currentFolderId={currentFolderId}
+            currentFolder={currentFolder}
             navigateToFolder={navigateToFolder}
           />
         )}
@@ -230,6 +238,7 @@ const DriveView = ({
           navigateToFile={navigateToFile}
           actions={actions}
           queryResults={[foldersResult, filesResult]}
+          encryptionKey={encryptionKey}
           canSort
           currentFolderId={currentFolderId}
           extraColumns={extraColumns}

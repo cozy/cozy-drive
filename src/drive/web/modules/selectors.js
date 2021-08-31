@@ -38,6 +38,27 @@ export const getParentFolder = (rootState, parentFolderId) => {
   return null
 }
 
+export const getEncryptionKey = rootState => {
+  const folder = getDisplayedFolder(rootState)
+  if (folder) {
+    const refsBy = get(folder, 'referenced_by', [])
+    const encryptionRef = refsBy.find(
+      ref => ref.type === 'io.cozy.files.encryption'
+    )
+    if (!encryptionRef) {
+      return null
+    }
+    const doc = getDocumentFromState(
+      rootState,
+      'io.cozy.files.encryption',
+      encryptionRef.id
+    )
+    console.log('encryption doc retreived from state: ', doc)
+    return doc ? doc.key : null
+  }
+  return null
+}
+
 const getFolderContentQueries = (rootState, folderId) => {
   const queries = rootState.cozy.queries
   const folderContentQueries = Object.entries(queries)
