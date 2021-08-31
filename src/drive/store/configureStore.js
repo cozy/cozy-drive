@@ -1,5 +1,6 @@
 /* global __DEVELOPMENT__, __TARGET__ */
 import { compose, createStore, applyMiddleware } from 'redux'
+import flag from 'cozy-flags'
 import { createLogger } from 'redux-logger'
 import RavenMiddleWare from 'redux-raven-middleware'
 import {
@@ -35,7 +36,7 @@ const configureStore = options => {
     middlewares.push(createTrackerMiddleware())
   }
 
-  if (options.logger === true) {
+  if (flag('drive.logger')) {
     middlewares.push(createLogger(loggerOptions()))
   }
 

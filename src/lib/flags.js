@@ -24,4 +24,5 @@ const flagsList = () => {
   flag('viewer-bottomSheet-clamp')
   flag('drive.onlyoffice.forceReadOnlyOnDesktop')
   flag('drive.onlyoffice.editorToolbarHeight')
+  flag('drive.logger')
 }
