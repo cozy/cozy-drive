@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 import flag from 'cozy-flags'
-import { get } from 'lodash'
 import { Q } from 'cozy-client'
 
 import logger from 'lib/logger'
+import { encryptFile } from 'drive/lib/encryption'
 import { CozyFile } from 'models'
 
 //!TODO Remove this method from Scanner and use from cozy-client files models
@@ -308,14 +308,13 @@ const uploadFile = async (client, file, dirID, options = {}) => {
 
   const onUploadProgress = options.onUploadProgress
   const encryptionKey = options.encryptionKey
-  //const encryption = await getEncryptionInfo(client, dirID)
   if (encryptionKey) {
     // TODO use web worker
     const vaultClient = options.vaultClient
     const fr = new FileReader()
     fr.onload = async () => {
-      // TODO: need to pass encryption dir enc key
-      const encryptedFile = await vaultClient.encryptFile(
+      const encryptedFile = await encryptFile(
+        vaultClient,
         fr.result,
         encryptionKey
       )

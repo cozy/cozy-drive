@@ -1,3 +1,4 @@
+import { decryptFile } from 'drive/lib/encryption'
 import has from 'lodash/has'
 
 export const hasCertifications = ({ file }) =>
@@ -31,7 +32,7 @@ export const downloadFile = async (
       .collection('io.cozy.files')
       .fetchFileContentById(file._id)
     const cipher = await resp.arrayBuffer()
-    const decryptedFile = await vaultClient.decryptFile(cipher, encryptionKey)
+    const decryptedFile = await decryptFile(vaultClient, cipher, encryptionKey)
     const url = URL.createObjectURL(
       new Blob([decryptedFile], { type: file.type })
     )

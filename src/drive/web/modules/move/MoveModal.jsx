@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 
 import { Query, cancelable, withClient, Q } from 'cozy-client'
+import { withVaultUnlockContext } from 'cozy-keys-lib'
 import { CozyFile } from 'models'
 import logger from 'lib/logger'
 import { RefreshableSharings } from 'cozy-sharing'
@@ -28,6 +29,7 @@ import {
   buildMoveOrImportQuery,
   buildOnlyFolderQuery
 } from 'drive/web/modules/queries'
+import { isEncryptedDir } from '../../../lib/encryption'
 
 const styles = theme => ({
   paper: {
@@ -79,12 +81,28 @@ export class MoveModal extends React.Component {
   }
 
   moveEntries = async callback => {
-    const { client, entries, onClose, sharingState, t } = this.props
+    // TODO encrypt/decrypt files
+    const {
+      client,
+      vaultClient,
+      entries,
+      onClose,
+      sharingState,
+      t
+    } = this.props
     const { sharedPaths } = sharingState
     const { folderId } = this.state
     try {
       this.setState({ isMoveInProgress: true })
       const trashedFiles = []
+      const response = await this.registerCancelable(
+        client.query(Q('io.cozy.files').getById(folderId))
+      )
+      const targetName = response.data.name
+      console.log('target : ', response)
+      if (isEncryptedDir(response.data)) {
+      }
+
       await Promise.all(
         entries.map(async entry => {
           const targetPath = await this.registerCancelable(
@@ -100,10 +118,6 @@ export class MoveModal extends React.Component {
         })
       )
 
-      const response = await this.registerCancelable(
-        client.query(Q('io.cozy.files').getById(folderId))
-      )
-      const targetName = response.data.name
       Alerter.info('Move.success', {
         subject: entries.length === 1 ? entries[0].name : '',
         target: targetName,
@@ -173,7 +187,7 @@ export class MoveModal extends React.Component {
   }
 
   render() {
-    const { onClose, entries, classes } = this.props
+    const { onClose, entries, classes, showUnlockForm } = this.props
     const { folderId, isMoveInProgress } = this.state
     const contentQuery = buildMoveOrImportQuery(folderId)
     const folderQuery = buildOnlyFolderQuery(folderId)
@@ -266,6 +280,7 @@ export default compose(
   connect(mapStateToProps),
   translate(),
   withClient,
+  withVaultUnlockContext,
   withSharingState,
   withStyles(styles)
 )(MoveModal)

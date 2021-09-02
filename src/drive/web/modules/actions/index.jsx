@@ -18,6 +18,7 @@ import ReplyIcon from 'cozy-ui/transpiled/react/Icons/Reply'
 import ShareIosIcon from 'cozy-ui/transpiled/react/Icons/ShareIos'
 import LinkOutIcon from 'cozy-ui/transpiled/react/Icons/LinkOut'
 import EyeIcon from 'cozy-ui/transpiled/react/Icons/Eye'
+import CozyTheme from 'cozy-ui/transpiled/react/CozyTheme'
 
 import DeleteConfirm from 'drive/web/modules/drive/DeleteConfirm'
 import MoveModal from 'drive/web/modules/move/MoveModal'
@@ -195,13 +196,21 @@ export const move = ({ canMove, pushModal, popModal }) => {
     icon: 'moveto',
     displayCondition: () => canMove,
     action: files =>
-      pushModal(<MoveModal entries={files} onClose={popModal} />),
+      pushModal(
+        <CozyTheme>
+          <MoveModal entries={files} onClose={popModal} />
+        </CozyTheme>
+      ),
     Component: function MoveTo(props) {
       const { t } = useI18n()
       return (
         <ActionMenuItem
           onClick={() =>
-            pushModal(<MoveModal entries={props.files} onClose={popModal} />)
+            pushModal(
+              <CozyTheme>
+                <MoveModal entries={props.files} onClose={popModal} />
+              </CozyTheme>
+            )
           }
           left={<Icon icon={MovetoIcon} />}
         >

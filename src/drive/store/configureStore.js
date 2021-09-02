@@ -12,7 +12,6 @@ import thunkMiddleware from 'redux-thunk'
 import createRootReducer from './rootReducer'
 import { ANALYTICS_URL, getReporterConfiguration } from 'drive/lib/reporter'
 import { connectStoreToHistory } from './connectedRouter'
-import { findLastKey } from 'lodash'
 
 /**
  * Creates the redux store
