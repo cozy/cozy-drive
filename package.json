@@ -120,7 +120,7 @@
     "cozy-flags": "2.6.0",
     "cozy-harvest-lib": "5.3.1",
     "cozy-logger": "1.6.0",
-    "cozy-pouch-link": "23.21.0",
+    "cozy-pouch-link": "^24.3.1",
     "cozy-realtime": "3.13.0",
     "cozy-scanner": "1.1.1",
     "cozy-scripts": "5.1.1",
