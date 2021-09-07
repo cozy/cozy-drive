@@ -44,6 +44,7 @@ const DriveProvider = ({
 
 DriveProvider.propTypes = {
   client: PropTypes.object.isRequired,
+  vaultClient: PropTypes.object.isRequired,
   lang: PropTypes.string.isRequired,
   polyglot: PropTypes.object,
   dictRequire: PropTypes.func

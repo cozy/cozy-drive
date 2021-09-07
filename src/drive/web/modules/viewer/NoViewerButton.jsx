@@ -9,7 +9,7 @@ import { isMobileApp } from 'cozy-device-helper'
 import { openLocalFileCopy } from 'drive/mobile/modules/offline/duck'
 
 import { downloadFile } from './helpers'
-import { getEncryptionKey } from 'drive/web/modules/selectors'
+import { getFolderEncryptionKey } from 'drive/web/modules/selectors'
 
 class AsyncActionButton extends React.Component {
   state = {
@@ -78,7 +78,7 @@ const NoViewerButton = ({ file, t, encryptionKey }) => {
 }
 
 const mapStateToProps = state => ({
-  encryptionKey: getEncryptionKey(state)
+  encryptionKey: getFolderEncryptionKey(state)
 })
 
 export default connect(mapStateToProps)(NoViewerButton)

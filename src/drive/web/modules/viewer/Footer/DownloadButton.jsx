@@ -10,7 +10,7 @@ import Button from 'cozy-ui/transpiled/react/Button'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
 import { downloadFile } from '../helpers'
-import { getEncryptionKey } from 'drive/web/modules/selectors'
+import { getFolderEncryptionKey } from 'drive/web/modules/selectors'
 
 const DownloadButton = ({ file, encryptionKey }) => {
   const { t } = useI18n()
@@ -38,7 +38,7 @@ const DownloadButton = ({ file, encryptionKey }) => {
 }
 
 const mapStateToProps = state => ({
-  encryptionKey: getEncryptionKey(state)
+  encryptionKey: getFolderEncryptionKey(state)
 })
 
 DownloadButton.propTypes = {

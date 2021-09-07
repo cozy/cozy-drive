@@ -2,6 +2,7 @@ import maxBy from 'lodash/maxBy'
 import get from 'lodash/get'
 
 import { getDocumentFromState } from 'cozy-client/dist/store'
+import { DOCTYPE_FILES, DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import { getMirrorQueryId, parseFolderQueryId } from './queries'
@@ -24,7 +25,7 @@ export const getCurrentFileId = rootState => {
 export const getDisplayedFolder = rootState => {
   const folderId = getCurrentFolderId(rootState)
   if (folderId) {
-    const doc = getDocumentFromState(rootState, 'io.cozy.files', folderId)
+    const doc = getDocumentFromState(rootState, DOCTYPE_FILES, folderId)
     return doc
   }
   return null
@@ -32,28 +33,32 @@ export const getDisplayedFolder = rootState => {
 
 export const getParentFolder = (rootState, parentFolderId) => {
   if (parentFolderId) {
-    const doc = getDocumentFromState(rootState, 'io.cozy.files', parentFolderId)
+    const doc = getDocumentFromState(rootState, DOCTYPE_FILES, parentFolderId)
     return doc
   }
   return null
 }
 
-export const getEncryptionKey = rootState => {
-  const folder = getDisplayedFolder(rootState)
+export const getFolderEncryptionKey = (rootState, { folderId } = {}) => {
+  let folder
+  if (folderId) {
+    folder = getDocumentFromState(rootState, DOCTYPE_FILES, folderId) //getDisplayedFolder(rootState)
+  } else {
+    folder = getDisplayedFolder(rootState)
+  }
   if (folder) {
     const refsBy = get(folder, 'referenced_by', [])
     const encryptionRef = refsBy.find(
-      ref => ref.type === 'io.cozy.files.encryption'
+      ref => ref.type === DOCTYPE_FILES_ENCRYPTION
     )
     if (!encryptionRef) {
       return null
     }
     const doc = getDocumentFromState(
       rootState,
-      'io.cozy.files.encryption',
+      DOCTYPE_FILES_ENCRYPTION,
       encryptionRef.id
     )
-    console.log('encryption doc retreived from state: ', doc)
     return doc ? doc.key : null
   }
   return null
@@ -112,7 +117,7 @@ export const getFolderContent = (rootState, folderId) => {
       otherQueryResults ? otherQueryResults.data : []
     )
     return allContent.map(fileId => {
-      return getDocumentFromState(rootState, 'io.cozy.files', fileId)
+      return getDocumentFromState(rootState, DOCTYPE_FILES, fileId)
     })
   } else {
     return null

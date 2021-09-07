@@ -24,12 +24,21 @@ import LoadMore from 'drive/web/modules/move/LoadMore'
 import Footer from 'drive/web/modules/move/Footer'
 import Topbar from 'drive/web/modules/move/Topbar'
 
-import { getDisplayedFolder } from 'drive/web/modules/selectors'
+import {
+  getDisplayedFolder,
+  getFolderEncryptionKey
+} from 'drive/web/modules/selectors'
 import {
   buildMoveOrImportQuery,
   buildOnlyFolderQuery
 } from 'drive/web/modules/queries'
-import { isEncryptedDir } from '../../../lib/encryption'
+import {
+  isEncryptedDir,
+  isEncryptedFile,
+  encryptAndUploadExistingFile,
+  decryptAndUploadExistingFile,
+  reencryptAndUploadExistingFile
+} from 'drive/lib/encryption'
 
 const styles = theme => ({
   paper: {
@@ -80,8 +89,51 @@ export class MoveModal extends React.Component {
     this.promises = []
   }
 
+  moveEncryptedEntry = async (
+    client,
+    vaultClient,
+    entry,
+    isEncryptedTarget
+  ) => {
+    const isEncryptedEntry = isEncryptedFile(entry)
+    if (isEncryptedTarget && !isEncryptedEntry) {
+      // The clear file is moved to an encrypted directory
+      const encryptionKey = getFolderEncryptionKey(client.store.getState(), {
+        folderId: this.state.folderId
+      })
+      await encryptAndUploadExistingFile(
+        client,
+        vaultClient,
+        entry,
+        encryptionKey
+      )
+    } else if (!isEncryptedTarget && isEncryptedEntry) {
+      // The encrypted file is moved to a clear directory
+      const encryptionKey = getFolderEncryptionKey(client.store.getState(), {
+        folderId: this.props.displayedFolder._id
+      })
+      await decryptAndUploadExistingFile(
+        client,
+        vaultClient,
+        entry,
+        encryptionKey
+      )
+    } else if (isEncryptedTarget && isEncryptedEntry) {
+      // The encrypted file is moved to another encrypted directory
+      const encryptionKey = getFolderEncryptionKey(client.store.getState(), {
+        folderId: this.state.folderId
+      })
+      const decryptionKey = getFolderEncryptionKey(client.store.getState(), {
+        folderId: this.props.displayedFolder._id
+      })
+      await reencryptAndUploadExistingFile(client, vaultClient, entry, {
+        decryptionKey,
+        encryptionKey
+      })
+    }
+  }
+
   moveEntries = async callback => {
-    // TODO encrypt/decrypt files
     const {
       client,
       vaultClient,
@@ -99,12 +151,20 @@ export class MoveModal extends React.Component {
         client.query(Q('io.cozy.files').getById(folderId))
       )
       const targetName = response.data.name
-      console.log('target : ', response)
-      if (isEncryptedDir(response.data)) {
-      }
-
+      const isEncryptedTarget = isEncryptedDir(response.data)
       await Promise.all(
         entries.map(async entry => {
+          const isEncryptedFileEntry = isEncryptedFile(entry)
+          if (isEncryptedTarget || isEncryptedFileEntry) {
+            await this.registerCancelable(
+              this.moveEncryptedEntry(
+                client,
+                vaultClient,
+                entry,
+                isEncryptedTarget
+              )
+            )
+          }
           const targetPath = await this.registerCancelable(
             CozyFile.getFullpath(folderId, entry.name)
           )
@@ -138,6 +198,7 @@ export class MoveModal extends React.Component {
     }
   }
 
+  // TODO: handle cancel move for encryption
   cancelMove = async (entries, trashedFiles, callback) => {
     const { client } = this.props
     try {
@@ -187,7 +248,7 @@ export class MoveModal extends React.Component {
   }
 
   render() {
-    const { onClose, entries, classes, showUnlockForm } = this.props
+    const { onClose, entries, classes } = this.props
     const { folderId, isMoveInProgress } = this.state
     const contentQuery = buildMoveOrImportQuery(folderId)
     const folderQuery = buildOnlyFolderQuery(folderId)
@@ -234,6 +295,7 @@ export class MoveModal extends React.Component {
                     hasNoData={data.length === 0}
                   >
                     <FileList
+                      folderId={folderId}
                       files={data}
                       targets={entries}
                       navigateTo={this.navigateTo}

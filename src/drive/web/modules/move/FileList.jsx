@@ -1,19 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import get from 'lodash/get'
 import { DumbFile as File } from 'drive/web/modules/filelist/File'
 import { useVaultUnlockContext } from 'cozy-keys-lib'
-import { isEncryptedDir } from 'drive/lib/encryption'
+import {
+  isEncryptedDir,
+  isUnSupportedFileForEncryption
+} from 'drive/lib/encryption'
 
 const getDirsSubjects = subjects => {
-  return subjects.filter(
-    subject => get(subject, 'attributes.type') === 'directory'
-  )
+  return subjects.filter(subject => subject.type === 'directory')
 }
 
 const getEncryptedDirs = subjects => {
   return subjects.filter(subject => {
-    if (get(subject, 'attributes.type') !== 'directory') {
+    if (subject.type !== 'directory') {
       return false
     }
     return isEncryptedDir(subject)
@@ -21,22 +21,18 @@ const getEncryptedDirs = subjects => {
 }
 
 const isInvalidMoveTarget = (subjects, target) => {
-  const isASubject = subjects.find(subject => subject._id === target._id)
-  const isAFile = target.type === 'file'
-  if (isAFile || isASubject) {
+  const isTargetASubject = subjects.find(subject => subject._id === target._id)
+  const isTargetAFile = target.type === 'file'
+  if (isTargetAFile || isTargetASubject) {
     return true
   }
 
   const dirs = getDirsSubjects(subjects)
+  const isTargetEncrypted = getEncryptedDirs([target]).length > 0
   if (dirs.length > 0) {
     const encryptedDirsSubjects = getEncryptedDirs(dirs)
     const hasEncryptedSubjects = encryptedDirsSubjects.length > 0
-    const isTargetEncrypted = getEncryptedDirs([target]).length > 0
 
-    if (hasEncryptedSubjects && !isTargetEncrypted) {
-      // Do not allow moving an encrypted folder to a non-encrypted one
-      return true
-    }
     if (!hasEncryptedSubjects && isTargetEncrypted) {
       // Do not allow moving a non-encrypted folder to an encrypted one
       return true
@@ -44,6 +40,16 @@ const isInvalidMoveTarget = (subjects, target) => {
     if (hasEncryptedSubjects && encryptedDirsSubjects.length !== dirs.length) {
       // Do not allow moving encrypted + non encrypted folders
       return true
+    }
+  }
+  if (isTargetEncrypted) {
+    // Do not allow moving unsupported files in encrypted folder
+    for (const subject of subjects) {
+      const isFile = subject.type === 'file'
+      const mime = subject.mime
+      if (isFile && isUnSupportedFileForEncryption(mime)) {
+        return true
+      }
     }
   }
   return false
@@ -56,6 +62,7 @@ const FileList = ({ targets, files, navigateTo }) => {
     const dir = files.find(f => f._id === folderId)
     const shouldUnlock = isEncryptedDir(dir)
     if (shouldUnlock) {
+      // TODO query encryption key to get it in the store
       return showUnlockForm({ onUnlock: () => navigateTo(dir) })
     } else {
       return navigateTo(dir)
@@ -85,9 +92,11 @@ const FileList = ({ targets, files, navigateTo }) => {
 }
 
 FileList.propTypes = {
+  folderId: PropTypes.string.isRequired,
   targets: PropTypes.array.isRequired,
   files: PropTypes.array.isRequired,
-  navigateTo: PropTypes.func.isRequired
+  navigateTo: PropTypes.func.isRequired,
+  setEncryptionKey: PropTypes.func.isRequired
 }
 
 export default FileList

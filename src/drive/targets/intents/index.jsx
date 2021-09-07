@@ -14,6 +14,7 @@ import registerClientPlugins from 'drive/lib/registerClientPlugins'
 import { schema } from 'drive/lib/doctypes'
 import appMetadata from 'drive/appMetadata'
 import IntentHandler from 'drive/web/modules/services'
+import { WebVaultClient } from 'cozy-keys-lib'
 
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.getElementById('main')
@@ -31,6 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
     schema
   })
 
+  const vaultClient = new WebVaultClient(cozyUrl)
+
   cozy.client.init({
     cozyURL: cozyUrl,
     token: data.token
@@ -40,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
   render(
     <DriveProvider
       client={client}
+      vaultClient={vaultClient}
       lang={data.locale}
       dictRequire={lang => require(`drive/locales/${lang}`)}
     >

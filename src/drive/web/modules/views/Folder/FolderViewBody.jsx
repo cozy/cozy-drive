@@ -56,7 +56,6 @@ const FolderViewBody = ({
   const { isBigThumbnail, toggleThumbnailSize } = useContext(
     ThumbnailSizeContext
   )
-  console.log('enter folder view with enc key ', encryptionKey)
   const vaultClient = useVaultClient()
   const { showUnlockForm } = useVaultUnlockContext()
   const { sharingsValue } = useContext(AcceptingSharingContext)
@@ -154,6 +153,7 @@ const FolderViewBody = ({
     () => {
       const checkLock = async () => {
         const isLocked = await vaultClient.isLocked()
+        console.log('is lock : ', isLocked)
         setShouldUnlock(isLocked)
       }
       if (encryptionKey) {

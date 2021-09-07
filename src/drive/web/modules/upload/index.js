@@ -3,7 +3,7 @@ import flag from 'cozy-flags'
 import { Q } from 'cozy-client'
 
 import logger from 'lib/logger'
-import { encryptFile } from 'drive/lib/encryption'
+import { encryptAndUploadNewFile } from 'drive/lib/encryption'
 import { CozyFile } from 'models'
 
 //!TODO Remove this method from Scanner and use from cozy-client files models
@@ -313,19 +313,17 @@ const uploadFile = async (client, file, dirID, options = {}) => {
     const vaultClient = options.vaultClient
     const fr = new FileReader()
     fr.onload = async () => {
-      const encryptedFile = await encryptFile(
+      return encryptAndUploadNewFile(
+        client,
         vaultClient,
         fr.result,
-        encryptionKey
-      )
-      const resp = await client
-        .collection('io.cozy.files')
-        .createFile(encryptedFile, {
+        encryptionKey,
+        {
           name: file.name,
-          dirId: dirID,
+          dirID,
           onUploadProgress
-        })
-      return resp.data
+        }
+      )
     }
     fr.readAsArrayBuffer(file)
   } else {

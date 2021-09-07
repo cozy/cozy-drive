@@ -5,13 +5,13 @@ import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 import {
   getDisplayedFolder,
   getCurrentFolderId,
-  getEncryptionKey
+  getFolderEncryptionKey
 } from 'drive/web/modules/selectors'
 
 const mapStateToProps = state => {
   const displayedFolder = getDisplayedFolder(state)
   const folderId = getCurrentFolderId(state)
-  const encryptionKey = getEncryptionKey(state)
+  const encryptionKey = getFolderEncryptionKey(state)
 
   const insideRegularFolder =
     folderId && displayedFolder && displayedFolder.id !== ROOT_DIR_ID

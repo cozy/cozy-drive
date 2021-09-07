@@ -262,7 +262,10 @@ export const buildEncryptionFolderInfoQuery = folderId => ({
 //}
 
 export const buildOnlyFolderQuery = folderId => ({
-  definition: () => Q('io.cozy.files').getById(folderId),
+  definition: () =>
+    Q('io.cozy.files')
+      .getById(folderId)
+      .include(['encryption']),
   options: {
     as: 'onlyfolder-' + folderId,
     fetchPolicy: defaultFetchPolicy,
