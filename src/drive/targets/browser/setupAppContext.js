@@ -37,7 +37,8 @@ const setupApp = memoize(() => {
   if (!Document.cozyClient) {
     Document.registerClient(client)
   }
-  const vaultClient = new WebVaultClient(cozyUrl)
+  console.log('create vault client from setup app')
+  const vaultClient = new WebVaultClient(cozyUrl, { isPassContext: false })
 
   const locale = data.locale
   registerClientPlugins(client)
