@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
-import Icon from 'cozy-ui/transpiled/react/Icon'
-import Lock from 'cozy-ui/transpiled/react/Icons/Lock'
+import EncryptedFolderIcon from 'drive/web/modules/views/Folder/EncryptedFolderIcon'
+
 import { useVaultUnlockContext } from 'cozy-keys-lib'
 
 import {
@@ -19,7 +19,7 @@ const AddEncryptedFolderItem = translate()(({ t, addEncryptedFolder }) => {
     <ActionMenuItem
       data-test-id="add-encrypted-folder-link"
       onClick={() => showUnlockForm({ onUnlock: addEncryptedFolder })}
-      left={<Icon icon={Lock} />}
+      left={<EncryptedFolderIcon size={16} />}
     >
       {t('toolbar.menu_new_encrypted_folder')}
     </ActionMenuItem>

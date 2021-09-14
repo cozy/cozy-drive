@@ -13,13 +13,12 @@ import IconText from 'cozy-ui/transpiled/react/Icons/FileTypeText'
 import IconVideo from 'cozy-ui/transpiled/react/Icons/FileTypeVideo'
 import IconZip from 'cozy-ui/transpiled/react/Icons/FileTypeZip'
 import IconNote from 'cozy-ui/transpiled/react/Icons/FileTypeNote'
-import IconEncrypted from 'cozy-ui/transpiled/react/Icons/Lock'
 
 import { getFileMimetype } from 'drive/lib/getFileMimetype'
 
-const getMimeTypeIcon = (isDirectory, name, mime, { isEncrypted = false }) => {
+const getMimeTypeIcon = (isDirectory, name, mime) => {
   if (isDirectory) {
-    return isEncrypted ? IconEncrypted : IconFolder
+    return IconFolder
   } else if (/\.cozy-note$/.test(name)) {
     return IconNote
   } else {
