@@ -3,6 +3,7 @@ import get from 'lodash/get'
 
 import { getDocumentFromState } from 'cozy-client/dist/store'
 import { DOCTYPE_FILES, DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
+import { getEncryptiondRef } from 'drive/lib/encryption'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import { getMirrorQueryId, parseFolderQueryId } from './queries'
@@ -39,18 +40,19 @@ export const getParentFolder = (rootState, parentFolderId) => {
   return null
 }
 
+export const isEncryptedFolder = (rootState, { folderId } = {}) => {
+  const folder = folderId
+    ? getDocumentFromState(rootState, DOCTYPE_FILES, folderId)
+    : getDisplayedFolder(rootState)
+  return getEncryptiondRef(folder) || false
+}
+
 export const getFolderEncryptionKey = (rootState, { folderId } = {}) => {
-  let folder
-  if (folderId) {
-    folder = getDocumentFromState(rootState, DOCTYPE_FILES, folderId) //getDisplayedFolder(rootState)
-  } else {
-    folder = getDisplayedFolder(rootState)
-  }
+  const folder = folderId
+    ? getDocumentFromState(rootState, DOCTYPE_FILES, folderId)
+    : getDisplayedFolder(rootState)
   if (folder) {
-    const refsBy = get(folder, 'referenced_by', [])
-    const encryptionRef = refsBy.find(
-      ref => ref.type === DOCTYPE_FILES_ENCRYPTION
-    )
+    const encryptionRef = getEncryptiondRef(folder)
     if (!encryptionRef) {
       return null
     }

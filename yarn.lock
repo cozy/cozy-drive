@@ -5137,10 +5137,10 @@ cozy-client@16.10.2:
     sift "^6.0.0"
     url-search-params-polyfill "^7.0.0"
 
-cozy-client@24.5.0:
-  version "24.5.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-24.5.0.tgz#8c5682448204ce8ab1cdb3ef60e2ef8cf74aca7c"
-  integrity sha512-4tZSiTPnKskIMTtMGa/o9BtoGAIYQoAPn05xyS3R0wciZ+8MSsAaGL/wsVs7QlZcr4Q8ja73wO8faxF3h0cOPA==
+cozy-client@24.7.0:
+  version "24.7.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-24.7.0.tgz#ed91ff00ef9d490bf203729ea36c43c907c5734c"
+  integrity sha512-5J61fq9MMfu7JMfY4rZT+ufo5/YxEjlvANS2x8wTiRzaKG8Bz5mcGZEXzAiZpi+eHAymXC9fFR9XUcLUI+xLoA==
   dependencies:
     "@cozy/minilog" "1.0.0"
     "@types/jest" "^26.0.20"
@@ -5149,19 +5149,19 @@ cozy-client@24.5.0:
     cozy-device-helper "^1.12.0"
     cozy-flags "2.7.1"
     cozy-logger "^1.6.0"
-    cozy-stack-client "^24.5.0"
+    cozy-stack-client "^24.6.1"
     json-stable-stringify "^1.0.1"
     lodash "^4.17.13"
     microee "^0.0.6"
     node-fetch "^2.6.1"
-    open "^7.0.2"
+    open "^8.0.0"
     prop-types "^15.6.2"
     react-redux "^7.2.0"
     redux "3 || 4"
     redux-thunk "^2.3.0"
     server-destroy "^1.0.1"
     sift "^6.0.0"
-    url-search-params-polyfill "^7.0.0"
+    url-search-params-polyfill "^8.0.0"
 
 cozy-client@^16.10.2:
   version "16.19.0"
@@ -5466,10 +5466,10 @@ cozy-sharing@3.4.2:
     react-autosuggest "^9.4.3"
     react-tooltip "^3.11.1"
 
-cozy-stack-client@24.5.0, cozy-stack-client@^24.5.0:
-  version "24.5.0"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-24.5.0.tgz#8b304a7d4d262698cc80139bc6df76d803ee099f"
-  integrity sha512-/yg/mnS4Kcsp7qpDikU15YsKSo9RKSK46dxB01ckO6lerGENA9w6wPBMNqeZkE9q8YKABryVQQ5VSctgEms+aQ==
+cozy-stack-client@24.6.0:
+  version "24.6.0"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-24.6.0.tgz#0c41c9bc5ee48f2f68ff5d38d3b83b2d2bbd23da"
+  integrity sha512-C2igTOWrakdCWUlUxZ8d4IqJQxIAzrK2eAsQv/NtY4TVKaQZLHxTWpJp9dY5a8G/mWGQyJOGRgTd5b33vEnQig==
   dependencies:
     cozy-flags "2.7.1"
     detect-node "^2.0.4"
@@ -5499,6 +5499,16 @@ cozy-stack-client@^24.0.0:
   version "24.0.0"
   resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-24.0.0.tgz#972a475d403a71b7d39874c0f6cf06f77c3a610b"
   integrity sha512-dPXTrZp201twWv0bLy7a6w9+wWU1YZzhEL1M44cvE7+VDyByi1Llp7x1k8Uzu1I5akEIR0RTVHPFXnN3CKjlzg==
+  dependencies:
+    cozy-flags "2.7.1"
+    detect-node "^2.0.4"
+    mime "^2.4.0"
+    qs "^6.7.0"
+
+cozy-stack-client@^24.6.1:
+  version "24.6.1"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-24.6.1.tgz#7c5330d1bf4000832a3b6860cd3d818ce7ced68a"
+  integrity sha512-0pfxZxLh2o1LEqR2QiBiOuwEsPADmJCQUDA1+RsSK4rq67X2mFQ/mWLUIN3f+5KgUtRVHXQuKZODHs/xht/aTA==
   dependencies:
     cozy-flags "2.7.1"
     detect-node "^2.0.4"
@@ -6016,6 +6026,11 @@ defaults@^1.0.3:
   integrity sha1-xlYFHpgX2f8I7YgUd/P+QBnz730=
   dependencies:
     clone "^1.0.2"
+
+define-lazy-prop@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/define-lazy-prop/-/define-lazy-prop-2.0.0.tgz#3f7ae421129bcaaac9bc74905c98a0009ec9ee7f"
+  integrity sha512-Ds09qNh8yw3khSjiJjiUInaGX9xlqZDY7JVryGxdxV7NPeuqQfplOpQ66yJFZut3jLa5zOwkXw1g9EI2uKh4Og==
 
 define-properties@^1.1.2, define-properties@^1.1.3:
   version "1.1.3"
@@ -9268,6 +9283,11 @@ is-docker@^2.0.0:
   resolved "https://registry.yarnpkg.com/is-docker/-/is-docker-2.1.1.tgz#4125a88e44e450d384e09047ede71adc2d144156"
   integrity sha512-ZOoqiXfEwtGknTiuDEy8pN2CfE3TxMHprvNer1mXiqwkOT77Rw3YVrUQ52EqAOU3QAWDQ+bQdx7HJzrv7LS2Hw==
 
+is-docker@^2.1.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/is-docker/-/is-docker-2.2.1.tgz#33eeabe23cfe86f14bde4408a02c0cfb853acdaa"
+  integrity sha512-F+i2BKsFrH66iaUFc0woD8sLy8getkwTwtOBjvs56Cx4CgJDeKQeqfz8wAYiSb8JOprWhHH5p77PbmYCvvUuXQ==
+
 is-dom@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/is-dom/-/is-dom-1.1.0.tgz#af1fced292742443bb59ca3f76ab5e80907b4e8a"
@@ -9607,7 +9627,7 @@ is-wsl@^1.1.0:
   resolved "https://registry.yarnpkg.com/is-wsl/-/is-wsl-1.1.0.tgz#1f16e4aa22b04d1336b66188a66af3c600c3a66d"
   integrity sha1-HxbkqiKwTRM2tmGIpmrzxgDDpm0=
 
-is-wsl@^2.1.1:
+is-wsl@^2.1.1, is-wsl@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/is-wsl/-/is-wsl-2.2.0.tgz#74a4c76e77ca9fd3f932f290c17ea326cd157271"
   integrity sha512-fKzAra0rGJUUBwGBgNkHZuToZcn+TtXHpeCgmkMJMMYx1sQDYaCSyjJBSCa2nH1DGm7s3n1oBnohoVTBaN7Lww==
@@ -12230,6 +12250,15 @@ open@7.4.0, open@^7.0.2:
   dependencies:
     is-docker "^2.0.0"
     is-wsl "^2.1.1"
+
+open@^8.0.0:
+  version "8.2.1"
+  resolved "https://registry.yarnpkg.com/open/-/open-8.2.1.tgz#82de42da0ccbf429bc12d099dad2e0975e14e8af"
+  integrity sha512-rXILpcQlkF/QuFez2BJDf3GsqpjGKbkUUToAIGo9A0Q6ZkoSGogZJulrUdwRkrAsoQvoZsrjCYt8+zblOk7JQQ==
+  dependencies:
+    define-lazy-prop "^2.0.0"
+    is-docker "^2.1.1"
+    is-wsl "^2.2.0"
 
 opener@1.4.2:
   version "1.4.2"
@@ -17181,6 +17210,11 @@ url-search-params-polyfill@^7.0.0:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/url-search-params-polyfill/-/url-search-params-polyfill-7.0.1.tgz#b900cd9a0d9d2ff757d500135256f2344879cbff"
   integrity sha512-bAw7L2E+jn9XHG5P9zrPnHdO0yJub4U+yXJOdpcpkr7OBd9T8oll4lUos0iSGRcDvfZoLUKfx9a6aNmIhJ4+mQ==
+
+url-search-params-polyfill@^8.0.0:
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/url-search-params-polyfill/-/url-search-params-polyfill-8.1.1.tgz#9e69e4dba300a71ae7ad3cead62c7717fd99329f"
+  integrity sha512-KmkCs6SjE6t4ihrfW9JelAPQIIIFbJweaaSLTh/4AO+c58JlDcb+GbdPt8yr5lRcFg4rPswRFRRhBGpWwh0K/Q==
 
 url-slug@2.0.0:
   version "2.0.0"

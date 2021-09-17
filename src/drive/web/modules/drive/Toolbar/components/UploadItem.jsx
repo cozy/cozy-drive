@@ -34,18 +34,10 @@ const UploadItem = ({ t, isDisabled, onUpload }) => (
 
 const mapDispatchToProps = (
   dispatch,
-  { displayedFolder, sharingState, encryptionKey, onUploaded }
+  { displayedFolder, sharingState, onUploaded }
 ) => ({
   onUpload: files => {
-    dispatch(
-      uploadFiles(
-        files,
-        displayedFolder.id,
-        sharingState,
-        encryptionKey,
-        onUploaded
-      )
-    )
+    dispatch(uploadFiles(files, displayedFolder.id, sharingState, onUploaded))
   }
 })
 

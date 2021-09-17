@@ -12,7 +12,7 @@ import { doUpload } from 'cozy-scanner/dist/ScannerUpload'
 
 import { logException } from 'drive/lib/reporter'
 import UploadQueue from './UploadQueue'
-
+import { getFolderEncryptionKey } from 'drive/web/modules/selectors'
 export { UploadQueue }
 
 const SLUG = 'upload'
@@ -143,10 +143,8 @@ export const processNextFile = (
   fileUploadedCallback,
   queueCompletedCallback,
   dirID,
-  sharingState,
-  encryptionKey
+  sharingState
 ) => async (dispatch, getState, { client, vaultClient }) => {
-  console.log('upload with enc key : ', encryptionKey)
   let error = null
   if (!client) {
     throw new Error(
@@ -176,6 +174,9 @@ export const processNextFile = (
             }
           }
         : {}
+      const encryptionKey = getFolderEncryptionKey(getState(), {
+        folderId: dirID
+      })
       const uploadedFile = await uploadFile(client, file, dirID, {
         vaultClient,
         encryptionKey,
@@ -232,8 +233,7 @@ export const processNextFile = (
       fileUploadedCallback,
       queueCompletedCallback,
       dirID,
-      sharingState,
-      encryptionKey
+      sharingState
     )
   )
 }
@@ -265,15 +265,6 @@ const createFolder = async (client, name, dirID) => {
     .collection('io.cozy.files')
     .createDirectory({ name, dirId: dirID })
   return resp.data
-}
-
-const getEncryptionInfo = async (client, dirID) => {
-  const dir = await client.query(
-    Q('io.cozy.files')
-      .getById(dirID)
-      .include(['encryption'])
-  )
-  return dir.included && dir.included.length > 0 ? dir.included[0] : null
 }
 
 const uploadFile = async (client, file, dirID, options = {}) => {
@@ -395,7 +386,6 @@ export const addToUploadQueue = (
   files,
   dirID,
   sharingState,
-  encryptionKey,
   fileUploadedCallback,
   queueCompletedCallback
 ) => async dispatch => {
@@ -408,8 +398,7 @@ export const addToUploadQueue = (
       fileUploadedCallback,
       queueCompletedCallback,
       dirID,
-      sharingState,
-      encryptionKey
+      sharingState
     )
   )
 }

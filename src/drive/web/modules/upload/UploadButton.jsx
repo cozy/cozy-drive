@@ -34,8 +34,7 @@ UploadButton.propTypes = {
   className: PropTypes.string.isRequired,
   displayedFolder: PropTypes.object.isRequired, // io.cozy.files
   // in case of upload conflicts, shared files are not overridden
-  sharingState: PropTypes.object.isRequired,
-  encryptionKey: PropTypes.string
+  sharingState: PropTypes.object.isRequired
 }
 
 UploadButton.defaultProps = {
@@ -44,18 +43,10 @@ UploadButton.defaultProps = {
 
 const mapDispatchToProps = (
   dispatch,
-  { displayedFolder, sharingState, encryptionKey, onUploaded }
+  { displayedFolder, sharingState, onUploaded }
 ) => ({
   onUpload: files => {
-    dispatch(
-      uploadFiles(
-        files,
-        displayedFolder.id,
-        sharingState,
-        encryptionKey,
-        onUploaded
-      )
-    )
+    dispatch(uploadFiles(files, displayedFolder.id, sharingState, onUploaded))
   }
 })
 

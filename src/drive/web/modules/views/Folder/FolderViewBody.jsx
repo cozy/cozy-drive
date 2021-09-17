@@ -32,7 +32,7 @@ import createFileOpeningHandler from 'drive/web/modules/views/Folder/createFileO
 import { useSyncingFakeFile } from './useSyncingFakeFile'
 import { isReferencedByShareInSharingContext } from 'drive/web/modules/views/Folder/syncHelpers'
 import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
-
+import { isEncryptedFolder } from 'drive/web/modules/selectors'
 // TODO: extraColumns is then passed to 'FileListHeader', 'AddFolder',
 // and 'File' (this one from a 'syncingFakeFile' and a normal file).
 // It is easy to forget to update one of these components to pass 'extraColumns'.
@@ -42,7 +42,6 @@ const FolderViewBody = ({
   queryResults,
   actions,
   canSort,
-  encryptionKey,
   canUpload = true,
   withFilePath = false,
   navigateToFolder,
@@ -107,7 +106,7 @@ const FolderViewBody = ({
   const isSharingContextEmpty = Object.keys(sharingsValue).length <= 0
 
   const { syncingFakeFile } = useSyncingFakeFile({ isEmpty, queryResults })
-
+  const isEncFolder = isEncryptedFolder(client.store.getState())
   /**
    * When we mount the component when we already have data in cache,
    * the mount is time consuming since we'll render at least 100 lines
@@ -122,8 +121,7 @@ const FolderViewBody = ({
    * more simpler component and then the files
    */
   const [needsToWait, setNeedsToWait] = useState(true)
-  //const [isVaultUnlocked, setIsVaultUnlocked] = useState(false)
-  const [shouldUnlock, setShouldUnlock] = useState(false)
+  const [shouldUnlock, setShouldUnlock] = useState(true)
 
   useEffect(
     () => {
@@ -137,36 +135,52 @@ const FolderViewBody = ({
     },
     [isLoading]
   )
-  /*useEffect(
+
+  /*
+  useEffect(
     () => {
-      console.log('encryptoin key : ', encryptionKey)
-      if (encryptionKey && !isVaultUnlocked) {
-        console.log('go show unlock')
-        showUnlockForm({
-          onUnlock: () => setIsVaultUnlocked(false)
-        })
+      const unlock = async () => {
+        const isLocked = await vaultClient.isLocked()
+        console.log('is locked ? : ', isLocked)
+        if (isEncDir && isLocked) {
+          setShouldUnlock(true)
+          showUnlockForm({
+            onUnlock: () => setShouldUnlock(false),
+            onDismiss: () => {
+              setShouldUnlock(false)
+              router.push(`/folder`)
+            }
+          })
+          return null
+        }
+        return null
       }
+      unlock()
     },
-    [encryptionKey]
-  )*/
+    [isEncDir, shouldUnlock]
+  )
+  console.log('should unlock : ', shouldUnlock)
+*/
+
   useEffect(
     () => {
       const checkLock = async () => {
         const isLocked = await vaultClient.isLocked()
-        console.log('is lock : ', isLocked)
         setShouldUnlock(isLocked)
       }
-      if (encryptionKey) {
+      if (isEncFolder) {
         checkLock()
       }
     },
-    [encryptionKey, shouldUnlock]
+    [isEncFolder, shouldUnlock]
   )
-  if (shouldUnlock) {
+
+  if (isEncFolder && shouldUnlock) {
     return (
       <VaultUnlocker
         onDismiss={() => {
-          router.push(`/folder`)
+          setShouldUnlock(false)
+          return router.push(`/folder`)
         }} // TODO: should add warning to user?
         onUnlock={() => setShouldUnlock(false)}
       />

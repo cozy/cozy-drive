@@ -26,14 +26,14 @@ import Topbar from 'drive/web/modules/move/Topbar'
 
 import {
   getDisplayedFolder,
-  getFolderEncryptionKey
+  getFolderEncryptionKey,
+  isEncryptedFolder
 } from 'drive/web/modules/selectors'
 import {
   buildMoveOrImportQuery,
   buildOnlyFolderQuery
 } from 'drive/web/modules/queries'
 import {
-  isEncryptedDir,
   isEncryptedFile,
   encryptAndUploadExistingFile,
   decryptAndUploadExistingFile,
@@ -93,9 +93,9 @@ export class MoveModal extends React.Component {
     client,
     vaultClient,
     entry,
-    isEncryptedTarget
+    isEncryptedTarget,
+    isEncryptedEntry
   ) => {
-    const isEncryptedEntry = isEncryptedFile(entry)
     if (isEncryptedTarget && !isEncryptedEntry) {
       // The clear file is moved to an encrypted directory
       const encryptionKey = getFolderEncryptionKey(client.store.getState(), {
@@ -148,10 +148,12 @@ export class MoveModal extends React.Component {
       this.setState({ isMoveInProgress: true })
       const trashedFiles = []
       const response = await this.registerCancelable(
-        client.query(Q('io.cozy.files').getById(folderId))
+        client.query(Q('io.cozy.files').getById(folderId)) // TODO: unecessary because in store?
       )
       const targetName = response.data.name
-      const isEncryptedTarget = isEncryptedDir(response.data)
+      const isEncryptedTarget = isEncryptedFolder(client.store.getState(), {
+        folderId
+      })
       await Promise.all(
         entries.map(async entry => {
           const isEncryptedFileEntry = isEncryptedFile(entry)
@@ -161,7 +163,8 @@ export class MoveModal extends React.Component {
                 client,
                 vaultClient,
                 entry,
-                isEncryptedTarget
+                isEncryptedTarget,
+                isEncryptedFileEntry
               )
             )
           }

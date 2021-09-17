@@ -8,9 +8,13 @@ const unsupporteFilesMimeTypeForEncryption = [
   'application/internet-shortcut'
 ]
 
-export const isEncryptedDir = dir => {
+export const hasEncryptionRef = dir => {
+  return getEncryptiondRef(dir) || false
+}
+
+export const getEncryptiondRef = dir => {
   const refs = get(dir, 'referenced_by', [])
-  return refs.some(ref => ref.type === DOCTYPE_FILES_ENCRYPTION)
+  return refs.find(ref => ref.type === DOCTYPE_FILES_ENCRYPTION)
 }
 
 export const isEncryptedFile = doc => {
@@ -120,15 +124,14 @@ export const createEncryptedDir = async (
   // TODO: the relationship is a has-many-file, which is quite confusing and poorly documented
   // Also, the has-many-file is made for albums, we might have problems in fetchMore for instance:
   // https://github.com/cozy/cozy-client/blob/3872bb4981ead5ba7775c7b72cff1bf47bcdeed7/packages/cozy-client/src/associations/HasManyFiles.js#L25
-  const dirData = {
+
+  const { data: dir } = await client.create(DOCTYPE_FILES, {
     name,
     dirId: dirID,
     type: 'directory'
-  }
-  const { data: dir } = await client.create(DOCTYPE_FILES, dirData)
-  //await client.save({ ...encryption, dir_id: dir._id })
+  })
 
-  const docId = `io.cozy.files/${dir._id}` //TODO use const io.cozy.files
+  const docId = `${DOCTYPE_FILES}/${dir._id}`
   const key = await vaultClient.generateEncryptionKey()
   const { data: encryption } = await client.create(DOCTYPE_FILES_ENCRYPTION, {
     _id: docId,

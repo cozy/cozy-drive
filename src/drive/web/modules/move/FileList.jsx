@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { DumbFile as File } from 'drive/web/modules/filelist/File'
 import { useVaultUnlockContext } from 'cozy-keys-lib'
 import {
-  isEncryptedDir,
+  hasEncryptionRef,
   isUnSupportedFileForEncryption
 } from 'drive/lib/encryption'
 
@@ -16,7 +16,7 @@ const getEncryptedDirs = subjects => {
     if (subject.type !== 'directory') {
       return false
     }
-    return isEncryptedDir(subject)
+    return hasEncryptionRef(subject)
   })
 }
 
@@ -60,7 +60,7 @@ const FileList = ({ targets, files, navigateTo }) => {
 
   const onFolderOpen = folderId => {
     const dir = files.find(f => f._id === folderId)
-    const shouldUnlock = isEncryptedDir(dir)
+    const shouldUnlock = hasEncryptionRef(dir)
     if (shouldUnlock) {
       // TODO query encryption key to get it in the store
       return showUnlockForm({ onUnlock: () => navigateTo(dir) })

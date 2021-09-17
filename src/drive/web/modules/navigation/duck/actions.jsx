@@ -39,7 +39,6 @@ export const uploadFiles = (
   files,
   dirId,
   sharingState,
-  encryptionKey,
   fileUploadedCallback = () => null
 ) => dispatch => {
   dispatch(
@@ -47,7 +46,6 @@ export const uploadFiles = (
       files,
       dirId,
       sharingState, // used to know if files are shared for conflicts management
-      encryptionKey,
       fileUploadedCallback,
       (loaded, quotas, conflicts, networkErrors, errors, updated) =>
         dispatch(

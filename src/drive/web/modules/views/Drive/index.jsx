@@ -128,7 +128,6 @@ const DriveView = ({
 
   const allResults = [foldersResult, filesResult]
   const currentFolder = get(currentFolderResult, 'data[0]')
-  const encryptionKey = get(currentFolder, 'encryption.data[0].key')
 
   const isInError = allResults.some(result => result.fetchStatus === 'failed')
   const isLoading = allResults.some(
@@ -138,7 +137,6 @@ const DriveView = ({
 
   const navigateToFolder = useCallback(
     folderId => {
-      console.log('navigate to folder id : ', folderId)
       router.push(`/folder/${folderId}`)
     },
     [router]
@@ -238,7 +236,6 @@ const DriveView = ({
           navigateToFile={navigateToFile}
           actions={actions}
           queryResults={[foldersResult, filesResult]}
-          encryptionKey={encryptionKey}
           canSort
           currentFolderId={currentFolderId}
           extraColumns={extraColumns}
