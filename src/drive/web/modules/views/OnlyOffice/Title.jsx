@@ -2,12 +2,11 @@ import React, { useContext, useMemo } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
 import flag from 'cozy-flags'
+import { SharingBannerPlugin } from 'cozy-sharing'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { DialogTitle } from 'cozy-ui/transpiled/react/Dialog'
 import Divider from 'cozy-ui/transpiled/react/MuiCozyTheme/Divider'
 
-import SharingBanner from 'drive/web/modules/public/SharingBanner'
-import { useSharingInfos } from 'drive/web/modules/public/useSharingInfos'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
 import { showSharingBanner } from 'drive/web/modules/views/OnlyOffice/helpers'
 import Toolbar from 'drive/web/modules/views/OnlyOffice/Toolbar'
@@ -27,7 +26,6 @@ const Title = () => {
     isInSharedFolder,
     isEditorForcedReadOnly
   } = useContext(OnlyOfficeContext)
-  const sharingInfos = useSharingInfos()
   const styles = useStyles()
   const { isMobile } = useBreakpoints()
 
@@ -60,7 +58,7 @@ const Title = () => {
           <Divider />
         </>
       )}
-      {showBanner && <SharingBanner sharingInfos={sharingInfos} />}
+      {showBanner && <SharingBannerPlugin />}
     </div>
   )
 }

@@ -12,6 +12,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import { Content, Overlay } from 'cozy-ui/transpiled/react'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import { SharingBannerPlugin, useSharingInfos } from 'cozy-sharing'
 
 import { ModalStack, ModalContext } from 'drive/lib/ModalContext'
 import useActions from 'drive/web/modules/actions/useActions'
@@ -21,8 +22,6 @@ import FolderViewHeader from '../Folder/FolderViewHeader'
 import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
 import PublicToolbar from 'drive/web/modules/public/PublicToolbar'
-import SharingBanner from 'drive/web/modules/public/SharingBanner'
-import { useSharingInfos } from 'drive/web/modules/public/useSharingInfos'
 import PublicViewer from 'drive/web/modules/viewer/PublicViewer'
 import {
   getCurrentFolderId,
@@ -188,7 +187,7 @@ const PublicFolderView = ({
       <Main isPublic={true}>
         <ModalStack />
         <ModalManager />
-        <SharingBanner sharingInfos={sharingInfos} />
+        <SharingBannerPlugin />
         <div className={cx({ 'u-pt-2': !isMobile })}>
           <FolderViewHeader>
             {currentFolderId && (
