@@ -1,4 +1,6 @@
 # 1.38.0
+## 🔧 Tech
+* Use `<SharingBannerPlugin />` and `useSharingInfos()` from `cozy-sharing` instead of internal components
 
 # 1.37.0
 ## 🐛 Bug Fixes

@@ -3,11 +3,10 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import { SharingBannerPlugin, useSharingInfos } from 'cozy-sharing'
 
 import { useRouter } from 'drive/lib/RouterContext'
 import Viewer from 'drive/web/modules/viewer/PublicViewer'
-import SharingBanner from 'drive/web/modules/public/SharingBanner'
-import { useSharingInfos } from 'drive/web/modules/public/useSharingInfos'
 import PublicToolbar from 'drive/web/modules/public/PublicToolbar'
 import {
   isOnlyOfficeEnabled,
@@ -28,7 +27,7 @@ const LightFileViewer = ({ files }) => {
 
   return (
     <div className={styles['viewer-wrapper-with-bar']}>
-      <SharingBanner sharingInfos={sharingInfos} />
+      <SharingBannerPlugin />
       {!isDesktop && (
         <PublicToolbar
           className={cx({ 'u-mt-1 u-mr-1': !isMobile })}

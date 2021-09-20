@@ -33,9 +33,11 @@ describe('LightFileViewer', () => {
 
     it('should have the sharing banner and public toolbar but no viewer toolbar', () => {
       const { root } = setup()
-      const { queryByTestId } = root
+      const { queryByTestId, queryAllByRole } = root
 
-      expect(queryByTestId('sharingBanner')).toBeTruthy()
+      expect(queryAllByRole('link')[0].getAttribute('href')).toBe(
+        'https://cozy.io'
+      ) // This is the sharing banner
       expect(queryByTestId('public-toolbar')).toBeTruthy()
       expect(queryByTestId('viewer-toolbar')).toBeFalsy()
     })
@@ -48,9 +50,11 @@ describe('LightFileViewer', () => {
 
     it('should have the sharing banner and viewer toolbar but no public toolbar', () => {
       const { root } = setup()
-      const { queryByTestId } = root
+      const { queryByTestId, queryAllByRole } = root
 
-      expect(queryByTestId('sharingBanner')).toBeTruthy()
+      expect(queryAllByRole('link')[0].getAttribute('href')).toBe(
+        'https://cozy.io'
+      ) // This is the sharing banner
       expect(queryByTestId('public-toolbar')).toBeFalsy()
       expect(queryByTestId('viewer-toolbar')).toBeTruthy()
     })
