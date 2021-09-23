@@ -4,7 +4,7 @@ import FileIconShortcut from 'drive/web/modules/filelist/FileIconShortcut'
 import { ImageLoader } from 'components/Image'
 import styles from 'drive/styles/filelist.styl'
 
-const FileIcon = ({ file, size }) => {
+const FileIcon = ({ file, size, isEncrypted }) => {
   const isImage = file.class === 'image'
   const isShortcut = file.class === 'shortcut'
 
@@ -25,7 +25,7 @@ const FileIcon = ({ file, size }) => {
       />
     )
   else if (isShortcut) return <FileIconShortcut file={file} size={size} />
-  else return <FileIconMime file={file} size={size} />
+  else return <FileIconMime file={file} size={size} isEncrypted={isEncrypted} />
 }
 
 export default FileIcon

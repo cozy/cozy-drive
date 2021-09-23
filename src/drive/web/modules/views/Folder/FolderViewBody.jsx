@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import get from 'lodash/get'
 
 import { useClient, useCapabilities } from 'cozy-client'
+import { useVaultClient, VaultUnlocker } from 'cozy-keys-lib'
 import { isSharingShortcut } from 'cozy-client/dist/models/file'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
@@ -26,6 +27,7 @@ import createFileOpeningHandler from 'drive/web/modules/views/Folder/createFileO
 import { useSyncingFakeFile } from './useSyncingFakeFile'
 import { isReferencedByShareInSharingContext } from 'drive/web/modules/views/Folder/syncHelpers'
 import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
+import { hasEncryptionRef } from 'drive/lib/encryption'
 
 // TODO: extraColumns is then passed to 'FileListHeader', 'AddFolder',
 // and 'File' (this one from a 'syncingFakeFile' and a normal file).
@@ -33,6 +35,7 @@ import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
 // It would be ideal to centralize it somewhere.
 const FolderViewBody = ({
   currentFolderId,
+  displayedFolder,
   queryResults,
   actions,
   canSort,
@@ -51,6 +54,7 @@ const FolderViewBody = ({
   )
   const { sharingsValue } = useContext(AcceptingSharingContext)
   const [sortOrder, setSortOrder] = useFolderSort(currentFolderId)
+  const vaultClient = useVaultClient()
 
   const changeSortOrder = useCallback(
     (folderId_legacy, attribute, order) =>
@@ -98,6 +102,7 @@ const FolderViewBody = ({
   const isSharingContextEmpty = Object.keys(sharingsValue).length <= 0
 
   const { syncingFakeFile } = useSyncingFakeFile({ isEmpty, queryResults })
+  const isEncFolder = hasEncryptionRef(displayedFolder)
 
   /**
    * When we mount the component when we already have data in cache,
@@ -126,101 +131,127 @@ const FolderViewBody = ({
     [isLoading]
   )
 
-  return (
-    <>
-      <SelectionBar actions={actions} />
-      <FileList>
-        {hasDataToShow && (
-          <>
-            <MobileFileListHeader
-              folderId={null}
-              canSort={canSort}
-              sort={sortOrder}
-              onFolderSort={changeSortOrder}
-              thumbnailSizeBig={isBigThumbnail}
-              toggleThumbnailSize={toggleThumbnailSize}
-            />
-            <FileListHeader
-              folderId={null}
-              canSort={canSort}
-              sort={sortOrder}
-              onFolderSort={changeSortOrder}
-              thumbnailSizeBig={isBigThumbnail}
-              toggleThumbnailSize={toggleThumbnailSize}
+  const [shouldUnlock, setShouldUnlock] = useState(true)
+  useEffect(
+    () => {
+      const checkLock = async () => {
+        const isLocked = await vaultClient.isLocked()
+        setShouldUnlock(isLocked)
+      }
+      if (isEncFolder) {
+        checkLock()
+      }
+    },
+    [isEncFolder, shouldUnlock]
+  )
+  if (isEncFolder && shouldUnlock) {
+    return (
+      <VaultUnlocker
+        onDismiss={() => {
+          setShouldUnlock(false)
+          return router.push(`/folder`)
+        }}
+        onUnlock={() => setShouldUnlock(false)}
+      />
+    )
+  } else {
+    return (
+      <>
+        <SelectionBar actions={actions} />
+        <FileList>
+          {hasDataToShow && (
+            <>
+              <MobileFileListHeader
+                folderId={null}
+                canSort={canSort}
+                sort={sortOrder}
+                onFolderSort={changeSortOrder}
+                thumbnailSizeBig={isBigThumbnail}
+                toggleThumbnailSize={toggleThumbnailSize}
+              />
+              <FileListHeader
+                folderId={null}
+                canSort={canSort}
+                sort={sortOrder}
+                onFolderSort={changeSortOrder}
+                thumbnailSizeBig={isBigThumbnail}
+                toggleThumbnailSize={toggleThumbnailSize}
+                extraColumns={extraColumns}
+              />
+            </>
+          )}
+          <FileListBody selectionModeActive={false}>
+            <AddFolder
+              vaultClient={vaultClient}
+              refreshFolderContent={refreshFolderContent}
               extraColumns={extraColumns}
             />
-          </>
-        )}
-        <FileListBody selectionModeActive={false}>
-          <AddFolder
-            refreshFolderContent={refreshFolderContent}
-            extraColumns={extraColumns}
-          />
-          {isInError && <Oops />}
-          {(needsToWait || isLoading) && <FileListRowsPlaceholder />}
-          {/* TODO FolderViewBody should not have the responsability to chose
+            {isInError && <Oops />}
+            {(needsToWait || isLoading) && <FileListRowsPlaceholder />}
+            {/* TODO FolderViewBody should not have the responsability to chose
           which empty component to display. It should be done by the "view" itself.
           But adding a new prop like <FolderViewBody emptyComponent={}
           is not good enought too */}
-          {isEmpty &&
-            currentFolderId !== TRASH_DIR_ID && (
-              <EmptyDrive canUpload={canUpload} />
-            )}
-          {isEmpty &&
-            currentFolderId === TRASH_DIR_ID && (
-              <EmptyTrash canUpload={canUpload} />
-            )}
-          {hasDataToShow &&
-            !needsToWait && (
-              <div className={!isDesktop ? 'u-ov-hidden' : ''}>
-                <>
-                  {syncingFakeFile && (
-                    <File
-                      attributes={syncingFakeFile}
-                      withSelectionCheckbox={false}
-                      onFolderOpen={() => {}}
-                      onFileOpen={() => {}}
-                      actions={[]}
-                      isInSyncFromSharing={true}
-                      extraColumns={extraColumns}
-                    />
-                  )}
-                  {queryResults.map((query, queryIndex) => (
-                    <React.Fragment key={queryIndex}>
-                      {query.data.map(file => (
-                        <File
-                          key={file._id}
-                          attributes={file}
-                          withSelectionCheckbox
-                          onFolderOpen={navigateToFolder}
-                          onFileOpen={handleFileOpen}
-                          withFilePath={withFilePath}
-                          thumbnailSizeBig={isBigThumbnail}
-                          actions={actions}
-                          refreshFolderContent={refreshFolderContent}
-                          isInSyncFromSharing={
-                            !isSharingContextEmpty &&
-                            isSharingShortcut(file) &&
-                            isReferencedByShareInSharingContext(
-                              file,
-                              sharingsValue
-                            )
-                          }
-                          extraColumns={extraColumns}
-                        />
-                      ))}
-                      {query.hasMore && (
-                        <LoadMore fetchMore={query.fetchMore} />
-                      )}
-                    </React.Fragment>
-                  ))}
-                </>
-              </div>
-            )}
-        </FileListBody>
-      </FileList>
-    </>
-  )
+            {isEmpty &&
+              currentFolderId !== TRASH_DIR_ID && (
+                <EmptyDrive isEncrypted={isEncFolder} canUpload={canUpload} />
+              )}
+            {isEmpty &&
+              currentFolderId === TRASH_DIR_ID && (
+                <EmptyTrash canUpload={canUpload} />
+              )}
+            {hasDataToShow &&
+              !needsToWait && (
+                <div className={!isDesktop ? 'u-ov-hidden' : ''}>
+                  <>
+                    {syncingFakeFile && (
+                      <File
+                        attributes={syncingFakeFile}
+                        withSelectionCheckbox={false}
+                        onFolderOpen={() => {}}
+                        onFileOpen={() => {}}
+                        actions={[]}
+                        isInSyncFromSharing={true}
+                        extraColumns={extraColumns}
+                      />
+                    )}
+                    {queryResults.map((query, queryIndex) => (
+                      <React.Fragment key={queryIndex}>
+                        {query.data.map(file => (
+                          <File
+                            key={file._id}
+                            attributes={file}
+                            withSelectionCheckbox
+                            onFolderOpen={navigateToFolder}
+                            onFileOpen={handleFileOpen}
+                            withFilePath={withFilePath}
+                            thumbnailSizeBig={isBigThumbnail}
+                            actions={actions}
+                            refreshFolderContent={refreshFolderContent}
+                            isInSyncFromSharing={
+                              !isSharingContextEmpty &&
+                              isSharingShortcut(file) &&
+                              isReferencedByShareInSharingContext(
+                                file,
+                                sharingsValue
+                              )
+                            }
+                            extraColumns={extraColumns}
+                          />
+                        ))}
+                        {query.hasMore && (
+                          <LoadMore fetchMore={query.fetchMore} />
+                        )}
+                      </React.Fragment>
+                    ))}
+                  </>
+                </div>
+              )}
+          </FileListBody>
+        </FileList>
+      </>
+    )
+  }
 }
 
 export default FolderViewBody

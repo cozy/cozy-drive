@@ -17,7 +17,7 @@ import SharingShortcutBadge from 'drive/web/modules/filelist/SharingShortcutBadg
 
 import styles from 'drive/styles/filelist.styl'
 
-const FileThumbnail = ({ file, size, isInSyncFromSharing }) => {
+const FileThumbnail = ({ file, size, isInSyncFromSharing, isEncrypted }) => {
   const { isMobile } = useBreakpoints()
   const isSharingShortcut =
     models.file.isSharingShortcut(file) && !isInSyncFromSharing
@@ -32,7 +32,9 @@ const FileThumbnail = ({ file, size, isInSyncFromSharing }) => {
         'u-pl-0': !isMobile
       })}
     >
-      {isSimpleFile && <FileIcon file={file} size={size} />}
+      {isSimpleFile && (
+        <FileIcon file={file} size={size} isEncrypted={isEncrypted} />
+      )}
       {isRegularShortcut && (
         <InfosBadge badgeContent={<Icon icon={LinkIcon} size={10} />}>
           <FileIcon file={file} size={size} />

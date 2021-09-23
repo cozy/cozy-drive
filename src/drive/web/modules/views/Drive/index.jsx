@@ -231,6 +231,7 @@ const DriveView = ({
           queryResults={[foldersResult, filesResult]}
           canSort
           currentFolderId={currentFolderId}
+          displayedFolder={displayedFolder}
           extraColumns={extraColumns}
         />
         {isFabDisplayed && (

@@ -11,6 +11,7 @@ import {
   getCurrentFolderId,
   getFolderContent
 } from 'drive/web/modules/selectors'
+import { createEncryptedDir } from 'drive/lib/encryption'
 import { logException } from 'drive/lib/reporter'
 
 export const SORT_FOLDER = 'SORT_FOLDER'
@@ -134,7 +135,12 @@ const doesFolderExistByName = (state, parentFolderId, name) => {
 /**
  * Creates a folder in the current view
  */
-export const createFolder = (client, name) => {
+export const createFolder = (
+  client,
+  vaultClient,
+  name,
+  { isEncryptedFolder = false } = {}
+) => {
   return async (dispatch, getState) => {
     const state = getState()
     const currentFolderId = getCurrentFolderId(state)
@@ -146,11 +152,18 @@ export const createFolder = (client, name) => {
     }
 
     try {
-      await client.create('io.cozy.files', {
-        name: name,
-        dirId: currentFolderId,
-        type: 'directory'
-      })
+      if (!isEncryptedFolder) {
+        await client.create('io.cozy.files', {
+          name: name,
+          dirId: currentFolderId,
+          type: 'directory'
+        })
+      } else {
+        await createEncryptedDir(client, vaultClient, {
+          name,
+          dirID: currentFolderId
+        })
+      }
     } catch (err) {
       if (err.response && err.response.status === HTTP_CODE_CONFLICT) {
         Alerter.error('alert.folder_name', { folderName: name })

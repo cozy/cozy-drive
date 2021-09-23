@@ -28,6 +28,9 @@ jest.mock('cozy-client/dist/hooks/useQuery', () =>
     data: []
   }))
 )
+jest.mock('cozy-keys-lib', () => ({
+  useVaultClient: jest.fn()
+}))
 jest.mock('drive/web/modules/views/hooks', () => ({
   ...jest.requireActual('drive/web/modules/views/hooks'),
   useFilesQueryWithPath: jest.fn()

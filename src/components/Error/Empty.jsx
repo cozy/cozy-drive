@@ -1,18 +1,21 @@
 import React from 'react'
 
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import Empty from 'cozy-ui/transpiled/react/Empty'
 import DriveIcon from 'cozy-ui/transpiled/react/Icons/FileTypeFolder'
 import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
 import PhotosIcon from 'cozy-ui/transpiled/react/Icons/FileTypeImage'
+import EncryptedFolderIcon from 'drive/web/modules/views/Folder/EncryptedFolderIcon'
 
 const EmptyIcon = {
   drive: DriveIcon,
+  encrypted: EncryptedFolderIcon,
   photos: PhotosIcon,
   trash: TrashIcon
 }
 
-const EmptyCanvas = translate()(({ t, type, canUpload, localeKey }) => {
+const EmptyCanvas = ({ type, canUpload, localeKey }) => {
+  const { t } = useI18n()
   return (
     <Empty
       data-test-id="empty-folder"
@@ -24,12 +27,17 @@ const EmptyCanvas = translate()(({ t, type, canUpload, localeKey }) => {
       }
     />
   )
-})
+}
 
 export default EmptyCanvas
 
-export const EmptyDrive = props => <EmptyCanvas type="drive" {...props} />
-
+export const EmptyDrive = props => {
+  const { isEncrypted } = props
+  if (isEncrypted) {
+    return <EmptyCanvas type="encrypted" {...props} />
+  }
+  return <EmptyCanvas type="drive" {...props} />
+}
 export const EmptyPhotos = props => <EmptyCanvas type="photos" {...props} />
 
 export const EmptyTrash = props => (

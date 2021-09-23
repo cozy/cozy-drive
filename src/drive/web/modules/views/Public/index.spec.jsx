@@ -1,7 +1,6 @@
 import React from 'react'
 import { render, fireEvent, act } from '@testing-library/react'
 import { Router, hashHistory, Route, Redirect } from 'react-router'
-
 import { setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
 import usePublicFilesQuery from './usePublicFilesQuery'
@@ -14,6 +13,9 @@ import PublicFolderView from './index'
 jest.mock('./usePublicFilesQuery', () => {
   return jest.fn()
 })
+jest.mock('cozy-keys-lib', () => ({
+  useVaultClient: jest.fn()
+}))
 jest.mock(
   'components/FileHistory',
   () =>
@@ -26,7 +28,6 @@ jest.mock('components/pushClient')
 describe('Public View', () => {
   const setup = () => {
     const { store, client } = setupStoreAndClient()
-
     client.plugins.realtime = {
       subscribe: jest.fn(),
       unsubscribe: jest.fn()

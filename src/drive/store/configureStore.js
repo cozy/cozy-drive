@@ -26,9 +26,11 @@ import { connectStoreToHistory } from './connectedRouter'
  * @return {ReduxStore}
  */
 const configureStore = options => {
-  const { client, t, initialState = {}, history } = options
+  const { client, vaultClient, t, initialState = {}, history } = options
 
-  const middlewares = [thunkMiddleware.withExtraArgument({ client, t })]
+  const middlewares = [
+    thunkMiddleware.withExtraArgument({ client, vaultClient, t })
+  ]
   if (__TARGET__ === 'mobile' && !__DEVELOPMENT__) {
     middlewares.push(RavenMiddleWare(ANALYTICS_URL, getReporterConfiguration()))
   }
