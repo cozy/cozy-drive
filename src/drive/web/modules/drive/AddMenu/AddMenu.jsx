@@ -7,12 +7,14 @@ import ActionMenu from 'cozy-ui/transpiled/react/ActionMenu'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 
 import AddFolderItem from 'drive/web/modules/drive/Toolbar/components/AddFolderItem'
+import AddEncryptedFolderItem from 'drive/web/modules/drive/Toolbar/components/AddEncryptedFolderItem'
 import CreateNoteItem from 'drive/web/modules/drive/Toolbar/components/CreateNoteItem'
 import CreateShortcut from 'drive/web/modules/drive/Toolbar/components/CreateShortcut'
 import UploadItem from 'drive/web/modules/drive/Toolbar/components/UploadItem'
 import StartScanner from 'drive/web/modules/drive/Toolbar/components/StartScanner'
 import CreateOnlyOfficeItem from 'drive/web/modules/drive/Toolbar/components/CreateOnlyOfficeItem'
 import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
+import flag from 'cozy-flags'
 
 export const ActionMenuContent = ({
   isDisabled,
@@ -35,6 +37,8 @@ export const ActionMenuContent = ({
         </>
       )}
       {canCreateFolder && <AddFolderItem />}
+      {canCreateFolder &&
+        flag('drive.encryption') && <AddEncryptedFolderItem />}
       {!isPublic && <CreateNoteItem />}
       {canUpload &&
         isOnlyOfficeEnabled() && (

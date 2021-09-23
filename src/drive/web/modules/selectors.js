@@ -3,8 +3,10 @@ import get from 'lodash/get'
 
 import { getDocumentFromState } from 'cozy-client/dist/store'
 
+import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import { getMirrorQueryId, parseFolderQueryId } from './queries'
+import { getEncryptiondRef } from 'drive/lib/encryption'
 
 export const getCurrentFolderId = rootState => {
   if (get(rootState, 'router.params.folderId')) {
@@ -24,7 +26,7 @@ export const getCurrentFileId = rootState => {
 export const getDisplayedFolder = rootState => {
   const folderId = getCurrentFolderId(rootState)
   if (folderId) {
-    const doc = getDocumentFromState(rootState, 'io.cozy.files', folderId)
+    const doc = getDocumentFromState(rootState, DOCTYPE_FILES, folderId)
     return doc
   }
   return null
@@ -32,7 +34,7 @@ export const getDisplayedFolder = rootState => {
 
 export const getParentFolder = (rootState, parentFolderId) => {
   if (parentFolderId) {
-    const doc = getDocumentFromState(rootState, 'io.cozy.files', parentFolderId)
+    const doc = getDocumentFromState(rootState, DOCTYPE_FILES, parentFolderId)
     return doc
   }
   return null
@@ -91,9 +93,16 @@ export const getFolderContent = (rootState, folderId) => {
       otherQueryResults ? otherQueryResults.data : []
     )
     return allContent.map(fileId => {
-      return getDocumentFromState(rootState, 'io.cozy.files', fileId)
+      return getDocumentFromState(rootState, DOCTYPE_FILES, fileId)
     })
   } else {
     return null
   }
+}
+
+export const isEncryptedFolder = (rootState, { folderId } = {}) => {
+  const folder = folderId
+    ? getDocumentFromState(rootState, DOCTYPE_FILES, folderId)
+    : getDisplayedFolder(rootState)
+  return getEncryptiondRef(folder) || false
 }

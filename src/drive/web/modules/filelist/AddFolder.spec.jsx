@@ -1,5 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import { WebVaultClient } from 'cozy-keys-lib'
 import AppLike from 'test/components/AppLike'
 import { setupStoreAndClient } from 'test/setup'
 import AddFolder, { AddFolder as DumbAddFolder } from './AddFolder'
@@ -16,14 +17,16 @@ jest.mock('cozy-flags', () => jest.fn())
 describe('AddFolder', () => {
   const setup = () => {
     const { client, store } = setupStoreAndClient({})
+    const vaultClient = new WebVaultClient('http://alice.cozy.cloud')
     jest.spyOn(client, 'create').mockResolvedValue({})
     const root = mount(
       <AppLike client={client} store={store}>
-        <AddFolder />
+        <AddFolder vaultClient={vaultClient} />
       </AppLike>
     )
     const component = root.find(DumbAddFolder)
-    return { root, client, component }
+
+    return { root, client, component, vaultClient }
   }
 
   describe('cozy-client migration', () => {
@@ -42,9 +45,14 @@ describe('AddFolder', () => {
     })
 
     it('should dispatch a createFolder action on submit', () => {
-      const { component, client } = setup()
+      const { component, client, vaultClient } = setup()
       expect(component.props().onSubmit('Mes photos de chat'))
-      expect(createFolder).toHaveBeenCalledWith(client, 'Mes photos de chat')
+      expect(createFolder).toHaveBeenCalledWith(
+        client,
+        vaultClient,
+        'Mes photos de chat',
+        { isEncryptedFolder: false }
+      )
     })
   })
 })

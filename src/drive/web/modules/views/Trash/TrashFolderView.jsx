@@ -17,7 +17,10 @@ import {
   buildTrashQuery,
   buildFileWithSpecificMetadataAttributeQuery
 } from 'drive/web/modules/queries'
-import { getCurrentFolderId } from 'drive/web/modules/selectors'
+import {
+  getCurrentFolderId,
+  getDisplayedFolder
+} from 'drive/web/modules/selectors'
 import { ModalContext } from 'drive/lib/ModalContext'
 import TrashToolbar from 'drive/web/modules/trash/Toolbar'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
@@ -51,7 +54,12 @@ const getBreadcrumbPath = (t, displayedFolder) =>
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-const TrashFolderView = ({ currentFolderId, router, children }) => {
+const TrashFolderView = ({
+  currentFolderId,
+  displayedFolder,
+  router,
+  children
+}) => {
   const { isMobile } = useBreakpoints()
 
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
@@ -130,6 +138,7 @@ const TrashFolderView = ({ currentFolderId, router, children }) => {
       </FolderViewHeader>
       <FolderViewBody
         currentFolderId={currentFolderId}
+        displayedFolder={displayedFolder}
         navigateToFolder={navigateToFolder}
         navigateToFile={navigateToFile}
         actions={actions}
@@ -143,5 +152,6 @@ const TrashFolderView = ({ currentFolderId, router, children }) => {
 }
 
 export default connect(state => ({
-  currentFolderId: getCurrentFolderId(state)
+  currentFolderId: getCurrentFolderId(state),
+  displayedFolder: getDisplayedFolder(state)
 }))(TrashFolderView)
