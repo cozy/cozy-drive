@@ -53,12 +53,13 @@ const AppLike = ({
   children,
   store,
   client,
+  vaultClient,
   sharingContextValue,
   routerContextValue,
   modalContextValue
 }) => (
   <Provider store={(client && client.store) || store || mockStore}>
-    <CozyProvider client={client}>
+    <CozyProvider client={client} vaultClient={vaultClient}>
       <TestI18n>
         <SharingContext.Provider
           value={sharingContextValue || mockSharingContextValue}

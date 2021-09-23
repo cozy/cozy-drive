@@ -11,6 +11,7 @@ import { isIOSApp } from 'cozy-device-helper'
 import { Document } from 'cozy-doctypes'
 import { initTranslation } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import { WebVaultClient } from 'cozy-keys-lib'
 
 import { saveState, loadState } from 'drive/store/persistedState'
 import configureStore from 'drive/store/configureStore'
@@ -103,9 +104,8 @@ class InitAppMobile {
     return this.persistedState
   }
 
-  getClient = async () => {
+  getClient = async cozyURL => {
     if (this.client) return this.client
-    const cozyURL = await this.getCozyURL()
     this.client = await initClient(cozyURL)
 
     if (!Document.cozyClient) {
@@ -254,7 +254,9 @@ class InitAppMobile {
   startApplication = async () => {
     if (this.stardedApp) return
 
-    const client = await this.getClient()
+    const cozyURL = await this.getCozyURL()
+    const client = await this.getClient(cozyURL)
+    const vaultClient = new WebVaultClient(cozyURL)
     const store = await this.getStore()
 
     registerClientPlugins(client)
@@ -276,7 +278,13 @@ class InitAppMobile {
     const root = document.querySelector('[role=application]')
 
     render(
-      <App lang={getLang()} polyglot={polyglot} client={client} store={store}>
+      <App
+        lang={getLang()}
+        polyglot={polyglot}
+        client={client}
+        store={store}
+        vaultClient={vaultClient}
+      >
         <DriveMobileRouter history={hashHistory} />
       </App>,
       root,
