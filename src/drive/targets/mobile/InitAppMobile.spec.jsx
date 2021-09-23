@@ -34,6 +34,9 @@ jest.mock('drive/lib/reporter', () => ({
   logException: jest.fn(),
   configureReporter: jest.fn()
 }))
+jest.mock('cozy-keys-lib', () => ({
+  WebVaultClient: jest.fn()
+}))
 logger.error = jest.fn()
 
 describe('App initialize', () => {
