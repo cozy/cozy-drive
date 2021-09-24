@@ -1,22 +1,22 @@
-import { shallow } from 'enzyme'
 import React from 'react'
+import { shallow } from 'enzyme'
+import CozyClient from 'cozy-client'
 
 import { FileOpener } from './FileOpenerExternal'
-global.cozy = {
-  client: {
-    files: {
-      statById: jest.fn()
-    }
-  }
-}
+
 const routerMock = {
   push: () => {},
   params: {
     fileId: '1'
   }
 }
+
 describe('FileOpenerExternal', () => {
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
   it('should set the id in state', async () => {
+    const client = new CozyClient({})
     const wrapper = shallow(
       <FileOpener
         router={routerMock}
@@ -24,19 +24,25 @@ describe('FileOpenerExternal', () => {
         routeParams={{
           fileId: '123'
         }}
+        client={client}
       />,
       {
         disableLifecycleMethods: true
       }
     )
-    global.cozy.client.files.statById.mockResolvedValue({
+
+    client.query = jest.fn().mockResolvedValue({
       _id: '123'
     })
+
     await wrapper.instance().loadFileInfo('123')
     expect(wrapper.state().file.id).toBe('123')
   })
 
   it('should set the id in state even after a props update', async () => {
+    const client = new CozyClient({})
+
+    client.stackClient.fetchJSON = jest.fn()
     const wrapper = shallow(
       <FileOpener
         router={routerMock}
@@ -44,12 +50,13 @@ describe('FileOpenerExternal', () => {
         routeParams={{
           fileId: '123'
         }}
+        client={client}
       />,
       {
         disableLifecycleMethods: true
       }
     )
-    global.cozy.client.files.statById.mockResolvedValue({
+    client.query = jest.fn().mockResolvedValue({
       _id: '123'
     })
     await wrapper.instance().loadFileInfo('123')
@@ -59,7 +66,7 @@ describe('FileOpenerExternal', () => {
         fileId: '456'
       }
     })
-    global.cozy.client.files.statById.mockResolvedValue({
+    client.query = jest.fn().mockResolvedValue({
       _id: '456'
     })
     await wrapper.instance().loadFileInfo('456')
