@@ -1,0 +1,45 @@
+{
+    "baseDir": "./build/drive",
+    "files": [
+        {
+            "path": "app/drive.<hash>.js"
+        },
+        {
+            "path": "app/drive.<hash>.min.css"
+        },
+        {
+            "path": "*.<hash>.worker.js"
+        },
+        {
+            "path": "vendors/drive.<hash>.js"
+        },
+        {
+            "path": "vendors/drive.<hash>.<hash>.min.css"
+        },
+        {
+            "path": "services/*/*.js"
+        },
+        {
+            "path": "public/drive.<hash>.js"
+        },
+        {
+            "path": "public/drive.<hash>.min.css"
+        },
+        {
+            "path": "public/pdf.worker.entry.<hash>.worker.js"
+        },
+        {
+            "path": "public/*.css"
+        }
+    ],
+    "reportOutput": [
+        [
+            "github",
+            {
+                "checkRun": false,
+                "commitStatus": true,
+                "prComment": true
+            }
+        ]
+    ]
+}
