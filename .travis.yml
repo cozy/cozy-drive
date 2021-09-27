@@ -1,7 +1,7 @@
 node-preset: &node # Used internally to share configuration, ignored by travis.
   language: node_js
   node_js:
-    - "10"
+    - "12"
   cache:
     yarn: true
     directories:
@@ -44,6 +44,7 @@ jobs:
         - yarn build:$COZY_APP_SLUG:browser
         - echo -en 'travis_fold:end:build\\r'
         - &downcloud-cert if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then eval "$(ssh-agent -s)" && chmod 600 /tmp/id_rsa_travis_downcloud && ssh-add /tmp/id_rsa_travis_downcloud; fi # Needs to be inlined and not in a script to work.
+        - if [ "${COZY_APP_SLUG}" == "drive" ]; then yarn bundlemon; fi
         #- echo 'create and deploy' && echo -en 'travis_fold:start:createanddeploy\\r'
         #- if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then ./scripts/create-deploy-test.sh; fi
         #- echo -en 'travis_fold:end:createanddeploy\\r'
