@@ -38,7 +38,7 @@ export const ActionMenuContent = ({
       )}
       {canCreateFolder && <AddFolderItem />}
       {canCreateFolder &&
-        flag('drive.encryption') && <AddEncryptedFolderItem />}
+        flag('drive.enable-encryption') && <AddEncryptedFolderItem />}
       {!isPublic && <CreateNoteItem />}
       {canUpload &&
         isOnlyOfficeEnabled() && (
