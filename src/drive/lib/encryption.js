@@ -32,5 +32,5 @@ export const createEncryptedDir = async (
 
   // Add the relationship
   const hydratedDir = client.hydrateDocument(dir)
-  hydratedDir.encryption.addById(encryption._id)
+  return hydratedDir.encryption.addById(encryption._id)
 }
