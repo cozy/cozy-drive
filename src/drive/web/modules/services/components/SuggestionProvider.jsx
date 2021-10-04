@@ -3,6 +3,7 @@ import React from 'react'
 import FuzzyPathSearch from '../FuzzyPathSearch'
 import { getFileMimetype } from 'drive/lib/getFileMimetype'
 import { withClient, models } from 'cozy-client'
+import { hasEncryptionRef } from 'drive/lib/encryption'
 
 const TYPE_DIRECTORY = 'directory'
 
@@ -124,12 +125,18 @@ const icons = iconsContext.keys().reduce((acc, item) => {
 }, {})
 
 function getIconUrl(file) {
-  const keyIcon =
-    file.type === TYPE_DIRECTORY
-      ? 'folder'
-      : models.file.isNote(file)
-        ? 'note'
-        : getFileMimetype(icons)(file.mime, file.name) || 'files'
+  let keyIcon
+  if (file.type === TYPE_DIRECTORY) {
+    if (hasEncryptionRef(file)) {
+      keyIcon = 'encrypted-folder'
+    } else {
+      keyIcon = 'folder'
+    }
+  } else {
+    keyIcon = models.file.isNote(file)
+      ? 'note'
+      : getFileMimetype(icons)(file.mime, file.name) || 'files'
+  }
   const icon = icons[keyIcon].default
 
   return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='${
