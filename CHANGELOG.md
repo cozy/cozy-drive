@@ -1,4 +1,8 @@
 # 1.38.0
+
+## 🐛 Bug Fixes
+* Do not update files in parallel in the qualification migration service, as it might fail in nsjail for too many files
+
 ## 🔧 Tech
 * Use `<SharingBannerPlugin />` and `useSharingInfos()` from `cozy-sharing` instead of internal components
 

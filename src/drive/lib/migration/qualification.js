@@ -255,16 +255,20 @@ export const getFileRequalification = file => {
  * @returns {Array} The saved files
  */
 export const migrateQualifiedFiles = async (client, files) => {
-  return Promise.all(
-    files.map(async file => {
-      const newQualification = getFileRequalification(file)
-      if (newQualification) {
-        const cleanedFile = removeOldQualificationAttributes(file)
-        return saveFileQualification(client, cleanedFile, newQualification)
-      } else {
-        log('warn', `No migration case found for the file ${file._id}`)
-        return null
-      }
-    })
-  )
+  let updatedFiles = []
+  for (const file of files) {
+    const newQualification = getFileRequalification(file)
+    if (newQualification) {
+      const cleanedFile = removeOldQualificationAttributes(file)
+      const newFile = await saveFileQualification(
+        client,
+        cleanedFile,
+        newQualification
+      )
+      updatedFiles.push(newFile)
+    } else {
+      log('warn', `No migration case found for the file ${file._id}`)
+    }
+  }
+  return updatedFiles
 }
