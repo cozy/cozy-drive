@@ -10,6 +10,11 @@ import { doUpload } from 'cozy-scanner/dist/ScannerUpload'
 
 import { logException } from 'drive/lib/reporter'
 import UploadQueue from './UploadQueue'
+import {
+  encryptAndUploadNewFile,
+  getEncryptionKeyFromDirId
+} from 'drive/lib/encryption'
+import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 
 export { UploadQueue }
 
@@ -142,7 +147,7 @@ export const processNextFile = (
   queueCompletedCallback,
   dirID,
   sharingState
-) => async (dispatch, getState, { client }) => {
+) => async (dispatch, getState, { client, vaultClient }) => {
   let error = null
   if (!client) {
     throw new Error(
@@ -157,24 +162,28 @@ export const processNextFile = (
   }
 
   const { file, entry, isDirectory } = item
+  const encryptionKey = await getEncryptionKeyFromDirId(client, dirID)
   try {
     dispatch({ type: UPLOAD_FILE, file })
     if (entry && isDirectory) {
-      const newDir = await uploadDirectory(client, entry, dirID)
+      const newDir = await uploadDirectory(client, entry, dirID, {
+        vaultClient,
+        encryptionKey
+      })
       fileUploadedCallback(newDir)
     } else {
-      const uploadedFile = await uploadFile(
-        client,
-        file,
-        dirID,
-        flag('drive.upload.with-progress')
-          ? {
-              onUploadProgress: event => {
-                dispatch(uploadProgress(file, event))
-              }
+      const withProgress = flag('drive.upload.with-progress')
+        ? {
+            onUploadProgress: event => {
+              dispatch(uploadProgress(file, event))
             }
-          : {}
-      )
+          }
+        : {}
+      const uploadedFile = await uploadFile(client, file, dirID, {
+        vaultClient,
+        encryptionKey,
+        ...withProgress
+      })
 
       fileUploadedCallback(uploadedFile)
     }
@@ -233,7 +242,12 @@ export const processNextFile = (
 
 const getFileFromEntry = entry => new Promise(resolve => entry.file(resolve))
 
-const uploadDirectory = async (client, directory, dirID) => {
+const uploadDirectory = async (
+  client,
+  directory,
+  dirID,
+  { vaultClient, encryptionKey }
+) => {
   const newDir = await createFolder(client, directory.name, dirID)
   const dirReader = directory.createReader()
   return new Promise(resolve => {
@@ -242,9 +256,15 @@ const uploadDirectory = async (client, directory, dirID) => {
         const entry = entries[i]
         if (entry.isFile) {
           const file = await getFileFromEntry(entry)
-          await uploadFile(client, file, newDir.id)
+          await uploadFile(client, file, newDir.id, {
+            vaultClient,
+            encryptionKey
+          })
         } else if (entry.isDirectory) {
-          await uploadDirectory(client, entry, newDir.id)
+          await uploadDirectory(client, entry, newDir.id, {
+            vaultClient,
+            encryptionKey
+          })
         }
       }
       resolve(newDir)
@@ -255,7 +275,7 @@ const uploadDirectory = async (client, directory, dirID) => {
 
 const createFolder = async (client, name, dirID) => {
   const resp = await client
-    .collection('io.cozy.files')
+    .collection(DOCTYPE_FILES)
     .createDirectory({ name, dirId: dirID })
   return resp.data
 }
@@ -289,11 +309,33 @@ const uploadFile = async (client, file, dirID, options = {}) => {
       }
     }
   }
-  const onUploadProgress = options.onUploadProgress
-  const resp = await client
-    .collection('io.cozy.files')
-    .createFile(file, { dirId: dirID, onUploadProgress })
-  return resp.data
+
+  const { onUploadProgress, encryptionKey, vaultClient } = options
+
+  if (encryptionKey && vaultClient) {
+    // TODO: use web worker
+    const fr = new FileReader()
+    fr.onloadend = async () => {
+      return encryptAndUploadNewFile(
+        client,
+        vaultClient,
+        fr.result,
+        encryptionKey,
+        {
+          name: file.name,
+          dirID,
+          onUploadProgress
+        }
+      )
+    }
+    fr.readAsArrayBuffer(file)
+  } else {
+    const resp = await client
+      .collection(DOCTYPE_FILES)
+      .createFile(file, { dirId: dirID, onUploadProgress })
+
+    return resp.data
+  }
 }
 
 /*
@@ -305,10 +347,10 @@ const uploadFile = async (client, file, dirID, options = {}) => {
  * @return {Object} - The updated io.cozy.files
  */
 export const overwriteFile = async (client, file, path, options = {}) => {
-  const statResp = await client.collection('io.cozy.files').statByPath(path)
+  const statResp = await client.collection(DOCTYPE_FILES).statByPath(path)
   const { id: fileId, dir_id: dirId } = statResp.data
   const resp = await client
-    .collection('io.cozy.files')
+    .collection(DOCTYPE_FILES)
     .updateFile(file, { dirId, fileId, options })
 
   return resp.data
@@ -327,6 +369,7 @@ export const uploadFilesFromNative = (
   //!TODO Promise.All to use parallelization
   for (const file of files) {
     try {
+      // TODO handle encrypted files upload for mobile
       await doUpload(
         file.file.fileUrl,
         null,

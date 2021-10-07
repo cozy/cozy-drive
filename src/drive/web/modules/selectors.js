@@ -6,7 +6,7 @@ import { getDocumentFromState } from 'cozy-client/dist/store'
 import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import { getMirrorQueryId, parseFolderQueryId } from './queries'
-import { getEncryptiondRef } from 'drive/lib/encryption'
+import { hasEncryptionRef } from 'drive/lib/encryption'
 
 export const getCurrentFolderId = rootState => {
   if (get(rootState, 'router.params.folderId')) {
@@ -104,5 +104,5 @@ export const isEncryptedFolder = (rootState, { folderId } = {}) => {
   const folder = folderId
     ? getDocumentFromState(rootState, DOCTYPE_FILES, folderId)
     : getDisplayedFolder(rootState)
-  return getEncryptiondRef(folder) || false
+  return hasEncryptionRef(folder)
 }

@@ -1,5 +1,6 @@
 import CozyClient, { Q } from 'cozy-client'
 import { TRASH_DIR_ID } from 'drive/constants/config'
+import { DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
 
 //Needs to be less than 10 minutes, since "thumbnails" links
 //are only valid for 10 minutes.
@@ -315,6 +316,14 @@ export const buildSettingsByIdQuery = id => ({
     as: `io.cozy.settings/${id}`,
     fetchPolicy: defaultFetchPolicy,
     singleDocData: true
+  }
+})
+
+export const buildEncryptionByIdQuery = id => ({
+  definition: Q(DOCTYPE_FILES_ENCRYPTION).getById(id),
+  options: {
+    as: id,
+    fetchPolicy: defaultFetchPolicy
   }
 })
 

@@ -1,5 +1,7 @@
 import get from 'lodash/get'
 import { DOCTYPE_FILES, DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
+import { ENCRYPTION_MIME_TYPE } from 'drive/constants/config'
+import { buildEncryptionByIdQuery } from 'drive/web/modules/queries'
 
 export const hasEncryptionRef = dir => {
   return !!getEncryptiondRef(dir)
@@ -8,6 +10,17 @@ export const hasEncryptionRef = dir => {
 export const getEncryptiondRef = dir => {
   const refs = get(dir, 'referenced_by', [])
   return refs.find(ref => ref.type === DOCTYPE_FILES_ENCRYPTION)
+}
+
+export const isEncryptedFile = file => {
+  return file.mime === ENCRYPTION_MIME_TYPE
+}
+
+export const getEncryptionKeyFromDirId = async (client, dirId) => {
+  const docId = `${DOCTYPE_FILES}/${dirId}`
+  const query = buildEncryptionByIdQuery(docId)
+  const res = await client.query(query.definition, { options: query.options })
+  return res && res.data ? res.data.key : null
 }
 
 export const createEncryptedDir = async (
@@ -33,4 +46,24 @@ export const createEncryptedDir = async (
   // Add the relationship
   const hydratedDir = client.hydrateDocument(dir)
   return hydratedDir.encryption.addById(encryption._id)
+}
+
+export const encryptAndUploadNewFile = async (
+  client,
+  vaultClient,
+  file,
+  encryptionKey,
+  fileOptions
+) => {
+  const { name, dirID, onUploadProgress } = fileOptions
+  const encryptedFile = await vaultClient.encryptFile(file, encryptionKey)
+  const resp = await client
+    .collection(DOCTYPE_FILES)
+    .createFile(encryptedFile, {
+      name,
+      dirId: dirID,
+      onUploadProgress,
+      contentType: ENCRYPTION_MIME_TYPE
+    })
+  return resp.data
 }
