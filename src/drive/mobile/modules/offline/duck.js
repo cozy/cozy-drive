@@ -6,9 +6,14 @@ import {
   deleteOfflineFile
 } from 'cozy-client/dist/models/fsnative'
 import { isMobileApp } from 'cozy-device-helper'
-
+import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
+import {
+  getEncryptionKeyFromDirId,
+  decryptFile,
+  isEncryptedFile
+} from 'drive/lib/encryption'
 import { openFileWith } from 'drive/web/modules/actions/utils'
 import logger from 'lib/logger'
 
@@ -39,13 +44,13 @@ export const getAvailableOfflineIds = ({ availableOffline }) => availableOffline
 export const isAvailableOffline = ({ availableOffline: state }, id) =>
   Array.isArray(state) && state.indexOf(id) !== -1
 
-export const toggleAvailableOffline = (file, client) => async (
+export const toggleAvailableOffline = (file, client, { vaultClient }) => async (
   dispatch,
   getState
 ) =>
   isAvailableOffline(getState(), file.id)
     ? dispatch(forgetDownloadedFile(file))
-    : dispatch(makeAvailableOffline(file, client))
+    : dispatch(makeAvailableOffline(file, client, { vaultClient }))
 
 const forgetDownloadedFile = file => async dispatch => {
   const filename = file.id
@@ -55,21 +60,30 @@ const forgetDownloadedFile = file => async dispatch => {
   dispatch(markAsUnavailableOffline(file.id))
 }
 
-const makeAvailableOffline = (file, client) => async dispatch => {
-  await saveOfflineFileCopy(file, client)
+const makeAvailableOffline = (
+  file,
+  client,
+  { vaultClient }
+) => async dispatch => {
+  await saveOfflineFileCopy(file, client, { vaultClient })
   dispatch(markAsAvailableOffline(file.id))
 }
 
-export const saveOfflineFileCopy = async (file, client) => {
+export const saveOfflineFileCopy = async (file, client, { vaultClient }) => {
   if (!isMobileApp() || !window.cordova.file) {
     return
   }
-
   try {
-    const response = await client
-      .collection('io.cozy.files')
-      .fetchFileContentById(file.id)
-    const blob = await response.blob()
+    let blob
+    if (isEncryptedFile(file)) {
+      const encryptionKey = await getEncryptionKeyFromDirId(client, file.dir_id)
+      blob = await decryptFile(client, vaultClient, { file, encryptionKey })
+    } else {
+      const response = await client
+        .collection(DOCTYPE_FILES)
+        .fetchFileContentById(file.id)
+      blob = await response.blob()
+    }
     const filename = file.id
     saveFileWithCordova(blob, filename)
   } catch (error) {
@@ -78,26 +92,34 @@ export const saveOfflineFileCopy = async (file, client) => {
   }
 }
 
-export const openLocalFile = file => async (dispatch, getState) => {
+export const openLocalFile = (client, file) => async (dispatch, getState) => {
   if (!isAvailableOffline(getState(), file.id)) {
     logger.error('openLocalFile: this file is not available offline')
   }
-  openOfflineFile(file).catch(error => {
+  const originalMime = isEncryptedFile(file)
+    ? client.collection(DOCTYPE_FILES).getFileTypeFromName(file.name)
+    : file.mime
+  const fileWithMime = { ...file, mime: originalMime }
+
+  openOfflineFile(fileWithMime).catch(error => {
     logger.error('openLocalFile', error)
     Alerter.error('mobile.error.make_available_offline.noapp')
   })
 }
 
 // TODO remove this one ? Only used in the No supportedViewer
-export const openLocalFileCopy = file => async (
+export const openLocalFileCopy = (client, file, { vaultClient }) => async (
   dispatch,
-  getState,
-  { client }
+  getState
 ) => {
+  const originalMime = isEncryptedFile(file)
+    ? client.collection(DOCTYPE_FILES).getFileTypeFromName(file.name)
+    : file.mime
+  const fileWithMime = { ...file, mime: originalMime }
   if (isAvailableOffline(getState(), file.id)) {
-    return openOfflineFile(file)
+    return openOfflineFile(fileWithMime)
   }
-  return openFileWith(client, file)
+  return openFileWith(client, fileWithMime, { vaultClient })
 }
 
 export const updateOfflineFileCopyIfNecessary = (

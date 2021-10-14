@@ -9,7 +9,8 @@ import {
 } from './utils'
 import {
   getEncryptionKeyFromDirId,
-  downloadEncryptedFile
+  downloadEncryptedFile,
+  decryptFile
 } from 'drive/lib/encryption'
 import { DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
 import { TRASH_DIR_ID, ENCRYPTION_MIME_TYPE } from 'drive/constants/config'
@@ -48,7 +49,8 @@ jest.mock('cozy-ui/transpiled/react/Alerter', () => ({
 jest.mock('drive/lib/encryption', () => ({
   ...jest.requireActual('drive/lib/encryption'),
   getEncryptionKeyFromDirId: jest.fn(),
-  downloadEncryptedFile: jest.fn()
+  downloadEncryptedFile: jest.fn(),
+  decryptFile: jest.fn()
 }))
 
 describe('trashFiles', () => {
@@ -222,7 +224,8 @@ describe('openFileWith', () => {
   const blobMock = jest.fn()
   const file = generateFile({ i: 0 })
   file.mime = 'text'
-
+  const encryptedFile = { ...file, mime: ENCRYPTION_MIME_TYPE }
+  const vaultClient = {}
   let cordovaBackup
 
   beforeEach(() => {
@@ -247,6 +250,24 @@ describe('openFileWith', () => {
     await openFileWith(mockClient, file)
     expect(mockClient.fetchFileContentById).toHaveBeenCalledWith(file.id)
     expect(saveAndOpenWithCordova).toHaveBeenCalledWith('fake file blob', file)
+  })
+
+  it('open an encrypted file', async () => {
+    getEncryptionKeyFromDirId.mockResolvedValueOnce('encryption-key')
+    decryptFile.mockResolvedValueOnce('fake file blob')
+    await openFileWith(mockClient, encryptedFile, { vaultClient })
+    expect(decryptFile).toHaveBeenCalledWith(
+      mockClient,
+      {},
+      {
+        file: encryptedFile,
+        encryptionKey: 'encryption-key'
+      }
+    )
+    expect(saveAndOpenWithCordova).toHaveBeenCalledWith(
+      'fake file blob',
+      encryptedFile
+    )
   })
 
   it('errors when the plugin is not present', async () => {
@@ -282,8 +303,13 @@ describe('openFileWith', () => {
 describe('exportFilesNative', () => {
   const mockClient = createMockClient({})
   const files = [generateFile({ i: 0 }), generateFile({ i: 1 })]
+  const encryptedFiles = files.map(file => ({
+    ...file,
+    mime: ENCRYPTION_MIME_TYPE
+  }))
   const exportMock = jest.fn()
   let pluginsBackup
+  const vaultClient = {}
 
   beforeEach(() => {
     jest.resetAllMocks()
@@ -305,7 +331,7 @@ describe('exportFilesNative', () => {
   })
 
   it('exports all files', async () => {
-    await exportFilesNative(mockClient, files, 'files.zip')
+    await exportFilesNative(mockClient, files)
 
     files.forEach(file =>
       expect(mockClient.fetchFileContentById).toHaveBeenCalledWith(file.id)
@@ -313,9 +339,26 @@ describe('exportFilesNative', () => {
     expect(exportMock).toHaveBeenCalled()
   })
 
+  it('exports encrypted files', async () => {
+    getEncryptionKeyFromDirId.mockResolvedValueOnce('encryption-key')
+    await exportFilesNative(mockClient, encryptedFiles, { vaultClient })
+
+    encryptedFiles.forEach(file =>
+      expect(decryptFile).toHaveBeenCalledWith(
+        mockClient,
+        {},
+        {
+          file,
+          encryptionKey: 'encryption-key'
+        }
+      )
+    )
+    expect(exportMock).toHaveBeenCalled()
+  })
+
   it('reports an error', async () => {
     mockClient.fetchFileContentById.mockRejectedValue('nope')
-    await exportFilesNative(mockClient, files, 'files.zip')
+    await exportFilesNative(mockClient, files)
     expect(Alerter.error).toHaveBeenCalled()
   })
 })

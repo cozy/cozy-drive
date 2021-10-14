@@ -41,11 +41,12 @@ class AsyncActionButton extends React.Component {
 const OpenWithCordovaButton = connect(
   null,
   (dispatch, ownProps) => ({
-    openLocalFileCopy: () => dispatch(openLocalFileCopy(ownProps.file))
+    openLocalFileCopy: (client, vaultClient) =>
+      dispatch(openLocalFileCopy(client, ownProps.file, { vaultClient }))
   })
-)(({ t, openLocalFileCopy }) => (
+)(({ t, openLocalFileCopy, client, vaultClient }) => (
   <AsyncActionButton
-    onClick={openLocalFileCopy}
+    onClick={() => openLocalFileCopy(client, vaultClient)}
     onError={error => {
       if (/^Activity not found/.test(error.message)) {
         Alerter.error('Viewer.error.noapp', error)
@@ -74,7 +75,18 @@ DownloadButton.contextTypes = {
 }
 
 const NoViewerButton = ({ file, t }) => {
-  if (isMobileApp()) return <OpenWithCordovaButton t={t} file={file} />
+  const client = useClient()
+  const vaultClient = useVaultClient()
+
+  if (isMobileApp())
+    return (
+      <OpenWithCordovaButton
+        t={t}
+        file={file}
+        client={client}
+        vaultClient={vaultClient}
+      />
+    )
   else return <DownloadButton t={t} file={file} />
 }
 
