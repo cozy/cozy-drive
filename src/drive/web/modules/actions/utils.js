@@ -6,7 +6,13 @@ import { isDirectory, isReferencedByAlbum } from 'cozy-client/dist/models/file'
 import { receiveQueryResult } from 'cozy-client/dist/store'
 import { isMobileApp, isIOS } from 'cozy-device-helper'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
-import { forceFileDownload } from 'cozy-stack-client/dist/utils'
+import {
+  getEncryptionKeyFromDirId,
+  downloadEncryptedFile,
+  hasEncryptionRef,
+  decryptFile,
+  isEncryptedFile
+} from 'drive/lib/encryption'
 
 export const isAnyFileReferencedByAlbum = files => {
   for (let i = 0, l = files.length; i < l; ++i) {
@@ -40,27 +46,35 @@ const openFileDownloadError = error => {
  * @param {CozyClient} client
  * @param {array} files  One or more files to download
  */
-export const downloadFiles = async (client, files) => {
+export const downloadFiles = async (client, files, { vaultClient } = {}) => {
+  const encryptionKey = await getEncryptionKeyFromDirId(client, files[0].dir_id)
+
   if (files.length === 1 && !isDirectory(files[0])) {
     const file = files[0]
-
     try {
       const filename = file.name
-      const downloadURL = await client
-        .collection('io.cozy.files')
-        .getDownloadLinkById(file.id, filename)
-
-      forceFileDownload(`${downloadURL}?Dl=1`, filename)
+      if (encryptionKey) {
+        return downloadEncryptedFile(client, vaultClient, file, encryptionKey)
+      } else {
+        return client.collection('io.cozy.files').download(file, null, filename)
+      }
     } catch (error) {
       Alerter.error(downloadFileError(error))
     }
   } else {
+    if (encryptionKey) {
+      // Multiple download is forbidden for encrypted files because we cannot generate client archive for now.
+      return Alerter.error('error.download_file.encryption_many')
+    }
+    const hasEncryptedDirs = files.find(
+      file => isDirectory(file) && hasEncryptionRef(file)
+    )
+    if (hasEncryptedDirs) {
+      // We cannot download encrypted folder because we cannot generate client archive for now.
+      return Alerter.error('error.download_file.encryption_many')
+    }
     const ids = files.map(f => f.id)
-    const href = await client
-      .collection('io.cozy.files')
-      .getArchiveLinkByIds(ids)
-    const fullpath = `${client.getStackClient().uri}${href}`
-    forceFileDownload(fullpath, 'files.zip')
+    return client.collection('io.cozy.files').downloadArchive(ids)
   }
 }
 

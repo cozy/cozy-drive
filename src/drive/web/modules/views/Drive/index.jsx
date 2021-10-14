@@ -7,6 +7,7 @@ import uniqBy from 'lodash/uniqBy'
 
 import { SharingContext } from 'cozy-sharing'
 import { useQuery, useClient } from 'cozy-client'
+import { useVaultClient } from 'cozy-keys-lib'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
@@ -144,12 +145,15 @@ const DriveView = ({
 
   const { hasWriteAccess } = useContext(SharingContext)
   const client = useClient()
+  const vaultClient = useVaultClient()
+
   const { pushModal, popModal } = useContext(ModalContext)
   const { refresh } = useContext(SharingContext)
   const dispatch = useDispatch()
   const canWriteToCurrentFolder = hasWriteAccess(currentFolderId)
   const actionsOptions = {
     client,
+    vaultClient,
     pushModal,
     popModal,
     refresh,
