@@ -14,12 +14,17 @@ jest.mock('cozy-device-helper', () => ({
   isMobileApp: jest.fn()
 }))
 
+jest.mock('cozy-keys-lib', () => ({
+  useVaultClient: jest.fn()
+}))
+
 const staticFile = {
   id: 'fileId',
   name: 'Demo.pdf'
 }
 
 const client = createMockClient({})
+const vaultClient = {}
 
 const setup = ({
   byDocId = { fileId: {} },
@@ -36,7 +41,11 @@ const setup = ({
   isMobileApp.mockReturnValue(isMobileAppValue)
 
   const root = render(
-    <AppLike client={client} sharingContextValue={mockSharingContext}>
+    <AppLike
+      client={client}
+      vaultClient={vaultClient}
+      sharingContextValue={mockSharingContext}
+    >
       <FooterContent file={file || staticFile} toolbarRef={{}} />
     </AppLike>
   )

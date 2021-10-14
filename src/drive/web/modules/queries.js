@@ -56,6 +56,7 @@ const buildDriveQuery = ({
         { type: sortOrder },
         { [sortAttribute]: sortOrder }
       ])
+      .include(['encryption'])
       .limitBy(100),
   options: {
     as: formatFolderQueryId(type, currentFolderId, sortAttribute, sortOrder),
@@ -240,7 +241,7 @@ export const buildFolderQuery = folderId => ({
   definition: () =>
     Q('io.cozy.files')
       .getById(folderId)
-      .include(['parent']),
+      .include(['encryption', 'parent']),
   options: {
     as: 'folder-' + folderId,
     fetchPolicy: defaultFetchPolicy

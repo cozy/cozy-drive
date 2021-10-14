@@ -4,9 +4,11 @@ import { connect } from 'react-redux'
 import { Button, Alerter } from 'cozy-ui/transpiled/react'
 import { logException } from 'drive/lib/reporter'
 import { isMobileApp } from 'cozy-device-helper'
+import { useVaultClient } from 'cozy-keys-lib'
+import { useClient } from 'cozy-client'
 
 import { openLocalFileCopy } from 'drive/mobile/modules/offline/duck'
-
+import { downloadFile } from './helpers'
 class AsyncActionButton extends React.Component {
   state = {
     loading: false
@@ -56,12 +58,16 @@ const OpenWithCordovaButton = connect(
   />
 ))
 
-const DownloadButton = ({ t, file }, { client }) => (
-  <Button
-    onClick={() => client.collection('io.cozy.files').download(file)}
-    label={t('Viewer.noviewer.download')}
-  />
-)
+const DownloadButton = ({ t, file }) => {
+  const client = useClient()
+  const vaultClient = useVaultClient()
+  return (
+    <Button
+      onClick={() => downloadFile(client, file, { vaultClient })}
+      label={t('Viewer.noviewer.download')}
+    />
+  )
+}
 
 DownloadButton.contextTypes = {
   client: PropTypes.object.isRequired
