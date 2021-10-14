@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 
 import { useClient } from 'cozy-client'
+import { useVaultClient } from 'cozy-keys-lib'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import Switch from 'cozy-ui/transpiled/react/MuiCozyTheme/Switch'
@@ -25,17 +26,18 @@ const MakeAvailableOfflineMenuItem = connect(
     checked: isAvailableOffline(state, ownProps.file.id)
   }),
   (dispatch, ownProps) => ({
-    toggleOfflineAvailability: client =>
-      dispatch(toggleAvailableOffline(ownProps.file, client))
+    toggleOfflineAvailability: (client, vaultClient) =>
+      dispatch(toggleAvailableOffline(ownProps.file, client, { vaultClient }))
   })
 )(({ checked, toggleOfflineAvailability, ...rest }) => {
   const { t } = useI18n()
   const client = useClient()
+  const vaultClient = useVaultClient()
   const styles = useStyles()
   const onToggle = useCallback(
     e => {
       e.stopPropagation()
-      return toggleOfflineAvailability(client)
+      return toggleOfflineAvailability(client, vaultClient)
     },
     [client, toggleOfflineAvailability]
   )

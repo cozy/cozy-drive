@@ -73,7 +73,7 @@ describe('createFileOpeningHandler', () => {
   it('should open an offline file', async () => {
     const handler = setup()
     await handler({ file: genericFile, isAvailableOffline: true })
-    expect(openLocalFile).toHaveBeenCalledWith(genericFile)
+    expect(openLocalFile).toHaveBeenCalledWith(client, genericFile)
   })
 
   it('should navigate to a normal file', async () => {

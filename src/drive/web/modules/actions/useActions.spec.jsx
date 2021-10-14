@@ -274,7 +274,8 @@ describe('useActions', () => {
         downloadAction.action(mockDocuments)
         expect(exportFilesNative).toHaveBeenCalledWith(
           mockClient,
-          mockDocuments
+          mockDocuments,
+          { vaultClient: {} }
         )
       })
     })
@@ -345,7 +346,9 @@ describe('useActions', () => {
       const mockDocument = { id: 'abc', name: 'my-file.md' }
 
       openAction.action([mockDocument])
-      expect(openFileWith).toHaveBeenCalledWith(mockClient, mockDocument)
+      expect(openFileWith).toHaveBeenCalledWith(mockClient, mockDocument, {
+        vaultClient: {}
+      })
     })
   })
 

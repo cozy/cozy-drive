@@ -66,14 +66,14 @@ export const download = ({ client, vaultClient }) => {
             true
           )
         },
-        action: files => exportFilesNative(client, files),
+        action: files => exportFilesNative(client, files, { vaultClient }),
         label: 'forwardTo',
         Component: function Download(props) {
           const { t } = useI18n()
           return (
             <ActionMenuItem
               onClick={() => {
-                return exportFilesNative(client, props.files)
+                return exportFilesNative(client, props.files, { vaultClient })
               }}
               left={<Icon icon={isIOSApp() ? ShareIosIcon : ReplyIcon} />}
             >
@@ -85,7 +85,8 @@ export const download = ({ client, vaultClient }) => {
     : {
         icon: 'download',
         displayCondition: files => {
-          // Do not display if an encrypted folder is selected
+          // Do not display when an encrypted folder is selected, as we cannot
+          // generate archive for encrypted files, for now.
           return !files.find(file => hasEncryptionRef(file))
         },
         action: files => downloadFiles(client, files, { vaultClient }),
@@ -154,17 +155,17 @@ export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
     }
   }
 }
-export const open = ({ client }) => {
+export const open = ({ client, vaultClient }) => {
   return {
     icon: 'openWith',
     displayCondition: selection =>
       isMobileApp() && selection.length === 1 && isFile(selection[0]),
-    action: files => openFileWith(client, files[0]),
+    action: files => openFileWith(client, files[0], { vaultClient }),
     Component: function Open(props) {
       const { t } = useI18n()
       return (
         <ActionMenuItem
-          onClick={() => openFileWith(client, props.files[0])}
+          onClick={() => openFileWith(client, props.files[0], { vaultClient })}
           left={<Icon icon={isIOSApp() ? EyeIcon : LinkOutIcon} />}
         >
           {isIOSApp()

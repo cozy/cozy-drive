@@ -1,5 +1,4 @@
 import get from 'lodash/get'
-import { Q } from 'cozy-client'
 import { DOCTYPE_FILES, DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
 import { ENCRYPTION_MIME_TYPE } from 'drive/constants/config'
 import { buildEncryptionByIdQuery } from 'drive/web/modules/queries'
@@ -76,7 +75,11 @@ const getBinaryFile = async (client, fileId) => {
   return resp.arrayBuffer()
 }
 
-export const decryptFile = async (client, vaultClient, file, encryptionKey) => {
+export const decryptFile = async (
+  client,
+  vaultClient,
+  { file, encryptionKey }
+) => {
   const cipher = await getBinaryFile(client, file._id)
   const decryptedFile = await vaultClient.decryptFile(cipher, encryptionKey)
   return new Blob([decryptedFile], { type: file.type })

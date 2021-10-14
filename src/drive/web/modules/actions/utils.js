@@ -13,6 +13,7 @@ import {
   decryptFile,
   isEncryptedFile
 } from 'drive/lib/encryption'
+import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 
 export const isAnyFileReferencedByAlbum = files => {
   for (let i = 0, l = files.length; i < l; ++i) {
@@ -56,7 +57,7 @@ export const downloadFiles = async (client, files, { vaultClient } = {}) => {
       if (encryptionKey) {
         return downloadEncryptedFile(client, vaultClient, file, encryptionKey)
       } else {
-        return client.collection('io.cozy.files').download(file, null, filename)
+        return client.collection(DOCTYPE_FILES).download(file, null, filename)
       }
     } catch (error) {
       Alerter.error(downloadFileError(error))
@@ -74,7 +75,7 @@ export const downloadFiles = async (client, files, { vaultClient } = {}) => {
       return Alerter.error('error.download_file.encryption_many')
     }
     const ids = files.map(f => f.id)
-    return client.collection('io.cozy.files').downloadArchive(ids)
+    return client.collection(DOCTYPE_FILES).downloadArchive(ids)
   }
 }
 
@@ -103,7 +104,7 @@ export const trashFiles = async (client, files) => {
       // only do client.destroy(), I do not know what it did not update the internal
       // store correctly when I tried
       const { data: updatedFile } = await client
-        .collection('io.cozy.files')
+        .collection(DOCTYPE_FILES)
         .destroy(file)
       client.store.dispatch(
         receiveQueryResult(null, {
@@ -126,16 +127,27 @@ export const trashFiles = async (client, files) => {
  *
  * @param {CozyClient} client
  * @param {array} files    One or more files to download
- * @param {string} filename The name of the file that will be saved
  */
-export const exportFilesNative = async (client, files, filename) => {
+export const exportFilesNative = async (
+  client,
+  files,
+  { vaultClient } = {}
+) => {
+  const encryptionKey = isEncryptedFile(files[0])
+    ? await getEncryptionKeyFromDirId(client, files[0].dir_id)
+    : null
   const downloadAllFiles = files.map(async file => {
-    const response = await client
-      .collection('io.cozy.files')
-      .fetchFileContentById(file.id)
+    let blob
+    if (encryptionKey) {
+      blob = await decryptFile(client, vaultClient, { file, encryptionKey })
+    } else {
+      const response = await client
+        .collection(DOCTYPE_FILES)
+        .fetchFileContentById(file.id)
 
-    const blob = await response.blob()
-    const filenameToUse = filename ? filename : file.name
+      blob = await response.blob()
+    }
+    const filenameToUse = file.name
     const localFile = await saveFileWithCordova(blob, filenameToUse)
     return localFile.nativeURL
   })
@@ -185,18 +197,27 @@ export const exportFilesNative = async (client, files, filename) => {
  * @param {CozyClient} client
  * @param {object} file   io.cozy.files document
  */
-export const openFileWith = async (client, file) => {
+export const openFileWith = async (client, file, { vaultClient } = {}) => {
   if (isMobileApp() && window.cordova.plugins.fileOpener2) {
-    let fileData
+    let blob
     try {
-      fileData = await client
-        .collection('io.cozy.files')
-        .fetchFileContentById(file.id)
+      if (isEncryptedFile(file)) {
+        const encryptionKey = await getEncryptionKeyFromDirId(
+          client,
+          file.dir_id
+        )
+        blob = await decryptFile(client, vaultClient, { file, encryptionKey })
+      } else {
+        const response = await client
+          .collection(DOCTYPE_FILES)
+          .fetchFileContentById(file.id)
+
+        blob = await response.blob()
+      }
     } catch (error) {
       Alerter.error(openFileDownloadError(error))
       throw error
     }
-    const blob = await fileData.blob()
     try {
       await saveAndOpenWithCordova(blob, file)
     } catch (error) {
@@ -209,20 +230,20 @@ export const openFileWith = async (client, file) => {
 
 export const restoreFiles = async (client, files) => {
   for (const file of files) {
-    await client.collection('io.cozy.files').restore(file.id)
+    await client.collection(DOCTYPE_FILES).restore(file.id)
   }
 }
 
 export const deleteFilesPermanently = async (client, files) => {
   for (const file of files) {
-    await client.collection('io.cozy.files').deleteFilePermanently(file.id)
+    await client.collection(DOCTYPE_FILES).deleteFilePermanently(file.id)
   }
 }
 
 export const emptyTrash = async client => {
   Alerter.info('alert.empty_trash_progress')
   try {
-    await client.collection('io.cozy.files').emptyTrash()
+    await client.collection(DOCTYPE_FILES).emptyTrash()
   } catch (err) {
     Alerter.error('alert.try_again')
   }

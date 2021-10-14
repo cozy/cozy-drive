@@ -114,6 +114,13 @@ class InitAppMobile {
     return this.client
   }
 
+  getVaultClient = async () => {
+    if (this.vaultClient) return this.vaultClient
+    const cozyURL = await this.getCozyURL()
+    this.vaultClient = new WebVaultClient(cozyURL)
+    return this.vaultClient
+  }
+
   getPolyglot = () => {
     if (!this.polyglot) {
       this.polyglot = initTranslation(getLang(), lang =>
@@ -126,10 +133,12 @@ class InitAppMobile {
   getStore = async () => {
     if (this.store) return this.store
     const client = this.client || (await this.getClient())
+    const vaultClient = this.vaultClient || (await this.getVaultClient())
     const polyglot = this.getPolyglot()
     const persistedState = await this.getPersistedState()
     this.store = configureStore({
       client,
+      vaultClient,
       t: polyglot.t.bind(polyglot),
       initialState: persistedState,
       history: hashHistory
@@ -256,7 +265,7 @@ class InitAppMobile {
 
     const cozyURL = await this.getCozyURL()
     const client = await this.getClient(cozyURL)
-    const vaultClient = new WebVaultClient(cozyURL)
+    const vaultClient = await this.getVaultClient()
     const store = await this.getStore()
 
     registerClientPlugins(client)

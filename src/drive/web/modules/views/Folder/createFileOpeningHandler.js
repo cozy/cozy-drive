@@ -17,7 +17,7 @@ const createFileOpeningHandler = ({
   isOnlyOfficeEnabled
 }) => async ({ event, file, isAvailableOffline }) => {
   if (isAvailableOffline) {
-    return dispatch(openLocalFile(file))
+    return dispatch(openLocalFile(client, file))
   }
 
   const isNote = models.file.isNote(file)
