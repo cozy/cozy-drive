@@ -19,6 +19,7 @@ import ShareIosIcon from 'cozy-ui/transpiled/react/Icons/ShareIos'
 import LinkOutIcon from 'cozy-ui/transpiled/react/Icons/LinkOut'
 import EyeIcon from 'cozy-ui/transpiled/react/Icons/Eye'
 
+import { hasEncryptionRef } from 'drive/lib/encryption'
 import DeleteConfirm from 'drive/web/modules/drive/DeleteConfirm'
 import MoveModal from 'drive/web/modules/move/MoveModal'
 import ShareMenuItem from 'drive/web/modules/drive/ShareMenuItem'
@@ -54,7 +55,7 @@ export const share = ({ hasWriteAccess, pushModal, popModal }) => {
   }
 }
 
-export const download = ({ client }) => {
+export const download = ({ client, vaultClient }) => {
   return isMobileApp()
     ? {
         icon: 'download',
@@ -83,13 +84,17 @@ export const download = ({ client }) => {
       }
     : {
         icon: 'download',
-        action: files => downloadFiles(client, files),
+        displayCondition: files => {
+          // Do not display if an encrypted folder is selected
+          return !files.find(file => hasEncryptionRef(file))
+        },
+        action: files => downloadFiles(client, files, { vaultClient }),
         Component: function Download(props) {
           const { t } = useI18n()
           return (
             <ActionMenuItem
               onClick={() => {
-                return downloadFiles(client, props.files)
+                return downloadFiles(client, props.files, { vaultClient })
               }}
               left={<Icon icon={DownloadIcon} />}
             >

@@ -68,6 +68,7 @@ describe('useActions', () => {
     location: { pathname: '/folder' }
   }
   const mockClient = createMockClient({})
+  const mockVaultClient = {}
 
   beforeEach(() => {
     jest.resetAllMocks()
@@ -78,6 +79,7 @@ describe('useActions', () => {
     const wrapper = ({ children }) => (
       <AppLike
         client={mockClient}
+        vaultClient={mockVaultClient}
         store={mockStore}
         routerContextValue={mockRouterContextValue}
         modalContextValue={mockModalContextValue}
@@ -113,6 +115,7 @@ describe('useActions', () => {
     hasWriteAccess: true,
     canMove: true,
     client: mockClient,
+    vaultClient: mockVaultClient,
     pushModal: mockModalContextValue.pushModal,
     popModal: mockModalContextValue.popModal,
     refresh: mockRefresh,
@@ -207,7 +210,9 @@ describe('useActions', () => {
         ]
 
         downloadAction.action(mockDocuments)
-        expect(downloadFiles).toHaveBeenCalledWith(mockClient, mockDocuments)
+        expect(downloadFiles).toHaveBeenCalledWith(mockClient, mockDocuments, {
+          vaultClient: {}
+        })
       })
     })
 

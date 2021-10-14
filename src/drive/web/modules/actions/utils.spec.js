@@ -1,5 +1,4 @@
 import { createMockClient } from 'cozy-client'
-import { forceFileDownload } from 'cozy-stack-client/dist/utils'
 import { initQuery, receiveQueryResult } from 'cozy-client/dist/store'
 import { generateFile } from 'test/generate'
 import {
@@ -8,7 +7,12 @@ import {
   openFileWith,
   exportFilesNative
 } from './utils'
-import { TRASH_DIR_ID } from 'drive/constants/config'
+import {
+  getEncryptionKeyFromDirId,
+  downloadEncryptedFile
+} from 'drive/lib/encryption'
+import { DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
+import { TRASH_DIR_ID, ENCRYPTION_MIME_TYPE } from 'drive/constants/config'
 import { isMobileApp } from 'cozy-device-helper'
 import {
   saveAndOpenWithCordova,
@@ -39,6 +43,12 @@ jest.mock('cozy-ui/transpiled/react/Alerter', () => ({
   success: jest.fn(),
   error: jest.fn(),
   info: jest.fn()
+}))
+
+jest.mock('drive/lib/encryption', () => ({
+  ...jest.requireActual('drive/lib/encryption'),
+  getEncryptionKeyFromDirId: jest.fn(),
+  downloadEncryptedFile: jest.fn()
 }))
 
 describe('trashFiles', () => {
@@ -94,11 +104,15 @@ describe('downloadFiles', () => {
   mockClient.stackClient.uri = 'http://cozy.tools'
   const mockGetDownloadLinkById = jest.fn()
   const mockGetArchiveLinkByIds = jest.fn()
+  const mockDownload = jest.fn()
+  const mockDownloadArchive = jest.fn()
 
   beforeEach(() => {
     mockClient.collection = () => ({
       getDownloadLinkById: mockGetDownloadLinkById,
-      getArchiveLinkByIds: mockGetArchiveLinkByIds
+      getArchiveLinkByIds: mockGetArchiveLinkByIds,
+      download: mockDownload,
+      downloadArchive: mockDownloadArchive
     })
   })
 
@@ -108,13 +122,24 @@ describe('downloadFiles', () => {
       name: 'my-file.pdf',
       type: 'file'
     }
-    const fileDownloadUrl = 'http://cozy.tools/download/url'
-    mockGetDownloadLinkById.mockResolvedValueOnce(fileDownloadUrl)
     await downloadFiles(mockClient, [file])
+    expect(mockDownload).toHaveBeenCalledWith(file, null, file.name)
+  })
 
-    expect(forceFileDownload).toHaveBeenCalledWith(
-      `${fileDownloadUrl}?Dl=1`,
-      file.name
+  it('downloads a single encrypted file', async () => {
+    const file = {
+      id: 'file-id-1',
+      name: 'my-file.pdf',
+      type: 'file',
+      mime: ENCRYPTION_MIME_TYPE
+    }
+    getEncryptionKeyFromDirId.mockResolvedValueOnce('encryption-key')
+    await downloadFiles(mockClient, [file], { vaultClient: {} })
+    expect(downloadEncryptedFile).toHaveBeenCalledWith(
+      mockClient,
+      {},
+      file,
+      'encryption-key'
     )
   })
 
@@ -124,14 +149,8 @@ describe('downloadFiles', () => {
       name: 'Classified',
       type: 'directory'
     }
-    const folderDownloadUrl = '/download/url'
-    mockGetArchiveLinkByIds.mockResolvedValueOnce(folderDownloadUrl)
     await downloadFiles(mockClient, [folder])
-
-    expect(forceFileDownload).toHaveBeenCalledWith(
-      `http://cozy.tools${folderDownloadUrl}`,
-      'files.zip'
-    )
+    expect(mockDownloadArchive).toHaveBeenCalledWith([folder.id])
   })
 
   it('downloads multiple files', async () => {
@@ -147,17 +166,53 @@ describe('downloadFiles', () => {
         type: 'file'
       }
     ]
-    const folderDownloadUrl = '/download/url'
-    mockGetArchiveLinkByIds.mockResolvedValueOnce(folderDownloadUrl)
     await downloadFiles(mockClient, files)
+    expect(mockDownloadArchive).toHaveBeenCalledWith(['file-id-1', 'file-id-2'])
+  })
 
-    expect(mockGetArchiveLinkByIds).toHaveBeenCalledWith([
-      'file-id-1',
-      'file-id-2'
-    ])
-    expect(forceFileDownload).toHaveBeenCalledWith(
-      `http://cozy.tools${folderDownloadUrl}`,
-      'files.zip'
+  it('cannot download multiple encrypted files', async () => {
+    const files = [
+      {
+        id: 'file-id-1',
+        name: 'my-encrypted-file-1.pdf',
+        type: 'file'
+      },
+      {
+        id: 'file-id-2',
+        name: 'my-encrypted-file-2.pdf',
+        type: 'file'
+      }
+    ]
+    getEncryptionKeyFromDirId.mockResolvedValueOnce('encryption-key')
+    await downloadFiles(mockClient, files, { vaultClient: {} })
+    expect(Alerter.error).toHaveBeenCalledWith(
+      'error.download_file.encryption_many'
+    )
+  })
+
+  it('cannot download an encrypted folder', async () => {
+    const files = [
+      {
+        id: 'file-id-1',
+        name: 'my-file-1.pdf',
+        type: 'file'
+      },
+      {
+        id: 'folder-id-1',
+        name: 'encrypted-folder',
+        type: 'folder',
+        referenced_by: [
+          {
+            id: 'encryption-key-id',
+            type: DOCTYPE_FILES_ENCRYPTION
+          }
+        ]
+      }
+    ]
+    getEncryptionKeyFromDirId.mockResolvedValueOnce(null)
+    await downloadFiles(mockClient, files, { vaultClient: {} })
+    expect(Alerter.error).toHaveBeenCalledWith(
+      'error.download_file.encryption_many'
     )
   })
 })

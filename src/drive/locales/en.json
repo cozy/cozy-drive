@@ -302,7 +302,8 @@
     },
     "download_file": {
       "offline": "You should be connected to download this file",
-      "missing": "This file is missing"
+      "missing": "This file is missing",
+      "encryption_many": "You cannot download several encrypted files at once"
     }
   },
   "Error": {
