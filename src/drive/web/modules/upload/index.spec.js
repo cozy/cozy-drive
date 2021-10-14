@@ -34,7 +34,8 @@ const fakeClient = {
     createFile: createFileSpy,
     statByPath: statByPathSpy,
     updateFile: updateFileSpy
-  })
+  }),
+  query: jest.fn()
 }
 
 CozyFile.getFullpath.mockResolvedValue('/my-dir/mydoc.odt')
@@ -86,6 +87,7 @@ describe('processNextFile function', () => {
   const sharingState = {
     sharedPaths: []
   }
+  fakeClient.query.mockResolvedValueOnce(null)
 
   afterEach(() => {
     jest.clearAllMocks()

@@ -7,6 +7,9 @@ import AppLike from 'test/components/AppLike'
 import { generateFile } from 'test/generate'
 
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
+jest.mock('cozy-keys-lib', () => ({
+  useVaultClient: jest.fn()
+}))
 
 const sleep = duration => new Promise(resolve => setTimeout(resolve, duration))
 
@@ -16,9 +19,11 @@ describe('FilesViewer', () => {
     nbFiles = 3,
     totalCount,
     client,
+    vaultClient,
     useQueryResultAttributes
   } = {}) => {
     client = client || new CozyClient({})
+    vaultClient = {}
     const store = {
       subscribe: () => {},
       getState: () => ({
@@ -51,9 +56,10 @@ describe('FilesViewer', () => {
     useQuery.mockReturnValue(mockedUseQueryReturnedValues)
 
     const root = mount(
-      <AppLike client={client} store={store}>
+      <AppLike client={client} vaultClient={vaultClient} store={store}>
         <FilesViewer
           client={client}
+          vaultClient={vaultClient}
           fileId={fileId}
           files={filesFixture}
           filesQuery={mockedUseQueryReturnedValues}
