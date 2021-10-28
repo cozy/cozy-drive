@@ -55,7 +55,10 @@ export const downloadFiles = async (client, files, { vaultClient } = {}) => {
     try {
       const filename = file.name
       if (encryptionKey) {
-        return downloadEncryptedFile(client, vaultClient, file, encryptionKey)
+        return downloadEncryptedFile(client, vaultClient, {
+          file,
+          encryptionKey
+        })
       } else {
         return client.collection(DOCTYPE_FILES).download(file, null, filename)
       }

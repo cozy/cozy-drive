@@ -51,9 +51,7 @@ export const createEncryptedDir = async (
 export const encryptAndUploadNewFile = async (
   client,
   vaultClient,
-  file,
-  encryptionKey,
-  fileOptions
+  { file, encryptionKey, fileOptions }
 ) => {
   const { name, dirID, onUploadProgress } = fileOptions
   const encryptedFile = await vaultClient.encryptFile(file, encryptionKey)
@@ -88,8 +86,7 @@ export const decryptFile = async (
 export const downloadEncryptedFile = async (
   client,
   vaultClient,
-  file,
-  encryptionKey
+  { file, encryptionKey }
 ) => {
   const blob = await decryptFile(client, vaultClient, file, encryptionKey)
   const url = URL.createObjectURL(blob)
