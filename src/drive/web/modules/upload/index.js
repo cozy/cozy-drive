@@ -316,17 +316,15 @@ const uploadFile = async (client, file, dirID, options = {}) => {
     // TODO: use web worker
     const fr = new FileReader()
     fr.onloadend = async () => {
-      return encryptAndUploadNewFile(
-        client,
-        vaultClient,
-        fr.result,
+      return encryptAndUploadNewFile(client, vaultClient, {
+        file: fr.result,
         encryptionKey,
-        {
+        fileOptions: {
           name: file.name,
           dirID,
           onUploadProgress
         }
-      )
+      })
     }
     fr.readAsArrayBuffer(file)
   } else {

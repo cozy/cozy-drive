@@ -140,8 +140,7 @@ describe('downloadFiles', () => {
     expect(downloadEncryptedFile).toHaveBeenCalledWith(
       mockClient,
       {},
-      file,
-      'encryption-key'
+      { file, encryptionKey: 'encryption-key' }
     )
   })
 
