@@ -1,7 +1,9 @@
 import { CozyFile } from 'models'
+import { doMobileUpload, readMobileFile } from 'cozy-client/dist/models/file'
+import { getEncryptionKeyFromDirId } from 'drive/lib/encryption'
+import { ENCRYPTION_MIME_TYPE } from 'drive/constants/config'
 
 import flag from 'cozy-flags'
-import { doUpload } from 'cozy-scanner/dist/ScannerUpload'
 import logger from 'lib/logger'
 
 import {
@@ -21,9 +23,16 @@ jest.mock('drive/lib/reporter', () => ({
 }))
 logger.warn = jest.fn()
 
-jest.mock('cozy-scanner/dist/ScannerUpload', () => ({
-  ...jest.requireActual('cozy-scanner/dist/ScannerUpload'),
-  doUpload: jest.fn()
+jest.mock('drive/lib/encryption', () => ({
+  ...jest.requireActual('drive/lib/encryption'),
+  getEncryptionKeyFromDirId: jest.fn()
+}))
+
+jest.mock('cozy-client/dist/models/file', () => ({
+  ...jest.requireActual('cozy-client/dist/models/file'),
+  doMobileUpload: jest.fn(),
+  readMobileFile: jest.fn(),
+  uploadFileWithConflictStrategy: jest.fn()
 }))
 
 const createFileSpy = jest.fn().mockName('createFile')
@@ -37,10 +46,17 @@ const fakeClient = {
   }),
   query: jest.fn()
 }
+const fakeVaultClient = {
+  encryptFile: jest.fn()
+}
 
 CozyFile.getFullpath.mockResolvedValue('/my-dir/mydoc.odt')
 
 describe('uploadFilesFromNative function', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   it('should upload files from native and put items to the queue', async () => {
     const filesToUpload = [
       {
@@ -60,21 +76,65 @@ describe('uploadFilesFromNative function', () => {
     ]
     const folderID = '123'
     const successCallBack = jest.fn()
+
+    const dispatchSpy = jest.fn(x => x)
     const uploadProcess = uploadFilesFromNative(
       filesToUpload,
       folderID,
       successCallBack
     )
-    doUpload.mockResolvedValue({ message: 'ok' })
-    const dispatchSpy = jest.fn(x => x)
+    doMobileUpload.mockResolvedValue({ message: 'ok' })
 
-    await uploadProcess(dispatchSpy)
+    await uploadProcess(dispatchSpy, null, {
+      client: fakeClient
+    })
+
     expect(dispatchSpy).toHaveBeenCalledWith({
       type: ADD_TO_UPLOAD_QUEUE,
       files: filesToUpload
     })
 
-    expect(doUpload).toHaveBeenCalledTimes(2)
+    expect(doMobileUpload).toHaveBeenCalledTimes(2)
+    expect(successCallBack).toHaveBeenCalled()
+  })
+
+  it('should upload encrypted files from native', async () => {
+    const filesToUpload = [
+      {
+        file: {
+          fileUrl: '/path/native/1',
+          name: 'file1.jpg',
+          type: 'image/jpeg',
+          mime: ENCRYPTION_MIME_TYPE
+        }
+      }
+    ]
+    const folderID = '123'
+    const successCallBack = jest.fn()
+
+    const dispatchSpy = jest.fn(x => x)
+    const uploadProcess = uploadFilesFromNative(
+      filesToUpload,
+      folderID,
+      successCallBack
+    )
+    getEncryptionKeyFromDirId.mockResolvedValue('encryption-key')
+    fakeVaultClient.encryptFile.mockResolvedValue('encrypted-file')
+    readMobileFile.mockResolvedValue({ blob: 'xyz' })
+
+    await uploadProcess(dispatchSpy, null, {
+      client: fakeClient,
+      vaultClient: fakeVaultClient
+    })
+
+    expect(dispatchSpy).toHaveBeenCalledWith({
+      type: ADD_TO_UPLOAD_QUEUE,
+      files: filesToUpload
+    })
+
+    expect(getEncryptionKeyFromDirId).toHaveBeenCalledTimes(1)
+    expect(readMobileFile).toHaveBeenCalledTimes(1)
+    expect(fakeVaultClient.encryptFile).toHaveBeenCalledTimes(1)
     expect(successCallBack).toHaveBeenCalled()
   })
 })

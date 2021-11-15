@@ -4,17 +4,21 @@ import flag from 'cozy-flags'
 import logger from 'lib/logger'
 import { CozyFile } from 'models'
 
-//!TODO Remove this method from Scanner and use from cozy-client files models
-//see https://github.com/cozy/cozy-client/pull/571
-import { doUpload } from 'cozy-scanner/dist/ScannerUpload'
-
 import { logException } from 'drive/lib/reporter'
+import { ENCRYPTION_MIME_TYPE } from 'drive/constants/config'
 import UploadQueue from './UploadQueue'
 import {
   encryptAndUploadNewFile,
   getEncryptionKeyFromDirId
 } from 'drive/lib/encryption'
 import { DOCTYPE_FILES } from 'drive/lib/doctypes'
+
+import { models } from 'cozy-client'
+const {
+  doMobileUpload,
+  readMobileFile,
+  uploadFileWithConflictStrategy
+} = models.file
 
 export { UploadQueue }
 
@@ -154,9 +158,7 @@ export const processNextFile = (
       'Upload module needs a cozy-client instance to work. This instance should be made available by using the extraArgument function of redux-thunk'
     )
   }
-
   const item = getUploadQueue(getState()).find(i => i.status === PENDING)
-
   if (!item) {
     return dispatch(onQueueEmpty(queueCompletedCallback))
   }
@@ -358,24 +360,36 @@ export const uploadFilesFromNative = (
   files,
   folderId,
   uploadFilesSuccessCallback
-) => async dispatch => {
+) => async (dispatch, _, { client, vaultClient }) => {
   dispatch({
     type: ADD_TO_UPLOAD_QUEUE,
     files: files
   })
-
+  const encryptionKey = await getEncryptionKeyFromDirId(client, folderId)
   //!TODO Promise.All to use parallelization
   for (const file of files) {
     try {
-      // TODO handle encrypted files upload for mobile
-      await doUpload(
-        file.file.fileUrl,
-        null,
-        file.file.name,
-        folderId,
-        'rename',
-        file.file.type
-      )
+      const fileOpts = {
+        name: file.file.name,
+        dirId: folderId,
+        conflictStrategy: 'rename'
+      }
+      if (encryptionKey) {
+        const blobFile = await readMobileFile(file.file.fileUrl)
+        const encryptedFile = await vaultClient.encryptFile(
+          blobFile,
+          encryptionKey
+        )
+        await uploadFileWithConflictStrategy(client, encryptedFile, {
+          ...fileOpts,
+          contentType: ENCRYPTION_MIME_TYPE
+        })
+      } else {
+        await doMobileUpload(client, file.file.fileUrl, {
+          ...fileOpts,
+          contentType: file.file.type
+        })
+      }
       dispatch(removeFileToUploadQueue(file.file))
     } catch (error) {
       logger.error(
