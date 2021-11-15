@@ -119,7 +119,7 @@ export const openLocalFileCopy = (client, file, { vaultClient }) => async (
   if (isAvailableOffline(getState(), file.id)) {
     return openOfflineFile(fileWithMime)
   }
-  return openFileWith(client, fileWithMime, { vaultClient })
+  return openFileWith(client, file, { vaultClient })
 }
 
 export const updateOfflineFileCopyIfNecessary = (

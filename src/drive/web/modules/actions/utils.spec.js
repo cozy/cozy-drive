@@ -235,6 +235,7 @@ describe('openFileWith', () => {
     mockClient.fetchFileContentById = jest.fn().mockReturnValue({
       blob: blobMock
     })
+    mockClient.getFileTypeFromName = jest.fn().mockReturnValue('fake-mime')
 
     cordovaBackup = window.cordova
     window.cordova = { plugins: { fileOpener2: {} } }
@@ -263,10 +264,10 @@ describe('openFileWith', () => {
         encryptionKey: 'encryption-key'
       }
     )
-    expect(saveAndOpenWithCordova).toHaveBeenCalledWith(
-      'fake file blob',
-      encryptedFile
-    )
+    expect(saveAndOpenWithCordova).toHaveBeenCalledWith('fake file blob', {
+      ...encryptedFile,
+      mime: 'fake-mime'
+    })
   })
 
   it('errors when the plugin is not present', async () => {

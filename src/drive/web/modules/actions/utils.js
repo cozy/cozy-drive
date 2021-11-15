@@ -203,6 +203,7 @@ export const exportFilesNative = async (
 export const openFileWith = async (client, file, { vaultClient } = {}) => {
   if (isMobileApp() && window.cordova.plugins.fileOpener2) {
     let blob
+    let originalMime = file.mime
     try {
       if (isEncryptedFile(file)) {
         const encryptionKey = await getEncryptionKeyFromDirId(
@@ -210,6 +211,9 @@ export const openFileWith = async (client, file, { vaultClient } = {}) => {
           file.dir_id
         )
         blob = await decryptFile(client, vaultClient, { file, encryptionKey })
+        originalMime = client
+          .collection(DOCTYPE_FILES)
+          .getFileTypeFromName(file.name)
       } else {
         const response = await client
           .collection(DOCTYPE_FILES)
@@ -222,7 +226,7 @@ export const openFileWith = async (client, file, { vaultClient } = {}) => {
       throw error
     }
     try {
-      await saveAndOpenWithCordova(blob, file)
+      await saveAndOpenWithCordova(blob, { ...file, mime: originalMime })
     } catch (error) {
       Alerter.info('mobile.error.open_with.noapp', { fileMime: file.mime })
     }
