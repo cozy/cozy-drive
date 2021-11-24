@@ -1,11 +1,9 @@
 /* global cozy */
 import React from 'react'
-import FuzzyPathSearch from '../FuzzyPathSearch'
-import { getFileMimetype } from 'drive/lib/getFileMimetype'
-import { withClient, models } from 'cozy-client'
-import { hasEncryptionRef } from 'drive/lib/encryption'
+import { withClient } from 'cozy-client'
 
-const TYPE_DIRECTORY = 'directory'
+import FuzzyPathSearch from '../FuzzyPathSearch'
+import { TYPE_DIRECTORY, makeNormalizedFile } from './helpers'
 
 class SuggestionProvider extends React.Component {
   componentDidMount() {
@@ -71,33 +69,9 @@ class SuggestionProvider extends React.Component {
         .filter(notOrphans)
 
       const normalizedFiles = await Promise.all(
-        normalizedFilesPrevious.map(async file => {
-          const isDir = file.type === TYPE_DIRECTORY
-          const dirId = isDir ? file._id : file.dir_id
-          const urlToFolder = `${window.location.origin}/#/folder/${dirId}`
-
-          let path, url
-          if (isDir) {
-            path = file.path
-            url = urlToFolder
-          } else {
-            const parentDir = folders.find(folder => folder._id === file.dir_id)
-            path = parentDir && parentDir.path ? parentDir.path : ''
-            if (models.file.isNote(file)) {
-              url = await models.note.fetchURL(client, file)
-            } else {
-              url = `${urlToFolder}/file/${file._id}`
-            }
-          }
-
-          return {
-            id: file._id,
-            name: file.name,
-            path,
-            url,
-            icon: getIconUrl(file)
-          }
-        })
+        normalizedFilesPrevious.map(
+          async file => await makeNormalizedFile(client, folders, file)
+        )
       )
 
       this.fuzzyPathSearch = new FuzzyPathSearch(normalizedFiles)
@@ -109,39 +83,6 @@ class SuggestionProvider extends React.Component {
   render() {
     return null
   }
-}
-
-const iconsContext = require.context(
-  'drive/assets/icons/',
-  false,
-  /icon-type-.*.svg$/
-)
-
-const icons = iconsContext.keys().reduce((acc, item) => {
-  acc[item.replace(/\.\/icon-type-(.*)\.svg/, '$1')] = iconsContext(item)
-  return acc
-}, {})
-
-function getIconUrl(file) {
-  let keyIcon
-  if (file.type === TYPE_DIRECTORY) {
-    if (hasEncryptionRef(file)) {
-      keyIcon = 'encrypted-folder'
-    } else {
-      keyIcon = 'folder'
-    }
-  } else {
-    keyIcon = models.file.isNote(file)
-      ? 'note'
-      : getFileMimetype(icons)(file.mime, file.name) || 'files'
-  }
-  const icon = icons[keyIcon].default
-
-  return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='${
-    icon.viewBox
-  }'>${icon.content}<use href='#${
-    icon.id
-  }' x='0' y='0' width='32' height='32'/></svg>`.replace(/#/g, '%23')
 }
 
 export default withClient(SuggestionProvider)
