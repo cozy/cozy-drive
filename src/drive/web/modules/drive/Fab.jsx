@@ -9,7 +9,9 @@ const useStyles = makeStyles(() => ({
     position: 'fixed',
     right: '1rem',
     bottom: ({ noSidebar }) =>
-      noSidebar ? '1rem' : 'calc(var(--sidebarHeight) + 1rem)'
+      noSidebar
+        ? '1rem'
+        : 'calc(var(--sidebarHeight) + env(safe-area-inset-bottom) + 1rem)'
   }
 }))
 
