@@ -1,0 +1,15 @@
+{
+  "name": "io.cozy.drive.mobile",
+  "version": "1.38.0",
+  "displayName": "Cozy Drive",
+  "cordova": {
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "dependencies": {
+    "cordova-ios": "~4.5.5",
+    "cordova-android": "^9.1.0"
+  }
+}
