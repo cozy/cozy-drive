@@ -3,7 +3,6 @@
 import memoize from 'lodash/memoize'
 import { initTranslation } from 'cozy-ui/transpiled/react/I18n'
 import CozyClient from 'cozy-client'
-import { WebVaultClient } from 'cozy-keys-lib'
 import {
   shouldEnableTracking,
   getTracker
@@ -37,8 +36,6 @@ const setupApp = memoize(() => {
   if (!Document.cozyClient) {
     Document.registerClient(client)
   }
-  const vaultClient = new WebVaultClient(cozyUrl)
-
   const locale = data.locale
   registerClientPlugins(client)
   const polyglot = initTranslation(locale, lang =>
@@ -48,7 +45,6 @@ const setupApp = memoize(() => {
 
   const store = configureStore({
     client,
-    vaultClient,
     t: polyglot.t.bind(polyglot),
     history
   })
@@ -74,7 +70,7 @@ const setupApp = memoize(() => {
     history = trackerInstance.connectToHistory(hashHistory)
     trackerInstance.track(hashHistory.getCurrentLocation()) // when using a hash history, the initial visit is not tracked by piwik react router
   }
-  return { locale, polyglot, client, vaultClient, history, store, root }
+  return { locale, polyglot, client, history, store, root }
 })
 
 export default setupApp

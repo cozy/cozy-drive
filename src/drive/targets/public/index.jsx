@@ -9,7 +9,6 @@ import 'cozy-ui/transpiled/react/stylesheet.css'
 import { Router, Route, Redirect, hashHistory } from 'react-router'
 import { getQueryParameter } from 'react-cozy-helpers'
 import CozyClient, { models } from 'cozy-client'
-import { WebVaultClient } from 'cozy-keys-lib'
 import { Document } from 'cozy-doctypes'
 import { I18n, initTranslation } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
@@ -85,8 +84,6 @@ const init = async () => {
   if (!Document.cozyClient) {
     Document.registerClient(client)
   }
-  const vaultClient = new WebVaultClient(cozyUrl)
-
   configureReporter()
   setCozyUrl(cozyUrl)
   // we still need cozy-client-js for opening a folder
@@ -99,7 +96,6 @@ const init = async () => {
   )
 
   const store = configureStore({
-    vaultClient,
     client,
     t: polyglot.t.bind(polyglot),
     history: hashHistory
@@ -126,13 +122,7 @@ const init = async () => {
     } else {
       initCozyBar(dataset, client)
       render(
-        <App
-          lang={lang}
-          polyglot={polyglot}
-          client={client}
-          vaultClient={vaultClient}
-          store={store}
-        >
+        <App lang={lang} polyglot={polyglot} client={client} store={store}>
           <Router history={hashHistory}>
             <Route component={PublicLayout}>
               {isOnlyOfficeEnabled() && (

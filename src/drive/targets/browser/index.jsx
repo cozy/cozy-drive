@@ -30,22 +30,13 @@ const AppComponent = props => (
 )
 
 const init = () => {
-  const {
-    locale,
-    polyglot,
-    client,
-    vaultClient,
-    history,
-    store,
-    root
-  } = setupApp()
+  const { locale, polyglot, client, history, store, root } = setupApp()
 
   render(
     <AppComponent
       lang={locale}
       polyglot={polyglot}
       client={client}
-      vaultClient={vaultClient}
       history={history}
       store={store}
     />,
