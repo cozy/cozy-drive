@@ -11,7 +11,6 @@ import { isIOSApp } from 'cozy-device-helper'
 import { Document } from 'cozy-doctypes'
 import { initTranslation } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
-import { WebVaultClient } from 'cozy-keys-lib'
 
 import { saveState, loadState } from 'drive/store/persistedState'
 import configureStore from 'drive/store/configureStore'
@@ -114,12 +113,11 @@ class InitAppMobile {
     return this.client
   }
 
-  getVaultClient = async () => {
+  /*getVaultClient = async () => {
     if (this.vaultClient) return this.vaultClient
-    const cozyURL = await this.getCozyURL()
     this.vaultClient = new WebVaultClient(cozyURL)
     return this.vaultClient
-  }
+  }*/
 
   getPolyglot = () => {
     if (!this.polyglot) {
@@ -133,12 +131,10 @@ class InitAppMobile {
   getStore = async () => {
     if (this.store) return this.store
     const client = this.client || (await this.getClient())
-    const vaultClient = this.vaultClient || (await this.getVaultClient())
     const polyglot = this.getPolyglot()
     const persistedState = await this.getPersistedState()
     this.store = configureStore({
       client,
-      vaultClient,
       t: polyglot.t.bind(polyglot),
       initialState: persistedState,
       history: hashHistory
@@ -265,8 +261,9 @@ class InitAppMobile {
 
     const cozyURL = await this.getCozyURL()
     const client = await this.getClient(cozyURL)
-    const vaultClient = await this.getVaultClient()
     const store = await this.getStore()
+
+    //const vaultClient = await this.getVaultClient()
 
     registerClientPlugins(client)
     const polyglot = await this.getPolyglot()
@@ -283,17 +280,11 @@ class InitAppMobile {
     if (isAnalyticsOn(store.getState())) {
       startTracker(getServerUrl(store.getState()))
     }
-
+    console.log('go to app')
     const root = document.querySelector('[role=application]')
 
     render(
-      <App
-        lang={getLang()}
-        polyglot={polyglot}
-        client={client}
-        store={store}
-        vaultClient={vaultClient}
-      >
+      <App lang={getLang()} polyglot={polyglot} client={client} store={store}>
         <DriveMobileRouter history={hashHistory} />
       </App>,
       root,

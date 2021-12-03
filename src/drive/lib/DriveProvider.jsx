@@ -14,18 +14,11 @@ import FabProvider from 'drive/lib/FabProvider'
 
 import StyledApp from 'drive/web/modules/drive/StyledApp'
 
-const DriveProvider = ({
-  client,
-  vaultClient,
-  lang,
-  polyglot,
-  dictRequire,
-  children
-}) => {
+const DriveProvider = ({ client, lang, polyglot, dictRequire, children }) => {
   return (
     <I18n lang={lang} polyglot={polyglot} dictRequire={dictRequire}>
       <CozyProvider client={client}>
-        <VaultProvider vaultClient={vaultClient}>
+        <VaultProvider cozyClient={client}>
           <VaultUnlockProvider>
             <SharingProvider doctype="io.cozy.files" documentType="Files">
               <BreakpointsProvider>
@@ -44,7 +37,6 @@ const DriveProvider = ({
 
 DriveProvider.propTypes = {
   client: PropTypes.object.isRequired,
-  vaultClient: PropTypes.object.isRequired,
   lang: PropTypes.string.isRequired,
   polyglot: PropTypes.object,
   dictRequire: PropTypes.func
