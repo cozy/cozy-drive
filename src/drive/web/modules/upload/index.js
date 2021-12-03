@@ -150,8 +150,9 @@ export const processNextFile = (
   fileUploadedCallback,
   queueCompletedCallback,
   dirID,
-  sharingState
-) => async (dispatch, getState, { client, vaultClient }) => {
+  sharingState,
+  { client, vaultClient }
+) => async (dispatch, getState) => {
   let error = null
   if (!client) {
     throw new Error(
@@ -237,7 +238,8 @@ export const processNextFile = (
       fileUploadedCallback,
       queueCompletedCallback,
       dirID,
-      sharingState
+      sharingState,
+      { client, vaultClient }
     )
   )
 }
@@ -359,8 +361,9 @@ export const overwriteFile = async (client, file, path, options = {}) => {
 export const uploadFilesFromNative = (
   files,
   folderId,
-  uploadFilesSuccessCallback
-) => async (dispatch, _, { client, vaultClient }) => {
+  uploadFilesSuccessCallback,
+  { client, vaultClient }
+) => async dispatch => {
   dispatch({
     type: ADD_TO_UPLOAD_QUEUE,
     files: files
@@ -410,7 +413,8 @@ export const addToUploadQueue = (
   dirID,
   sharingState,
   fileUploadedCallback,
-  queueCompletedCallback
+  queueCompletedCallback,
+  { client, vaultClient }
 ) => async dispatch => {
   dispatch({
     type: ADD_TO_UPLOAD_QUEUE,
@@ -421,7 +425,8 @@ export const addToUploadQueue = (
       fileUploadedCallback,
       queueCompletedCallback,
       dirID,
-      sharingState
+      sharingState,
+      { client, vaultClient }
     )
   )
 }

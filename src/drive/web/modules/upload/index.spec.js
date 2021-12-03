@@ -81,7 +81,8 @@ describe('uploadFilesFromNative function', () => {
     const uploadProcess = uploadFilesFromNative(
       filesToUpload,
       folderID,
-      successCallBack
+      successCallBack,
+      { client: fakeClient, vaultClient: fakeVaultClient }
     )
     doMobileUpload.mockResolvedValue({ message: 'ok' })
 
@@ -116,7 +117,8 @@ describe('uploadFilesFromNative function', () => {
     const uploadProcess = uploadFilesFromNative(
       filesToUpload,
       folderID,
-      successCallBack
+      successCallBack,
+      { client: fakeClient, vaultClient: fakeVaultClient }
     )
     getEncryptionKeyFromDirId.mockResolvedValue('encryption-key')
     fakeVaultClient.encryptFile.mockResolvedValue('encrypted-file')
@@ -154,6 +156,7 @@ describe('processNextFile function', () => {
   })
 
   beforeEach(() => {
+    getEncryptionKeyFromDirId.mockResolvedValue(null)
     flag.mockReturnValue(true)
   })
 
@@ -167,7 +170,8 @@ describe('processNextFile function', () => {
       fileUploadedCallbackSpy,
       queueCompletedCallbackSpy,
       dirId,
-      sharingState
+      sharingState,
+      { client: fakeClient, vaultClient: fakeVaultClient }
     )
     const result = await asyncProcess(dispatchSpy, getState, {
       client: fakeClient
@@ -205,9 +209,10 @@ describe('processNextFile function', () => {
       fileUploadedCallbackSpy,
       queueCompletedCallbackSpy,
       dirId,
-      sharingState
+      sharingState,
+      { client: fakeClient, vaultClient: fakeVaultClient }
     )
-    await asyncProcess(dispatchSpy, getState, { client: fakeClient })
+    await asyncProcess(dispatchSpy, getState)
     expect(dispatchSpy).toHaveBeenCalledWith({
       type: 'UPLOAD_FILE',
       file
@@ -251,9 +256,10 @@ describe('processNextFile function', () => {
       fileUploadedCallbackSpy,
       queueCompletedCallbackSpy,
       dirId,
-      sharingState
+      sharingState,
+      { client: fakeClient, vaultClient: fakeVaultClient }
     )
-    await asyncProcess(dispatchSpy, getState, { client: fakeClient })
+    await asyncProcess(dispatchSpy, getState)
 
     expect(dispatchSpy).toHaveBeenNthCalledWith(1, {
       type: 'UPLOAD_FILE',
@@ -313,7 +319,8 @@ describe('processNextFile function', () => {
       fileUploadedCallbackSpy,
       queueCompletedCallbackSpy,
       dirId,
-      sharingState
+      sharingState,
+      { client: fakeClient, vaultClient: fakeVaultClient }
     )
     await asyncProcess(dispatchSpy, getState, { client: fakeClient })
 
@@ -350,7 +357,8 @@ describe('processNextFile function', () => {
       fileUploadedCallbackSpy,
       queueCompletedCallbackSpy,
       dirId,
-      sharingState
+      sharingState,
+      { client: fakeClient, vaultClient: fakeVaultClient }
     )
     await asyncProcess(dispatchSpy, getState, { client: fakeClient })
 
