@@ -12,24 +12,24 @@ const getBreadcrumbPath = (t, displayedFolder) =>
   uniqBy(
     [
       {
-        id: ROOT_DIR_ID
+        _id: ROOT_DIR_ID
       },
       {
-        id: get(displayedFolder, 'dir_id')
+        _id: get(displayedFolder, 'dir_id')
       },
       {
-        id: displayedFolder.id,
+        _id: displayedFolder._id,
         name: displayedFolder.name
       }
     ],
-    'id'
+    '_id'
   )
-    .filter(({ id }) => Boolean(id))
+    .filter(({ _id }) => Boolean(_id))
     .map(breadcrumb => ({
-      id: breadcrumb.id,
+      _id: breadcrumb._id,
       name:
         breadcrumb.name ||
-        (breadcrumb.id === ROOT_DIR_ID ? t('breadcrumb.title_drive') : '…')
+        (breadcrumb._id === ROOT_DIR_ID ? t('breadcrumb.title_drive') : '…')
     }))
 
 const MoveTopbar = (

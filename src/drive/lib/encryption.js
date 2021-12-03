@@ -88,7 +88,7 @@ export const downloadEncryptedFile = async (
   vaultClient,
   { file, encryptionKey }
 ) => {
-  const blob = await decryptFile(client, vaultClient, file, encryptionKey)
+  const blob = await decryptFile(client, vaultClient, { file, encryptionKey })
   const url = URL.createObjectURL(blob)
   return client.collection(DOCTYPE_FILES).forceFileDownload(url, file.name)
 }

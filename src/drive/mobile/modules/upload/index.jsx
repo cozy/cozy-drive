@@ -40,7 +40,7 @@ export const generateForQueue = files => {
 export class DumbUpload extends Component {
   state = {
     items: [],
-    folderId: ROOT_DIR_ID
+    folder: { _id: ROOT_DIR_ID }
   }
   async componentDidMount() {
     const { stopMediaBackup } = this.props
@@ -50,18 +50,18 @@ export class DumbUpload extends Component {
   }
 
   async uploadFiles() {
-    const { items, folderId } = this.state
+    const { items, folder } = this.state
     const { router, uploadFilesFromNative, client, vaultClient } = this.props
 
     const filesForQueue = generateForQueue(items)
-    uploadFilesFromNative(filesForQueue, folderId, this.callbackSuccess, {
+    uploadFilesFromNative(filesForQueue, folder._id, this.callbackSuccess, {
       client,
       vaultClient
     })
     //just to be sure that first dispatch of uploadFilesFromNative was done
     //we replace the URL to be sure that even with the back button on Android
     //we don't arrive on this component
-    setTimeout(() => router.replace(`/folder/${folderId}`), 50)
+    setTimeout(() => router.replace(`/folder/${folder._id}`), 50)
   }
 
   callbackSuccess = () => {
@@ -73,7 +73,7 @@ export class DumbUpload extends Component {
   }
 
   navigateTo = folder => {
-    this.setState({ folderId: folder.id })
+    this.setState({ folder: folder || { _id: ROOT_DIR_ID } })
   }
 
   onClose = () => {
@@ -85,10 +85,10 @@ export class DumbUpload extends Component {
   }
 
   render() {
-    const { items, folderId, uploadInProgress } = this.state
+    const { items, folder, uploadInProgress } = this.state
     const { t } = this.props
-    const contentQuery = buildMoveOrImportQuery(folderId)
-    const folderQuery = buildOnlyFolderQuery(folderId)
+    const contentQuery = buildMoveOrImportQuery(folder._id)
+    const folderQuery = buildOnlyFolderQuery(folder._id)
 
     return (
       <FixedDialog
@@ -107,7 +107,7 @@ export class DumbUpload extends Component {
               query={folderQuery.definition()}
               fetchPolicy={folderQuery.options.fetchPolicy}
               as={folderQuery.options.as}
-              key={`breadcrumb-${folderId}`}
+              key={`breadcrumb-${folder._id}`}
             >
               {({ data, fetchStatus }) => (
                 <Topbar
@@ -121,7 +121,7 @@ export class DumbUpload extends Component {
         }
         content={
           <Query
-            key={`content-${folderId}`}
+            key={`content-${folder._id}`}
             query={contentQuery.definition()}
             fetchPolicy={contentQuery.options.fetchPolicy}
             as={contentQuery.options.as}
@@ -135,6 +135,7 @@ export class DumbUpload extends Component {
                   >
                     <div>
                       <FileList
+                        folder={folder}
                         files={data}
                         targets={items}
                         navigateTo={this.navigateTo}
@@ -152,7 +153,7 @@ export class DumbUpload extends Component {
             onConfirm={() => this.uploadFiles()}
             onClose={this.onClose}
             targets={items}
-            currentDirId={folderId}
+            currentDirId={folder._id}
             isMoving={uploadInProgress}
             primaryTextAction={t('ImportToDrive.action')}
             secondaryTextAction={t('ImportToDrive.cancel')}
