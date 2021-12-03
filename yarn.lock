@@ -5379,10 +5379,10 @@ cozy-jobs-cli@1.15.9:
     pretty "2.0.0"
     strip-json-comments "3.1.1"
 
-cozy-keys-lib@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/cozy-keys-lib/-/cozy-keys-lib-4.0.0.tgz#9d1e64f90e27f7f909965e171646384935418f10"
-  integrity sha512-F2XviyVgzL6aoRavUa0MOFu3IbbwfN+BEdMZ5simPMGYtyU41tEHGXczMhXVjSLWiERoSShpmS4gvlG7hygaSQ==
+cozy-keys-lib@4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/cozy-keys-lib/-/cozy-keys-lib-4.1.0.tgz#b71e4eb8df0dfea4d5bfa0585c7e64105bb18ea8"
+  integrity sha512-qmbcK/Ifj3OgIdPLRdtcRihOkSiGc67h4BqAVqu4gNPBBOTcKYjD6TiR9nqLViQfhqfk19QK1bHYCkZB+wc7dQ==
   dependencies:
     "@aspnet/signalr" "^1.1.4"
     "@aspnet/signalr-protocol-msgpack" "^1.1.0"
@@ -11372,6 +11372,13 @@ mini-css-extract-plugin@0.5.0:
 minilog@3.1.0, "minilog@https://github.com/cozy/minilog.git#master":
   version "3.1.0"
   resolved "https://github.com/cozy/minilog.git#6da0aa58759c4f1a1a7e0fd093dbe2a67c035c55"
+  dependencies:
+    microee "0.0.6"
+
+"minilog@git+https://github.com/cozy/minilog.git#master":
+  version "3.1.0"
+  uid "6da0aa58759c4f1a1a7e0fd093dbe2a67c035c55"
+  resolved "git+https://github.com/cozy/minilog.git#6da0aa58759c4f1a1a7e0fd093dbe2a67c035c55"
   dependencies:
     microee "0.0.6"
 
@@ -18332,6 +18339,7 @@ yargs@^3.8.0:
     string-width "^1.0.1"
     window-size "^0.1.4"
     y18n "^3.2.0"
+
 yup@^0.29.1:
   version "0.29.3"
   resolved "https://registry.yarnpkg.com/yup/-/yup-0.29.3.tgz#69a30fd3f1c19f5d9e31b1cf1c2b851ce8045fea"
@@ -18344,8 +18352,8 @@ yup@^0.29.1:
     property-expr "^2.0.2"
     synchronous-promise "^2.0.13"
     toposort "^2.0.2"
+
 zxcvbn@^4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/zxcvbn/-/zxcvbn-4.4.2.tgz#28ec17cf09743edcab056ddd8b1b06262cc73c30"
   integrity sha1-KOwXzwl0PtyrBW3dixsGJizHPDA=
-

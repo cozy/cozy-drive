@@ -5,7 +5,8 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
-import { Query } from 'cozy-client'
+import { Query, withClient } from 'cozy-client'
+import { withVaultClient } from 'cozy-keys-lib'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { translate } from 'cozy-ui/transpiled/react'
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
@@ -50,9 +51,13 @@ export class DumbUpload extends Component {
 
   async uploadFiles() {
     const { items, folderId } = this.state
-    const { router, uploadFilesFromNative } = this.props
+    const { router, uploadFilesFromNative, client, vaultClient } = this.props
+
     const filesForQueue = generateForQueue(items)
-    uploadFilesFromNative(filesForQueue, folderId, this.callbackSuccess)
+    uploadFilesFromNative(filesForQueue, folderId, this.callbackSuccess, {
+      client,
+      vaultClient
+    })
     //just to be sure that first dispatch of uploadFilesFromNative was done
     //we replace the URL to be sure that even with the back button on Android
     //we don't arrive on this component
@@ -164,8 +169,18 @@ DumbUpload.propTypes = {
   uploadFilesFromNative: PropTypes.func.isRequired
 }
 const mapDispatchToProps = dispatch => ({
-  uploadFilesFromNative: (files, folderId, successCallback) =>
-    dispatch(uploadFilesFromNative(files, folderId, successCallback)),
+  uploadFilesFromNative: (
+    files,
+    folderId,
+    successCallback,
+    { client, vaultClient }
+  ) =>
+    dispatch(
+      uploadFilesFromNative(files, folderId, successCallback, {
+        client,
+        vaultClient
+      })
+    ),
   stopMediaBackup: () => dispatch(cancelMediaBackup()),
   startMediaBackup: () => dispatch(startMediaBackup())
 })
@@ -173,6 +188,8 @@ const mapDispatchToProps = dispatch => ({
 export default compose(
   translate(),
   withRouter,
+  withClient,
+  withVaultClient,
   connect(
     null,
     mapDispatchToProps

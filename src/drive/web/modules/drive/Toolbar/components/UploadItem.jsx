@@ -2,6 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 
+import { useClient } from 'cozy-client'
+import { useVaultClient } from 'cozy-keys-lib'
+
 import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
 import { translate } from 'cozy-ui/transpiled/react'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
@@ -12,32 +15,41 @@ import UploadIcon from 'cozy-ui/transpiled/react/Icons/Upload'
 import { uploadFiles } from 'drive/web/modules/navigation/duck'
 import toolbarContainer from '../toolbar'
 
-const UploadItem = ({ t, isDisabled, onUpload }) => (
-  <FileInput
-    label={t('toolbar.menu_upload')}
-    disabled={isDisabled}
-    multiple
-    onChange={onUpload}
-    data-test-id="upload-btn"
-    value={[]}
-    // FileInput needs to stay rendered until the onChange event, so we prevent the event from bubbling
-    onClick={e => e.stopPropagation()}
-  >
-    <ActionMenuItem
-      left={<Icon icon={UploadIcon} />}
+const UploadItem = ({ t, isDisabled, onUpload }) => {
+  const client = useClient()
+  const vaultClient = useVaultClient()
+  return (
+    <FileInput
+      label={t('toolbar.menu_upload')}
+      disabled={isDisabled}
+      multiple
+      onChange={files => onUpload(client, vaultClient, files)}
+      data-test-id="upload-btn"
+      value={[]}
+      // FileInput needs to stay rendered until the onChange event, so we prevent the event from bubbling
       onClick={e => e.stopPropagation()}
     >
-      {t('toolbar.menu_upload')}
-    </ActionMenuItem>
-  </FileInput>
-)
+      <ActionMenuItem
+        left={<Icon icon={UploadIcon} />}
+        onClick={e => e.stopPropagation()}
+      >
+        {t('toolbar.menu_upload')}
+      </ActionMenuItem>
+    </FileInput>
+  )
+}
 
 const mapDispatchToProps = (
   dispatch,
   { displayedFolder, sharingState, onUploaded }
 ) => ({
-  onUpload: files => {
-    dispatch(uploadFiles(files, displayedFolder.id, sharingState, onUploaded))
+  onUpload: (client, vaultClient, files) => {
+    dispatch(
+      uploadFiles(files, displayedFolder.id, sharingState, onUploaded, {
+        client,
+        vaultClient
+      })
+    )
   }
 })
 

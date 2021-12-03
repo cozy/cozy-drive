@@ -39,7 +39,8 @@ export const uploadFiles = (
   files,
   dirId,
   sharingState,
-  fileUploadedCallback = () => null
+  fileUploadedCallback = () => null,
+  { client, vaultClient }
 ) => dispatch => {
   dispatch(
     addToUploadQueue(
@@ -57,7 +58,8 @@ export const uploadFiles = (
             errors,
             updated
           )
-        )
+        ),
+      { client, vaultClient }
     )
   )
 }
