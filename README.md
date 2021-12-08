@@ -1,15 +1,14 @@
 [![Travis build status shield](https://img.shields.io/travis/cozy/cozy-drive.svg?branch=master)](https://travis-ci.org/cozy/cozy-drive)
-[![NPM release version shield](https://img.shields.io/npm/v/cozy-drive.svg)](https://www.npmjs.com/package/cozy-drive)
 [![Github Release version shield](https://img.shields.io/github/tag/cozy/cozy-drive.svg)](https://github.com/cozy/cozy-drive/releases)
 [![NPM Licence shield](https://img.shields.io/github/license/cozy/cozy-drive.svg)](https://github.com/cozy/cozy-drive/blob/master/LICENSE)
 
 
 [Cozy] Drive
-=======================
+=====
 
 
 What's Cozy?
-------------
+----
 
 ![Cozy Logo](https://cdn.rawgit.com/cozy/cozy-guidelines/master/templates/cozy_logo_small.svg)
 
@@ -17,7 +16,7 @@ What's Cozy?
 
 
 What's Drive?
-------------------
+----
 
 Cozy Drive makes your file management easy. Main features are:
 
@@ -27,14 +26,14 @@ Cozy Drive makes your file management easy. Main features are:
 - Files and folders search
 
 
-Hack
+Getting Started
 ----
 
-_:pushpin: Note:_ we recommend to use [Yarn] instead of NPM for package management. Don't hesitate to [install][yarn-install] and use it for your Cozy projects, it's now our main node packages tool for Cozy official apps.
+_:pushpin: Note:_ [Yarn] is the official Node package manager of Cozy. Don't hesitate to [install Yarn][yarn-install] and use it in any Cozy projects.
 
-### Install and run in dev mode
+### Install
 
-Hacking the Drive app requires you to [setup a dev environment][setup].
+Starting the Drive app requires you to [setup a dev environment][setup].
 
 You can then clone the app repository and install dependencies:
 
@@ -44,12 +43,31 @@ $ cd cozy-drive
 $ yarn install
 ```
 
-:pushpin: If you use a node environment wrapper like [nvm] or [ndenv], don't forget to set your local node version `12` before doing a `yarn install`.
+:pushpin: Don't forget to set your local node version `12` before doing a `yarn install`.
 
-:warning: During its early ages, _cozy-drive_ uses beta versions of [cozy-ui] and [cozy-client-js], take a look at the ["living on the edge" note](#living-on-the-edge) below to know hot to install and configure the latest available versions.
+:warning: During its early ages, _cozy-drive_ uses beta versions of [cozy-ui] and [cozy-client-js], take a look at the ["living on the edge" note](#living-on-the-edge) below to know how to install and configure the latest available versions.
 
 Cozy's apps use a standard set of _npm scripts_ to run common tasks, like watch, lint, test, build…
 
+### Run in dev mode
+
+Using a watcher - with Hot Module Replacement:
+```sh
+$ cd cozy-drive
+$ yarn watch:drive:browser
+$ cozy-stack serve --appdir drive:/<project_absolute_path>/cozy-drive/build/drive
+```
+
+Or directly build the app (static file generated):
+```sh
+$ cd cozy-drive
+$ yarn build:drive
+$ cozy-stack serve --appdir drive:/<project_absolute_path>/cozy-drive/build/drive
+```
+
+Your app is available at http://drive.cozy.localhost:8080/#/folder
+
+Note: it's mandatory to explicit to cozy-stack the folder of the build that should be served, to be able to run the app.
 
 ### Run it inside the VM
 
@@ -66,7 +84,10 @@ $ yarn watch:drive:browser
 $ docker run --rm -it -p 8080:8080 -v "$(pwd)/build/drive":/data/cozy-app/drive cozy/cozy-app-dev
 ```
 
-your app is available at http://drive.cozy.tools:8080.
+Your app is available at http://drive.cozy.tools:8080.
+
+Advanced case
+----
 
 ### Share and send mails in development
 
@@ -96,6 +117,10 @@ yarn link cozy-ui
 ```
 
 You can now run the watch task and your project will hot-reload each times a cozy-ui source file is touched.
+
+###### Troubleshooting
+Consider using [rlink] instead of `yarn link`
+
 
 [Cozy-client-js] is our API library that provides an unified API on top of the cozy-stack. If you need to develop / hack cozy-client-js in parallel of your application, you can use the same trick that we used with [cozy-ui]: yarn linking.
 
@@ -131,7 +156,7 @@ As a _developer_, you must [configure the transifex client][tx-client], and clai
 
 ### Maintainer
 
-The lead maintainer for Cozy Drive is @GoOz, send him/her a :beers: to say hello!
+The lead maintainer for Cozy Drive is @Crash--, send him/her a :beers: to say hello!
 
 
 ### Get in touch
@@ -156,6 +181,7 @@ Cozy Drive is developed by Cozy Cloud and distributed under the [AGPL v3 license
 [yarn]: https://yarnpkg.com/
 [yarn-install]: https://yarnpkg.com/en/docs/install
 [cozy-ui]: https://github.com/cozy/cozy-ui
+[rlink]: https://gist.github.com/ptbrowne/add609bdcf4396d32072acc4674fff23
 [cozy-client-js]: https://github.com/cozy/cozy-client-js/
 [cozy-stack-docker]: https://github.com/cozy/cozy-stack/blob/master/docs/client-app-dev.md#with-docker
 [doctypes]: https://cozy.github.io/cozy-doctypes/
@@ -173,7 +199,6 @@ Cozy Drive is developed by Cozy Cloud and distributed under the [AGPL v3 license
 [github]: https://github.com/cozy/
 [twitter]: https://twitter.com/cozycloud
 [nvm]: https://github.com/creationix/nvm
-[ndenv]: https://github.com/riywo/ndenv
 [cozy-dev]: https://github.com/cozy/cozy-dev/
 [mocha]: https://mochajs.org/
 [chai]: http://chaijs.com/
