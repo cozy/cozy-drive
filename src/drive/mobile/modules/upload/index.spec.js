@@ -2,16 +2,16 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import { DumbUpload, generateForQueue } from './'
-import CozyClient from 'cozy-client'
 
+jest.mock('cozy-keys-lib', () => ({
+  withVaultClient: jest.fn().mockReturnValue({})
+}))
 jest.mock('cozy-ui/transpiled/react/utils/color', () => ({
   getCssVariableValue: () => '#fff'
 }))
 
 const tSpy = jest.fn()
 const uploadFilesFromNativeSpy = jest.fn()
-
-const cozyClient = new CozyClient({})
 
 describe('OpenWith component Modal', () => {
   afterEach(() => {
@@ -22,7 +22,8 @@ describe('OpenWith component Modal', () => {
 
   const setupComponent = () => {
     const props = {
-      client: cozyClient,
+      client: {},
+      vaultClient: {},
       t: tSpy,
       uploadFilesFromNative: uploadFilesFromNativeSpy
     }
@@ -41,7 +42,7 @@ describe('OpenWith component Modal', () => {
     it('should call uploadFileFromNative with the right arguments', async () => {
       const component = setupComponent()
       const folderId = 'io.cozy.root'
-      component.setState({ items: defaultItems, folderId })
+      component.setState({ items: defaultItems, folder: { _id: folderId } })
 
       component.instance().callbackSuccess = jest.fn()
       await component.instance().uploadFiles()
@@ -49,7 +50,8 @@ describe('OpenWith component Modal', () => {
       expect(uploadFilesFromNativeSpy).toHaveBeenCalledWith(
         genetaredForQueue,
         folderId,
-        component.instance().callbackSuccess
+        component.instance().callbackSuccess,
+        { client: {}, vaultClient: {} }
       )
     })
   })

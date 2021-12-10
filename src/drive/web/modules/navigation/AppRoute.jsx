@@ -1,4 +1,8 @@
 /* global __TARGET__ */
+jest.mock('cozy-keys-lib', () => ({
+  withVaultClient: jest.fn().mockReturnValue({}),
+  useVaultClient: jest.fn()
+}))
 import React from 'react'
 import { Route, IndexRoute, Redirect } from 'react-router'
 
@@ -25,6 +29,7 @@ import OnlyOfficeView from '../views/OnlyOffice'
 import OnlyOfficeCreateView from '../views/OnlyOffice/Create'
 
 import FilesViewerRecent from '../views/Recent/FilesViewerRecent'
+
 // To keep in sync with AppRoute below, used to extract params
 // in the "router" redux slice. Innermost routes should be
 // first

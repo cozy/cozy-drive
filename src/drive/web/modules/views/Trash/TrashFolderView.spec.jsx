@@ -13,9 +13,6 @@ import FolderViewBody from '../Folder/FolderViewBody'
 
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 jest.mock('components/pushClient')
-jest.mock('cozy-keys-lib', () => ({
-  useVaultClient: jest.fn()
-}))
 
 describe('TrashFolderView', () => {
   const mockClient = () => {
