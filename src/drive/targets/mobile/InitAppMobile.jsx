@@ -113,12 +113,6 @@ class InitAppMobile {
     return this.client
   }
 
-  /*getVaultClient = async () => {
-    if (this.vaultClient) return this.vaultClient
-    this.vaultClient = new WebVaultClient(cozyURL)
-    return this.vaultClient
-  }*/
-
   getPolyglot = () => {
     if (!this.polyglot) {
       this.polyglot = initTranslation(getLang(), lang =>
@@ -263,8 +257,6 @@ class InitAppMobile {
     const client = await this.getClient(cozyURL)
     const store = await this.getStore()
 
-    //const vaultClient = await this.getVaultClient()
-
     registerClientPlugins(client)
     const polyglot = await this.getPolyglot()
     //needed to migrate from cozy-drive auth to cozy-authenticate.
@@ -280,7 +272,6 @@ class InitAppMobile {
     if (isAnalyticsOn(store.getState())) {
       startTracker(getServerUrl(store.getState()))
     }
-    console.log('go to app')
     const root = document.querySelector('[role=application]')
 
     render(
