@@ -1,9 +1,10 @@
 import { Contact as DoctypeContact } from 'cozy-doctypes'
+import { getInitials, getDisplayName } from 'cozy-client/dist/models/contact'
 
 class Contact extends DoctypeContact {
   static getInitials(contactOrRecipient, defaultValue = '') {
     if (Contact.isContact(contactOrRecipient)) {
-      return DoctypeContact.getInitials(contactOrRecipient)
+      return getInitials(contactOrRecipient)
     } else {
       const s =
         contactOrRecipient.public_name ||
@@ -15,7 +16,7 @@ class Contact extends DoctypeContact {
 
   static getDisplayName(contact, defaultValue = '') {
     if (Contact.isContact(contact)) {
-      return DoctypeContact.getDisplayName(contact)
+      return getDisplayName(contact)
     } else {
       return (
         contact.public_name || contact.name || contact.email || defaultValue

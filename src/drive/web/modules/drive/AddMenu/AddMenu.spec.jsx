@@ -9,6 +9,7 @@ import { useAppLinkWithStoreFallback } from 'cozy-client'
 import ScanWrapper from 'drive/web/modules/drive/Toolbar/components/ScanWrapper'
 import AppLike from 'test/components/AppLike'
 import { ActionMenuContent } from './AddMenu'
+
 jest.mock('cozy-client/dist/hooks/useAppLinkWithStoreFallback', () => jest.fn())
 
 jest.mock('cozy-device-helper', () => ({
@@ -75,6 +76,11 @@ describe('AddMenu', () => {
     })
 
     it('opens and closes the scanner', async () => {
+      // TODO: Deprecation: `background` is deprecated and has been migrated automatically, you should use `backgroundIcon` now
+      // TODO: Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in %s.%s a useEffect cleanup function
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation()
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation()
+
       isMobileApp.mockReturnValue(true)
       await act(async () => {
         const { root } = await setup()
@@ -88,6 +94,8 @@ describe('AddMenu', () => {
         fireEvent.click(getByText('Cancel'))
         expect(queryByText('Save the doc')).toBeNull()
       })
+      consoleWarnSpy.mockRestore()
+      consoleErrorSpy.mockRestore()
     })
 
     it('is not displayed outside of a folder', async () => {

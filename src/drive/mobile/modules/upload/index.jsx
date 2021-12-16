@@ -46,7 +46,7 @@ export class DumbUpload extends Component {
     const { stopMediaBackup } = this.props
     stopMediaBackup()
     const items = await localforage.getItem('importedFiles')
-    this.setState({ items })
+    this.setState({ items: items || [] })
   }
 
   async uploadFiles() {

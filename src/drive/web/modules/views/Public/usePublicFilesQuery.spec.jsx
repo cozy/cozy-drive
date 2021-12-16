@@ -101,17 +101,17 @@ describe('usePublicFilesQuery', () => {
     })
     const { result, waitForNextUpdate } = setup()
 
-    await act(() => waitForNextUpdate())
+    await act(async () => await waitForNextUpdate())
 
     expect(result.current.fetchStatus).toEqual('loaded')
     expect(result.current.data).toEqual(mockData)
     expect(result.current.hasMore).toEqual(true)
 
-    await act(() => result.current.forceRefetch())
+    act(() => result.current.forceRefetch())
 
     expect(result.current.fetchStatus).toEqual('loading')
 
-    await act(() => waitForNextUpdate())
+    await act(async () => await waitForNextUpdate())
     expect(statByIdMock).toHaveBeenCalledWith(mockFolderId, {
       'page[cursor]': undefined
     })

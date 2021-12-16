@@ -25,13 +25,15 @@ describe('OpenWith component Modal', () => {
       client: {},
       vaultClient: {},
       t: tSpy,
-      uploadFilesFromNative: uploadFilesFromNativeSpy
+      uploadFilesFromNative: uploadFilesFromNativeSpy,
+      stopMediaBackup: jest.fn(),
+      router: jest.fn()
     }
     return shallow(<DumbUpload {...props} />)
   }
 
   describe('generateForQueue', () => {
-    it('should generat the right object for the Drive queue', () => {
+    it('should generate the right object for the Drive queue', () => {
       const genetaredForQueue = generateForQueue(defaultItems)
       expect(genetaredForQueue).toEqual([
         { file: defaultItems[0], isDirectory: false }

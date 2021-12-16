@@ -19,7 +19,7 @@ jest.mock('cozy-ui/transpiled/react/hooks/useBreakpoints', () => ({
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 jest.mock('drive/web/modules/views/OnlyOffice/Toolbar/helpers', () => ({
   ...jest.requireActual('drive/web/modules/views/OnlyOffice/Toolbar/helpers'),
-  computeHomeApp: jest.fn(() => ({}))
+  computeHomeApp: jest.fn(() => ({ slug: 'slug' }))
 }))
 
 const client = createMockClient({})
@@ -76,6 +76,9 @@ describe('Toolbar', () => {
 
   describe('FileName', () => {
     it('should show the path', () => {
+      // TODO : analyse why BaseButton has incorrect props and remove this consoleSpy
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation()
+
       useQuery
         .mockReturnValueOnce(officeDocParam)
         .mockReturnValue({ ...officeDocParam, data: { path: '/path' } })
@@ -84,6 +87,8 @@ describe('Toolbar', () => {
       const { queryByTestId } = root
 
       expect(queryByTestId('onlyoffice-filename-path')).toBeTruthy()
+
+      consoleSpy.mockRestore()
     })
 
     it('should not show the path on mobile', () => {

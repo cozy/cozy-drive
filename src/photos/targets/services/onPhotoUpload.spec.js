@@ -2,6 +2,9 @@ import { onPhotoUpload } from './onPhotoUpload'
 import { readSetting } from 'photos/ducks/clustering/settings'
 import { convertDurationInMilliseconds } from 'photos/ducks/clustering/utils'
 import CozyClient from 'cozy-client'
+import log from 'cozy-logger'
+
+jest.mock('cozy-logger')
 
 jest.mock('photos/ducks/clustering/settings', () => ({
   ...jest.requireActual('photos/ducks/clustering/settings'),
@@ -23,6 +26,9 @@ CozyClient.fromEnv = jest.fn().mockReturnValue(client)
 describe('onPhotoUpload', () => {
   beforeEach(() => {
     jest.spyOn(Date, 'now').mockImplementation(() => 1000)
+
+    // TODO: remove this spy by testing correctly the asynchronous actions
+    jest.spyOn(console, 'error').mockImplementation()
   })
   afterEach(() => {
     jest.clearAllMocks()
@@ -37,6 +43,10 @@ describe('onPhotoUpload', () => {
     })
     await onPhotoUpload()
     expect(client.save).toHaveBeenCalledTimes(0)
+    expect(log).toHaveBeenCalledWith(
+      'info',
+      'Service called with COZY_URL: undefined'
+    )
   })
 
   it('Should stop if execution is postponed', async () => {

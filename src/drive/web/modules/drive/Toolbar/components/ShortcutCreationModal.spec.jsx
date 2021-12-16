@@ -40,6 +40,10 @@ const defaultProps = {
 describe('ShortcutCreationModal', () => {
   beforeEach(() => {
     jest.resetAllMocks()
+    // TODO: cozy-ui  Warning: Failed prop type: The prop `open` is marked as required in `FixedDialog`, but its value is `undefined`.
+    // TODO: cozy-ui  Material-UI: You are trying to override a style that does not exist - Fix the `borderWidth` key of `theme.overrides.MuiTextField`
+    jest.spyOn(console, 'error').mockImplementation()
+    jest.spyOn(console, 'warn').mockImplementation()
     window.matchMedia = createMatchMedia(window.innerWidth)
     tMock.mockImplementation(key => key)
   })

@@ -1,7 +1,9 @@
 import CozyClient from 'cozy-client'
 import { saveClustering } from './albums'
 import doctypes from 'photos/targets/browser/doctypes'
+import log from 'cozy-logger'
 
+jest.mock('cozy-logger')
 const client = new CozyClient({ schema: doctypes })
 client.save = jest.fn().mockImplementation((doctype, album) => {
   return { data: { _id: '1', _type: doctype, ...album } }
@@ -11,7 +13,7 @@ client.create = jest.fn().mockImplementation((doctype, album) => {
 })
 client.mutate = jest.fn()
 
-describe('album', () => {
+describe('albums', () => {
   it('should save clustering if no existing auto-album', async () => {
     const photos = [
       {
@@ -28,6 +30,9 @@ describe('album', () => {
     const clusters = [photos]
     const clustered = await saveClustering(client, clusters)
     expect(clustered).toBe(photos.length)
+
+    expect(log).toHaveBeenCalledWith('info', '2 photos clustered into: "1"')
+    expect(log).toHaveBeenCalledTimes(1)
   })
 
   it('should save clustering with existing auto-albums', async () => {
@@ -70,5 +75,7 @@ describe('album', () => {
     )
     const clustered = await saveClustering(client, clusters, hydratedAlbums)
     expect(clustered).toBe(photos.length)
+
+    expect(log).toHaveBeenCalledWith('info', '2 photos clustered into: "1"')
   })
 })

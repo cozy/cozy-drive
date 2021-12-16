@@ -7,6 +7,8 @@ import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
 import PhotosIcon from 'cozy-ui/transpiled/react/Icons/FileTypeImage'
 import EncryptedFolderIcon from 'drive/web/modules/views/Folder/EncryptedFolderIcon'
 
+import styles from './empty.styl'
+
 const EmptyIcon = {
   drive: DriveIcon,
   encrypted: EncryptedFolderIcon,
@@ -25,6 +27,8 @@ const EmptyCanvas = ({ type, canUpload, localeKey }) => {
         (localeKey && t(`empty.${localeKey}_text`)) ||
         (canUpload && t('empty.text'))
       }
+      layout={false}
+      className={styles['empty']}
     />
   )
 }
