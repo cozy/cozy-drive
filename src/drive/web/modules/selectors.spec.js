@@ -62,6 +62,9 @@ const sleep = duration => new Promise(resolve => setTimeout(resolve, duration))
 
 describe('getCurrentViewFetchStatus', () => {
   it('should return the fetch status', async () => {
+    // TODO: Warning: An update to %s inside a test was not wrapped in act(...).
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation()
+
     const folderId = 'directory-foobar0'
     const initialStoreState = {
       router: {
@@ -92,6 +95,8 @@ describe('getCurrentViewFetchStatus', () => {
     const state2 = store.getState()
     const status2 = getCurrentViewFetchStatus(state2)
     expect(status2).toEqual('loaded')
+
+    consoleSpy.mockRestore()
   })
 })
 describe('getCurrentFolderId', () => {

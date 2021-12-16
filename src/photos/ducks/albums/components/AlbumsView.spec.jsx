@@ -28,7 +28,14 @@ describe('AlbumsView', () => {
     return { component }
   }
   it('displays an empty Component', () => {
+    // TODO : analyse why so many translations are missing in this test
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation()
+    const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation()
+
     const { component } = setup({ albums: { data: [] } })
     expect(component.render()).toMatchSnapshot()
+
+    consoleErrorSpy.mockRestore()
+    consoleWarnSpy.mockRestore()
   })
 })

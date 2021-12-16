@@ -70,6 +70,7 @@ describe('TrashFolderView', () => {
     const { getByText } = render(
       <AppLike client={client} store={store}>
         <FolderViewBody
+          navigateToFolder={jest.fn()}
           currentFolderId={'io.cozy.trash'}
           queryResults={[
             {

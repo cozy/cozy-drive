@@ -5,6 +5,7 @@ import FilesViewer from './FilesViewer'
 import CozyClient, { useQuery } from 'cozy-client'
 import AppLike from 'test/components/AppLike'
 import { generateFile } from 'test/generate'
+import { act } from 'react-dom/test-utils'
 
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 jest.mock('cozy-keys-lib', () => ({
@@ -83,23 +84,25 @@ describe('FilesViewer', () => {
     client.query = jest.fn().mockResolvedValue({
       data: generateFile({ i: '51' })
     })
-    const { root } = setup({
-      client,
-      nbFiles: 50,
-      totalCount: 100,
-      fileId: 'file-foobar51'
-    })
-    await sleep(0)
-
-    root.update()
-    expect(root.find(Overlay).length).toBe(1)
-    expect(root.find(Viewer).length).toBe(1)
-    expect(client.query).toHaveBeenCalledWith(
-      expect.objectContaining({
-        id: 'file-foobar51',
-        doctype: 'io.cozy.files'
+    await act(async () => {
+      const { root } = await setup({
+        client,
+        nbFiles: 50,
+        totalCount: 100,
+        fileId: 'file-foobar51'
       })
-    )
+      await sleep(0)
+
+      root.update()
+      expect(root.find(Overlay).length).toBe(1)
+      expect(root.find(Viewer).length).toBe(1)
+      expect(client.query).toHaveBeenCalledWith(
+        expect.objectContaining({
+          id: 'file-foobar51',
+          doctype: 'io.cozy.files'
+        })
+      )
+    })
   })
 
   it('should fetch more files if necessary', async () => {

@@ -39,10 +39,15 @@ describe('MoreMenu', () => {
 
   describe('DownloadButton', () => {
     it('download files', async () => {
+      // TODO: remove it when DeleteItem get props
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation()
+
       const { getByText } = await setup()
 
       fireEvent.click(getByText('Download folder'))
       expect(downloadFiles).toHaveBeenCalled()
+
+      consoleSpy.mockRestore()
     })
   })
 })
