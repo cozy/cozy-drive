@@ -5,7 +5,10 @@ yarn-error.log
 
 # Build
 build/
+
+# Test
 coverage/
+.consoleUsageReporter.json
 
 # Stack
 storage/
