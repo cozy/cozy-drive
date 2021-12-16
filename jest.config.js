@@ -1,6 +1,7 @@
 module.exports = {
   roots: ['<rootDir>/src'],
   setupFiles: ['<rootDir>/jestHelpers/setup.js'],
+  setupFilesAfterEnv: ['<rootDir>/jestHelpers/setupFilesAfterEnv.js'],
   moduleFileExtensions: ['js', 'jsx', 'json', 'styl'],
   moduleNameMapper: {
     '.(png|gif|jpe?g)$': '<rootDir>/jestHelpers/mocks/fileMock.js',
@@ -37,5 +38,6 @@ module.exports = {
     __APP_SLUG__: 'drive',
     __TARGET__: 'browser',
     __DEVELOPMENT__: true
-  }
+  },
+  reporters: ['default', '<rootDir>/jestHelpers/ConsoleUsageReporter.js']
 }
