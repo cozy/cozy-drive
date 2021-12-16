@@ -11,6 +11,7 @@ import configureStore from '../src/drive/store/configureStore'
 import AppLike from 'test/components/AppLike'
 import FolderContent from 'test/components/FolderContent'
 import { generateFile } from './generate'
+import { act } from 'react-dom/test-utils'
 
 jest.mock('cozy-keys-lib', () => ({
   withVaultClient: jest.fn().mockReturnValue({}),
@@ -37,8 +38,6 @@ export const mockCozyClientRequestQuery = () => {
     CozyClient.prototype.requestQuery.mockRestore()
   })
 }
-
-const sleep = duration => new Promise(resolve => setTimeout(resolve, duration))
 
 const getStoreStateWhenViewingFolder = folderId => {
   return {
@@ -83,14 +82,17 @@ const setupFolderContent = async ({ folderId, initialStoreState }) => {
     attribute: 'name',
     order: 'desc'
   }
-  const root = mount(
-    <AppLike store={store} client={client}>
-      <FolderContent folderId={folderId} sortOrder={sortOrder} />
-    </AppLike>
-  )
+  let root
 
-  await sleep(1)
-  root.update()
+  await act(async () => {
+    root = mount(
+      <AppLike store={store} client={client}>
+        <FolderContent folderId={folderId} sortOrder={sortOrder} />
+      </AppLike>
+    )
+
+    await root.update()
+  })
 
   return { root, store, client }
 }

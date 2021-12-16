@@ -1,11 +1,14 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { App } from './App'
+import { createMockClient } from 'cozy-client'
 
 describe('Public view', () => {
+  const client = createMockClient({})
   const options = {
     context: {
-      t: jest.fn()
+      t: jest.fn().mockImplementation(t => t),
+      client
     }
   }
 

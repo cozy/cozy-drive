@@ -21,6 +21,9 @@ describe('Dropzone', () => {
     const { store, client } = await setupFolderContent({
       folderId: 'directory-foobar0'
     })
+
+    store.dispatch = jest.fn()
+
     const root = mount(
       <AppLike client={client} store={store}>
         <Dropzone displayedFolder={displayedFolder} />

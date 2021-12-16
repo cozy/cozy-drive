@@ -26,6 +26,7 @@ exports[`Public view should render children when they are present 1`] = `
             className="pho-public-download"
             data-test-id="album-public-download"
             icon={[Function]}
+            label="Toolbar.album_download"
             onClick={[Function]}
             size="normal"
             tag="button"
@@ -36,6 +37,7 @@ exports[`Public view should render children when they are present 1`] = `
             className="u-hide--desk"
             component={<MoreButton />}
             position="right"
+            title="Toolbar.more"
           >
             <MenuItem
               data-test-id="album-public-create-cozy-mobile"
@@ -46,7 +48,9 @@ exports[`Public view should render children when they are present 1`] = `
                 />
               }
               onSelect={[Function]}
-            />
+            >
+              Share.create-cozy
+            </MenuItem>
             <MenuItem
               data-test-id="album-public-download-mobile"
               icon={
@@ -56,7 +60,9 @@ exports[`Public view should render children when they are present 1`] = `
                 />
               }
               onSelect={[Function]}
-            />
+            >
+              Toolbar.album_download
+            </MenuItem>
           </Menu>
         </div>
       </div>
@@ -122,6 +128,7 @@ exports[`Public view should render the album 1`] = `
             className="pho-public-download"
             data-test-id="album-public-download"
             icon={[Function]}
+            label="Toolbar.album_download"
             onClick={[Function]}
             size="normal"
             tag="button"
@@ -132,6 +139,7 @@ exports[`Public view should render the album 1`] = `
             className="u-hide--desk"
             component={<MoreButton />}
             position="right"
+            title="Toolbar.more"
           >
             <MenuItem
               data-test-id="album-public-create-cozy-mobile"
@@ -142,7 +150,9 @@ exports[`Public view should render the album 1`] = `
                 />
               }
               onSelect={[Function]}
-            />
+            >
+              Share.create-cozy
+            </MenuItem>
             <MenuItem
               data-test-id="album-public-download-mobile"
               icon={
@@ -152,7 +162,9 @@ exports[`Public view should render the album 1`] = `
                 />
               }
               onSelect={[Function]}
-            />
+            >
+              Toolbar.album_download
+            </MenuItem>
           </Menu>
         </div>
       </div>

@@ -71,6 +71,7 @@ const MoreMenu = ({ isDisabled, hasWriteAccess }) => {
           {hasWriteAccess && (
             <InsideRegularFolder>
               <hr />
+              {/* TODO DeleteItem needs props */}
               <DeleteItem />
             </InsideRegularFolder>
           )}
