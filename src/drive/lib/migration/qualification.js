@@ -100,7 +100,7 @@ export const extractFilesToMigrate = files => {
  * We changed some labels set by cozy-scanner: this method
  * transform them with the new one.
  *
- * @param {string} label - The old qualification label
+ * @param {string} oldLabel - The old qualification label
  * @returns {string} The new qualification label
  */
 const getNewLabelSetFromCozyScanner = oldLabel => {
@@ -108,7 +108,7 @@ const getNewLabelSetFromCozyScanner = oldLabel => {
     return 'vehicle_registration'
   }
   if (oldLabel === 'insurance_card') {
-    return 'national_insurance_card'
+    return 'national_health_insurance_card'
   }
   return oldLabel
 }
