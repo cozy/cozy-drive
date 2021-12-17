@@ -39,8 +39,29 @@ export const RenameInput = ({
         try {
           await updateFileNameQuery(client, file, newName)
           if (refreshFolderContent) refreshFolderContent()
-        } catch {
-          Alerter.error('alert.file_name', { fileName: newName })
+        } catch (error) {
+          if (
+            error.message.includes(
+              'Invalid filename containing illegal character(s):'
+            )
+          ) {
+            Alerter.error(
+              'alert.file_name_illegal_characters',
+              {
+                fileName: newName,
+                characters: error.message.split(
+                  'Invalid filename containing illegal character(s): '
+                )[1]
+              },
+              { duration: 2000 }
+            )
+          } else if (error.message.includes('Invalid filename:')) {
+            Alerter.error('alert.file_name_illegal_name', { fileName: newName })
+          } else if (error.message.includes('Missing name argument')) {
+            Alerter.error('alert.file_name_missing')
+          } else {
+            Alerter.error('alert.file_name', { fileName: newName })
+          }
         } finally {
           onAbort()
         }

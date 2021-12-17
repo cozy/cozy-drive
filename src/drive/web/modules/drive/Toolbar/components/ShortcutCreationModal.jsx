@@ -29,13 +29,13 @@ const makeURLValid = str => {
 }
 const ShortcutCreationModal = ({ onClose, onCreated, displayedFolder }) => {
   const { t } = useI18n()
-  const [filename, setFilename] = useState('')
+  const [fileName, setFilename] = useState('')
   const [url, setUrl] = useState('')
   const client = useClient()
 
   const createShortcut = useCallback(
     async () => {
-      if (!filename || !url) {
+      if (!fileName || !url) {
         Alerter.error(t('Shortcut.needs_info'))
         return
       }
@@ -45,7 +45,7 @@ const ShortcutCreationModal = ({ onClose, onCreated, displayedFolder }) => {
         return
       }
       const data = {
-        name: filename.endsWith('.url') ? filename : filename + '.url',
+        name: fileName.endsWith('.url') ? fileName : fileName + '.url',
         dir_id: displayedFolder.id,
         url: makedURL
       }
@@ -54,11 +54,32 @@ const ShortcutCreationModal = ({ onClose, onCreated, displayedFolder }) => {
         Alerter.success(t('Shortcut.created'))
         if (onCreated) onCreated()
         onClose()
-      } catch (e) {
-        Alerter.error(t('Shortcut.errored'))
+      } catch (error) {
+        if (
+          error.message.includes(
+            'Invalid filename containing illegal character(s):'
+          )
+        ) {
+          Alerter.error(
+            'alert.file_name_illegal_characters',
+            {
+              fileName,
+              characters: error.message.split(
+                'Invalid filename containing illegal character(s): '
+              )[1]
+            },
+            { duration: 2000 }
+          )
+        } else if (error.message.includes('Invalid filename:')) {
+          Alerter.error('alert.file_name_illegal_name', { fileName })
+        } else if (error.message.includes('Missing name argument')) {
+          Alerter.error('alert.file_name_missing')
+        } else {
+          Alerter.error(t('Shortcut.errored'))
+        }
       }
     },
-    [client, filename, onClose, onCreated, t, url, displayedFolder]
+    [client, fileName, onClose, onCreated, t, url, displayedFolder]
   )
 
   const handleKeyDown = e => {

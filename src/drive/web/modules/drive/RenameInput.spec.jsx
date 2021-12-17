@@ -7,10 +7,27 @@ import AppLike from 'test/components/AppLike'
 import { generateFile } from 'test/generate'
 
 import { RenameInput } from './RenameInput'
+import Alerter from 'cozy-ui/transpiled/react/Alerter'
+
+jest.mock('cozy-ui/transpiled/react/Alerter', () => ({
+  error: jest.fn(),
+  success: jest.fn()
+}))
 
 describe('RenameInput', () => {
-  const client = createMockClient({})
-  const onAbort = jest.fn()
+  let client
+  let onAbort
+  let file
+
+  beforeEach(() => {
+    jest.resetAllMocks()
+    client = createMockClient({})
+    onAbort = jest.fn()
+    file = {
+      ...generateFile({ i: '10', type: 'file' }),
+      meta: { rev: '1' }
+    }
+  })
 
   const setup = ({ file }) => {
     return render(
@@ -21,11 +38,6 @@ describe('RenameInput', () => {
   }
 
   it('tests the component', async () => {
-    const file = {
-      ...generateFile({ i: '10', type: 'file' }),
-      meta: { rev: '1' }
-    }
-
     const { getByText } = setup({ file })
     const inputNode = document.getElementsByTagName('input')[0]
 
@@ -57,12 +69,6 @@ describe('RenameInput', () => {
   })
 
   it('works without meta rev', async () => {
-    // files that have just been uploaded don't have a meta.rev field, they just have a normal _rev
-    const file = {
-      ...generateFile({ i: '10', type: 'file' }),
-      _rev: 1
-    }
-
     setup({ file })
     const inputNode = document.getElementsByTagName('input')[0]
 
@@ -74,5 +80,59 @@ describe('RenameInput', () => {
         _rev: '1'
       })
     )
+  })
+
+  it('should alert error on illegal characters', async () => {
+    setup({ file })
+    const inputNode = document.getElementsByTagName('input')[0]
+
+    client.save.mockRejectedValueOnce({
+      message: 'Invalid filename containing illegal character(s): /'
+    })
+
+    fireEvent.change(inputNode, { target: { value: 'new/Name.pdf' } })
+    fireEvent.keyDown(inputNode, { key: 'Enter', code: 'Enter', keyCode: 13 })
+
+    await waitFor(() => expect(Alerter.error).toHaveBeenCalledTimes(1))
+    expect(Alerter.error).toHaveBeenCalledWith(
+      'alert.file_name_illegal_characters',
+      {
+        fileName: 'new/Name.pdf',
+        characters: '/'
+      },
+      { duration: 2000 }
+    )
+  })
+
+  it('should alert error on incorrect file name', async () => {
+    setup({ file })
+    const inputNode = document.getElementsByTagName('input')[0]
+
+    client.save.mockRejectedValueOnce({
+      message: 'Invalid filename: .'
+    })
+
+    fireEvent.change(inputNode, { target: { value: '..pdf' } })
+    fireEvent.keyDown(inputNode, { key: 'Enter', code: 'Enter', keyCode: 13 })
+
+    await waitFor(() => expect(Alerter.error).toHaveBeenCalledTimes(1))
+    expect(Alerter.error).toHaveBeenCalledWith('alert.file_name_illegal_name', {
+      fileName: '..pdf'
+    })
+  })
+
+  it('should alert error on missing file name', async () => {
+    setup({ file })
+    const inputNode = document.getElementsByTagName('input')[0]
+
+    client.save.mockRejectedValueOnce({
+      message: 'Missing name argument'
+    })
+
+    fireEvent.change(inputNode, { target: { value: '   .pdf' } })
+    fireEvent.keyDown(inputNode, { key: 'Enter', code: 'Enter', keyCode: 13 })
+
+    await waitFor(() => expect(Alerter.error).toHaveBeenCalledTimes(1))
+    expect(Alerter.error).toHaveBeenCalledWith('alert.file_name_missing')
   })
 })
