@@ -6,6 +6,10 @@ import { CozyFile } from 'models'
 
 import { MoveModal } from './MoveModal'
 
+jest.mock('cozy-client/dist/utils', () => ({
+  cancelable: jest.fn().mockImplementation(promise => promise)
+}))
+
 jest.mock('cozy-doctypes')
 jest.mock('cozy-stack-client')
 jest.mock('cozy-ui/transpiled/react/utils/color', () => ({

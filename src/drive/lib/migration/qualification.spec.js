@@ -1,8 +1,8 @@
 import {
   extractFilesToMigrate,
   getFileRequalification,
-  removeOldQualificationAttributes,
-  getMostRecentUpdatedDate
+  getMostRecentUpdatedDate,
+  removeOldQualificationAttributes
 } from 'drive/lib/migration/qualification'
 import log from 'cozy-logger'
 
@@ -59,6 +59,38 @@ describe('qualification migration', () => {
       label: 'health_invoice',
       purpose: 'invoice',
       sourceCategory: 'health'
+    })
+  })
+
+  it('should get the new qualification for a registration file qualified by cozy-scanner', () => {
+    const file = {
+      metadata: {
+        label: 'registration'
+      }
+    }
+    const qualif = getFileRequalification(file)
+    expect(qualif).toEqual({
+      label: 'vehicle_registration',
+      purpose: 'attestation',
+      sourceCategory: 'gov',
+      sourceSubCategory: 'transport',
+      subjects: ['right', 'identity']
+    })
+  })
+
+  it('should get the new qualification for a insurance_card file qualified by cozy-scanner', () => {
+    const file = {
+      metadata: {
+        label: 'insurance_card'
+      }
+    }
+    const qualif = getFileRequalification(file)
+    expect(qualif).toEqual({
+      label: 'national_health_insurance_card',
+      purpose: 'attestation',
+      sourceCategory: 'gov',
+      sourceSubCategory: 'health',
+      subjects: ['identity', 'insurance']
     })
   })
 
