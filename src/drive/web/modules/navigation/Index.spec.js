@@ -5,6 +5,10 @@ import { SHAREDWITHME_DIR_ID } from 'drive/constants/config'
 
 import { fetchSharing } from './Index'
 
+jest.mock('cozy-keys-lib', () => ({
+  withVaultClient: jest.fn().mockReturnValue({}),
+  useVaultClient: jest.fn()
+}))
 const client = createMockClient({})
 const router = { push: jest.fn() }
 const setSharingsValue = jest.fn()

@@ -6,6 +6,11 @@ import { generateFile, getStoreStateWhenViewingFolder } from 'test/generate'
 
 import { createFolder } from './actions'
 
+jest.mock('cozy-keys-lib', () => ({
+  withVaultClient: jest.fn().mockReturnValue({}),
+  useVaultClient: jest.fn(),
+  WebVaultClient: jest.fn().mockReturnValue({})
+}))
 const vaultClient = new WebVaultClient('http://alice.cozy.cloud')
 
 beforeEach(() => {
