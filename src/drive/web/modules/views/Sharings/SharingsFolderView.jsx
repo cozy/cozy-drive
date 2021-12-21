@@ -1,6 +1,5 @@
 import React, { useCallback, useContext } from 'react'
 import { connect, useDispatch } from 'react-redux'
-import get from 'lodash/get'
 
 import { useQuery, useClient } from 'cozy-client'
 import { SharingContext } from 'cozy-sharing'
@@ -34,26 +33,6 @@ import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
-
-const getBreadcrumbPath = (t, displayedFolder, sharedDocumentIds) => {
-  const breadcrumbs = [
-    {
-      id: sharedDocumentIds.includes(get(displayedFolder, 'dir_id')) // TODO: use hasSharedParent or similar from cozy-sharing
-        ? get(displayedFolder, 'dir_id')
-        : null
-    },
-    {
-      id: displayedFolder.id,
-      name: displayedFolder.name
-    }
-  ].filter(({ id }) => Boolean(id))
-
-  breadcrumbs.unshift({ name: t('breadcrumb.title_sharings') })
-  return breadcrumbs.map(breadcrumb => ({
-    id: breadcrumb.id,
-    name: breadcrumb.name || '…'
-  }))
-}
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
@@ -133,17 +112,17 @@ const SharingsFolderView = ({
   )
 
   const { t } = useI18n()
-  const geTranslatedBreadcrumbPath = useCallback(
-    displayedFolder => getBreadcrumbPath(t, displayedFolder, sharedDocumentIds),
-    [t, sharedDocumentIds]
-  )
+  const rootBreadcrumbPath = {
+    name: t('breadcrumb.title_sharings')
+  }
 
   return (
     <FolderView>
       <FolderViewHeader>
         {currentFolderId && (
           <FolderViewBreadcrumb
-            getBreadcrumbPath={geTranslatedBreadcrumbPath}
+            sharedDocumentIds={sharedDocumentIds}
+            rootBreadcrumbPath={rootBreadcrumbPath}
             currentFolderId={currentFolderId}
             navigateToFolder={navigateToFolder}
           />

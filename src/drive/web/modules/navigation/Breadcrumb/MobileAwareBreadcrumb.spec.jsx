@@ -1,50 +1,38 @@
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
-import { createMockClient } from 'cozy-client'
-import AppLike from 'test/components/AppLike'
+import { render } from '@testing-library/react'
+import MobileAwareBreadcrumb from './MobileAwareBreadcrumb'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
-import { MobileBreadcrumb } from './MobileAwareBreadcrumb'
+jest.mock('cozy-ui/transpiled/react/hooks/useBreakpoints')
+// eslint-disable-next-line react/display-name
+jest.mock('./components/DesktopBreadcrumb/DesktopBreadcrumb', () => () => (
+  <div data-testid="desktop-breadcrumb" />
+))
+// eslint-disable-next-line react/display-name
+jest.mock('./components/MobileBreadcrumb/MobileBreadcrumb', () => () => (
+  <div data-testid="mobile-breadcrumb" />
+))
 
 describe('MobileAwareBreadcrumb', () => {
-  it('works', async () => {
-    const BarComponentMock = ({ children }) => <div>{children}</div>
-    global.cozy.bar.BarCenter = BarComponentMock
-    global.cozy.bar.BarLeft = BarComponentMock
+  it('should return mobile breadcrumb on mobile', () => {
+    // Given
+    useBreakpoints.mockReturnValue({ isMobile: true })
 
-    const path = [
-      { id: '1', name: 'root folder' },
-      { id: '2', name: 'parent folder' },
-      { id: '3', name: 'current folder' }
-    ]
+    // When
+    const { getByTestId } = render(<MobileAwareBreadcrumb />)
 
-    const onBreadcrumbClick = jest.fn()
+    // Then
+    expect(getByTestId('mobile-breadcrumb')).toBeInTheDocument()
+  })
 
-    const { findByText } = render(
-      <AppLike client={createMockClient({})}>
-        <MobileBreadcrumb
-          breakpoints={{ isMobile: true }}
-          path={path}
-          onBreadcrumbClick={onBreadcrumbClick}
-        />
-      </AppLike>
-    )
+  it('should return mobile breadcrumb on desktop', () => {
+    // Given
+    useBreakpoints.mockReturnValue({ isMobile: false })
 
-    // rznders the path
-    const rootLink = await findByText('root folder')
-    await findByText('parent folder')
-    await findByText('current folder')
+    // When
+    const { getByTestId } = render(<MobileAwareBreadcrumb />)
 
-    fireEvent.click(rootLink)
-    expect(onBreadcrumbClick).toHaveBeenCalledWith({
-      id: '1',
-      name: 'root folder'
-    })
-
-    const backButton = document.querySelector('button')
-    fireEvent.click(backButton)
-    expect(onBreadcrumbClick).toHaveBeenCalledWith({
-      id: '2',
-      name: 'parent folder'
-    })
+    // Then
+    expect(getByTestId('desktop-breadcrumb')).toBeInTheDocument()
   })
 })

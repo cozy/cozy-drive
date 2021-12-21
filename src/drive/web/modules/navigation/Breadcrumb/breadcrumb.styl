@@ -5,8 +5,22 @@
 @require '../../../../styles/coz-bar-size.styl'
 
 .fil-path-backdrop
-  flex 1 1 auto
-  width 1%
+    flex 1 1 auto
+    width 1%
+    min-width 0
+
+    &:not([override])
+        margin-right 2rem
+
+    ol
+        flex-wrap nowrap
+        min-width 0
+        overflow hidden
+        text-overflow ellipsis
+
+        li
+            &:last-child
+                min-width 0
 
 .fil-path-title
     margin    0
@@ -14,6 +28,7 @@
     overflow hidden
     white-space nowrap
     text-overflow ellipsis
+    display block
 
 .fil-path-link
     display          inline-flex
@@ -25,6 +40,9 @@
 
     .fil-path-separator
         margin 0 .25rem
+
+    &:hover
+        color          var(--primaryTextColor)
 
 .fil-path-previous
     width      $coz-bar-size
@@ -45,6 +63,8 @@
     text-overflow  ellipsis
     overflow       hidden
     white-space    nowrap
+    color          var(--primaryTextColor)
+    font-weight    bold
 
 +small-screen()
     .fil-path-backdrop

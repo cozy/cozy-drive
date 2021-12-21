@@ -1,5 +1,5 @@
 /* global __TARGET__ */
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 
@@ -9,108 +9,100 @@ import RightIcon from 'cozy-ui/transpiled/react/Icons/Right'
 
 import styles from 'drive/web/modules/navigation/Breadcrumb/breadcrumb.styl'
 
-export class Breadcrumb extends Component {
-  state = {
-    deployed: false
+const Breadcrumb = ({
+  path,
+  onBreadcrumbClick,
+  opening,
+  inlined,
+  className = ''
+}) => {
+  const [deployed, setDeployed] = useState(false)
+  const [menu, setMenu] = useState(undefined)
+
+  const toggleDeploy = () => (deployed ? closeMenu() : openMenu())
+
+  const openMenu = () => {
+    setDeployed(true)
+    document.addEventListener('click', handleClickOutside, true)
   }
 
-  toggleDeploy = () => {
-    this.state.deployed ? this.closeMenu() : this.openMenu()
+  const closeMenu = () => {
+    setDeployed(false)
+    document.removeEventListener('click', handleClickOutside, true)
   }
 
-  openMenu() {
-    this.setState({ deployed: true })
-    document.addEventListener('click', this.handleClickOutside, true)
-  }
-
-  closeMenu() {
-    this.setState({ deployed: false })
-    document.removeEventListener('click', this.handleClickOutside, true)
-  }
-
-  handleClickOutside = e => {
-    if (this.menu && !this.menu.contains(e.target)) {
+  const handleClickOutside = e => {
+    if (menu && !menu.contains(e.target)) {
       e.stopPropagation()
-      this.closeMenu()
+      closeMenu()
     }
   }
 
-  render() {
-    const {
-      path,
-      onBreadcrumbClick,
-      opening,
-      inlined,
-      className = ''
-    } = this.props
-    const { deployed } = this.state
+  if (!path) return false
 
-    if (!path) return false
-
-    return (
-      <div
-        className={cx(
-          styles['fil-path-backdrop'],
-          { [styles['deployed']]: deployed },
-          { [styles['inlined']]: inlined },
-          { [styles['mobile']]: __TARGET__ === 'mobile' },
-          className
-        )}
+  return (
+    <div
+      className={cx(
+        styles['fil-path-backdrop'],
+        { [styles['deployed']]: deployed },
+        { [styles['inlined']]: inlined },
+        { [styles['mobile']]: __TARGET__ === 'mobile' },
+        className
+      )}
+    >
+      <h2
+        data-test-id="path-title"
+        className={styles['fil-path-title']}
+        onClick={toggleDeploy}
+        ref={ref => {
+          setMenu(ref)
+        }}
       >
-        <h2
-          data-test-id="path-title"
-          className={styles['fil-path-title']}
-          onClick={this.toggleDeploy}
-          ref={ref => {
-            this.menu = ref
-          }}
-        >
-          {path.map((folder, index) => {
-            if (index < path.length - 1) {
-              return (
-                <span
-                  className={styles['fil-path-link']}
-                  onClick={e => {
-                    e.stopPropagation()
-                    onBreadcrumbClick(folder)
-                  }}
-                  key={index}
-                >
-                  <span className={styles['fil-path-link-name']}>
-                    {folder.name}
-                  </span>
-                  <Icon
-                    icon={RightIcon}
-                    className={styles['fil-path-separator']}
-                  />
+        {path.map((folder, index) => {
+          if (index < path.length - 1) {
+            return (
+              <span
+                className={styles['fil-path-link']}
+                onClick={e => {
+                  e.stopPropagation()
+                  onBreadcrumbClick(folder)
+                }}
+                key={index}
+              >
+                <span className={styles['fil-path-link-name']}>
+                  {folder.name}
                 </span>
-              )
-            } else {
-              return (
-                <span
-                  className={styles['fil-path-current']}
-                  onClick={e => {
-                    e.stopPropagation()
-                    if (path.length >= 2) this.toggleDeploy()
-                  }}
-                  key={index}
-                >
-                  <span className={styles['fil-path-current-name']}>
-                    {folder.name}
-                  </span>
-                  {path.length >= 2 && (
-                    <span className={styles['fil-path-down']} />
-                  )}
+                <Icon
+                  icon={RightIcon}
+                  className={styles['fil-path-separator']}
+                />
+              </span>
+            )
+          } else {
+            return (
+              <span
+                className={styles['fil-path-current']}
+                onClick={e => {
+                  e.stopPropagation()
+                  if (path.length >= 2) toggleDeploy()
+                }}
+                key={index}
+              >
+                <span className={styles['fil-path-current-name']}>
+                  {folder.name}
+                </span>
+                {path.length >= 2 && (
+                  <span className={styles['fil-path-down']} />
+                )}
 
-                  {opening && <Spinner />}
-                </span>
-              )
-            }
-          })}
-        </h2>
-      </div>
-    )
-  }
+                {opening && <Spinner />}
+              </span>
+            )
+          }
+        })}
+      </h2>
+    </div>
+  )
 }
 
 Breadcrumb.propTypes = {

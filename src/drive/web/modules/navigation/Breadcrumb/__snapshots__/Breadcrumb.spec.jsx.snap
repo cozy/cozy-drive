@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Breadcrumbs template should match snapshot 1`] = `
+<div>
+  <div
+    class="fil-path-backdrop"
+  >
+    <h2
+      class="fil-path-title"
+      data-test-id="path-title"
+    >
+      <span
+        class="fil-path-link"
+      >
+        <span
+          class="fil-path-link-name"
+        >
+          Drive
+        </span>
+        <svg
+          class="fil-path-separator styles__icon___23x3R"
+          height="16"
+          viewBox="0 0 16 16"
+          width="16"
+        >
+          <path
+            d="M12.707 7.293l-6-6a.999.999 0 10-1.414 1.414L10.586 8l-5.293 5.293a.999.999 0 101.414 1.414l6-6a.999.999 0 000-1.414"
+            fill-rule="evenodd"
+          />
+        </svg>
+      </span>
+      <span
+        class="fil-path-link"
+      >
+        <span
+          class="fil-path-link-name"
+        >
+          grandParent
+        </span>
+        <svg
+          class="fil-path-separator styles__icon___23x3R"
+          height="16"
+          viewBox="0 0 16 16"
+          width="16"
+        >
+          <path
+            d="M12.707 7.293l-6-6a.999.999 0 10-1.414 1.414L10.586 8l-5.293 5.293a.999.999 0 101.414 1.414l6-6a.999.999 0 000-1.414"
+            fill-rule="evenodd"
+          />
+        </svg>
+      </span>
+      <span
+        class="fil-path-link"
+      >
+        <span
+          class="fil-path-link-name"
+        >
+          parent
+        </span>
+        <svg
+          class="fil-path-separator styles__icon___23x3R"
+          height="16"
+          viewBox="0 0 16 16"
+          width="16"
+        >
+          <path
+            d="M12.707 7.293l-6-6a.999.999 0 10-1.414 1.414L10.586 8l-5.293 5.293a.999.999 0 101.414 1.414l6-6a.999.999 0 000-1.414"
+            fill-rule="evenodd"
+          />
+        </svg>
+      </span>
+      <span
+        class="fil-path-current"
+      >
+        <span
+          class="fil-path-current-name"
+        >
+          current
+        </span>
+        <span
+          class="fil-path-down"
+        />
+      </span>
+    </h2>
+  </div>
+</div>
+`;

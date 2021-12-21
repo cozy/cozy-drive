@@ -1,33 +1,41 @@
 import React, { useCallback } from 'react'
-import { useQuery } from 'cozy-client'
-import get from 'lodash/get'
+import { useBreadcrumbPath } from './hooks/useBreadcrumbPath.jsx'
 import { MobileAwareBreadcrumb as Breadcrumb } from 'drive/web/modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
-import { buildFolderQuery } from 'drive/web/modules/queries'
+import PropTypes from 'prop-types'
 
 const FolderViewBreadcrumb = ({
   currentFolderId,
-  getBreadcrumbPath,
-  navigateToFolder
+  navigateToFolder,
+  rootBreadcrumbPath,
+  sharedDocumentIds
 }) => {
-  const currentFolderQuery = buildFolderQuery(currentFolderId)
-  const currentFolderQueryResults = useQuery(
-    currentFolderQuery.definition,
-    currentFolderQuery.options
-  )
-  const currentFolder = get(currentFolderQueryResults, 'data[0]')
-  const path = currentFolder ? getBreadcrumbPath(currentFolder) : []
+  const path = useBreadcrumbPath({
+    currentFolderId,
+    rootBreadcrumbPath,
+    sharedDocumentIds
+  })
 
   const onBreadcrumbClick = useCallback(({ id }) => navigateToFolder(id), [
     navigateToFolder
   ])
 
-  return currentFolder ? (
+  return path && path.length > 0 ? (
     <Breadcrumb
       path={path}
       onBreadcrumbClick={onBreadcrumbClick}
       opening={false}
     />
   ) : null
+}
+
+FolderViewBreadcrumb.propTypes = {
+  currentFolderId: PropTypes.string.isRequired,
+  navigateToFolder: PropTypes.func.isRequired,
+  rootBreadcrumbPath: PropTypes.exact({
+    id: PropTypes.string,
+    name: PropTypes.string
+  }).isRequired,
+  sharedDocumentIds: PropTypes.array
 }
 
 export default FolderViewBreadcrumb
