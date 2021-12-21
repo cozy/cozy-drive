@@ -13,6 +13,10 @@ storage/
 # Reports
 reports/
 
+# Locales
+**/locales/*
+!**/locales/en.json
+
 # Default
 !.gitkeep
 
