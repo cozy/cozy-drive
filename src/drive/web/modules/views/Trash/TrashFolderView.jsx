@@ -1,9 +1,6 @@
 import React, { useCallback, useContext } from 'react'
 import { connect } from 'react-redux'
 
-import get from 'lodash/get'
-import uniqBy from 'lodash/uniqBy'
-
 import { useQuery, useClient } from 'cozy-client'
 import { SharingContext } from 'cozy-sharing'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
@@ -12,7 +9,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import useActions from 'drive/web/modules/actions/useActions'
 import { restore, destroy } from 'drive/web/modules/actions'
-import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
+import { TRASH_DIR_ID } from 'drive/constants/config'
 import {
   buildTrashQuery,
   buildFileWithSpecificMetadataAttributeQuery
@@ -30,26 +27,6 @@ import FolderView from '../Folder/FolderView'
 import FolderViewHeader from '../Folder/FolderViewHeader'
 import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
-
-const getBreadcrumbPath = (t, displayedFolder) =>
-  uniqBy(
-    [
-      { id: TRASH_DIR_ID, name: t('breadcrumb.title_trash') },
-      {
-        id: get(displayedFolder, 'dir_id')
-      },
-      {
-        id: displayedFolder.id,
-        name: displayedFolder.name
-      }
-    ],
-    'id'
-  )
-    .filter(({ id }) => Boolean(id) && id !== ROOT_DIR_ID)
-    .map(breadcrumb => ({
-      id: breadcrumb.id,
-      name: breadcrumb.name || '…'
-    }))
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
@@ -119,17 +96,17 @@ const TrashFolderView = ({
   const actions = useActions([restore, destroy], actionsOptions)
 
   const { t } = useI18n()
-  const geTranslatedBreadcrumbPath = useCallback(
-    displayedFolder => getBreadcrumbPath(t, displayedFolder),
-    [t]
-  )
+  const rootBreadcrumbPath = {
+    id: TRASH_DIR_ID,
+    name: t('breadcrumb.title_trash')
+  }
 
   return (
     <FolderView>
       <FolderViewHeader>
         {currentFolderId && (
           <FolderViewBreadcrumb
-            getBreadcrumbPath={geTranslatedBreadcrumbPath}
+            rootBreadcrumbPath={rootBreadcrumbPath}
             currentFolderId={currentFolderId}
             navigateToFolder={navigateToFolder}
           />

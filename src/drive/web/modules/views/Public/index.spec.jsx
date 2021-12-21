@@ -10,6 +10,21 @@ import { generateFileFixtures, getByTextWithMarkup } from '../testUtils'
 
 import PublicFolderView from './index'
 
+jest.mock('../Folder/FolderViewBreadcrumb', () =>
+  // eslint-disable-next-line react/display-name
+  ({ rootBreadcrumbPath, currentFolderId }) => (
+    <div
+      data-path={rootBreadcrumbPath}
+      data-folder-id={currentFolderId}
+      data-test-id="FolderViewBreadcrumb"
+    />
+  )
+)
+
+jest.mock('drive/web/modules/selectors', () => ({
+  getCurrentFolderId: () => '1234'
+}))
+
 jest.mock('./usePublicFilesQuery', () => {
   return jest.fn()
 })
@@ -47,25 +62,26 @@ describe('Public View', () => {
     return { ...rendered, client }
   }
 
-  it('renders the public view', async () => {
+  const updated_at = '2020-05-14T10:33:31.365224+02:00'
+
+  beforeEach(() => {
     const nbFiles = 2
     const path = '/test'
     const dir_id = 'dirIdParent'
-    const updated_at = '2020-05-14T10:33:31.365224+02:00'
-
     const filesFixture = generateFileFixtures({
       nbFiles,
       path,
       dir_id,
       updated_at
     })
-
     usePublicFilesQuery.mockReturnValue({
       data: filesFixture,
       fetchStatus: 'loaded',
       refreshFolderContent: jest.fn()
     })
+  })
 
+  it('renders the public view', async () => {
     const { getByText, findByText } = setup()
     const sleep = duration =>
       new Promise(resolve => setTimeout(resolve, duration))
@@ -91,5 +107,25 @@ describe('Public View', () => {
     fireEvent.click(historyItem)
 
     await expect(findByText('FileHistory stub')).resolves.toBeTruthy()
+  })
+
+  it('should use FolderViewBreadcrumb with correct rootBreadcrumbPath', async () => {
+    // Given
+    let render
+
+    // When
+    await act(async () => {
+      render = await setup()
+    })
+
+    // Then
+    const { getByTestId } = render
+    expect(getByTestId('FolderViewBreadcrumb')).toBeTruthy()
+    expect(
+      getByTestId('FolderViewBreadcrumb').hasAttribute('data-path')
+    ).toEqual(true)
+    expect(
+      getByTestId('FolderViewBreadcrumb').getAttribute('data-folder-id')
+    ).toEqual('1234')
   })
 })

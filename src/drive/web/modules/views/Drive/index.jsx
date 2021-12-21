@@ -2,8 +2,6 @@
 
 import React, { useCallback, useContext, useEffect } from 'react'
 import { connect, useDispatch } from 'react-redux'
-import get from 'lodash/get'
-import uniqBy from 'lodash/uniqBy'
 
 import { SharingContext } from 'cozy-sharing'
 import { useQuery, useClient } from 'cozy-client'
@@ -51,30 +49,6 @@ import FolderViewBreadcrumb from 'drive/web/modules/views/Folder/FolderViewBread
 import { useTrashRedirect } from 'drive/web/modules/views/Drive/useTrashRedirect'
 import FabWithMenuContext from 'drive/web/modules/drive/FabWithMenuContext'
 import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
-
-const getBreadcrumbPath = (t, displayedFolder) =>
-  uniqBy(
-    [
-      {
-        id: ROOT_DIR_ID
-      },
-      {
-        id: get(displayedFolder, 'dir_id')
-      },
-      {
-        id: displayedFolder.id,
-        name: displayedFolder.name
-      }
-    ],
-    'id'
-  )
-    .filter(({ id }) => Boolean(id))
-    .map(breadcrumb => ({
-      id: breadcrumb.id,
-      name:
-        breadcrumb.name ||
-        (breadcrumb.id === ROOT_DIR_ID ? t('breadcrumb.title_drive') : '…')
-    }))
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
@@ -182,10 +156,10 @@ const DriveView = ({
   )
 
   const { t } = useI18n()
-  const geTranslatedBreadcrumbPath = useCallback(
-    displayedFolder => getBreadcrumbPath(t, displayedFolder),
-    [t]
-  )
+  const rootBreadcrumbPath = {
+    id: ROOT_DIR_ID,
+    name: t('breadcrumb.title_drive')
+  }
 
   useEffect(() => {
     if (canWriteToCurrentFolder) {
@@ -202,7 +176,7 @@ const DriveView = ({
       <FolderViewHeader>
         {currentFolderId && (
           <FolderViewBreadcrumb
-            getBreadcrumbPath={geTranslatedBreadcrumbPath}
+            rootBreadcrumbPath={rootBreadcrumbPath}
             currentFolderId={currentFolderId}
             navigateToFolder={navigateToFolder}
           />

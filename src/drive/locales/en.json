@@ -27,7 +27,8 @@
     "title_sharings": "Sharings",
     "title_shared": "Shared by me",
     "title_activity": "Activity",
-    "title_trash": "Trash"
+    "title_trash": "Trash",
+    "label": "Show path"
   },
   "Toolbar": {
     "more": "More"

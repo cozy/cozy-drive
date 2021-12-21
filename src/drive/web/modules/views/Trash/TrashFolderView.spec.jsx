@@ -110,4 +110,19 @@ describe('TrashFolderView', () => {
     })
     getByText(`You don’t have any deleted files.`)
   })
+
+  it('should contain breadcrumb with root path', async () => {
+    useQuery.mockReturnValue({
+      data: [],
+      count: 0
+    })
+
+    const { getByText } = setup()
+    const sleep = duration =>
+      new Promise(resolve => setTimeout(resolve, duration))
+    await act(async () => {
+      await sleep(100)
+    })
+    getByText(`Trash`)
+  })
 })
