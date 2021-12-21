@@ -1,32 +1,22 @@
 import React, { useCallback } from 'react'
-import { useQuery } from 'cozy-client'
-import get from 'lodash/get'
-import { MobileAwareBreadcrumb as Breadcrumb } from 'drive/web/modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
-import { buildFolderQuery } from 'drive/web/modules/queries'
+import { useBreadcrumbPath } from '../useBreadcrumbPath.jsx'
+import { default as BreadcrumbMui } from '@material-ui/core/Breadcrumbs'
 
-const FolderViewBreadcrumb = ({
-  currentFolderId,
-  getBreadcrumbPath,
-  navigateToFolder
-}) => {
-  const currentFolderQuery = buildFolderQuery(currentFolderId)
-  const currentFolderQueryResults = useQuery(
-    currentFolderQuery.definition,
-    currentFolderQuery.options
-  )
-  const currentFolder = get(currentFolderQueryResults, 'data[0]')
-  const path = currentFolder ? getBreadcrumbPath(currentFolder) : []
+const FolderViewBreadcrumb = ({ currentFolderId, navigateToFolder }) => {
+  const paths = useBreadcrumbPath({ currentFolderId })
 
   const onBreadcrumbClick = useCallback(({ id }) => navigateToFolder(id), [
     navigateToFolder
   ])
 
-  return currentFolder ? (
-    <Breadcrumb
-      path={path}
-      onBreadcrumbClick={onBreadcrumbClick}
-      opening={false}
-    />
+  return paths ? (
+    <BreadcrumbMui>
+      {paths.map(item => (
+        <a key={item.name} color="inherit" href="#" onClick={onBreadcrumbClick}>
+          {item.name}
+        </a>
+      ))}
+    </BreadcrumbMui>
   ) : null
 }
 
