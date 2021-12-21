@@ -13,7 +13,11 @@ jest.mock('drive/web/modules/navigation/duck/actions', () => ({
 }))
 
 jest.mock('cozy-flags', () => jest.fn())
-
+jest.mock('cozy-keys-lib', () => ({
+  withVaultClient: jest.fn().mockReturnValue({}),
+  useVaultClient: jest.fn(),
+  WebVaultClient: jest.fn().mockReturnValue({})
+}))
 describe('AddFolder', () => {
   const setup = () => {
     const { client, store } = setupStoreAndClient({})

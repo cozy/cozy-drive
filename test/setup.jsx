@@ -12,6 +12,11 @@ import AppLike from 'test/components/AppLike'
 import FolderContent from 'test/components/FolderContent'
 import { generateFile } from './generate'
 
+jest.mock('cozy-keys-lib', () => ({
+  withVaultClient: jest.fn().mockReturnValue({}),
+  useVaultClient: jest.fn()
+}))
+
 configure({ testIdAttribute: 'data-test-id' })
 
 export const mockCozyClientRequestQuery = () => {

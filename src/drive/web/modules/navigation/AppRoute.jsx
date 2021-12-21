@@ -1,8 +1,4 @@
 /* global __TARGET__ */
-jest.mock('cozy-keys-lib', () => ({
-  withVaultClient: jest.fn().mockReturnValue({}),
-  useVaultClient: jest.fn()
-}))
 import React from 'react'
 import { Route, IndexRoute, Redirect } from 'react-router'
 
