@@ -10,6 +10,7 @@ import TextField from 'cozy-ui/transpiled/react/MuiCozyTheme/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import Stack from 'cozy-ui/transpiled/react/Stack'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 
 const ENTER_KEY = 13
 
@@ -32,6 +33,7 @@ const ShortcutCreationModal = ({ onClose, onCreated, displayedFolder }) => {
   const [fileName, setFilename] = useState('')
   const [url, setUrl] = useState('')
   const client = useClient()
+  const isOffline = useBrowserOffline()
 
   const createShortcut = useCallback(
     async () => {
@@ -50,12 +52,22 @@ const ShortcutCreationModal = ({ onClose, onCreated, displayedFolder }) => {
         url: makedURL
       }
       try {
-        await client.collection('io.cozy.files.shortcuts').create(data)
-        Alerter.success(t('Shortcut.created'))
-        if (onCreated) onCreated()
+        if (isOffline) {
+          Alerter.error('alert.offline')
+        } else {
+          await client.collection('io.cozy.files.shortcuts').create(data)
+          Alerter.success(t('Shortcut.created'))
+          if (onCreated) onCreated()
+        }
         onClose()
       } catch (error) {
         if (
+          error.message.includes(
+            'NetworkError when attempting to fetch resource.'
+          )
+        ) {
+          Alerter.error('upload.alert.network')
+        } else if (
           error.message.includes(
             'Invalid filename containing illegal character(s):'
           )

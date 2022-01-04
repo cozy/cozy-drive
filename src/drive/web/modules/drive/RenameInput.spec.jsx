@@ -8,7 +8,9 @@ import { generateFile } from 'test/generate'
 
 import { RenameInput } from './RenameInput'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 
+jest.mock('cozy-ui/transpiled/react/hooks/useBrowserOffline')
 jest.mock('cozy-ui/transpiled/react/Alerter', () => ({
   error: jest.fn(),
   success: jest.fn()
@@ -134,5 +136,32 @@ describe('RenameInput', () => {
 
     await waitFor(() => expect(Alerter.error).toHaveBeenCalledTimes(1))
     expect(Alerter.error).toHaveBeenCalledWith('alert.file_name_missing')
+  })
+
+  it('should alert network error when detected by useBrowserOffline', async () => {
+    useBrowserOffline.mockReturnValue(true)
+    setup({ file })
+    const inputNode = document.getElementsByTagName('input')[0]
+
+    fireEvent.change(inputNode, { target: { value: '   .pdf' } })
+    fireEvent.keyDown(inputNode, { key: 'Enter', code: 'Enter', keyCode: 13 })
+
+    await waitFor(() => expect(Alerter.error).toHaveBeenCalledTimes(1))
+    expect(Alerter.error).toHaveBeenCalledWith('alert.offline')
+  })
+
+  it('should alert network error when not detected by useBrowserOffline', async () => {
+    setup({ file })
+    const inputNode = document.getElementsByTagName('input')[0]
+
+    client.save.mockRejectedValueOnce({
+      message: 'NetworkError when attempting to fetch resource.'
+    })
+
+    fireEvent.change(inputNode, { target: { value: '   .pdf' } })
+    fireEvent.keyDown(inputNode, { key: 'Enter', code: 'Enter', keyCode: 13 })
+
+    await waitFor(() => expect(Alerter.error).toHaveBeenCalledTimes(1))
+    expect(Alerter.error).toHaveBeenCalledWith('upload.alert.network')
   })
 })
