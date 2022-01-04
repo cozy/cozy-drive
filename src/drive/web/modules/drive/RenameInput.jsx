@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import { useClient } from 'cozy-client'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 
 import { CozyFile } from 'models'
 import FilenameInput from 'drive/web/modules/filelist/FilenameInput'
@@ -28,6 +29,7 @@ export const RenameInput = ({
   const client = useClient()
   const { filename, extension } = CozyFile.splitFilename(file)
   const name = withoutExtension ? filename : file.name
+  const isOffline = useBrowserOffline()
 
   return (
     <FilenameInput
@@ -37,10 +39,20 @@ export const RenameInput = ({
       onSubmit={async newValue => {
         const newName = withoutExtension ? newValue + extension : newValue
         try {
-          await updateFileNameQuery(client, file, newName)
-          if (refreshFolderContent) refreshFolderContent()
+          if (isOffline) {
+            Alerter.error('alert.offline')
+          } else {
+            await updateFileNameQuery(client, file, newName)
+            if (refreshFolderContent) refreshFolderContent()
+          }
         } catch (error) {
           if (
+            error.message.includes(
+              'NetworkError when attempting to fetch resource.'
+            )
+          ) {
+            Alerter.error('upload.alert.network')
+          } else if (
             error.message.includes(
               'Invalid filename containing illegal character(s):'
             )

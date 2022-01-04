@@ -9,9 +9,11 @@ import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
 import ShortcutCreationModal from './ShortcutCreationModal'
 import AppLike from '../../../../../../../test/components/AppLike'
+import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 
 const tMock = jest.fn()
 
+jest.mock('cozy-ui/transpiled/react/hooks/useBrowserOffline')
 jest.mock('cozy-ui/transpiled/react/Alerter', () => ({
   error: jest.fn(),
   success: jest.fn()
@@ -188,5 +190,38 @@ describe('ShortcutCreationModal', () => {
 
     await waitFor(() => expect(Alerter.error).toHaveBeenCalledTimes(1))
     expect(Alerter.error).toHaveBeenCalledWith('alert.file_name_missing')
+  })
+
+  it('should alert network error when detected by useBrowserOffline', async () => {
+    useBrowserOffline.mockReturnValue(true)
+    const { urlInput, filenameInput, submitButton } = setup({
+      ...defaultProps,
+      onCreated: jest.fn()
+    })
+
+    fireEvent.change(urlInput, { target: { value: 'https://cozy.io' } })
+    fireEvent.change(filenameInput, { target: { value: '   ' } })
+    fireEvent.click(submitButton)
+
+    await waitFor(() => expect(Alerter.error).toHaveBeenCalledTimes(1))
+    expect(Alerter.error).toHaveBeenCalledWith('alert.offline')
+  })
+
+  it('should alert network error when not detected by useBrowserOffline', async () => {
+    const { urlInput, filenameInput, submitButton } = setup({
+      ...defaultProps,
+      onCreated: jest.fn()
+    })
+
+    client.stackClient.fetchJSON.mockRejectedValue({
+      message: 'NetworkError when attempting to fetch resource.'
+    })
+
+    fireEvent.change(urlInput, { target: { value: 'https://cozy.io' } })
+    fireEvent.change(filenameInput, { target: { value: '   ' } })
+    fireEvent.click(submitButton)
+
+    await waitFor(() => expect(Alerter.error).toHaveBeenCalledTimes(1))
+    expect(Alerter.error).toHaveBeenCalledWith('upload.alert.network')
   })
 })
