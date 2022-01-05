@@ -5,6 +5,7 @@ import { isMobileApp } from 'cozy-device-helper'
 import { openLocalFile } from 'drive/mobile/modules/offline/duck'
 import generateShortcutUrl from 'drive/web/modules/views/Folder/generateShortcutUrl'
 import { makeOnlyOfficeFileRoute } from 'drive/web/modules/views/OnlyOffice/helpers'
+import { DOCTYPE_FILES_SHORTCUT } from 'drive/lib/doctypes'
 
 const createFileOpeningHandler = ({
   client,
@@ -28,7 +29,7 @@ const createFileOpeningHandler = ({
     if (isMobileApp()) {
       try {
         const resp = await client.query(
-          Q('io.cozy.files.shortcuts').getById(file.id)
+          Q(DOCTYPE_FILES_SHORTCUT).getById(file.id)
         )
         replaceCurrentUrl(resp.data.attributes.url)
       } catch (error) {
