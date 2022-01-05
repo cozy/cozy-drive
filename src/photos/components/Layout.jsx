@@ -20,6 +20,7 @@ import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { UploadQueue } from '../ducks/upload'
 import { IconSprite } from 'cozy-ui/transpiled/react'
 import { ModalManager } from 'react-cozy-helpers'
+import { isFlagshipApp } from 'cozy-device-helper'
 
 const NavLink = genNavLink(RRNavLink)
 
@@ -40,13 +41,13 @@ export const Layout = ({ t, children }) => (
           </NavLink>
         </NavItem>
       </Nav>
-      <ButtonClient />
+      {!isFlagshipApp() && <ButtonClient />}
     </Sidebar>
 
     <Alerter t={t} />
     <UploadQueue />
     <Main className={styles['pho-content']}>
-      {__TARGET__ !== 'mobile' && <BannerClient />}
+      {__TARGET__ !== 'mobile' && !isFlagshipApp() && <BannerClient />}
       {children}
     </Main>
     <ModalManager />
