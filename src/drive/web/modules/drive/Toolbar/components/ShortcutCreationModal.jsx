@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import { useClient } from 'cozy-client'
 import { isIOS } from 'cozy-device-helper'
@@ -11,6 +11,7 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import Stack from 'cozy-ui/transpiled/react/Stack'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
+import { DOCTYPE_FILES_SHORTCUT } from 'drive/lib/doctypes'
 
 const ENTER_KEY = 13
 
@@ -46,16 +47,16 @@ const ShortcutCreationModal = ({ onClose, onCreated, displayedFolder }) => {
         Alerter.error(t('Shortcut.url_badformat'))
         return
       }
-      const data = {
-        name: fileName.endsWith('.url') ? fileName : fileName + '.url',
-        dir_id: displayedFolder.id,
-        url: makedURL
-      }
       try {
         if (isOffline) {
           Alerter.error('alert.offline')
         } else {
-          await client.collection('io.cozy.files.shortcuts').create(data)
+          await client.save({
+            _type: DOCTYPE_FILES_SHORTCUT,
+            dir_id: displayedFolder.id,
+            name: fileName.endsWith('.url') ? fileName : fileName + '.url',
+            url: makedURL
+          })
           Alerter.success(t('Shortcut.created'))
           if (onCreated) onCreated()
         }

@@ -10,6 +10,7 @@ import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import ShortcutCreationModal from './ShortcutCreationModal'
 import AppLike from '../../../../../../../test/components/AppLike'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
+import { DOCTYPE_FILES_SHORTCUT } from 'drive/lib/doctypes'
 
 const tMock = jest.fn()
 
@@ -62,55 +63,38 @@ describe('ShortcutCreationModal', () => {
     }
   }
 
-  it('should show the new shortcut form', async () => {
-    const { urlInput, filenameInput, submitButton } = setup(defaultProps)
+  it('should display error when filename is empty', async () => {
+    // Given
+    const { urlInput, submitButton } = setup(defaultProps)
     fireEvent.change(urlInput, { target: { value: 'https://cozy.io' } })
 
+    // When
     fireEvent.click(submitButton)
-    expect(client.stackClient.fetchJSON).not.toHaveBeenCalled()
+
+    // Then
+    expect(client.save).not.toHaveBeenCalled()
     expect(Alerter.error).toHaveBeenCalledTimes(1)
     expect(Alerter.success).not.toHaveBeenCalled()
+  })
 
-    client.stackClient.fetchJSON.mockResolvedValue({ data: {} })
-    fireEvent.change(filenameInput, { target: { value: 'filename' } })
-    fireEvent.click(submitButton)
-
-    expect(client.stackClient.fetchJSON).toHaveBeenCalledWith(
-      'POST',
-      '/shortcuts',
-      {
-        data: {
-          attributes: {
-            dir_id: 'id',
-            name: 'filename.url',
-            type: 'io.cozy.files.shortcuts',
-            url: 'https://cozy.io'
-          },
-          type: 'io.cozy.files.shortcuts'
-        }
-      }
-    )
-    expect(Alerter.error).toHaveBeenCalledTimes(1)
-    await waitFor(() => expect(Alerter.success).toHaveBeenCalledTimes(1))
-
+  it('should handle correctly success case', async () => {
+    // Given
+    const { urlInput, filenameInput, submitButton } = setup(defaultProps)
+    fireEvent.change(urlInput, { target: { value: 'https://cozy.io' } })
     fireEvent.change(filenameInput, { target: { value: 'filename.url' } })
+    client.save.mockResolvedValue({ data: {} })
+
+    // When
     fireEvent.click(submitButton)
-    expect(client.stackClient.fetchJSON).toHaveBeenCalledWith(
-      'POST',
-      '/shortcuts',
-      {
-        data: {
-          attributes: {
-            dir_id: 'id',
-            name: 'filename.url',
-            type: 'io.cozy.files.shortcuts',
-            url: 'https://cozy.io'
-          },
-          type: 'io.cozy.files.shortcuts'
-        }
-      }
-    )
-    await waitFor(() => expect(Alerter.success).toHaveBeenCalledTimes(2))
+
+    // Then
+    expect(client.save).toHaveBeenCalledWith({
+      dir_id: 'id',
+      name: 'filename.url',
+      _type: DOCTYPE_FILES_SHORTCUT,
+      url: 'https://cozy.io'
+    })
+    await waitFor(() => expect(Alerter.success).toHaveBeenCalledTimes(1))
   })
 
   it('should call the optional onCreated prop', async () => {
@@ -120,7 +104,7 @@ describe('ShortcutCreationModal', () => {
       onCreated: onCreatedMock
     })
 
-    client.stackClient.fetchJSON.mockResolvedValue({ data: {} })
+    client.save.mockResolvedValue({ data: {} })
     fireEvent.change(urlInput, { target: { value: 'https://cozy.io' } })
     fireEvent.change(filenameInput, { target: { value: 'filename' } })
     fireEvent.click(submitButton)
@@ -135,7 +119,7 @@ describe('ShortcutCreationModal', () => {
       onCreated: jest.fn()
     })
 
-    client.stackClient.fetchJSON.mockRejectedValue({
+    client.save.mockRejectedValue({
       message: 'Invalid filename containing illegal character(s): /'
     })
 
@@ -160,7 +144,7 @@ describe('ShortcutCreationModal', () => {
       onCreated: jest.fn()
     })
 
-    client.stackClient.fetchJSON.mockRejectedValue({
+    client.save.mockRejectedValue({
       message: 'Invalid filename: ..'
     })
 
@@ -180,7 +164,7 @@ describe('ShortcutCreationModal', () => {
       onCreated: jest.fn()
     })
 
-    client.stackClient.fetchJSON.mockRejectedValue({
+    client.save.mockRejectedValue({
       message: 'Missing name argument'
     })
 
@@ -213,7 +197,7 @@ describe('ShortcutCreationModal', () => {
       onCreated: jest.fn()
     })
 
-    client.stackClient.fetchJSON.mockRejectedValue({
+    client.save.mockRejectedValue({
       message: 'NetworkError when attempting to fetch resource.'
     })
 
