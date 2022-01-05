@@ -4,6 +4,7 @@ import localforage from 'localforage'
 
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { default as UIButtonClient } from 'cozy-ui/transpiled/react/PushClientButton'
+import { isFlagshipApp } from 'cozy-device-helper'
 
 import { track, isLinux, isClientAlreadyInstalled, DESKTOP_BANNER } from '.'
 import Config from 'drive/config/config.json'
@@ -14,7 +15,7 @@ class ButtonClient extends Component {
   }
 
   async componentWillMount() {
-    if (Config.promoteDesktop.isActivated !== true) return
+    if (Config.promoteDesktop.isActivated !== true || isFlagshipApp()) return
     const seen = (await localforage.getItem(DESKTOP_BANNER)) || false
     // we want to show the button if the banner has been marked as seen *and*
     // the client hasn't been already installed
@@ -27,7 +28,11 @@ class ButtonClient extends Component {
   }
 
   render() {
-    if (Config.promoteDesktop.isActivated !== true || !this.state.mustShow)
+    if (
+      Config.promoteDesktop.isActivated !== true ||
+      !this.state.mustShow ||
+      isFlagshipApp()
+    )
       return null
     const { t } = this.props
     return (
