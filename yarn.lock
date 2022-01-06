@@ -5406,10 +5406,10 @@ cozy-jobs-cli@1.15.9:
     pretty "2.0.0"
     strip-json-comments "3.1.1"
 
-cozy-keys-lib@4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-keys-lib/-/cozy-keys-lib-4.1.0.tgz#b71e4eb8df0dfea4d5bfa0585c7e64105bb18ea8"
-  integrity sha512-qmbcK/Ifj3OgIdPLRdtcRihOkSiGc67h4BqAVqu4gNPBBOTcKYjD6TiR9nqLViQfhqfk19QK1bHYCkZB+wc7dQ==
+cozy-keys-lib@4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/cozy-keys-lib/-/cozy-keys-lib-4.1.1.tgz#0643f7fbc92183ca569a427303c591aa5580d4fa"
+  integrity sha512-qjpO23+w/SGADgM/KPPXCVxVxhPOSXdshjDHZpsNf9na53sA75d+rdbR1Vj0QaOWVDLPUYH86gBnHpPJJg7o3A==
   dependencies:
     "@aspnet/signalr" "^1.1.4"
     "@aspnet/signalr-protocol-msgpack" "^1.1.0"
