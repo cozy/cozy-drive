@@ -34,7 +34,7 @@ class DriveMobileRouter extends Component {
     shouldDisplayMigrate: false
   }
   async componentDidMount() {
-    //Wait for the app to be booted to avoid race condition between cordova & JS
+    // Wait for the app to be booted to avoid race condition between cordova & JS
     await appBooted
     const shouldMigrate = await shouldMigrateAdapter()
     this.setState({
@@ -70,11 +70,11 @@ class DriveMobileRouter extends Component {
     // added in cozy-drive v1.35.0
     await migrateOfflineFiles(client)
 
-    //Check if we have something in the localStorage to see if
-    //we need to redirect to /onboarding
+    // Check if we have something in the localStorage to see if
+    // we need to redirect to /onboarding
     const alreadyOnboarded = await localForage.getItem(ONBOARDED_ITEM)
-    //Do not try to add an else case since we can arrive from an universal
-    //link and then, we need to redirect to a specific url
+    // Do not try to add an else case since we can arrive from an universal
+    // link and then, we need to redirect to a specific url
     if (!alreadyOnboarded) {
       this.props.history.replace('/onboarding')
     }

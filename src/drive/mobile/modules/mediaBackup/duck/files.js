@@ -22,7 +22,7 @@ const ERROR_CODE_TOO_LARGE = 413
 export const getUploadDir = async (client, t) => {
   const uploadedFolders = await getReferencedFolders(client, REF_BACKUP)
   if (uploadedFolders.length >= 1) {
-    //Let's fix the bug introduced between 1.18.18 and 1.18.24
+    // Let's fix the bug introduced between 1.18.18 and 1.18.24
     await fixMagicFolderName(client, uploadedFolders[0])
     // There can be more than one referenced folder in case of consecutive delete/restores. We always want to return the most recently used.
     return uploadedFolders[0]
@@ -81,7 +81,7 @@ export const uploadPhoto = (
     dispatch(mediaUploadSucceed(photo))
     return
   } catch (_) {
-    //logger.log('_')
+    // logger.log('_')
   } // if an exception is throw, the file doesn't exist yet and we can safely upload it
 
   const MILLISECOND = 1

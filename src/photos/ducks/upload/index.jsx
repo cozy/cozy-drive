@@ -18,7 +18,7 @@ const RECEIVE_UPLOAD_SUCCESS = 'RECEIVE_UPLOAD_SUCCESS'
 const RECEIVE_UPLOAD_ERROR = 'RECEIVE_UPLOAD_ERROR'
 const PURGE_UPLOAD_QUEUE = 'PURGE_UPLOAD_QUEUE'
 
-//!TODO mutualize in FileCollection
+// !TODO mutualize in FileCollection
 const PENDING = 'pending'
 const LOADING = 'loading'
 const LOADED = 'loaded'
@@ -79,8 +79,8 @@ const processNextFile = callback => async (dispatch, getState) => {
       409: CONFLICT,
       413: QUOTA
     }
-    //Photo doesn't have a status QUOTA. So
-    //we just use FAILED as it seems to do the job
+    // Photo doesn't have a status QUOTA. So
+    // we just use FAILED as it seems to do the job
     const status =
       statusError[error.status] ||
       /Failed to fetch$/.exec(error.toString()) ||

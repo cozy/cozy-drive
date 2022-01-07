@@ -27,7 +27,7 @@ const trackEvent = () => {
 const buildPremiumLink = (uuid, managerUrl) =>
   `${managerUrl}/cozy/instances/${uuid}/premium`
 
-//TODO use cozy-client helpers after https://github.com/cozy/cozy-client/pull/567 merge
+// TODO use cozy-client helpers after https://github.com/cozy/cozy-client/pull/567 merge
 const SupportUs = ({ t, client }) => {
   if (isMobileApp()) return null
 

@@ -56,7 +56,7 @@ class CallToAction extends Component {
         <ul>
           <li>
             <a
-              //eslint-disable-next-line react/jsx-no-target-blank
+              // eslint-disable-next-line react/jsx-no-target-blank
               target="_blank"
               href={t(
                 isLinux() ? 'Nav.link-client' : 'Nav.link-client-desktop'

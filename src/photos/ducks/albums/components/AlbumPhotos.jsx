@@ -55,7 +55,7 @@ class AlbumPhotos extends Component {
         Alerter.error('Error.generic')
       })
   }
-  //!TODO Hack. We should not use 99999 as limit.
+  // !TODO Hack. We should not use 99999 as limit.
   downloadAlbum = async () => {
     const { album } = this.props
     const allPhotos = await this.props.client

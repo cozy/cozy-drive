@@ -47,7 +47,7 @@ describe('Header', () => {
       ]
     })
     expect(getByText('FileName.txt'))
-    //expect(component).toMatchSnapshot()
+    // expect(component).toMatchSnapshot()
   })
   it('should display the right title if more than one files', () => {
     const { getByText } = setupComponent({

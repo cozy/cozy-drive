@@ -13,7 +13,7 @@ import { handleConflictOnMove } from './handleConflictOnMove'
 - we don't delete the old media_foldr in case it retains things in it*/
 
 export const fixMagicFolderName = async (client, savedFromMyDeviceFolder) => {
-  //LET'S FIX the bug introduced in 1.18.18. Used in 1.18.24 release
+  // LET'S FIX the bug introduced in 1.18.18. Used in 1.18.24 release
   if (
     savedFromMyDeviceFolder.name !==
     'mobile.settings.media_backup.backup_folder'
@@ -57,7 +57,7 @@ export const fixMagicFolderName = async (client, savedFromMyDeviceFolder) => {
         .deleteFilePermanently(folderSyncPhoto.data.id)
     }
   } catch (e) {
-    //eslint-disable-next-line
+    // eslint-disable-next-line
     console.warn('error', e)
   }
 
@@ -84,7 +84,7 @@ export const fixMagicFolderName = async (client, savedFromMyDeviceFolder) => {
         { _type: 'io.cozy.apps', _id: REF_PHOTOS }
       ])
   } catch (e) {
-    //eslint-disable-next-line
+    // eslint-disable-next-line
     console.warn('error stat remove ref', e)
   }
 

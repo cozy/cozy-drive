@@ -58,9 +58,9 @@ export class DumbUpload extends Component {
       client,
       vaultClient
     })
-    //just to be sure that first dispatch of uploadFilesFromNative was done
-    //we replace the URL to be sure that even with the back button on Android
-    //we don't arrive on this component
+    // just to be sure that first dispatch of uploadFilesFromNative was done
+    // we replace the URL to be sure that even with the back button on Android
+    // we don't arrive on this component
     setTimeout(() => router.replace(`/folder/${folder._id}`), 50)
   }
 
@@ -79,8 +79,8 @@ export class DumbUpload extends Component {
   onClose = () => {
     const { router } = this.props
     localforage.removeItem('importedFiles')
-    //we replace the URL to be sure that even with the back button on Android
-    //we don't arrive on this component
+    // we replace the URL to be sure that even with the back button on Android
+    // we don't arrive on this component
     router.replace('/')
   }
 
