@@ -108,6 +108,7 @@ const FileName = ({
               <div
                 data-test-id="fil-file-filename-and-ext"
                 className={styles['fil-file-filename-and-ext']}
+                title={filename + extension}
               >
                 {filename}
                 {extension && (
@@ -119,7 +120,10 @@ const FileName = ({
           {withFilePath &&
             attributes.displayedPath &&
             (isMobile ? (
-              <div className={styles['fil-file-description']}>
+              <div
+                className={styles['fil-file-description']}
+                title={filename + extension}
+              >
                 <MidEllipsis
                   className={styles['fil-file-description--path']}
                   text={attributes.displayedPath}
