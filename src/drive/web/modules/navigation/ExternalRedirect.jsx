@@ -1,7 +1,7 @@
 import React from 'react'
 import { useClient, useFetchShortcut } from 'cozy-client'
 import Empty from 'cozy-ui/transpiled/react/Empty'
-import IconSprite from 'cozy-ui/transpiled/react/Icon/Sprite'
+import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import EmptyIcon from 'assets/icons/icon-folder-broken.svg'
 
@@ -14,7 +14,7 @@ const ExternalRedirect = ({ params: { fileId }, t }) => {
 
   return (
     <>
-      <IconSprite />
+      <Sprite />
       {fetchStatus === 'failed' && (
         <Empty
           data-testid="empty-share"

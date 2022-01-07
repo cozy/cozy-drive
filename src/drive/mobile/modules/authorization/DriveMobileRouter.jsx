@@ -7,7 +7,7 @@ import { MobileRouter } from 'cozy-authentication'
 import { getUniversalLinkDomain } from 'cozy-ui/transpiled/react/AppLinker'
 import { withClient } from 'cozy-client'
 import PouchLink from 'cozy-pouch-link'
-import { IconSprite } from 'cozy-ui/transpiled/react/'
+import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 
 import AppRoute from 'drive/web/modules/navigation/AppRoute'
 import { setUrl } from 'drive/mobile/modules/settings/duck'
@@ -129,7 +129,7 @@ class DriveMobileRouter extends Component {
         >
           {AppRoute}
         </MobileRouter>
-        <IconSprite />
+        <Sprite />
       </div>
     )
   }

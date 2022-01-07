@@ -70,7 +70,14 @@ const setup = ({
 }
 
 describe('Toolbar', () => {
+  let consoleSpy
+
+  beforeEach(() => {
+    consoleSpy = jest.spyOn(console, 'warn').mockImplementation()
+  })
+
   afterEach(() => {
+    consoleSpy.mockRestore()
     jest.clearAllMocks()
   })
 

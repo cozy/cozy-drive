@@ -2,7 +2,7 @@ import React from 'react'
 import { Router, Route, hashHistory } from 'react-router'
 
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
-import IconSprite from 'cozy-ui/transpiled/react/Icon/Sprite'
+import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 
 import FileOpenerExternal from 'drive/web/modules/viewer/FileOpenerExternal'
 import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
@@ -58,7 +58,7 @@ class Embeder extends React.Component {
             )}
           </Router>
         )}
-        <IconSprite />
+        <Sprite />
       </div>
     )
   }

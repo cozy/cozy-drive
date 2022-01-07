@@ -7,12 +7,14 @@ import { withStyles } from '@material-ui/core/styles'
 import { Query, cancelable, withClient, Q } from 'cozy-client'
 import { CozyFile } from 'models'
 import logger from 'lib/logger'
+
 import { RefreshableSharings } from 'cozy-sharing'
 import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
+import { withBreakpoints } from 'cozy-ui/transpiled/react'
 
 import { ROOT_DIR_ID } from 'drive/constants/config'
 import Header from 'drive/web/modules/move/Header'
@@ -175,15 +177,21 @@ export class MoveModal extends React.Component {
   }
 
   render() {
-    const { onClose, entries, classes } = this.props
+    const {
+      onClose,
+      entries,
+      classes,
+      breakpoints: { isMobile }
+    } = this.props
     const { folderId, isMoveInProgress } = this.state
+
     const contentQuery = buildMoveOrImportQuery(folderId)
     const folderQuery = buildOnlyFolderQuery(folderId)
 
     return (
       <FixedDialog
         open
-        onClose={onClose}
+        onClose={isMobile ? undefined : onClose}
         size="large"
         classes={{
           paper: classes.paper
@@ -269,5 +277,6 @@ export default compose(
   translate(),
   withClient,
   withSharingState,
-  withStyles(styles)
+  withStyles(styles),
+  withBreakpoints()
 )(MoveModal)

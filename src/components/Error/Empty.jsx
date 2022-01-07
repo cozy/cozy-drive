@@ -27,7 +27,6 @@ const EmptyCanvas = ({ type, canUpload, localeKey }) => {
         (localeKey && t(`empty.${localeKey}_text`)) ||
         (canUpload && t('empty.text'))
       }
-      layout={false}
       className={styles['empty']}
     />
   )
