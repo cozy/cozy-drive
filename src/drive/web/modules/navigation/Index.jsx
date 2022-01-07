@@ -97,19 +97,16 @@ const Index = ({ router }) => {
 
   const sharingId = getSharingIdFromUrl(window.location)
 
-  useEffect(
-    () => {
-      fetchSharing({
-        client,
-        sharingsValue,
-        setSharingsValue,
-        router,
-        sharingId,
-        setFileValue
-      })
-    },
-    [client, sharingId, router, setSharingsValue, setFileValue, sharingsValue]
-  )
+  useEffect(() => {
+    fetchSharing({
+      client,
+      sharingsValue,
+      setSharingsValue,
+      router,
+      sharingId,
+      setFileValue
+    })
+  }, [client, sharingId, router, setSharingsValue, setFileValue, sharingsValue])
 
   return null
 }

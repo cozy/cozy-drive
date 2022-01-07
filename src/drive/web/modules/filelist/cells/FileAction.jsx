@@ -24,7 +24,7 @@ const FileAction = forwardRef(function FileAction(
       <span ref={ref}>
         <Button
           theme="action"
-          {...!disabled && { onClick }}
+          {...(!disabled && { onClick })}
           extension="narrow"
           icon={
             <Icon

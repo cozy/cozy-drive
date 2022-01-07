@@ -169,18 +169,15 @@ const PublicFolderView = ({
     [t, parentFolder]
   )
 
-  useEffect(
-    () => {
-      if (hasWritePermissions) {
-        setIsFabDisplayed(isMobile)
-        return () => {
-          // to not have this set to false on other views after using this view
-          setIsFabDisplayed(false)
-        }
+  useEffect(() => {
+    if (hasWritePermissions) {
+      setIsFabDisplayed(isMobile)
+      return () => {
+        // to not have this set to false on other views after using this view
+        setIsFabDisplayed(false)
       }
-    },
-    [setIsFabDisplayed, isMobile, hasWritePermissions]
-  )
+    }
+  }, [setIsFabDisplayed, isMobile, hasWritePermissions])
 
   return (
     <>
@@ -228,17 +225,16 @@ const PublicFolderView = ({
                 <FabWithMenuContext noSidebar={true} />
               </AddMenuProvider>
             )}
-            {viewerOpened &&
-              viewableFiles.length > 0 && (
-                <Overlay>
-                  <PublicViewer
-                    files={viewableFiles}
-                    currentIndex={currentViewerIndex}
-                    onChangeRequest={showInViewer}
-                    onCloseRequest={closeViewer}
-                  />
-                </Overlay>
-              )}
+            {viewerOpened && viewableFiles.length > 0 && (
+              <Overlay>
+                <PublicViewer
+                  files={viewableFiles}
+                  currentIndex={currentViewerIndex}
+                  onChangeRequest={showInViewer}
+                  onCloseRequest={closeViewer}
+                />
+              </Overlay>
+            )}
             {children}
           </Content>
         </div>

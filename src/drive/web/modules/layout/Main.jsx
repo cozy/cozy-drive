@@ -14,9 +14,9 @@ const Main = ({ children, isPublic = false }) => (
       [styles['fil-content']]: !isPublic
     })}
   >
-    {__TARGET__ !== 'mobile' &&
-      !isPublic &&
-      !isFlagshipApp() && <BannerClient />}
+    {__TARGET__ !== 'mobile' && !isPublic && !isFlagshipApp() && (
+      <BannerClient />
+    )}
     {children}
   </MainUI>
 )

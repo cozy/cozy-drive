@@ -7,13 +7,10 @@ import PreviousButton from 'drive/web/modules/navigation/Breadcrumb/PreviousButt
 export const MobileBreadcrumb = props => {
   const { BarCenter, BarLeft } = cozy.bar
   const { onBreadcrumbClick, path } = props
-  const navigateBack = useCallback(
-    () => {
-      const parentFolder = path[path.length - 2]
-      onBreadcrumbClick(parentFolder)
-    },
-    [onBreadcrumbClick, path]
-  )
+  const navigateBack = useCallback(() => {
+    const parentFolder = path[path.length - 2]
+    onBreadcrumbClick(parentFolder)
+  }, [onBreadcrumbClick, path])
 
   return props.breakpoints.isMobile ? (
     <div>

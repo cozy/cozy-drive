@@ -67,14 +67,11 @@ const useUpdateDocumentTitle = docId => {
     t
   ])
 
-  useEffect(
-    () => {
-      if (fetchStatus === 'loaded' && title !== document.title) {
-        document.title = title
-      }
-    },
-    [fetchStatus, title]
-  )
+  useEffect(() => {
+    if (fetchStatus === 'loaded' && title !== document.title) {
+      document.title = title
+    }
+  }, [fetchStatus, title])
 }
 
 export default useUpdateDocumentTitle

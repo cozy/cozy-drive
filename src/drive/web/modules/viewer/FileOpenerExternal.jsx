@@ -75,34 +75,33 @@ export class FileOpener extends Component {
       <div className="u-pos-absolute u-w-100 u-h-100 u-bg-charcoalGrey">
         {loading && <Spinner size="xxlarge" middle noMargin color="white" />}
         {fileNotFound && <FileNotFoundError />}
-        {!loading &&
-          !fileNotFound && (
-            <RemoveScroll>
-              <Overlay>
-                <Viewer
-                  files={[file]}
-                  currentIndex={0}
-                  onChangeRequest={() => {}}
-                  onCloseRequest={() => service.terminate()}
-                  renderFallbackExtraContent={file => (
-                    <Fallback file={file} t={t} />
-                  )}
-                  onlyOfficeProps={{
-                    isEnabled: isOnlyOfficeEnabled(),
-                    opener: file =>
-                      router.push(makeOnlyOfficeFileRoute(file, true))
-                  }}
-                  panelInfoProps={{
-                    showPanel,
-                    PanelContent
-                  }}
-                  footerProps={{
-                    FooterContent
-                  }}
-                />
-              </Overlay>
-            </RemoveScroll>
-          )}
+        {!loading && !fileNotFound && (
+          <RemoveScroll>
+            <Overlay>
+              <Viewer
+                files={[file]}
+                currentIndex={0}
+                onChangeRequest={() => {}}
+                onCloseRequest={() => service.terminate()}
+                renderFallbackExtraContent={file => (
+                  <Fallback file={file} t={t} />
+                )}
+                onlyOfficeProps={{
+                  isEnabled: isOnlyOfficeEnabled(),
+                  opener: file =>
+                    router.push(makeOnlyOfficeFileRoute(file, true))
+                }}
+                panelInfoProps={{
+                  showPanel,
+                  PanelContent
+                }}
+                footerProps={{
+                  FooterContent
+                }}
+              />
+            </Overlay>
+          </RemoveScroll>
+        )}
       </div>
     )
   }

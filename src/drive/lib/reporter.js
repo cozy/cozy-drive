@@ -24,11 +24,10 @@ export const normalizeData = data => {
       data.exception.values[0].stacktrace)
 
   if (stacktrace) {
-    stacktrace.frames = stacktrace.frames.map(
-      frame =>
-        frame.filename !== '[native code]'
-          ? { ...frame, filename: normalizeUrl(frame.filename, PATH_STRIP_RE) }
-          : frame
+    stacktrace.frames = stacktrace.frames.map(frame =>
+      frame.filename !== '[native code]'
+        ? { ...frame, filename: normalizeUrl(frame.filename, PATH_STRIP_RE) }
+        : frame
     )
   }
   return data

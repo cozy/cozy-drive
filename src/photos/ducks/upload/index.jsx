@@ -54,8 +54,8 @@ const queue = (state = [], action) => {
     case UPLOAD_FILE:
     case RECEIVE_UPLOAD_SUCCESS:
     case RECEIVE_UPLOAD_ERROR:
-      return state.map(
-        i => (i.file.name !== action.file.name ? i : item(i, action))
+      return state.map(i =>
+        i.file.name !== action.file.name ? i : item(i, action)
       )
     default:
       return state

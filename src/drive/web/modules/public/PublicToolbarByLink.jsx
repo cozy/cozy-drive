@@ -44,13 +44,10 @@ const MoreMenu = ({ files, isMobile }) => {
 
   const openMenu = useCallback(() => setMenuVisible(true), [setMenuVisible])
   const closeMenu = useCallback(() => setMenuVisible(false), [setMenuVisible])
-  const toggleMenu = useCallback(
-    () => {
-      if (menuIsVisible) return closeMenu()
-      openMenu()
-    },
-    [closeMenu, openMenu, menuIsVisible]
-  )
+  const toggleMenu = useCallback(() => {
+    if (menuIsVisible) return closeMenu()
+    openMenu()
+  }, [closeMenu, openMenu, menuIsVisible])
   return (
     <>
       <div ref={anchorRef}>

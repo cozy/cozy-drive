@@ -30,11 +30,10 @@ const getIconUrl = file => {
   }
   const icon = icons[keyIcon].default
 
-  return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='${
-    icon.viewBox
-  }'>${icon.content}<use href='#${
-    icon.id
-  }' x='0' y='0' width='32' height='32'/></svg>`.replace(/#/g, '%23')
+  return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='${icon.viewBox}'>${icon.content}<use href='#${icon.id}' x='0' y='0' width='32' height='32'/></svg>`.replace(
+    /#/g,
+    '%23'
+  )
 }
 
 export const containerForTesting = {

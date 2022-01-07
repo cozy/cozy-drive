@@ -14,9 +14,7 @@ const withSharedDocumentIds = BaseComponent => {
     </SharedDocuments>
   )
 
-  WrapperComponent.displayName = `withSharedDocumentIds(${
-    BaseComponent.displayName
-  })`
+  WrapperComponent.displayName = `withSharedDocumentIds(${BaseComponent.displayName})`
 
   return WrapperComponent
 }

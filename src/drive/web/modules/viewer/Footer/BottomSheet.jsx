@@ -57,32 +57,28 @@ const BottomSheetWrapper = ({
 
   const toolbar = toolbarRef.current
 
-  useEffect(
-    () => {
-      const maxHeight = toolbar
-        ? window.innerHeight - toolbar.offsetHeight
-        : window.innerHeight
-      const mediumHeight = Math.round(maxHeight * 0.33)
-      const actionButtonsHeight = parseFloat(
-        getComputedStyle(actionButtonsRef.current).getPropertyValue('height')
-      )
-      const actionButtonsBottomMargin = 16
-      const minHeight =
-        headerRef.current.offsetHeight +
-        actionButtonsHeight +
-        actionButtonsBottomMargin
+  useEffect(() => {
+    const maxHeight = toolbar
+      ? window.innerHeight - toolbar.offsetHeight
+      : window.innerHeight
+    const mediumHeight = Math.round(maxHeight * 0.33)
+    const actionButtonsHeight = parseFloat(
+      getComputedStyle(actionButtonsRef.current).getPropertyValue('height')
+    )
+    const actionButtonsBottomMargin = 16
+    const minHeight =
+      headerRef.current.offsetHeight +
+      actionButtonsHeight +
+      actionButtonsBottomMargin
 
-      // Used so that the bottomSheet can be opened to the top,
-      // without stopping at the content height
-      const bottomSpacerHeight =
-        maxHeight - innerContentRef.current.offsetHeight
+    // Used so that the bottomSheet can be opened to the top,
+    // without stopping at the content height
+    const bottomSpacerHeight = maxHeight - innerContentRef.current.offsetHeight
 
-      setPeekHeights([minHeight, mediumHeight, maxHeight])
-      setInitPos(mediumHeight)
-      setBottomSpacerHeight(bottomSpacerHeight)
-    },
-    [toolbar, innerContentRef, file, actionButtonsRef]
-  )
+    setPeekHeights([minHeight, mediumHeight, maxHeight])
+    setInitPos(mediumHeight)
+    setBottomSpacerHeight(bottomSpacerHeight)
+  }, [toolbar, innerContentRef, file, actionButtonsRef])
 
   const handleOnIndexChange = snapIndex => {
     const maxHeightSnapIndex = peekHeights.length - 1

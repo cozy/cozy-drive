@@ -30,24 +30,21 @@ export const usePublicFilesQuery = currentFolderId => {
 
   const nextCursor = useRef(null)
 
-  useEffect(
-    () => {
-      const initialFetch = async () => {
-        try {
-          setFetchStatus('loading')
-          const { included, cursor } = await statById(client, currentFolderId)
-          nextCursor.current = cursor
-          setData(included || [])
-          setHasMore(!!cursor)
-          setFetchStatus('loaded')
-        } catch (error) {
-          setFetchStatus('error')
-        }
+  useEffect(() => {
+    const initialFetch = async () => {
+      try {
+        setFetchStatus('loading')
+        const { included, cursor } = await statById(client, currentFolderId)
+        nextCursor.current = cursor
+        setData(included || [])
+        setHasMore(!!cursor)
+        setFetchStatus('loaded')
+      } catch (error) {
+        setFetchStatus('error')
       }
-      initialFetch()
-    },
-    [currentFolderId, fetchCounter, client]
-  )
+    }
+    initialFetch()
+  }, [currentFolderId, fetchCounter, client])
 
   const fetchMore = async () => {
     try {

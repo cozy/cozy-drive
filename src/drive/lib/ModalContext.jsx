@@ -11,13 +11,10 @@ export const ModalContextProvider = ({ children }) => {
     },
     [modalStack]
   )
-  const popModal = useCallback(
-    () => {
-      modalStack.pop()
-      setModalStack([...modalStack])
-    },
-    [modalStack]
-  )
+  const popModal = useCallback(() => {
+    modalStack.pop()
+    setModalStack([...modalStack])
+  }, [modalStack])
 
   return (
     <ModalContext.Provider value={{ modalStack, pushModal, popModal }}>

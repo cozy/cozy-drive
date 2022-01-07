@@ -37,17 +37,17 @@ export const ActionMenuContent = ({
         </>
       )}
       {canCreateFolder && <AddFolderItem />}
-      {canCreateFolder &&
-        flag('drive.enable-encryption') && <AddEncryptedFolderItem />}
+      {canCreateFolder && flag('drive.enable-encryption') && (
+        <AddEncryptedFolderItem />
+      )}
       {!isPublic && <CreateNoteItem />}
-      {canUpload &&
-        isOnlyOfficeEnabled() && (
-          <>
-            <CreateOnlyOfficeItem fileClass="text" />
-            <CreateOnlyOfficeItem fileClass="spreadsheet" />
-            <CreateOnlyOfficeItem fileClass="slide" />
-          </>
-        )}
+      {canUpload && isOnlyOfficeEnabled() && (
+        <>
+          <CreateOnlyOfficeItem fileClass="text" />
+          <CreateOnlyOfficeItem fileClass="spreadsheet" />
+          <CreateOnlyOfficeItem fileClass="slide" />
+        </>
+      )}
       <CreateShortcut onCreated={refreshFolderContent} />
       {canUpload && <hr />}
       {canUpload && (
