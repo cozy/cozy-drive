@@ -6,22 +6,19 @@ export const usePublicWritePermissions = currentFolderId => {
   const [fetchStatus, setFetchStatus] = useState('pending')
   const [hasWritePermissions, setHasWritePermissions] = useState(false)
 
-  useEffect(
-    () => {
-      const fetch = async () => {
-        try {
-          setFetchStatus('loading')
-          const permissions = await models.permission.fetchOwn(client)
-          setHasWritePermissions(!models.permission.isReadOnly(permissions[0]))
-          setFetchStatus('loaded')
-        } catch (error) {
-          setFetchStatus('error')
-        }
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        setFetchStatus('loading')
+        const permissions = await models.permission.fetchOwn(client)
+        setHasWritePermissions(!models.permission.isReadOnly(permissions[0]))
+        setFetchStatus('loaded')
+      } catch (error) {
+        setFetchStatus('error')
       }
-      fetch()
-    },
-    [client, currentFolderId]
-  )
+    }
+    fetch()
+  }, [client, currentFolderId])
 
   return { fetchStatus, hasWritePermissions }
 }

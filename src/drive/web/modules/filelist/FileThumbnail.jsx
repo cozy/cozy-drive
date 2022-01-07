@@ -62,15 +62,13 @@ const FileThumbnail = ({ file, size, isInSyncFromSharing, isEncrypted }) => {
        * The next functionnal's task is to work on sharing and we'll remove
        * this badge from here. In the meantime, we take this workaround
        */}
-      {file.class !== 'shortcut' &&
-        isMobile &&
-        !isInSyncFromSharing && (
-          <SharedBadge
-            docId={file.id}
-            className={styles['fil-content-shared']}
-            xsmall
-          />
-        )}
+      {file.class !== 'shortcut' && isMobile && !isInSyncFromSharing && (
+        <SharedBadge
+          docId={file.id}
+          className={styles['fil-content-shared']}
+          xsmall
+        />
+      )}
     </TableCell>
   )
 }

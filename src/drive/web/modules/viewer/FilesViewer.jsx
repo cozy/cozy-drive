@@ -58,14 +58,11 @@ const FilesViewer = ({ filesQuery, files, fileId, onClose, onChange }) => {
   const { t } = useI18n()
   const { router } = useRouter()
 
-  const handleOnClose = useCallback(
-    () => {
-      if (onClose) {
-        onClose()
-      }
-    },
-    [onClose]
-  )
+  const handleOnClose = useCallback(() => {
+    if (onClose) {
+      onClose()
+    }
+  }, [onClose])
 
   const handleOnChange = useCallback(
     nextFile => {
@@ -118,41 +115,38 @@ const FilesViewer = ({ filesQuery, files, fileId, onClose, onChange }) => {
     }
   }, [])
 
-  useEffect(
-    () => {
-      let isMounted = true
+  useEffect(() => {
+    let isMounted = true
 
-      // If we get close of the last file fetched, but we know there are more in the folder
-      // (it shouldn't happen in /recent), we fetch more files
-      const fetchMoreIfNecessary = async () => {
-        if (fetchingMore) return
+    // If we get close of the last file fetched, but we know there are more in the folder
+    // (it shouldn't happen in /recent), we fetch more files
+    const fetchMoreIfNecessary = async () => {
+      if (fetchingMore) return
 
-        setFetchingMore(true)
-        try {
-          const fileCount = filesQuery.count
+      setFetchingMore(true)
+      try {
+        const fileCount = filesQuery.count
 
-          const currentIndex = files.findIndex(f => f.id === fileId)
+        const currentIndex = files.findIndex(f => f.id === fileId)
 
-          if (
-            files.length !== fileCount &&
-            files.length - currentIndex <= 5 &&
-            isMounted
-          ) {
-            await filesQuery.fetchMore()
-          }
-        } finally {
-          setFetchingMore(false)
+        if (
+          files.length !== fileCount &&
+          files.length - currentIndex <= 5 &&
+          isMounted
+        ) {
+          await filesQuery.fetchMore()
         }
+      } finally {
+        setFetchingMore(false)
       }
+    }
 
-      fetchMoreIfNecessary()
+    fetchMoreIfNecessary()
 
-      return () => {
-        isMounted = false
-      }
-    },
-    [fetchingMore, filesQuery.count, files.length, fileId]
-  )
+    return () => {
+      isMounted = false
+    }
+  }, [fetchingMore, filesQuery.count, files.length, fileId])
 
   const currentIndex = useMemo(() => getCurrentIndex(), [getCurrentIndex])
   const hasCurrentIndex = useMemo(() => currentIndex != -1, [currentIndex])

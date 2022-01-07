@@ -141,28 +141,27 @@ class AlbumPhotos extends Component {
             data-test-id="album-pho-content-wrapper"
             className={styles['pho-content-wrapper']}
           >
-            {album.name &&
-              album.photos.data && (
-                <Topbar
-                  viewName="albumContent"
-                  albumName={album.name}
-                  editing={editing}
-                  onEdit={this.renameAlbum}
-                >
-                  <AlbumToolbar
-                    t={t}
-                    router={router}
-                    album={album}
-                    sharedWithMe={shared.withMe}
-                    sharedByMe={shared.byMe}
-                    readOnly={shared.readOnly}
-                    onRename={this.editAlbumName}
-                    downloadAlbum={this.downloadAlbum}
-                    deleteAlbum={this.deleteAlbum}
-                    shareAlbum={shareAlbum}
-                  />
-                </Topbar>
-              )}
+            {album.name && album.photos.data && (
+              <Topbar
+                viewName="albumContent"
+                albumName={album.name}
+                editing={editing}
+                onEdit={this.renameAlbum}
+              >
+                <AlbumToolbar
+                  t={t}
+                  router={router}
+                  album={album}
+                  sharedWithMe={shared.withMe}
+                  sharedByMe={shared.byMe}
+                  readOnly={shared.readOnly}
+                  onRename={this.editAlbumName}
+                  downloadAlbum={this.downloadAlbum}
+                  deleteAlbum={this.deleteAlbum}
+                  shareAlbum={shareAlbum}
+                />
+              </Topbar>
+            )}
             {this.state.displayDestroyConfirmModal &&
               this.renderDestroyConfirm()}
             {this.state.showAddAlbumModal && (

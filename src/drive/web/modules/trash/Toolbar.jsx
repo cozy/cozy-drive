@@ -36,19 +36,16 @@ export const Toolbar = ({
 
   const { pushModal, popModal } = useContext(ModalContext)
 
-  const onEmptyTrash = useCallback(
-    () => {
-      pushModal(
-        <EmptyTrashConfirm
-          onClose={popModal}
-          onConfirm={() => {
-            emptyTrash(client)
-          }}
-        />
-      )
-    },
-    [pushModal, popModal, client]
-  )
+  const onEmptyTrash = useCallback(() => {
+    pushModal(
+      <EmptyTrashConfirm
+        onClose={popModal}
+        onConfirm={() => {
+          emptyTrash(client)
+        }}
+      />
+    )
+  }, [pushModal, popModal, client])
 
   const MoreMenu = (
     <div>

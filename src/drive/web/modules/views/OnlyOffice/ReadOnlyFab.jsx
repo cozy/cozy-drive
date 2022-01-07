@@ -22,12 +22,9 @@ const ReadOnlyFab = () => {
     OnlyOfficeContext
   )
 
-  const handleClick = useCallback(
-    () => {
-      setIsEditorForcedReadOnly(v => !v)
-    },
-    [setIsEditorForcedReadOnly]
-  )
+  const handleClick = useCallback(() => {
+    setIsEditorForcedReadOnly(v => !v)
+  }, [setIsEditorForcedReadOnly])
 
   return (
     <Fab

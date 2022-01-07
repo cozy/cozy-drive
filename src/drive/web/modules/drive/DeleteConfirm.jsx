@@ -42,15 +42,12 @@ export const DeleteConfirm = ({
   const client = useClient()
   const [isDeleting, setDeleting] = useState(false)
 
-  const onDelete = useCallback(
-    async () => {
-      setDeleting(true)
-      await trashFiles(client, files)
-      afterConfirmation()
-      onClose()
-    },
-    [client, files, afterConfirmation, onClose]
-  )
+  const onDelete = useCallback(async () => {
+    setDeleting(true)
+    await trashFiles(client, files)
+    afterConfirmation()
+    onClose()
+  }, [client, files, afterConfirmation, onClose])
 
   return (
     <ConfirmDialog
@@ -91,16 +88,15 @@ const DeleteConfirmWithSharingContext = ({ files, ...rest }) =>
     <SharedDocument docId={files[0].id}>
       {({ isSharedByMe, link, recipients }) => (
         <DeleteConfirm files={files} {...rest}>
-          {isSharedByMe &&
-            link && <Message type="link" fileCount={files.length} />}
-          {isSharedByMe &&
-            recipients.length > 0 && (
-              <Message type="shared" fileCount={files.length} />
-            )}
-          {isSharedByMe &&
-            recipients.length > 0 && (
-              <SharedRecipientsList className={'u-ml-1'} docId={files[0].id} />
-            )}
+          {isSharedByMe && link && (
+            <Message type="link" fileCount={files.length} />
+          )}
+          {isSharedByMe && recipients.length > 0 && (
+            <Message type="shared" fileCount={files.length} />
+          )}
+          {isSharedByMe && recipients.length > 0 && (
+            <SharedRecipientsList className={'u-ml-1'} docId={files[0].id} />
+          )}
         </DeleteConfirm>
       )}
     </SharedDocument>

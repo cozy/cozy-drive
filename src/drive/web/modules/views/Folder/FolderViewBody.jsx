@@ -118,32 +118,26 @@ const FolderViewBody = ({
    * more simpler component and then the files
    */
   const [needsToWait, setNeedsToWait] = useState(true)
-  useEffect(
-    () => {
-      let timeout = null
-      if (!isLoading) {
-        timeout = setTimeout(() => {
-          setNeedsToWait(false)
-        }, 50)
-      }
-      return () => clearTimeout(timeout)
-    },
-    [isLoading]
-  )
+  useEffect(() => {
+    let timeout = null
+    if (!isLoading) {
+      timeout = setTimeout(() => {
+        setNeedsToWait(false)
+      }, 50)
+    }
+    return () => clearTimeout(timeout)
+  }, [isLoading])
 
   const [shouldUnlock, setShouldUnlock] = useState(true)
-  useEffect(
-    () => {
-      const checkLock = async () => {
-        const isLocked = await vaultClient.isLocked()
-        setShouldUnlock(isLocked)
-      }
-      if (isEncFolder) {
-        checkLock()
-      }
-    },
-    [isEncFolder, shouldUnlock]
-  )
+  useEffect(() => {
+    const checkLock = async () => {
+      const isLocked = await vaultClient.isLocked()
+      setShouldUnlock(isLocked)
+    }
+    if (isEncFolder) {
+      checkLock()
+    }
+  }, [isEncFolder, shouldUnlock])
   if (isEncFolder && shouldUnlock) {
     return (
       <VaultUnlocker
@@ -192,61 +186,58 @@ const FolderViewBody = ({
           which empty component to display. It should be done by the "view" itself.
           But adding a new prop like <FolderViewBody emptyComponent={}
           is not good enought too */}
-            {isEmpty &&
-              currentFolderId !== TRASH_DIR_ID && (
-                <EmptyDrive isEncrypted={isEncFolder} canUpload={canUpload} />
-              )}
-            {isEmpty &&
-              currentFolderId === TRASH_DIR_ID && (
-                <EmptyTrash canUpload={canUpload} />
-              )}
-            {hasDataToShow &&
-              !needsToWait && (
-                <div className={!isDesktop ? 'u-ov-hidden' : ''}>
-                  <>
-                    {syncingFakeFile && (
-                      <File
-                        attributes={syncingFakeFile}
-                        withSelectionCheckbox={false}
-                        onFolderOpen={() => {}}
-                        onFileOpen={() => {}}
-                        actions={[]}
-                        isInSyncFromSharing={true}
-                        extraColumns={extraColumns}
-                      />
-                    )}
-                    {queryResults.map((query, queryIndex) => (
-                      <React.Fragment key={queryIndex}>
-                        {query.data.map(file => (
-                          <File
-                            key={file._id}
-                            attributes={file}
-                            withSelectionCheckbox
-                            onFolderOpen={navigateToFolder}
-                            onFileOpen={handleFileOpen}
-                            withFilePath={withFilePath}
-                            thumbnailSizeBig={isBigThumbnail}
-                            actions={actions}
-                            refreshFolderContent={refreshFolderContent}
-                            isInSyncFromSharing={
-                              !isSharingContextEmpty &&
-                              isSharingShortcut(file) &&
-                              isReferencedByShareInSharingContext(
-                                file,
-                                sharingsValue
-                              )
-                            }
-                            extraColumns={extraColumns}
-                          />
-                        ))}
-                        {query.hasMore && (
-                          <LoadMore fetchMore={query.fetchMore} />
-                        )}
-                      </React.Fragment>
-                    ))}
-                  </>
-                </div>
-              )}
+            {isEmpty && currentFolderId !== TRASH_DIR_ID && (
+              <EmptyDrive isEncrypted={isEncFolder} canUpload={canUpload} />
+            )}
+            {isEmpty && currentFolderId === TRASH_DIR_ID && (
+              <EmptyTrash canUpload={canUpload} />
+            )}
+            {hasDataToShow && !needsToWait && (
+              <div className={!isDesktop ? 'u-ov-hidden' : ''}>
+                <>
+                  {syncingFakeFile && (
+                    <File
+                      attributes={syncingFakeFile}
+                      withSelectionCheckbox={false}
+                      onFolderOpen={() => {}}
+                      onFileOpen={() => {}}
+                      actions={[]}
+                      isInSyncFromSharing={true}
+                      extraColumns={extraColumns}
+                    />
+                  )}
+                  {queryResults.map((query, queryIndex) => (
+                    <React.Fragment key={queryIndex}>
+                      {query.data.map(file => (
+                        <File
+                          key={file._id}
+                          attributes={file}
+                          withSelectionCheckbox
+                          onFolderOpen={navigateToFolder}
+                          onFileOpen={handleFileOpen}
+                          withFilePath={withFilePath}
+                          thumbnailSizeBig={isBigThumbnail}
+                          actions={actions}
+                          refreshFolderContent={refreshFolderContent}
+                          isInSyncFromSharing={
+                            !isSharingContextEmpty &&
+                            isSharingShortcut(file) &&
+                            isReferencedByShareInSharingContext(
+                              file,
+                              sharingsValue
+                            )
+                          }
+                          extraColumns={extraColumns}
+                        />
+                      ))}
+                      {query.hasMore && (
+                        <LoadMore fetchMore={query.fetchMore} />
+                      )}
+                    </React.Fragment>
+                  ))}
+                </>
+              </div>
+            )}
           </FileListBody>
         </FileList>
       </>

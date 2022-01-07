@@ -57,17 +57,16 @@ const Status = ({
       <TableCell
         className={cx(styles['fil-content-cell'], styles['fil-content-status'])}
       >
-        {isAvailableOffline &&
-          !disabled && (
-            <span className={styles['fil-content-offline']}>
-              <Icon
-                icon={PhoneDownloadIcon}
-                color={palette.white}
-                width="14"
-                height="14"
-              />
-            </span>
-          )}
+        {isAvailableOffline && !disabled && (
+          <span className={styles['fil-content-offline']}>
+            <Icon
+              icon={PhoneDownloadIcon}
+              color={palette.white}
+              width="14"
+              height="14"
+            />
+          </span>
+        )}
         <ShareContent
           file={file}
           setDisplayedModal={setDisplayedModal}

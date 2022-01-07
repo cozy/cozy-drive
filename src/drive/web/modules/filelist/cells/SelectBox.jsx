@@ -11,21 +11,20 @@ const SelectBox = ({ withSelectionCheckbox, selected, onClick, disabled }) => (
       styles['fil-content-cell'],
       styles['fil-content-file-select']
     )}
-    {...!disabled && { onClick }}
+    {...(!disabled && { onClick })}
   >
-    {withSelectionCheckbox &&
-      !disabled && (
-        <span data-input="checkbox">
-          <input
-            onChange={() => {
-              // handled by onClick on the <TableCell>
-            }}
-            type="checkbox"
-            checked={selected}
-          />
-          <label />
-        </span>
-      )}
+    {withSelectionCheckbox && !disabled && (
+      <span data-input="checkbox">
+        <input
+          onChange={() => {
+            // handled by onClick on the <TableCell>
+          }}
+          type="checkbox"
+          checked={selected}
+        />
+        <label />
+      </span>
+    )}
   </TableCell>
 )
 

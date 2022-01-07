@@ -62,10 +62,10 @@ class BannerClient extends Component {
     const link = isIOS()
       ? 'Nav.link-client-ios'
       : isAndroid()
-        ? 'Nav.link-client-android'
-        : isLinux()
-          ? 'Nav.link-client'
-          : 'Nav.link-client-desktop'
+      ? 'Nav.link-client-android'
+      : isLinux()
+      ? 'Nav.link-client'
+      : 'Nav.link-client-desktop'
 
     const text =
       isIOS() || isAndroid() ? 'Nav.btn-client-mobile' : 'Nav.banner-txt-client'

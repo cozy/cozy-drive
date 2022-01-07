@@ -22,27 +22,24 @@ export const useExtraColumns = ({
     [columnsNames]
   )
 
-  useEffect(
-    () => {
-      if (!queryBuilder) {
-        return
+  useEffect(() => {
+    if (!queryBuilder) {
+      return
+    }
+    for (let columnSpec of columnsSpecs) {
+      if (!columnSpec.query) {
+        continue
       }
-      for (let columnSpec of columnsSpecs) {
-        if (!columnSpec.query) {
-          continue
-        }
-        const opts = {
-          queryBuilder,
-          currentFolderId,
-          sharedDocumentIds,
-          attribute: columnSpec.label
-        }
-        const def = columnSpec.query(opts).definition()
-        client.query(def, columnSpec.query(opts).options)
+      const opts = {
+        queryBuilder,
+        currentFolderId,
+        sharedDocumentIds,
+        attribute: columnSpec.label
       }
-    },
-    [client, columnsSpecs, currentFolderId, sharedDocumentIds, queryBuilder]
-  )
+      const def = columnSpec.query(opts).definition()
+      client.query(def, columnSpec.query(opts).options)
+    }
+  }, [client, columnsSpecs, currentFolderId, sharedDocumentIds, queryBuilder])
 
   return columnsSpecs.filter(columnSpec => {
     if (conditionBuilder) {

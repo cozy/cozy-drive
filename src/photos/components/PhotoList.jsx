@@ -110,26 +110,22 @@ export class PhotoList extends Component {
       >
         <div className={styles['pho-section-header']}>
           <h3>{title}</h3>
-          {showSelection &&
-            photos.length > 1 &&
-            allSelected && (
-              <a
-                style={{ marginRight: `${firstRowLastBoxRight}px` }}
-                onClick={() => onPhotosUnselect(photos)}
-              >
-                {t('Board.unselect_all')}
-              </a>
-            )}
-          {showSelection &&
-            photos.length > 1 &&
-            !allSelected && (
-              <a
-                style={{ marginRight: `${firstRowLastBoxRight}px` }}
-                onClick={() => onPhotosSelect(photos)}
-              >
-                {t('Board.select_all')}
-              </a>
-            )}
+          {showSelection && photos.length > 1 && allSelected && (
+            <a
+              style={{ marginRight: `${firstRowLastBoxRight}px` }}
+              onClick={() => onPhotosUnselect(photos)}
+            >
+              {t('Board.unselect_all')}
+            </a>
+          )}
+          {showSelection && photos.length > 1 && !allSelected && (
+            <a
+              style={{ marginRight: `${firstRowLastBoxRight}px` }}
+              onClick={() => onPhotosSelect(photos)}
+            >
+              {t('Board.select_all')}
+            </a>
+          )}
         </div>
         <div
           className={styles['pho-photo-wrapper']}

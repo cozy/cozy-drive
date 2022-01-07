@@ -187,18 +187,15 @@ const DriveView = ({
     [t]
   )
 
-  useEffect(
-    () => {
-      if (canWriteToCurrentFolder) {
-        setIsFabDisplayed(isMobile)
-        return () => {
-          // to not have this set to false on other views after using this view
-          setIsFabDisplayed(false)
-        }
+  useEffect(() => {
+    if (canWriteToCurrentFolder) {
+      setIsFabDisplayed(isMobile)
+      return () => {
+        // to not have this set to false on other views after using this view
+        setIsFabDisplayed(false)
       }
-    },
-    [setIsFabDisplayed, isMobile, canWriteToCurrentFolder]
-  )
+    }
+  }, [setIsFabDisplayed, isMobile, canWriteToCurrentFolder])
 
   return (
     <FolderView>

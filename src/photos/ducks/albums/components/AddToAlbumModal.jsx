@@ -43,20 +43,18 @@ class AddToAlbumModal extends Component {
               />
               <Divider className="u-ml-0 u-maw-100 u-mt-1" />
               {isFetchingAlbums && <Loading loadingType="albums_fetching" />}
-              {!isFetchingAlbums &&
-                data &&
-                data.length > 0 && (
-                  <div className={classNames(styles['coz-select-album'])}>
-                    <SelectAlbumsForm
-                      albums={{ data, fetchStatus }}
-                      onSubmitSelectedAlbum={album =>
-                        addPhotos(album, photos)
-                          .then(onDismiss)
-                          .then(onSuccess)
-                      }
-                    />
-                  </div>
-                )}
+              {!isFetchingAlbums && data && data.length > 0 && (
+                <div className={classNames(styles['coz-select-album'])}>
+                  <SelectAlbumsForm
+                    albums={{ data, fetchStatus }}
+                    onSubmitSelectedAlbum={album =>
+                      addPhotos(album, photos)
+                        .then(onDismiss)
+                        .then(onSuccess)
+                    }
+                  />
+                </div>
+              )}
             </div>
           </div>
         }

@@ -36,64 +36,61 @@ const ShortcutCreationModal = ({ onClose, onCreated, displayedFolder }) => {
   const client = useClient()
   const isOffline = useBrowserOffline()
 
-  const createShortcut = useCallback(
-    async () => {
-      if (!fileName || !url) {
-        Alerter.error(t('Shortcut.needs_info'))
-        return
+  const createShortcut = useCallback(async () => {
+    if (!fileName || !url) {
+      Alerter.error(t('Shortcut.needs_info'))
+      return
+    }
+    const makedURL = makeURLValid(url)
+    if (!makedURL) {
+      Alerter.error(t('Shortcut.url_badformat'))
+      return
+    }
+    try {
+      if (isOffline) {
+        Alerter.error('alert.offline')
+      } else {
+        await client.save({
+          _type: DOCTYPE_FILES_SHORTCUT,
+          dir_id: displayedFolder.id,
+          name: fileName.endsWith('.url') ? fileName : fileName + '.url',
+          url: makedURL
+        })
+        Alerter.success(t('Shortcut.created'))
+        if (onCreated) onCreated()
       }
-      const makedURL = makeURLValid(url)
-      if (!makedURL) {
-        Alerter.error(t('Shortcut.url_badformat'))
-        return
+      onClose()
+    } catch (error) {
+      if (
+        error.message.includes(
+          'NetworkError when attempting to fetch resource.'
+        )
+      ) {
+        Alerter.error('upload.alert.network')
+      } else if (
+        error.message.includes(
+          'Invalid filename containing illegal character(s):'
+        )
+      ) {
+        Alerter.error(
+          'alert.file_name_illegal_characters',
+          {
+            fileName,
+            characters: error.message.split(
+              'Invalid filename containing illegal character(s): '
+            )[1]
+          },
+          { duration: 2000 }
+        )
+      } else if (error.message.includes('Invalid filename:')) {
+        Alerter.error('alert.file_name_illegal_name', { fileName })
+      } else if (error.message.includes('Missing name argument')) {
+        Alerter.error('alert.file_name_missing')
+      } else {
+        Alerter.error(t('Shortcut.errored'))
       }
-      try {
-        if (isOffline) {
-          Alerter.error('alert.offline')
-        } else {
-          await client.save({
-            _type: DOCTYPE_FILES_SHORTCUT,
-            dir_id: displayedFolder.id,
-            name: fileName.endsWith('.url') ? fileName : fileName + '.url',
-            url: makedURL
-          })
-          Alerter.success(t('Shortcut.created'))
-          if (onCreated) onCreated()
-        }
-        onClose()
-      } catch (error) {
-        if (
-          error.message.includes(
-            'NetworkError when attempting to fetch resource.'
-          )
-        ) {
-          Alerter.error('upload.alert.network')
-        } else if (
-          error.message.includes(
-            'Invalid filename containing illegal character(s):'
-          )
-        ) {
-          Alerter.error(
-            'alert.file_name_illegal_characters',
-            {
-              fileName,
-              characters: error.message.split(
-                'Invalid filename containing illegal character(s): '
-              )[1]
-            },
-            { duration: 2000 }
-          )
-        } else if (error.message.includes('Invalid filename:')) {
-          Alerter.error('alert.file_name_illegal_name', { fileName })
-        } else if (error.message.includes('Missing name argument')) {
-          Alerter.error('alert.file_name_missing')
-        } else {
-          Alerter.error(t('Shortcut.errored'))
-        }
-      }
-    },
-    [client, fileName, onClose, onCreated, t, url, displayedFolder]
-  )
+    }
+  }, [client, fileName, onClose, onCreated, t, url, displayedFolder])
 
   const handleKeyDown = e => {
     if (e.keyCode === ENTER_KEY) {

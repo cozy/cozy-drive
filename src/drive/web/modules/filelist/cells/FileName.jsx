@@ -25,16 +25,13 @@ export const CertificationsIcons = ({ attributes }) => {
 
   //TODO To be removed when UI's AppIcon use getIconURL from Cozy-Client
   //instead of its own see https://github.com/cozy/cozy-ui/issues/1723
-  const fetchIcon = useCallback(
-    () => {
-      return client.getStackClient().getIconURL({
-        type: 'konnector',
-        slug,
-        priority: 'registry'
-      })
-    },
-    [client, slug]
-  )
+  const fetchIcon = useCallback(() => {
+    return client.getStackClient().getIconURL({
+      type: 'konnector',
+      slug,
+      priority: 'registry'
+    })
+  }, [client, slug])
 
   return (
     <div className={styles['fil-file-certifications']}>

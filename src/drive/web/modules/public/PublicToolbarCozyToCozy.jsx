@@ -30,13 +30,10 @@ const MoreMenu = ({
   const [menuIsVisible, setMenuVisible] = useState(false)
   const openMenu = useCallback(() => setMenuVisible(true), [setMenuVisible])
   const closeMenu = useCallback(() => setMenuVisible(false), [setMenuVisible])
-  const toggleMenu = useCallback(
-    () => {
-      if (menuIsVisible) return closeMenu()
-      openMenu()
-    },
-    [closeMenu, openMenu, menuIsVisible]
-  )
+  const toggleMenu = useCallback(() => {
+    if (menuIsVisible) return closeMenu()
+    openMenu()
+  }, [closeMenu, openMenu, menuIsVisible])
   return (
     <>
       <div ref={anchorRef}>
@@ -56,15 +53,14 @@ const MoreMenu = ({
               : t('toolbar.add_to_mine')}
           </ActionMenuItem>
 
-          {isMobile &&
-            files.length > 0 && (
-              <ActionMenuItem
-                onClick={() => downloadFiles(client, files)}
-                left={<Icon icon={'download'} />}
-              >
-                {t('toolbar.menu_download')}
-              </ActionMenuItem>
-            )}
+          {isMobile && files.length > 0 && (
+            <ActionMenuItem
+              onClick={() => downloadFiles(client, files)}
+              left={<Icon icon={'download'} />}
+            >
+              {t('toolbar.menu_download')}
+            </ActionMenuItem>
+          )}
           {files.length > 1 && <SelectableItem />}
         </ActionMenu>
       )}

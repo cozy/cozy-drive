@@ -176,15 +176,14 @@ const File = props => {
           }}
         />
       )}
-      {actions &&
-        actionMenuVisible && (
-          <ActionMenuWithHeader
-            file={attributes}
-            anchorElRef={filerowMenuToggleRef}
-            actions={actions}
-            onClose={hideActionMenu}
-          />
-        )}
+      {actions && actionMenuVisible && (
+        <ActionMenuWithHeader
+          file={attributes}
+          anchorElRef={filerowMenuToggleRef}
+          actions={actions}
+          onClose={hideActionMenu}
+        />
+      )}
     </TableRow>
   )
 }

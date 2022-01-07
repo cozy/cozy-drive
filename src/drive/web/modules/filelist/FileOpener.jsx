@@ -60,41 +60,38 @@ const FileOpener = ({
 }) => {
   const rowRef = useRef()
 
-  useEffect(
-    () => {
-      if (!rowRef || !rowRef.current) return
+  useEffect(() => {
+    if (!rowRef || !rowRef.current) return
 
-      const gesturesHandler = propagating(new Hammer(rowRef.current))
+    const gesturesHandler = propagating(new Hammer(rowRef.current))
 
-      gesturesHandler.on('tap press singletap', ev => {
-        if (actionMenuVisible || disabled) return
-        if (enableTouchEvents(ev)) {
-          ev.preventDefault() // prevent a ghost click
-          if (ev.type === 'press' || selectionModeActive) {
-            ev.srcEvent.stopImmediatePropagation()
-            toggle(ev.srcEvent)
-          } else {
-            ev.srcEvent.stopImmediatePropagation()
-            if (!isRenaming) open(ev.srcEvent, file)
-          }
+    gesturesHandler.on('tap press singletap', ev => {
+      if (actionMenuVisible || disabled) return
+      if (enableTouchEvents(ev)) {
+        ev.preventDefault() // prevent a ghost click
+        if (ev.type === 'press' || selectionModeActive) {
+          ev.srcEvent.stopImmediatePropagation()
+          toggle(ev.srcEvent)
+        } else {
+          ev.srcEvent.stopImmediatePropagation()
+          if (!isRenaming) open(ev.srcEvent, file)
         }
-      })
-
-      return () => {
-        gesturesHandler && gesturesHandler.destroy()
       }
-    },
-    [
-      rowRef,
-      file,
-      disabled,
-      actionMenuVisible,
-      toggle,
-      open,
-      selectionModeActive,
-      isRenaming
-    ]
-  )
+    })
+
+    return () => {
+      gesturesHandler && gesturesHandler.destroy()
+    }
+  }, [
+    rowRef,
+    file,
+    disabled,
+    actionMenuVisible,
+    toggle,
+    open,
+    selectionModeActive,
+    isRenaming
+  ])
 
   if (models.file.shouldBeOpenedByOnlyOffice(file)) {
     return (
