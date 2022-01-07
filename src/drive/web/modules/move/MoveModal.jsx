@@ -38,6 +38,8 @@ const styles = theme => ({
     '& .MuiDialogTitle-root': {
       padding: '0',
       [theme.breakpoints.down('sm')]: {
+        width: '100%',
+        overflow: 'visible',
         // back button
         '& .MuiButtonBase-root': {
           display: 'none'
