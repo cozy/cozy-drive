@@ -65,7 +65,7 @@ export class MoveModal extends React.Component {
   }
 
   navigateTo = folder => {
-    this.setState({ folderId: folder.id })
+    this.setState({ folderId: folder._id })
   }
 
   registerCancelable = promise => {
