@@ -73,7 +73,7 @@ class InitAppMobile {
       false
     )
 
-    /*We add fastclick only for iOS since Chrome removed this behavior (iOS also, but
+    /* We add fastclick only for iOS since Chrome removed this behavior (iOS also, but
       we still use UIWebview and not WKWebview... )*/
     if (isIOSApp()) {
       var FastClick = require('fastclick')
@@ -213,8 +213,8 @@ class InitAppMobile {
    * We write the items in localStorage and then push to a specific route
    */
   openWithHandler = async intent => {
-    //We prefer to remove previous imported items if no
-    //imported in order to create a new fresh import
+    // We prefer to remove previous imported items if no
+    // imported in order to create a new fresh import
     try {
       await localforage.removeItem('importedFiles')
     } catch (e) {
@@ -259,9 +259,9 @@ class InitAppMobile {
 
     registerClientPlugins(client)
     const polyglot = await this.getPolyglot()
-    //needed to migrate from cozy-drive auth to cozy-authenticate.
-    //@TODO should be remove one day. It has been added for the migration
-    //from 1.18.17 to 1.18.18
+    // needed to migrate from cozy-drive auth to cozy-authenticate.
+    // @TODO should be remove one day. It has been added for the migration
+    // from 1.18.17 to 1.18.18
     await this.migrateToCozyAuth()
 
     if (!__DEVELOPMENT__) configureReporter()

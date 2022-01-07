@@ -23,8 +23,8 @@ export const CertificationsIcons = ({ attributes }) => {
   const slug = get(attributes, 'cozyMetadata.uploadedBy.slug')
   const client = useClient()
 
-  //TODO To be removed when UI's AppIcon use getIconURL from Cozy-Client
-  //instead of its own see https://github.com/cozy/cozy-ui/issues/1723
+  // TODO To be removed when UI's AppIcon use getIconURL from Cozy-Client
+  // instead of its own see https://github.com/cozy/cozy-ui/issues/1723
   const fetchIcon = useCallback(() => {
     return client.getStackClient().getIconURL({
       type: 'konnector',

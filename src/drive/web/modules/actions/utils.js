@@ -162,9 +162,9 @@ export const exportFilesNative = async (
     // TODO use a promise pool here
     const urls = await Promise.all(downloadAllFiles)
     if (urls.length === 1 && isIOS()) {
-      //TODO
-      //It seems that files: is not well supported on iOS. url seems to work well
-      //at with one file. Need to check when severals
+      // TODO
+      // It seems that files: is not well supported on iOS. url seems to work well
+      // at with one file. Need to check when severals
       window.plugins.socialsharing.shareWithOptions(
         {
           url: urls[0]

@@ -17,7 +17,7 @@ import { PROTOCOL } from 'drive/mobile/lib/constants'
   instead of redirecting to the web version of the app, redirect to the native app via the custom scheme.
 */
 export const getRedirectUri = appSlug => {
-  //needed for our Drive standalone mode
+  // needed for our Drive standalone mode
   if (!isMobileApp()) return 'http://localhost'
   const redirectedPath = 'auth'
   return isAndroidApp()

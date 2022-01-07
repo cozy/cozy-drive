@@ -42,7 +42,7 @@ const DestroyConfirm = ({ t, files, onClose }) => {
               try {
                 await deleteFilesPermanently(client, files)
               } catch {
-                //eslint-disable-next-line
+                // eslint-disable-next-line
             } finally {
                 onClose()
               }

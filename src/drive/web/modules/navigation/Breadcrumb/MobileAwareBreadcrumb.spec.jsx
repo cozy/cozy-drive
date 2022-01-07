@@ -29,7 +29,7 @@ describe('MobileAwareBreadcrumb', () => {
       </AppLike>
     )
 
-    //rznders the path
+    // rznders the path
     const rootLink = await findByText('root folder')
     await findByText('parent folder')
     await findByText('current folder')

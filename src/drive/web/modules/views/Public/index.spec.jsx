@@ -77,14 +77,14 @@ describe('Public View', () => {
     const el0 = getByText(`foobar0`)
     // Check if the filename is displayed with the extension. If not throw
     getByTextWithMarkup(getByText, `foobar0.pdf`)
-    //get the FileRow element
+    // get the FileRow element
     const fileRow0 = el0.closest('.fil-content-row')
-    //check if the date is right
+    // check if the date is right
     expect(fileRow0.getElementsByTagName('time')[0].dateTime).toEqual(
       updated_at
     )
 
-    //check if the ActionMenu is displayed
+    // check if the ActionMenu is displayed
     fireEvent.click(fileRow0.getElementsByTagName('button')[0])
     // navigates  to the history view
     const historyItem = getByText('History')

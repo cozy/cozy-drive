@@ -153,7 +153,7 @@ export class App extends Component {
 
 App.propTypes = {
   album: PropTypes.object.isRequired,
-  hasMore: PropTypes.bool, //see https://github.com/cozy/cozy-client/issues/345
+  hasMore: PropTypes.bool, // see https://github.com/cozy/cozy-client/issues/345
   photos: PropTypes.array.isRequired,
   fetchMore: PropTypes.func.isRequired
 }

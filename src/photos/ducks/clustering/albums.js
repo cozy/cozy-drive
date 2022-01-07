@@ -27,7 +27,7 @@ const updateAlbumPeriod = async (client, photos, album) => {
   return album
 }
 
-//TODO: we should probably use addById from HasManyFiles. However, it causes
+// TODO: we should probably use addById from HasManyFiles. However, it causes
 // unexpected relationships writes in the albums. So we skip it for now.
 const addRefs = async (client, ids, album) => {
   ids = Array.isArray(ids) ? ids : [ids]
@@ -38,7 +38,7 @@ const addRefs = async (client, ids, album) => {
   await client.mutate(album.photos.addReferences(relations))
 }
 
-//TODO: we should probably use removeById from HasManyFiles. However, it causes
+// TODO: we should probably use removeById from HasManyFiles. However, it causes
 // unexpected relationships writes in the albums. So we skip it for now.
 const removeRefs = async (client, ids, album) => {
   ids = Array.isArray(ids) ? ids : [ids]

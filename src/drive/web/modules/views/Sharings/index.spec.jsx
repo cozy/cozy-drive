@@ -134,19 +134,19 @@ describe('Sharings View', () => {
       const el0 = getByText(`foobar0`)
       // Check if the filename is displayed with the extension. If not throw
       getByTextWithMarkup(getByText, `foobar0.pdf`)
-      //get the FileRow element
+      // get the FileRow element
       const fileRow0 = el0.closest('.fil-content-row')
-      //check if the date is right
+      // check if the date is right
       expect(fileRow0.getElementsByTagName('time')[0].dateTime).toEqual(
         updated_at
       )
-      //check the path to the parent's folder
+      // check the path to the parent's folder
       const linkElement0 = fileRow0.getElementsByClassName('fil-file-path')[0]
       expect(removeNonASCII(linkElement0.textContent)).toEqual(path)
 
       expect(linkElement0.href.endsWith(`#/folder/${dir_id}`)).toBe(true)
 
-      //check if the ActionMenu is displayed
+      // check if the ActionMenu is displayed
       fireEvent.click(fileRow0.getElementsByTagName('button')[0])
       const el1 = getByText(`foobar1`)
       const parentDiv1 = el1.closest('.fil-file')

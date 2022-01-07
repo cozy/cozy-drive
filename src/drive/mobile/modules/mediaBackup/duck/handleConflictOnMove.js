@@ -1,13 +1,13 @@
 import { CozyFile } from 'models'
 
-//Fix bug for 1.18.18 release. Used for 1.18.24 release
+// Fix bug for 1.18.18 release. Used for 1.18.24 release
 const generateNewFolderNameOnConflict = folderName => {
-  //Check if the string ends by _1
+  // Check if the string ends by _1
   const regex = new RegExp('(_)([0-9]+)$')
   const matches = folderName.match(regex)
   if (matches) {
     let versionNumber = parseInt(matches[2])
-    //increment versionNumber
+    // increment versionNumber
     versionNumber++
     const newfolderName = folderName.replace(
       new RegExp('(_)([0-9]+)$'),

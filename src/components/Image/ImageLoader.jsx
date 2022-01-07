@@ -155,7 +155,7 @@ class ImageLoader extends React.Component {
   render() {
     const { src } = this.state
     const { render, renderFallback } = this.props
-    //If the navigator is not onLine, let's render the fallback directly
+    // If the navigator is not onLine, let's render the fallback directly
     if (src && window.navigator.onLine) return render(src)
     else if (renderFallback) return renderFallback()
     else return null

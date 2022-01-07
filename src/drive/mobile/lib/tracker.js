@@ -52,7 +52,7 @@ export const startHeartBeat = () => {
     try {
       trackerInstance.push(['enableHeartBeatTimer', mobileHeartBeatDelay])
     } catch (err) {
-      //logger.log(err)
+      // logger.log(err)
     }
   }
 }
@@ -64,7 +64,7 @@ export const stopHeartBeat = () => {
     try {
       trackerInstance.push(['disableHeartBeatTimer']) // undocumented, see https://github.com/piwik/piwik/blob/3.x-dev/js/piwik.js#L6544
     } catch (err) {
-      //logger.log(err)
+      // logger.log(err)
     }
   }
 }

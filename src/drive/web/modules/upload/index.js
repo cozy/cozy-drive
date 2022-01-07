@@ -369,7 +369,7 @@ export const uploadFilesFromNative = (
     files: files
   })
   const encryptionKey = await getEncryptionKeyFromDirId(client, folderId)
-  //!TODO Promise.All to use parallelization
+  // !TODO Promise.All to use parallelization
   for (const file of files) {
     try {
       const fileOpts = {

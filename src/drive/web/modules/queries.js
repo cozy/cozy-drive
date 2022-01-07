@@ -2,9 +2,9 @@ import CozyClient, { Q } from 'cozy-client'
 import { TRASH_DIR_ID } from 'drive/constants/config'
 import { DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
 
-//Needs to be less than 10 minutes, since "thumbnails" links
-//are only valid for 10 minutes.
-//cf https://github.com/cozy/cozy-doctypes/blob/master/docs/io.cozy.files.md#files
+// Needs to be less than 10 minutes, since "thumbnails" links
+// are only valid for 10 minutes.
+// cf https://github.com/cozy/cozy-doctypes/blob/master/docs/io.cozy.files.md#files
 const DEFAULT_CACHE_TIMEOUT_QUERIES = 9 * 60 * 1000
 const defaultFetchPolicy = CozyClient.fetchPolicies.olderThan(
   DEFAULT_CACHE_TIMEOUT_QUERIES
