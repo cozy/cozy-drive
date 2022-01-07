@@ -53,6 +53,7 @@ export const setupStoreAndClient = ({ initialStoreState } = {}) => {
   const client = new CozyClient({
     store: false
   })
+  client.getStackClient().setUri('http://test.cloud')
 
   const store = configureStore({
     client,

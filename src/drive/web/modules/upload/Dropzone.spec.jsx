@@ -32,13 +32,15 @@ describe('Dropzone', () => {
 
     const dropzone = root.find(DumbDropzone)
     const files = []
-    dropzone.props().uploadFiles(files)
+    dropzone.props().uploadFiles(files, { client, vaultClient: {} })
     expect(uploadFiles).toHaveBeenCalledWith(
       files,
       'directory-foobar0',
       expect.objectContaining({
         refresh: expect.any(Function)
-      })
+      }),
+      () => null,
+      { client, vaultClient: {} }
     )
   })
 })

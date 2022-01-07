@@ -5,6 +5,7 @@ import { createStore } from 'redux'
 
 import { I18n } from 'cozy-ui/transpiled/react'
 import { SharingContext } from 'cozy-sharing'
+import { VaultProvider } from 'cozy-keys-lib'
 
 import langEn from 'drive/locales/en.json'
 import { ThumbnailSizeContextProvider } from 'drive/lib/ThumbnailSizeContext'
@@ -59,27 +60,29 @@ const AppLike = ({
 }) => (
   <Provider store={(client && client.store) || store || mockStore}>
     <CozyProvider client={client}>
-      <TestI18n>
-        <SharingContext.Provider
-          value={sharingContextValue || mockSharingContextValue}
-        >
-          <AcceptingSharingProvider>
-            <RouterContext.Provider
-              value={routerContextValue || mockRouterContextValue}
-            >
-              <ThumbnailSizeContextProvider>
-                <BreakpointsProvider>
-                  <ModalContext.Provider
-                    value={modalContextValue || mockModalContextValue}
-                  >
-                    <FabProvider>{children}</FabProvider>
-                  </ModalContext.Provider>
-                </BreakpointsProvider>
-              </ThumbnailSizeContextProvider>
-            </RouterContext.Provider>
-          </AcceptingSharingProvider>
-        </SharingContext.Provider>
-      </TestI18n>
+      <VaultProvider cozyClient={client}>
+        <TestI18n>
+          <SharingContext.Provider
+            value={sharingContextValue || mockSharingContextValue}
+          >
+            <AcceptingSharingProvider>
+              <RouterContext.Provider
+                value={routerContextValue || mockRouterContextValue}
+              >
+                <ThumbnailSizeContextProvider>
+                  <BreakpointsProvider>
+                    <ModalContext.Provider
+                      value={modalContextValue || mockModalContextValue}
+                    >
+                      <FabProvider>{children}</FabProvider>
+                    </ModalContext.Provider>
+                  </BreakpointsProvider>
+                </ThumbnailSizeContextProvider>
+              </RouterContext.Provider>
+            </AcceptingSharingProvider>
+          </SharingContext.Provider>
+        </TestI18n>
+      </VaultProvider>
     </CozyProvider>
   </Provider>
 )
