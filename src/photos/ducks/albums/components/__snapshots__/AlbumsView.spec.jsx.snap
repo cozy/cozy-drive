@@ -81,7 +81,7 @@ exports[`AlbumsView displays an empty Component 1`] = `
     </div>
   </div>
   <div
-    class="styles__c-empty-container___1LpH9 empty"
+    class="styles__c-empty___3w5oV empty"
     data-testid="empty-folder"
   >
     <svg

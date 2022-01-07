@@ -2,10 +2,6 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { Unlink } from './Unlink'
 
-jest.mock('cozy-ui/transpiled/react/utils/color', () => ({
-  getCssVariableValue: () => '#fff'
-}))
-
 describe('Unlink', () => {
   const client = {
     stackClient: {

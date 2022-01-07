@@ -20,6 +20,12 @@ const HeaderIlustration = ({ count }) => {
   )
 }
 
+const specificCardStyle = {
+  marginLeft: '2rem',
+  marginRight: '4rem',
+  marginTop: '1rem',
+  marginBottom: '1rem'
+}
 const Header = ({ entries, title, subTitle }) => {
   const { t } = useI18n()
   const titleToUse = title
@@ -28,7 +34,7 @@ const Header = ({ entries, title, subTitle }) => {
   const subTitleToUse = subTitle ? subTitle : t('Move.to')
 
   return (
-    <Card inset className="u-bg-paleGrey">
+    <Card inset className="u-bg-paleGrey" style={specificCardStyle}>
       <Media>
         <Img className="u-mr-1">
           <HeaderIlustration count={entries.length} />

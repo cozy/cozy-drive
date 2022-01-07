@@ -5154,6 +5154,13 @@ cozy-client@^16.10.2:
     sift "^6.0.0"
     url-search-params-polyfill "^7.0.0"
 
+cozy-device-helper@1.16.1, cozy-device-helper@^1.16.1:
+  version "1.16.1"
+  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.16.1.tgz#559b6c3f104541b53603590ccd6fc89296878f26"
+  integrity sha512-20IZGl7O1+J9qft+zMElL5nrSakAgqOx00IDsbbnJSFDLYtbA6wW6tIKOahYB+YLsDXEwiw6bzccqjiBXU0JAQ==
+  dependencies:
+    lodash "^4.17.19"
+
 cozy-device-helper@1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.8.0.tgz#17b41d0ea28a504b906669a43449952e72615abb"
@@ -5236,6 +5243,14 @@ cozy-harvest-lib@5.3.1:
     react-final-form "^3.7.0"
     react-markdown "^4.2.2"
     uuid "^3.3.2"
+
+cozy-intent@1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/cozy-intent/-/cozy-intent-1.5.0.tgz#c4423fa81946484cb2d32da4523c5e052a174b28"
+  integrity sha512-yvQ8TwwmDUuwT63T7/DcmLbXdrnMvDKJorY1js8eboR9oG9vQsFHvXs0lndXIqu26WOtAB6DCC+2prwYh8M7NQ==
+  dependencies:
+    cozy-device-helper "^1.16.1"
+    post-me "0.4.5"
 
 cozy-interapp@0.4.9:
   version "0.4.9"
@@ -5490,18 +5505,20 @@ cozy-ui@35.22.0:
     react-select "2.2.0"
     react-swipeable-views "0.13.3"
 
-cozy-ui@^51.5.2:
-  version "51.5.2"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-51.5.2.tgz#39d66e33e0ab49efa339c2cb78fe553eaa3c8892"
-  integrity sha512-VHxeQhbhxIDTZKhSZHoaV4vvn9zZGA5BrIo5aXGr0sl/I6imLql5AxwSDeyWIZwdeQL65cNbassc0wczY+We0A==
+cozy-ui@60.9.1:
+  version "60.9.1"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-60.9.1.tgz#90757c930a03acfeb8bd013e869edf147bdeb9d3"
+  integrity sha512-GyVEhAIkNP2OMiGR5npQ3xEbEJ4e9jyz+nns/yQTLdwkkzblQb1T9MYHmn8/iKy5mGl4l+sutPrjMd+98EyoWg==
   dependencies:
     "@babel/runtime" "^7.3.4"
     "@popperjs/core" "^2.4.4"
     classnames "^2.2.5"
     cozy-interapp "^0.5.4"
     date-fns "^1.28.5"
+    filesize "8.0.7"
     hammerjs "^2.0.8"
     intersection-observer "0.11.0"
+    mui-bottom-sheet "https://github.com/cozy/mui-bottom-sheet.git#v1.0.6"
     node-polyglot "^2.2.2"
     normalize.css "^7.0.0"
     react-markdown "^4.0.8"
@@ -7562,6 +7579,11 @@ filesize@3.6.1, filesize@^3.6.1:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/filesize/-/filesize-3.6.1.tgz#090bb3ee01b6f801a8a8be99d31710b3422bb317"
   integrity sha512-7KjR1vv6qnicaPMi1iiTcI85CyYwRO/PSFCu6SvqL8jN2Wjt/NIYQTFtFs7fSDCYOstUkEWIQGFUg5YZQfjlcg==
+
+filesize@8.0.7:
+  version "8.0.7"
+  resolved "https://registry.yarnpkg.com/filesize/-/filesize-8.0.7.tgz#695e70d80f4e47012c132d57a059e80c6b580bd8"
+  integrity sha512-pjmC+bkIF8XI7fWaH8KxHcZL3DPybs1roSKP4rKDvy20tAWwIObE4+JIseG2byfGKhud5ZnM4YSGKBz7Sh0ndQ==
 
 fill-range@^2.1.0:
   version "2.2.4"
@@ -12713,6 +12735,11 @@ posix-character-classes@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/posix-character-classes/-/posix-character-classes-0.1.1.tgz#01eac0fe3b5af71a2a6c02feabb8c1fef7e00eab"
   integrity sha1-AerA/jta9xoqbAL+q7jB/vfgDqs=
+
+post-me@0.4.5:
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/post-me/-/post-me-0.4.5.tgz#6171b721c7b86230c51cfbe48ddea047ef8831ce"
+  integrity sha512-XgPdktF/2M5jglgVDULr9NUb/QNv3bY3g6RG22iTb5MIMtB07/5FJB5fbVmu5Eaopowc6uZx7K3e7x1shPwnXw==
 
 postcss-assets-webpack-plugin@3.0.0:
   version "3.0.0"

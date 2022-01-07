@@ -6,9 +6,6 @@ import { DumbUpload, generateForQueue } from './'
 jest.mock('cozy-keys-lib', () => ({
   withVaultClient: jest.fn().mockReturnValue({})
 }))
-jest.mock('cozy-ui/transpiled/react/utils/color', () => ({
-  getCssVariableValue: () => '#fff'
-}))
 
 const tSpy = jest.fn()
 const uploadFilesFromNativeSpy = jest.fn()

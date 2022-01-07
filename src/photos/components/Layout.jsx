@@ -18,7 +18,7 @@ import ButtonClient from '../../components/pushClient/Button'
 import BannerClient from '../../components/pushClient/Banner'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { UploadQueue } from '../ducks/upload'
-import { IconSprite } from 'cozy-ui/transpiled/react'
+import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { ModalManager } from 'react-cozy-helpers'
 import { isFlagshipApp } from 'cozy-device-helper'
 
@@ -52,7 +52,7 @@ export const Layout = ({ t, children }) => (
     </Main>
     <ModalManager />
 
-    <IconSprite />
+    <Sprite />
   </LayoutUI>
 )
 

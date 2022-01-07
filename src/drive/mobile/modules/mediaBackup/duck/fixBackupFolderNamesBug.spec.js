@@ -1,8 +1,5 @@
 import { fixMagicFolderName } from './fixBackupFolderNamesBug'
 import { ROOT_DIR_ID } from 'drive/constants/config'
-jest.mock('cozy-ui/transpiled/react/utils/color', () => ({
-  getCssVariableValue: () => '#fff'
-}))
 
 jest.mock('./handleConflictOnMove', () => ({
   ...jest.requireActual('./handleConflictOnMove'),

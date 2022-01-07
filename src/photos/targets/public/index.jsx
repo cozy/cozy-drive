@@ -17,7 +17,7 @@ import { I18n } from 'cozy-ui/transpiled/react/I18n'
 import { getQueryParameter } from 'react-cozy-helpers'
 import getSharedDocument from 'cozy-sharing/dist/getSharedDocument'
 import ErrorUnsharedComponent from 'photos/components/ErrorUnshared'
-import { IconSprite } from 'cozy-ui/transpiled/react'
+import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 
 import appMetadata from 'photos/appMetadata'
 import doctypes from '../browser/doctypes'
@@ -97,7 +97,7 @@ async function init() {
         <>
           <StyledApp>
             {app}
-            <IconSprite />
+            <Sprite />
           </StyledApp>
         </>
       </I18n>,

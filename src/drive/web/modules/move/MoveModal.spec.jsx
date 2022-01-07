@@ -12,9 +12,6 @@ jest.mock('cozy-client/dist/utils', () => ({
 
 jest.mock('cozy-doctypes')
 jest.mock('cozy-stack-client')
-jest.mock('cozy-ui/transpiled/react/utils/color', () => ({
-  getCssVariableValue: () => '#fff'
-}))
 
 CozyFile.doctype = 'io.cozy.files'
 
@@ -59,7 +56,8 @@ describe('MoveModal component', () => {
       onClose: onCloseSpy,
       sharingState,
       t: tSpy,
-      classes: { paper: {} }
+      classes: { paper: {} },
+      breakpoints: { isMobile: false }
     }
     return shallow(<MoveModal {...props} />)
   }

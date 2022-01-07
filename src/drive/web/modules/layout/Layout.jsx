@@ -13,7 +13,7 @@ import SupportUs from 'components/pushClient/SupportUs'
 
 import { UploadQueue } from 'drive/web/modules/upload'
 import UserActionRequired from 'drive/mobile/modules/authorization/UserActionRequired'
-import { IconSprite } from 'cozy-ui/transpiled/react'
+import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 
 initFlags()
 
@@ -31,7 +31,7 @@ const Layout = ({ t, children }) => (
     <UploadQueue />
     {__TARGET__ === 'mobile' && <UserActionRequired />}
     {children}
-    <IconSprite />
+    <Sprite />
   </LayoutUI>
 )
 
