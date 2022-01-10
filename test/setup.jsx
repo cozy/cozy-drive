@@ -14,7 +14,20 @@ import { generateFile } from './generate'
 import { act } from 'react-dom/test-utils'
 
 jest.mock('cozy-keys-lib', () => ({
-  withVaultClient: jest.fn().mockReturnValue({}),
+  withVaultClient: BaseComponent => {
+    const Component = props => (
+      <>
+        {({ vaultClient }) => (
+          <BaseComponent vaultClient={vaultClient} {...props} />
+        )}
+      </>
+    )
+
+    Component.displayName = `withVaultClient(${BaseComponent.displayName ||
+    BaseComponent.name})`
+
+    return Component
+  },
   useVaultClient: jest.fn()
 }))
 

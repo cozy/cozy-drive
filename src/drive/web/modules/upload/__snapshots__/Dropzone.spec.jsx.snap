@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dropzone should match snapshot 1`] = `
+<AppLike
+  client={
+    CozyClient {
+      "uri": undefined,
+    }
+  }
+  store={
+    Object {
+      "dispatch": [MockFunction],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <Provider
+    store={
+      Object {
+        "dispatch": [MockFunction],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+        Symbol(observable): [Function],
+      }
+    }
+  >
+    <CozyProvider
+      client={
+        CozyClient {
+          "uri": undefined,
+        }
+      }
+    >
+      <TestI18n>
+        <I18n
+          defaultLang="en"
+          dictRequire={[Function]}
+          lang="en"
+        >
+          <AcceptingSharingProvider>
+            <ThumbnailSizeContextProvider>
+              <BreakpointsProvider>
+                <FabProvider>
+                  <WithSharingState(withClient(withVaultClient(Connect(Dropzone))))
+                    displayedFolder={
+                      Object {
+                        "id": "directory-foobar0",
+                      }
+                    }
+                  >
+                    <withClient(withVaultClient(Connect(Dropzone)))
+                      displayedFolder={
+                        Object {
+                          "id": "directory-foobar0",
+                        }
+                      }
+                      sharingState={
+                        Object {
+                          "getRecipients": [MockFunction],
+                          "getSharingLink": [MockFunction],
+                          "hasWriteAccess": [MockFunction],
+                          "refresh": [MockFunction],
+                        }
+                      }
+                    >
+                      <withVaultClient(Connect(Dropzone))
+                        client={
+                          CozyClient {
+                            "uri": undefined,
+                          }
+                        }
+                        displayedFolder={
+                          Object {
+                            "id": "directory-foobar0",
+                          }
+                        }
+                        sharingState={
+                          Object {
+                            "getRecipients": [MockFunction],
+                            "getSharingLink": [MockFunction],
+                            "hasWriteAccess": [MockFunction],
+                            "refresh": [MockFunction],
+                          }
+                        }
+                      />
+                    </withClient(withVaultClient(Connect(Dropzone)))>
+                  </WithSharingState(withClient(withVaultClient(Connect(Dropzone))))>
+                </FabProvider>
+              </BreakpointsProvider>
+            </ThumbnailSizeContextProvider>
+          </AcceptingSharingProvider>
+        </I18n>
+      </TestI18n>
+    </CozyProvider>
+  </Provider>
+</AppLike>
+`;
