@@ -2,18 +2,17 @@ import { models } from 'cozy-client'
 
 import { getFileMimetype } from 'drive/lib/getFileMimetype'
 import { hasEncryptionRef } from 'drive/lib/encryption'
+import iconsContext from './iconsContext'
 
 export const TYPE_DIRECTORY = 'directory'
 
-const iconsContext =
-  typeof require.context === 'undefined' // no require.context in jest
-    ? { keys: () => [] }
-    : require.context('drive/assets/icons/', false, /icon-type-.*.svg$/)
-
-const icons = iconsContext.keys().reduce((acc, item) => {
-  acc[item.replace(/\.\/icon-type-(.*)\.svg/, '$1')] = iconsContext(item)
-  return acc
-}, {})
+const icons =
+  iconsContext &&
+  iconsContext.keys &&
+  iconsContext.keys().reduce((acc, item) => {
+    acc[item.replace(/\.\/icon-type-(.*)\.svg/, '$1')] = iconsContext(item)
+    return acc
+  }, {})
 
 const getIconUrl = file => {
   let keyIcon

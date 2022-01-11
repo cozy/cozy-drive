@@ -1,15 +1,16 @@
 import { createMockClient, models } from 'cozy-client'
 
+require.context = jest.fn()
 import {
   makeNormalizedFile,
   containerForTesting,
   TYPE_DIRECTORY
 } from './helpers'
 
+jest.mock('./iconsContext', () => ({ keys: () => [] }))
+
 models.note.fetchURL = jest.fn(() => 'noteUrl')
-
 jest.spyOn(containerForTesting, 'getIconUrl').mockReturnValue('mocked')
-
 const client = createMockClient({})
 
 const noteFileProps = {
