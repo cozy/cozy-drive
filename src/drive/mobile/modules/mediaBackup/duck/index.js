@@ -40,21 +40,24 @@ export const startMediaBackup = (isManualBackup = false) => async (
   getState,
   { client, t }
 ) => {
+  let isEffectivelyManualBackup = isManualBackup
   dispatch({ type: MEDIA_UPLOAD_START })
   client.getStackClient().fetchJSON('POST', '/settings/synchronized')
   if (!(await isAuthorized())) {
-    const promptForPermissions = isManualBackup
+    const promptForPermissions = isEffectivelyManualBackup
     const receivedAuthorisation = await updateValueAfterRequestAuthorization(
       promptForPermissions
     )
     // manual backup is only possible if the authorization is accepted
-    if (isManualBackup && !receivedAuthorisation) isManualBackup = false
+    if (isEffectivelyManualBackup && !receivedAuthorisation) {
+      isEffectivelyManualBackup = false
+    }
     // disable backupImages when authorization is refused
     if (getState().mobile.settings.backupImages && !receivedAuthorisation) {
       await dispatch(setBackupImages(false))
     }
   }
-  if (canBackup(isManualBackup, getState)) {
+  if (canBackup(isEffectivelyManualBackup, getState)) {
     try {
       const photosOnDevice = await getPhotos()
       const alreadyUploaded = getState().mobile.mediaBackup.uploaded
@@ -72,7 +75,7 @@ export const startMediaBackup = (isManualBackup = false) => async (
           if (
             getState().mobile.mediaBackup.cancelMediaBackup ||
             getState().mobile.mediaBackup.diskQuotaReached ||
-            !canBackup(isManualBackup, getState)
+            !canBackup(isEffectivelyManualBackup, getState)
           ) {
             break
           }
@@ -103,34 +106,36 @@ export const backupImages = (backupImages, force = false) => async (
   if (getState().mobile.mediaBackup.running === true && !force) {
     return
   }
-  if (backupImages === undefined) {
-    backupImages = getState().mobile.settings.backupImages
+  let images = backupImages
+  if (images === undefined) {
+    images = getState().mobile.settings.backupImages
   } else {
-    await dispatch(setBackupImages(backupImages))
+    await dispatch(setBackupImages(images))
   }
 
-  const isAuthorized = await updateValueAfterRequestAuthorization(backupImages)
-  if (backupImages && !isAuthorized) {
-    backupImages = isAuthorized
-    dispatch(setBackupImages(backupImages))
+  const isAuthorized = await updateValueAfterRequestAuthorization(images)
+  if (images && !isAuthorized) {
+    images = isAuthorized
+    dispatch(setBackupImages(images))
   }
 
   const {
     updateStatusBackgroundService
   } = require('drive/mobile/lib/background')
-  updateStatusBackgroundService(backupImages)
-  if (backupImages) {
+  updateStatusBackgroundService(images)
+  if (images) {
     dispatch(startMediaBackup())
   }
 
-  return backupImages
+  return images
 }
 
 const updateValueAfterRequestAuthorization = async value => {
-  if (value) {
-    value = await requestAuthorization()
+  let updatedValue = value
+  if (updatedValue) {
+    updatedValue = await requestAuthorization()
   }
-  return value
+  return updatedValue
 }
 
 export { default } from './reducer'
