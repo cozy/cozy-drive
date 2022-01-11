@@ -61,7 +61,7 @@ export const SharingsView = ({
 
   const query = useMemo(
     () => buildSharingsQuery({ ids: sharedDocumentIds, enabled: allLoaded }),
-    [sharedDocumentIds.length, allLoaded]
+    [sharedDocumentIds, allLoaded]
   )
   const result = useFilesQueryWithPath(query)
 

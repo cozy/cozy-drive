@@ -56,7 +56,7 @@ const createRootReducer = client => {
 
   const rootReducer = (state, action) => {
     if (action.type === UNLINK) {
-      state = undefined
+      state = undefined // eslint-disable-line no-param-reassign
     }
     return appReducer(state, action)
   }

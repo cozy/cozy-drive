@@ -90,7 +90,7 @@ const ShortcutCreationModal = ({ onClose, onCreated, displayedFolder }) => {
         Alerter.error(t('Shortcut.errored'))
       }
     }
-  }, [client, fileName, onClose, onCreated, t, url, displayedFolder])
+  }, [client, fileName, onClose, onCreated, t, url, displayedFolder, isOffline])
 
   const handleKeyDown = e => {
     if (e.keyCode === ENTER_KEY) {

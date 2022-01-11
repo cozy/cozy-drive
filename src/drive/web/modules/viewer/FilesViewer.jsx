@@ -113,7 +113,7 @@ const FilesViewer = ({ filesQuery, files, fileId, onClose, onChange }) => {
     return () => {
       isMounted = false
     }
-  }, [])
+  }, [client, currentFile, fileId, getCurrentIndex, handleOnClose])
 
   useEffect(() => {
     let isMounted = true
@@ -146,7 +146,7 @@ const FilesViewer = ({ filesQuery, files, fileId, onClose, onChange }) => {
     return () => {
       isMounted = false
     }
-  }, [fetchingMore, filesQuery.count, files.length, fileId])
+  }, [fetchingMore, filesQuery, files, fileId])
 
   const currentIndex = useMemo(() => getCurrentIndex(), [getCurrentIndex])
   const hasCurrentIndex = useMemo(() => currentIndex != -1, [currentIndex])

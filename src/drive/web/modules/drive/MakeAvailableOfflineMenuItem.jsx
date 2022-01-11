@@ -39,7 +39,7 @@ const MakeAvailableOfflineMenuItem = connect(
       e.stopPropagation()
       return toggleOfflineAvailability(client, vaultClient)
     },
-    [client, toggleOfflineAvailability]
+    [client, toggleOfflineAvailability, vaultClient]
   )
 
   return (

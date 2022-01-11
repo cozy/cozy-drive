@@ -137,7 +137,7 @@ const FolderViewBody = ({
     if (isEncFolder) {
       checkLock()
     }
-  }, [isEncFolder, shouldUnlock])
+  }, [vaultClient, isEncFolder, shouldUnlock])
   if (isEncFolder && shouldUnlock) {
     return (
       <VaultUnlocker
