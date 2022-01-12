@@ -138,7 +138,7 @@ class AlbumPhotos extends Component {
       >
         {(selected, active, selection) => (
           <div
-            data-test-id="album-pho-content-wrapper"
+            data-testid="album-pho-content-wrapper"
             className={styles['pho-content-wrapper']}
           >
             {album.name && album.photos.data && (

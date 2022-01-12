@@ -11,7 +11,7 @@ import { showNewFolderInput } from 'drive/web/modules/filelist/duck'
 const AddFolderItem = translate()(({ t, addFolder }) => {
   return (
     <ActionMenuItem
-      data-test-id="add-folder-link"
+      data-testid="add-folder-link"
       onClick={addFolder}
       left={<Icon icon={IconFolder} />}
     >

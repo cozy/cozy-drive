@@ -20,7 +20,7 @@ const EmptyCanvas = ({ type, canUpload, localeKey }) => {
   const { t } = useI18n()
   return (
     <Empty
-      data-test-id="empty-folder"
+      data-testid="empty-folder"
       icon={EmptyIcon[type]}
       title={localeKey ? t(`empty.${localeKey}_title`) : t('empty.title')}
       text={

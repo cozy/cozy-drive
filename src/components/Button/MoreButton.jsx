@@ -10,7 +10,7 @@ const MoreButton = ({ disabled, onClick }) => {
   const { t } = useI18n()
   return (
     <Button
-      data-test-id="more-button"
+      data-testid="more-button"
       className={styles['dri-btn--more']}
       theme="secondary"
       disabled={disabled}

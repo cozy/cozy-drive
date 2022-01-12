@@ -14,7 +14,7 @@ exports[`Public view should render children when they are present 1`] = `
         />
         <div
           className="pho-toolbar"
-          data-test-id="pho-toolbar-album-public"
+          data-testid="pho-toolbar-album-public"
           role="toolbar"
         >
           <CozyHomeLink
@@ -24,7 +24,7 @@ exports[`Public view should render children when they are present 1`] = `
           <Button
             align="center"
             className="pho-public-download"
-            data-test-id="album-public-download"
+            data-testid="album-public-download"
             icon={[Function]}
             label="Toolbar.album_download"
             onClick={[Function]}
@@ -40,7 +40,7 @@ exports[`Public view should render children when they are present 1`] = `
             title="Toolbar.more"
           >
             <MenuItem
-              data-test-id="album-public-create-cozy-mobile"
+              data-testid="album-public-create-cozy-mobile"
               icon={
                 <Icon
                   icon={[Function]}
@@ -52,7 +52,7 @@ exports[`Public view should render children when they are present 1`] = `
               Share.create-cozy
             </MenuItem>
             <MenuItem
-              data-test-id="album-public-download-mobile"
+              data-testid="album-public-download-mobile"
               icon={
                 <Icon
                   icon={[Function]}
@@ -116,7 +116,7 @@ exports[`Public view should render the album 1`] = `
         />
         <div
           className="pho-toolbar"
-          data-test-id="pho-toolbar-album-public"
+          data-testid="pho-toolbar-album-public"
           role="toolbar"
         >
           <CozyHomeLink
@@ -126,7 +126,7 @@ exports[`Public view should render the album 1`] = `
           <Button
             align="center"
             className="pho-public-download"
-            data-test-id="album-public-download"
+            data-testid="album-public-download"
             icon={[Function]}
             label="Toolbar.album_download"
             onClick={[Function]}
@@ -142,7 +142,7 @@ exports[`Public view should render the album 1`] = `
             title="Toolbar.more"
           >
             <MenuItem
-              data-test-id="album-public-create-cozy-mobile"
+              data-testid="album-public-create-cozy-mobile"
               icon={
                 <Icon
                   icon={[Function]}
@@ -154,7 +154,7 @@ exports[`Public view should render the album 1`] = `
               Share.create-cozy
             </MenuItem>
             <MenuItem
-              data-test-id="album-public-download-mobile"
+              data-testid="album-public-download-mobile"
               icon={
                 <Icon
                   icon={[Function]}

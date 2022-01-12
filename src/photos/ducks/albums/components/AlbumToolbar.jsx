@@ -33,7 +33,7 @@ class AlbumToolbar extends Component {
     } = this.props
     return (
       <div
-        data-test-id="pho-toolbar-album"
+        data-testid="pho-toolbar-album"
         className={styles['pho-toolbar']}
         role="toolbar"
       >
@@ -52,7 +52,7 @@ class AlbumToolbar extends Component {
           </>
         )}
         <Menu
-          data-test-id="more-button"
+          data-testid="more-button"
           disabled={disabled}
           className={styles['pho-toolbar-menu']}
           component={<MoreButton />}
@@ -84,14 +84,14 @@ class AlbumToolbar extends Component {
             </MenuItem>
           )}
           <MenuItem
-            data-test-id="menu-download-album"
+            data-testid="menu-download-album"
             onSelect={downloadAlbum}
             icon={<Icon icon={DownloadIcon} />}
           >
             {t('Toolbar.menu.download_album')}
           </MenuItem>
           <MenuItem
-            data-test-id="menu-rename-album"
+            data-testid="menu-rename-album"
             icon={<Icon icon={RenameIcon} />}
             onSelect={onRename}
           >
@@ -99,7 +99,7 @@ class AlbumToolbar extends Component {
           </MenuItem>
           {!readOnly && (
             <MenuItem
-              data-test-id="menu-add-photos-to-album"
+              data-testid="menu-add-photos-to-album"
               icon={<Icon icon={AlbumAddIcon} />}
               onSelect={() => router.push(`${router.location.pathname}/edit`)}
             >
@@ -117,7 +117,7 @@ class AlbumToolbar extends Component {
           <hr />
           {!sharedWithMe && (
             <MenuItem
-              data-test-id="menu-delete-album"
+              data-testid="menu-delete-album"
               className={styles['pho-action-delete']}
               icon={<Icon icon={TrashIcon} />}
               onSelect={deleteAlbum}

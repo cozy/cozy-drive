@@ -24,7 +24,7 @@ jest.mock('react-dropzone', () => {
       className={className}
       data-disable-click={disableClick}
       style={style}
-      data-test-id="drop-button"
+      data-testid="drop-button"
       onClick={() => onDrop(['files'], '_', { dataTransfer: { items: [] } })}
     />
   )

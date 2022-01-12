@@ -50,13 +50,15 @@ describe('LightFileViewer', () => {
 
     it('should have the sharing banner and viewer toolbar but no public toolbar', () => {
       const { root } = setup()
-      const { queryByTestId, queryAllByRole } = root
+      const { container, queryByTestId, queryAllByRole } = root
 
       expect(queryAllByRole('link')[0].getAttribute('href')).toBe(
         'https://cozy.io'
       ) // This is the sharing banner
       expect(queryByTestId('public-toolbar')).toBeFalsy()
-      expect(queryByTestId('viewer-toolbar')).toBeTruthy()
+      expect(
+        container.querySelector('[data-testid="viewer-toolbar"]')
+      ).toBeTruthy()
     })
   })
 })

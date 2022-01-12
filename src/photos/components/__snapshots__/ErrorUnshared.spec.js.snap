@@ -3,7 +3,7 @@
 exports[`ErrorUnshared should match the snapshot 1`] = `
 <div
   className="pho-public-layout pho-public-layout--full u-pt-3"
-  data-test-id="pho-public-layout"
+  data-testid="pho-public-layout"
 >
   <Main
     className="u-pt-1-half"

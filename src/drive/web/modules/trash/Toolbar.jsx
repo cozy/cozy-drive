@@ -78,7 +78,7 @@ export const Toolbar = ({
 
   return (
     <div
-      data-test-id="empty-trash"
+      data-testid="empty-trash"
       className={styles['fil-toolbar-trash']}
       role="toolbar"
     >

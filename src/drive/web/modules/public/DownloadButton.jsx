@@ -19,7 +19,7 @@ export const DownloadFilesButton = ({ files }) => {
   return (
     <DownloadButton
       label={t('toolbar.menu_download')}
-      data-test-id="fil-public-download"
+      data-testid="fil-public-download"
       onDownload={() => {
         downloadFiles(client, files)
       }}
