@@ -1,7 +1,10 @@
 {
   "extends": ["cozy-app/react"],
   "rules": {
-    "no-console": 1
+    "no-console": 1,
+    "no-param-reassign": "error",
+    "react-hooks/exhaustive-deps": "error"
+
   },
   "globals": {
     "fixture": false
