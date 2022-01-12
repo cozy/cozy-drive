@@ -10,13 +10,13 @@ import styles from 'photos/styles/toolbar.styl'
 
 const AlbumsToolbar = ({ t, router }) => (
   <div
-    data-test-id="pho-toolbar-albums"
+    data-testid="pho-toolbar-albums"
     className={styles['pho-toolbar']}
     role="toolbar"
   >
     <div className={'u-hide--mob'}>
       <ButtonLink
-        data-test-id="album-add"
+        data-testid="album-add"
         theme="secondary"
         href="#/albums/new"
         icon={AlbumAddIcon}

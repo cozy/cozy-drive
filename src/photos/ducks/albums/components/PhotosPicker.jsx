@@ -66,7 +66,7 @@ class PhotosPicker extends Component {
                         {t('Albums.create.panel_form.label')}
                       </label>
                       <input
-                        data-test-id="input-album-name"
+                        data-testid="input-album-name"
                         type="text"
                         ref={input => {
                           this.input = input
@@ -77,13 +77,13 @@ class PhotosPicker extends Component {
                     </div>
                   )}
                   {!isNew && (
-                    <h3 data-test-id="pho-picker-album-name">{album.name}</h3>
+                    <h3 data-testid="pho-picker-album-name">{album.name}</h3>
                   )}
                 </div>
               </header>
               <div className={styles['pho-panel-content']}>
                 <div
-                  data-test-id="picker-panel"
+                  data-testid="picker-panel"
                   className={styles['pho-panel-wrap']}
                 >
                   <TimelineBoard
@@ -102,7 +102,7 @@ class PhotosPicker extends Component {
                       label={t('Albums.create.panel_form.cancel')}
                     />
                     <Button
-                      data-test-id="validate-album"
+                      data-testid="validate-album"
                       onClick={() =>
                         isNew
                           ? this.onCreate(selected)

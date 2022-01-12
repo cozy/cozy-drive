@@ -18,7 +18,7 @@ const DeleteItem = ({
 }) =>
   isSharedWithMe ? (
     <ActionMenuItem
-      data-test-id="fil-action-delete"
+      data-testid="fil-action-delete"
       left={<Icon icon={TrashIcon} color="var(--errorColor)" />}
       onClick={() =>
         onLeave(displayedFolder).then(() => trashFolder(displayedFolder))
@@ -28,7 +28,7 @@ const DeleteItem = ({
     </ActionMenuItem>
   ) : (
     <ActionMenuItem
-      data-test-id="fil-action-delete"
+      data-testid="fil-action-delete"
       left={<Icon icon={TrashIcon} color="var(--errorColor)" />}
       onClick={() => {
         trashFolder(displayedFolder)

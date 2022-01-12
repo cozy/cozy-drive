@@ -24,7 +24,7 @@ const UploadItem = ({ t, isDisabled, onUpload }) => {
       disabled={isDisabled}
       multiple
       onChange={files => onUpload(client, vaultClient, files)}
-      data-test-id="upload-btn"
+      data-testid="upload-btn"
       value={[]}
       // FileInput needs to stay rendered until the onChange event, so we prevent the event from bubbling
       onClick={e => e.stopPropagation()}

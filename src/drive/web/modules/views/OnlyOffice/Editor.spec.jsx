@@ -101,11 +101,13 @@ describe('Editor', () => {
     useQuery.mockReturnValue(officeDocParam)
 
     const { root } = setup()
-    const { queryByTestId, getAllByText } = root
+    const { container, queryByTestId, getAllByText } = root
 
     expect(queryByTestId('onlyoffice-content-spinner')).toBeFalsy()
     expect(queryByTestId('onlyoffice-title')).toBeFalsy()
-    expect(queryByTestId('viewer-toolbar')).toBeTruthy()
+    expect(
+      container.querySelector('[data-testid="viewer-toolbar"]')
+    ).toBeTruthy()
     expect(getAllByText('Download')).toBeTruthy()
   })
 
@@ -134,11 +136,13 @@ describe('Editor', () => {
     isOnlyOfficeEnabled.mockReturnValue(false)
 
     const { root } = setup()
-    const { queryByTestId, getAllByText } = root
+    const { container, queryByTestId, getAllByText } = root
 
     expect(queryByTestId('onlyoffice-content-spinner')).toBeFalsy()
     expect(queryByTestId('onlyoffice-title')).toBeFalsy()
-    expect(queryByTestId('viewer-toolbar')).toBeTruthy()
+    expect(
+      container.querySelector('[data-testid="viewer-toolbar"]')
+    ).toBeTruthy()
     expect(getAllByText('Download')).toBeTruthy()
   })
 

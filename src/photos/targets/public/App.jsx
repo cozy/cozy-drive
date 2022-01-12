@@ -70,7 +70,7 @@ export class App extends Component {
     const { t } = this.context
     return (
       <div
-        data-test-id="pho-public-layout"
+        data-testid="pho-public-layout"
         className={styles['pho-public-layout']}
       >
         <Main className="u-pt-1-half">
@@ -86,7 +86,7 @@ export class App extends Component {
                 >
                   <h2 className={styles['pho-content-title']}>{album.name}</h2>
                   <div
-                    data-test-id="pho-toolbar-album-public"
+                    data-testid="pho-toolbar-album-public"
                     className={styles['pho-toolbar']}
                     role="toolbar"
                   >
@@ -96,7 +96,7 @@ export class App extends Component {
                     />
                     <Button
                       theme="secondary"
-                      data-test-id="album-public-download"
+                      data-testid="album-public-download"
                       className={styles['pho-public-download']}
                       onClick={() => this.onDownload(selected)}
                       icon={DownloadIcon}
@@ -111,7 +111,7 @@ export class App extends Component {
                       className="u-hide--desk"
                     >
                       <MenuItem
-                        data-test-id="album-public-create-cozy-mobile"
+                        data-testid="album-public-create-cozy-mobile"
                         onSelect={() =>
                           (window.location = getHomeLinkHref('sharing-photos'))
                         }
@@ -120,7 +120,7 @@ export class App extends Component {
                         {t('Share.create-cozy')}
                       </MenuItem>
                       <MenuItem
-                        data-test-id="album-public-download-mobile"
+                        data-testid="album-public-download-mobile"
                         onSelect={() => this.onDownload(selected)}
                         icon={<Icon icon={DownloadIcon} />}
                       >

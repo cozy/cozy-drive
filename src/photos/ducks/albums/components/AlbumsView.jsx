@@ -31,7 +31,7 @@ class AlbumsView extends Component {
     }
     return (
       <div
-        data-test-id="album-pho-content-wrapper"
+        data-testid="album-pho-content-wrapper"
         className={styles['pho-content-wrapper']}
       >
         <Topbar viewName="albums">

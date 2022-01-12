@@ -113,7 +113,7 @@ export default class AlbumItem extends Component {
 
     return (
       <div
-        data-test-id="pho-album"
+        data-testid="pho-album"
         data-test-name={album.name}
         className={styles['pho-album']}
       >

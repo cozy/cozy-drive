@@ -88,7 +88,7 @@ const InProgressHeader = translate()(({ t, total, done }) => (
 
 const FinishedHeader = translate()(({ t, total, successful, onClose }) => (
   <div
-    data-test-id="upload-queue-success"
+    data-testid="upload-queue-success"
     className={styles['upload-queue-header-inner']}
   >
     <span>{t('UploadQueue.header_done', { done: successful, total })}</span>
@@ -112,7 +112,7 @@ class UploadQueue extends Component {
     const { collapsed } = this.state
     return (
       <div
-        data-test-id="upload-queue"
+        data-testid="upload-queue"
         className={classNames(styles['upload-queue'], {
           [styles['upload-queue--visible']]: queue.length !== 0,
           [styles['upload-queue--collapsed']]: collapsed

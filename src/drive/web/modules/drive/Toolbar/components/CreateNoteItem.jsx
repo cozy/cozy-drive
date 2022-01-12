@@ -46,7 +46,7 @@ const CreateNoteItem = ({ client, t, displayedFolder }) => {
 
   return (
     <ActionMenuItem
-      data-test-id="create-a-note"
+      data-testid="create-a-note"
       left={<Icon icon={IconNote} />}
       onClick={async () => {
         if (notesAppUrl === undefined) return

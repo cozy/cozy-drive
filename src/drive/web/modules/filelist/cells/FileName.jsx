@@ -103,7 +103,7 @@ const FileName = ({
           <div className={styles['fil-file-filename']}>
             <div className={styles['fil-file-filename-wrapper']}>
               <div
-                data-test-id="fil-file-filename-and-ext"
+                data-testid="fil-file-filename-and-ext"
                 className={styles['fil-file-filename-and-ext']}
                 title={filename + extension}
               >

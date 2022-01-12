@@ -1,7 +1,7 @@
 import { Selector } from 'testcafe'
 
 const getElementWithTestId = Selector(
-  id => document.querySelectorAll(`[data-test-id='${id}']`)
+  id => document.querySelectorAll(`[data-testid='${id}']`)
   //getElementsByAttribute is not part of W3C DOM, while querySelectorAll is.
 )
 const getElementWithTestItem = Selector(
@@ -116,7 +116,7 @@ export const uploadedItemName = value => {
 export const uploadedItem = value => {
   return uploadedItemName(value)
     .parent('div')
-    .withAttribute('data-test-id', 'upload-queue-item')
+    .withAttribute('data-testid', 'upload-queue-item')
 }
 //************************
 // Commons - Public
@@ -172,7 +172,7 @@ export const breadcrumb = getElementWithTestId('path-title')
 //c-empty is use for empty drive, or error..
 export const driveEmpty = Selector('[class*="c-empty"]')
   .parent(0)
-  .withAttribute('data-test-id', 'fil-content-body')
+  .withAttribute('data-testid', 'fil-content-body')
 //oops is a class for error only
 export const errorOops = Selector('[class*="oops"]')
 export const errorEmpty = Selector('[class*="c-empty"]')
@@ -210,10 +210,10 @@ export const btnEmptyTrash = toolbarTrash.find('button')
 //Moving (modal)
 export const modalBreadcrumb = modal
   .find('h2')
-  .withAttribute('data-test-id', 'path-title')
+  .withAttribute('data-testid', 'path-title')
 export const modalFolderOrFileName = modalContent
   .find('div')
-  .withAttribute('data-test-id', 'fil-file-filename-and-ext')
+  .withAttribute('data-testid', 'fil-file-filename-and-ext')
 
 //Files list
 export const contentTable = Selector('[class*="fil-content-table"]')
@@ -284,7 +284,7 @@ export const pickerAlbumName = getElementWithTestId('pho-picker-album-name')
 export const btnValidateAlbum = getElementWithTestId('validate-album') //Same button for create album and Add to album
 export const photoSectionAddToAlbum = getElementWithTestId('picker-panel')
   .find('div')
-  .withAttribute('data-test-id', 'photo-section')
+  .withAttribute('data-testid', 'photo-section')
 export const allPhotosAddToAlbum = photoSectionAddToAlbum
   .find('img')
   .parent('div')
@@ -320,14 +320,14 @@ export const album = albumName => {
 //************************
 export const btnShare = toolbarDrive
   .child('button')
-  .withAttribute('data-test-id', 'share-button')
+  .withAttribute('data-testid', 'share-button')
 export const btnShareAlbum = toolbarAlbum
   .child('button')
-  .withAttribute('data-test-id', 'share-button')
+  .withAttribute('data-testid', 'share-button')
 
 export const btnShareByMe = toolbarDrive
   .child('button')
-  .withAttribute('data-test-id', 'share-by-me-button')
+  .withAttribute('data-testid', 'share-by-me-button')
 
 export const divShareByLink = getElementWithTestId('share-by-link')
 export const toggleShareLink = divShareByLink.child('[class*="toggle"]')

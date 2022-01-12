@@ -70,7 +70,7 @@ class Toolbar extends Component {
 
     return (
       <div
-        data-test-id="fil-toolbar-files"
+        data-testid="fil-toolbar-files"
         className={cx(styles['fil-toolbar-files'], 'u-flex-items-center')}
         role="toolbar"
       >

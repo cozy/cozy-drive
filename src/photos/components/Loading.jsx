@@ -14,7 +14,7 @@ export const Loading = ({
   middle = true
 }) => {
   return (
-    <div data-test-id="loading" className={classNames(styles['pho-loading'])}>
+    <div data-testid="loading" className={classNames(styles['pho-loading'])}>
       <Spinner
         size={size}
         loadingType={loadingType}

@@ -7,7 +7,7 @@ exports[`Breadcrumbs template should match snapshot 1`] = `
   >
     <h2
       class="fil-path-title"
-      data-test-id="path-title"
+      data-testid="path-title"
     >
       <span
         class="fil-path-link"

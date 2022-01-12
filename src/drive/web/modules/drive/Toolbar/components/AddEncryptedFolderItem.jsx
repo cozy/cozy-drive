@@ -16,7 +16,7 @@ const AddEncryptedFolderItem = ({ addEncryptedFolder }) => {
 
   return (
     <ActionMenuItem
-      data-test-id="add-encrypted-folder-link"
+      data-testid="add-encrypted-folder-link"
       onClick={() => showUnlockForm({ onUnlock: addEncryptedFolder })}
       left={<EncryptedFolderIcon width={16} height={16} />}
     >

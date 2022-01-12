@@ -17,7 +17,7 @@ const ExternalRedirect = ({ params: { fileId }, t }) => {
       <IconSprite />
       {fetchStatus === 'failed' && (
         <Empty
-          data-test-id="empty-share"
+          data-testid="empty-share"
           icon={EmptyIcon}
           title={t('External.redirection.title')}
           text={t('External.redirection.error')}
@@ -25,7 +25,7 @@ const ExternalRedirect = ({ params: { fileId }, t }) => {
       )}
       {fetchStatus !== 'failed' && (
         <Empty
-          data-test-id="empty-share"
+          data-testid="empty-share"
           icon={'globe'}
           title={t('External.redirection.title')}
           text={t('External.redirection.text')}

@@ -3,20 +3,20 @@
 exports[`AlbumsView displays an empty Component 1`] = `
 <div
   class="pho-content-wrapper"
-  data-test-id="album-pho-content-wrapper"
+  data-testid="album-pho-content-wrapper"
 >
   <div
     class="pho-content-header"
   >
     <h2
       class="pho-content-title"
-      data-test-id="pho-content-title"
+      data-testid="pho-content-title"
     >
       Nav.albums
     </h2>
     <div
       class="pho-toolbar"
-      data-test-id="pho-toolbar-albums"
+      data-testid="pho-toolbar-albums"
       role="toolbar"
     >
       <div
@@ -24,7 +24,7 @@ exports[`AlbumsView displays an empty Component 1`] = `
       >
         <a
           class="styles__c-btn___-2Vnj styles__c-btn--secondary___3Br_N"
-          data-test-id="album-add"
+          data-testid="album-add"
           href="#/albums/new"
         >
           <span>
@@ -52,7 +52,7 @@ exports[`AlbumsView displays an empty Component 1`] = `
       >
         <button
           class="styles__c-btn___-2Vnj styles__c-btn--secondary___3Br_N styles__c-btn--narrow___27FHD styles__c-btn--center___16_Xh dri-btn--more"
-          data-test-id="more-button"
+          data-testid="more-button"
           title="More"
           type="submit"
         >
@@ -82,7 +82,7 @@ exports[`AlbumsView displays an empty Component 1`] = `
   </div>
   <div
     class="styles__c-empty-container___1LpH9 empty"
-    data-test-id="empty-folder"
+    data-testid="empty-folder"
   >
     <svg
       class="styles__c-empty-img___2GC4d styles__icon___23x3R"

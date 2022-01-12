@@ -51,7 +51,7 @@ const Breadcrumb = ({
       )}
     >
       <h2
-        data-test-id="path-title"
+        data-testid="path-title"
         className={styles['fil-path-title']}
         onClick={toggleDeploy}
         ref={ref => {

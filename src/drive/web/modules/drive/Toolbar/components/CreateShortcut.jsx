@@ -14,7 +14,7 @@ const CreateShortcutWrapper = ({ openModal }) => {
 
   return (
     <ActionMenuItem
-      data-test-id="create-a-shortcut"
+      data-testid="create-a-shortcut"
       left={<Icon icon={DeviceBrowserIcon} />}
       onClick={openModal}
     >

@@ -31,7 +31,7 @@ jest.mock('cozy-keys-lib', () => ({
   useVaultClient: jest.fn()
 }))
 
-configure({ testIdAttribute: 'data-test-id' })
+configure({ testIdAttribute: 'data-testid' })
 
 export const mockCozyClientRequestQuery = () => {
   beforeEach(() => {

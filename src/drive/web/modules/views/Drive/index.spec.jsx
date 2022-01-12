@@ -19,7 +19,7 @@ jest.mock('../Folder/FolderViewBreadcrumb', () =>
     <div
       data-path={rootBreadcrumbPath}
       data-folder-id={currentFolderId}
-      data-test-id="FolderViewBreadcrumb"
+      data-testid="FolderViewBreadcrumb"
     />
   )
 )

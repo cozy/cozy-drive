@@ -7,7 +7,7 @@ export const ErrorShare = ({ errorType }) => {
   const { t } = useI18n()
   return (
     <Empty
-      data-test-id="empty-share"
+      data-testid="empty-share"
       icon={CloudBrokenIcon}
       title={t(`Error.${errorType}_title`)}
       text={t(`Error.${errorType}_text`)}

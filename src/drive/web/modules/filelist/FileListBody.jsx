@@ -15,7 +15,7 @@ const FileListBody = ({ className, children }) => {
 
   return (
     <TableBody
-      data-test-id="fil-content-body"
+      data-testid="fil-content-body"
       className={cx(className, styles['fil-content-body'], {
         [styles['fil-content-body--selectable']]: selectionModeActive,
         [styles['fil-content-body--withFabActive']]: isFabDisplayed

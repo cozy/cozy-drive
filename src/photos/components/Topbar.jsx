@@ -69,7 +69,7 @@ EditableAlbumName.propTypes = {
 }
 
 const TopbarTitle = ({ children }) => (
-  <h2 data-test-id="pho-content-title" className={styles['pho-content-title']}>
+  <h2 data-testid="pho-content-title" className={styles['pho-content-title']}>
     {children}
   </h2>
 )
@@ -77,7 +77,7 @@ const TopbarTitle = ({ children }) => (
 const BackToAlbumsButton = ({ onClick }) => (
   <div
     role="button"
-    data-test-id="pho-content-album-previous"
+    data-testid="pho-content-album-previous"
     className={styles['pho-content-album-previous']}
     onClick={onClick}
   />
