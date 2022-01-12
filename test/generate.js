@@ -7,23 +7,24 @@ export const generateFile = ({
   dir_id = 'io.cozy.files.root-dir',
   updated_at = ''
 } = {}) => {
-  if (ext === undefined) {
+  let extension = ext
+  if (extension === undefined) {
     if (type === 'file') {
-      ext = '.pdf'
+      extension = '.pdf'
     } else if (type === 'directory') {
-      ext = ''
+      extension = ''
     }
   }
-  let optionnal = {}
+  let optional = {}
   if (type === 'file') {
-    optionnal = {
-      ...optionnal,
+    optional = {
+      ...optional,
       size: 10
     }
   }
   if (updated_at !== '') {
-    optionnal = {
-      ...optionnal,
+    optional = {
+      ...optional,
       updated_at
     }
   }
@@ -32,11 +33,11 @@ export const generateFile = ({
     displayedPath: path,
     id: `${type}-${prefix}${i}`,
     _id: `${type}-${prefix}${i}`,
-    name: `${prefix}${i}${ext}`,
-    path: `${path === '/' ? '' : path}/${prefix}${i}${ext}`,
+    name: `${prefix}${i}${extension}`,
+    path: `${path === '/' ? '' : path}/${prefix}${i}${extension}`,
     type,
     _type: 'io.cozy.files',
-    ...optionnal
+    ...optional
   }
 }
 

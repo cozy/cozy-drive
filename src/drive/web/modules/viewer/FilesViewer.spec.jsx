@@ -19,12 +19,10 @@ describe('FilesViewer', () => {
     fileId = 'file-foobar0',
     nbFiles = 3,
     totalCount,
-    client,
-    vaultClient,
+    client = new CozyClient({}),
+    vaultClient = {},
     useQueryResultAttributes
   } = {}) => {
-    client = client || new CozyClient({})
-    vaultClient = {}
     const store = {
       subscribe: () => {},
       getState: () => ({

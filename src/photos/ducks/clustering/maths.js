@@ -9,12 +9,13 @@ export const diffPairWise = values => {
 }
 
 export const standardDeviation = (values, avg) => {
+  let average = avg
   if (!avg) {
-    avg = mean(values)
+    average = mean(values)
   }
 
   const squareDiffs = values.map(value => {
-    const diff = value - avg
+    const diff = value - average
     return diff * diff
   })
 
@@ -29,11 +30,8 @@ export const mean = values => {
   return sum / values.length
 }
 
-export const quantile = (array, percentile) => {
+export const quantile = (array, percentile = 100) => {
   const sortedArray = array.sort((a, b) => a - b)
-  if (!percentile) {
-    percentile = 100
-  }
 
   const index = (percentile / 100) * (sortedArray.length - 1)
   if (Math.floor(index) === index) {
