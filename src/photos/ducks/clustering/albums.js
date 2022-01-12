@@ -30,8 +30,8 @@ const updateAlbumPeriod = async (client, photos, album) => {
 // TODO: we should probably use addById from HasManyFiles. However, it causes
 // unexpected relationships writes in the albums. So we skip it for now.
 const addRefs = async (client, ids, album) => {
-  ids = Array.isArray(ids) ? ids : [ids]
-  const relations = ids.map(id => ({
+  const arraysOfIds = Array.isArray(ids) ? ids : [ids]
+  const relations = arraysOfIds.map(id => ({
     _id: id,
     _type: 'io.cozy.files'
   }))
@@ -41,8 +41,8 @@ const addRefs = async (client, ids, album) => {
 // TODO: we should probably use removeById from HasManyFiles. However, it causes
 // unexpected relationships writes in the albums. So we skip it for now.
 const removeRefs = async (client, ids, album) => {
-  ids = Array.isArray(ids) ? ids : [ids]
-  const relations = ids.map(id => ({
+  const arraysOfIds = Array.isArray(ids) ? ids : [ids]
+  const relations = arraysOfIds.map(id => ({
     _id: id,
     _type: 'io.cozy.files'
   }))

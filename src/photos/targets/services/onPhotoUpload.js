@@ -60,6 +60,7 @@ const createInitialClusters = async (client, paramsMode, dataset) => {
 const clusterizePhotos = async (client, setting, dataset, albums) => {
   log('info', `Start clustering on ${dataset.length} photos`)
 
+  let newSetting = setting
   let clusteredCount = 0
   if (albums && albums.length > 0) {
     // Build the clusterize Map, based on the dataset and existing photos
@@ -80,23 +81,23 @@ const clusterizePhotos = async (client, setting, dataset, albums) => {
           clusterAlbums,
           photos
         )
-        setting = await updateParamsPeriod(client, setting, params, dataset)
+        newSetting = await updateParamsPeriod(client, setting, params, dataset)
       }
     } else {
       return
     }
   } else {
     // No album found: this is an initialization
-    const params = setting.parameters[setting.parameters.length - 1]
+    const params = newSetting.parameters[newSetting.parameters.length - 1]
     const paramsMode = getDefaultParametersMode(params)
     if (!paramsMode) {
       log('warn', 'No parameters for clustering found')
       return
     }
     clusteredCount = await createInitialClusters(client, paramsMode, dataset)
-    setting = await updateParamsPeriod(client, setting, params, dataset)
+    newSetting = await updateParamsPeriod(client, newSetting, params, dataset)
   }
-  return { setting, clusteredCount }
+  return { newSetting, clusteredCount }
 }
 
 const initParameters = dataset => {
@@ -156,13 +157,14 @@ const runClustering = async (client, setting) => {
     new Date(lastParams.evaluation.end).getTime()
       ? 0
       : result.clusteredCount
-  setting = await updateSettingStatus(
+
+  const newSetting = await updateSettingStatus(
     client,
     result.setting,
     evalCount,
     newLastDate
   )
-  return { photos, newSetting: setting }
+  return { photos, newSetting }
 }
 
 export const onPhotoUpload = async () => {

@@ -156,9 +156,6 @@ export const gradientClustering = (dataset, reachabilities, params) => {
  * Compute the gradient angle based on the eps and a multiplicator coefficient
  * The higher is the coef, the more coarse is the clustering.
  */
-export const gradientAngle = (eps, coefficient) => {
-  if (coefficient === undefined) {
-    coefficient = 1
-  }
+export const gradientAngle = (eps, coefficient = 1) => {
   return Math.cos(2 * Math.atan(1 / eps)) / coefficient
 }
