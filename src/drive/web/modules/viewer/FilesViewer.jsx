@@ -113,7 +113,7 @@ const FilesViewer = ({ filesQuery, files, fileId, onClose, onChange }) => {
     return () => {
       isMounted = false
     }
-  }, [client, currentFile, fileId, getCurrentIndex, handleOnClose])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     let isMounted = true
