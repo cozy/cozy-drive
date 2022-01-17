@@ -1,8 +1,8 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import PropTypes from 'prop-types'
-import AppLike from '../../../../../test/components/AppLike'
-import { mockedRouter } from '../../../../../test/__mocks__/mockedRouter'
+import AppLike from 'test/components/AppLike'
+import { mockedRouter } from 'test/__mocks__/mockedRouter'
 
 import AlbumsView from './AlbumsView'
 import { createMockClient } from 'cozy-client'

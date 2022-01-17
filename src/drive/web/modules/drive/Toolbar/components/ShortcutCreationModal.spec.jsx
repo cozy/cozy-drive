@@ -8,7 +8,7 @@ import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
 import ShortcutCreationModal from './ShortcutCreationModal'
-import AppLike from '../../../../../../../test/components/AppLike'
+import AppLike from 'test/components/AppLike'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 import { DOCTYPE_FILES_SHORTCUT } from 'drive/lib/doctypes'
 
