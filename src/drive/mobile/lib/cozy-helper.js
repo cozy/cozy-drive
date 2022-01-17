@@ -76,7 +76,7 @@ export const pickAdapter = async () => {
 
 export const initClient = async url => {
   const stackLink = new StackLink()
-  const adapter = await pickAdapter()
+  const adapter = getOldAdapterName()
 
   const pouchLinkOptions = {
     doctypes: [DOCTYPE_FILES],

@@ -15,8 +15,7 @@ import {
   restoreCozyClientJs,
   initBar,
   getOldAdapterName,
-  getAdapterPlugin,
-  shouldMigrateAdapter
+  getAdapterPlugin
 } from 'drive/mobile/lib/cozy-helper'
 import { unlink } from './duck/index'
 import { saveCredentials } from './sagas'
@@ -36,11 +35,7 @@ class DriveMobileRouter extends Component {
   async componentDidMount() {
     // Wait for the app to be booted to avoid race condition between cordova & JS
     await appBooted
-    const shouldMigrate = await shouldMigrateAdapter()
-    this.setState({
-      isAppBooted: true,
-      shouldDisplayMigrate: shouldMigrate
-    })
+    this.setState({ isAppBooted: true })
   }
 
   initClientAndBar = async client => {
