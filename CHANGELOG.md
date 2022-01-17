@@ -3,6 +3,7 @@
 ## ✨ Features
 
 * Add multiple import at once for Android
+* Remove Pouch adapter migration
 
 ## 🐛 Bug Fixes
 
