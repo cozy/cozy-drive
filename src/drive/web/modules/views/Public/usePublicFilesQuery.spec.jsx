@@ -2,7 +2,7 @@ import React from 'react'
 import { renderHook, act } from '@testing-library/react-hooks'
 import { createMockClient } from 'cozy-client'
 
-import AppLike from '../../../../../../test/components/AppLike'
+import AppLike from 'test/components/AppLike'
 
 import usePublicFilesQuery from './usePublicFilesQuery'
 

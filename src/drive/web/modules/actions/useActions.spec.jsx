@@ -4,7 +4,7 @@ import { createMockClient } from 'cozy-client'
 import { isMobileApp } from 'cozy-device-helper'
 
 import { ShareModal } from 'cozy-sharing'
-import AppLike from '../../../../../test/components/AppLike'
+import AppLike from 'test/components/AppLike'
 import DeleteConfirm from 'drive/web/modules/drive/DeleteConfirm'
 import MoveModal from 'drive/web/modules/move/MoveModal'
 import { EditDocumentQualification } from 'cozy-scanner'

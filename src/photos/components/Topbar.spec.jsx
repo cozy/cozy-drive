@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import AppLike from '../../../test/components/AppLike'
-import { mockedRouter } from '../../../test/__mocks__/mockedRouter'
+import AppLike from 'test/components/AppLike'
+import { mockedRouter } from 'test/__mocks__/mockedRouter'
 import { Topbar } from './Topbar'
 import { createMockClient } from 'cozy-client'
 describe('Topbar', () => {
