@@ -34,17 +34,11 @@ export class Dropzone extends Component {
 
   render() {
     const { dropzoneActive } = this.state
-    const {
-      displayedFolder,
-      children,
-      /* don't pass these props to UIDropzone */
-      sharingState, // eslint-disable-line no-unused-vars
-      uploadFiles, // eslint-disable-line no-unused-vars
-      ...rest
-    } = this.props
+    const { displayedFolder, children, disabled, role } = this.props
     return (
       <UIDropzone
-        {...rest}
+        disabled={disabled}
+        role={role}
         className={dropzoneActive ? styles['fil-dropzone-active'] : ''}
         disableClick
         style={{}}
