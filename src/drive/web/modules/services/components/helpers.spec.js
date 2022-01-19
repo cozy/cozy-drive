@@ -1,14 +1,10 @@
 import { createMockClient, models } from 'cozy-client'
 
-import {
-  makeNormalizedFile,
-  containerForTesting,
-  TYPE_DIRECTORY
-} from './helpers'
+import { makeNormalizedFile, TYPE_DIRECTORY } from './helpers'
+import { getIconUrl } from './iconContext'
 
+jest.mock('./iconContext', () => ({ getIconUrl: () => 'iconUrl' }))
 models.note.fetchURL = jest.fn(() => 'noteUrl')
-
-jest.spyOn(containerForTesting, 'getIconUrl').mockReturnValue('mocked')
 
 const client = createMockClient({})
 
@@ -32,7 +28,12 @@ describe('makeNormalizedFile', () => {
       name: 'fileName'
     }
 
-    const normalizedFile = await makeNormalizedFile(client, folders, file)
+    const normalizedFile = await makeNormalizedFile(
+      client,
+      folders,
+      file,
+      getIconUrl
+    )
 
     expect(normalizedFile).toMatchObject({
       id: 'fileId',
@@ -51,7 +52,12 @@ describe('makeNormalizedFile', () => {
       name: 'fileName'
     }
 
-    const normalizedFile = await makeNormalizedFile(client, folders, file)
+    const normalizedFile = await makeNormalizedFile(
+      client,
+      folders,
+      file,
+      getIconUrl
+    )
 
     expect(normalizedFile).toMatchObject({
       id: 'fileId',
@@ -71,7 +77,12 @@ describe('makeNormalizedFile', () => {
       ...noteFileProps
     }
 
-    const normalizedFile = await makeNormalizedFile(client, folders, file)
+    const normalizedFile = await makeNormalizedFile(
+      client,
+      folders,
+      file,
+      getIconUrl
+    )
 
     expect(normalizedFile).toMatchObject({
       id: 'fileId',

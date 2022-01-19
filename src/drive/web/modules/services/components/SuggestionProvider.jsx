@@ -1,9 +1,10 @@
 /* global cozy */
 import React from 'react'
+import FuzzyPathSearch from '../FuzzyPathSearch'
 import { withClient } from 'cozy-client'
 
-import FuzzyPathSearch from '../FuzzyPathSearch'
 import { TYPE_DIRECTORY, makeNormalizedFile } from './helpers'
+import { getIconUrl } from './iconContext'
 
 class SuggestionProvider extends React.Component {
   componentDidMount() {
@@ -70,7 +71,8 @@ class SuggestionProvider extends React.Component {
 
       const normalizedFiles = await Promise.all(
         normalizedFilesPrevious.map(
-          async file => await makeNormalizedFile(client, folders, file)
+          async file =>
+            await makeNormalizedFile(client, folders, file, getIconUrl)
         )
       )
 
