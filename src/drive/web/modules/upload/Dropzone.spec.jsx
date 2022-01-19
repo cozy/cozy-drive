@@ -6,8 +6,24 @@ import AppLike from 'test/components/AppLike'
 import { render } from '@testing-library/react'
 
 jest.mock('react-dropzone', () => {
-  const Component = ({ onDrop }) => (
+  const Component = ({
+    onDrop,
+    disabled,
+    role,
+    className,
+    disableClick,
+    style,
+    onDropEnter, // eslint-disable-line no-unused-vars
+    onDropLeave, // eslint-disable-line no-unused-vars
+    ...rest
+  }) => (
     <button
+      {...rest}
+      disabled={disabled}
+      role={role}
+      className={className}
+      data-disable-click={disableClick}
+      style={style}
       data-test-id="drop-button"
       onClick={() => onDrop(['files'], '_', { dataTransfer: { items: [] } })}
     />
