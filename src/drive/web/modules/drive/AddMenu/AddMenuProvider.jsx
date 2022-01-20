@@ -6,6 +6,7 @@ import React, {
   createContext
 } from 'react'
 import { useSelector } from 'react-redux'
+import { logException } from 'drive/lib/reporter'
 
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
@@ -50,6 +51,9 @@ const AddMenuProvider = ({
   const handleOfflineClick = useCallback(e => {
     e.stopPropagation()
     Alerter.error('alert.offline')
+    logException(
+      `Offline click on AddMenu button detected. Here is the value of window.navigator.onLine: ${window.navigator.onLine}`
+    )
   }, [])
 
   return (
