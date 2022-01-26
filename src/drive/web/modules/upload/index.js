@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux'
-import flag from 'cozy-flags'
 
 import logger from 'lib/logger'
 import { CozyFile } from 'models'
@@ -175,13 +174,12 @@ export const processNextFile = (
       })
       fileUploadedCallback(newDir)
     } else {
-      const withProgress = flag('drive.upload.with-progress')
-        ? {
-            onUploadProgress: event => {
-              dispatch(uploadProgress(file, event))
-            }
-          }
-        : {}
+      const withProgress = {
+        onUploadProgress: event => {
+          dispatch(uploadProgress(file, event))
+        }
+      }
+
       const uploadedFile = await uploadFile(client, file, dirID, {
         vaultClient,
         encryptionKey,
@@ -196,18 +194,11 @@ export const processNextFile = (
     if (uploadError.status === CONFLICT_ERROR) {
       try {
         const path = await CozyFile.getFullpath(dirID, file.name)
-        const uploadedFile = await overwriteFile(
-          client,
-          file,
-          path,
-          flag('drive.upload.with-progress')
-            ? {
-                onUploadProgress: event => {
-                  dispatch(uploadProgress(file, event))
-                }
-              }
-            : {}
-        )
+        const uploadedFile = await overwriteFile(client, file, path, {
+          onUploadProgress: event => {
+            dispatch(uploadProgress(file, event))
+          }
+        })
         fileUploadedCallback(uploadedFile)
         dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file, isUpdate: true })
         error = null
