@@ -21,7 +21,7 @@
     "deploy:photos": "cozy-app-publish --token $REGISTRY_TOKEN --build-dir 'build/photos/' --prepublish downcloud --postpublish mattermost",
     "tx": "tx pull --all || true",
     "lint": "npm-run-all --parallel 'lint:*'",
-    "lint:styles": "stylint src/drive/styles --config ./.stylintrc",
+    "lint:styles": "stylint src --config ./node_modules/cozy-scripts/config/.stylintrc",
     "lint:js": "eslint '{src,test}/**/*.{js,jsx}'",
     "testcafe:drive": "node testcafe/runner-drive.js",
     "testcafe:photos": "node testcafe/runner-photos.js",

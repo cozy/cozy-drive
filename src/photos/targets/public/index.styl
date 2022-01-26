@@ -9,10 +9,14 @@
     +medium-screen()
         padding-top  3rem
 
-+small-screen()
+.pho-content-header.--no-icon
+    left 0
+    padding-left .9375rem
+
++small-screen() // @stylint ignore
     .pho-public-layout--full
         reset()
-        position: absolute;
+        position absolute
         top 0
         right 0
         bottom 0
@@ -20,11 +24,6 @@
         z-index $bar-index
         background-color var(--white)
 
-.pho-content-header.--no-icon
-    left 0
-    padding-left .9375rem
-
-+small-screen()
     .pho-public-download
     .pho-public-mycozy
         display none

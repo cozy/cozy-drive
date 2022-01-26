@@ -1,8 +1,7 @@
 @require 'components/forms.styl'
 @require 'settings/breakpoints.styl'
 @require 'settings/z-index.styl'
-
-$coz-bar-size = 3rem
+@require 'styles/coz-bar-size.styl'
 
 .pho-content-header
     display       flex
@@ -22,7 +21,7 @@ $coz-bar-size = 3rem
         height   $coz-bar-size
 
         &.--hide-bar
-          z-index  $bar-index
+            z-index  $bar-index
 
 
 .pho-content-album-previous
@@ -31,7 +30,7 @@ $coz-bar-size = 3rem
     margin-right 1rem
     background   embedurl('../assets/icons/icon-back.svg')
     cursor       pointer
-    
+
     +medium-screen()
         width           1rem
         height          1rem
@@ -48,13 +47,13 @@ $coz-bar-size = 3rem
     font-size 1.5rem
 
     input[type=text]
-        padding 0.17rem 0.3rem 0.17rem 0.4rem
+        padding .17rem .3rem .17rem .4rem
         max-width 100%
 
     +small-screen()
-       font-size 1.25rem
-       display flex
-       align-items center
+        font-size 1.25rem
+        display flex
+        align-items center
 
     +tiny-screen()
-       white-space   nowrap
+        white-space   nowrap
