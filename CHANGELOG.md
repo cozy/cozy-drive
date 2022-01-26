@@ -1,3 +1,9 @@
+# 1.39.0
+
+## 🔧 Tech
+
+* Stylint with Cozy config each .styl files in src
+
 # 1.38.0
 
 ## ✨ Features

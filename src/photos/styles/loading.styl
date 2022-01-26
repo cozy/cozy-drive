@@ -1,14 +1,16 @@
 @require 'settings/breakpoints.styl'
 
 .pho-loading
-  min-height 300px
+    min-height 300px
 
-+medium-screen()
-  .pho-empty
-    &:before
-      width  3.4375rem
-      height 3.4375rem
-    h2
-      margin 2rem 1.5rem 0
-    p
-      margin .3125rem 1.5rem 0
++medium-screen() // @stylint ignore
+    .pho-empty
+        &:before
+            width 3.4375rem
+            height 3.4375rem
+
+        h2
+            margin 2rem 1.5rem 0
+
+        p
+            margin .3125rem 1.5rem 0

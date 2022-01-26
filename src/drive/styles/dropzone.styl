@@ -16,37 +16,37 @@
     align-items    center
 
 @keyframes pulse
-  from
-    transform scale3d(1, 1, 1)
-  50%
-    transform scale3d(1.25, 1.25, 1.25)
-  to
-    transform scale3d(1, 1, 1)
+    from
+        transform scale3d(1, 1, 1)
+    50%
+        transform scale3d(1.25, 1.25, 1.25)
+    to
+        transform scale3d(1, 1, 1)
 
 .fil-dropzone-teaser-claudy
     width  3.5em
     height 3.5em
     margin-bottom 1rem
     border-radius 100%
-    border none
-    box-shadow 0 1px 3px 0 rgba(50, 54, 63, 0.19), 0 6px 18px 0 rgba(50, 54, 63, 0.39)
+    border 0
+    box-shadow 0 1px 3px 0 rgba(50, 54, 63, .19), 0 6px 18px 0 rgba(50, 54, 63, .39)
     animation-name pulse
     animation-duration 2s
     animation-iteration-count infinite
     cursor pointer
     outline 0
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display flex
+    align-items center
+    justify-content center
     background-color var(--dodgerBlue)
-    
+
 .fil-dropzone-teaser-content
     background-color var(--dodgerBlue)
     border-radius 2px
     text-align center
     color var(--white)
     padding 1rem
-    box-shadow 0 1px 3px 0 rgba(50, 54, 63, 0.19), 0 6px 18px 0 rgba(50, 54, 63, 0.39)
+    box-shadow 0 1px 3px 0 rgba(50, 54, 63, .19), 0 6px 18px 0 rgba(50, 54, 63, .39)
 
     & > p
         margin-top 0

@@ -2,32 +2,38 @@
 @require 'settings/palette.styl'
 
 .pho-album-list
-    display    flex
-    flex-wrap  wrap
-    margin     0 1rem 2rem 1rem
+    display flex
+    flex-wrap wrap
+    margin 0 1rem 2rem
 
 .pho-album-list--thumbnails
     flex-direction column
     margin-left 0
     margin-right 0
+
     .pho-album
-        margin .5rem 0 1rem 0
+        margin .5rem 0 1rem
         width auto
+
     .pho-album-link
         display flex
         align-items center
         width 100%
+
     .pho-album-photo-item
         height 3rem
         width 3rem
         min-width 3rem // solves a rendering bug in chrome
         margin-right 1rem
+
     .pho-album-title
         font-weight normal
         font-size 1rem
         color var(--charcoalGrey)
+
     .pho-album-description
         text-align left
+
     .pho-album-shared
         position static
         display inline-block
@@ -37,48 +43,49 @@
 .pho-album-list--selectable
     .pho-album-link
         cursor pointer
+
     .pho-album-link--disabled
         cursor not-allowed
         opacity .6
 
 .pho-album
-    margin      .5rem 1rem 2rem 1rem
-    width       20rem
-    position    relative
+    margin .5rem 1rem 2rem
+    width 20rem
+    position relative
 
 .pho-album-photo-item
-    width         100%
-    height        12rem
+    width 100%
+    height 12rem
     border-radius .25rem
-    object-fit    cover
-    background    var(--paleGrey) embedurl('../assets/icons/icon-album-fallback.svg') center center / 5rem 4rem no-repeat
+    object-fit cover
+    background var(--paleGrey) embedurl('../assets/icons/icon-album-fallback.svg') center center / 5rem 4rem no-repeat
 
 .pho-album-title
-    width           100%
-    margin          .2rem 0 .2rem
-    overflow        hidden
-    font-size       1.25rem
-    color           var(--black)
+    width 100%
+    margin .2rem 0
+    overflow hidden
+    font-size 1.25rem
+    color var(--black)
     text-decoration none
-    text-overflow   ellipsis
+    text-overflow ellipsis
 
 .pho-album-link
-    color           var(--black)
+    color var(--black)
     text-decoration none
 
 .pho-album-description
-    width       100%
-    color       var(--coolGrey)
+    width 100%
+    color var(--coolGrey)
     font-weight normal
-    font-size   .875rem
-    margin      0
+    font-size .875rem
+    margin 0
 
 .pho-album-shared
-    position          absolute
-    top               10.9375rem
-    right             .175rem
+    position absolute
+    top 10.9375rem
+    right .175rem
 
 +tiny-screen()
     .pho-album
-        width           100%
-        margin-left     1rem
+        width 100%
+        margin-left 1rem
