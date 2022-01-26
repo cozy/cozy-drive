@@ -3,7 +3,6 @@ import { doMobileUpload, readMobileFile } from 'cozy-client/dist/models/file'
 import { getEncryptionKeyFromDirId } from 'drive/lib/encryption'
 import { ENCRYPTION_MIME_TYPE } from 'drive/constants/config'
 
-import flag from 'cozy-flags'
 import logger from 'lib/logger'
 
 import {
@@ -17,11 +16,9 @@ import {
 } from './index'
 
 jest.mock('cozy-doctypes')
-jest.mock('cozy-flags')
 jest.mock('drive/lib/reporter', () => ({
   logException: jest.fn()
 }))
-logger.warn = jest.fn()
 
 jest.mock('drive/lib/encryption', () => ({
   ...jest.requireActual('drive/lib/encryption'),
@@ -140,6 +137,7 @@ describe('uploadFilesFromNative function', () => {
     expect(successCallBack).toHaveBeenCalled()
   })
 })
+
 describe('processNextFile function', () => {
   const fileUploadedCallbackSpy = jest.fn()
   const queueCompletedCallbackSpy = jest.fn()
@@ -157,7 +155,6 @@ describe('processNextFile function', () => {
 
   beforeEach(() => {
     getEncryptionKeyFromDirId.mockResolvedValue(null)
-    flag.mockReturnValue(true)
   })
 
   it('should handle an empty queue', async () => {
@@ -288,6 +285,7 @@ describe('processNextFile function', () => {
   })
 
   it('should handle an error during overwrite', async () => {
+    logger.warn = jest.fn()
     const getState = () => ({
       upload: {
         queue: [
@@ -334,6 +332,7 @@ describe('processNextFile function', () => {
   })
 
   it('should handle an error during upload', async () => {
+    logger.warn = jest.fn()
     const getState = () => ({
       upload: {
         queue: [
@@ -654,7 +653,7 @@ describe('queue reducer', () => {
       expect(result).toEqual(expected)
     })
 
-    it('should compute speed and remaing time', () => {
+    it('should compute speed and remaining time', () => {
       const result = queue(state, uploadProgress(file, event1, date1))
       expect(result[0].progress.remainingTime).toBe(null)
       const result2 = queue(result, uploadProgress(file, event2, date2))
