@@ -1,0 +1,3 @@
+commit-message:
+  # Prefix all commit messages with "fix"
+  prefix: "fix"
