@@ -112,8 +112,7 @@
     "dacc": {
       "type": "node",
       "file": "services/dacc/drive.js",
-      "trigger": "@event io.cozy.files.CREATED,UPDATED",
-      "debounce": "1s"
+      "trigger": "@every 720h"
     }
   },
   "permissions": {
@@ -219,10 +218,9 @@
       ]
     },
     "dacc": {
-      "description": "Required to send or receive anonymized measures.",
-      "type": "eu.mycozy.dacc",
+      "type": "cc.cozycloud.dacc.dev",
       "verbs": [
-        "ALL"
+        "POST"
       ]
     }
   }
