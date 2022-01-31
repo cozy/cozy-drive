@@ -97,6 +97,11 @@
       "file": "services/qualificationMigration/drive.js",
       "trigger": "@event io.cozy.files:CREATED,UPDATED",
       "debounce": "24h"
+    },
+    "dacc": {
+      "type": "node",
+      "file": "services/dacc/drive.js",
+      "trigger": "@every 720h"
     }
   },
   "permissions": {
@@ -169,6 +174,11 @@
       "description": "Required to display additional information in the viewer for files automatically retrieved by services",
       "type": "io.cozy.triggers",
       "verbs": ["GET"]
+    },
+    "dacc": {
+      "type": "cc.cozycloud.dacc",
+      "verbs": ["POST"],
+      "description": "Remote-doctype required to send anonymized measures to the Cozy's DACC"
     }
   }
 }
