@@ -14,9 +14,23 @@ const LOADED = 'LOADED'
 const FAILED = 'FAILED'
 
 class ImageLoader extends React.Component {
-  state = {
-    status: PENDING,
-    src: null
+  constructor(props) {
+    super(props)
+    this.state =
+      props.file &&
+      props.file.links &&
+      props.size &&
+      props.file.links[props.size] &&
+      props.client.getStackClient().uri
+        ? {
+            status: LOADED,
+            src:
+              props.client.getStackClient().uri + props.file.links[props.size]
+          }
+        : {
+            status: PENDING,
+            src: null
+          }
   }
 
   _mounted = false
