@@ -4,6 +4,10 @@
 
 * Stylint with Cozy config each .styl files in src
 
+## ✨ Features
+
+* DACC service to send anonymized measures about the file sizes grouped by app/konnector
+
 # 1.38.0
 
 ## ✨ Features
