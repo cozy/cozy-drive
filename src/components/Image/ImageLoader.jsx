@@ -23,7 +23,7 @@ class ImageLoader extends React.Component {
       props.file.links[props.size] &&
       props.client.getStackClient().uri
         ? {
-            status: LOADED,
+            status: PENDING,
             src:
               props.client.getStackClient().uri + props.file.links[props.size]
           }
