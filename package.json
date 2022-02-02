@@ -146,7 +146,6 @@
     "mui-bottom-sheet": "https://github.com/cozy/mui-bottom-sheet.git#v1.0.6",
     "node-fetch": "2.6.7",
     "node-polyglot": "2.4.0",
-    "node-uuid": "1.4.8",
     "piwik-react-router": "0.8.2",
     "popper.js": "1.16.1",
     "pouchdb-adapter-cordova-sqlite": "^2.0.7",
