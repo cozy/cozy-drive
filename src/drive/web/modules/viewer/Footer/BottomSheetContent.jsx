@@ -51,5 +51,5 @@ const BottomSheetContent = forwardRef(({ file }, ref) => {
 BottomSheetContent.propTypes = {
   file: PropTypes.object.isRequired
 }
-
+BottomSheetContent.displayName = 'BottomSheetContent'
 export default BottomSheetContent
