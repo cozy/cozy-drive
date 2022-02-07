@@ -2,10 +2,14 @@ import React, { useState, useCallback, useContext, useEffect } from 'react'
 import { connect, useDispatch } from 'react-redux'
 import { ModalManager } from 'react-cozy-helpers'
 import cx from 'classnames'
+import flag from 'cozy-flags'
+import get from 'lodash/get'
+import uniqBy from 'lodash/uniqBy'
 
 import { useClient, models } from 'cozy-client'
 import { SharingContext } from 'cozy-sharing'
 import { isMobileApp } from 'cozy-device-helper'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import { Content, Overlay } from 'cozy-ui/transpiled/react'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
@@ -20,7 +24,11 @@ import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
 import PublicToolbar from 'drive/web/modules/public/PublicToolbar'
 import PublicViewer from 'drive/web/modules/viewer/PublicViewer'
-import { getCurrentFolderId } from 'drive/web/modules/selectors'
+import {
+  getCurrentFolderId,
+  getDisplayedFolder,
+  getParentFolder
+} from 'drive/web/modules/selectors'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
 import FabWithMenuContext from 'drive/web/modules/drive/FabWithMenuContext'
@@ -30,11 +38,38 @@ import { FabContext } from 'drive/lib/FabProvider'
 import usePublicFilesQuery from './usePublicFilesQuery'
 import usePublicWritePermissions from './usePublicWritePermissions'
 import { ROOT_DIR_ID } from 'drive/constants/config'
+import OldFolderViewBreadcrumb from '../Folder/OldFolderViewBreadcrumb'
+
+const getBreadcrumbPath = (t, displayedFolder, parentFolder) =>
+  uniqBy(
+    [
+      {
+        id: get(parentFolder, 'id'),
+        name: get(parentFolder, 'name')
+      },
+      {
+        id: displayedFolder.id,
+        name: displayedFolder.name
+      }
+    ],
+    'id'
+  )
+    .filter(({ id }) => Boolean(id))
+    .map(breadcrumb => ({
+      id: breadcrumb.id,
+      name: breadcrumb.name || '…'
+    }))
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-const PublicFolderView = ({ currentFolderId, router, location, children }) => {
+const PublicFolderView = ({
+  currentFolderId,
+  parentFolder,
+  router,
+  location,
+  children
+}) => {
   const client = useClient()
   const { isMobile } = useBreakpoints()
   const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)
@@ -131,6 +166,12 @@ const PublicFolderView = ({ currentFolderId, router, location, children }) => {
   }
   const actions = useActions([download, trash, rename, versions], actionOptions)
 
+  const { t } = useI18n()
+  const geTranslatedBreadcrumbPath = useCallback(
+    displayedFolder => getBreadcrumbPath(t, displayedFolder, parentFolder),
+    [t, parentFolder]
+  )
+
   const rootBreadcrumbPath = {
     id: ROOT_DIR_ID,
     name: 'Public'
@@ -146,6 +187,12 @@ const PublicFolderView = ({ currentFolderId, router, location, children }) => {
     }
   }, [setIsFabDisplayed, isMobile, hasWritePermissions])
 
+  const showNewBreadcrumbFlag = flag(
+    'drive.breadcrumb.showCompleteBreadcrumbOnPublicPage'
+  )
+  const isOldBreadcrumb =
+    !showNewBreadcrumbFlag || showNewBreadcrumbFlag !== true
+
   return (
     <>
       <Main isPublic={true}>
@@ -156,11 +203,19 @@ const PublicFolderView = ({ currentFolderId, router, location, children }) => {
           <FolderViewHeader>
             {currentFolderId && (
               <>
-                <FolderViewBreadcrumb
-                  rootBreadcrumbPath={rootBreadcrumbPath}
-                  currentFolderId={currentFolderId}
-                  navigateToFolder={navigateToFolder}
-                />
+                {isOldBreadcrumb ? (
+                  <OldFolderViewBreadcrumb
+                    currentFolderId={currentFolderId}
+                    getBreadcrumbPath={geTranslatedBreadcrumbPath}
+                    navigateToFolder={navigateToFolder}
+                  />
+                ) : (
+                  <FolderViewBreadcrumb
+                    rootBreadcrumbPath={rootBreadcrumbPath}
+                    currentFolderId={currentFolderId}
+                    navigateToFolder={navigateToFolder}
+                  />
+                )}
                 <PublicToolbar
                   files={files}
                   hasWriteAccess={hasWritePermissions}
@@ -210,6 +265,12 @@ const PublicFolderView = ({ currentFolderId, router, location, children }) => {
   )
 }
 
-export default connect(state => ({
-  currentFolderId: getCurrentFolderId(state)
-}))(PublicFolderView)
+export default connect(state => {
+  const displayedFolder = getDisplayedFolder(state)
+  const parentDirId = get(displayedFolder, 'dir_id')
+  return {
+    currentFolderId: getCurrentFolderId(state),
+    displayedFolder,
+    parentFolder: getParentFolder(state, parentDirId)
+  }
+})(PublicFolderView)

@@ -5,11 +5,11 @@ import { setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
 import usePublicFilesQuery from './usePublicFilesQuery'
 import FileHistory from 'components/FileHistory'
-
 import { generateFileFixtures, getByTextWithMarkup } from '../testUtils'
 
 import PublicFolderView from './index'
 
+jest.mock('cozy-flags', () => () => true)
 jest.mock('../Folder/FolderViewBreadcrumb', () =>
   // eslint-disable-next-line react/display-name
   ({ rootBreadcrumbPath, currentFolderId }) => (
@@ -22,7 +22,13 @@ jest.mock('../Folder/FolderViewBreadcrumb', () =>
 )
 
 jest.mock('drive/web/modules/selectors', () => ({
-  getCurrentFolderId: () => '1234'
+  getCurrentFolderId: () => '1234',
+  getDisplayedFolder: () => ({
+    dir_id: 'parent-folder-id',
+    _id: 'displayed-folder-id',
+    name: 'My Folder'
+  }),
+  getParentFolder: () => '5678'
 }))
 
 jest.mock('./usePublicFilesQuery', () => {
