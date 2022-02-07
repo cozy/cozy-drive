@@ -178,7 +178,12 @@
     "dacc": {
       "type": "cc.cozycloud.dacc",
       "verbs": ["POST"],
-      "description": "Remote-doctype required to send anonymized measures to the Cozy's DACC"
+      "description": "Remote-doctype required to send anonymized measures to the DACC shared among mycozy.cloud's Cozy."
+    },
+    "dacc-eu": {
+      "type": "eu.mycozy.dacc",
+      "verbs": ["POST"],
+      "description": "Remote-doctype required to send anonymized measures to the DACC shared among mycozy.eu's Cozy."
     }
   }
 }
