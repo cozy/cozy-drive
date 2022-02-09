@@ -35,11 +35,17 @@ export const run = async () => {
     excludedSlug,
     nonExcludedGroupLabel,
     measureName,
-    remoteDoctype
+    remoteDoctype,
+    maxFileDateQuery
   } = daccFileSizeFlag
-  const aggregationDate = endOfMonth(subMonths(new Date(), 1))
+
+  const aggregationDate =
+    maxFileDateQuery || endOfMonth(subMonths(new Date(), 1))
 
   const sizesBySlug = await aggregateFilesSize(client, aggregationDate)
+  if (Object.keys(sizesBySlug).length < 1) {
+    log('info', `No files found to aggregate with date ${aggregationDate}`)
+  }
 
   if (excludedSlug && nonExcludedGroupLabel) {
     const totalNonExcluded = aggregateNonExcludedSlugs(
