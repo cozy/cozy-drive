@@ -27,6 +27,7 @@ import PhotosViewer from 'photos/components/PhotosViewer'
 import StyledApp from 'photos/components/StyledApp'
 
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
+import { WebviewIntentProvider } from 'cozy-intent'
 
 document.addEventListener('DOMContentLoaded', init)
 
@@ -74,20 +75,22 @@ async function init() {
   try {
     const id = await getSharedDocument(client)
     app = (
-      <Provider store={store}>
-        <CozyProvider client={client}>
-          <BreakpointsProvider>
-            <StyledApp>
-              <Router history={hashHistory}>
-                <Route path="shared/:albumId" component={App}>
-                  <Route path=":photoId" component={PhotosViewer} />
-                </Route>
-                <Redirect from="/*" to={`shared/${id}`} />
-              </Router>
-            </StyledApp>
-          </BreakpointsProvider>
-        </CozyProvider>
-      </Provider>
+      <WebviewIntentProvider>
+        <Provider store={store}>
+          <CozyProvider client={client}>
+            <BreakpointsProvider>
+              <StyledApp>
+                <Router history={hashHistory}>
+                  <Route path="shared/:albumId" component={App}>
+                    <Route path=":photoId" component={PhotosViewer} />
+                  </Route>
+                  <Redirect from="/*" to={`shared/${id}`} />
+                </Router>
+              </StyledApp>
+            </BreakpointsProvider>
+          </CozyProvider>
+        </Provider>
+      </WebviewIntentProvider>
     )
   } catch (e) {
     app = <ErrorUnsharedComponent />

@@ -15,6 +15,7 @@ import { RealtimePlugin } from 'cozy-realtime'
 import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { I18n } from 'cozy-ui/transpiled/react/I18n'
 import SharingProvider from 'cozy-sharing'
+import { WebviewIntentProvider } from 'cozy-intent'
 
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
 
@@ -90,22 +91,24 @@ const setupAppContext = memoize(() => {
 
 const App = props => {
   return (
-    <Provider store={props.store}>
-      <I18n
-        lang={props.locale}
-        dictRequire={lang => require(`photos/locales/${lang}`)}
-      >
-        <CozyProvider client={props.client}>
-          <BreakpointsProvider>
-            <StyledApp>
-              <SharingProvider doctype={DOCTYPE_ALBUMS} documentType="Albums">
-                {props.children}
-              </SharingProvider>
-            </StyledApp>
-          </BreakpointsProvider>
-        </CozyProvider>
-      </I18n>
-    </Provider>
+    <WebviewIntentProvider>
+      <Provider store={props.store}>
+        <I18n
+          lang={props.locale}
+          dictRequire={lang => require(`photos/locales/${lang}`)}
+        >
+          <CozyProvider client={props.client}>
+            <BreakpointsProvider>
+              <StyledApp>
+                <SharingProvider doctype={DOCTYPE_ALBUMS} documentType="Albums">
+                  {props.children}
+                </SharingProvider>
+              </StyledApp>
+            </BreakpointsProvider>
+          </CozyProvider>
+        </I18n>
+      </Provider>
+    </WebviewIntentProvider>
   )
 }
 
