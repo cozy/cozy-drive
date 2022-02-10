@@ -13,6 +13,7 @@ import { ModalContext } from 'drive/lib/ModalContext'
 import { RouterContext } from 'drive/lib/RouterContext'
 import { AcceptingSharingProvider } from 'drive/lib/AcceptingSharingContext'
 import FabProvider from 'drive/lib/FabProvider'
+import { WebviewIntentProvider } from 'cozy-intent'
 
 const mockStore = createStore(() => ({
   mobile: {
@@ -57,31 +58,33 @@ const AppLike = ({
   routerContextValue,
   modalContextValue
 }) => (
-  <Provider store={(client && client.store) || store || mockStore}>
-    <CozyProvider client={client}>
-      <TestI18n>
-        <SharingContext.Provider
-          value={sharingContextValue || mockSharingContextValue}
-        >
-          <AcceptingSharingProvider>
-            <RouterContext.Provider
-              value={routerContextValue || mockRouterContextValue}
-            >
-              <ThumbnailSizeContextProvider>
-                <BreakpointsProvider>
-                  <ModalContext.Provider
-                    value={modalContextValue || mockModalContextValue}
-                  >
-                    <FabProvider>{children}</FabProvider>
-                  </ModalContext.Provider>
-                </BreakpointsProvider>
-              </ThumbnailSizeContextProvider>
-            </RouterContext.Provider>
-          </AcceptingSharingProvider>
-        </SharingContext.Provider>
-      </TestI18n>
-    </CozyProvider>
-  </Provider>
+  <WebviewIntentProvider>
+    <Provider store={(client && client.store) || store || mockStore}>
+      <CozyProvider client={client}>
+        <TestI18n>
+          <SharingContext.Provider
+            value={sharingContextValue || mockSharingContextValue}
+          >
+            <AcceptingSharingProvider>
+              <RouterContext.Provider
+                value={routerContextValue || mockRouterContextValue}
+              >
+                <ThumbnailSizeContextProvider>
+                  <BreakpointsProvider>
+                    <ModalContext.Provider
+                      value={modalContextValue || mockModalContextValue}
+                    >
+                      <FabProvider>{children}</FabProvider>
+                    </ModalContext.Provider>
+                  </BreakpointsProvider>
+                </ThumbnailSizeContextProvider>
+              </RouterContext.Provider>
+            </AcceptingSharingProvider>
+          </SharingContext.Provider>
+        </TestI18n>
+      </CozyProvider>
+    </Provider>
+  </WebviewIntentProvider>
 )
 
 export default AppLike
