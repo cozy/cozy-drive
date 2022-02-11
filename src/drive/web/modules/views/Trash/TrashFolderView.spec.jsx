@@ -97,6 +97,8 @@ describe('TrashFolderView', () => {
   })
 
   it('renders the empty trash view', async () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation() // to be removed with https://github.com/cozy/cozy-libs/pull/1457
+
     useQuery.mockReturnValue({
       data: [],
       count: 0
@@ -109,6 +111,8 @@ describe('TrashFolderView', () => {
       await sleep(100)
     })
     getByText(`You don’t have any deleted files.`)
+
+    consoleSpy.mockRestore()
   })
 
   it('should contain breadcrumb with root path', async () => {

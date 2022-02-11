@@ -92,6 +92,8 @@ describe('Public View', () => {
   })
 
   it('renders the public view', async () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation() // to be removed with https://github.com/cozy/cozy-libs/pull/1457
+
     const { getByText, findByText } = setup()
     const sleep = duration =>
       new Promise(resolve => setTimeout(resolve, duration))
@@ -117,6 +119,8 @@ describe('Public View', () => {
     fireEvent.click(historyItem)
 
     await expect(findByText('FileHistory stub')).resolves.toBeTruthy()
+
+    consoleSpy.mockRestore()
   })
 
   it('should use FolderViewBreadcrumb with correct rootBreadcrumbPath', async () => {

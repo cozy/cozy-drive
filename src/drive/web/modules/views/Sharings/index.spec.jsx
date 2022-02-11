@@ -91,6 +91,8 @@ describe('Sharings View', () => {
   }
 
   it('should display placeholder when all files are not loaded', async () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation() // to be removed with https://github.com/cozy/cozy-libs/pull/1457
+
     const { container } = setup(false)
 
     await waitFor(() => {
@@ -98,6 +100,8 @@ describe('Sharings View', () => {
         container.querySelector('.fil-content-file-placeholder')
       ).not.toBeNull()
     })
+
+    consoleSpy.mockRestore()
   })
 
   it('should not display placeholder when all files are loaded', async () => {
