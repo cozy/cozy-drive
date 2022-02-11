@@ -122,7 +122,7 @@
     "cozy-doctypes": "1.82.2",
     "cozy-flags": "2.6.0",
     "cozy-harvest-lib": "5.10.5",
-    "cozy-intent": "1.8.0",
+    "cozy-intent": "^1.9.1",
     "cozy-keys-lib": "4.1.1",
     "cozy-logger": "1.6.0",
     "cozy-pouch-link": "27.15.0",
