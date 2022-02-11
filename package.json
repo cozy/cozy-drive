@@ -80,7 +80,7 @@
     "@welldone-software/why-did-you-render": "^6.1.4",
     "babel-core": "7.0.0-bridge.0",
     "bundlemon": "^1.0.0",
-    "chrome-remote-interface": "0.27.1",
+    "chrome-remote-interface": "0.31.2",
     "cordova": "8.1.2",
     "cordova-android": "9.1.0",
     "cozy-jobs-cli": "1.15.9",
