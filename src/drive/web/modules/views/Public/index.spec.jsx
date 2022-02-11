@@ -9,6 +9,10 @@ import { generateFileFixtures, getByTextWithMarkup } from '../testUtils'
 
 import PublicFolderView from './index'
 
+jest.mock('cozy-intent', () => ({
+  WebviewIntentProvider: ({ children }) => children
+}))
+
 jest.mock('cozy-flags', () => () => true)
 jest.mock('../Folder/FolderViewBreadcrumb', () =>
   // eslint-disable-next-line react/display-name
