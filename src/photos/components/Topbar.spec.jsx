@@ -4,6 +4,11 @@ import AppLike from 'test/components/AppLike'
 import { mockedRouter } from 'test/__mocks__/mockedRouter'
 import { Topbar } from './Topbar'
 import { createMockClient } from 'cozy-client'
+
+jest.mock('cozy-intent', () => ({
+  WebviewIntentProvider: ({ children }) => children
+}))
+
 describe('Topbar', () => {
   const client = createMockClient({})
 
