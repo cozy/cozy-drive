@@ -67,6 +67,8 @@ const setup = () => {
 
 describe('Recent View', () => {
   it('tests the recent view', async () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation() // to be removed with https://github.com/cozy/cozy-libs/pull/1457
+
     const nbFiles = 2
     const path = '/test'
     const dir_id = '123'
@@ -140,5 +142,7 @@ describe('Recent View', () => {
     // Going back to recent view, not file view
     hashHistory.goBack()
     await expect(findByText('Recent')).resolves.toBeTruthy()
+
+    consoleSpy.mockRestore()
   })
 })

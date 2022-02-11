@@ -54,15 +54,14 @@ describe('Drive View', () => {
   }
 
   it('should use FolderViewBreadcrumb with correct rootBreadcrumbPath', async () => {
-    // Given
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation() // to be removed with https://github.com/cozy/cozy-libs/pull/1457
+
     let render
 
-    // When
     await act(async () => {
       render = await setup()
     })
 
-    // Then
     const { getByTestId } = render
     expect(getByTestId('FolderViewBreadcrumb')).toBeTruthy()
     expect(
@@ -71,5 +70,7 @@ describe('Drive View', () => {
     expect(
       getByTestId('FolderViewBreadcrumb').getAttribute('data-folder-id')
     ).toEqual('1234')
+
+    consoleSpy.mockRestore()
   })
 })
