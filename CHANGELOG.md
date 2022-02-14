@@ -6,6 +6,8 @@
 
 ## 🔧 Tech
 
+* Remove piwik-react-router useless dependencies packages
+
 # 1.39.0
 
 ## ✨ Features
