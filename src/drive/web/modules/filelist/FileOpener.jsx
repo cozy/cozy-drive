@@ -110,15 +110,46 @@ const FileOpener = ({
     )
   }
 
+  const isFolder = file =>
+    file.attributes && file.attributes.type === 'directory'
+  const isFile = file => file.attributes && file.attributes.type === 'file'
+  const isShortcut = file => file.class === 'shortcut'
+  const isNote = file => file.name.endsWith('.cozy-note')
+  let buildHref = ''
+  if (isFolder(file)) {
+    buildHref = `/#/folder/${file.id}`
+  } else if (isNote(file)) {
+    console.log('isNote')
+    console.log({ file })
+    // DO NOTHING
+    // http://drive.cozy.localhost:8080/#/folder/io.cozy.files.root-dir/file/682e64b839470826fda67a4abc022ff4
+    // notes.cozy.localhost:8080/#/n/682e64b839470826fda67a4abc022ff4
+  } else if (isShortcut(file)) {
+    console.log('isShortcut')
+    console.log({ file })
+    // generate external file <=
+    // DO NOTHING
+  } else if (isFile(file)) {
+    buildHref = `/#/folder/${file.dir_id}/file/${file.id}`
+  } else {
+    console.log('NOT FILE')
+    console.log({ file })
+    buildHref = ''
+  }
+
   return (
-    <span
+    <a // works only with folder broken
       data-testid="not-onlyoffice-span"
-      className={styles['file-opener']}
+      className={`${styles['file-opener']} ${styles['file-opener__a']}`}
       ref={rowRef}
       id={file.id}
+      href={buildHref}
+      onClick={ev => {
+        ev.preventDefault()
+      }}
     >
       {children}
-    </span>
+    </a>
   )
 }
 
