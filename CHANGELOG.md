@@ -1,14 +1,23 @@
+# 1.40.0
+
+## ✨ Features
+
+## 🐛 Bug Fixes
+
+## 🔧 Tech
+
 # 1.39.0
 
 ## ✨ Features
 
-* Log sentry exception on click on add menu when offline
+* Use MUI Breadcrumb with fully fetched path
+* Add feature flag on Breadcrumb on public view
+* Allow all users to see progress on upload file
 * DACC service to send anonymized measures about the file sizes grouped by app/konnector
+* Implement cozy-bar AA navigation
+* Log sentry exception on click on add menu when offline
 * Upgrade cozy-client to allow all users to see progress on upload file
 * Upgrade cozy-ui to benefit of new version of material-ui component
-* Use MUI Breadcrumb with fully fetched path
-
-## 🐛 Bug Fixes
 
 ## 🔧 Tech
 

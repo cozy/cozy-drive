@@ -1,6 +1,6 @@
 {
   "name": "cozy-drive",
-  "version": "1.39.0",
+  "version": "1.40.0",
   "main": "src/main.jsx",
   "scripts": {
     "build:drive": "yarn build:drive:browser",
@@ -65,7 +65,8 @@
     "m4dz",
     "nono",
     "ptbrowne",
-    "y_lohse"
+    "y_lohse",
+    "trollepierre"
   ],
   "license": "AGPL-3.0",
   "bugs": {
