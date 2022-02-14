@@ -1,45 +1,55 @@
 {
-    "baseDir": "./build/drive",
-    "files": [
-        {
-            "path": "app/drive.<hash>.js"
-        },
-        {
-            "path": "app/drive.<hash>.min.css"
-        },
-        {
-            "path": "*.<hash>.worker.js"
-        },
-        {
-            "path": "vendors/drive.<hash>.js"
-        },
-        {
-            "path": "vendors/drive.<hash>.<hash>.min.css"
-        },
-        {
-            "path": "services/*/*.js"
-        },
-        {
-            "path": "public/drive.<hash>.js"
-        },
-        {
-            "path": "public/drive.<hash>.min.css"
-        },
-        {
-            "path": "public/pdf.worker.entry.<hash>.worker.js"
-        },
-        {
-            "path": "public/*.css"
-        }
-    ],
-    "reportOutput": [
-        [
-            "github",
-            {
-                "checkRun": false,
-                "commitStatus": true,
-                "prComment": true
-            }
-        ]
+  "baseDir": "./build/drive",
+  "files": [
+    {
+      "path": "app/drive.<hash>.js",
+      "maxSize": "234 KB"
+    },
+    {
+      "path": "app/drive.<hash>.min.css",
+      "maxSize": "55 KB"
+    },
+    {
+      "path": "public/cozy-bar.css",
+      "maxSize": "24 KB"
+    },
+    {
+      "path": "public/drive.<hash>.js",
+      "maxSize": "1.47 MB"
+    },
+    {
+      "path": "public/drive.<hash>.min.css",
+      "maxSize": "86 KB"
+    },
+    {
+      "path": "public/pdf.worker.entry.<hash>.worker.js",
+      "maxSize": "221 KB"
+    },
+    {
+      "path": "services/dacc/drive.js",
+      "maxSize": "249 KB"
+    },
+    {
+      "path": "services/qualificationMigration/drive.js",
+      "maxSize": "242 KB"
+    },
+    {
+      "path": "vendors/drive.<hash>.<hash>.min.css",
+      "maxSize": "35 KB"
+    },
+    {
+      "path": "vendors/drive.<hash>.js",
+      "maxSize": "1.41 MB"
+    }
+  ],
+  "reportOutput": [
+    [
+      "github",
+      {
+        "checkRun": false,
+        "commitStatus": true,
+        "prComment": true
+      }
     ]
+  ]
 }
