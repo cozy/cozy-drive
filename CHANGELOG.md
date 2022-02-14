@@ -7,6 +7,7 @@
 ## 🔧 Tech
 
 * Update several dependencies packages
+* Remove cozy-jobs-cli useless devDependencies packages
 * Remove piwik-react-router useless dependencies packages
 * Add date attribute to dacc flag
 * Add generic build command
