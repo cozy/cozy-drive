@@ -9,6 +9,8 @@
 
 ## 🔧 Tech
 
+* Add bundlemon size limit
+
 # 1.40.0
 
 ## 🐛 Bug Fixes
@@ -25,6 +27,7 @@
 * Move [dependabot](https://github.com/dependabot) config file to correct location
 * Fix auto-merge job what disallowed used merge commits
 * Remove Drive Android job
+
 
 # 1.39.0
 
