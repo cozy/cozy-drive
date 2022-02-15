@@ -37,6 +37,9 @@ import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlac
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
+const folderUrlToNavigate = folderId => `/sharings/${folderId}`
+const fileUrlToNavigate = file => `/sharings/file/${file.id}`
+
 export const SharingsView = ({
   router,
   location,
@@ -67,14 +70,14 @@ export const SharingsView = ({
 
   const navigateToFolder = useCallback(
     folderId => {
-      router.push(`/sharings/${folderId}`)
+      router.push(folderUrlToNavigate(folderId))
     },
     [router]
   )
 
   const navigateToFile = useCallback(
     file => {
-      router.push(`/sharings/file/${file.id}`)
+      router.push(fileUrlToNavigate(file))
     },
     [router]
   )

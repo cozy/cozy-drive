@@ -53,6 +53,10 @@ import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
+const folderUrlToNavigate = folderId => `/folder/${folderId}`
+const fileUrlToNavigate = currentFolderId => file =>
+  `/folder/${currentFolderId}/file/${file.id}`
+
 const DriveView = ({
   currentFolderId,
   router,
@@ -105,14 +109,14 @@ const DriveView = ({
 
   const navigateToFolder = useCallback(
     folderId => {
-      router.push(`/folder/${folderId}`)
+      router.push(folderUrlToNavigate(folderId))
     },
     [router]
   )
 
   const navigateToFile = useCallback(
     file => {
-      router.push(`/folder/${currentFolderId}/file/${file.id}`)
+      router.push(fileUrlToNavigate(currentFolderId)(file))
     },
     [router, currentFolderId]
   )

@@ -35,6 +35,9 @@ import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
+const folderUrlToNavigate = folderId => `/folder/${folderId}`
+const fileUrlToNavigate = file => `/recent/file/${file.id}`
+
 export const RecentView = ({ router, location, children }) => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
@@ -55,14 +58,14 @@ export const RecentView = ({ router, location, children }) => {
 
   const navigateToFolder = useCallback(
     folderId => {
-      router.push(`/folder/${folderId}`)
+      router.push(folderUrlToNavigate(folderId))
     },
     [router]
   )
 
   const navigateToFile = useCallback(
     file => {
-      router.push(`/recent/file/${file.id}`)
+      router.push(fileUrlToNavigate(file))
     },
     [router]
   )
