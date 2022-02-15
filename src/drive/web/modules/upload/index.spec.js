@@ -50,10 +50,6 @@ const fakeVaultClient = {
 CozyFile.getFullpath.mockResolvedValue('/my-dir/mydoc.odt')
 
 describe('uploadFilesFromNative function', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
   it('should upload files from native and put items to the queue', async () => {
     const filesToUpload = [
       {
@@ -148,10 +144,6 @@ describe('processNextFile function', () => {
     sharedPaths: []
   }
   fakeClient.query.mockResolvedValueOnce(null)
-
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
 
   beforeEach(() => {
     getEncryptionKeyFromDirId.mockResolvedValue(null)
@@ -677,10 +669,6 @@ describe('queue reducer', () => {
 })
 
 describe('overwriteFile function', () => {
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   it('should update the io.cozy.files', async () => {
     updateFileSpy.mockResolvedValue({
       data: {

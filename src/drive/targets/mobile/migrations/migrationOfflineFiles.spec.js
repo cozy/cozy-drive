@@ -16,63 +16,41 @@ import logger from 'lib/logger'
 
 logger.error = jest.fn()
 
-jest.mock('drive/mobile/modules/offline/duck', () => ({
-  ...jest.requireActual('drive/mobile/modules/offline/duck'),
-  getAvailableOfflineIds: jest.fn(({ availableOffline }) => availableOffline),
-  saveOfflineFileCopy: jest.fn(),
-  addFileIdToLocalStorageItem: jest.fn(),
-  markAsUnavailableOffline: jest.fn()
-}))
-
-jest.mock('drive/mobile/modules/mediaBackup/duck', () => ({
-  ...jest.requireActual('drive/mobile/modules/mediaBackup/duck'),
-  startMediaBackup: jest.fn(),
-  cancelMediaBackup: jest.fn()
-}))
-
+jest.mock('drive/mobile/modules/offline/duck')
+jest.mock('drive/mobile/modules/mediaBackup/duck')
 jest.mock('localforage')
-
-jest.mock('drive/mobile/lib/network', () => ({
-  isWifi: jest.fn()
-}))
-
-jest.mock('drive/mobile/lib/cozy-helper', () => {
-  return {
-    getLang: () => 'en',
-    initClient: jest.fn()
-  }
-})
+jest.mock('drive/mobile/lib/network')
+jest.mock('drive/mobile/lib/cozy-helper')
 
 describe('migrateOfflineFiles', () => {
-  afterEach(() => {
-    jest.clearAllMocks()
+  let setup
+
+  beforeEach(() => {
+    getAvailableOfflineIds.mockImplementation(({ availableOffline }) => availableOffline)
+    setup = async ({
+         isWifiEnabled = true,
+         isAlreadyMigrated = false,
+         availableOfflineFileIds
+       }) => {
+      const alreadyMigrated = localforage.getItem.mockResolvedValueOnce
+      alreadyMigrated(isAlreadyMigrated)
+      isWifi.mockReturnValue(isWifiEnabled)
+
+      const client = {
+        query: jest.fn(() => ({ data: { data: { id: '123' } } })),
+        store: {
+          getState: jest.fn(() => ({
+            availableOffline: availableOfflineFileIds
+          })),
+          dispatch: jest.fn()
+        }
+      }
+      await migrateOfflineFiles(client)
+      return { client }
+    }
   })
 
-  const setup = async ({
-    isWifiEnabled = true,
-    isAlreadyMigrated = false,
-    availableOfflineFileIds
-  }) => {
-    const alreadyMigrated = localforage.getItem.mockResolvedValueOnce
-    alreadyMigrated(isAlreadyMigrated)
-    isWifi.mockReturnValue(isWifiEnabled)
-
-    const client = {
-      query: jest.fn(() => ({ data: { data: { id: '123' } } })),
-      store: {
-        getState: jest.fn(() => ({
-          availableOffline: availableOfflineFileIds
-        })),
-        dispatch: jest.fn()
-      }
-    }
-
-    await migrateOfflineFiles(client)
-
-    return { client }
-  }
-
-  it('should migrate offline files and set informations in localStorage', async () => {
+  it('should migrate offline files and set information in localStorage', async () => {
     const availableOfflineFileIds = ['123', '456']
     const { client } = await setup({ availableOfflineFileIds })
 

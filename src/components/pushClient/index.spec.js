@@ -2,9 +2,6 @@ import { isClientAlreadyInstalled, DESKTOP_SOFTWARE_ID } from './index'
 import CozyClient from 'cozy-client'
 
 describe('isClientAlreadyInstalled', () => {
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
   test('isClientAlreadyInstalled is true', async () => {
     const client = new CozyClient({})
     client.query = jest.fn().mockResolvedValue({

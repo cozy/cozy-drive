@@ -201,7 +201,7 @@ describe('downloadFiles', () => {
       {
         id: 'folder-id-1',
         name: 'encrypted-folder',
-        type: 'folder',
+        type: 'directory',
         referenced_by: [
           {
             id: 'encryption-key-id',

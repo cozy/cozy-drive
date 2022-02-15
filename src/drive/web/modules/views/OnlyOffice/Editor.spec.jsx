@@ -82,7 +82,6 @@ const setup = ({
 
 describe('Editor', () => {
   afterEach(() => {
-    jest.clearAllMocks()
     document.body.innerHTML = '' // used to reset document.getElementById(id) present in View
   })
 

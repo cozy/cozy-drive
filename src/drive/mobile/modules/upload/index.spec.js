@@ -11,10 +11,6 @@ const tSpy = jest.fn()
 const uploadFilesFromNativeSpy = jest.fn()
 
 describe('OpenWith component Modal', () => {
-  afterEach(() => {
-    jest.restoreAllMocks()
-  })
-
   const defaultItems = [{ name: 'File1.pdf' }]
 
   const setupComponent = () => {
