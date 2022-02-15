@@ -42,7 +42,7 @@ mockCozyClientRequestQuery()
 describe('Dropzone', () => {
   it('should match snapshot', async () => {
     // Given
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation()
+    jest.spyOn(console, 'error').mockImplementation()
 
     const displayedFolder = {
       id: 'directory-foobar0'
@@ -62,9 +62,6 @@ describe('Dropzone', () => {
 
     // Then
     expect(root).toMatchSnapshot()
-
-    // After
-    consoleSpy.mockRestore()
   })
 
   it('should dispatch the uploadFiles action', () => {
