@@ -75,10 +75,6 @@ test('excludeTrashedFiles', () => {
 })
 
 describe('useFileWithPath', () => {
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   it('should return default data while all queries are not finished', () => {
     useQuery
       .mockReturnValueOnce({ data: null, fetchStatus: 'loading' })

@@ -33,10 +33,6 @@ const cozyClient = new CozyClient({
 })
 
 describe('MoveModal component', () => {
-  afterEach(() => {
-    jest.restoreAllMocks()
-  })
-
   const defaultEntries = [
     { _id: 'bill_201901', dir_id: 'bills', name: 'bill_201901.pdf' },
     { _id: 'bill_201902', dir_id: 'bills', name: 'bill_201902.pdf' },
@@ -119,9 +115,6 @@ describe('MoveModal component', () => {
   })
 
   describe('cancelMove', () => {
-    afterEach(() => {
-      jest.restoreAllMocks()
-    })
     it('should move items back to their previous location', async () => {
       const component = setupComponent()
       const callback = jest.fn()

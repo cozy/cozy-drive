@@ -29,10 +29,6 @@ const setup = ({ file }) => {
 }
 
 describe('FileOpener', () => {
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   it('should show a link to onlyoffice document if Only Office is supported', () => {
     shouldBeOpenedByOnlyOffice.mockReturnValue(true)
 

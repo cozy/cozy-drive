@@ -50,7 +50,6 @@ describe('StartMediaBackup', () => {
   const uploadDirPath = '/upload'
 
   beforeEach(() => {
-    jest.resetAllMocks()
     getUploadDir.mockResolvedValue({
       _id: uploadDirIr,
       attributes: {

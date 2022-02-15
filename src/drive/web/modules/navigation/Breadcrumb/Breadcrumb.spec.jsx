@@ -6,10 +6,6 @@ import { dummyBreadcrumbPath } from 'test/dummies/dummyBreadcrumbPath'
 describe('Breadcrumbs', () => {
   const path = dummyBreadcrumbPath()
 
-  beforeEach(() => {
-    jest.restoreAllMocks()
-  })
-
   describe('template', () => {
     it('should match snapshot', () => {
       // When
