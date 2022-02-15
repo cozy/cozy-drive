@@ -15,59 +15,67 @@ jest.mock('cozy-client/dist/models/file', () => ({
 }))
 
 describe('createFileOpeningHandler', () => {
-  const client = createMockClient({})
-  const dispatch = jest.fn()
-  const navigateToFile = jest.fn()
-  const replaceCurrentUrl = jest.fn()
-  const openInNewTab = jest.fn()
-  const routeTo = jest.fn()
+  let client
+  let dispatch
+  let navigateToFile
+  let replaceCurrentUrl
+  let openInNewTab
+  let routeTo
   const isFlatDomain = true
+  let genericFile
+  let setup
+  let shortcutFile
+  let onlyofficeFile
+  let noteFile
 
-  client.getStackClient = jest.fn(() => client)
-  client.collection = jest.fn(() => client)
-  client.fetchURL = jest.fn()
-  client.uri = 'http://cozy.tools'
-
-  const genericFile = generateFile({ i: 0 })
-  const noteFile = generateFile({
-    prefix: 'my-note-',
-    i: 1,
-    type: 'file',
-    ext: '.cozy-note'
-  })
-
-  noteFile.metadata = {
-    content: '',
-    schema: '',
-    title: '',
-    version: ''
-  }
-
-  const shortcutFile = generateFile({
-    prefix: 'cozy',
-    i: 2,
-    type: 'file',
-    ext: '.url'
-  })
-  shortcutFile.class = 'shortcut'
-
-  const onlyofficeFile = generateFile({ i: 3 })
-  onlyofficeFile.class = 'slide'
-
-  const setup = ({ isOnlyOfficeEnabled } = { isOnlyOfficeEnabled: true }) =>
-    createFileOpeningHandler({
-      client,
-      isFlatDomain,
-      dispatch,
-      navigateToFile,
-      replaceCurrentUrl,
-      openInNewTab,
-      routeTo,
-      isOnlyOfficeEnabled
+  beforeEach(() => {
+    client = createMockClient({})
+    dispatch = jest.fn()
+    navigateToFile = jest.fn()
+    replaceCurrentUrl = jest.fn()
+    openInNewTab = jest.fn()
+    routeTo = jest.fn()
+    client.getStackClient = jest.fn(() => client)
+    client.collection = jest.fn(() => client)
+    client.fetchURL = jest.fn()
+    client.uri = 'http://cozy.tools'
+    genericFile = generateFile({ i: 0 })
+    noteFile = generateFile({
+      prefix: 'my-note-',
+      i: 1,
+      type: 'file',
+      ext: '.cozy-note'
     })
 
-  afterEach(() => {
-    jest.clearAllMocks()
+    noteFile.metadata = {
+      content: '',
+      schema: '',
+      title: '',
+      version: ''
+    }
+
+    shortcutFile = generateFile({
+      prefix: 'cozy',
+      i: 2,
+      type: 'file',
+      ext: '.url'
+    })
+    shortcutFile.class = 'shortcut'
+
+    onlyofficeFile = generateFile({ i: 3 })
+    onlyofficeFile.class = 'slide'
+
+    setup = ({ isOnlyOfficeEnabled } = { isOnlyOfficeEnabled: true }) =>
+      createFileOpeningHandler({
+        client,
+        isFlatDomain,
+        dispatch,
+        navigateToFile,
+        replaceCurrentUrl,
+        openInNewTab,
+        routeTo,
+        isOnlyOfficeEnabled
+      })
   })
 
   it('should open an offline file', async () => {
@@ -146,7 +154,6 @@ describe('createFileOpeningHandler', () => {
       expect(replaceCurrentUrl).not.toHaveBeenCalled()
       expect(routeTo).not.toHaveBeenCalled()
       expect(navigateToFile).not.toHaveBeenCalled()
-      jest.clearAllMocks()
     }
   })
 

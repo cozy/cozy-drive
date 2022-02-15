@@ -30,9 +30,6 @@ describe('onPhotoUpload', () => {
     // TODO: remove this spy by testing correctly the asynchronous actions
     jest.spyOn(console, 'error').mockImplementation()
   })
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
 
   it('Should stop if other execution is running', async () => {
     readSetting.mockReturnValueOnce({

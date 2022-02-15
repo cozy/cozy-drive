@@ -26,6 +26,7 @@ module.exports = {
     '^cozy-client$': 'cozy-client/dist/index.js',
     '^react-redux': '<rootDir>/node_modules/react-redux'
   },
+  clearMocks: true,
   snapshotSerializers: ['enzyme-to-json/serializer'],
   transform: {
     '^.+\\.jsx?$': 'babel-jest',
