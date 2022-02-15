@@ -119,14 +119,10 @@ const FileOpener = ({
   if (isFolder(file)) {
     buildHref = `/#/folder/${file.id}`
   } else if (isNote(file)) {
-    console.log('isNote')
-    console.log({ file })
     // DO NOTHING
     // http://drive.cozy.localhost:8080/#/folder/io.cozy.files.root-dir/file/682e64b839470826fda67a4abc022ff4
     // notes.cozy.localhost:8080/#/n/682e64b839470826fda67a4abc022ff4
   } else if (isShortcut(file)) {
-    console.log('isShortcut')
-    console.log({ file })
     // generate external file <=
     // DO NOTHING
   } else if (isFile(file)) {
@@ -138,7 +134,7 @@ const FileOpener = ({
   }
 
   return (
-    <a // works only with folder broken
+    <a
       data-testid="not-onlyoffice-span"
       className={`${styles['file-opener']} ${styles['file-opener__a']}`}
       ref={rowRef}

@@ -65,7 +65,12 @@ const File = props => {
     const { onFolderOpen, onFileOpen, isAvailableOffline } = props
     event.stopPropagation()
     if (isDirectory(attributes)) {
-      onFolderOpen(attributes.id)
+      if (event.ctrlKey || event.metaKey || event.shiftKey) {
+        const openInNewTab = url => window.open(url, '_blank')
+        openInNewTab(`/#/folder/${attributes.id}`)
+      } else {
+        onFolderOpen(attributes.id)
+      }
     } else {
       onFileOpen({
         event,

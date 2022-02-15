@@ -41,7 +41,12 @@ const createFileOpeningHandler = ({
     }
   } else if (isNote) {
     try {
-      replaceCurrentUrl(await models.note.fetchURL(client, file))
+      const routeToNote = await models.note.fetchURL(client, file)
+      if (event.ctrlKey || event.metaKey || event.shiftKey) {
+        openInNewTab(routeToNote)
+      } else {
+        replaceCurrentUrl(routeToNote)
+      }
     } catch (e) {
       Alerter.error('alert.offline')
     }
@@ -52,7 +57,11 @@ const createFileOpeningHandler = ({
       routeTo(makeOnlyOfficeFileRoute(file, true))
     }
   } else {
-    navigateToFile(file)
+    if (event.ctrlKey || event.metaKey || event.shiftKey) {
+      openInNewTab(`/#/folder/${file.dir_id}/file/${file.id}`)
+    } else {
+      navigateToFile(file)
+    }
   }
 }
 
