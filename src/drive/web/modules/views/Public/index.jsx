@@ -8,10 +8,8 @@ import uniqBy from 'lodash/uniqBy'
 
 import { useClient, models } from 'cozy-client'
 import { SharingContext } from 'cozy-sharing'
-import { isMobileApp } from 'cozy-device-helper'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import { Content, Overlay } from 'cozy-ui/transpiled/react'
-import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { SharingBannerPlugin, useSharingInfos } from 'cozy-sharing'
 
@@ -108,22 +106,8 @@ const PublicFolderView = ({
   )
 
   const navigateToFile = async file => {
-    const isNote = models.file.isNote(file)
-    if (isNote) {
-      try {
-        const noteUrl = await models.note.fetchURL(client, file)
-        const url = new URL(noteUrl)
-        if (!isMobileApp()) {
-          url.searchParams.set('returnUrl', window.location.href)
-        }
-        window.location.href = url.toString()
-      } catch (e) {
-        Alerter.error('alert.offline')
-      }
-    } else {
-      showInViewer(file)
-      setViewerOpened(true)
-    }
+    showInViewer(file)
+    setViewerOpened(true)
   }
 
   const showInViewer = useCallback(
