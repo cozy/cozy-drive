@@ -70,21 +70,14 @@ const setup = ({
 }
 
 describe('Toolbar', () => {
-  let consoleSpy
-
   beforeEach(() => {
-    consoleSpy = jest.spyOn(console, 'warn').mockImplementation()
-  })
-
-  afterEach(() => {
-    consoleSpy.mockRestore()
-    jest.clearAllMocks()
+    jest.spyOn(console, 'warn').mockImplementation()
   })
 
   describe('FileName', () => {
     it('should show the path', () => {
       // TODO : analyse why BaseButton has incorrect props and remove this consoleSpy
-      const consoleSpy = jest.spyOn(console, 'error').mockImplementation()
+      jest.spyOn(console, 'error').mockImplementation()
 
       useQuery
         .mockReturnValueOnce(officeDocParam)
@@ -94,8 +87,6 @@ describe('Toolbar', () => {
       const { queryByTestId } = root
 
       expect(queryByTestId('onlyoffice-filename-path')).toBeTruthy()
-
-      consoleSpy.mockRestore()
     })
 
     it('should not show the path on mobile', () => {

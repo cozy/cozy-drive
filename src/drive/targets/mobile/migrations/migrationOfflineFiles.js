@@ -23,6 +23,7 @@ const migrateOfflineFiles = async (client) => {
     if (alreadyMigrated || !isWifi()) return
 
     const availableOfflineIds = getAvailableOfflineIds(client.store.getState())
+
     if (!availableOfflineIds || availableOfflineIds.length < 1) {
       await localforage.setItem('offlineFilesMigration-finished', true)
       return

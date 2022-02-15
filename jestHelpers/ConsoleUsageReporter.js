@@ -117,9 +117,7 @@ ${reset(formatConsoleCalls(consoleCalls))}
 If calling the console is normal in your test case, consider mocking the \
 console as is:
 
-  const consoleSpy = jest.spyOn(console, 'method').mockImplementation();
-  [...]
-  consoleSpy.mockRestore();
+  jest.spyOn(console, 'method').mockImplementation();
 `)
         )
       }

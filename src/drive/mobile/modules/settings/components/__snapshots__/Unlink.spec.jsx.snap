@@ -17,35 +17,7 @@ exports[`Unlink should render the Component 1`] = `
       "data": "foo",
     }
   }
-  t={
-    [MockFunction] {
-      "calls": Array [
-        Array [
-          "mobile.settings.unlink.title",
-        ],
-        Array [
-          "mobile.settings.unlink.description",
-        ],
-        Array [
-          "mobile.settings.unlink.button",
-        ],
-      ],
-      "results": Array [
-        Object {
-          "type": "return",
-          "value": "mobile.settings.unlink.title",
-        },
-        Object {
-          "type": "return",
-          "value": "mobile.settings.unlink.description",
-        },
-        Object {
-          "type": "return",
-          "value": "mobile.settings.unlink.button",
-        },
-      ],
-    }
-  }
+  t={[MockFunction]}
   unlink={[MockFunction]}
 >
   <div>

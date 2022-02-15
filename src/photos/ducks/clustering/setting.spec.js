@@ -19,9 +19,6 @@ const photos = [
 ]
 
 describe('setting', () => {
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
   it('Should update the params period ', async () => {
     const params = [
       {

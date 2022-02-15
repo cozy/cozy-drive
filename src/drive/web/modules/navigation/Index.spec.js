@@ -46,10 +46,6 @@ const setup = async ({ sharingId, withReferencedFiles, withShortcut } = {}) => {
  * As for the redirection, it is done according to whether there is a reference file or not.
  */
 describe('fetchSharing', () => {
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   it('should redirect to /folder and store nothing in context, if no sharing id', async () => {
     await setup()
 

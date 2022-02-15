@@ -24,10 +24,6 @@ jest.mock('folder-references', () => ({
   getOrCreateFolderWithReference: jest.fn()
 }))
 describe('bugFix fix', () => {
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
   it('should fix the default scenario', async () => {
     /** 1er scénario :
      * - /Photos sans référence + /Photos/Uploadées par Cozy Photos/Photo1.jpg
