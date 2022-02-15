@@ -111,7 +111,7 @@ describe('Editor', () => {
   })
 
   it('should show the title and the container view if the only office server is installed', () => {
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation() // to be removed with https://github.com/cozy/cozy-libs/pull/1457
+    jest.spyOn(console, 'error').mockImplementation() // TODO: to be removed with https://github.com/cozy/cozy-libs/pull/1457
 
     useFetchJSON.mockReturnValue({
       fetchStatus: 'loaded',
@@ -126,8 +126,6 @@ describe('Editor', () => {
     expect(queryByTestId('onlyoffice-content-spinner')).toBeFalsy()
     expect(queryByTestId('onlyoffice-title')).toBeTruthy()
     expect(container.querySelector('#onlyOfficeEditor')).toBeTruthy()
-
-    consoleSpy.mockRestore()
   })
 
   it('should show the CozyUi Viewer if the only office server is not installed', () => {

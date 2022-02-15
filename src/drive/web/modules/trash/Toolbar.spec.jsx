@@ -16,7 +16,7 @@ describe('Toolbar', () => {
     // TODO: Warning: You called act(async () => ...) without await. This could lead to unexpected testing behaviour,
     //  interleaving multiple act calls and mixing their scopes. You should - await act(async () => ...);
     // However the above resolution makes test failing
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation()
+    jest.spyOn(console, 'error').mockImplementation()
 
     const { getByText } = render(
       <AppLike client={client}>
@@ -45,7 +45,5 @@ describe('Toolbar', () => {
 
     expect(client.emptyTrash).toHaveBeenCalled()
     await waitForElementToBeRemoved(() => getByText('Delete all'))
-
-    consoleSpy.mockRestore()
   })
 })

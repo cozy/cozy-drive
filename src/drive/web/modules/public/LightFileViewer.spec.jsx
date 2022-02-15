@@ -35,7 +35,7 @@ describe('LightFileViewer', () => {
     })
 
     it('should have the sharing banner and public toolbar but no viewer toolbar', () => {
-      const consoleSpy = jest.spyOn(console, 'error').mockImplementation() // to be removed with https://github.com/cozy/cozy-libs/pull/1457
+      jest.spyOn(console, 'error').mockImplementation() // TODO: to be removed with https://github.com/cozy/cozy-libs/pull/1457
 
       const { root } = setup()
       const { queryByTestId, queryAllByRole } = root
@@ -45,8 +45,6 @@ describe('LightFileViewer', () => {
       ) // This is the sharing banner
       expect(queryByTestId('public-toolbar')).toBeTruthy()
       expect(queryByTestId('viewer-toolbar')).toBeFalsy()
-
-      consoleSpy.mockRestore()
     })
   })
 
