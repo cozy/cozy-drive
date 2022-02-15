@@ -57,15 +57,13 @@ describe('FooterContent', () => {
   it('should show download button if not in mobile app', () => {
     // TODO: Warning: Invalid values for props %s on <%s> tag. Either remove them from the element, or pass a string or number value to keep them in the DOM.
     //  For details, see https://fb.me/react-attribute-behavior%s `t`, `f` button in button (created by BaseButton)
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation()
+    jest.spyOn(console, 'error').mockImplementation()
 
     const { root } = setup()
     const { getByText, queryByText } = root
 
     expect(getByText('Download'))
     expect(queryByText('Forward')).toBeFalsy()
-
-    consoleSpy.mockRestore()
   })
 
   it('should show forward button if in mobile app', () => {
