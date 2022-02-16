@@ -3,6 +3,7 @@
   "version": "1.40.0",
   "main": "src/main.jsx",
   "scripts": {
+    "build": "yarn build:drive && yarn build:photos",
     "build:drive": "yarn build:drive:browser",
     "build:drive:browser": "COZY_APP_SLUG=drive cozy-scripts build --manifest src/drive/targets/manifest.webapp --build-dir build/drive --src-dir src/drive",
     "build:drive:mobile": "COZY_APP_SLUG=drive cozy-scripts build --mobile --manifest src/drive/targets/manifest.webapp --src-dir src/drive",
