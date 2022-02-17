@@ -85,6 +85,10 @@ const getSpeed = (state, action) => {
   return ((nowLoaded - lastLoaded) / (now - lastUpdated)) * 1000
 }
 
+let remainingTimes = []
+let averageRemainingTime = undefined
+let timeout = undefined
+
 const getProgress = (state, action) => {
   if (action.type == RECEIVE_UPLOAD_SUCCESS) {
     return null
@@ -92,14 +96,34 @@ const getProgress = (state, action) => {
     const speed = state ? getSpeed(state, action) : null
     const loaded = action.loaded
     const total = action.total
-    const remainingTime =
+    const instantRemainingTime =
       speed && total && loaded ? (total - loaded) / speed : null
+
+    if (!averageRemainingTime) {
+      averageRemainingTime = instantRemainingTime
+    }
+
+    if (instantRemainingTime) {
+      remainingTimes.push(instantRemainingTime)
+    }
+
+    if (!timeout) {
+      timeout = setTimeout(() => {
+        averageRemainingTime =
+          remainingTimes.reduce((a, b) => a + b) / remainingTimes.length
+
+        clearTimeout(timeout)
+        timeout = undefined
+        remainingTimes = []
+      }, 3000)
+    }
+
     return {
       loaded,
       total,
       lastUpdated: action.date,
       speed,
-      remainingTime
+      remainingTime: averageRemainingTime
     }
   } else if (action.type === RECEIVE_UPLOAD_ERROR) {
     return null
