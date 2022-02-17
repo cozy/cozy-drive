@@ -2,7 +2,7 @@
   "name": "Drive",
   "name_prefix": "Cozy",
   "slug": "drive",
-  "version": "1.39.0",
+  "version": "1.40.0",
   "type": "webapp",
   "licence": "AGPL-3.0",
   "icon": "public/app-icon.svg",
@@ -108,6 +108,11 @@
       "file": "services/qualificationMigration/drive.js",
       "trigger": "@event io.cozy.files:CREATED,UPDATED",
       "debounce": "24h"
+    },
+    "dacc": {
+      "type": "node",
+      "file": "services/dacc/drive.js",
+      "trigger": "@every 720h"
     }
   },
   "permissions": {
@@ -211,6 +216,20 @@
       "verbs": [
         "GET"
       ]
+    },
+    "dacc": {
+      "type": "cc.cozycloud.dacc",
+      "verbs": [
+        "POST"
+      ],
+      "description": "Remote-doctype required to send anonymized measures to the DACC shared among mycozy.cloud's Cozy."
+    },
+    "dacc-eu": {
+      "type": "eu.mycozy.dacc",
+      "verbs": [
+        "POST"
+      ],
+      "description": "Remote-doctype required to send anonymized measures to the DACC shared among mycozy.eu's Cozy."
     }
   }
 }

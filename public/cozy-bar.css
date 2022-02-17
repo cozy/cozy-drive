@@ -6,8 +6,7 @@
 
 [role=banner] .blurry {
   opacity: .5;
-  -webkit-filter: blur(5px);
-          filter: blur(5px);
+  filter: blur(5px);
 }
 
 [role=banner] [data-icon] {
@@ -451,9 +450,14 @@
 }
 
 [role=banner] .coz-nav-apps-btns-home {
-  width: 2rem;
   height: 2rem;
   margin-right: .75rem;
+}
+
+[role=banner] .coz-nav-apps-btns-home.\--flagship {
+  background: none;
+  border: 0;
+  height: 100%;
 }
 
 [role=banner] .coz-nav-apps-btns-home-svg {
@@ -910,8 +914,7 @@
   background: white;
   transform-origin: 100% 100% 0;
   transform: scale(0) translateY(6em);
-  -webkit-filter: drop-shadow(0 4px 6px rgba(50, 54, 63, 0.5));
-          filter: drop-shadow(0 4px 6px rgba(50, 54, 63, 0.5));
+  filter: drop-shadow(0 4px 6px rgba(50, 54, 63, 0.5));
   opacity: 0;
   transition: .2s transform ease-in, .1s opacity ease-in;
 }
@@ -6905,6 +6908,68 @@
   fill: inherit;
 }
 
+.cozy-ui-bar-c-loading-placeholder--215aK {
+  -webkit-animation-delay: 0.1s;
+          animation-delay: 0.1s;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-name: cozy-ui-bar-placeHolderShimmer--3-jlD;
+          animation-name: cozy-ui-bar-placeHolderShimmer--3-jlD;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+  background-position: -20rem 0;
+  background-image: linear-gradient(to right, #c0c0c0 0%, #fcfcfc 50%, #c0c0c0 100%);
+  background-size: 20rem 10rem;
+  background-repeat: no-repeat;
+  background-color: #c0c0c0;
+  border-radius: 0.15rem;
+  max-width: 100%;
+  position: relative;
+  margin: 0.1rem 0;
+}
+.cozy-ui-bar-c-app-icon--3Xbeb,
+.cozy-ui-bar-c-app-icon--3Xbeb svg {
+  height: 100%;
+  width: 100%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.cozy-ui-bar-c-app-icon-default--2Jv93 {
+  color: var(--silver);
+}
+@-webkit-keyframes cozy-ui-bar-placeHolderShimmer--3-jlD {
+  0% {
+    background-position: -20rem 0;
+  }
+  80% {
+    background-position: 20rem 0;
+  }
+  80.1% {
+    background-position: -20rem 0;
+  }
+  100% {
+    background-position: -20rem 0;
+  }
+}
+@keyframes cozy-ui-bar-placeHolderShimmer--3-jlD {
+  0% {
+    background-position: -20rem 0;
+  }
+  80% {
+    background-position: 20rem 0;
+  }
+  80.1% {
+    background-position: -20rem 0;
+  }
+  100% {
+    background-position: -20rem 0;
+  }
+}
+
 @-webkit-keyframes cozy-ui-bar-spin--39OaW {
   from {
     transform: rotate(0deg);
@@ -7893,68 +7958,6 @@
 }
 .cozy-ui-bar-c-btn--subtle--225Zu.cozy-ui-bar-c-btn--secondary--2JUsA svg {
   color: var(--coolGrey);
-}
-
-.cozy-ui-bar-c-loading-placeholder--215aK {
-  -webkit-animation-delay: 0.1s;
-          animation-delay: 0.1s;
-  -webkit-animation-duration: 2s;
-          animation-duration: 2s;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-  -webkit-animation-name: cozy-ui-bar-placeHolderShimmer--3-jlD;
-          animation-name: cozy-ui-bar-placeHolderShimmer--3-jlD;
-  -webkit-animation-timing-function: linear;
-          animation-timing-function: linear;
-  background-position: -20rem 0;
-  background-image: linear-gradient(to right, #c0c0c0 0%, #fcfcfc 50%, #c0c0c0 100%);
-  background-size: 20rem 10rem;
-  background-repeat: no-repeat;
-  background-color: #c0c0c0;
-  border-radius: 0.15rem;
-  max-width: 100%;
-  position: relative;
-  margin: 0.1rem 0;
-}
-.cozy-ui-bar-c-app-icon--3Xbeb,
-.cozy-ui-bar-c-app-icon--3Xbeb svg {
-  height: 100%;
-  width: 100%;
-  flex-grow: 0;
-  flex-shrink: 0;
-  -o-object-fit: contain;
-     object-fit: contain;
-}
-.cozy-ui-bar-c-app-icon-default--2Jv93 {
-  color: var(--silver);
-}
-@-webkit-keyframes cozy-ui-bar-placeHolderShimmer--3-jlD {
-  0% {
-    background-position: -20rem 0;
-  }
-  80% {
-    background-position: 20rem 0;
-  }
-  80.1% {
-    background-position: -20rem 0;
-  }
-  100% {
-    background-position: -20rem 0;
-  }
-}
-@keyframes cozy-ui-bar-placeHolderShimmer--3-jlD {
-  0% {
-    background-position: -20rem 0;
-  }
-  80% {
-    background-position: 20rem 0;
-  }
-  80.1% {
-    background-position: -20rem 0;
-  }
-  100% {
-    background-position: -20rem 0;
-  }
 }
 
 :root {
