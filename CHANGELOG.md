@@ -22,6 +22,11 @@
 * Upgrade cozy-client to allow all users to see progress on upload file
 * Upgrade cozy-ui to benefit of new version of material-ui component
 
+## 🐛 Bug Fixes
+
+* Upgrade cozy-ui to make upload progress bar size fixed
+* Upload: return average remaining time each 3 seconds
+
 ## 🔧 Tech
 
 * Format style files of the full repository to respect the Cozy Stylint config
