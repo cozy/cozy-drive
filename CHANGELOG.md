@@ -4,6 +4,8 @@
 
 ## 🐛 Bug Fixes
 
+* Escape public name in public cozy-to-cozy sharing view
+
 ## 🔧 Tech
 
 * Update several dependencies packages
