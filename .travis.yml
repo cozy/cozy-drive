@@ -77,47 +77,7 @@ jobs:
       name: "Photos web"
       env:
         - COZY_APP_SLUG=photos
-    - name: "Drive android"
-      stage: "build"
-      language: android
-      android:
-        components:
-          - build-tools-26.0.2
-      before_cache:
-        - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-      cache:
-        yarn: true
-        directories:
-          - node_modules
-          - $HOME/.gradle/caches/
-          - $HOME/.gradle/wrapper/
-          - $HOME/.android/build-cache
-      env:
-        - COZY_APP_SLUG=drive
-      before_install:
-        - yes | sdkmanager "platforms;android-27" # see https://github.com/travis-ci/travis-ci/issues/8874#issuecomment-350350607
-        - scripts/decrypt.sh
-        - scripts/signing.sh
-        - curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-        - sudo apt-get install nodejs
-        - sudo apt-get install build-essential
-        - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.22.4
-        - export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-        - yarn
-        - yarn run cozy-ci-transifex
-        - export PATH=/usr/local/android-sdk/build-tools/26.0.2:$PATH # Required to expose apksigner command.
-      script:
-        - yarn tx
-        - yarn build:drive:mobile
-        - yarn genicon:drive:mobile
-        - yarn prepare:drive:mobile
-        - mkdir -p src/drive/targets/mobile/build/android/
-        - yarn build:drive:android
-        - yarn autosign:drive:android
-      after_success:
-        - *downcloud-cert
-        - if [[ "$(git log -2)" =~ [\[APK\]] ]]; then APK_URL=$(node scripts/downcloud.js src/drive/targets/mobile/build/android/cozy-drive.apk) && yarn run cozy-ci-github "🎁 [Click here]($APK_URL) to download the latest Android APK"; fi
+
 env:
   global:
     - MATTERMOST_CHANNEL=appvengers
