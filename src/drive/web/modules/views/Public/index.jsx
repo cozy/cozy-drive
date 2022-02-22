@@ -214,6 +214,7 @@ const PublicFolderView = ({
             <FolderViewBody
               navigateToFolder={navigateToFolder}
               navigateToFile={navigateToFile}
+              folderUrlToNavigate={folderUrlToNavigate}
               actions={actions}
               queryResults={[filesResult]}
               canSort={false}

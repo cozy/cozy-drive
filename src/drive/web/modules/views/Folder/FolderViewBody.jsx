@@ -44,7 +44,9 @@ const FolderViewBody = ({
   navigateToFolder,
   navigateToFile,
   refreshFolderContent = null,
-  extraColumns
+  extraColumns,
+  fileUrlToNavigate,
+  folderUrlToNavigate
 }) => {
   const { router } = useRouter()
   const { isDesktop } = useBreakpoints()
@@ -79,7 +81,8 @@ const FolderViewBody = ({
         replaceCurrentUrl: url => (window.location.href = url),
         openInNewTab: url => window.open(url, '_blank'),
         routeTo: url => router.push(url),
-        isOnlyOfficeEnabled: isOnlyOfficeEnabled()
+        isOnlyOfficeEnabled: isOnlyOfficeEnabled(),
+        fileUrlToNavigate
       })({
         event,
         file,
@@ -185,7 +188,7 @@ const FolderViewBody = ({
             {/* TODO FolderViewBody should not have the responsability to chose
           which empty component to display. It should be done by the "view" itself.
           But adding a new prop like <FolderViewBody emptyComponent={}
-          is not good enought too */}
+          is not good enough too */}
             {isEmpty && currentFolderId !== TRASH_DIR_ID && (
               <EmptyDrive isEncrypted={isEncFolder} canUpload={canUpload} />
             )}
@@ -214,6 +217,7 @@ const FolderViewBody = ({
                           attributes={file}
                           withSelectionCheckbox
                           onFolderOpen={navigateToFolder}
+                          folderUrlToNavigate={folderUrlToNavigate}
                           onFileOpen={handleFileOpen}
                           withFilePath={withFilePath}
                           thumbnailSizeBig={isBigThumbnail}

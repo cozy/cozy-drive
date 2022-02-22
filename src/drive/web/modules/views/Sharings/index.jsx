@@ -116,6 +116,8 @@ export const SharingsView = ({
           <FolderViewBody
             navigateToFolder={navigateToFolder}
             navigateToFile={navigateToFile}
+            fileUrlToNavigate={fileUrlToNavigate}
+            folderUrlToNavigate={folderUrlToNavigate}
             actions={actions}
             queryResults={[result]}
             canSort={false}

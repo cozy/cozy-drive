@@ -206,6 +206,8 @@ const DriveView = ({
         <FolderViewBody
           navigateToFolder={navigateToFolder}
           navigateToFile={navigateToFile}
+          fileUrlToNavigate={fileUrlToNavigate}
+          folderUrlToNavigate={folderUrlToNavigate}
           actions={actions}
           queryResults={[foldersResult, filesResult]}
           canSort

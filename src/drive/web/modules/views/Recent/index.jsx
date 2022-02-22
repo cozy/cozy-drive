@@ -113,6 +113,8 @@ export const RecentView = ({ router, location, children }) => {
       <FolderViewBody
         navigateToFolder={navigateToFolder}
         navigateToFile={navigateToFile}
+        fileUrlToNavigate={fileUrlToNavigate}
+        folderUrlToNavigate={folderUrlToNavigate}
         actions={actions}
         queryResults={[result]}
         canSort={false}

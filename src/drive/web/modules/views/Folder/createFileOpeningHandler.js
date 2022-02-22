@@ -15,9 +15,18 @@ const createFileOpeningHandler = ({
   replaceCurrentUrl,
   openInNewTab,
   routeTo,
-  isOnlyOfficeEnabled
+  isOnlyOfficeEnabled,
+  fileUrlToNavigate
 }) => async ({ event, file, isAvailableOffline }) => {
+  const fileUrl =
+    fileUrlToNavigate(file.dir_id)(file) ||
+    `/folder/${file.dir_id}/file/${file.id}`
+
+  console.log('createFileOpeningHandler')
+
   if (isAvailableOffline) {
+    console.log('isAvailableOffline')
+
     return dispatch(openLocalFile(client, file))
   }
 
@@ -25,7 +34,11 @@ const createFileOpeningHandler = ({
   const isShortcut = models.file.isShortcut(file)
   const isOnlyOffice = models.file.shouldBeOpenedByOnlyOffice(file)
 
+  console.log('super')
+  const shouldOpenInNewTab = event.ctrlKey || event.metaKey || event.shiftKey
+
   if (isShortcut) {
+    console.log('isShortcut')
     if (isMobileApp()) {
       try {
         const resp = await client.query(
@@ -39,28 +52,35 @@ const createFileOpeningHandler = ({
       const url = generateShortcutUrl({ file, client, isFlatDomain })
       openInNewTab(url)
     }
-  } else if (isNote) {
-    try {
-      const routeToNote = await models.note.fetchURL(client, file)
-      if (event.ctrlKey || event.metaKey || event.shiftKey) {
-        openInNewTab(routeToNote)
-      } else {
-        replaceCurrentUrl(routeToNote)
-      }
-    } catch (e) {
-      Alerter.error('alert.offline')
-    }
-  } else if (isOnlyOffice && isOnlyOfficeEnabled) {
-    if (event.ctrlKey || event.metaKey || event.shiftKey) {
-      openInNewTab(makeOnlyOfficeFileRoute(file))
-    } else {
-      routeTo(makeOnlyOfficeFileRoute(file, true))
-    }
   } else {
-    if (event.ctrlKey || event.metaKey || event.shiftKey) {
-      openInNewTab(`/#/folder/${file.dir_id}/file/${file.id}`)
+    if (isNote) {
+      console.log('isNote')
+      try {
+        const routeToNote = await models.note.fetchURL(client, file)
+        if (shouldOpenInNewTab) {
+          openInNewTab(routeToNote)
+        } else {
+          replaceCurrentUrl(routeToNote)
+        }
+      } catch (e) {
+        Alerter.error('alert.offline')
+      }
+    } else if (isOnlyOffice && isOnlyOfficeEnabled) {
+      console.log('isOnlyOffice')
+      if (shouldOpenInNewTab) {
+        openInNewTab(makeOnlyOfficeFileRoute(file))
+      } else {
+        routeTo(makeOnlyOfficeFileRoute(file, true))
+      }
     } else {
-      navigateToFile(file)
+      console.log('here')
+      if (shouldOpenInNewTab) {
+        console.log('shouldOpenInNewTab')
+        openInNewTab(`/#${fileUrl}`)
+      } else {
+        console.log('should not OpenInNewTab')
+        navigateToFile(file)
+      }
     }
   }
 }

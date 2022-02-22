@@ -122,6 +122,8 @@ const TrashFolderView = ({
         displayedFolder={displayedFolder}
         navigateToFolder={navigateToFolder}
         navigateToFile={navigateToFile}
+        fileUrlToNavigate={fileUrlToNavigate}
+        folderUrlToNavigate={folderUrlToNavigate}
         actions={actions}
         queryResults={[foldersResult, filesResult]}
         canSort
