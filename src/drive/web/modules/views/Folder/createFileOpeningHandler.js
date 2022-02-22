@@ -18,11 +18,12 @@ const createFileOpeningHandler = ({
   isOnlyOfficeEnabled,
   fileUrlToNavigate
 }) => async ({ event, file, isAvailableOffline }) => {
+  console.log('createFileOpeningHandler')
   const fileUrl =
     fileUrlToNavigate(file.dir_id)(file) ||
     `/folder/${file.dir_id}/file/${file.id}`
 
-  console.log('createFileOpeningHandler')
+  console.log('fireUrl')
 
   if (isAvailableOffline) {
     console.log('isAvailableOffline')
@@ -58,8 +59,10 @@ const createFileOpeningHandler = ({
       try {
         const routeToNote = await models.note.fetchURL(client, file)
         if (shouldOpenInNewTab) {
+          console.log('shouldOpenInNewTab')
           openInNewTab(routeToNote)
         } else {
+          console.log('should NOT OpenInNewTab')
           replaceCurrentUrl(routeToNote)
         }
       } catch (e) {

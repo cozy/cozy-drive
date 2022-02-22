@@ -30,6 +30,8 @@ export const getParentLink = element => {
 const enableTouchEvents = ev => {
   // remove event when you rename a file
   if (['INPUT', 'BUTTON'].indexOf(ev.target.nodeName) !== -1) {
+    console.log('case 1')
+
     return false
   }
 
@@ -39,11 +41,15 @@ const enableTouchEvents = ev => {
     parentDiv.className.indexOf(styles['fil-content-file-select']) !== -1 ||
     parentDiv.className.indexOf(styles['fil-content-file-action']) !== -1
   ) {
+    console.log('case 2')
     return false
   }
 
   // Check if the clicked element is a file path, in that case the FileOpener has nothing to handle
-  if (ev.srcEvent.target.closest('[class^="fil-file-path"]')) return false
+  if (ev.srcEvent.target.closest('[class^="fil-file-path"]')) {
+    console.log('case 3')
+    return false
+  }
 
   return true
 }
@@ -69,9 +75,12 @@ const FileOpener = ({
       console.log('tap press singletap')
 
       if (actionMenuVisible || disabled) return
+      console.log('RETURN PASSE')
       if (enableTouchEvents(ev)) {
+        console.log('TOUCH EVENT ENABLE')
         ev.preventDefault() // prevent a ghost click
         if (ev.type === 'press' || selectionModeActive) {
+          console.log('PRESS')
           ev.srcEvent.stopImmediatePropagation()
           toggle(ev.srcEvent)
         } else {

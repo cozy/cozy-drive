@@ -73,6 +73,7 @@ const FolderViewBody = ({
 
   const handleFileOpen = useCallback(
     ({ event, file, isAvailableOffline }) => {
+      console.log('handleFileOpen')
       return createFileOpeningHandler({
         client,
         isFlatDomain,

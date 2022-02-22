@@ -36,7 +36,7 @@ const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
 const folderUrlToNavigate = folderId => `/folder/${folderId}`
-const fileUrlToNavigate = file => `/recent/file/${file.id}`
+const fileUrlToNavigate = () => file => `/recent/file/${file.id}`
 
 export const RecentView = ({ router, location, children }) => {
   const { t } = useI18n()
