@@ -62,6 +62,8 @@ const File = props => {
   }
 
   const open = (event, attributes) => {
+    console.log('open')
+
     const {
       onFolderOpen,
       onFileOpen,
@@ -70,6 +72,8 @@ const File = props => {
     } = props
     event.stopPropagation()
     if (isDirectory(attributes)) {
+      console.log('is directory')
+
       if (event.ctrlKey || event.metaKey || event.shiftKey) {
         const openInNewTab = url => window.open(url, '_blank')
         const folderUrl =
@@ -165,6 +169,7 @@ const File = props => {
           refreshFolderContent={refreshFolderContent}
           isInSyncFromSharing={isInSyncFromSharing}
           folderUrlToNavigate={folderUrlToNavigate}
+          open={open}
         />
         <LastUpdate
           date={updatedAt}

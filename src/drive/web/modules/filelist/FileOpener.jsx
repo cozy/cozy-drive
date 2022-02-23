@@ -30,11 +30,11 @@ const enableTouchEvents = ev => {
     return false
   }
 
-  // // Check if the clicked element is a file path, in that case the FileOpener has nothing to handle
-  // if (ev.srcEvent.target.closest('[class^="fil-file-path"]')) {
-  //   console.log('case 3')
-  //   return false
-  // }
+  // Check if the clicked element is a file path, in that case the FileOpener has nothing to handle
+  if (ev.srcEvent.target.closest('[class^="fil-file-path"]')) {
+    console.log('case 3')
+    return false
+  }
 
   return true
 }
@@ -140,6 +140,8 @@ const FileOpener = ({
       id={file.id}
       href={buildHref}
       onClick={ev => {
+        console.log('on click file opener')
+
         ev.preventDefault()
       }}
     >

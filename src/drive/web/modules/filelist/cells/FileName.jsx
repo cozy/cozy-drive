@@ -81,7 +81,8 @@ const FileName = ({
   formattedUpdatedAt,
   refreshFolderContent,
   isInSyncFromSharing,
-  folderUrlToNavigate
+  folderUrlToNavigate,
+  open
 }) => {
   const classes = cx(
     styles['fil-content-cell'],
@@ -131,6 +132,11 @@ const FileName = ({
               <a
                 href={`/#${folderUrlToNavigate(attributes.dir_id)}`}
                 className={styles['fil-file-path']}
+                onClick={ev => {
+                  ev.preventDefault()
+                  console.log('on click')
+                  open(ev, { type: 'directory', id: attributes.dir_id })
+                }}
               >
                 <MidEllipsis text={attributes.displayedPath} />
               </a>
