@@ -129,8 +129,7 @@ const FileName = ({
                 <CertificationsIcons attributes={attributes} />
               </div>
             ) : (
-              <a
-                href={`/#${folderUrlToNavigate(attributes.dir_id)}`}
+              <span
                 className={styles['fil-file-path']}
                 onClick={ev => {
                   ev.preventDefault()
@@ -139,7 +138,7 @@ const FileName = ({
                 }}
               >
                 <MidEllipsis text={attributes.displayedPath} />
-              </a>
+              </span>
             ))}
           {!withFilePath &&
             (isDirectory(attributes) || (
