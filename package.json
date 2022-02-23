@@ -42,6 +42,7 @@
     "run:drive:ios:emulator": "(cd src/drive/targets/mobile && cordova run ios --buildFlag='-UseModernBuildSystem=0' --emulator)",
     "publish:drive:ios": "yarn build:drive:mobile && (cd src/drive/targets/mobile && fastlane ios pushtest)",
     "sentry:drive:mobile": "sentry-cli releases -o sentry -p cozy-drive-v3 files $npm_package_version upload-sourcemaps ./src/drive/targets/mobile/www",
+    "version": "yarn version:drive & yarn version:photos",
     "version:drive:manifest": "replace '\\d+\\.\\d+\\.\\d+' $npm_package_version ./src/drive/targets/manifest.webapp",
     "version:drive:mobilePackage": "replace '\"version\": \"\\d+\\.\\d+\\.\\d+\"' '\"version\": \"'$npm_package_version'\"' ./src/drive/targets/mobile/package.json",
     "version:drive:config": "replace 'version=\"\\d+\\.\\d+\\.\\d+\"' 'version=\"'$npm_package_version'\"' ./src/drive/targets/mobile/config.xml",
