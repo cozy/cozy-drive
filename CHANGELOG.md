@@ -1,7 +1,5 @@
 # 1.40.0
 
-## ✨ Features
-
 ## 🐛 Bug Fixes
 
 * Escape public name in public cozy-to-cozy sharing view
@@ -10,6 +8,11 @@
 
 * Update several dependencies packages
 * Remove piwik-react-router useless dependencies packages
+* Add date attribute to dacc flag
+* Add generic build command
+* Move [dependabot](https://github.com/dependabot) config file to correct location
+* Fix auto-merge job what disallowed used merge commits
+* Remove Drive Android job
 
 # 1.39.0
 
