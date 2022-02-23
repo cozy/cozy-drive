@@ -218,6 +218,7 @@ const FolderViewBody = ({
                           attributes={file}
                           withSelectionCheckbox
                           onFolderOpen={navigateToFolder}
+                          fileUrlToNavigate={fileUrlToNavigate}
                           folderUrlToNavigate={folderUrlToNavigate}
                           onFileOpen={handleFileOpen}
                           withFilePath={withFilePath}

@@ -104,7 +104,9 @@ const File = props => {
     refreshFolderContent,
     isInSyncFromSharing,
     extraColumns,
-    breakpoints: { isExtraLarge, isMobile }
+    breakpoints: { isExtraLarge, isMobile },
+    fileUrlToNavigate,
+    folderUrlToNavigate
   } = props
 
   const isImage = attributes.class === 'image'
@@ -144,6 +146,8 @@ const File = props => {
         open={open}
         toggle={toggle}
         isRenaming={isRenaming}
+        fileUrlToNavigate={fileUrlToNavigate}
+        folderUrlToNavigate={folderUrlToNavigate}
       >
         <FileThumbnail
           file={attributes}
@@ -160,6 +164,7 @@ const File = props => {
           formattedUpdatedAt={formattedUpdatedAt}
           refreshFolderContent={refreshFolderContent}
           isInSyncFromSharing={isInSyncFromSharing}
+          folderUrlToNavigate={folderUrlToNavigate}
         />
         <LastUpdate
           date={updatedAt}

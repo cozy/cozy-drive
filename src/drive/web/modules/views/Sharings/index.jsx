@@ -38,7 +38,7 @@ const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
 const folderUrlToNavigate = folderId => `/sharings/${folderId}`
-const fileUrlToNavigate = file => `/sharings/file/${file.id}`
+const fileUrlToNavigate = () => file => `/sharings/file/${file.id}`
 
 export const SharingsView = ({
   router,

@@ -34,6 +34,11 @@ import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
 
+const folderUrlToNavigate = folderId =>
+  folderId ? `/sharings/${folderId}` : '/sharings'
+const fileUrlToNavigate = currentFolderId => file =>
+  `/sharings/${currentFolderId}/file/${file.id}`
+
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
@@ -77,15 +82,14 @@ const SharingsFolderView = ({
 
   const navigateToFolder = useCallback(
     folderId => {
-      if (folderId) router.push(`/sharings/${folderId}`)
-      else router.push('/sharings')
+      router.push(folderUrlToNavigate(folderId))
     },
     [router]
   )
 
   const navigateToFile = useCallback(
     file => {
-      router.push(`/sharings/${currentFolderId}/file/${file.id}`)
+      router.push(fileUrlToNavigate(currentFolderId)(file))
     },
     [router, currentFolderId]
   )
@@ -132,6 +136,8 @@ const SharingsFolderView = ({
       <FolderViewBody
         navigateToFolder={navigateToFolder}
         navigateToFile={navigateToFile}
+        fileUrlToNavigate={fileUrlToNavigate}
+        folderUrlToNavigate={folderUrlToNavigate}
         actions={actions}
         queryResults={[foldersResult, filesResult]}
         canSort

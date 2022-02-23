@@ -30,8 +30,6 @@ export const getParentLink = element => {
 const enableTouchEvents = ev => {
   // remove event when you rename a file
   if (['INPUT', 'BUTTON'].indexOf(ev.target.nodeName) !== -1) {
-    console.log('case 1')
-
     return false
   }
 
@@ -41,15 +39,14 @@ const enableTouchEvents = ev => {
     parentDiv.className.indexOf(styles['fil-content-file-select']) !== -1 ||
     parentDiv.className.indexOf(styles['fil-content-file-action']) !== -1
   ) {
-    console.log('case 2')
     return false
   }
 
-  // Check if the clicked element is a file path, in that case the FileOpener has nothing to handle
-  if (ev.srcEvent.target.closest('[class^="fil-file-path"]')) {
-    console.log('case 3')
-    return false
-  }
+  // // Check if the clicked element is a file path, in that case the FileOpener has nothing to handle
+  // if (ev.srcEvent.target.closest('[class^="fil-file-path"]')) {
+  //   console.log('case 3')
+  //   return false
+  // }
 
   return true
 }
@@ -62,7 +59,9 @@ const FileOpener = ({
   open,
   selectionModeActive,
   isRenaming,
-  children
+  children,
+  folderUrlToNavigate,
+  fileUrlToNavigate
 }) => {
   const rowRef = useRef()
 
@@ -129,7 +128,7 @@ const FileOpener = ({
   const isNote = file => file.name.endsWith('.cozy-note')
   let buildHref = ''
   if (isFolder(file)) {
-    buildHref = `/#/folder/${file.id}`
+    buildHref = `/#${folderUrlToNavigate(file.id)}`
   } else if (isNote(file)) {
     // DO NOTHING
     // http://drive.cozy.localhost:8080/#/folder/io.cozy.files.root-dir/file/682e64b839470826fda67a4abc022ff4
@@ -138,7 +137,7 @@ const FileOpener = ({
     // generate external file <=
     // DO NOTHING
   } else if (isFile(file)) {
-    buildHref = `/#/folder/${file.dir_id}/file/${file.id}`
+    buildHref = `/#${fileUrlToNavigate(file.dir_id)(file)}`
   } else {
     console.log('NOT FILE')
     console.log({ file })
