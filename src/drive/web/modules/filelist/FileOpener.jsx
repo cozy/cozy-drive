@@ -111,7 +111,9 @@ const FileOpener = ({
 
   const isFolder = file =>
     file.attributes && file.attributes.type === 'directory'
-  const isFile = file => file.attributes && file.attributes.type === 'file'
+  const isFile = file =>
+    (file.attributes && file.attributes.type === 'file') ||
+    file._type === 'io.cozy.files'
   const isShortcut = file => file.class === 'shortcut'
   const isNote = file => file.name.endsWith('.cozy-note')
   let buildHref = ''
@@ -129,6 +131,7 @@ const FileOpener = ({
   } else {
     console.log('NOT FILE')
     console.log({ file })
+    console.log('file._type, ', file._type)
     buildHref = ''
   }
 
