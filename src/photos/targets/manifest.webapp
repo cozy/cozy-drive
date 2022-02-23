@@ -2,7 +2,7 @@
   "name": "Photos",
   "name_prefix": "Cozy",
   "slug": "photos",
-  "version": "1.40.0",
+  "version": "1.41.0",
   "type": "webapp",
   "licence": "AGPL-3.0",
   "icon": "public/app-icon.svg",
