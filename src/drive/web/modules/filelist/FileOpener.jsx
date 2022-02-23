@@ -15,18 +15,6 @@ const getParentDiv = element => {
   return getParentDiv(element.parentNode)
 }
 
-export const getParentLink = element => {
-  if (!element) {
-    return null
-  }
-
-  if (element.nodeName.toLowerCase() === 'a') {
-    return element
-  }
-
-  return getParentLink(element.parentNode)
-}
-
 const enableTouchEvents = ev => {
   // remove event when you rename a file
   if (['INPUT', 'BUTTON'].indexOf(ev.target.nodeName) !== -1) {
