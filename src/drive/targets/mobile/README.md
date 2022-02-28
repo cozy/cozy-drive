@@ -117,11 +117,21 @@ $ yarn start:drive:mobile
 
 #### Standalone mode
 
-- Open your browser with web-security CORS disabled
-- launch `$ yarn start:drive:standalone`
-- Go to localhost:8888 in your browser, or check the `Dev assets` in the top of the yarn console
-- Follow the onboarding and after giving your cozy URL, click on the link logged in the bottom of the console
-- Log yourself, accept permissions and copy the url you've been redirected to.
+- Open your browser with web-security CORS disabled.
+
+Brave:
+```sh
+$ open -n -a /Applications/Brave\ Browser.app/Contents/MacOS/Brave\ Browser --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security
+```
+Chrome:
+```sh
+$ open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security
+```
+
+- After verifying that your app has been built, launch `$ yarn start:drive:standalone`
+- Go to http://localhost:8888 in your browser, or check the `Dev assets` in the top of the yarn console
+- Follow the onboarding and after giving your own cozy URL, click on the link logged in the bottom of the browser console (similar to http://cozy.localhost:8080/auth/authorize?client_id={CLIENT_ID}&redirect_uri=http%3A%2F%2Flocalhost&state={STATE}&response_type=code&scope=)
+- Log yourself, accept permissions by clicking on "AUTORIZE" and copy the url you've been redirected to (similar to http://localhost/?access_code={ACCESS_CODE}&code={CODE}&fallback=https%3A%2F%2F{COZY_USER_NAME}-drive.mycozy.cloud%2F&state={STATE}#)
 - Return to your previous tab and paste the url in the prompt (be quick, or take your time, whatever, because the prompt may be blocked when it pops if you're still on the permissions tab)
 
 ## :iphone: Launch the simulator
