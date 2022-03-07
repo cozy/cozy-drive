@@ -4,6 +4,9 @@
 
 ## 🐛 Bug Fixes
 
+ - Compute sizes in MB instead of MiB in dacc service.
+ - Query files based on their uploaded date in dacc service.
+
 ## 🔧 Tech
 
 # 1.40.0
