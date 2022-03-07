@@ -50,7 +50,7 @@ export const sendToRemoteDoctype = async (
 
 const convertFileSizeInMB = file => {
   // The size is converted in MB to avoid too large values
-  return parseInt(file.size) / (1024 * 1024) // Size in MB
+  return parseInt(file.size) / (1000 * 1000) // Size in million of Bytes (MB)
 }
 
 /**
