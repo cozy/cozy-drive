@@ -142,7 +142,7 @@
     "jest": "^24.9.0",
     "justified-layout": "2.1.2",
     "kd-tree-javascript": "1.0.3",
-    "localforage": "1.7.3",
+    "localforage": "1.10.0",
     "lodash": "4.17.21",
     "log-prefix": "0.1.1",
     "mime-types": "2.1.34",
