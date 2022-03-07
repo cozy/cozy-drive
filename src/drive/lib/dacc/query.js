@@ -13,7 +13,7 @@ export const queryFilesByDate = async (client, endDate, bookmark = '') => {
     'cozyMetadata.createdByApp': {
       $gt: null
     },
-    created_at: { $lte: endDate }
+    'cozyMetadata.uploadedAt': { $lte: endDate }
   }
   const options = {
     partialFilter: {
@@ -21,8 +21,11 @@ export const queryFilesByDate = async (client, endDate, bookmark = '') => {
       trashed: false
     },
     fields: ['cozyMetadata.createdByApp', 'size'],
-    indexedFields: ['cozyMetadata.createdByApp', 'created_at'],
-    sort: [{ 'cozyMetadata.createdByApp': 'asc' }, { created_at: 'asc' }],
+    indexedFields: ['cozyMetadata.createdByApp', 'cozyMetadata.uploadedAt'],
+    sort: [
+      { 'cozyMetadata.createdByApp': 'asc' },
+      { 'cozyMetadata.uploadedAt': 'asc' }
+    ],
     limit: 1000,
     bookmark
   }
