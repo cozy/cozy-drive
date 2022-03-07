@@ -225,7 +225,7 @@
       "description": "Remote-doctype required to send anonymized measures to the DACC shared among mycozy.cloud's Cozy."
     },
     "dacc-dev": {
-      "type": "cc.cozycloud.dacc-dev",
+      "type": "cc.cozycloud.dacc.dev",
       "verbs": [
         "POST"
       ],
