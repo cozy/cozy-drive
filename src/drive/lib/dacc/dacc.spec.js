@@ -54,10 +54,10 @@ describe('dacc service', () => {
       'maif',
       'maif-vie'
     ])
-    expect(sizesBySlug['drive']).toEqual(4)
-    expect(sizesBySlug['edf']).toEqual(2)
-    expect(sizesBySlug['maif']).toEqual(8)
-    expect(sizesBySlug['maif-vie']).toEqual(6)
+    expect(sizesBySlug['drive']).toEqual(4.194304)
+    expect(sizesBySlug['edf']).toEqual(2.097152)
+    expect(sizesBySlug['maif']).toEqual(8.388608)
+    expect(sizesBySlug['maif-vie']).toEqual(6.291456)
   })
 
   it('should aggregate all sizes but excluded slug', async () => {
