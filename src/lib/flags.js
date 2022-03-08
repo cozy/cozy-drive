@@ -23,8 +23,8 @@ const flagsList = () => {
   flag('viewer-bottom-sheet-tension')
   flag('viewer-bottom-sheet-friction')
   flag('viewer-bottom-sheet-clamp')
-  flag('drive.onlyoffice.forceReadOnlyOnDesktop')
-  flag('drive.onlyoffice.editorToolbarHeight')
+  flag('drive.onlyoffice.forceReadOnlyOnDesktop') // flagName should use kebab case
+  flag('drive.onlyoffice.editorToolbarHeight') // flagName should use kebab case
   flag('drive.logger')
   flag('drive.enable-encryption')
 }
