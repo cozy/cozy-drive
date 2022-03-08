@@ -69,7 +69,7 @@ const DebugTools = ({ offline, setOffline }) => {
         onChange={e =>
           handleOnChange(
             parseFloat(e.target.value),
-            'viewer-bottomSheet-tension',
+            'viewer-bottom-sheet-tension',
             setBottomSheetTension
           )
         }
@@ -81,7 +81,7 @@ const DebugTools = ({ offline, setOffline }) => {
         onChange={e =>
           handleOnChange(
             parseFloat(e.target.value),
-            'viewer-bottomSheet-friction',
+            'viewer-bottom-sheet-friction',
             setBottomSheetFriction
           )
         }
@@ -92,7 +92,7 @@ const DebugTools = ({ offline, setOffline }) => {
         onChange={e =>
           handleOnChange(
             e.target.checked,
-            'viewer-bottomSheet-clamp',
+            'viewer-bottom-sheet-clamp',
             setBottomSheetClamp
           )
         }

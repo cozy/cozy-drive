@@ -17,11 +17,12 @@ export const initFlags = () => {
   }
 }
 
+// flagName should use kebab case
 const flagsList = () => {
   flag('switcher', true)
-  flag('viewer-bottomSheet-tension')
-  flag('viewer-bottomSheet-friction')
-  flag('viewer-bottomSheet-clamp')
+  flag('viewer-bottom-sheet-tension')
+  flag('viewer-bottom-sheet-friction')
+  flag('viewer-bottom-sheet-clamp')
   flag('drive.onlyoffice.forceReadOnlyOnDesktop')
   flag('drive.onlyoffice.editorToolbarHeight')
   flag('drive.logger')
