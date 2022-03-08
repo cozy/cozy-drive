@@ -103,16 +103,16 @@ const BottomSheetWrapper = ({
       // springConfig doc : https://www.react-spring.io/docs/hooks/api
       springConfig={{
         tension:
-          typeof flag('viewer-bottomSheet-tension') === 'number'
-            ? flag('viewer-bottomSheet-tension')
+          typeof flag('viewer-bottom-sheet-tension') === 'number'
+            ? flag('viewer-bottom-sheet-tension')
             : defaultBottomSheetSpringConfig.tension,
         friction:
-          typeof flag('viewer-bottomSheet-friction') === 'number'
-            ? flag('viewer-bottomSheet-friction')
+          typeof flag('viewer-bottom-sheet-friction') === 'number'
+            ? flag('viewer-bottom-sheet-friction')
             : defaultBottomSheetSpringConfig.friction,
         clamp:
-          typeof flag('viewer-bottomSheet-clamp') === 'boolean'
-            ? flag('viewer-bottomSheet-clamp')
+          typeof flag('viewer-bottom-sheet-clamp') === 'boolean'
+            ? flag('viewer-bottom-sheet-clamp')
             : defaultBottomSheetSpringConfig.clamp
       }}
       disabledClosing={true}
