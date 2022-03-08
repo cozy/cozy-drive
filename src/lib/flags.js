@@ -20,6 +20,7 @@ export const initFlags = () => {
 // flagName should use kebab case
 const flagsList = () => {
   flag('switcher', true)
+  flag('debug')
   flag('viewer-bottom-sheet-tension')
   flag('viewer-bottom-sheet-friction')
   flag('viewer-bottom-sheet-clamp')
@@ -27,4 +28,6 @@ const flagsList = () => {
   flag('drive.onlyoffice.editorToolbarHeight') // flagName should use kebab case
   flag('drive.logger')
   flag('drive.enable-encryption')
+  flag('drive.dacc-files-size-by-slug')
+  flag('drive.breadcrumb.showCompleteBreadcrumbOnPublicPage') // flagName should use kebab case
 }
