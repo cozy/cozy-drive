@@ -8,7 +8,7 @@ import { ButtonLink } from 'cozy-ui/transpiled/react/Button'
 import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
 
 import { withClient } from 'cozy-client'
-import { isMobileApp } from 'cozy-device-helper'
+import { isMobileApp, isFlagshipApp } from 'cozy-device-helper'
 
 import withInstance from 'drive/web/modules/upload/withInstance'
 
@@ -29,7 +29,7 @@ const buildPremiumLink = (uuid, managerUrl) =>
 
 // TODO use cozy-client helpers after https://github.com/cozy/cozy-client/pull/567 merge
 const SupportUs = ({ t, client }) => {
-  if (isMobileApp()) return null
+  if (isMobileApp() || isFlagshipApp()) return null
 
   const instanceInfo = withInstance(client)
 
