@@ -2,13 +2,19 @@
 
 ## ✨ Features
 
+* When displaying cozy-home from Cozy's native application, the Support Us is not displayed
+
 ## 🐛 Bug Fixes
 
- - Compute sizes in MB instead of MiB in dacc service.
- - Query files based on their uploaded date in dacc service.
+ * Compute sizes in MB instead of MiB in dacc service.
+ * Query files based on their uploaded date in dacc service.
+ * Upload drop zone can correctly upload file with name containing ampersand "&" and hash "#"
 
 ## 🔧 Tech
 
+* Update several dependencies packages
+* Publish in our internal communication tool, when new versions of the applications are released
+* Update documentation about standalone mode
 * Add bundlemon size limit
 
 # 1.40.0
