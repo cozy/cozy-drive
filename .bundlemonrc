@@ -1,4 +1,5 @@
 {
+  "verbose": true,
   "baseDir": "./build/drive",
   "files": [
     {
@@ -42,14 +43,5 @@
       "maxSize": "1.41 MB"
     }
   ],
-  "reportOutput": [
-    [
-      "github",
-      {
-        "checkRun": false,
-        "commitStatus": true,
-        "prComment": true
-      }
-    ]
-  ]
+  "reportOutput": ["github"]
 }
