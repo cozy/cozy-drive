@@ -9,6 +9,7 @@
  * Compute sizes in MB instead of MiB in dacc service.
  * Query files based on their uploaded date in dacc service.
  * Upload drop zone can correctly upload file with name containing ampersand "&" and hash "#"
+ * Do not query encryption files when flag is not set
 
 ## 🔧 Tech
 

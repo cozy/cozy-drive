@@ -1,4 +1,5 @@
 import get from 'lodash/get'
+import flag from 'cozy-flags'
 import { DOCTYPE_FILES, DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
 import { ENCRYPTION_MIME_TYPE } from 'drive/constants/config'
 import { buildEncryptionByIdQuery } from 'drive/web/modules/queries'
@@ -17,6 +18,9 @@ export const isEncryptedFile = file => {
 }
 
 export const getEncryptionKeyFromDirId = async (client, dirId) => {
+  if (!flag('drive.enable-encryption')) {
+    return null
+  }
   const docId = `${DOCTYPE_FILES}/${dirId}`
   const query = buildEncryptionByIdQuery(docId)
   const res = await client.query(query.definition, { options: query.options })
