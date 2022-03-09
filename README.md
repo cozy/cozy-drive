@@ -147,7 +147,7 @@ Community
 
 ### Localization
 
-Localization and translations are handled by [Transifex][tx], which is used by all Cozy's apps.
+Localization and translations are handled by [Transifex][tx].
 
 As a _translator_, you can login to [Transifex][tx-signin] (using your Github account) and claim access to the [app repository][tx-app]. Locales are pulled [by the pipeline][yarn tx in travis.yml] when app is build before publishing.
 
