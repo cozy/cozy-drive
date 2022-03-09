@@ -25,4 +25,5 @@ const flagsList = () => {
   flag('drive.onlyoffice.forceReadOnlyOnDesktop')
   flag('drive.onlyoffice.editorToolbarHeight')
   flag('drive.logger')
+  flag('drive.enable-encryption')
 }
