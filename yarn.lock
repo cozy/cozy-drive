@@ -4123,10 +4123,10 @@ bundlemon-utils@^0.4.0:
   dependencies:
     bytes "^3.1.0"
 
-bundlemon@1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/bundlemon/-/bundlemon-1.3.0.tgz#ea5150107c61c2d00f2448588965ff5e478ffccf"
-  integrity sha512-6tSARvzrYf3K8xRC19GXBTCI4p45QxDV4VyyYEh1hUuM7gJdBIAUalhZY/5yidmhthGkonIVTh3taH054BLqGw==
+bundlemon@1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/bundlemon/-/bundlemon-1.3.1.tgz#2bac7be5e53ed6901a578d494c2ded8ab975611d"
+  integrity sha512-9FhJS9N/GV6HkQG1buqxkKdGyPCHp+3iqRuYjVwAgSuHFdPvTyjpzxaa7fCjX3JYyXqkDLjhkASNQGWsx6SzTg==
   dependencies:
     axios "^0.21.1"
     brotli-size "^4.0.0"
