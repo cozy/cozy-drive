@@ -16,13 +16,15 @@
 * Update several dependencies packages
 * Publish in our internal communication tool, when new versions of the applications are released
 * Update documentation about standalone mode
-* Add bundlemon size limit
+* Upgrade bundlemon to run on master pipeline and explicit delta on PR
 
 # 1.40.0
 
 ## 🐛 Bug Fixes
 
 * Escape public name in public cozy-to-cozy sharing view
+* Fix upload when file name contains characters like `#` or `&`
+* Fix AppIcon issue
 
 ## 🔧 Tech
 
