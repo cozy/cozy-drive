@@ -8,15 +8,18 @@
 
  * Compute sizes in MB instead of MiB in dacc service.
  * Query files based on their uploaded date in dacc service.
- * Upload drop zone can correctly upload file with name containing ampersand "&" and hash "#"
  * Do not query encryption files when flag is not set
 
 ## 🔧 Tech
 
+* Upgrade bundlemon to run on master pipeline and explicit delta on PR
+* Add pull request template, explicit CHANGELOG.md to update
 * Update several dependencies packages
 * Publish in our internal communication tool, when new versions of the applications are released
-* Update documentation about standalone mode
-* Upgrade bundlemon to run on master pipeline and explicit delta on PR
+* Update documentation about standalone mode and Transifex
+* Add script command to execute version update for drive and photos simultaneously
+* Clear mocks automatically in the configuration of Jest, our test runner
+* Minor improvements in the code revealed by our linters
 
 # 1.40.0
 
