@@ -154,7 +154,7 @@
     "pouchdb-adapter-idb": "7.2.2",
     "pouchdb-adapter-indexeddb": "7.2.2",
     "pouchdb-debug": "^7.2.1",
-    "prop-types": "15.7.2",
+    "prop-types": "15.8.1",
     "propagating-hammerjs": "^2.0.1",
     "raven-js": "3.27.2",
     "react": "16.14.0",
