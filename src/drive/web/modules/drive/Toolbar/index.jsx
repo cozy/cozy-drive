@@ -59,7 +59,8 @@ class Toolbar extends Component {
       canCreateFolder,
       hasWriteAccess,
       breakpoints: { isMobile },
-      client
+      client,
+      webviewIntent
     } = this.props
 
     const isDisabled = disabled || selectionModeActive
@@ -98,6 +99,7 @@ class Toolbar extends Component {
               store={this.context.store}
               t={t}
               lang={lang}
+              webviewService={webviewIntent}
             >
               <SharingProvider doctype="io.cozy.files" documentType="Files">
                 <MoreMenu

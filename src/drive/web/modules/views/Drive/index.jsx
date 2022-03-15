@@ -49,6 +49,7 @@ import FolderViewBreadcrumb from 'drive/web/modules/views/Folder/FolderViewBread
 import { useTrashRedirect } from 'drive/web/modules/views/Drive/useTrashRedirect'
 import FabWithMenuContext from 'drive/web/modules/drive/FabWithMenuContext'
 import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
+import { useWebviewIntent } from 'cozy-intent'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
@@ -171,6 +172,8 @@ const DriveView = ({
     }
   }, [setIsFabDisplayed, isMobile, canWriteToCurrentFolder])
 
+  const webviewIntent = useWebviewIntent()
+
   return (
     <FolderView>
       <FolderViewHeader>
@@ -185,6 +188,7 @@ const DriveView = ({
           canUpload={true}
           canCreateFolder={true}
           disabled={isLoading || isInError || isPending}
+          webviewIntent={webviewIntent}
         />
       </FolderViewHeader>
       {__TARGET__ === 'mobile' && (
