@@ -174,7 +174,7 @@
     "redux-thunk": "2.3.0",
     "scheduler": "0.20.2",
     "snarkdown": "2.0.0",
-    "webpack-node-externals": "1.7.2",
+    "webpack-node-externals": "3.0.0",
     "whatwg-fetch": "3.0.0"
   }
 }
