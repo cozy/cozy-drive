@@ -20,6 +20,7 @@
 * Add script command to execute version update for drive and photos simultaneously
 * Clear mocks automatically in the configuration of Jest, our test runner
 * Minor improvements in the code revealed by our linters
+* Remove react-autosuggest as not used directly in this package
 
 # 1.40.0
 
