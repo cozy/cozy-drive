@@ -31,6 +31,10 @@ import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
+const folderUrlToNavigate = folderId => `/trash/${folderId}`
+const fileUrlToNavigate = currentFolderId => file =>
+  `/trash/${currentFolderId}/file/${file.id}`
+
 const TrashFolderView = ({
   currentFolderId,
   displayedFolder,
@@ -72,14 +76,14 @@ const TrashFolderView = ({
 
   const navigateToFolder = useCallback(
     folderId => {
-      router.push(`/trash/${folderId}`)
+      router.push(folderUrlToNavigate(folderId))
     },
     [router]
   )
 
   const navigateToFile = useCallback(
     file => {
-      router.push(`/trash/${currentFolderId}/file/${file.id}`)
+      router.push(fileUrlToNavigate(currentFolderId)(file))
     },
     [router, currentFolderId]
   )
@@ -118,6 +122,8 @@ const TrashFolderView = ({
         displayedFolder={displayedFolder}
         navigateToFolder={navigateToFolder}
         navigateToFile={navigateToFile}
+        fileUrlToNavigate={fileUrlToNavigate}
+        folderUrlToNavigate={folderUrlToNavigate}
         actions={actions}
         queryResults={[foldersResult, filesResult]}
         canSort

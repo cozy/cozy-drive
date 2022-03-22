@@ -62,10 +62,26 @@ const File = props => {
   }
 
   const open = (event, attributes) => {
-    const { onFolderOpen, onFileOpen, isAvailableOffline } = props
+    console.log('open')
+
+    const {
+      onFolderOpen,
+      onFileOpen,
+      isAvailableOffline,
+      folderUrlToNavigate
+    } = props
     event.stopPropagation()
     if (isDirectory(attributes)) {
-      onFolderOpen(attributes.id)
+      console.log('is directory')
+
+      if (event.ctrlKey || event.metaKey || event.shiftKey) {
+        const openInNewTab = url => window.open(url, '_blank')
+        const folderUrl =
+          folderUrlToNavigate(attributes.id) || `/folder/${attributes.id}`
+        openInNewTab(`/#${folderUrl}`)
+      } else {
+        onFolderOpen(attributes.id)
+      }
     } else {
       onFileOpen({
         event,
@@ -92,7 +108,9 @@ const File = props => {
     refreshFolderContent,
     isInSyncFromSharing,
     extraColumns,
-    breakpoints: { isExtraLarge, isMobile }
+    breakpoints: { isExtraLarge, isMobile },
+    fileUrlToNavigate,
+    folderUrlToNavigate
   } = props
 
   const isImage = attributes.class === 'image'
@@ -132,6 +150,8 @@ const File = props => {
         open={open}
         toggle={toggle}
         isRenaming={isRenaming}
+        fileUrlToNavigate={fileUrlToNavigate}
+        folderUrlToNavigate={folderUrlToNavigate}
       >
         <FileThumbnail
           file={attributes}
@@ -148,6 +168,8 @@ const File = props => {
           formattedUpdatedAt={formattedUpdatedAt}
           refreshFolderContent={refreshFolderContent}
           isInSyncFromSharing={isInSyncFromSharing}
+          folderUrlToNavigate={folderUrlToNavigate}
+          open={open}
         />
         <LastUpdate
           date={updatedAt}

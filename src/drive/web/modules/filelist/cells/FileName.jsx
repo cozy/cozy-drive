@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react'
 import cx from 'classnames'
-import { Link } from 'react-router'
 import get from 'lodash/get'
 
 import { useClient } from 'cozy-client'
@@ -81,7 +80,9 @@ const FileName = ({
   formattedSize,
   formattedUpdatedAt,
   refreshFolderContent,
-  isInSyncFromSharing
+  isInSyncFromSharing,
+  folderUrlToNavigate,
+  open
 }) => {
   const classes = cx(
     styles['fil-content-cell'],
@@ -128,13 +129,16 @@ const FileName = ({
                 <CertificationsIcons attributes={attributes} />
               </div>
             ) : (
-              <Link
-                to={`/folder/${attributes.dir_id}`}
-                // Please do not modify the className as it is used in event handling, see FileOpener#46
+              <span
                 className={styles['fil-file-path']}
+                onClick={ev => {
+                  ev.preventDefault()
+                  console.log('on click')
+                  open(ev, { type: 'directory', id: attributes.dir_id })
+                }}
               >
                 <MidEllipsis text={attributes.displayedPath} />
-              </Link>
+              </span>
             ))}
           {!withFilePath &&
             (isDirectory(attributes) || (
