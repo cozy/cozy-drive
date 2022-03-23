@@ -82,8 +82,5 @@ export default compose(
   withSharingState,
   withClient,
   withVaultClient,
-  connect(
-    null,
-    mapDispatchToProps
-  )
+  connect(null, mapDispatchToProps)
 )(Dropzone)

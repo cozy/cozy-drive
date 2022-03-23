@@ -47,7 +47,7 @@ const setup = ({
         history: jest.fn()
       }}
       sharingContextValue={{
-        byDocId: { '123': {} },
+        byDocId: { 123: {} },
         documentType: 'Files'
       }}
     >

@@ -23,8 +23,9 @@ jest.mock('cozy-keys-lib', () => ({
       </>
     )
 
-    Component.displayName = `withVaultClient(${BaseComponent.displayName ||
-      BaseComponent.name})`
+    Component.displayName = `withVaultClient(${
+      BaseComponent.displayName || BaseComponent.name
+    })`
 
     return Component
   },

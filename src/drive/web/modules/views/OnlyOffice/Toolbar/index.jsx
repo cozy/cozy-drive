@@ -19,13 +19,8 @@ import useUpdateDocumentTitle from 'drive/web/modules/views/useUpdateDocumentTit
 
 const Toolbar = () => {
   const { isMobile } = useBreakpoints()
-  const {
-    fileId,
-    isPublic,
-    isFromSharing,
-    isEditorReadOnly,
-    isEditorReady
-  } = useContext(OnlyOfficeContext)
+  const { fileId, isPublic, isFromSharing, isEditorReadOnly, isEditorReady } =
+    useContext(OnlyOfficeContext)
   useUpdateDocumentTitle(fileId)
   const { data: fileWithPath } = useFileWithPath(fileId)
   const { router } = useRouter()
@@ -34,10 +29,10 @@ const Toolbar = () => {
     () => router.location.pathname.endsWith('/fromCreate'),
     [router]
   )
-  const hasOnyMoreHistoryEntry = useMemo(() => isFromSharing || isFromCreate, [
-    isFromSharing,
-    isFromCreate
-  ])
+  const hasOnyMoreHistoryEntry = useMemo(
+    () => isFromSharing || isFromCreate,
+    [isFromSharing, isFromCreate]
+  )
   // The condition is different in the case of a only office file that has been shared with us.
   // In this case there is a double redirection (one to know that the file is a share, the other
   // to open it on the host instance), so there is an additional entry in the history.

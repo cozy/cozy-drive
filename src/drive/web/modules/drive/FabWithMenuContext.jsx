@@ -6,13 +6,8 @@ import Fab from 'drive/web/modules/drive/Fab'
 import { AddMenuContext } from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
 
 const FabWithMenuContext = ({ noSidebar }) => {
-  const {
-    anchorRef,
-    handleToggle,
-    isDisabled,
-    handleOfflineClick,
-    isOffline
-  } = useContext(AddMenuContext)
+  const { anchorRef, handleToggle, isDisabled, handleOfflineClick, isOffline } =
+    useContext(AddMenuContext)
 
   return (
     <div

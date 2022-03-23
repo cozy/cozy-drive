@@ -15,9 +15,10 @@ const FolderViewBreadcrumb = ({
     sharedDocumentIds
   })
 
-  const onBreadcrumbClick = useCallback(({ id }) => navigateToFolder(id), [
-    navigateToFolder
-  ])
+  const onBreadcrumbClick = useCallback(
+    ({ id }) => navigateToFolder(id),
+    [navigateToFolder]
+  )
 
   return path && path.length > 0 ? (
     <Breadcrumb

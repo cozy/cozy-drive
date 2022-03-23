@@ -13,11 +13,8 @@ import {
 import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 
 import { models } from 'cozy-client'
-const {
-  doMobileUpload,
-  readMobileFile,
-  uploadFileWithConflictStrategy
-} = models.file
+const { doMobileUpload, readMobileFile, uploadFileWithConflictStrategy } =
+  models.file
 
 export { UploadQueue }
 
@@ -169,95 +166,97 @@ export const uploadProgress = (file, event, date) => ({
   date: date || Date.now()
 })
 
-export const processNextFile = (
-  fileUploadedCallback,
-  queueCompletedCallback,
-  dirID,
-  sharingState,
-  { client, vaultClient }
-) => async (dispatch, getState) => {
-  let error = null
-  if (!client) {
-    throw new Error(
-      'Upload module needs a cozy-client instance to work. This instance should be made available by using the extraArgument function of redux-thunk'
-    )
-  }
-  const item = getUploadQueue(getState()).find(i => i.status === PENDING)
-  if (!item) {
-    return dispatch(onQueueEmpty(queueCompletedCallback))
-  }
-
-  const { file, entry, isDirectory } = item
-  const encryptionKey = await getEncryptionKeyFromDirId(client, dirID)
-  try {
-    dispatch({ type: UPLOAD_FILE, file })
-    if (entry && isDirectory) {
-      const newDir = await uploadDirectory(client, entry, dirID, {
-        vaultClient,
-        encryptionKey
-      })
-      fileUploadedCallback(newDir)
-    } else {
-      const withProgress = {
-        onUploadProgress: event => {
-          dispatch(uploadProgress(file, event))
-        }
-      }
-
-      const uploadedFile = await uploadFile(client, file, dirID, {
-        vaultClient,
-        encryptionKey,
-        ...withProgress
-      })
-
-      fileUploadedCallback(uploadedFile)
+export const processNextFile =
+  (
+    fileUploadedCallback,
+    queueCompletedCallback,
+    dirID,
+    sharingState,
+    { client, vaultClient }
+  ) =>
+  async (dispatch, getState) => {
+    let error = null
+    if (!client) {
+      throw new Error(
+        'Upload module needs a cozy-client instance to work. This instance should be made available by using the extraArgument function of redux-thunk'
+      )
     }
-    dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file })
-  } catch (uploadError) {
-    error = uploadError
-    if (uploadError.status === CONFLICT_ERROR) {
-      try {
-        const path = await CozyFile.getFullpath(dirID, file.name)
-        const uploadedFile = await overwriteFile(client, file, path, {
+    const item = getUploadQueue(getState()).find(i => i.status === PENDING)
+    if (!item) {
+      return dispatch(onQueueEmpty(queueCompletedCallback))
+    }
+
+    const { file, entry, isDirectory } = item
+    const encryptionKey = await getEncryptionKeyFromDirId(client, dirID)
+    try {
+      dispatch({ type: UPLOAD_FILE, file })
+      if (entry && isDirectory) {
+        const newDir = await uploadDirectory(client, entry, dirID, {
+          vaultClient,
+          encryptionKey
+        })
+        fileUploadedCallback(newDir)
+      } else {
+        const withProgress = {
           onUploadProgress: event => {
             dispatch(uploadProgress(file, event))
           }
+        }
+
+        const uploadedFile = await uploadFile(client, file, dirID, {
+          vaultClient,
+          encryptionKey,
+          ...withProgress
         })
+
         fileUploadedCallback(uploadedFile)
-        dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file, isUpdate: true })
-        error = null
-      } catch (updateError) {
-        error = updateError
+      }
+      dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file })
+    } catch (uploadError) {
+      error = uploadError
+      if (uploadError.status === CONFLICT_ERROR) {
+        try {
+          const path = await CozyFile.getFullpath(dirID, file.name)
+          const uploadedFile = await overwriteFile(client, file, path, {
+            onUploadProgress: event => {
+              dispatch(uploadProgress(file, event))
+            }
+          })
+          fileUploadedCallback(uploadedFile)
+          dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file, isUpdate: true })
+          error = null
+        } catch (updateError) {
+          error = updateError
+        }
+      }
+      if (error) {
+        logger.warn(error)
+        logException(
+          `Upload module catches an error when executing processNextFile(): ${error}`
+        )
+        const statusError = {
+          409: CONFLICT,
+          413: QUOTA
+        }
+
+        const status =
+          statusError[error.status] ||
+          (/Failed to fetch$/.exec(error.toString()) && NETWORK) ||
+          FAILED
+
+        dispatch({ type: RECEIVE_UPLOAD_ERROR, file, status })
       }
     }
-    if (error) {
-      logger.warn(error)
-      logException(
-        `Upload module catches an error when executing processNextFile(): ${error}`
+    dispatch(
+      processNextFile(
+        fileUploadedCallback,
+        queueCompletedCallback,
+        dirID,
+        sharingState,
+        { client, vaultClient }
       )
-      const statusError = {
-        409: CONFLICT,
-        413: QUOTA
-      }
-
-      const status =
-        statusError[error.status] ||
-        (/Failed to fetch$/.exec(error.toString()) && NETWORK) ||
-        FAILED
-
-      dispatch({ type: RECEIVE_UPLOAD_ERROR, file, status })
-    }
-  }
-  dispatch(
-    processNextFile(
-      fileUploadedCallback,
-      queueCompletedCallback,
-      dirID,
-      sharingState,
-      { client, vaultClient }
     )
-  )
-}
+  }
 
 const getFileFromEntry = entry => new Promise(resolve => entry.file(resolve))
 
@@ -373,78 +372,77 @@ export const overwriteFile = async (client, file, path, options = {}) => {
   return resp.data
 }
 
-export const uploadFilesFromNative = (
-  files,
-  folderId,
-  uploadFilesSuccessCallback,
-  { client, vaultClient }
-) => async dispatch => {
-  dispatch({
-    type: ADD_TO_UPLOAD_QUEUE,
-    files: files
-  })
-  const encryptionKey = await getEncryptionKeyFromDirId(client, folderId)
-  // !TODO Promise.All to use parallelization
-  for (const file of files) {
-    try {
-      const fileOpts = {
-        name: file.file.name,
-        dirId: folderId,
-        conflictStrategy: 'rename'
-      }
-      if (encryptionKey) {
-        const blobFile = await readMobileFile(file.file.fileUrl)
-        const encryptedFile = await vaultClient.encryptFile(
-          blobFile,
-          encryptionKey
+export const uploadFilesFromNative =
+  (files, folderId, uploadFilesSuccessCallback, { client, vaultClient }) =>
+  async dispatch => {
+    dispatch({
+      type: ADD_TO_UPLOAD_QUEUE,
+      files: files
+    })
+    const encryptionKey = await getEncryptionKeyFromDirId(client, folderId)
+    // !TODO Promise.All to use parallelization
+    for (const file of files) {
+      try {
+        const fileOpts = {
+          name: file.file.name,
+          dirId: folderId,
+          conflictStrategy: 'rename'
+        }
+        if (encryptionKey) {
+          const blobFile = await readMobileFile(file.file.fileUrl)
+          const encryptedFile = await vaultClient.encryptFile(
+            blobFile,
+            encryptionKey
+          )
+          await uploadFileWithConflictStrategy(client, encryptedFile, {
+            ...fileOpts,
+            contentType: ENCRYPTION_MIME_TYPE
+          })
+        } else {
+          await doMobileUpload(client, file.file.fileUrl, {
+            ...fileOpts,
+            contentType: file.file.type
+          })
+        }
+        dispatch(removeFileToUploadQueue(file.file))
+      } catch (error) {
+        logger.error(
+          `Uploading files from native failed with file ${file.file}: ${error}`
         )
-        await uploadFileWithConflictStrategy(client, encryptedFile, {
-          ...fileOpts,
-          contentType: ENCRYPTION_MIME_TYPE
-        })
-      } else {
-        await doMobileUpload(client, file.file.fileUrl, {
-          ...fileOpts,
-          contentType: file.file.type
-        })
       }
-      dispatch(removeFileToUploadQueue(file.file))
-    } catch (error) {
-      logger.error(
-        `Uploading files from native failed with file ${file.file}: ${error}`
-      )
     }
-  }
 
-  if (uploadFilesSuccessCallback) uploadFilesSuccessCallback()
-}
+    if (uploadFilesSuccessCallback) uploadFilesSuccessCallback()
+  }
 
 export const removeFileToUploadQueue = file => async dispatch => {
   dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file, isUpdate: true })
 }
 
-export const addToUploadQueue = (
-  files,
-  dirID,
-  sharingState,
-  fileUploadedCallback,
-  queueCompletedCallback,
-  { client, vaultClient }
-) => async dispatch => {
-  dispatch({
-    type: ADD_TO_UPLOAD_QUEUE,
-    files: extractFilesEntries(files)
-  })
-  dispatch(
-    processNextFile(
-      fileUploadedCallback,
-      queueCompletedCallback,
-      dirID,
-      sharingState,
-      { client, vaultClient }
+export const addToUploadQueue =
+  (
+    files,
+    dirID,
+    sharingState,
+    fileUploadedCallback,
+    queueCompletedCallback,
+    { client, vaultClient }
+  ) =>
+  async dispatch => {
+    dispatch({
+      type: ADD_TO_UPLOAD_QUEUE,
+      files: extractFilesEntries(files)
+    })
+    dispatch(
+      processNextFile(
+        fileUploadedCallback,
+        queueCompletedCallback,
+        dirID,
+        sharingState,
+        { client, vaultClient }
+      )
     )
-  )
-}
+  }
 
 export const purgeUploadQueue = () => ({ type: PURGE_UPLOAD_QUEUE })
 

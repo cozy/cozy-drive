@@ -47,10 +47,10 @@ export const getOnlyNeededActions = (actions, file) => {
  * `file`.
  */
 export const ActionsItems = ({ actions, file, onClose }) => {
-  const cleanedActions = useMemo(() => getOnlyNeededActions(actions, file), [
-    actions,
-    file
-  ])
+  const cleanedActions = useMemo(
+    () => getOnlyNeededActions(actions, file),
+    [actions, file]
+  )
 
   return cleanedActions.map((actionObject, i) => {
     const actionName = getActionName(actionObject)

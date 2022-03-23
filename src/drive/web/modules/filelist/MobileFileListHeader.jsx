@@ -27,12 +27,14 @@ export const MobileFileListHeader = ({
   const { t } = useI18n()
   const [isShowingSortMenu, setIsShowingSortMenu] = useState(false)
 
-  const showSortMenu = useCallback(() => setIsShowingSortMenu(true), [
-    setIsShowingSortMenu
-  ])
-  const hideSortMenu = useCallback(() => setIsShowingSortMenu(false), [
-    setIsShowingSortMenu
-  ])
+  const showSortMenu = useCallback(
+    () => setIsShowingSortMenu(true),
+    [setIsShowingSortMenu]
+  )
+  const hideSortMenu = useCallback(
+    () => setIsShowingSortMenu(false),
+    [setIsShowingSortMenu]
+  )
 
   if (!canSort) return null
   const actualSort = sort || DEFAULT_SORT

@@ -33,10 +33,7 @@ const mapDispatchToProps = dispatch => ({
 
 const deleteContainer = compose(
   toolbarContainer,
-  connect(
-    null,
-    mapDispatchToProps
-  )
+  connect(null, mapDispatchToProps)
 )
 
 export default deleteContainer

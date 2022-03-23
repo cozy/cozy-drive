@@ -20,12 +20,8 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Title = () => {
-  const {
-    isPublic,
-    isFromSharing,
-    isInSharedFolder,
-    isEditorForcedReadOnly
-  } = useContext(OnlyOfficeContext)
+  const { isPublic, isFromSharing, isInSharedFolder, isEditorForcedReadOnly } =
+    useContext(OnlyOfficeContext)
   const styles = useStyles()
   const { isMobile } = useBreakpoints()
 

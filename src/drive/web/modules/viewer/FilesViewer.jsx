@@ -150,15 +150,14 @@ const FilesViewer = ({ filesQuery, files, fileId, onClose, onChange }) => {
 
   const currentIndex = useMemo(() => getCurrentIndex(), [getCurrentIndex])
   const hasCurrentIndex = useMemo(() => currentIndex != -1, [currentIndex])
-  const viewerFiles = useMemo(() => (hasCurrentIndex ? files : [currentFile]), [
-    hasCurrentIndex,
-    files,
-    currentFile
-  ])
-  const viewerIndex = useMemo(() => (hasCurrentIndex ? currentIndex : 0), [
-    hasCurrentIndex,
-    currentIndex
-  ])
+  const viewerFiles = useMemo(
+    () => (hasCurrentIndex ? files : [currentFile]),
+    [hasCurrentIndex, files, currentFile]
+  )
+  const viewerIndex = useMemo(
+    () => (hasCurrentIndex ? currentIndex : 0),
+    [hasCurrentIndex, currentIndex]
+  )
 
   // If we can't find the file, we fallback to the (potentially loading)
   // direct stat made by the viewer

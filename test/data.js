@@ -144,11 +144,9 @@ export const officeDocParam = {
         documentType: 'word',
         document: {
           filetype: 'docx',
-          key:
-            '32e07d806f9b0139c541543d7eb8149c-56a653128a91a5c2291db9735b43fd86',
+          key: '32e07d806f9b0139c541543d7eb8149c-56a653128a91a5c2291db9735b43fd86',
           title: 'Letter.docx',
-          url:
-            'https://bob.cozy.example/files/downloads/735e6cf69af2db82/Letter.docx?Dl=1',
+          url: 'https://bob.cozy.example/files/downloads/735e6cf69af2db82/Letter.docx?Dl=1',
           info: {
             owner: 'Bob',
             uploaded: '2010-07-07 3:46 PM'

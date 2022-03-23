@@ -79,19 +79,17 @@ const mapStateToProps = state => ({
   isEncrypted: isEncryptedFolder(state)
 })
 
-const createFolderAfterSubmit = (ownProps, name) => async (
-  dispatch,
-  getState
-) => {
-  return dispatch(
-    createFolder(ownProps.client, ownProps.vaultClient, name, {
-      isEncryptedFolder: isEncryptedFolder(getState())
+const createFolderAfterSubmit =
+  (ownProps, name) => async (dispatch, getState) => {
+    return dispatch(
+      createFolder(ownProps.client, ownProps.vaultClient, name, {
+        isEncryptedFolder: isEncryptedFolder(getState())
+      })
+    ).then(() => {
+      if (ownProps.refreshFolderContent) ownProps.refreshFolderContent()
+      return dispatch(hideNewFolderInput())
     })
-  ).then(() => {
-    if (ownProps.refreshFolderContent) ownProps.refreshFolderContent()
-    return dispatch(hideNewFolderInput())
-  })
-}
+  }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmit: name => dispatch(createFolderAfterSubmit(ownProps, name)),
@@ -108,9 +106,6 @@ export { AddFolder }
 export default compose(
   withClient,
   translate(),
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ),
+  connect(mapStateToProps, mapDispatchToProps),
   withBreakpoints()
 )(AddFolder)

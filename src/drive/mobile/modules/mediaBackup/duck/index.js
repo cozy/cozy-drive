@@ -35,100 +35,101 @@ const canBackup = (isManualBackup, getState) => {
   )
 }
 
-export const startMediaBackup = (isManualBackup = false) => async (
-  dispatch,
-  getState,
-  { client, t }
-) => {
-  let isEffectivelyManualBackup = isManualBackup
-  dispatch({ type: MEDIA_UPLOAD_START })
-  client.getStackClient().fetchJSON('POST', '/settings/synchronized')
-  if (!(await isAuthorized())) {
-    const promptForPermissions = isEffectivelyManualBackup
-    const receivedAuthorisation = await updateValueAfterRequestAuthorization(
-      promptForPermissions
-    )
-    // manual backup is only possible if the authorization is accepted
-    if (isEffectivelyManualBackup && !receivedAuthorisation) {
-      isEffectivelyManualBackup = false
-    }
-    // disable backupImages when authorization is refused
-    if (getState().mobile.settings.backupImages && !receivedAuthorisation) {
-      await dispatch(setBackupImages(false))
-    }
-  }
-  if (canBackup(isEffectivelyManualBackup, getState)) {
-    try {
-      const photosOnDevice = await getPhotos()
-      const alreadyUploaded = getState().mobile.mediaBackup.uploaded
-      const photosToUpload = photosOnDevice.filter(
-        photo => !alreadyUploaded.includes(photo.id)
+export const startMediaBackup =
+  (isManualBackup = false) =>
+  async (dispatch, getState, { client, t }) => {
+    let isEffectivelyManualBackup = isManualBackup
+    dispatch({ type: MEDIA_UPLOAD_START })
+    client.getStackClient().fetchJSON('POST', '/settings/synchronized')
+    if (!(await isAuthorized())) {
+      const promptForPermissions = isEffectivelyManualBackup
+      const receivedAuthorisation = await updateValueAfterRequestAuthorization(
+        promptForPermissions
       )
-      const totalUpload = photosToUpload.length
-      if (totalUpload > 0) {
-        const {
-          _id: uploadDirId,
-          attributes: { path: uploadDirPath }
-        } = await getUploadDir(client, t)
-        let uploadCounter = 0
-        for (const photo of photosToUpload) {
-          if (
-            getState().mobile.mediaBackup.cancelMediaBackup ||
-            getState().mobile.mediaBackup.diskQuotaReached ||
-            !canBackup(isEffectivelyManualBackup, getState)
-          ) {
-            break
-          }
-          dispatch(currentMediaUpload(photo, uploadCounter++, totalUpload))
-          await dispatch(uploadPhoto(uploadDirPath, uploadDirId, photo, client))
-        }
+      // manual backup is only possible if the authorization is accepted
+      if (isEffectivelyManualBackup && !receivedAuthorisation) {
+        isEffectivelyManualBackup = false
       }
-
-      client.getStackClient().fetchJSON('POST', '/settings/synchronized')
-    } catch (e) {
-      dispatch({ type: MEDIA_UPLOAD_ABORT })
-      if (!e.message.match(/Failed to fetch/))
-        logException(`Unexpected error during the files backup (${e.message})`)
+      // disable backupImages when authorization is refused
+      if (getState().mobile.settings.backupImages && !receivedAuthorisation) {
+        await dispatch(setBackupImages(false))
+      }
     }
-  } else {
-    dispatch({ type: MEDIA_UPLOAD_ABORT })
+    if (canBackup(isEffectivelyManualBackup, getState)) {
+      try {
+        const photosOnDevice = await getPhotos()
+        const alreadyUploaded = getState().mobile.mediaBackup.uploaded
+        const photosToUpload = photosOnDevice.filter(
+          photo => !alreadyUploaded.includes(photo.id)
+        )
+        const totalUpload = photosToUpload.length
+        if (totalUpload > 0) {
+          const {
+            _id: uploadDirId,
+            attributes: { path: uploadDirPath }
+          } = await getUploadDir(client, t)
+          let uploadCounter = 0
+          for (const photo of photosToUpload) {
+            if (
+              getState().mobile.mediaBackup.cancelMediaBackup ||
+              getState().mobile.mediaBackup.diskQuotaReached ||
+              !canBackup(isEffectivelyManualBackup, getState)
+            ) {
+              break
+            }
+            dispatch(currentMediaUpload(photo, uploadCounter++, totalUpload))
+            await dispatch(
+              uploadPhoto(uploadDirPath, uploadDirId, photo, client)
+            )
+          }
+        }
+
+        client.getStackClient().fetchJSON('POST', '/settings/synchronized')
+      } catch (e) {
+        dispatch({ type: MEDIA_UPLOAD_ABORT })
+        if (!e.message.match(/Failed to fetch/))
+          logException(
+            `Unexpected error during the files backup (${e.message})`
+          )
+      }
+    } else {
+      dispatch({ type: MEDIA_UPLOAD_ABORT })
+    }
+
+    dispatch({ type: MEDIA_UPLOAD_END })
   }
 
-  dispatch({ type: MEDIA_UPLOAD_END })
-}
+export const backupImages =
+  (backupImages, force = false) =>
+  async (dispatch, getState) => {
+    // TODO: it looks like the media backup is triggered twice at app init, but I couldn't figure why :/
+    // This fixes the issue, but we'll need to figure out why it is triggered twice...
+    if (getState().mobile.mediaBackup.running === true && !force) {
+      return
+    }
+    let images = backupImages
+    if (images === undefined) {
+      images = getState().mobile.settings.backupImages
+    } else {
+      await dispatch(setBackupImages(images))
+    }
 
-export const backupImages = (backupImages, force = false) => async (
-  dispatch,
-  getState
-) => {
-  // TODO: it looks like the media backup is triggered twice at app init, but I couldn't figure why :/
-  // This fixes the issue, but we'll need to figure out why it is triggered twice...
-  if (getState().mobile.mediaBackup.running === true && !force) {
-    return
-  }
-  let images = backupImages
-  if (images === undefined) {
-    images = getState().mobile.settings.backupImages
-  } else {
-    await dispatch(setBackupImages(images))
-  }
+    const isAuthorized = await updateValueAfterRequestAuthorization(images)
+    if (images && !isAuthorized) {
+      images = isAuthorized
+      dispatch(setBackupImages(images))
+    }
 
-  const isAuthorized = await updateValueAfterRequestAuthorization(images)
-  if (images && !isAuthorized) {
-    images = isAuthorized
-    dispatch(setBackupImages(images))
-  }
+    const {
+      updateStatusBackgroundService
+    } = require('drive/mobile/lib/background')
+    updateStatusBackgroundService(images)
+    if (images) {
+      dispatch(startMediaBackup())
+    }
 
-  const {
-    updateStatusBackgroundService
-  } = require('drive/mobile/lib/background')
-  updateStatusBackgroundService(images)
-  if (images) {
-    dispatch(startMediaBackup())
+    return images
   }
-
-  return images
-}
 
 const updateValueAfterRequestAuthorization = async value => {
   let updatedValue = value

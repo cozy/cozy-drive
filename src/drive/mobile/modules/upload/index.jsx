@@ -191,8 +191,5 @@ export default compose(
   withRouter,
   withClient,
   withVaultClient,
-  connect(
-    null,
-    mapDispatchToProps
-  )
+  connect(null, mapDispatchToProps)
 )(DumbUpload)

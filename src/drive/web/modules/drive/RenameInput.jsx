@@ -87,7 +87,4 @@ const mapDispatchToProps = dispatch => ({
   onAbort: () => dispatch(abortRenaming())
 })
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(RenameInput)
+export default connect(null, mapDispatchToProps)(RenameInput)

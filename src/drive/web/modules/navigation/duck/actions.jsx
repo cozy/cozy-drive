@@ -35,87 +35,83 @@ export const sortFolder = (folderId, sortAttribute, sortOrder = 'asc') => {
  * @param {function} fileUploadedCallback - Optional function to call when the upload is completed
  * @returns {function} - A function that dispatches addToUploadQueue action
  */
-export const uploadFiles = (
-  files,
-  dirId,
-  sharingState,
-  fileUploadedCallback = () => null,
-  { client, vaultClient }
-) => dispatch => {
-  dispatch(
-    addToUploadQueue(
-      files,
-      dirId,
-      sharingState, // used to know if files are shared for conflicts management
-      fileUploadedCallback,
-      (loaded, quotas, conflicts, networkErrors, errors, updated) =>
-        dispatch(
-          uploadQueueProcessed(
-            loaded,
-            quotas,
-            conflicts,
-            networkErrors,
-            errors,
-            updated
-          )
-        ),
-      { client, vaultClient }
+export const uploadFiles =
+  (
+    files,
+    dirId,
+    sharingState,
+    fileUploadedCallback = () => null,
+    { client, vaultClient }
+  ) =>
+  dispatch => {
+    dispatch(
+      addToUploadQueue(
+        files,
+        dirId,
+        sharingState, // used to know if files are shared for conflicts management
+        fileUploadedCallback,
+        (loaded, quotas, conflicts, networkErrors, errors, updated) =>
+          dispatch(
+            uploadQueueProcessed(
+              loaded,
+              quotas,
+              conflicts,
+              networkErrors,
+              errors,
+              updated
+            )
+          ),
+        { client, vaultClient }
+      )
     )
-  )
-}
-
-const uploadQueueProcessed = (
-  created,
-  quotas,
-  conflicts,
-  networkErrors,
-  errors,
-  updated
-) => dispatch => {
-  const conflictCount = conflicts.length
-  const createdCount = created.length
-  const updatedCount = updated.length
-  if (quotas.length > 0) {
-    logger.warn(`Upload module triggers a quota alert: ${quotas}`)
-    // quota errors have their own modal instead of a notification
-    dispatch(showModal(<QuotaAlert />))
-  } else if (networkErrors.length > 0) {
-    logger.warn(`Upload module triggers a network error: ${networkErrors}`)
-    Alerter.info('upload.alert.network')
-  } else if (errors.length > 0) {
-    logException(`Upload module triggers an error: ${errors}`)
-    Alerter.info('upload.alert.errors')
-  } else if (updatedCount > 0 && createdCount > 0 && conflictCount > 0) {
-    Alerter.success('upload.alert.success_updated_conflicts', {
-      smart_count: createdCount,
-      updatedCount,
-      conflictCount
-    })
-  } else if (updatedCount > 0 && createdCount > 0) {
-    Alerter.success('upload.alert.success_updated', {
-      smart_count: createdCount,
-      updatedCount
-    })
-  } else if (updatedCount > 0 && conflictCount > 0) {
-    Alerter.success('upload.alert.updated_conflicts', {
-      smart_count: updatedCount,
-      conflictCount
-    })
-  } else if (conflictCount > 0) {
-    Alerter.info('upload.alert.success_conflicts', {
-      smart_count: createdCount,
-      conflictNumber: conflictCount
-    })
-  } else if (updatedCount > 0 && createdCount === 0) {
-    Alerter.success('upload.alert.updated', {
-      smart_count: updatedCount
-    })
-  } else {
-    Alerter.success('upload.alert.success', {
-      smart_count: createdCount
-    })
   }
-}
+
+const uploadQueueProcessed =
+  (created, quotas, conflicts, networkErrors, errors, updated) => dispatch => {
+    const conflictCount = conflicts.length
+    const createdCount = created.length
+    const updatedCount = updated.length
+    if (quotas.length > 0) {
+      logger.warn(`Upload module triggers a quota alert: ${quotas}`)
+      // quota errors have their own modal instead of a notification
+      dispatch(showModal(<QuotaAlert />))
+    } else if (networkErrors.length > 0) {
+      logger.warn(`Upload module triggers a network error: ${networkErrors}`)
+      Alerter.info('upload.alert.network')
+    } else if (errors.length > 0) {
+      logException(`Upload module triggers an error: ${errors}`)
+      Alerter.info('upload.alert.errors')
+    } else if (updatedCount > 0 && createdCount > 0 && conflictCount > 0) {
+      Alerter.success('upload.alert.success_updated_conflicts', {
+        smart_count: createdCount,
+        updatedCount,
+        conflictCount
+      })
+    } else if (updatedCount > 0 && createdCount > 0) {
+      Alerter.success('upload.alert.success_updated', {
+        smart_count: createdCount,
+        updatedCount
+      })
+    } else if (updatedCount > 0 && conflictCount > 0) {
+      Alerter.success('upload.alert.updated_conflicts', {
+        smart_count: updatedCount,
+        conflictCount
+      })
+    } else if (conflictCount > 0) {
+      Alerter.info('upload.alert.success_conflicts', {
+        smart_count: createdCount,
+        conflictNumber: conflictCount
+      })
+    } else if (updatedCount > 0 && createdCount === 0) {
+      Alerter.success('upload.alert.updated', {
+        smart_count: updatedCount
+      })
+    } else {
+      Alerter.success('upload.alert.success', {
+        smart_count: createdCount
+      })
+    }
+  }
 
 /**
  * Given a folderId, checks the current known state to return if

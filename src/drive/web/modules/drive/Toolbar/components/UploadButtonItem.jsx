@@ -17,7 +17,4 @@ const UploadButtonItem = ({ t, displayedFolder, isDisabled, onUploaded }) => (
   />
 )
 
-export default compose(
-  toolbarContainer,
-  translate()
-)(UploadButtonItem)
+export default compose(toolbarContainer, translate())(UploadButtonItem)

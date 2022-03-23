@@ -39,9 +39,10 @@ const MoreMenu = ({ isDisabled, hasWriteAccess }) => {
     () => toggleMenu(menuIsVisible, setMenuVisible),
     [menuIsVisible, setMenuVisible]
   )
-  const handleClose = useCallback(() => closeMenu(setMenuVisible), [
-    setMenuVisible
-  ])
+  const handleClose = useCallback(
+    () => closeMenu(setMenuVisible),
+    [setMenuVisible]
+  )
 
   return (
     <div>

@@ -94,7 +94,4 @@ const mapDispatchToProps = dispatch => ({
   startMediaBackup: () => dispatch(startMediaBackup())
 })
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(toolbarContainer(ScanWrapper))
+export default connect(null, mapDispatchToProps)(toolbarContainer(ScanWrapper))

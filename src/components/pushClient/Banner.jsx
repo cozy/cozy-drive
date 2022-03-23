@@ -101,7 +101,4 @@ class BannerClient extends Component {
   }
 }
 
-export default flow(
-  translate(),
-  withClient
-)(BannerClient)
+export default flow(translate(), withClient)(BannerClient)

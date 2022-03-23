@@ -57,8 +57,5 @@ export default compose(
   withSharingState,
   toolbarContainer,
   translate(),
-  connect(
-    null,
-    mapDispatchToProps
-  )
+  connect(null, mapDispatchToProps)
 )(UploadItem)

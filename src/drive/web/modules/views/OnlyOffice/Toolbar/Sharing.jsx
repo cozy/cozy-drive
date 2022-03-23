@@ -10,9 +10,10 @@ const Sharing = ({ fileWithPath }) => {
   const [showShareModal, setShowShareModal] = useState(false)
   const { isMobile } = useBreakpoints()
 
-  const toggleShareModal = useCallback(() => setShowShareModal(v => !v), [
-    setShowShareModal
-  ])
+  const toggleShareModal = useCallback(
+    () => setShowShareModal(v => !v),
+    [setShowShareModal]
+  )
 
   return (
     <>

@@ -51,9 +51,9 @@ export const withPersistentState = (WrappedComponent, persistenceKey) => {
       this.persistedStatePromise.cancel()
     }
   }
-  WithPersistentState.displayName = `WithPersistentState(${WrappedComponent.displayName ||
-    WrappedComponent.name ||
-    'Component'})`
+  WithPersistentState.displayName = `WithPersistentState(${
+    WrappedComponent.displayName || WrappedComponent.name || 'Component'
+  })`
   return WithPersistentState
 }
 export default withPersistentState

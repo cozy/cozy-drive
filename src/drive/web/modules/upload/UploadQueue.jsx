@@ -31,7 +31,4 @@ const mapDispatchToProps = dispatch => ({
   purgeQueue: () => dispatch(purgeUploadQueue())
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DumbUploadQueue)
+export default connect(mapStateToProps, mapDispatchToProps)(DumbUploadQueue)

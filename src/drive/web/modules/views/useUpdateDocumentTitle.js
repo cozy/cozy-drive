@@ -61,11 +61,10 @@ const useUpdateDocumentTitle = docId => {
     [client.appMetadata]
   )
 
-  const title = useMemo(() => makeTitle(fileWithPath, appFullName, t), [
-    fileWithPath,
-    appFullName,
-    t
-  ])
+  const title = useMemo(
+    () => makeTitle(fileWithPath, appFullName, t),
+    [fileWithPath, appFullName, t]
+  )
 
   useEffect(() => {
     if (fetchStatus === 'loaded' && title !== document.title) {

@@ -34,19 +34,20 @@ const AddMenuProvider = ({
   const isOffline = useBrowserOffline()
   const anchorRef = useRef()
 
-  const handleClose = useCallback(() => closeMenu(setMenuVisible), [
-    setMenuVisible
-  ])
+  const handleClose = useCallback(
+    () => closeMenu(setMenuVisible),
+    [setMenuVisible]
+  )
 
   const handleToggle = useCallback(
     () => toggleMenu(menuIsVisible, setMenuVisible),
     [menuIsVisible, setMenuVisible]
   )
 
-  const isDisabled = useMemo(() => disabled || selectionModeActive, [
-    disabled,
-    selectionModeActive
-  ])
+  const isDisabled = useMemo(
+    () => disabled || selectionModeActive,
+    [disabled, selectionModeActive]
+  )
 
   const handleOfflineClick = useCallback(e => {
     e.stopPropagation()

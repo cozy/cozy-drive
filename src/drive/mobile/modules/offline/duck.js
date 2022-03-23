@@ -44,13 +44,12 @@ export const getAvailableOfflineIds = ({ availableOffline }) => availableOffline
 export const isAvailableOffline = ({ availableOffline: state }, id) =>
   Array.isArray(state) && state.indexOf(id) !== -1
 
-export const toggleAvailableOffline = (file, client, { vaultClient }) => async (
-  dispatch,
-  getState
-) =>
-  isAvailableOffline(getState(), file.id)
-    ? dispatch(forgetDownloadedFile(file))
-    : dispatch(makeAvailableOffline(file, client, { vaultClient }))
+export const toggleAvailableOffline =
+  (file, client, { vaultClient }) =>
+  async (dispatch, getState) =>
+    isAvailableOffline(getState(), file.id)
+      ? dispatch(forgetDownloadedFile(file))
+      : dispatch(makeAvailableOffline(file, client, { vaultClient }))
 
 const forgetDownloadedFile = file => async dispatch => {
   const filename = file.id
@@ -60,14 +59,12 @@ const forgetDownloadedFile = file => async dispatch => {
   dispatch(markAsUnavailableOffline(file.id))
 }
 
-const makeAvailableOffline = (
-  file,
-  client,
-  { vaultClient }
-) => async dispatch => {
-  await saveOfflineFileCopy(file, client, { vaultClient })
-  dispatch(markAsAvailableOffline(file.id))
-}
+const makeAvailableOffline =
+  (file, client, { vaultClient }) =>
+  async dispatch => {
+    await saveOfflineFileCopy(file, client, { vaultClient })
+    dispatch(markAsAvailableOffline(file.id))
+  }
 
 export const saveOfflineFileCopy = async (file, client, { vaultClient }) => {
   if (!isMobileApp() || !window.cordova.file) {
@@ -108,32 +105,28 @@ export const openLocalFile = (client, file) => async (dispatch, getState) => {
 }
 
 // TODO remove this one ? Only used in the No supportedViewer
-export const openLocalFileCopy = (client, file, { vaultClient }) => async (
-  dispatch,
-  getState
-) => {
-  const originalMime = isEncryptedFile(file)
-    ? client.collection(DOCTYPE_FILES).getFileTypeFromName(file.name)
-    : file.mime
-  const fileWithMime = { ...file, mime: originalMime }
-  if (isAvailableOffline(getState(), file.id)) {
-    return openOfflineFile(fileWithMime)
+export const openLocalFileCopy =
+  (client, file, { vaultClient }) =>
+  async (dispatch, getState) => {
+    const originalMime = isEncryptedFile(file)
+      ? client.collection(DOCTYPE_FILES).getFileTypeFromName(file.name)
+      : file.mime
+    const fileWithMime = { ...file, mime: originalMime }
+    if (isAvailableOffline(getState(), file.id)) {
+      return openOfflineFile(fileWithMime)
+    }
+    return openFileWith(client, file, { vaultClient })
   }
-  return openFileWith(client, file, { vaultClient })
-}
 
-export const updateOfflineFileCopyIfNecessary = (
-  file,
-  prevFile,
-  client
-) => async (_, getState) => {
-  if (
-    isAvailableOffline(getState(), file.id) &&
-    file.md5sum !== prevFile.md5sum
-  ) {
-    await saveOfflineFileCopy(file, client)
+export const updateOfflineFileCopyIfNecessary =
+  (file, prevFile, client) => async (_, getState) => {
+    if (
+      isAvailableOffline(getState(), file.id) &&
+      file.md5sum !== prevFile.md5sum
+    ) {
+      await saveOfflineFileCopy(file, client)
+    }
   }
-}
 
 export const addFileIdToLocalStorageItem = async (key, value) => {
   const oldValue = (await localforage.getItem(key)) || []
