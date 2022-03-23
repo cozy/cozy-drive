@@ -224,9 +224,8 @@ export const buildMoveOrImportQuery = dirId => ({
  * the query `files id123 name desc`.
  */
 export const getMirrorQueryId = queryId => {
-  const { type, folderId, sortAttribute, sortOrder } = parseFolderQueryId(
-    queryId
-  )
+  const { type, folderId, sortAttribute, sortOrder } =
+    parseFolderQueryId(queryId)
   const otherType = type === 'directory' ? 'file' : 'directory'
   const otherQueryId = formatFolderQueryId(
     otherType,
@@ -239,9 +238,7 @@ export const getMirrorQueryId = queryId => {
 
 export const buildFolderQuery = folderId => ({
   definition: () =>
-    Q('io.cozy.files')
-      .getById(folderId)
-      .include(['encryption', 'parent']),
+    Q('io.cozy.files').getById(folderId).include(['encryption', 'parent']),
   options: {
     as: 'folder-' + folderId,
     fetchPolicy: defaultFetchPolicy

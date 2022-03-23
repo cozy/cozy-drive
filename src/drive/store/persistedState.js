@@ -5,14 +5,8 @@ const shouldMigrateSettings = state => state.hasOwnProperty('settings')
 
 const migrateSettings = async prevState => {
   const { client, offline } = prevState.settings
-  const {
-    authorized,
-    token,
-    serverUrl,
-    backupImages,
-    analytics,
-    wifiOnly
-  } = prevState.mobile.settings
+  const { authorized, token, serverUrl, backupImages, analytics, wifiOnly } =
+    prevState.mobile.settings
   const { revoked } = prevState.mobile.authorization || { revoked: false }
   const newState = {
     mobile: {

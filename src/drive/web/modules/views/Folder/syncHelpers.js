@@ -77,10 +77,8 @@ export const checkSyncingFakeFileObsolescence = ({
   setSharingsValue,
   syncingFakeFile
 }) => {
-  const isThereRealtimeFileReferencedBySharing = isThereFileReferencedBySharingId(
-    queryResults,
-    sharingId
-  )
+  const isThereRealtimeFileReferencedBySharing =
+    isThereFileReferencedBySharingId(queryResults, sharingId)
 
   if (!isThereRealtimeFileReferencedBySharing) {
     return syncingFakeFile

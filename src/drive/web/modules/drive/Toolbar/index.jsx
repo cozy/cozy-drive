@@ -144,9 +144,6 @@ ToolbarWithSharingContext.displayName = 'ToolbarWithSharingContext'
 export default compose(
   translate(),
   withClient,
-  connect(
-    mapStateToProps,
-    null
-  ),
+  connect(mapStateToProps, null),
   withBreakpoints()
 )(ToolbarWithSharingContext)

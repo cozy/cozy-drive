@@ -18,9 +18,8 @@ const useStyles = makeStyles(theme => ({
 
 const ReadOnlyFab = () => {
   const styles = useStyles()
-  const { isEditorForcedReadOnly, setIsEditorForcedReadOnly } = useContext(
-    OnlyOfficeContext
-  )
+  const { isEditorForcedReadOnly, setIsEditorForcedReadOnly } =
+    useContext(OnlyOfficeContext)
 
   const handleClick = useCallback(() => {
     setIsEditorForcedReadOnly(v => !v)

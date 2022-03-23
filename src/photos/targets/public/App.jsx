@@ -49,9 +49,10 @@ export class App extends Component {
       allPhotos = photosRequested.data
     }
 
-    this.context.client
-      .collection('io.cozy.files')
-      .downloadArchive(allPhotos.map(({ _id }) => _id), album.name)
+    this.context.client.collection('io.cozy.files').downloadArchive(
+      allPhotos.map(({ _id }) => _id),
+      album.name
+    )
   }
 
   renderViewer(children) {

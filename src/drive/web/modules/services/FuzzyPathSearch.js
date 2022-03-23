@@ -13,10 +13,7 @@ class FuzzyPathSearch {
     if (!query) return []
 
     const queryArray = removeDiacritics(
-      query
-        .replace(/\//g, ' ')
-        .trim()
-        .toLowerCase()
+      query.replace(/\//g, ' ').trim().toLowerCase()
     ).split(' ')
     const preparedQuery = queryArray.map(word => ({
       word,

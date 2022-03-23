@@ -15,9 +15,10 @@ const DesktopBreadcrumb = ({ onBreadcrumbClick, path }) => {
   const [dropdownTrigger, setDropdownTrigger] = useState(
     document.querySelector(`[aria-label="${expandText}"]`)
   )
-  const anchorElRef = useMemo(() => ({ current: dropdownTrigger }), [
-    dropdownTrigger
-  ])
+  const anchorElRef = useMemo(
+    () => ({ current: dropdownTrigger }),
+    [dropdownTrigger]
+  )
   const [menuDisplayed, setMenuDisplayed] = useState(false)
 
   const handleDropdownTriggerClick = e => {

@@ -82,9 +82,7 @@ class FeedbackForm extends Component {
             onSubmit={this.submitForm}
           >
             <textarea
-              className={`${
-                styles['feedback-text']
-              } u-bxz u-p-1 u-mb-1 u-w-100`}
+              className={`${styles['feedback-text']} u-bxz u-p-1 u-mb-1 u-w-100`}
               placeholder={t('mobile.rating.email.placeholder')}
               ref={this.registerElement.bind(this)}
             />
@@ -120,7 +118,4 @@ FeedbackForm.propTypes = {
 
 export { FeedbackForm }
 
-export default compose(
-  withClient,
-  translate()
-)(FeedbackForm)
+export default compose(withClient, translate())(FeedbackForm)

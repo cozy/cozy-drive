@@ -49,9 +49,8 @@ const FolderViewBody = ({
   const { router } = useRouter()
   const { isDesktop } = useBreakpoints()
   const client = useClient()
-  const { isBigThumbnail, toggleThumbnailSize } = useContext(
-    ThumbnailSizeContext
-  )
+  const { isBigThumbnail, toggleThumbnailSize } =
+    useContext(ThumbnailSizeContext)
   const { sharingsValue } = useContext(AcceptingSharingContext)
   const [sortOrder, setSortOrder] = useFolderSort(currentFolderId)
   const vaultClient = useVaultClient()

@@ -35,15 +35,14 @@ const FileName = ({ fileWithPath }) => {
   const [isRenaming, setIsRenaming] = useState(false)
 
   const onRename = useCallback(() => setIsRenaming(true), [setIsRenaming])
-  const onRenameFinished = useCallback(() => setIsRenaming(false), [
-    setIsRenaming
-  ])
+  const onRenameFinished = useCallback(
+    () => setIsRenaming(false),
+    [setIsRenaming]
+  )
 
   return (
     <div
-      className={`${
-        styles['fileName']
-      } u-mh-1 u-mh-half-s u-ellipsis u-flex-grow-1`}
+      className={`${styles['fileName']} u-mh-1 u-mh-half-s u-ellipsis u-flex-grow-1`}
     >
       {isRenaming ? (
         <Typography variant="h6" noWrap>

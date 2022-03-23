@@ -65,7 +65,8 @@ export const useFileWithPath = docId => {
     ...fileResult,
     fetchStatus:
       fileResult.fetchStatus === 'loaded' &&
-      (parentResult && parentResult.fetchStatus === 'loaded')
+      parentResult &&
+      parentResult.fetchStatus === 'loaded'
         ? 'loaded'
         : 'loading',
     data: {

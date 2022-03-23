@@ -62,12 +62,8 @@ const init = async () => {
   const lang = document.documentElement.getAttribute('lang') || 'en'
   const root = document.querySelector('[role=application]')
   const dataset = JSON.parse(root.dataset.cozy)
-  const {
-    sharecode,
-    isOnlyOfficeDocShared,
-    onlyOfficeDocId,
-    username
-  } = getQueryParameter()
+  const { sharecode, isOnlyOfficeDocShared, onlyOfficeDocId, username } =
+    getQueryParameter()
 
   const protocol = window.location ? window.location.protocol : 'https:'
   const cozyUrl = `${protocol}//${dataset.domain}`

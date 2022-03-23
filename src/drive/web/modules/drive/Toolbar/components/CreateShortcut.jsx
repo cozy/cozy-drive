@@ -30,7 +30,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     )
 })
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(CreateShortcutWrapper)
+export default connect(null, mapDispatchToProps)(CreateShortcutWrapper)

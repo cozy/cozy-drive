@@ -138,9 +138,10 @@ const PublicFolderView = ({
     [viewableFiles, files, filesResult]
   )
 
-  const closeViewer = useCallback(() => setViewerOpened(false), [
-    setViewerOpened
-  ])
+  const closeViewer = useCallback(
+    () => setViewerOpened(false),
+    [setViewerOpened]
+  )
 
   const { hasWritePermissions } = usePublicWritePermissions()
 

@@ -68,15 +68,17 @@ class AlbumPhotos extends Component {
         },
         { limit: 99999 }
       )
-    this.props.client
-      .collection('io.cozy.files')
-      .downloadArchive(allPhotos.data.map(({ _id }) => _id), album.name)
+    this.props.client.collection('io.cozy.files').downloadArchive(
+      allPhotos.data.map(({ _id }) => _id),
+      album.name
+    )
   }
 
   downloadPhotos = photos => {
-    this.props.client
-      .collection('io.cozy.files')
-      .downloadArchive(photos.map(({ _id }) => _id), 'selected')
+    this.props.client.collection('io.cozy.files').downloadArchive(
+      photos.map(({ _id }) => _id),
+      'selected'
+    )
   }
   closeDestroyConfirmModal = () => {
     this.setState({
@@ -115,15 +117,8 @@ class AlbumPhotos extends Component {
       return null
     }
 
-    const {
-      t,
-      router,
-      album,
-      shareAlbum,
-      photos,
-      hasMore,
-      fetchMore
-    } = this.props
+    const { t, router, album, shareAlbum, photos, hasMore, fetchMore } =
+      this.props
     const { editing } = this.state
     const shared = {}
 
@@ -226,10 +221,7 @@ AlbumPhotos.propTypes = {
 }
 
 export default flow(
-  connect(
-    null,
-    mapDispatchToProps
-  ),
+  connect(null, mapDispatchToProps),
   withRouter,
   withClient,
   translate()

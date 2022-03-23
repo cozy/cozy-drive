@@ -267,10 +267,7 @@ export const onPhotoUpload = async () => {
           slug: 'photos'
         }
       }
-      client
-        .getStackClient()
-        .collection('io.cozy.triggers')
-        .create(attrs)
+      client.getStackClient().collection('io.cozy.triggers').create(attrs)
       await client.save({
         ...newSetting,
         jobStatus: 'postponed'

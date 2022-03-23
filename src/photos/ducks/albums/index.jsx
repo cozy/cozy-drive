@@ -23,9 +23,7 @@ const ALBUMS_QUERY = client =>
     .sortBy([{ created_at: 'desc' }])
 
 export const ALBUM_QUERY = (client, ownProps) =>
-  Q(DOCTYPE_ALBUMS)
-    .getById(ownProps.router.params.albumId)
-    .include(['photos'])
+  Q(DOCTYPE_ALBUMS).getById(ownProps.router.params.albumId).include(['photos'])
 
 const addPhotos = async (album, photos) => {
   try {
@@ -131,30 +129,36 @@ const ConnectedAddToAlbumModal = props => (
 )
 
 // eslint-disable-next-line react/display-name
-export const AlbumPhotosWithLoader = ({ children }) => (
-  { data: album, fetchStatus },
-  { updateAlbum, deleteAlbum, removePhotos }
-) => {
-  if (album && fetchStatus === 'loaded') {
-    return (
-      <AlbumPhotos
-        album={album}
-        photos={album.photos.data}
-        updateAlbum={updateAlbum}
-        deleteAlbum={deleteAlbum}
-        removePhotos={removePhotos}
-        hasMore={album.photos.hasMore}
-        fetchMore={album.photos.fetchMore.bind(album.photos)}
-      >
-        {children}
-      </AlbumPhotos>
-    )
-  } else {
-    return (
-      <Loading size={'xxlarge'} loadingType={'photos_fetching'} middle={true} />
-    )
+export const AlbumPhotosWithLoader =
+  ({ children }) =>
+  (
+    { data: album, fetchStatus },
+    { updateAlbum, deleteAlbum, removePhotos }
+  ) => {
+    if (album && fetchStatus === 'loaded') {
+      return (
+        <AlbumPhotos
+          album={album}
+          photos={album.photos.data}
+          updateAlbum={updateAlbum}
+          deleteAlbum={deleteAlbum}
+          removePhotos={removePhotos}
+          hasMore={album.photos.hasMore}
+          fetchMore={album.photos.fetchMore.bind(album.photos)}
+        >
+          {children}
+        </AlbumPhotos>
+      )
+    } else {
+      return (
+        <Loading
+          size={'xxlarge'}
+          loadingType={'photos_fetching'}
+          middle={true}
+        />
+      )
+    }
   }
-}
 
 export const ConnectedAlbumPhotos = withRouter(props => (
   <Query query={ALBUM_QUERY} {...props} mutations={ALBUM_MUTATIONS}>

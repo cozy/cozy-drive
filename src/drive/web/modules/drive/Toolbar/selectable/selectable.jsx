@@ -8,9 +8,6 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const selectableContainer = component =>
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(component)
+  connect(mapStateToProps, mapDispatchToProps)(component)
 
 export default selectableContainer

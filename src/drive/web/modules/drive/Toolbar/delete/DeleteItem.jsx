@@ -46,7 +46,4 @@ DeleteItem.propTypes = {
   onLeave: PropTypes.func.isRequired
 }
 
-export default compose(
-  translate(),
-  deleteContainer
-)(DeleteItem)
+export default compose(translate(), deleteContainer)(DeleteItem)

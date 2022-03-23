@@ -8,13 +8,8 @@ import { AddMenuContext } from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
 
 export const AddButton = () => {
   const { t } = useI18n()
-  const {
-    anchorRef,
-    handleToggle,
-    isDisabled,
-    handleOfflineClick,
-    isOffline
-  } = useContext(AddMenuContext)
+  const { anchorRef, handleToggle, isDisabled, handleOfflineClick, isOffline } =
+    useContext(AddMenuContext)
 
   return (
     <div ref={anchorRef} onClick={isOffline ? handleOfflineClick : undefined}>

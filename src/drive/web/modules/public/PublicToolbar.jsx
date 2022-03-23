@@ -12,12 +12,8 @@ const PublicToolbar = ({
   sharingInfos,
   className
 }) => {
-  const {
-    loading,
-    discoveryLink,
-    sharing,
-    isSharingShortcutCreated
-  } = sharingInfos
+  const { loading, discoveryLink, sharing, isSharingShortcutCreated } =
+    sharingInfos
 
   if (loading) return null
   return (

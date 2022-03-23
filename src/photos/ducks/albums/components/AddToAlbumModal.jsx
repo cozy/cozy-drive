@@ -36,9 +36,7 @@ class AddToAlbumModal extends Component {
             <div>
               <CreateAlbumForm
                 onSubmitNewAlbum={name =>
-                  createAlbum(name, photos)
-                    .then(onDismiss)
-                    .then(onSuccess)
+                  createAlbum(name, photos).then(onDismiss).then(onSuccess)
                 }
               />
               <Divider className="u-ml-0 u-maw-100 u-mt-1" />
@@ -48,9 +46,7 @@ class AddToAlbumModal extends Component {
                   <SelectAlbumsForm
                     albums={{ data, fetchStatus }}
                     onSubmitSelectedAlbum={album =>
-                      addPhotos(album, photos)
-                        .then(onDismiss)
-                        .then(onSuccess)
+                      addPhotos(album, photos).then(onDismiss).then(onSuccess)
                     }
                   />
                 </div>

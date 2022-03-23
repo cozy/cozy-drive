@@ -20,9 +20,6 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const shareContainer = component =>
-  connect(
-    null,
-    mapDispatchToProps
-  )(toolbarContainer(component))
+  connect(null, mapDispatchToProps)(toolbarContainer(component))
 
 export default shareContainer

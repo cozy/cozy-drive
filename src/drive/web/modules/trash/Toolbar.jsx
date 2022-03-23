@@ -112,8 +112,5 @@ const mapStateToProps = state => ({
 export default compose(
   translate(),
   withBreakpoints(),
-  connect(
-    mapStateToProps,
-    null
-  )
+  connect(mapStateToProps, null)
 )(Toolbar)

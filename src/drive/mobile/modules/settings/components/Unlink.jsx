@@ -50,8 +50,5 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 })
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(translate()(withClient(Unlink)))
+  connect(mapStateToProps, mapDispatchToProps)(translate()(withClient(Unlink)))
 )

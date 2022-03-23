@@ -32,9 +32,7 @@ export const getAllPhotos = async client => {
 
 export const getFilesByAutoAlbum = async (client, album) => {
   let allPhotos = []
-  const query = Q(DOCTYPE_ALBUMS)
-    .getById(album._id)
-    .include(['photos'])
+  const query = Q(DOCTYPE_ALBUMS).getById(album._id).include(['photos'])
   const resp = await client.query(query)
 
   let data = client.hydrateDocument(resp.data)

@@ -83,10 +83,8 @@ const OnlyOnceFirstUploadModal = withPersistentState(
 )
 
 const mapStateToProps = state => {
-  const {
-    uploading = false,
-    currentUpload = { messageData: { total: 0 } }
-  } = state.mobile.mediaBackup
+  const { uploading = false, currentUpload = { messageData: { total: 0 } } } =
+    state.mobile.mediaBackup
   const { messageData } = currentUpload
   return {
     uploading:

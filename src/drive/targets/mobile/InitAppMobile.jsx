@@ -79,7 +79,7 @@ class InitAppMobile {
       var FastClick = require('fastclick')
       document.addEventListener(
         'DOMContentLoaded',
-        function() {
+        function () {
           FastClick.attach(document.body)
         },
         false

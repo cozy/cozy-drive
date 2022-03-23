@@ -68,9 +68,10 @@ class Timeline extends Component {
   }
 
   downloadPhotos = photos => {
-    this.props.client
-      .collection('io.cozy.files')
-      .downloadArchive(photos.map(({ _id }) => _id), 'selected')
+    this.props.client.collection('io.cozy.files').downloadArchive(
+      photos.map(({ _id }) => _id),
+      'selected'
+    )
   }
 
   closeModal = () => {

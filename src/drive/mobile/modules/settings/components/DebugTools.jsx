@@ -135,7 +135,4 @@ const mapDispatchToProps = dispatch => ({
   setOffline: e => dispatch(setOffline(e.target.checked))
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DebugTools)
+export default connect(mapStateToProps, mapDispatchToProps)(DebugTools)

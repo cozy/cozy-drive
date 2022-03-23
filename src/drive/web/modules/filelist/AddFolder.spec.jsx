@@ -35,7 +35,7 @@ describe('AddFolder', () => {
 
   describe('cozy-client migration', () => {
     beforeEach(() => {
-      flag.mockImplementation(function(name) {
+      flag.mockImplementation(function (name) {
         if (name === 'drive.client-migration.enabled') {
           return true
         } else {

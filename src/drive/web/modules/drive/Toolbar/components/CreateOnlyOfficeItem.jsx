@@ -13,18 +13,20 @@ const CreateOnlyOfficeItem = ({ fileClass }) => {
   const { t } = useI18n()
   const { router } = useRouter()
 
-  const folderId = useMemo(() => get(router, 'params.folderId', ROOT_DIR_ID), [
-    router
-  ])
+  const folderId = useMemo(
+    () => get(router, 'params.folderId', ROOT_DIR_ID),
+    [router]
+  )
 
   const handleClick = useCallback(
     () => router.push(`/onlyoffice/create/${folderId}/${fileClass}`),
     [router, fileClass, folderId]
   )
 
-  const ClassIcon = useMemo(() => makeOnlyOfficeIconByClass(fileClass), [
-    fileClass
-  ])
+  const ClassIcon = useMemo(
+    () => makeOnlyOfficeIconByClass(fileClass),
+    [fileClass]
+  )
 
   return (
     <ActionMenuItem onClick={handleClick} left={<Icon icon={ClassIcon} />}>

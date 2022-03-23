@@ -16,10 +16,10 @@ const useCreateFile = (folderId, fileClass) => {
 
   const fileExt = useMemo(() => makeExtByClass(fileClass), [fileClass])
   const fileMime = useMemo(() => makeMimeByClass(fileClass), [fileClass])
-  const fileUrl = useMemo(() => `/onlyOffice/${fileClass}.${fileExt}`, [
-    fileClass,
-    fileExt
-  ])
+  const fileUrl = useMemo(
+    () => `/onlyOffice/${fileClass}.${fileExt}`,
+    [fileClass, fileExt]
+  )
   const fileName = useMemo(
     () => t(`OnlyOffice.createFileName.${fileClass}`) + `.${fileExt}`,
     [t, fileClass, fileExt]
@@ -30,16 +30,15 @@ const useCreateFile = (folderId, fileClass) => {
       const reader = new FileReader()
       reader.onloadend = async () => {
         try {
-          const {
-            data: createdFile
-          } = await CozyFile.uploadFileWithConflictStrategy(
-            fileName,
-            reader.result,
-            folderId,
-            'rename',
-            null,
-            fileMime
-          )
+          const { data: createdFile } =
+            await CozyFile.uploadFileWithConflictStrategy(
+              fileName,
+              reader.result,
+              folderId,
+              'rename',
+              null,
+              fileMime
+            )
           setStatus('loaded')
           setFileId(createdFile.id)
         } catch (error) {

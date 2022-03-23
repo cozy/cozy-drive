@@ -32,7 +32,6 @@ LoadMore.defaultProps = {
 }
 // eslint-disable-next-line
 const withTranslation = BaseComponent => ({ t, ...props }) => (
-  <BaseComponent text={t('table.load_more')} {...props} />
-)
+    <BaseComponent text={t('table.load_more')} {...props} />
 
 export default translate()(withTranslation(LoadMore))

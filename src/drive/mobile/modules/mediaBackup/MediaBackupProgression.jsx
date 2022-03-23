@@ -33,13 +33,8 @@ const mapStateToProps = state => ({
 })
 
 export const UploadStatus = props => {
-  const {
-    isEnabled,
-    isPreparing,
-    isUploading,
-    isAborted,
-    isQuotaReached
-  } = props
+  const { isEnabled, isPreparing, isUploading, isAborted, isQuotaReached } =
+    props
   const { t, current, total, progress, serverUrl } = props
   const storageUpgradeUrl = serverUrl
     ? serverUrl.replace(/(\w+)\./, '$1-settings.') + '/#/storage'

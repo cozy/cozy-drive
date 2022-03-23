@@ -68,55 +68,51 @@ const mediaUploadSucceed = ({ id }) => ({
   type: MEDIA_UPLOAD_SUCCESS,
   id
 })
-export const uploadPhoto = (
-  dirName,
-  dirID,
-  photo,
-  client
-) => async dispatch => {
-  try {
-    const path = dirName + '/' + photo.fileName
-    await client.collection('io.cozy.files').statByPath(path)
+export const uploadPhoto =
+  (dirName, dirID, photo, client) => async dispatch => {
+    try {
+      const path = dirName + '/' + photo.fileName
+      await client.collection('io.cozy.files').statByPath(path)
 
-    dispatch(mediaUploadSucceed(photo))
-    return
-  } catch (_) {
-    // logger.log('_')
-  } // if an exception is throw, the file doesn't exist yet and we can safely upload it
+      dispatch(mediaUploadSucceed(photo))
+      return
+    } catch (_) {
+      // logger.log('_')
+    } // if an exception is throw, the file doesn't exist yet and we can safely upload it
 
-  const MILLISECOND = 1
-  const SECOND = 1000 * MILLISECOND
-  const MINUTE = 60 * SECOND
-  const maxBackupTime = 5 * MINUTE
-  const timeout = setTimeout(() => {
-    logger.info(JSON.stringify(photo))
-    logException(`Backup duration exceeded ${maxBackupTime} milliseconds`)
-  }, maxBackupTime)
-  try {
-    const onProgressUpdate = progress => {
-      dispatch({ type: CURRENT_UPLOAD_PROGRESS, progress })
-    }
-
-    const onThumbnailGenerated = () => {}
-
-    await uploadLibraryItem(
-      dirID,
-      photo,
-      throttle(onProgressUpdate, 500),
-      onThumbnailGenerated
-    )
-    clearTimeout(timeout)
-    dispatch(mediaUploadSucceed(photo))
-  } catch (err) {
-    if (err.code && parseInt(err.code) === ERROR_CODE_TOO_LARGE) {
-      clearTimeout(timeout)
-      dispatch({ type: MEDIA_UPLOAD_QUOTA })
-    } else {
-      logger.warn('startMediaBackup upload item error')
-      logger.warn(JSON.stringify(err))
+    const MILLISECOND = 1
+    const SECOND = 1000 * MILLISECOND
+    const MINUTE = 60 * SECOND
+    const maxBackupTime = 5 * MINUTE
+    const timeout = setTimeout(() => {
       logger.info(JSON.stringify(photo))
-      const reason = err.message ? err.message : JSON.stringify(err)
-      logException('Backup error: ' + reason, null, ['backup error'])
+      logException(`Backup duration exceeded ${maxBackupTime} milliseconds`)
+    }, maxBackupTime)
+    try {
+      const onProgressUpdate = progress => {
+        dispatch({ type: CURRENT_UPLOAD_PROGRESS, progress })
+      }
+
+      const onThumbnailGenerated = () => {}
+
+      await uploadLibraryItem(
+        dirID,
+        photo,
+        throttle(onProgressUpdate, 500),
+        onThumbnailGenerated
+      )
+      clearTimeout(timeout)
+      dispatch(mediaUploadSucceed(photo))
+    } catch (err) {
+      if (err.code && parseInt(err.code) === ERROR_CODE_TOO_LARGE) {
+        clearTimeout(timeout)
+        dispatch({ type: MEDIA_UPLOAD_QUOTA })
+      } else {
+        logger.warn('startMediaBackup upload item error')
+        logger.warn(JSON.stringify(err))
+        logger.info(JSON.stringify(photo))
+        const reason = err.message ? err.message : JSON.stringify(err)
+        logException('Backup error: ' + reason, null, ['backup error'])
+      }
     }
   }
-}

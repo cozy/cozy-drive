@@ -38,13 +38,10 @@ class AsyncActionButton extends React.Component {
   }
 }
 
-const OpenWithCordovaButton = connect(
-  null,
-  (dispatch, ownProps) => ({
-    openLocalFileCopy: (client, vaultClient) =>
-      dispatch(openLocalFileCopy(client, ownProps.file, { vaultClient }))
-  })
-)(({ t, openLocalFileCopy, client, vaultClient }) => (
+const OpenWithCordovaButton = connect(null, (dispatch, ownProps) => ({
+  openLocalFileCopy: (client, vaultClient) =>
+    dispatch(openLocalFileCopy(client, ownProps.file, { vaultClient }))
+}))(({ t, openLocalFileCopy, client, vaultClient }) => (
   <AsyncActionButton
     onClick={() => openLocalFileCopy(client, vaultClient)}
     onError={error => {

@@ -43,8 +43,7 @@ export const makeExtByClass = fileClass => {
 export const makeMimeByClass = fileClass => {
   // see https://developer.mozilla.org/fr/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
   const mimeByClass = {
-    text:
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    text: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     spreadsheet:
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     slide:

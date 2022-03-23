@@ -136,7 +136,4 @@ const mapDispatchToProps = dispatch => ({
   unlink: (client, clientSettings) => dispatch(unlink(client, clientSettings))
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(UserActionRequired)
+export default connect(mapStateToProps, mapDispatchToProps)(UserActionRequired)

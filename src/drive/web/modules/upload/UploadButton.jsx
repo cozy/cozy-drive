@@ -52,8 +52,5 @@ const mapDispatchToProps = (
 
 export default compose(
   withSharingState,
-  connect(
-    null,
-    mapDispatchToProps
-  )
+  connect(null, mapDispatchToProps)
 )(UploadButton)

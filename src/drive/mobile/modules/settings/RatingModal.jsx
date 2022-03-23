@@ -203,9 +203,9 @@ const withBootDelay = (WrappedComponent, showAfterBoots) => {
     }
   }
 
-  WithBootDelay.displayName = `WithBootDelay(${WrappedComponent.displayName ||
-    WrappedComponent.name ||
-    'Component'})`
+  WithBootDelay.displayName = `WithBootDelay(${
+    WrappedComponent.displayName || WrappedComponent.name || 'Component'
+  })`
   return WithBootDelay
 }
 
