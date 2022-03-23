@@ -4,7 +4,7 @@
   "files": [
     {
       "path": "app/drive.<hash>.js",
-      "maxSize": "234 KB"
+      "maxSize": "235 KB"
     },
     {
       "path": "app/drive.<hash>.min.css",
