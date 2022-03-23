@@ -19,16 +19,16 @@ jest.mock('photos/ducks/clustering/files', () => ({
   getFilesFromDate: jest.fn().mockReturnValue([])
 }))
 
-const client = new CozyClient({})
-client.save = jest.fn(doc => Promise.resolve({ data: doc }))
-CozyClient.fromEnv = jest.fn().mockReturnValue(client)
-
 describe('onPhotoUpload', () => {
+  let client
   beforeEach(() => {
-    jest.spyOn(Date, 'now').mockImplementation(() => 1000)
-
     // TODO: remove this spy by testing correctly the asynchronous actions
     jest.spyOn(console, 'error').mockImplementation()
+
+    client = new CozyClient({})
+    client.save = jest.fn(doc => Promise.resolve({ data: doc }))
+    CozyClient.fromEnv = jest.fn().mockReturnValue(client)
+    jest.spyOn(Date, 'now').mockImplementation(() => 1000)
   })
 
   it('Should stop if other execution is running', async () => {
