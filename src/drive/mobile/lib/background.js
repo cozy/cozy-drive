@@ -139,6 +139,8 @@ const disableAndroidBackgroundService = async () => {
 }
 
 const startAndroidBackgroundService = () => {
+  // TODO: fix me
+  // eslint-disable-next-line promise/catch-or-return,promise/always-return
   backgroundService().then(() => {
     stopAndroidBackgroundService()
   })
@@ -184,6 +186,8 @@ const disableIosBackgroundService = () => {
 }
 
 const startIosBackgroundService = () => {
+  // TODO: fix me
+  // eslint-disable-next-line promise/catch-or-return,promise/always-return
   backgroundService().then(() => {
     stopIosBackgroundService()
   })

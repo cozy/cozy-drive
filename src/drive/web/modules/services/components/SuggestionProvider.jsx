@@ -49,12 +49,16 @@ class SuggestionProvider extends React.Component {
   // fetches pretty much all the files and preloads FuzzyPathSearch
   async indexFiles() {
     const { client } = this.props
+    // TODO: fix me
+    // eslint-disable-next-line no-async-promise-executor
     return new Promise(async resolve => {
       const resp = await cozy.client.fetchJSON(
         'GET',
         `/data/io.cozy.files/_all_docs?include_docs=true`
       )
       const files = resp.rows
+        // TODO: fix me
+        // eslint-disable-next-line no-prototype-builtins
         .filter(row => !row.doc.hasOwnProperty('views'))
         .map(row => ({ id: row.id, ...row.doc }))
 

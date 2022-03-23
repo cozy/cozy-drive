@@ -37,6 +37,8 @@ class PhotosPicker extends Component {
 
   onUpdate = selected => {
     const { album } = this.props
+    // TODO: fix me
+    // eslint-disable-next-line promise/catch-or-return
     this.props
       .addPhotos(album, selected)
       .then(() => this.props.router.push(`/albums/${album.id}`))

@@ -131,6 +131,8 @@ const ConnectedAddToAlbumModal = props => (
 // eslint-disable-next-line react/display-name
 export const AlbumPhotosWithLoader =
   ({ children }) =>
+  // TODO: fix me
+  // eslint-disable-next-line react/display-name
   (
     { data: album, fetchStatus },
     { updateAlbum, deleteAlbum, removePhotos }

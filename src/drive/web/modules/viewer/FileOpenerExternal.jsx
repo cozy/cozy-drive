@@ -36,7 +36,7 @@ export class FileOpener extends Component {
     loading: true,
     file: null
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const routerFileId = get(this.props, 'routeParams.fileId')
     if (this.props.fileId) {
       this.loadFileInfo(this.props.fileId)
