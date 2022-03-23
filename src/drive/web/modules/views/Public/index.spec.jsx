@@ -94,7 +94,15 @@ describe('Public View', () => {
   it('renders the public view', async () => {
     jest.spyOn(console, 'error').mockImplementation() // TODO: to be removed with https://github.com/cozy/cozy-libs/pull/1457
 
-    const { getByText, findByText } = setup()
+    // Given
+    let render
+
+    // When
+    await act(async () => {
+      render = await setup()
+    })
+
+    const { getByText, findByText } = render
     const sleep = duration =>
       new Promise(resolve => setTimeout(resolve, duration))
     await act(async () => {

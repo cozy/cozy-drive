@@ -4,6 +4,7 @@
 
 * When displaying cozy-home from Cozy's native application, the Support Us is not displayed
 * Upgrade Cozy-Scripts to enable service-worker
+* Add service-worker to cache bundle assets, to load the page faster
 
 ## 🐛 Bug Fixes
 
