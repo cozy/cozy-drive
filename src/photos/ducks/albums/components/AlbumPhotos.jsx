@@ -48,6 +48,8 @@ class AlbumPhotos extends Component {
     let updatedAlbum = { ...this.props.album, name: name }
     this.props
       .updateAlbum(updatedAlbum)
+      // TODO: fix me
+      // eslint-disable-next-line promise/always-return
       .then(() => {
         this.setState({ editing: false })
       })
@@ -95,6 +97,8 @@ class AlbumPhotos extends Component {
         onClose={this.closeDestroyConfirmModal}
         confirm={() =>
           deleteAlbum(album)
+            // TODO: fix me
+            // eslint-disable-next-line promise/always-return
             .then(() => {
               router.replace('albums')
               Alerter.success('Albums.remove_album.success', {

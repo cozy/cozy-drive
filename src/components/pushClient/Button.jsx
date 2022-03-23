@@ -14,7 +14,7 @@ class ButtonClient extends Component {
     mustShow: false
   }
 
-  async componentWillMount() {
+  async UNSAFE_componentWillMount() {
     if (Config.promoteDesktop.isActivated !== true || isFlagshipApp()) return
     const seen = (await localforage.getItem(DESKTOP_BANNER)) || false
     // we want to show the button if the banner has been marked as seen *and*

@@ -157,6 +157,8 @@ const getPhotosByClusters = (photos, f) => {
     } else {
       const date = album.name
 
+      // TODO: fix me
+      // eslint-disable-next-line no-prototype-builtins
       if (!sections.hasOwnProperty(date)) {
         const title = getSectionTitle(album, f)
         sections[date] = {

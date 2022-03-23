@@ -14,6 +14,8 @@ class LoadMoreButton extends Component {
 
   handleClick() {
     this.setState({ fetching: true })
+    // TODO: fix me
+    // eslint-disable-next-line promise/catch-or-return
     this.props.onClick().then(() => this.setState({ fetching: false }))
   }
 

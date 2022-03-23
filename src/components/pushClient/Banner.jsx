@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-redeclare,no-unused-vars
 /* global localStorage */
 
 import React, { Component } from 'react'
