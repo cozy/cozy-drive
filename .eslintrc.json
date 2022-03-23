@@ -8,5 +8,10 @@
   },
   "globals": {
     "fixture": false
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }

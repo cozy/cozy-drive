@@ -3,6 +3,7 @@
 ## ✨ Features
 
 * When displaying cozy-home from Cozy's native application, the Support Us is not displayed
+* Upgrade Cozy-Scripts to enable service-worker
 
 ## 🐛 Bug Fixes
 
@@ -21,6 +22,7 @@
 * Clear mocks automatically in the configuration of Jest, our test runner
 * Minor improvements in the code revealed by our linters
 * Remove react-autosuggest as not used directly in this package
+* Upgrade eslint-cozy-config-app to use eslint@v7
 
 # 1.40.0
 
