@@ -8,7 +8,8 @@ import LightFileViewer from './LightFileViewer'
 import AppLike from 'test/components/AppLike'
 
 jest.mock('cozy-intent', () => ({
-  WebviewIntentProvider: ({ children }) => children
+  WebviewIntentProvider: ({ children }) => children,
+  useWebviewIntent: () => ({ call: () => {} })
 }))
 jest.mock('cozy-ui/transpiled/react/hooks/useBreakpoints', () => ({
   __esModule: true,
