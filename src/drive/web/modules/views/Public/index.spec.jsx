@@ -10,7 +10,8 @@ import { generateFileFixtures, getByTextWithMarkup } from '../testUtils'
 import PublicFolderView from './index'
 
 jest.mock('cozy-intent', () => ({
-  WebviewIntentProvider: ({ children }) => children
+  WebviewIntentProvider: ({ children }) => children,
+  useWebviewIntent: () => ({ call: () => {} })
 }))
 
 jest.mock('cozy-flags', () => () => true)
