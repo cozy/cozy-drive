@@ -15,7 +15,7 @@ const StartScanner = ({ t }) => {
   const { status, online, startScanner } = scannerContextValue
 
   const offlineMessage = () => {
-    return alert(t('Scan.error.offlinee'))
+    return alert(t('Scan.error.offline'))
   }
   const uploadingMessage = () => {
     return alert(t('Scan.error.uploading'))
