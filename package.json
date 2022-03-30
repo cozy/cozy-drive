@@ -5,7 +5,6 @@
   "scripts": {
     "build": "yarn build:drive && yarn build:photos",
     "build:drive": "yarn build:drive:browser",
-    "postbuild:drive:browser": "workbox injectManifest webpack/workbox.config.js && rm -rf build/serviceWorker",
     "build:drive:browser": "COZY_APP_SLUG=drive cozy-scripts build --manifest src/drive/targets/manifest.webapp --build-dir build/drive --src-dir src/drive",
     "build:drive:mobile": "COZY_APP_SLUG=drive cozy-scripts build --mobile --manifest src/drive/targets/manifest.webapp --src-dir src/drive",
     "watch:drive": "yarn watch:drive:browser",
@@ -172,8 +171,6 @@
     "scheduler": "0.20.2",
     "snarkdown": "2.0.0",
     "webpack-node-externals": "3.0.0",
-    "whatwg-fetch": "3.0.0",
-    "workbox-cli": "6.5.1",
-    "workbox-precaching": "6.5.1"
+    "whatwg-fetch": "3.0.0"
   }
 }

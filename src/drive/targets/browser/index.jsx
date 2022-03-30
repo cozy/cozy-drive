@@ -1,5 +1,5 @@
 /* global __DEVELOPMENT__ */
-import { register as registerServiceWorker } from 'src/targets/browser/serviceWorkerRegistration'
+
 import 'cozy-ui/transpiled/react/stylesheet.css'
 // eslint-disable-next-line no-unused-vars
 import mainStyles from 'drive/styles/main.styl'
@@ -51,5 +51,3 @@ if (module.hot) {
   init()
   module.hot.accept()
 }
-
-registerServiceWorker()
