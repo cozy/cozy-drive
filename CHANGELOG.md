@@ -23,6 +23,7 @@
 * Clear mocks automatically in the configuration of Jest, our test runner
 * Minor improvements in the code revealed by our linters
 * Remove react-autosuggest as not used directly in this package
+* Remove react-tooltip as not used directly in this package
 * Upgrade eslint-cozy-config-app to use eslint@v7
 * Unregister any service worker that could have been registered during development
 
