@@ -6300,7 +6300,7 @@ cozy-ui@^62.4.3:
     filesize "8.0.7"
     hammerjs "^2.0.8"
     intersection-observer "0.11.0"
-    mui-bottom-sheet "git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.6"
+    mui-bottom-sheet "https://github.com/cozy/mui-bottom-sheet.git#v1.0.6"
     node-polyglot "^2.2.2"
     normalize.css "^8.0.0"
     react-markdown "^4.0.8"
@@ -13030,7 +13030,6 @@ msgpack5@^4.0.2:
 
 "mui-bottom-sheet@git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.6":
   version "1.0.6"
-  uid "494c40416ecde95732c864f9b921e7e545075aa5"
   resolved "git+https://github.com/cozy/mui-bottom-sheet.git#494c40416ecde95732c864f9b921e7e545075aa5"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
@@ -15607,14 +15606,6 @@ react-themeable@^1.1.0:
   integrity sha1-fURm3ZsrX6dQWHJ4JenxUro3mg4=
   dependencies:
     object-assign "^3.0.0"
-
-react-tooltip@3.11.1:
-  version "3.11.1"
-  resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-3.11.1.tgz#7b4ce48ed26a46e996662b19a2afebbfd483513b"
-  integrity sha512-YCMVlEC2KuHIzOQhPplTK5jmBBwoL+PYJJdJKXj7M/h7oevupd/QSVq6z5U7/ehIGXyHsAqvwpdxexDfyQ0o3A==
-  dependencies:
-    classnames "^2.2.5"
-    prop-types "^15.6.0"
 
 react-tooltip@^3.11.1:
   version "3.11.6"
