@@ -4,7 +4,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { Link, withRouter } from 'react-router'
 
-import FileImageLoader  from 'cozy-ui/transpiled/react/FileImageLoader'
+import FileImageLoader from 'cozy-ui/transpiled/react/FileImageLoader'
 
 const getStyleFromBox = box => {
   let style = {}
