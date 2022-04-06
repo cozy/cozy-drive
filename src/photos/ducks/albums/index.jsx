@@ -134,7 +134,7 @@ export const AlbumPhotosWithLoader =
   // TODO: fix me
   // eslint-disable-next-line react/display-name
   (
-    { data: album, fetchStatus },
+    { data: album, fetchStatus, lastFetch },
     { updateAlbum, deleteAlbum, removePhotos }
   ) => {
     if (album && fetchStatus === 'loaded') {
@@ -147,6 +147,7 @@ export const AlbumPhotosWithLoader =
           removePhotos={removePhotos}
           hasMore={album.photos.hasMore}
           fetchMore={album.photos.fetchMore.bind(album.photos)}
+          lastFetch={lastFetch}
         >
           {children}
         </AlbumPhotos>

@@ -10,16 +10,15 @@ import ErrorComponent from 'components/Error/ErrorComponent'
 import Topbar from '../../../components/Topbar'
 
 const Content = ({ list }) => {
-  const { fetchStatus } = list
-  switch (fetchStatus) {
-    case 'pending':
-    case 'loading':
-      return <Loading loadingType="albums_fetching" />
-    case 'failed':
-      return <ErrorComponent errorType="albums" />
-    default:
-      return <AlbumsList {...list} />
+  const { fetchStatus, lastFetch } = list
+  if (!lastFetch && (fetchStatus === 'pending' || fetchStatus === 'loading')) {
+    return <Loading loadingType="albums_fetching" />
   }
+  if (fetchStatus === 'failed') {
+    return <ErrorComponent errorType="albums" />
+  }
+
+  return <AlbumsList {...list} />
 }
 
 class AlbumsView extends Component {

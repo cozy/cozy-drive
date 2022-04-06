@@ -121,8 +121,16 @@ class AlbumPhotos extends Component {
       return null
     }
 
-    const { t, router, album, shareAlbum, photos, hasMore, fetchMore } =
-      this.props
+    const {
+      t,
+      router,
+      album,
+      shareAlbum,
+      photos,
+      hasMore,
+      fetchMore,
+      lastFetch
+    } = this.props
     const { editing } = this.state
     const shared = {}
 
@@ -182,6 +190,7 @@ class AlbumPhotos extends Component {
                 fetchStatus={photos.fetchStatus}
                 hasMore={hasMore}
                 fetchMore={fetchMore}
+                lastFetch={lastFetch}
               />
             )}
             {this.renderViewer(this.props.children)}
@@ -221,7 +230,8 @@ AlbumPhotos.propTypes = {
   shareAlbum: PropTypes.func,
   photos: PropTypes.array.isRequired,
   t: PropTypes.func.isRequired,
-  router: PropTypes.object.isRequired
+  router: PropTypes.object.isRequired,
+  lastFetch: PropTypes.string
 }
 
 export default flow(

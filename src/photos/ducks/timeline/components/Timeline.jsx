@@ -111,7 +111,7 @@ class Timeline extends Component {
   }
 
   render() {
-    const { t, lists, fetchStatus, hasMore, fetchMore } = this.props
+    const { t, lists, fetchStatus, hasMore, fetchMore, lastFetch } = this.props
     return (
       <Selection
         actions={selection => ({
@@ -153,6 +153,7 @@ class Timeline extends Component {
                 fetchStatus={fetchStatus}
                 hasMore={hasMore}
                 fetchMore={fetchMore}
+                lastFetch={lastFetch}
               />
             </Content>
             {this.renderViewer(this.props.children)}

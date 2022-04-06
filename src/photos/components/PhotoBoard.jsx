@@ -28,11 +28,12 @@ export class PhotoBoard extends Component {
       measureRef,
       contentRect: {
         entry: { width }
-      }
+      },
+      lastFetch
     } = this.props
-
     const isError = fetchStatus === 'failed'
-    const isFetching = fetchStatus === 'pending' || fetchStatus === 'loading'
+    const isFetching =
+      (fetchStatus === 'pending' || fetchStatus === 'loading') && !lastFetch
 
     if (isError) {
       return <ErrorComponent errorType={`${photosContext}_photos`} />
