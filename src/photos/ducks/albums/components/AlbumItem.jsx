@@ -4,8 +4,9 @@ import classNames from 'classnames'
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
+import FileImageLoader  from 'cozy-ui/transpiled/react/FileImageLoader'
+
 import { SharedBadge, SharedDocument } from 'cozy-sharing'
-import { ImageLoader } from 'components/Image'
 
 const AlbumItemLink = ({ router, album, image, title, desc }) => {
   const parentPath = router.location.pathname
@@ -86,9 +87,9 @@ export default class AlbumItem extends Component {
     const image = !coverPhoto ? (
       <div className={styles['pho-album-photo-item']} />
     ) : (
-      <ImageLoader
+      <FileImageLoader
         file={coverPhoto}
-        size="small"
+        linkType="small"
         render={src => (
           <img
             src={src}

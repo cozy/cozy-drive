@@ -4,7 +4,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { Link, withRouter } from 'react-router'
 
-import { ImageLoader } from 'components/Image'
+import FileImageLoader  from 'cozy-ui/transpiled/react/FileImageLoader'
 
 const getStyleFromBox = box => {
   let style = {}
@@ -54,9 +54,9 @@ const Photo = props => {
             query: router.location.query
           }}
         >
-          <ImageLoader
+          <FileImageLoader
             file={photo}
-            size="small"
+            linkType="small"
             render={src => (
               <img
                 data-testid="pho-photo-item"
