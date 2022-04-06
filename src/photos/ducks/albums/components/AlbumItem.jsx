@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import FileImageLoader  from 'cozy-ui/transpiled/react/FileImageLoader'
+import FileImageLoader from 'cozy-ui/transpiled/react/FileImageLoader'
 
 import { SharedBadge, SharedDocument } from 'cozy-sharing'
 
