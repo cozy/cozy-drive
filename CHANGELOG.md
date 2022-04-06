@@ -4,6 +4,8 @@
 
 * When displaying cozy-home from Cozy's native application, the Support Us is not displayed
 * Upgrade Cozy-Scripts to enable service-worker
+* Display tiny thumbnail instead of small
+* Display thumbnail for PDF (behind a flag)
 * Photos: Fix pagination issue
 
 ## 🐛 Bug Fixes
