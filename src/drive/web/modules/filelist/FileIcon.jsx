@@ -1,7 +1,7 @@
 import React from 'react'
 import FileIconMime from 'drive/web/modules/filelist/FileIconMime'
 import FileIconShortcut from 'drive/web/modules/filelist/FileIconShortcut'
-import { ImageLoader } from 'components/Image'
+import FileImageLoader  from 'cozy-ui/transpiled/react/FileImageLoader'
 import styles from 'drive/styles/filelist.styl'
 
 const FileIcon = ({ file, size, isEncrypted }) => {
@@ -10,9 +10,9 @@ const FileIcon = ({ file, size, isEncrypted }) => {
 
   if (isImage)
     return (
-      <ImageLoader
+      <FileImageLoader
         file={file}
-        size="small"
+        linkType="tiny"
         render={src => (
           <img
             src={src}
