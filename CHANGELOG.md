@@ -6,6 +6,8 @@
 * Upgrade Cozy-Scripts to enable service-worker
 * Photos: Fix pagination issue
 * Change Sentry url
+* Display tiny thumbnail instead of small
+* Display thumbnail for PDF (behind a flag)
 
 ## 🐛 Bug Fixes
 
