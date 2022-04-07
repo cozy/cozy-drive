@@ -26,6 +26,7 @@
 * Remove react-tooltip as not used directly in this package
 * Upgrade eslint-cozy-config-app to use eslint@v7
 * Unregister any service worker that could have been registered during development
+* Improve a fragile test, breaking while some Node 16 pipeline
 
 # 1.40.0
 
