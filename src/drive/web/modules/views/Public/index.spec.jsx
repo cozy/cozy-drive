@@ -9,6 +9,8 @@ import { generateFileFixtures, getByTextWithMarkup } from '../testUtils'
 
 import PublicFolderView from './index'
 
+jest.mock('cozy-client/dist/hooks/useCapabilities', () => jest.fn())
+
 jest.mock('cozy-intent', () => ({
   WebviewIntentProvider: ({ children }) => children,
   useWebviewIntent: () => ({ call: () => {} })
@@ -93,8 +95,6 @@ describe('Public View', () => {
   })
 
   it('renders the public view', async () => {
-    jest.spyOn(console, 'error').mockImplementation() // TODO: to be removed with https://github.com/cozy/cozy-libs/pull/1457
-
     const { getByText, findByText } = await setup()
     await act(async () => {
       const sleep = duration =>
