@@ -1,6 +1,6 @@
 # Cozy TestCafe
 
-[Testcafe](https://devexpress.github.io/testcafe/) is used for automated testing on Travis.
+[Testcafe](https://devexpress.github.io/testcafe/) is not used anymore for automated testing on Travis.
 
 To run local test using testcafe, you must first set some environment variables.
 
