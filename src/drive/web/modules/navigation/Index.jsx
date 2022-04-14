@@ -46,7 +46,7 @@ export const fetchSharing = async ({
   sharingId
 }) => {
   if (!sharingId) {
-    return router.push('/folder')
+    return router.replace('/folder')
   }
 
   try {
@@ -77,15 +77,15 @@ export const fetchSharing = async ({
     }
 
     if (!hasReferencedFile) {
-      return router.push(`/folder/${SHAREDWITHME_DIR_ID}`)
+      return router.replace(`/folder/${SHAREDWITHME_DIR_ID}`)
     }
-    return router.push(`/folder/${referencedFile.dir_id}`)
+    return router.replace(`/folder/${referencedFile.dir_id}`)
   } catch (e) {
     // eslint-disable-next-line
     console.warn(
       `fetchSharing error : ${e}. Redirect to /folder/${SHAREDWITHME_DIR_ID}`
     )
-    return router.push(`/folder/${SHAREDWITHME_DIR_ID}`)
+    return router.replace(`/folder/${SHAREDWITHME_DIR_ID}`)
   }
 }
 
