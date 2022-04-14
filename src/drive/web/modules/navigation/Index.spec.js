@@ -10,7 +10,7 @@ jest.mock('cozy-keys-lib', () => ({
   useVaultClient: jest.fn()
 }))
 const client = createMockClient({})
-const router = { push: jest.fn() }
+const router = { replace: jest.fn() }
 const setSharingsValue = jest.fn()
 const setFileValue = jest.fn()
 const sharingRes = { data: { id: '123' } }
@@ -51,7 +51,7 @@ describe('fetchSharing', () => {
 
     expect(setSharingsValue).not.toHaveBeenCalled()
     expect(setFileValue).not.toHaveBeenCalled()
-    expect(router.push).toHaveBeenCalledWith('/folder')
+    expect(router.replace).toHaveBeenCalledWith('/folder')
   })
 
   it('should redirect to /shared-with-me-dir and store sharing in context, if sharing id but no referenced file', async () => {
@@ -61,7 +61,9 @@ describe('fetchSharing', () => {
 
     expect(setSharingsValue).toHaveBeenCalled()
     expect(setFileValue).not.toHaveBeenCalled()
-    expect(router.push).toHaveBeenCalledWith(`/folder/${SHAREDWITHME_DIR_ID}`)
+    expect(router.replace).toHaveBeenCalledWith(
+      `/folder/${SHAREDWITHME_DIR_ID}`
+    )
   })
 
   it('should redirect to /folder/dirId and store nothing in context, if sharing id and referenced file but no shortcut', async () => {
@@ -72,7 +74,7 @@ describe('fetchSharing', () => {
 
     expect(setSharingsValue).not.toHaveBeenCalled()
     expect(setFileValue).not.toHaveBeenCalled()
-    expect(router.push).toHaveBeenCalledWith('/folder/dirId')
+    expect(router.replace).toHaveBeenCalledWith('/folder/dirId')
   })
 
   it('should redirect to /folder/dirId and store sharing and file in context, if sharing id, referenced file and shortcut', async () => {
@@ -84,6 +86,6 @@ describe('fetchSharing', () => {
 
     expect(setSharingsValue).toHaveBeenCalled()
     expect(setFileValue).toHaveBeenCalled()
-    expect(router.push).toHaveBeenCalledWith('/folder/dirId')
+    expect(router.replace).toHaveBeenCalledWith('/folder/dirId')
   })
 })
