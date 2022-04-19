@@ -5858,12 +5858,12 @@ cozy-app-publish@^0.27.2:
     request "^2.88.0"
     tar "^4.4.13"
 
-cozy-authentication@2.6.1:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/cozy-authentication/-/cozy-authentication-2.6.1.tgz#c21e190b65a1cd8cd837728790ea397957c5c9bb"
-  integrity sha512-1C2Dr/YAwgP5mSTNfClQLH3fJ86fFtattevzxyBRJe+4aTYVXIHf+7mK2S+8bYUb3JkKvbICe5YEfEzqHE615A==
+cozy-authentication@2.8.3:
+  version "2.8.3"
+  resolved "https://registry.yarnpkg.com/cozy-authentication/-/cozy-authentication-2.8.3.tgz#f427d76417a750678cbbdce886ca09ef8db124c5"
+  integrity sha512-bu29D86IeiBoWn6ClOEobmRXWI1Nl1135BObW06vZaj2fUs6Yh9fcAtC1fAeYYVTN63U0haWPm9APHyV/Gw7IA==
   dependencies:
-    cozy-device-helper "^1.12.0"
+    cozy-device-helper "^1.17.0"
     localforage "1.7.3"
     prop-types "15.7.2"
     snarkdown "1.2.2"
@@ -5975,24 +5975,10 @@ cozy-client@^27.19.4:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
-cozy-device-helper@1.17.0, cozy-device-helper@^1.16.1, cozy-device-helper@^1.17.0:
+cozy-device-helper@1.17.0, cozy-device-helper@^1.12.0, cozy-device-helper@^1.13.2, cozy-device-helper@^1.16.1, cozy-device-helper@^1.17.0, cozy-device-helper@^1.7.5:
   version "1.17.0"
   resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.17.0.tgz#fbce9737ea83c67969b2b173163b37299a36283c"
   integrity sha512-G61i75dPe/JwLUxN0foWG34lnm+0iybMu05AjoXv/UU2fRsTPfNnsHH4ZRi5JS6OPK4ccuj+ffRmabdywo23TA==
-  dependencies:
-    lodash "^4.17.19"
-
-cozy-device-helper@^1.12.0, cozy-device-helper@^1.7.5:
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.12.0.tgz#619a24b0d3caf2d3f616a1524daef7c7b71eab7a"
-  integrity sha512-7pFbltgkD8rSO0PEf8pd6aBB37RUnNYH7fb3pkbcvo5rk4quCfSLREV94gZwXxowzP4vjZcAumTM09DfI42mJA==
-  dependencies:
-    lodash "^4.17.19"
-
-cozy-device-helper@^1.13.2:
-  version "1.13.2"
-  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.13.2.tgz#483f649424ef0e5c60aa5bca4c57beda420ecd00"
-  integrity sha512-dgRUxjg7Hr6fd/3g3Zo1X3LEjr31htCRXRDlvlC3UI6cJ57PIaNRFEuRJdbthU0XBDagK312H8Ug6KMrH+Lo+w==
   dependencies:
     lodash "^4.17.19"
 
