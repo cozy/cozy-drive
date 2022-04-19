@@ -159,7 +159,7 @@
     "react-dropzone": "5.1.1",
     "react-inspector": "^5.1.0",
     "react-measure": "2.5.0",
-    "react-redux": "7.2.0",
+    "react-redux": "8.0.0",
     "react-remove-scroll": "^2.4.4",
     "react-router": "3.2.6",
     "redux": "3.7.2",
