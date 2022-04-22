@@ -265,14 +265,14 @@ First, you will need to create a `.sentryclirc` file in `~/` that will contain t
 
 ```
 [defaults]
-url=https://sentry.cozycloud.cc/
+url=https://errors.cozycloud.cc/
 project=cozy-drive-dev
 org=sentry
 [auth]
 token = {token}
 ```
 
-Replace `{token}` with a token that you can generate by going to [this page](https://sentry.cozycloud.cc/api/) (Profile -> API). The token should have the `project:write` and `project:releases` permissions.
+Replace `{token}` with a token that you can generate by going to [this page](https://errors.cozycloud.cc/api/) (Profile -> API). The token should have the `project:write` and `project:releases` permissions.
 
 Once the file is created, and after you've ran the proper build commands, you can upload the sourcemaps with
 
