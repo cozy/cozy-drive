@@ -108,7 +108,7 @@
     },
      "reporting": {
       "description": "Allow to report unexpected errors to the support team",
-      "type": "cc.cozycloud.sentry",
+      "type": "cc.cozycloud.errors",
       "verbs": ["POST"]
     },
     "triggers": {
