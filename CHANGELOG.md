@@ -31,6 +31,7 @@
 * Unregister any service worker that could have been registered during development
 * Improve a fragile test, breaking while some Node 16 pipeline
 * Add codeowners in the repository
+* Remove testcafe and all e2e related scripts and folder
 
 # 1.40.0
 

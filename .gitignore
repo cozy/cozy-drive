@@ -56,6 +56,3 @@ src/drive/targets/mobile/fastlane/report.xml
 src/drive/targets/mobile/fastlane/Error*.png
 src/drive/targets/mobile/fastlane/Preview.html
 src/drive/targets/mobilePreview.html
-
-# testcafe data
-testcafe/data/FILES TO TEST

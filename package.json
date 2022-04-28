@@ -24,8 +24,6 @@
     "lint": "npm-run-all --parallel 'lint:*'",
     "lint:styles": "stylint src --config ./node_modules/cozy-scripts/config/.stylintrc",
     "lint:js": "eslint '{src,test}/**/*.{js,jsx}'",
-    "testcafe:drive": "node testcafe/runner-drive.js",
-    "testcafe:photos": "node testcafe/runner-photos.js",
     "test": "env NODE_ENV='test' cozy-scripts test",
     "genicon:drive:mobile": "(cd src/drive/targets/mobile && rm -Rf ./res/icons ./res/screens && splashicon-generator --imagespath='./res/model' && cp res/model/splash.png res/screens/ios/Default@2x~universal~anyany.png)",
     "prepare:drive:mobile": "(cd src/drive/targets/mobile && rm -rf platforms && rm -rf plugins && cordova prepare)",
@@ -76,6 +74,7 @@
   },
   "homepage": "https://github.com/cozy/cozy-drive#readme",
   "devDependencies": {
+    "@babel/core": "^7.0.0",
     "@sentry/cli": "1.72.1",
     "@testing-library/jest-dom": "5.16.3",
     "@testing-library/react": "11.2.7",
@@ -102,7 +101,6 @@
     "splashicon-generator": "0.2.12",
     "stylint": "1.5.9",
     "tar": "4.4.18",
-    "testcafe": "1.18.3",
     "unzipper": "0.10.11",
     "visualreview-client": "git+https://github.com/cozy/VisualReview-node-client.git#v0.0.4",
     "worker-loader": "2.0.0"
