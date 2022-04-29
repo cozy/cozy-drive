@@ -1,8 +1,9 @@
 import get from 'lodash/get'
 import flag from 'cozy-flags'
 import { DOCTYPE_FILES, DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
-import { ENCRYPTION_MIME_TYPE } from 'drive/constants/config'
 import { buildEncryptionByIdQuery } from 'drive/web/modules/queries'
+import { models } from 'cozy-client'
+const { isEncrypted } = models.file
 
 export const hasEncryptionRef = dir => {
   return !!getEncryptiondRef(dir)
@@ -14,7 +15,7 @@ export const getEncryptiondRef = dir => {
 }
 
 export const isEncryptedFile = file => {
-  return file.mime === ENCRYPTION_MIME_TYPE
+  return isEncrypted(file)
 }
 
 export const getEncryptionKeyFromDirId = async (client, dirId) => {
@@ -65,7 +66,7 @@ export const encryptAndUploadNewFile = async (
       name,
       dirId: dirID,
       onUploadProgress,
-      contentType: ENCRYPTION_MIME_TYPE
+      encrypted: true
     })
   return resp.data
 }
