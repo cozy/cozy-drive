@@ -6,10 +6,17 @@ import CozyClient, { useQuery } from 'cozy-client'
 import AppLike from 'test/components/AppLike'
 import { generateFile } from 'test/generate'
 import { act } from 'react-dom/test-utils'
+import { getEncryptionKeyFromDirId } from 'drive/lib/encryption'
 
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 jest.mock('cozy-keys-lib', () => ({
   useVaultClient: jest.fn()
+}))
+
+jest.mock('drive/lib/encryption', () => ({
+  ...jest.requireActual('drive/lib/encryption'),
+  getEncryptionKeyFromDirId: jest.fn(),
+  getDecryptedFileURL: jest.fn()
 }))
 
 const sleep = duration => new Promise(resolve => setTimeout(resolve, duration))
@@ -21,7 +28,8 @@ describe('FilesViewer', () => {
     totalCount,
     client = new CozyClient({}),
     vaultClient = {},
-    useQueryResultAttributes
+    useQueryResultAttributes,
+    isEncrypted = false
   } = {}) => {
     const store = {
       subscribe: () => {},
@@ -43,7 +51,7 @@ describe('FilesViewer', () => {
 
     const filesFixture = Array(nbFiles)
       .fill(null)
-      .map((x, i) => generateFile({ i, type: 'file' }))
+      .map((x, i) => generateFile({ i, type: 'file', encrypted: isEncrypted }))
     const mockedUseQueryReturnedValues = {
       data: filesFixture,
       count: totalCount || filesFixture.length,
@@ -129,5 +137,25 @@ describe('FilesViewer', () => {
     expect(root.find(Overlay).length).toBe(1)
     expect(root.find(Viewer).length).toBe(1)
     expect(fetchMore).toHaveBeenCalledTimes(1)
+  })
+
+  it('should get decyrption key when file is encrypted', async () => {
+    const client = new CozyClient({})
+    client.query = jest.fn().mockResolvedValue({
+      data: generateFile({ i: '0', encrypted: true })
+    })
+    await act(async () => {
+      const { root } = await setup({
+        client,
+        nbFiles: 1,
+        totalCount: 1,
+        fileId: 'file-foobar0',
+        isEncrypted: true
+      })
+      root.update()
+      expect(root.find(Viewer).length).toBe(1)
+
+      expect(getEncryptionKeyFromDirId).toHaveBeenCalled()
+    })
   })
 })

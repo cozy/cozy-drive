@@ -8,6 +8,7 @@
 * Change Sentry url
 * Display tiny thumbnail instead of small
 * Display thumbnail for PDF (behind a flag)
+* Support client-side encrypted files visualization 
 
 ## 🐛 Bug Fixes
 

@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState, useMemo } from 'react'
 import { RemoveScroll } from 'react-remove-scroll'
 
 import { Q, useClient } from 'cozy-client'
+import { useVaultClient } from 'cozy-keys-lib'
 import { isIOSApp } from 'cozy-device-helper'
 import logger from 'lib/logger'
 import Overlay from 'cozy-ui/transpiled/react/Overlay'
@@ -21,6 +22,11 @@ import {
 import { showPanel } from './helpers'
 import PanelContent from './Panel/PanelContent'
 import FooterContent from './Footer/FooterContent'
+import {
+  isEncryptedFile,
+  getEncryptionKeyFromDirId,
+  getDecryptedFileURL
+} from 'drive/lib/encryption'
 
 export const FilesViewerLoading = () => (
   <Overlay>
@@ -52,11 +58,13 @@ const styleStatusBar = switcher => {
 const FilesViewer = ({ filesQuery, files, fileId, onClose, onChange }) => {
   useUpdateDocumentTitle(fileId)
   const [currentFile, setCurrentFile] = useState(null)
+  const [currentDecryptedFileURL, setcurrentDecryptedFileURL] = useState(null)
   const [fetchingMore, setFetchingMore] = useState(false)
 
   const client = useClient()
   const { t } = useI18n()
   const { router } = useRouter()
+  const vaultClient = useVaultClient()
 
   const handleOnClose = useCallback(() => {
     if (onClose) {
@@ -76,6 +84,13 @@ const FilesViewer = ({ filesQuery, files, fileId, onClose, onChange }) => {
   const getCurrentIndex = useCallback(
     () => files.findIndex(f => f.id === fileId),
     [files, fileId]
+  )
+
+  const currentIndex = useMemo(() => getCurrentIndex(), [getCurrentIndex])
+  const hasCurrentIndex = useMemo(() => currentIndex != -1, [currentIndex])
+  const viewerFiles = useMemo(
+    () => (hasCurrentIndex ? files : [currentFile]),
+    [hasCurrentIndex, files, currentFile]
   )
 
   useEffect(() => {
@@ -116,19 +131,39 @@ const FilesViewer = ({ filesQuery, files, fileId, onClose, onChange }) => {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
+    const getDecyptedURLIfNecessary = async () => {
+      const file = files[currentIndex]
+      if (file && isEncryptedFile(file)) {
+        const encryptionKey = await getEncryptionKeyFromDirId(
+          client,
+          file.dir_id
+        )
+        const url = await getDecryptedFileURL(client, vaultClient, {
+          file,
+          encryptionKey
+        })
+        setcurrentDecryptedFileURL(url)
+      }
+    }
+    getDecyptedURLIfNecessary()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentIndex])
+
+  useEffect(() => {
     let isMounted = true
 
     // If we get close of the last file fetched, but we know there are more in the folder
     // (it shouldn't happen in /recent), we fetch more files
     const fetchMoreIfNecessary = async () => {
-      if (fetchingMore) return
+      if (fetchingMore) {
+        return
+      }
 
       setFetchingMore(true)
       try {
         const fileCount = filesQuery.count
 
         const currentIndex = files.findIndex(f => f.id === fileId)
-
         if (
           files.length !== fileCount &&
           files.length - currentIndex <= 5 &&
@@ -148,12 +183,6 @@ const FilesViewer = ({ filesQuery, files, fileId, onClose, onChange }) => {
     }
   }, [fetchingMore, filesQuery, files, fileId])
 
-  const currentIndex = useMemo(() => getCurrentIndex(), [getCurrentIndex])
-  const hasCurrentIndex = useMemo(() => currentIndex != -1, [currentIndex])
-  const viewerFiles = useMemo(
-    () => (hasCurrentIndex ? files : [currentFile]),
-    [hasCurrentIndex, files, currentFile]
-  )
   const viewerIndex = useMemo(
     () => (hasCurrentIndex ? currentIndex : 0),
     [hasCurrentIndex, currentIndex]
@@ -170,6 +199,7 @@ const FilesViewer = ({ filesQuery, files, fileId, onClose, onChange }) => {
       <Overlay>
         <Viewer
           files={viewerFiles}
+          currentURL={currentDecryptedFileURL}
           currentIndex={viewerIndex}
           onChangeRequest={handleOnChange}
           onCloseRequest={handleOnClose}
