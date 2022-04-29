@@ -4,7 +4,6 @@ import logger from 'lib/logger'
 import { CozyFile } from 'models'
 
 import { logException } from 'drive/lib/reporter'
-import { ENCRYPTION_MIME_TYPE } from 'drive/constants/config'
 import UploadQueue from './UploadQueue'
 import {
   encryptAndUploadNewFile,
@@ -396,7 +395,7 @@ export const uploadFilesFromNative =
           )
           await uploadFileWithConflictStrategy(client, encryptedFile, {
             ...fileOpts,
-            contentType: ENCRYPTION_MIME_TYPE
+            contentType: file.file.type
           })
         } else {
           await doMobileUpload(client, file.file.fileUrl, {

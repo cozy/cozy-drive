@@ -1,7 +1,6 @@
 import { CozyFile } from 'models'
 import { doMobileUpload, readMobileFile } from 'cozy-client/dist/models/file'
 import { getEncryptionKeyFromDirId } from 'drive/lib/encryption'
-import { ENCRYPTION_MIME_TYPE } from 'drive/constants/config'
 
 import logger from 'lib/logger'
 
@@ -99,7 +98,7 @@ describe('uploadFilesFromNative function', () => {
           fileUrl: '/path/native/1',
           name: 'file1.jpg',
           type: 'image/jpeg',
-          mime: ENCRYPTION_MIME_TYPE
+          encrypted: true
         }
       }
     ]

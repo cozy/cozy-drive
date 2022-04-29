@@ -13,7 +13,7 @@ import {
   decryptFile
 } from 'drive/lib/encryption'
 import { DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
-import { TRASH_DIR_ID, ENCRYPTION_MIME_TYPE } from 'drive/constants/config'
+import { TRASH_DIR_ID } from 'drive/constants/config'
 import { isMobileApp } from 'cozy-device-helper'
 import {
   saveAndOpenWithCordova,
@@ -133,7 +133,7 @@ describe('downloadFiles', () => {
       id: 'file-id-1',
       name: 'my-file.pdf',
       type: 'file',
-      mime: ENCRYPTION_MIME_TYPE
+      encrypted: true
     }
     getEncryptionKeyFromDirId.mockResolvedValueOnce('encryption-key')
     await downloadFiles(mockClient, [file], { vaultClient: {} })
@@ -223,7 +223,7 @@ describe('openFileWith', () => {
   const blobMock = jest.fn()
   const file = generateFile({ i: 0 })
   file.mime = 'text'
-  const encryptedFile = { ...file, mime: ENCRYPTION_MIME_TYPE }
+  const encryptedFile = { ...file, encrypted: true }
   const vaultClient = {}
   let cordovaBackup
 
@@ -305,7 +305,7 @@ describe('exportFilesNative', () => {
   const files = [generateFile({ i: 0 }), generateFile({ i: 1 })]
   const encryptedFiles = files.map(file => ({
     ...file,
-    mime: ENCRYPTION_MIME_TYPE
+    encrypted: true
   }))
   const exportMock = jest.fn()
   let pluginsBackup
