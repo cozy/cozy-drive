@@ -58,7 +58,7 @@ const styleStatusBar = switcher => {
 const FilesViewer = ({ filesQuery, files, fileId, onClose, onChange }) => {
   useUpdateDocumentTitle(fileId)
   const [currentFile, setCurrentFile] = useState(null)
-  const [currentDecryptedFileURL, setcurrentDecryptedFileURL] = useState(null)
+  const [currentDecryptedFileURL, setCurrentDecryptedFileURL] = useState(null)
   const [fetchingMore, setFetchingMore] = useState(false)
 
   const client = useClient()
@@ -131,7 +131,7 @@ const FilesViewer = ({ filesQuery, files, fileId, onClose, onChange }) => {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    const getDecyptedURLIfNecessary = async () => {
+    const getDecryptedURLIfNecessary = async () => {
       const file = files[currentIndex]
       if (file && isEncryptedFile(file)) {
         const encryptionKey = await getEncryptionKeyFromDirId(
@@ -142,10 +142,10 @@ const FilesViewer = ({ filesQuery, files, fileId, onClose, onChange }) => {
           file,
           encryptionKey
         })
-        setcurrentDecryptedFileURL(url)
+        setCurrentDecryptedFileURL(url)
       }
     }
-    getDecyptedURLIfNecessary()
+    getDecryptedURLIfNecessary()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex])
 
