@@ -16,7 +16,7 @@
     },
     {
       "path": "public/drive.<hash>.js",
-      "maxSize": "1.47 MB"
+      "maxSize": "1.60 MB"
     },
     {
       "path": "public/drive.<hash>.min.css",
@@ -40,7 +40,7 @@
     },
     {
       "path": "vendors/drive.<hash>.js",
-      "maxSize": "1.41 MB"
+      "maxSize": "1.54 MB"
     }
   ],
   "reportOutput": ["github"]
