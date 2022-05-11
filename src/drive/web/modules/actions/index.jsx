@@ -19,7 +19,7 @@ import ShareIosIcon from 'cozy-ui/transpiled/react/Icons/ShareIos'
 import LinkOutIcon from 'cozy-ui/transpiled/react/Icons/LinkOut'
 import EyeIcon from 'cozy-ui/transpiled/react/Icons/Eye'
 
-import { hasEncryptionRef } from 'drive/lib/encryption'
+import { isEncryptedFolder } from 'drive/lib/encryption'
 import DeleteConfirm from 'drive/web/modules/drive/DeleteConfirm'
 import MoveModal from 'drive/web/modules/move/MoveModal'
 import ShareMenuItem from 'drive/web/modules/drive/ShareMenuItem'
@@ -87,7 +87,7 @@ export const download = ({ client, vaultClient }) => {
         displayCondition: files => {
           // Do not display when an encrypted folder is selected, as we cannot
           // generate archive for encrypted files, for now.
-          return !files.find(file => hasEncryptionRef(file))
+          return !files.find(file => isEncryptedFolder(file))
         },
         action: files => downloadFiles(client, files, { vaultClient }),
         Component: function Download(props) {

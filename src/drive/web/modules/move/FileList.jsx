@@ -3,11 +3,7 @@ import PropTypes from 'prop-types'
 import { DumbFile as File } from 'drive/web/modules/filelist/File'
 import { VaultUnlocker } from 'cozy-keys-lib'
 import { ROOT_DIR_ID } from 'drive/constants/config'
-import { hasEncryptionRef } from 'drive/lib/encryption'
-
-const isEncryptedFolder = folder => {
-  return hasEncryptionRef(folder)
-}
+import { isEncryptedFolder } from 'drive/lib/encryption'
 
 const isInvalidMoveTarget = (subjects, target) => {
   const isASubject = subjects.find(subject => subject._id === target._id)
