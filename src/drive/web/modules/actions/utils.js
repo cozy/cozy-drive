@@ -9,7 +9,7 @@ import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import {
   getEncryptionKeyFromDirId,
   downloadEncryptedFile,
-  hasEncryptionRef,
+  isEncryptedFolder,
   decryptFile,
   isEncryptedFile
 } from 'drive/lib/encryption'
@@ -71,7 +71,7 @@ export const downloadFiles = async (client, files, { vaultClient } = {}) => {
       return Alerter.error('error.download_file.encryption_many')
     }
     const hasEncryptedDirs = files.find(
-      file => isDirectory(file) && hasEncryptionRef(file)
+      file => isDirectory(file) && isEncryptedFolder(file)
     )
     if (hasEncryptedDirs) {
       // We cannot download encrypted folder because we cannot generate client archive for now.

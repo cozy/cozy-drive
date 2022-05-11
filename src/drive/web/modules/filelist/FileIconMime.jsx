@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 
 import { isDirectory } from 'cozy-client/dist/models/file'
 import { Icon } from 'cozy-ui/transpiled/react'
-import { hasEncryptionRef } from 'drive/lib/encryption'
+import { isEncryptedFolder } from 'drive/lib/encryption'
 import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
 
 const FileIcon = ({ file, size = 32, isEncrypted = false }) => {
   const isDir = isDirectory(file)
-  const isDirEncrypted = isEncrypted || (isDirectory && hasEncryptionRef(file))
+  const isDirEncrypted = isEncrypted || (isDirectory && isEncryptedFolder(file))
 
   return (
     <Icon

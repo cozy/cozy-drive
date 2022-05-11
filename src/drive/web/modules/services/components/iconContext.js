@@ -1,6 +1,6 @@
 import { TYPE_DIRECTORY } from './helpers'
 import { models } from 'cozy-client'
-import { hasEncryptionRef } from 'drive/lib/encryption'
+import { isEncryptedFolder } from 'drive/lib/encryption'
 import { getFileMimetype } from 'drive/lib/getFileMimetype'
 
 const iconsContext = require.context(
@@ -17,7 +17,7 @@ const icons = iconsContext.keys().reduce((acc, item) => {
 export function getIconUrl(file) {
   let keyIcon
   if (file.type === TYPE_DIRECTORY) {
-    if (hasEncryptionRef(file)) {
+    if (isEncryptedFolder(file)) {
       keyIcon = 'encrypted-folder'
     } else {
       keyIcon = 'folder'

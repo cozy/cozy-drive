@@ -27,7 +27,7 @@ import createFileOpeningHandler from 'drive/web/modules/views/Folder/createFileO
 import { useSyncingFakeFile } from './useSyncingFakeFile'
 import { isReferencedByShareInSharingContext } from 'drive/web/modules/views/Folder/syncHelpers'
 import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
-import { hasEncryptionRef } from 'drive/lib/encryption'
+import { isEncryptedFolder } from 'drive/lib/encryption'
 
 // TODO: extraColumns is then passed to 'FileListHeader', 'AddFolder',
 // and 'File' (this one from a 'syncingFakeFile' and a normal file).
@@ -101,7 +101,7 @@ const FolderViewBody = ({
   const isSharingContextEmpty = Object.keys(sharingsValue).length <= 0
 
   const { syncingFakeFile } = useSyncingFakeFile({ isEmpty, queryResults })
-  const isEncFolder = hasEncryptionRef(displayedFolder)
+  const isEncFolder = isEncryptedFolder(displayedFolder)
 
   /**
    * When we mount the component when we already have data in cache,
