@@ -26,7 +26,8 @@ const setup = async (
     canCreateFolder = false,
     canUpload = true,
     hasWriteAccess = true,
-    isPublic = false
+    isPublic = false,
+    isEncryptedFolder = false
   } = {}
 ) => {
   const { client, store } = await setupFolderContent({
@@ -44,6 +45,7 @@ const setup = async (
           canUpload={canUpload}
           hasWriteAccess={hasWriteAccess}
           isPublic={isPublic}
+          isEncryptedFolder={isEncryptedFolder}
         />
       </ScanWrapper>
     </AppLike>
@@ -148,6 +150,24 @@ describe('AddMenu', () => {
         )
         const { queryByText } = root
         expect(queryByText('Note')).toBeTruthy()
+      })
+    })
+
+    it('does not display non-supported items inside an encrypted directory', async () => {
+      isMobileApp.mockReturnValue(false)
+
+      await act(async () => {
+        const { root } = await setup(
+          { folderId: 'directory-foobar0' },
+          { isEncryptedFolder: true }
+        )
+        const { queryByText } = root
+        expect(queryByText('Note')).toBeNull()
+        expect(queryByText('Shortcut')).toBeNull()
+        expect(queryByText('Folder')).toBeNull()
+        expect(queryByText('Text document')).toBeNull()
+        expect(queryByText('Spreadsheet')).toBeNull()
+        expect(queryByText('Presentation')).toBeNull()
       })
     })
   })

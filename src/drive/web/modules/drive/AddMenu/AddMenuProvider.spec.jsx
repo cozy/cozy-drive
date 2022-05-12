@@ -3,6 +3,8 @@ import { fireEvent, render } from '@testing-library/react'
 import AddMenuProvider, { AddMenuContext } from './AddMenuProvider'
 import { logException } from 'drive/lib/reporter'
 
+jest.mock('drive/web/modules/drive/Toolbar/toolbar', () => children => children)
+
 jest.mock(
   'drive/web/modules/drive/Toolbar/components/ScanWrapper',
   // eslint-disable-next-line react/display-name
@@ -28,7 +30,6 @@ describe('AddMenuContext', () => {
         <Component />
       </AddMenuProvider>
     )
-
     // When
     fireEvent.click(getByTestId('button'))
     fireEvent.click(container)

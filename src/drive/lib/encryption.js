@@ -5,6 +5,10 @@ import { buildEncryptionByIdQuery } from 'drive/web/modules/queries'
 import { models } from 'cozy-client'
 const { isEncrypted } = models.file
 
+export const isEncryptedFileOrFolder = fileOrdir => {
+  return isEncryptedFolder(fileOrdir) || isEncryptedFile(fileOrdir)
+}
+
 export const isEncryptedFolder = dir => {
   return !!getEncryptiondRef(dir)
 }

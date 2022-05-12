@@ -6,13 +6,16 @@ import {
   getDisplayedFolder,
   getCurrentFolderId
 } from 'drive/web/modules/selectors'
+import { isEncryptedFolder } from 'drive/lib/encryption'
 
 const mapStateToProps = state => {
   const displayedFolder = getDisplayedFolder(state)
   const folderId = getCurrentFolderId(state)
-
   const insideRegularFolder =
-    folderId && displayedFolder && displayedFolder.id !== ROOT_DIR_ID
+    folderId &&
+    displayedFolder &&
+    displayedFolder.id !== ROOT_DIR_ID &&
+    !isEncryptedFolder(displayedFolder)
 
   return {
     displayedFolder,

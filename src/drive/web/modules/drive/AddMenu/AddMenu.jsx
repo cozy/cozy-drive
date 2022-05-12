@@ -21,7 +21,8 @@ export const ActionMenuContent = ({
   canCreateFolder,
   canUpload,
   refreshFolderContent,
-  isPublic
+  isPublic,
+  isEncryptedFolder
 }) => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
@@ -36,19 +37,21 @@ export const ActionMenuContent = ({
           <hr />
         </>
       )}
-      {canCreateFolder && <AddFolderItem />}
-      {canCreateFolder && flag('drive.enable-encryption') && (
+      {canCreateFolder && !isEncryptedFolder && <AddFolderItem />}
+      {canCreateFolder && !isPublic && flag('drive.enable-encryption') && (
         <AddEncryptedFolderItem />
       )}
-      {!isPublic && <CreateNoteItem />}
-      {canUpload && isOnlyOfficeEnabled() && (
+      {!isPublic && !isEncryptedFolder && <CreateNoteItem />}
+      {canUpload && isOnlyOfficeEnabled() && !isEncryptedFolder && (
         <>
           <CreateOnlyOfficeItem fileClass="text" />
           <CreateOnlyOfficeItem fileClass="spreadsheet" />
           <CreateOnlyOfficeItem fileClass="slide" />
         </>
       )}
-      <CreateShortcut onCreated={refreshFolderContent} />
+      {!isEncryptedFolder && (
+        <CreateShortcut onCreated={refreshFolderContent} />
+      )}
       {canUpload && <hr />}
       {canUpload && (
         <UploadItem disabled={isDisabled} onUploaded={refreshFolderContent} />
@@ -65,7 +68,8 @@ const AddMenu = ({
   canCreateFolder,
   canUpload,
   refreshFolderContent,
-  isPublic
+  isPublic,
+  isEncryptedFolder
 }) => {
   return (
     <ActionMenu
@@ -82,6 +86,7 @@ const AddMenu = ({
         canUpload={canUpload}
         refreshFolderContent={refreshFolderContent}
         isPublic={isPublic}
+        isEncryptedFolder={isEncryptedFolder}
       />
     </ActionMenu>
   )

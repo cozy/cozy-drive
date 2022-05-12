@@ -19,7 +19,11 @@ import ShareIosIcon from 'cozy-ui/transpiled/react/Icons/ShareIos'
 import LinkOutIcon from 'cozy-ui/transpiled/react/Icons/LinkOut'
 import EyeIcon from 'cozy-ui/transpiled/react/Icons/Eye'
 
-import { isEncryptedFolder } from 'drive/lib/encryption'
+import {
+  isEncryptedFolder,
+  isEncryptedFile,
+  isEncryptedFileOrFolder
+} from 'drive/lib/encryption'
 import DeleteConfirm from 'drive/web/modules/drive/DeleteConfirm'
 import MoveModal from 'drive/web/modules/move/MoveModal'
 import ShareMenuItem from 'drive/web/modules/drive/ShareMenuItem'
@@ -39,7 +43,10 @@ import { useI18n } from 'cozy-ui/transpiled/react'
 export const share = ({ hasWriteAccess, pushModal, popModal }) => {
   return {
     icon: 'share',
-    displayCondition: selection => hasWriteAccess && selection.length === 1,
+    displayCondition: selection =>
+      hasWriteAccess &&
+      selection.length === 1 &&
+      !isEncryptedFileOrFolder(selection[0]),
     action: selected =>
       pushModal(
         <ShareModal
@@ -85,9 +92,13 @@ export const download = ({ client, vaultClient }) => {
     : {
         icon: 'download',
         displayCondition: files => {
-          // Do not display when an encrypted folder is selected, as we cannot
-          // generate archive for encrypted files, for now.
-          return !files.find(file => isEncryptedFolder(file))
+          // We cannot generate archive for encrypted files, for now.
+          // Then, we do not display the download button when the selection
+          // includes an encrypted folder or several encrypted files
+          return (
+            !files.some(file => isEncryptedFolder(file)) &&
+            !(files.length > 1 && files.some(file => isEncryptedFile(file)))
+          )
         },
         action: files => downloadFiles(client, files, { vaultClient }),
         Component: function Download(props) {
