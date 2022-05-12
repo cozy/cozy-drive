@@ -18,6 +18,8 @@ import {
 } from 'drive/web/modules/drive/Toolbar/components/MoreMenu'
 import AddMenu from 'drive/web/modules/drive/AddMenu/AddMenu'
 import ScanWrapper from 'drive/web/modules/drive/Toolbar/components/ScanWrapper'
+import toolbarContainer from 'drive/web/modules/drive/Toolbar/toolbar'
+import { isEncryptedFolder } from 'drive/lib/encryption'
 
 export const AddMenuContext = createContext()
 
@@ -27,7 +29,8 @@ const AddMenuProvider = ({
   canUpload,
   refreshFolderContent,
   children,
-  isPublic
+  isPublic,
+  displayedFolder
 }) => {
   const [menuIsVisible, setMenuVisible] = useState(false)
   const selectionModeActive = useSelector(isSelectionBarVisible)
@@ -47,6 +50,11 @@ const AddMenuProvider = ({
   const isDisabled = useMemo(
     () => disabled || selectionModeActive,
     [disabled, selectionModeActive]
+  )
+
+  const isEncryptedDir = useMemo(
+    () => isEncryptedFolder(displayedFolder),
+    [displayedFolder]
   )
 
   const handleOfflineClick = useCallback(e => {
@@ -78,6 +86,7 @@ const AddMenuProvider = ({
             canUpload={canUpload}
             refreshFolderContent={refreshFolderContent}
             isPublic={isPublic}
+            isEncryptedFolder={isEncryptedDir}
           />
         )}
       </ScanWrapper>
@@ -85,4 +94,4 @@ const AddMenuProvider = ({
   )
 }
 
-export default React.memo(AddMenuProvider)
+export default React.memo(toolbarContainer(AddMenuProvider))

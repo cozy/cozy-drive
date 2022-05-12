@@ -9,6 +9,7 @@
 * Display tiny thumbnail instead of small
 * Display thumbnail for PDF (behind a flag)
 * Support client-side encrypted files visualization 
+* Disable unsuported items inside encrypted folder
 
 ## 🐛 Bug Fixes
 
