@@ -21,6 +21,7 @@ const Sharing = ({ fileWithPath }) => {
         <IconButton
           data-testid="onlyoffice-sharing-icon"
           onClick={toggleShareModal}
+          size="medium"
         >
           <Icon icon={ShareIcon} />
         </IconButton>

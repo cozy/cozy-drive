@@ -34,6 +34,8 @@
 * Unregister any service worker that could have been registered during development
 * Improve a fragile test, breaking while some Node 16 pipeline
 * Add codeowners in the repository
+* Upgrade cozy-client for flagship app 
+* Upgrade cozy-ui for matomo 
 
 # 1.40.0
 

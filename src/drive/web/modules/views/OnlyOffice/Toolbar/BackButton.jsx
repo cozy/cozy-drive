@@ -11,6 +11,7 @@ const BackButton = ({ onClick }) => {
       data-testid="onlyoffice-backButton"
       className="u-ml-half-s"
       onClick={onClick}
+      size="medium"
     >
       <Icon icon={PreviousIcon} />
     </IconButton>

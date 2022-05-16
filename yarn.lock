@@ -4755,6 +4755,22 @@ bundlemon@1.3.1:
     micromatch "^4.0.4"
     yup "^0.32.11"
 
+bundlemon@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/bundlemon/-/bundlemon-1.3.2.tgz#164a038b1f4e8f520119367d3ba3b11a2372d19d"
+  integrity sha512-Mc2OWqZK2rJge6htxeFtK6imjgyOPn8mniH7RcqUv4GLeNG7LWbu+p9QNbW2tEWtuk+AKhkBZdlNCdo1KP4v8Q==
+  dependencies:
+    axios "^0.21.1"
+    brotli-size "^4.0.0"
+    bundlemon-utils "^0.4.0"
+    bytes "^3.1.0"
+    chalk "^4.1.1"
+    commander "^8.0.0"
+    cosmiconfig "^7.0.0"
+    gzip-size "^6.0.0"
+    micromatch "^4.0.4"
+    yup "^0.32.11"
+
 bytes@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.0.0.tgz#d32815404d689699f85a4ea4fa8755dd13a96048"
@@ -6250,13 +6266,14 @@ cozy-ui@22.3.1:
     react-pdf "^4.0.5"
     react-select "2.2.0"
 
-cozy-ui@65.1.3:
-  version "65.1.3"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-65.1.3.tgz#e82644b0b4f207e6a0399b30e5b238ff42732080"
-  integrity sha512-dDcIOYVe0aSrmT0IAtGWu6r0CuuK9b4M0ZxRtW+jCaGX7BZrh/xdgo624kpeBc671p0iT2xNtk7bPke4HKPIIg==
+cozy-ui@^67.0.2:
+  version "67.0.2"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-67.0.2.tgz#f7c99a016e6b447b088e46d9768acb5b8323e8ea"
+  integrity sha512-aLO1ztvD0d1J7qfQ8sS9LSHr3mOBgvmsjmx2Zxt/VjGQX8W+Oeef4E8KNf19ee5lwEG39h1t19fHNbeYCYziuw==
   dependencies:
     "@babel/runtime" "^7.3.4"
     "@popperjs/core" "^2.4.4"
+    bundlemon "^1.3.2"
     chart.js "3.7.1"
     classnames "^2.2.5"
     cozy-interapp "^0.5.4"
@@ -12976,6 +12993,17 @@ msgpack5@^4.0.2:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
     safe-buffer "^5.1.2"
+
+"mui-bottom-sheet@git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.6":
+  version "1.0.6"
+  uid "494c40416ecde95732c864f9b921e7e545075aa5"
+  resolved "git+https://github.com/cozy/mui-bottom-sheet.git#494c40416ecde95732c864f9b921e7e545075aa5"
+  dependencies:
+    "@juggle/resize-observer" "^3.1.3"
+    jest-environment-jsdom-sixteen "^1.0.3"
+    react-spring "9.0.0-rc.3"
+    react-use-gesture "^7.0.8"
+    react-use-measure "^2.0.0"
 
 "mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.6":
   version "1.0.6"
