@@ -10,6 +10,7 @@ import {
   getEncryptionKeyFromDirId
 } from 'drive/lib/encryption'
 import { DOCTYPE_FILES } from 'drive/lib/doctypes'
+import flag from 'cozy-flags'
 
 import { models } from 'cozy-client'
 const { doMobileUpload, readMobileFile, uploadFileWithConflictStrategy } =
@@ -186,7 +187,9 @@ export const processNextFile =
     }
 
     const { file, entry, isDirectory } = item
-    const encryptionKey = await getEncryptionKeyFromDirId(client, dirID)
+    const encryptionKey = flag('drive.enable-encryption')
+      ? await getEncryptionKeyFromDirId(client, dirID)
+      : null
     try {
       dispatch({ type: UPLOAD_FILE, file })
       if (entry && isDirectory) {

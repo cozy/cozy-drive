@@ -16,6 +16,7 @@
  * Compute sizes in MB instead of MiB in dacc service.
  * Query files based on their uploaded date in dacc service.
  * Do not query encryption files when flag is not set
+ * Fix upload on shared folders
 
 ## 🔧 Tech
 
