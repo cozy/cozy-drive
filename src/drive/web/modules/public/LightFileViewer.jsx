@@ -6,7 +6,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { SharingBannerPlugin, useSharingInfos } from 'cozy-sharing'
 
 import { useRouter } from 'drive/lib/RouterContext'
-import Viewer from 'drive/web/modules/viewer/PublicViewer'
+import PublicViewer from 'drive/web/modules/viewer/PublicViewer'
 import PublicToolbar from 'drive/web/modules/public/PublicToolbar'
 import {
   isOnlyOfficeEnabled,
@@ -36,9 +36,10 @@ const LightFileViewer = ({ files }) => {
         />
       )}
       <div className={'u-pos-relative u-h-100'}>
-        <Viewer
+        <PublicViewer
           files={files}
           currentIndex={0}
+          disableSharing
           onlyOfficeProps={{
             isEnabled: isOnlyOfficeEnabled(),
             opener: onlyOfficeOpener

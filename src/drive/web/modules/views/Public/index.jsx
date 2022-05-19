@@ -255,6 +255,7 @@ const PublicFolderView = ({
                   currentIndex={currentViewerIndex}
                   onChangeRequest={showInViewer}
                   onCloseRequest={closeViewer}
+                  disableSharing
                 />
               </Overlay>
             )}
