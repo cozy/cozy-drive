@@ -5969,10 +5969,10 @@ cozy-client@^27.14.4:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
-cozy-client@^29.0.0:
-  version "29.0.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-29.0.0.tgz#6a6267a3b8d233560de3920ec85b44ec78ebb257"
-  integrity sha512-87emHFLtaSO2XVKaXZBSqo3VhqePHUmFnJ98EHZRNuYutghxO9V4efGpyGNBrgGUOugsV3/wiVrBBPWM1lTIOA==
+cozy-client@^29.0.1:
+  version "29.0.1"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-29.0.1.tgz#c29828c7358a0f4c275ccf4520a355ce4aec0edb"
+  integrity sha512-wf9UnHjErFerbOBIJMiA6EPlsTTIAm7I3s1h3riEyUPptBNMx7Kcrgvq8HbU8i7U3fWc4yDbzSiWIercJoIi5g==
   dependencies:
     "@cozy/minilog" "1.0.0"
     "@types/jest" "^26.0.20"
@@ -6116,12 +6116,12 @@ cozy-logger@^1.3.0, cozy-logger@^1.6.0, cozy-logger@^1.7.0:
     chalk "^2.4.2"
     json-stringify-safe "5.0.1"
 
-cozy-pouch-link@^29.0.0:
-  version "29.0.0"
-  resolved "https://registry.yarnpkg.com/cozy-pouch-link/-/cozy-pouch-link-29.0.0.tgz#b444d73aff1ff077267a250d47ef798cd147dda6"
-  integrity sha512-uquJyw9Q4B3TreHMTyjfLyoOIayGovB1CuH4d+n35DJ/o3rxAbj7nRKmRbbpbz4VIv+PeAS6BbFeRVqo0QHaRw==
+cozy-pouch-link@^29.0.1:
+  version "29.0.1"
+  resolved "https://registry.yarnpkg.com/cozy-pouch-link/-/cozy-pouch-link-29.0.1.tgz#b202834472796f2b82c6467b84bc985b745e794e"
+  integrity sha512-zv6bo6l82fsp6zyjP262WGYdKjPjKqTgKpnZqzlfr0gUM9e4HXNrbHkrvC9b5W+GcnhOgYIYyhJjBnbEjcoxyQ==
   dependencies:
-    cozy-client "^29.0.0"
+    cozy-client "^29.0.1"
     pouchdb-browser "^7.2.2"
     pouchdb-find "^7.2.2"
 
@@ -12993,17 +12993,6 @@ msgpack5@^4.0.2:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
     safe-buffer "^5.1.2"
-
-"mui-bottom-sheet@git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.6":
-  version "1.0.6"
-  uid "494c40416ecde95732c864f9b921e7e545075aa5"
-  resolved "git+https://github.com/cozy/mui-bottom-sheet.git#494c40416ecde95732c864f9b921e7e545075aa5"
-  dependencies:
-    "@juggle/resize-observer" "^3.1.3"
-    jest-environment-jsdom-sixteen "^1.0.3"
-    react-spring "9.0.0-rc.3"
-    react-use-gesture "^7.0.8"
-    react-use-measure "^2.0.0"
 
 "mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.6":
   version "1.0.6"
