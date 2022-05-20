@@ -1,13 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 
 import { Button } from 'cozy-ui/transpiled/react'
-import Input from 'cozy-ui/transpiled/react/Input'
 import Checkbox from 'cozy-ui/transpiled/react/Checkbox'
 import Typography from 'cozy-ui/transpiled/react/Typography'
-import flag from 'cozy-flags'
 
-import { defaultBottomSheetSpringConfig } from 'drive/web/modules/viewer/Footer/BottomSheet'
 import { logException, logInfo } from 'drive/lib/reporter'
 import { setOffline, isOfflineCapable } from '../duck'
 
@@ -26,21 +23,6 @@ const getPersistedWarmupedQueries = () => {
 }
 
 const DebugTools = ({ offline, setOffline }) => {
-  const [bottomSheetTension, setBottomSheetTension] = useState(
-    defaultBottomSheetSpringConfig.tension
-  )
-  const [bottomSheetFriction, setBottomSheetFriction] = useState(
-    defaultBottomSheetSpringConfig.friction
-  )
-  const [bottomSheetClamp, setBottomSheetClamp] = useState(
-    defaultBottomSheetSpringConfig.clamp
-  )
-
-  const handleOnChange = (value, flagName, setter) => {
-    flag.store.set(flagName, value)
-    setter(value)
-  }
-
   return (
     <div>
       <Typography variant="h4" gutterBottom>
@@ -57,46 +39,6 @@ const DebugTools = ({ offline, setOffline }) => {
         value={offline}
         onChange={setOffline}
         checked={offline}
-      />
-
-      <Typography variant="h4" className="u-mt-1" gutterBottom>
-        Viewer BottomSheet
-      </Typography>
-      <Typography variant="body1">Tension :</Typography>
-      <Input
-        value={bottomSheetTension}
-        type="number"
-        onChange={e =>
-          handleOnChange(
-            parseFloat(e.target.value),
-            'viewer-bottom-sheet-tension',
-            setBottomSheetTension
-          )
-        }
-      />
-      <Typography variant="body1">Friction :</Typography>
-      <Input
-        value={bottomSheetFriction}
-        type="number"
-        onChange={e =>
-          handleOnChange(
-            parseFloat(e.target.value),
-            'viewer-bottom-sheet-friction',
-            setBottomSheetFriction
-          )
-        }
-      />
-      <Checkbox
-        label="Clamp"
-        value={bottomSheetClamp}
-        onChange={e =>
-          handleOnChange(
-            e.target.checked,
-            'viewer-bottom-sheet-clamp',
-            setBottomSheetClamp
-          )
-        }
-        checked={bottomSheetClamp}
       />
 
       <Typography
