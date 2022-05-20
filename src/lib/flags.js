@@ -21,9 +21,6 @@ export const initFlags = () => {
 const flagsList = () => {
   flag('switcher', true)
   flag('debug')
-  flag('viewer-bottom-sheet-tension')
-  flag('viewer-bottom-sheet-friction')
-  flag('viewer-bottom-sheet-clamp')
   flag('drive.onlyoffice.forceReadOnlyOnDesktop') // flagName should use kebab case
   flag('drive.onlyoffice.editorToolbarHeight') // flagName should use kebab case
   flag('drive.logger')
