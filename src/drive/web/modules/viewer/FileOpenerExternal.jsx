@@ -23,9 +23,6 @@ import {
   isOnlyOfficeEnabled,
   makeOnlyOfficeFileRoute
 } from 'drive/web/modules/views/OnlyOffice/helpers'
-import { showPanel } from './helpers'
-import PanelContent from './Panel/PanelContent'
-import FooterContent from './Footer/FooterContent'
 
 const FileNotFoundError = translate()(({ t }) => (
   <pre className="u-error">{t('FileOpenerExternal.fileNotFoundError')}</pre>
@@ -90,13 +87,6 @@ export class FileOpener extends Component {
                   isEnabled: isOnlyOfficeEnabled(),
                   opener: file =>
                     router.push(makeOnlyOfficeFileRoute(file, true))
-                }}
-                panelInfoProps={{
-                  showPanel,
-                  PanelContent
-                }}
-                footerProps={{
-                  FooterContent
                 }}
               />
             </Overlay>

@@ -8,9 +8,6 @@ import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
 import Oops from 'components/Error/Oops'
-import { showPanel } from 'drive/web/modules/viewer/helpers'
-import PanelContent from 'drive/web/modules/viewer/Panel/PanelContent'
-import FooterContent from 'drive/web/modules/viewer/Footer/FooterContent'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
 import { buildFileByIdQuery } from 'drive/web/modules/queries'
 
@@ -39,18 +36,7 @@ const Error = () => {
   return (
     <RemoveScroll>
       <Overlay>
-        <Viewer
-          files={files}
-          currentIndex={0}
-          onCloseRequest={handleOnClose}
-          panelInfoProps={{
-            showPanel,
-            PanelContent
-          }}
-          footerProps={{
-            FooterContent
-          }}
-        />
+        <Viewer files={files} currentIndex={0} onCloseRequest={handleOnClose} />
       </Overlay>
     </RemoveScroll>
   )
