@@ -19,9 +19,6 @@ import {
   makeOnlyOfficeFileRoute
 } from 'drive/web/modules/views/OnlyOffice/helpers'
 
-import { showPanel } from './helpers'
-import PanelContent from './Panel/PanelContent'
-import FooterContent from './Footer/FooterContent'
 import {
   isEncryptedFile,
   getEncryptionKeyFromDirId,
@@ -207,13 +204,6 @@ const FilesViewer = ({ filesQuery, files, fileId, onClose, onChange }) => {
           onlyOfficeProps={{
             isEnabled: isOnlyOfficeEnabled(),
             opener: file => router.push(makeOnlyOfficeFileRoute(file, true))
-          }}
-          panelInfoProps={{
-            showPanel,
-            PanelContent
-          }}
-          footerProps={{
-            FooterContent
           }}
         />
       </Overlay>
