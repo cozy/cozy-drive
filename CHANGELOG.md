@@ -1,5 +1,13 @@
 # 1.42.0
 
+## 🐛 Bug Fixes
+
+* Disable sharing on public file viewer
+
+## 🔧 Tech
+
+* Remove useless props to Viewer + useless Viewer footer/panel code
+
 # 1.41.0
 
 ## ✨ Features
@@ -10,7 +18,7 @@
 * Change Sentry url
 * Display tiny thumbnail instead of small
 * Display thumbnail for PDF (behind a flag)
-* Support client-side encrypted files visualization 
+* Support client-side encrypted files visualization
 * Disable unsuported items inside encrypted folder
 
 ## 🐛 Bug Fixes
@@ -36,8 +44,8 @@
 * Unregister any service worker that could have been registered during development
 * Improve a fragile test, breaking while some Node 16 pipeline
 * Add codeowners in the repository
-* Upgrade cozy-client for flagship app 
-* Upgrade cozy-ui for matomo 
+* Upgrade cozy-client for flagship app
+* Upgrade cozy-ui for matomo
 
 # 1.40.0
 
