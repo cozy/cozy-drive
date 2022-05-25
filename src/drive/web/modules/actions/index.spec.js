@@ -1,6 +1,10 @@
 import { download } from './index'
 import { DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
 
+jest.mock('cozy-keys-lib', () => ({
+  withVaultUnlockContext: jest.fn().mockReturnValue({})
+}))
+
 describe('download', () => {
   it('should not display when an encrypted folder is selected', () => {
     const files = [

@@ -135,9 +135,8 @@ export class DumbUpload extends Component {
                   >
                     <div>
                       <FileList
-                        folder={folder}
                         files={data}
-                        targets={items}
+                        entries={items}
                         navigateTo={this.navigateTo}
                       />
                       <LoadMore hasMore={hasMore} fetchMore={fetchMore} />
