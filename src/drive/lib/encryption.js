@@ -60,10 +60,10 @@ export const createEncryptedDir = async (
 export const encryptAndUploadNewFile = async (
   client,
   vaultClient,
-  { file, encryptionKey, fileOptions }
+  { binary, encryptionKey, fileOptions }
 ) => {
   const { name, dirID, onUploadProgress } = fileOptions
-  const encryptedFile = await vaultClient.encryptFile(file, encryptionKey)
+  const encryptedFile = await vaultClient.encryptFile(binary, encryptionKey)
   const resp = await client
     .collection(DOCTYPE_FILES)
     .createFile(encryptedFile, {
@@ -72,6 +72,69 @@ export const encryptAndUploadNewFile = async (
       onUploadProgress,
       encrypted: true
     })
+  return resp.data
+}
+
+export const encryptAndUploadExistingFile = async (
+  client,
+  vaultClient,
+  { file, encryptionKey }
+) => {
+  const encryptedFile = await encryptFile(client, vaultClient, {
+    file,
+    encryptionKey
+  })
+
+  const attributes = {
+    ...file,
+    encrypted: true,
+    fileId: file._id,
+    data: encryptedFile
+  }
+  const resp = await client.save(attributes)
+  return resp.data
+}
+
+export const decryptAndUploadExistingFile = async (
+  client,
+  vaultClient,
+  { file, decryptionKey }
+) => {
+  const plaintextFile = await decryptFile(client, vaultClient, {
+    file,
+    decryptionKey
+  })
+
+  const attributes = {
+    ...file,
+    encrypted: false,
+    fileId: file._id,
+    data: plaintextFile
+  }
+  const resp = await client.save(attributes)
+  return resp.data
+}
+
+export const reencryptAndUploadExistingFile = async (
+  client,
+  vaultClient,
+  { file, encryptionKey, decryptionKey }
+) => {
+  const plaintextFile = await decryptFile(client, vaultClient, {
+    file,
+    decryptionKey
+  })
+  const reencryptedFile = await vaultClient.encryptFile(
+    plaintextFile,
+    encryptionKey
+  )
+  const attributes = {
+    ...file,
+    encrypted: true,
+    fileId: file._id,
+    data: reencryptedFile
+  }
+  const resp = await client.save(attributes)
   return resp.data
 }
 
