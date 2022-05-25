@@ -131,13 +131,13 @@ const FilesViewer = ({ filesQuery, files, fileId, onClose, onChange }) => {
     const getDecryptedURLIfNecessary = async () => {
       const file = files[currentIndex]
       if (file && isEncryptedFile(file)) {
-        const encryptionKey = await getEncryptionKeyFromDirId(
+        const decryptionKey = await getEncryptionKeyFromDirId(
           client,
           file.dir_id
         )
         const url = await getDecryptedFileURL(client, vaultClient, {
           file,
-          encryptionKey
+          decryptionKey
         })
         setCurrentDecryptedFileURL(url)
       }

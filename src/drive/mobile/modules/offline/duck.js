@@ -11,7 +11,7 @@ import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
 import {
   getEncryptionKeyFromDirId,
-  decryptFile,
+  decryptFileToBlob,
   isEncryptedFile
 } from 'drive/lib/encryption'
 import { openFileWith } from 'drive/web/modules/actions/utils'
@@ -73,8 +73,11 @@ export const saveOfflineFileCopy = async (file, client, { vaultClient }) => {
   try {
     let blob
     if (isEncryptedFile(file)) {
-      const encryptionKey = await getEncryptionKeyFromDirId(client, file.dir_id)
-      blob = await decryptFile(client, vaultClient, { file, encryptionKey })
+      const decryptionKey = await getEncryptionKeyFromDirId(client, file.dir_id)
+      blob = await decryptFileToBlob(client, vaultClient, {
+        file,
+        decryptionKey
+      })
     } else {
       const response = await client
         .collection(DOCTYPE_FILES)

@@ -10,7 +10,7 @@ import {
   getEncryptionKeyFromDirId,
   downloadEncryptedFile,
   isEncryptedFolder,
-  decryptFile,
+  decryptFileToBlob,
   isEncryptedFile
 } from 'drive/lib/encryption'
 import { DOCTYPE_FILES } from 'drive/lib/doctypes'
@@ -48,16 +48,16 @@ const openFileDownloadError = error => {
  * @param {array} files  One or more files to download
  */
 export const downloadFiles = async (client, files, { vaultClient } = {}) => {
-  const encryptionKey = await getEncryptionKeyFromDirId(client, files[0].dir_id)
+  const decryptionKey = await getEncryptionKeyFromDirId(client, files[0].dir_id)
 
   if (files.length === 1 && !isDirectory(files[0])) {
     const file = files[0]
     try {
       const filename = file.name
-      if (encryptionKey) {
+      if (decryptionKey) {
         return downloadEncryptedFile(client, vaultClient, {
           file,
-          encryptionKey
+          decryptionKey
         })
       } else {
         return client.collection(DOCTYPE_FILES).download(file, null, filename)
@@ -66,8 +66,8 @@ export const downloadFiles = async (client, files, { vaultClient } = {}) => {
       Alerter.error(downloadFileError(error))
     }
   } else {
-    if (encryptionKey) {
-      // Multiple download is forbidden for encrypted files because we cannot generate client archive for now.
+    if (decryptionKey) {
+      // decryptionKey download is forbidden for encrypted files because we cannot generate client archive for now.
       return Alerter.error('error.download_file.encryption_many')
     }
     const hasEncryptedDirs = files.find(
@@ -136,13 +136,16 @@ export const exportFilesNative = async (
   files,
   { vaultClient } = {}
 ) => {
-  const encryptionKey = isEncryptedFile(files[0])
+  const decryptionKey = isEncryptedFile(files[0])
     ? await getEncryptionKeyFromDirId(client, files[0].dir_id)
     : null
   const downloadAllFiles = files.map(async file => {
     let blob
-    if (encryptionKey) {
-      blob = await decryptFile(client, vaultClient, { file, encryptionKey })
+    if (decryptionKey) {
+      blob = await decryptFileToBlob(client, vaultClient, {
+        file,
+        decryptionKey
+      })
     } else {
       const response = await client
         .collection(DOCTYPE_FILES)
@@ -206,11 +209,14 @@ export const openFileWith = async (client, file, { vaultClient } = {}) => {
     let originalMime = file.mime
     try {
       if (isEncryptedFile(file)) {
-        const encryptionKey = await getEncryptionKeyFromDirId(
+        const decryptionKey = await getEncryptionKeyFromDirId(
           client,
           file.dir_id
         )
-        blob = await decryptFile(client, vaultClient, { file, encryptionKey })
+        blob = await decryptFileToBlob(client, vaultClient, {
+          file,
+          decryptionKey
+        })
         originalMime = client
           .collection(DOCTYPE_FILES)
           .getFileTypeFromName(file.name)
