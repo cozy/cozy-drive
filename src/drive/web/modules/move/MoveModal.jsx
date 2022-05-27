@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles'
 
 import { Query, cancelable, withClient, Q } from 'cozy-client'
 import { CozyFile } from 'models'
+import { withVaultUnlockContext } from 'cozy-keys-lib'
 import logger from 'lib/logger'
 
 import { RefreshableSharings } from 'cozy-sharing'
@@ -16,7 +17,6 @@ import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
 import { withBreakpoints } from 'cozy-ui/transpiled/react'
 
-import { ROOT_DIR_ID } from 'drive/constants/config'
 import Header from 'drive/web/modules/move/Header'
 import Explorer from 'drive/web/modules/move/Explorer'
 import FileList from 'drive/web/modules/move/FileList'
@@ -30,6 +30,14 @@ import {
   buildMoveOrImportQuery,
   buildOnlyFolderQuery
 } from 'drive/web/modules/queries'
+import {
+  isEncryptedFolder,
+  isEncryptedFile,
+  getEncryptionKeyFromDirId,
+  encryptAndUploadExistingFile,
+  decryptAndUploadExistingFile,
+  reencryptAndUploadExistingFile
+} from 'drive/lib/encryption'
 
 const styles = theme => ({
   paper: {
@@ -57,7 +65,7 @@ export class MoveModal extends React.Component {
     this.promises = []
     const { displayedFolder } = props
     this.state = {
-      folderId: displayedFolder ? displayedFolder._id : ROOT_DIR_ID,
+      targetFolder: displayedFolder,
       isMoveInProgress: false
     }
   }
@@ -67,7 +75,7 @@ export class MoveModal extends React.Component {
   }
 
   navigateTo = folder => {
-    this.setState({ folderId: folder._id })
+    this.setState({ targetFolder: folder })
   }
 
   registerCancelable = promise => {
@@ -82,21 +90,91 @@ export class MoveModal extends React.Component {
     this.promises = []
   }
 
+  moveEncryptedEntry = async (
+    client,
+    vaultClient,
+    entry,
+    { isEncryptedTarget, isEncryptedFileEntry, targetFolder, sourceFolder }
+  ) => {
+    if (isEncryptedTarget && !isEncryptedFileEntry) {
+      // The plaintext file is moved to an encrypted directory
+      const encryptionKey = await getEncryptionKeyFromDirId(
+        client,
+        targetFolder._id
+      )
+
+      await encryptAndUploadExistingFile(client, vaultClient, {
+        file: entry,
+        encryptionKey
+      })
+    } else if (!isEncryptedTarget && isEncryptedFileEntry) {
+      // The encrypted file is moved to a plaintext directory
+      const decryptionKey = await getEncryptionKeyFromDirId(
+        client,
+        sourceFolder._id
+      )
+
+      await decryptAndUploadExistingFile(client, vaultClient, {
+        file: entry,
+        decryptionKey
+      })
+    } else if (isEncryptedTarget && isEncryptedFileEntry) {
+      // The encrypted file is moved to another encrypted directory
+      const encryptionKey = await getEncryptionKeyFromDirId(
+        client,
+        targetFolder._id
+      )
+      const decryptionKey = await getEncryptionKeyFromDirId(
+        client,
+        sourceFolder._id
+      )
+      await reencryptAndUploadExistingFile(client, vaultClient, {
+        file: entry,
+        decryptionKey,
+        encryptionKey
+      })
+    }
+  }
+
+  moveEntry = async (
+    entry,
+    targetFolder,
+    { sharedPaths, isEncryptedTarget, client, vaultClient }
+  ) => {
+    const { displayedFolder } = this.props
+    const isEncryptedFileEntry = isEncryptedFile(entry)
+    if (isEncryptedTarget || isEncryptedFileEntry) {
+      await this.moveEncryptedEntry(client, vaultClient, entry, {
+        isEncryptedTarget,
+        isEncryptedFileEntry,
+        targetFolder,
+        sourceFolder: displayedFolder
+      })
+    }
+
+    const targetPath = await CozyFile.getFullpath(targetFolder._id, entry.name)
+    const force = !sharedPaths.includes(targetPath)
+    return CozyFile.move(entry._id, { folderId: targetFolder._id }, force)
+  }
+
   moveEntries = async callback => {
-    const { client, entries, onClose, sharingState, t } = this.props
+    const { client, vaultClient, entries, onClose, sharingState, t } =
+      this.props
     const { sharedPaths } = sharingState
-    const { folderId } = this.state
+    const { targetFolder } = this.state
     try {
       this.setState({ isMoveInProgress: true })
+      const isEncryptedTarget = isEncryptedFolder(targetFolder)
       const trashedFiles = []
       await Promise.all(
         entries.map(async entry => {
-          const targetPath = await this.registerCancelable(
-            CozyFile.getFullpath(folderId, entry.name)
-          )
-          const force = !sharedPaths.includes(targetPath)
           const moveResponse = await this.registerCancelable(
-            CozyFile.move(entry._id, { folderId }, force)
+            this.moveEntry(entry, targetFolder, {
+              sharedPaths,
+              isEncryptedTarget,
+              client,
+              vaultClient
+            })
           )
           if (moveResponse.deleted) {
             trashedFiles.push(moveResponse.deleted)
@@ -105,7 +183,7 @@ export class MoveModal extends React.Component {
       )
 
       const response = await this.registerCancelable(
-        client.query(Q('io.cozy.files').getById(folderId))
+        client.query(Q('io.cozy.files').getById(targetFolder._id))
       )
       const targetName = response.data.name
       Alerter.info('Move.success', {
@@ -113,7 +191,8 @@ export class MoveModal extends React.Component {
         target: targetName,
         smart_count: entries.length,
         buttonText: t('Move.cancel'),
-        buttonAction: () => this.cancelMove(entries, trashedFiles, callback)
+        buttonAction: () =>
+          this.cancelMove(entries, trashedFiles, callback, { targetFolder })
       })
       this.trackEvent(entries.length)
       if (callback) callback()
@@ -129,14 +208,28 @@ export class MoveModal extends React.Component {
   }
 
   cancelMove = async (entries, trashedFiles, callback) => {
-    const { client } = this.props
+    const { client, vaultClient, displayedFolder } = this.props
+    const { targetFolder } = this.state
     try {
+      const isEncryptedDisplayedFolder = isEncryptedFolder(displayedFolder)
+      const isEncryptedTargetFolder = isEncryptedFolder(targetFolder)
+
       await Promise.all(
-        entries.map(entry =>
-          this.registerCancelable(
+        entries.map(async entry => {
+          if (isEncryptedDisplayedFolder || isEncryptedTargetFolder) {
+            this.registerCancelable(
+              this.moveEncryptedEntry(client, vaultClient, entry, {
+                isEncryptedTarget: isEncryptedDisplayedFolder,
+                isEncryptedFileEntry: isEncryptedTargetFolder,
+                targetFolder: displayedFolder,
+                sourceFolder: targetFolder
+              })
+            )
+          }
+          return this.registerCancelable(
             CozyFile.move(entry._id, { folderId: entry.dir_id })
           )
-        )
+        })
       )
       const fileCollection = client.collection(CozyFile.doctype)
       let restoreErrorsCount = 0
@@ -183,10 +276,10 @@ export class MoveModal extends React.Component {
       classes,
       breakpoints: { isMobile }
     } = this.props
-    const { folderId, isMoveInProgress } = this.state
+    const { targetFolder, isMoveInProgress } = this.state
 
-    const contentQuery = buildMoveOrImportQuery(folderId)
-    const folderQuery = buildOnlyFolderQuery(folderId)
+    const contentQuery = buildMoveOrImportQuery(targetFolder._id)
+    const folderQuery = buildOnlyFolderQuery(targetFolder._id)
 
     return (
       <FixedDialog
@@ -203,7 +296,7 @@ export class MoveModal extends React.Component {
               query={folderQuery.definition()}
               fetchPolicy={folderQuery.options.fetchPolicy}
               as={folderQuery.options.as}
-              key={`breadcrumb-${folderId}`}
+              key={`breadcrumb-${targetFolder._id}`}
             >
               {({ data, fetchStatus }) => (
                 <Topbar
@@ -220,7 +313,7 @@ export class MoveModal extends React.Component {
             query={contentQuery.definition()}
             fetchPolicy={contentQuery.options.fetchPolicy}
             as={contentQuery.options.as}
-            key={`content-${folderId}`}
+            key={`content-${targetFolder._id}`}
           >
             {({ data, fetchStatus, hasMore, fetchMore }) => {
               return (
@@ -231,7 +324,7 @@ export class MoveModal extends React.Component {
                   >
                     <FileList
                       files={data}
-                      targets={entries}
+                      entries={entries}
                       navigateTo={this.navigateTo}
                     />
                     <LoadMore hasMore={hasMore} fetchMore={fetchMore} />
@@ -248,7 +341,7 @@ export class MoveModal extends React.Component {
                 onConfirm={() => this.moveEntries(refresh)}
                 onClose={onClose}
                 targets={entries}
-                currentDirId={folderId}
+                currentDirId={targetFolder._id}
                 isMoving={isMoveInProgress}
               />
             )}
@@ -276,6 +369,7 @@ export default compose(
   connect(mapStateToProps),
   translate(),
   withClient,
+  withVaultUnlockContext,
   withSharingState,
   withStyles(styles),
   withBreakpoints()

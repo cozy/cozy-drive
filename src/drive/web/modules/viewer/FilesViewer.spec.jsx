@@ -10,7 +10,8 @@ import { getEncryptionKeyFromDirId } from 'drive/lib/encryption'
 
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 jest.mock('cozy-keys-lib', () => ({
-  useVaultClient: jest.fn()
+  useVaultClient: jest.fn(),
+  withVaultUnlockContext: jest.fn().mockReturnValue({})
 }))
 
 jest.mock('drive/lib/encryption', () => ({

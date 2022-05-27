@@ -337,7 +337,7 @@ const uploadFile = async (client, file, dirID, options = {}) => {
     const fr = new FileReader()
     fr.onloadend = async () => {
       return encryptAndUploadNewFile(client, vaultClient, {
-        file: fr.result,
+        binary: fr.result,
         encryptionKey,
         fileOptions: {
           name: file.name,

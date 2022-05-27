@@ -4,7 +4,8 @@ import { shallow } from 'enzyme'
 import { DumbUpload, generateForQueue } from './'
 
 jest.mock('cozy-keys-lib', () => ({
-  withVaultClient: jest.fn().mockReturnValue({})
+  withVaultClient: jest.fn().mockReturnValue({}),
+  withVaultUnlockContext: jest.fn().mockReturnValue({})
 }))
 
 const tSpy = jest.fn()

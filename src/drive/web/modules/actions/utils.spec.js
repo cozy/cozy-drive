@@ -10,7 +10,7 @@ import {
 import {
   getEncryptionKeyFromDirId,
   downloadEncryptedFile,
-  decryptFile
+  decryptFileToBlob
 } from 'drive/lib/encryption'
 import { DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
 import { TRASH_DIR_ID } from 'drive/constants/config'
@@ -50,7 +50,7 @@ jest.mock('drive/lib/encryption', () => ({
   ...jest.requireActual('drive/lib/encryption'),
   getEncryptionKeyFromDirId: jest.fn(),
   downloadEncryptedFile: jest.fn(),
-  decryptFile: jest.fn()
+  decryptFileToBlob: jest.fn()
 }))
 
 describe('trashFiles', () => {
@@ -140,7 +140,7 @@ describe('downloadFiles', () => {
     expect(downloadEncryptedFile).toHaveBeenCalledWith(
       mockClient,
       {},
-      { file, encryptionKey: 'encryption-key' }
+      { file, decryptionKey: 'encryption-key' }
     )
   })
 
@@ -254,14 +254,14 @@ describe('openFileWith', () => {
 
   it('open an encrypted file', async () => {
     getEncryptionKeyFromDirId.mockResolvedValueOnce('encryption-key')
-    decryptFile.mockResolvedValueOnce('fake file blob')
+    decryptFileToBlob.mockResolvedValueOnce('fake file blob')
     await openFileWith(mockClient, encryptedFile, { vaultClient })
-    expect(decryptFile).toHaveBeenCalledWith(
+    expect(decryptFileToBlob).toHaveBeenCalledWith(
       mockClient,
       {},
       {
         file: encryptedFile,
-        encryptionKey: 'encryption-key'
+        decryptionKey: 'encryption-key'
       }
     )
     expect(saveAndOpenWithCordova).toHaveBeenCalledWith('fake file blob', {
@@ -344,12 +344,12 @@ describe('exportFilesNative', () => {
     await exportFilesNative(mockClient, encryptedFiles, { vaultClient })
 
     encryptedFiles.forEach(file =>
-      expect(decryptFile).toHaveBeenCalledWith(
+      expect(decryptFileToBlob).toHaveBeenCalledWith(
         mockClient,
         {},
         {
           file,
-          encryptionKey: 'encryption-key'
+          decryptionKey: 'encryption-key'
         }
       )
     )

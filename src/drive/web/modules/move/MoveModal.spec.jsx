@@ -5,9 +5,27 @@ import CozyClient from 'cozy-client'
 import { CozyFile } from 'models'
 
 import { MoveModal } from './MoveModal'
+import { DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
+import {
+  getEncryptionKeyFromDirId,
+  encryptAndUploadExistingFile,
+  decryptAndUploadExistingFile,
+  reencryptAndUploadExistingFile
+} from 'drive/lib/encryption'
 
 jest.mock('cozy-client/dist/utils', () => ({
   cancelable: jest.fn().mockImplementation(promise => promise)
+}))
+
+jest.mock('cozy-keys-lib', () => ({
+  withVaultUnlockContext: jest.fn().mockReturnValue(<></>)
+}))
+jest.mock('drive/lib/encryption', () => ({
+  ...jest.requireActual('drive/lib/encryption'),
+  getEncryptionKeyFromDirId: jest.fn(),
+  encryptAndUploadExistingFile: jest.fn(),
+  decryptAndUploadExistingFile: jest.fn(),
+  reencryptAndUploadExistingFile: jest.fn()
 }))
 
 jest.mock('cozy-doctypes')
@@ -44,10 +62,19 @@ describe('MoveModal component', () => {
     sharedPaths: ['/sharedFolder', '/bills/bill_201903.pdf']
   }
 
-  const setupComponent = (entries = defaultEntries) => {
+  const defaultDisplayedFolder = { _id: 'bills' }
+  const encryptedDisplayedFolder = {
+    _id: 'encrypted',
+    referenced_by: [{ type: DOCTYPE_FILES_ENCRYPTION, id: '123' }]
+  }
+
+  const setupComponent = (
+    entries = defaultEntries,
+    displayedFolder = defaultDisplayedFolder
+  ) => {
     const props = {
       client: cozyClient,
-      displayedFolder: { _id: 'bills' },
+      displayedFolder,
       entries,
       onClose: onCloseSpy,
       sharingState,
@@ -60,8 +87,8 @@ describe('MoveModal component', () => {
 
   describe('moveEntries', () => {
     it('should move entries to destination', async () => {
-      const component = setupComponent(defaultEntries, sharingState)
-      component.setState({ folderId: 'destinationFolder' })
+      const component = setupComponent(defaultEntries)
+      component.setState({ targetFolder: { _id: 'destinationFolder' } })
       CozyFile.getFullpath.mockImplementation((destinationFolder, name) =>
         Promise.resolve(
           name === 'bill_201903.pdf' ? '/bills/bill_201903.pdf' : '/whatever'
@@ -112,6 +139,81 @@ describe('MoveModal component', () => {
       expect(cb).toHaveBeenCalled()
       // TODO: check that trashedFiles are passed to cancel button
     })
+
+    it('should move non-encrypted files to encrypted dir', async () => {
+      const component = setupComponent(defaultEntries)
+      component.setState({
+        targetFolder: {
+          _id: 'destinationFolder',
+          referenced_by: [{ type: DOCTYPE_FILES_ENCRYPTION, id: '123' }]
+        }
+      })
+      CozyFile.move.mockImplementation(id => ({ moved: { id } }))
+      const cb = jest.fn()
+      await component.instance().moveEntries(cb)
+
+      expect(getEncryptionKeyFromDirId).toHaveBeenCalled()
+      expect(encryptAndUploadExistingFile).toHaveBeenCalled()
+    })
+
+    it('should move encrypted files to non-encrypted dir', async () => {
+      const entries = [
+        {
+          _id: 'bill_201901',
+          dir_id: 'bills',
+          name: 'bill_201901.pdf',
+          encrypted: true
+        },
+        {
+          _id: 'bill_201901',
+          dir_id: 'bills',
+          name: 'bill_201901.pdf',
+          encrypted: true
+        }
+      ]
+      const component = setupComponent(entries)
+      component.setState({
+        targetFolder: {
+          _id: 'destinationFolder'
+        }
+      })
+      CozyFile.move.mockImplementation(id => ({ moved: { id } }))
+      const cb = jest.fn()
+      await component.instance().moveEntries(cb)
+
+      expect(getEncryptionKeyFromDirId).toHaveBeenCalled()
+      expect(decryptAndUploadExistingFile).toHaveBeenCalled()
+    })
+
+    it('should move encrypted files to encrypted dir', async () => {
+      const entries = [
+        {
+          _id: 'bill_201901',
+          dir_id: 'bills',
+          name: 'bill_201901.pdf',
+          encrypted: true
+        },
+        {
+          _id: 'bill_201901',
+          dir_id: 'bills',
+          name: 'bill_201901.pdf',
+          encrypted: true
+        }
+      ]
+      const component = setupComponent(entries)
+      component.setState({
+        targetFolder: {
+          _id: 'destinationFolder',
+          referenced_by: [{ type: DOCTYPE_FILES_ENCRYPTION, id: '123' }]
+        }
+      })
+      CozyFile.move.mockImplementation(id => ({ moved: { id } }))
+      const cb = jest.fn()
+      await component.instance().moveEntries(cb)
+
+      expect(getEncryptionKeyFromDirId).toHaveBeenCalled()
+      expect(reencryptAndUploadExistingFile).toHaveBeenCalled()
+    })
   })
 
   describe('cancelMove', () => {
@@ -138,6 +240,74 @@ describe('MoveModal component', () => {
       expect(collectionSpy).toHaveBeenCalledWith('io.cozy.files')
       expect(restoreSpy).toHaveBeenCalledWith('trashed-1')
       expect(restoreSpy).toHaveBeenCalledWith('trashed-2')
+      expect(callback).toHaveBeenCalled()
+    })
+
+    it('should move back files moved from non-encrypted dir to encrypted dir', async () => {
+      const component = setupComponent(defaultEntries)
+      component.setState({
+        targetFolder: {
+          _id: 'destinationFolder',
+          referenced_by: [{ type: DOCTYPE_FILES_ENCRYPTION, id: '123' }]
+        }
+      })
+      const callback = jest.fn()
+      await component.instance().cancelMove(defaultEntries, [], callback)
+      expect(getEncryptionKeyFromDirId).toHaveBeenCalled()
+      expect(decryptAndUploadExistingFile).toHaveBeenCalled()
+
+      expect(CozyFile.move).toHaveBeenCalledWith('bill_201901', {
+        folderId: 'bills'
+      })
+      expect(CozyFile.move).toHaveBeenCalledWith('bill_201902', {
+        folderId: 'bills'
+      })
+      expect(restoreSpy).not.toHaveBeenCalled()
+      expect(callback).toHaveBeenCalled()
+    })
+
+    it('should move back files moved from encrypted dir to non-encrypted dir', async () => {
+      const component = setupComponent(defaultEntries, encryptedDisplayedFolder)
+      component.setState({
+        targetFolder: {
+          _id: 'destinationFolder'
+        }
+      })
+      const callback = jest.fn()
+      await component.instance().cancelMove(defaultEntries, [], callback)
+      expect(getEncryptionKeyFromDirId).toHaveBeenCalled()
+      expect(encryptAndUploadExistingFile).toHaveBeenCalled()
+
+      expect(CozyFile.move).toHaveBeenCalledWith('bill_201901', {
+        folderId: 'bills'
+      })
+      expect(CozyFile.move).toHaveBeenCalledWith('bill_201902', {
+        folderId: 'bills'
+      })
+      expect(restoreSpy).not.toHaveBeenCalled()
+      expect(callback).toHaveBeenCalled()
+    })
+
+    it('should move back files moved from encrypted dir to another encrypted dir', async () => {
+      const component = setupComponent(defaultEntries, encryptedDisplayedFolder)
+      component.setState({
+        targetFolder: {
+          _id: 'destinationFolder',
+          referenced_by: [{ type: DOCTYPE_FILES_ENCRYPTION, id: '123' }]
+        }
+      })
+      const callback = jest.fn()
+      await component.instance().cancelMove(defaultEntries, [], callback)
+      expect(getEncryptionKeyFromDirId).toHaveBeenCalled()
+      expect(reencryptAndUploadExistingFile).toHaveBeenCalled()
+
+      expect(CozyFile.move).toHaveBeenCalledWith('bill_201901', {
+        folderId: 'bills'
+      })
+      expect(CozyFile.move).toHaveBeenCalledWith('bill_201902', {
+        folderId: 'bills'
+      })
+      expect(restoreSpy).not.toHaveBeenCalled()
       expect(callback).toHaveBeenCalled()
     })
   })

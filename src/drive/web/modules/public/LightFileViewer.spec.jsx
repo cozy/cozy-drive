@@ -16,6 +16,10 @@ jest.mock('cozy-ui/transpiled/react/hooks/useBreakpoints', () => ({
   default: jest.fn(),
   BreakpointsProvider: ({ children }) => children
 }))
+jest.mock('cozy-keys-lib', () => ({
+  withVaultUnlockContext: jest.fn().mockReturnValue(<></>),
+  withVaultClient: jest.fn().mockReturnValue(<></>)
+}))
 
 const client = new createMockClient({})
 

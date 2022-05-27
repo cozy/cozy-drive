@@ -6,6 +6,10 @@
 
 # 1.42.0
 
+## ✨ Features
+
+* Support moving files from/to encrypted folder
+
 ## 🐛 Bug Fixes
 
 * Disable sharing on public file viewer

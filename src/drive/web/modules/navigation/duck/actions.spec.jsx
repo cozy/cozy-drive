@@ -9,7 +9,8 @@ import { createFolder } from './actions'
 jest.mock('cozy-keys-lib', () => ({
   withVaultClient: jest.fn().mockReturnValue({}),
   useVaultClient: jest.fn(),
-  WebVaultClient: jest.fn().mockReturnValue({})
+  WebVaultClient: jest.fn().mockReturnValue({}),
+  withVaultUnlockContext: jest.fn().mockReturnValue({})
 }))
 const vaultClient = new WebVaultClient('http://alice.cozy.cloud')
 
