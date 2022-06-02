@@ -6,6 +6,9 @@ import Overlay from 'cozy-ui/transpiled/react/Overlay'
 import Viewer from 'cozy-ui/transpiled/react/Viewer'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
+import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
+import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
 
 import Oops from 'components/Error/Oops'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
@@ -36,7 +39,12 @@ const Error = () => {
   return (
     <RemoveScroll>
       <Overlay>
-        <Viewer files={files} currentIndex={0} onCloseRequest={handleOnClose} />
+        <Viewer files={files} currentIndex={0} onCloseRequest={handleOnClose}>
+          <FooterActionButtons>
+            <SharingButton />
+            <ForwardOrDownloadButton />
+          </FooterActionButtons>
+        </Viewer>
       </Overlay>
     </RemoveScroll>
   )
