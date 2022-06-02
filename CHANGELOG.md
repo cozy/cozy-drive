@@ -2,6 +2,8 @@
 
 ## ✨ Features
 
+* Update cozy-stack-client and cozy-pouch-link to sync with cozy-client version
+
 ## 🐛 Bug Fixes
 
 ## 🔧 Tech
