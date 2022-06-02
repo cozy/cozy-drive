@@ -16,6 +16,7 @@ import AddButton from 'drive/web/modules/drive/Toolbar/components/AddButton'
 import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
 
 import { DownloadFilesButton } from './DownloadButton'
+import { useWebviewIntent } from 'cozy-intent'
 
 export const isFilesIsFile = files =>
   files.length === 1 && files[0].type === 'file'
@@ -87,12 +88,18 @@ const PublicToolbarByLink = ({
   const isFile = isFilesIsFile(files)
   const client = useClient()
   const { isMobile } = useBreakpoints()
+  const webviewIntent = useWebviewIntent()
 
   const shouldDisplayMoreMenu = isMobile || (!isFile && files.length > 0)
 
   return (
     <CozyBarRightMobile>
-      <BarContextProvider client={client} t={t} store={client.store}>
+      <BarContextProvider
+        client={client}
+        t={t}
+        store={client.store}
+        webviewService={webviewIntent}
+      >
         {!isMobile && (
           <>
             {hasWriteAccess && (
