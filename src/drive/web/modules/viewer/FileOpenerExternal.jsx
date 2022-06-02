@@ -17,6 +17,9 @@ import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Viewer from 'cozy-ui/transpiled/react/Viewer'
 import Overlay from 'cozy-ui/transpiled/react/Overlay'
+import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
+import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
+import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
 
 import Fallback from 'drive/web/modules/viewer/Fallback'
 import {
@@ -88,7 +91,12 @@ export class FileOpener extends Component {
                   opener: file =>
                     router.push(makeOnlyOfficeFileRoute(file, true))
                 }}
-              />
+              >
+                <FooterActionButtons>
+                  <SharingButton />
+                  <ForwardOrDownloadButton />
+                </FooterActionButtons>
+              </Viewer>
             </Overlay>
           </RemoveScroll>
         )}

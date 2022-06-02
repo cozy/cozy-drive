@@ -4,6 +4,8 @@ import cx from 'classnames'
 
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { SharingBannerPlugin, useSharingInfos } from 'cozy-sharing'
+import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
+import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
 
 import { useRouter } from 'drive/lib/RouterContext'
 import PublicViewer from 'drive/web/modules/viewer/PublicViewer'
@@ -39,13 +41,16 @@ const LightFileViewer = ({ files }) => {
         <PublicViewer
           files={files}
           currentIndex={0}
-          disableSharing
           onlyOfficeProps={{
             isEnabled: isOnlyOfficeEnabled(),
             opener: onlyOfficeOpener
           }}
           toolbarProps={{ showToolbar: isDesktop }}
-        />
+        >
+          <FooterActionButtons>
+            <ForwardOrDownloadButton />
+          </FooterActionButtons>
+        </PublicViewer>
       </div>
     </div>
   )

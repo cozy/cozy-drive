@@ -3,6 +3,8 @@
 ## ✨ Features
 
 * Update cozy-stack-client and cozy-pouch-link to sync with cozy-client version
+* Update cozy-ui
+  - Modify Viewers to handle [68.0.0 BC](https://github.com/cozy/cozy-ui/releases/tag/v68.0.0)
 
 ## 🐛 Bug Fixes
 

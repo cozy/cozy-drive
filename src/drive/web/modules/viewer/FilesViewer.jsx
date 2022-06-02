@@ -10,6 +10,9 @@ import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import Viewer from 'cozy-ui/transpiled/react/Viewer'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import palette from 'cozy-ui/transpiled/react/palette'
+import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
+import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
+import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
 
 import useUpdateDocumentTitle from 'drive/web/modules/views/useUpdateDocumentTitle'
 import { useRouter } from 'drive/lib/RouterContext'
@@ -205,7 +208,12 @@ const FilesViewer = ({ filesQuery, files, fileId, onClose, onChange }) => {
             isEnabled: isOnlyOfficeEnabled(),
             opener: file => router.push(makeOnlyOfficeFileRoute(file, true))
           }}
-        />
+        >
+          <FooterActionButtons>
+            <SharingButton />
+            <ForwardOrDownloadButton />
+          </FooterActionButtons>
+        </Viewer>
       </Overlay>
     </RemoveScroll>
   )

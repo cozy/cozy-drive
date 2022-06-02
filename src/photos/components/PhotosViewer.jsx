@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
-import { Overlay, Viewer } from 'cozy-ui/transpiled/react'
+
+import Overlay from 'cozy-ui/transpiled/react/Overlay'
+import Viewer from 'cozy-ui/transpiled/react/Viewer'
+import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
+import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
+import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
 
 const getParentPath = router => {
   const url = router.location.pathname
@@ -28,7 +33,12 @@ class PhotosViewer extends Component {
               query: router.location.query
             })
           }
-        />
+        >
+          <FooterActionButtons>
+            <SharingButton />
+            <ForwardOrDownloadButton />
+          </FooterActionButtons>
+        </Viewer>
       </Overlay>
     )
   }
