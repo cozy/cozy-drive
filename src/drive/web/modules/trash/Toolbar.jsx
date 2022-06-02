@@ -20,6 +20,7 @@ import { MoreButton } from 'components/Button'
 import EmptyTrashConfirm from './components/EmptyTrashConfirm'
 
 import styles from 'drive/styles/toolbar.styl'
+import { useWebviewIntent } from 'cozy-intent'
 
 export const Toolbar = ({
   t,
@@ -33,6 +34,7 @@ export const Toolbar = ({
   const anchorRef = React.createRef()
   const openMenu = useCallback(() => setMenuVisible(true), [setMenuVisible])
   const closeMenu = useCallback(() => setMenuVisible(false), [setMenuVisible])
+  const webviewIntent = useWebviewIntent()
 
   const { pushModal, popModal } = useContext(ModalContext)
 
@@ -94,7 +96,12 @@ export const Toolbar = ({
 
       {isMobile ? (
         <BarRight>
-          <BarContextProvider client={client} t={t} store={client.store}>
+          <BarContextProvider
+            client={client}
+            t={t}
+            store={client.store}
+            webviewService={webviewIntent}
+          >
             {MoreMenu}
           </BarContextProvider>
         </BarRight>
