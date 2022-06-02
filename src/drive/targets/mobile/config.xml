@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="14200001" id="io.cozy.drive.mobile" ios-CFBundleVersion="1.42.1.0" version="1.42.1" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="14300000" id="io.cozy.drive.mobile" ios-CFBundleVersion="1.43.0.0" version="1.43.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Cozy Drive</name>
     <description>Sync files from your Cozy.</description>
     <author email="contact@cozycloud.cc" href="https://cozy.io">Cozy Cloud</author>
@@ -11,7 +11,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <preference name="AppendUserAgent" value="io.cozy.drive.mobile-1.42.1" />
+    <preference name="AppendUserAgent" value="io.cozy.drive.mobile-1.43.0" />
     <preference name="android-targetSdkVersion" value="29" />
     <platform name="android">
         <preference name="android-minSdkVersion" value="21" />
