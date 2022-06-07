@@ -78,7 +78,7 @@ const PublicToolbarCozyToCozy = ({
   const isFile = isFilesIsFile(files)
   const client = useClient()
   const { isMobile } = useBreakpoints()
-  const { webviewIntent } = useWebviewIntent()
+  const webviewIntent = useWebviewIntent()
 
   const shouldDisplayMoreMenu = isMobile || (!isFile && files.length > 0)
 
