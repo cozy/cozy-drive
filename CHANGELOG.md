@@ -5,6 +5,7 @@
 * Update cozy-stack-client and cozy-pouch-link to sync with cozy-client version
 * Update cozy-ui
   - Modify Viewers to handle [68.0.0 BC](https://github.com/cozy/cozy-ui/releases/tag/v68.0.0)
+  - Fix on progress bar when uploading files [[68.4.0]](https://github.com/cozy/cozy-ui/releases/tag/v68.4.0)
 * Update cozy-scripts for Amirale development
 
 ## 🐛 Bug Fixes

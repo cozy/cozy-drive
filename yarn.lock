@@ -6266,10 +6266,10 @@ cozy-ui@22.3.1:
     react-pdf "^4.0.5"
     react-select "2.2.0"
 
-cozy-ui@^68.2.0:
-  version "68.2.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-68.2.0.tgz#c360b3c260094ad0670fe44af8f4a36125844fd2"
-  integrity sha512-pd3Tztq1sWcMCXEaUyWJNrak+1Sakrc6EQmkicV5+jkJzftc+zq6GFYdWV8vpu+fAsrH3i/i9xsD4yiDFN8Zgw==
+cozy-ui@^68.4.0:
+  version "68.4.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-68.4.0.tgz#251319995e962a93ddd5df406eccdb161bc5b852"
+  integrity sha512-nhtERwnIinvBXMag2zO5/T24NlIiU+Q9T6r2jLzCXdf0a4Rj1L8LM0kOrqzHGPmMWPOZaRctyrzFSI9TSbzZ2g==
   dependencies:
     "@babel/runtime" "^7.3.4"
     "@popperjs/core" "^2.4.4"
@@ -6293,6 +6293,7 @@ cozy-ui@^68.2.0:
     react-remove-scroll "^2.4.0"
     react-select "^4.3.0"
     react-swipeable-views "^0.13.3"
+    rooks "^5.11.2"
 
 create-ecdh@^4.0.0:
   version "4.0.4"
@@ -12994,6 +12995,17 @@ msgpack5@^4.0.2:
     readable-stream "^2.3.6"
     safe-buffer "^5.1.2"
 
+"mui-bottom-sheet@git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.6":
+  version "1.0.6"
+  uid "494c40416ecde95732c864f9b921e7e545075aa5"
+  resolved "git+https://github.com/cozy/mui-bottom-sheet.git#494c40416ecde95732c864f9b921e7e545075aa5"
+  dependencies:
+    "@juggle/resize-observer" "^3.1.3"
+    jest-environment-jsdom-sixteen "^1.0.3"
+    react-spring "9.0.0-rc.3"
+    react-use-gesture "^7.0.8"
+    react-use-measure "^2.0.0"
+
 "mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.6":
   version "1.0.6"
   resolved "https://github.com/cozy/mui-bottom-sheet.git#494c40416ecde95732c864f9b921e7e545075aa5"
@@ -16272,6 +16284,14 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
   dependencies:
     hash-base "^3.0.0"
     inherits "^2.0.1"
+
+rooks@^5.11.2:
+  version "5.11.2"
+  resolved "https://registry.yarnpkg.com/rooks/-/rooks-5.11.2.tgz#f7ba3a758c512c7cc807af38615f3052439578b8"
+  integrity sha512-kOVYjNW/0Emq9NN3DbmC41xcltK25gVV2PMGw+Et9vC5UiIKrwWYRYmMid2/WRGQ0oodOeksCkrqGwJcV2buuQ==
+  dependencies:
+    lodash.debounce "^4.0.8"
+    raf "^3.4.1"
 
 rst-selector-parser@^2.2.3:
   version "2.2.3"
