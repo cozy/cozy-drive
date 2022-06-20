@@ -52,6 +52,10 @@ const removeRefs = async (client, ids, album) => {
 const addAutoAlbumReferences = async (client, photos, album) => {
   let refCount = 0
   const refsIds = []
+  if (!album.photos) {
+    log('warn', `No photos relationship for album ${album._id}`)
+    return
+  }
   for (const photo of photos) {
     if (photo.clusterId === album._id) {
       continue

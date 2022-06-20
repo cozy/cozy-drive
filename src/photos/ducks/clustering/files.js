@@ -38,6 +38,10 @@ export const getFilesByAutoAlbum = async (client, album) => {
   let data = client.hydrateDocument(resp.data)
   const photos = await data.photos.data
   allPhotos = allPhotos.concat(photos)
+  if (!data.photos) {
+    log('warn', `No photo in auto album ${album._id}`)
+    return []
+  }
   while (data.photos.hasMore) {
     await data.photos.fetchMore()
     const fromState = client.getDocumentFromState(DOCTYPE_ALBUMS, album._id)
