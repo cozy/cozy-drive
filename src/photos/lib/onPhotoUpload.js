@@ -140,6 +140,13 @@ const runClustering = async (client, setting) => {
   }
   const albums = await findAutoAlbums(client)
   const dataset = prepareDataset(photos, albums)
+  if (!dataset[0]) {
+    log(
+      'error',
+      `The oldest photo in dataset containing ${photos.length} photos is undefined`
+    )
+    return { photos: [], newSetting: setting }
+  }
   const result = await clusterizePhotos(client, setting, dataset, albums)
   if (!result) {
     return { photos: [], newSetting: setting }
