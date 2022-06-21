@@ -14,6 +14,8 @@
 
 ## 🔧 Tech
 
+* Move dacc-run file to a lib folder to prevent it occurring in build
+
 # 1.42.1
 
 ## 🐛 Bug Fixes
