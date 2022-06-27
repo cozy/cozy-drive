@@ -5,6 +5,9 @@ import { generateFile } from 'test/generate'
 import { openLocalFile } from 'drive/mobile/modules/offline/duck'
 import createFileOpeningHandler from './createFileOpeningHandler'
 
+const mockUseWebviewIntent = jest.fn()
+const mockIsFlagshipApp = jest.fn()
+
 jest.mock('drive/mobile/modules/offline/duck', () => ({
   openLocalFile: jest.fn()
 }))
@@ -12,6 +15,15 @@ jest.mock('drive/mobile/modules/offline/duck', () => ({
 jest.mock('cozy-client/dist/models/file', () => ({
   ...jest.requireActual('cozy-client/dist/models/file'),
   shouldBeOpenedByOnlyOffice: jest.fn()
+}))
+
+jest.mock('cozy-intent', () => ({
+  useWebviewIntent: () => ({ call: () => mockUseWebviewIntent() })
+}))
+
+jest.mock('cozy-device-helper', () => ({
+  ...jest.requireActual('cozy-device-helper'),
+  isFlagshipApp: () => mockIsFlagshipApp()
 }))
 
 describe('createFileOpeningHandler', () => {
@@ -65,7 +77,12 @@ describe('createFileOpeningHandler', () => {
     onlyofficeFile = generateFile({ i: 3 })
     onlyofficeFile.class = 'slide'
 
-    setup = ({ isOnlyOfficeEnabled } = { isOnlyOfficeEnabled: true }) =>
+    setup = (
+      { isOnlyOfficeEnabled, webviewIntent } = {
+        isOnlyOfficeEnabled: true,
+        webviewIntent: { call: mockUseWebviewIntent }
+      }
+    ) =>
       createFileOpeningHandler({
         client,
         isFlatDomain,
@@ -74,7 +91,8 @@ describe('createFileOpeningHandler', () => {
         replaceCurrentUrl,
         openInNewTab,
         routeTo,
-        isOnlyOfficeEnabled
+        isOnlyOfficeEnabled,
+        webviewIntent
       })
   })
 
@@ -106,6 +124,55 @@ describe('createFileOpeningHandler', () => {
     expect(replaceCurrentUrl).toHaveBeenCalledWith(
       'https://cozy-tools-notes.cloud/public/?id=note-id&sharecode=sharecode&username=public+note#/'
     )
+  })
+
+  it('should redirect to the notes app in Flagship setting', async () => {
+    mockIsFlagshipApp.mockReturnValueOnce(true)
+
+    client.fetchURL.mockResolvedValue({
+      data: {
+        note_id: 'note-id',
+        subdomain: 'notes',
+        protocol: 'https',
+        instance: 'cozy-tools.cloud',
+        sharecode: 'sharecode',
+        public_name: 'public note'
+      }
+    })
+    const handler = setup()
+    await handler({ file: noteFile, isAvailableOffline: false })
+
+    expect(replaceCurrentUrl).not.toHaveBeenCalled()
+    expect(mockUseWebviewIntent).toHaveBeenCalledWith(
+      'openApp',
+      'https://cozy-tools-notes.cloud/public/?id=note-id&sharecode=sharecode&username=public+note#/',
+      { slug: 'notes' }
+    )
+  })
+
+  it('should not redirect to the notes app in Flagship setting if WebviewIntent fails for an unknown reason', async () => {
+    mockIsFlagshipApp.mockReturnValueOnce(true)
+
+    client.fetchURL.mockResolvedValue({
+      data: {
+        note_id: 'note-id',
+        subdomain: 'notes',
+        protocol: 'https',
+        instance: 'cozy-tools.cloud',
+        sharecode: 'sharecode',
+        public_name: 'public note'
+      }
+    })
+    const handler = setup({ webviewIntent: undefined })
+    await handler({
+      file: noteFile,
+      isAvailableOffline: false
+    })
+
+    expect(replaceCurrentUrl).toHaveBeenCalledWith(
+      'https://cozy-tools-notes.cloud/public/?id=note-id&sharecode=sharecode&username=public+note#/'
+    )
+    expect(mockUseWebviewIntent).not.toHaveBeenCalled()
   })
 
   it('should open a shortcut in a new tab', async () => {

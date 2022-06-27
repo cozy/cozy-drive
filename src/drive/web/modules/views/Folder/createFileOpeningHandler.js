@@ -1,6 +1,6 @@
 import { models, Q } from 'cozy-client'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
-import { isMobileApp } from 'cozy-device-helper'
+import { isFlagshipApp, isMobileApp } from 'cozy-device-helper'
 
 import { openLocalFile } from 'drive/mobile/modules/offline/duck'
 import generateShortcutUrl from 'drive/web/modules/views/Folder/generateShortcutUrl'
@@ -16,7 +16,8 @@ const createFileOpeningHandler =
     replaceCurrentUrl,
     openInNewTab,
     routeTo,
-    isOnlyOfficeEnabled
+    isOnlyOfficeEnabled,
+    webviewIntent
   }) =>
   async ({ event, file, isAvailableOffline }) => {
     if (isAvailableOffline) {
@@ -43,7 +44,16 @@ const createFileOpeningHandler =
       }
     } else if (isNote) {
       try {
-        replaceCurrentUrl(await models.note.fetchURL(client, file))
+        const fetchedURL = await models.note.fetchURL(client, file)
+
+        /**
+         * Not using AppLinker here because it would require too much refactoring and would be risky
+         * Instead we use the webviewIntent programmatically to open the cozy-note app on the note href
+         */
+        if (isFlagshipApp() && webviewIntent)
+          return webviewIntent.call('openApp', fetchedURL, { slug: 'notes' })
+
+        replaceCurrentUrl(fetchedURL)
       } catch (e) {
         Alerter.error('alert.offline')
       }

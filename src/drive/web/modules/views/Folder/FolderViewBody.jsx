@@ -28,6 +28,7 @@ import { useSyncingFakeFile } from './useSyncingFakeFile'
 import { isReferencedByShareInSharingContext } from 'drive/web/modules/views/Folder/syncHelpers'
 import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
 import { isEncryptedFolder } from 'drive/lib/encryption'
+import { useWebviewIntent } from 'cozy-intent'
 
 // TODO: extraColumns is then passed to 'FileListHeader', 'AddFolder',
 // and 'File' (this one from a 'syncingFakeFile' and a normal file).
@@ -54,6 +55,7 @@ const FolderViewBody = ({
   const { sharingsValue } = useContext(AcceptingSharingContext)
   const [sortOrder, setSortOrder] = useFolderSort(currentFolderId)
   const vaultClient = useVaultClient()
+  const webviewIntent = useWebviewIntent()
 
   const changeSortOrder = useCallback(
     (folderId_legacy, attribute, order) =>
@@ -78,14 +80,15 @@ const FolderViewBody = ({
         replaceCurrentUrl: url => (window.location.href = url),
         openInNewTab: url => window.open(url, '_blank'),
         routeTo: url => router.push(url),
-        isOnlyOfficeEnabled: isOnlyOfficeEnabled()
+        isOnlyOfficeEnabled: isOnlyOfficeEnabled(),
+        webviewIntent
       })({
         event,
         file,
         isAvailableOffline
       })
     },
-    [client, dispatch, navigateToFile, isFlatDomain, router]
+    [client, dispatch, navigateToFile, isFlatDomain, router, webviewIntent]
   )
 
   const isInError = queryResults.some(query => query.fetchStatus === 'failed')
