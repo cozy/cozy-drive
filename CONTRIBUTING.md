@@ -37,6 +37,7 @@ Please keep in mind that:
 - We recommend to use [task lists][checkbox] to explain steps / features in your Pull-Request description
 - you do _not_ need to build app to submit a PR
 - you should update the Transifex source locale file if you modify it for your feature needs (see [Localization section in README][localization])
+- you should update the Changelog if needed
 
 
 ### Workflow

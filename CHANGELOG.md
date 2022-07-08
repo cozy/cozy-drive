@@ -15,6 +15,7 @@
 ## 🔧 Tech
 
 * Move dacc-run file to a lib folder to prevent it occurring in build
+* Remove pull request template
 
 # 1.42.1
 
