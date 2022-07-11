@@ -6155,10 +6155,10 @@ cozy-scanner@2.0.2:
   dependencies:
     cozy-device-helper "^1.13.2"
 
-cozy-scripts@^6.3.3:
-  version "6.3.3"
-  resolved "https://registry.yarnpkg.com/cozy-scripts/-/cozy-scripts-6.3.3.tgz#3924e5876f93dbadd343c834406ae29a47a98300"
-  integrity sha512-X8DrGAfxqscFi9PXW7DnGZW+s918YukF05NjrY0sDHhg9vXdWYvZ32j8y750HYaDx7l4FP3RSULa+cG9z640TA==
+cozy-scripts@^6.3.4:
+  version "6.3.4"
+  resolved "https://registry.yarnpkg.com/cozy-scripts/-/cozy-scripts-6.3.4.tgz#8cf3561e33933ce490523b4f93c01e99a31cf67e"
+  integrity sha512-q7EGqgbgGJwhEvdhYtad1b+9gBONSvviPGUUHTbb4VIVohU3FkFgjas7pA4Ylxv71Kd7V+yYzwl1XPBv9UESXw==
   dependencies:
     "@babel/core" "7.9.0"
     "@babel/polyfill" "^7.10.4"
