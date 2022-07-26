@@ -125,7 +125,7 @@
     "cozy-intent": "^1.17.1",
     "cozy-keys-lib": "4.1.9",
     "cozy-logger": "1.9.0",
-    "cozy-pouch-link": "^32.2.3",
+    "cozy-pouch-link": "^32.2.8",
     "cozy-realtime": "3.13.0",
     "cozy-scanner": "2.0.2",
     "cozy-scripts": "^6.3.4",
