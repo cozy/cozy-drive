@@ -1,3 +1,47 @@
 {
-  "extends": ["cozy"]
+  "name": "renovate-config-cozy",
+  "version": "0.8.5",
+  "description": "Renovate config for Cozy (Cozy Cloud)",
+  "renovate-config": {
+    "default": {
+      "extends": [
+        "config:base",
+        ":semanticCommitTypeAll(fix)"
+      ],
+      "rangeStrategy": "pin",
+      "packageRules": [
+        {
+          "excludePackagePrefixes": [
+            "cozy-"
+          ],
+          "extends": [
+            "schedule:monthly"
+          ],
+          "rangeStrategy": "pin"
+        },
+        {
+          "matchPackagePrefixes": [
+            "cozy-"
+          ],
+          "rangeStrategy": "bump"
+        },
+        {
+          "matchPackageNames": [
+            "cozy-client",
+            "cozy-stack-client",
+            "cozy-pouch-link"
+          ],
+          "groupName": "Cozy Client",
+          "rangeStrategy": "bump"
+        }
+      ],
+      "timezone": "Europe/Paris",
+      "addLabels": [
+        "dependencies"
+      ],
+      "prHourlyLimit": 1,
+      "updateNotScheduled": false
+    }
+  },
+  "license": "MIT"
 }
