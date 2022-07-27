@@ -5974,16 +5974,16 @@ cozy-client@^27.14.4:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
-cozy-client@^32.2.3:
-  version "32.2.3"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-32.2.3.tgz#353b03ef8c4d3d8c6e2730a5992840965bc413e1"
-  integrity sha512-kWDgeytUdycLSTUhBtrx2tSpbuEqUoBYDG+hdeE/JrevBWHaGZxE/PdY0f9TWWEnQANFHVFgEXCvcYnSUc8iZg==
+cozy-client@^32.2.8:
+  version "32.2.8"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-32.2.8.tgz#149dc0c696061b4aa7403263194179797f3a9c0d"
+  integrity sha512-23lFqnfpfbKkYAmLWCXZQxAODQLU4w9atKJA4Ej6vMK4bFJ3AsmXexDqFEfN0sCwzysoiqhWcqtVX7isaQHQ7w==
   dependencies:
     "@cozy/minilog" "1.0.0"
     "@types/jest" "^26.0.20"
     "@types/lodash" "^4.14.170"
     btoa "^1.2.1"
-    cozy-stack-client "^32.2.3"
+    cozy-stack-client "^32.2.5"
     json-stable-stringify "^1.0.1"
     lodash "^4.17.13"
     microee "^0.0.6"
@@ -5998,10 +5998,10 @@ cozy-client@^32.2.3:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
-cozy-client@^32.2.8:
-  version "32.2.8"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-32.2.8.tgz#149dc0c696061b4aa7403263194179797f3a9c0d"
-  integrity sha512-23lFqnfpfbKkYAmLWCXZQxAODQLU4w9atKJA4Ej6vMK4bFJ3AsmXexDqFEfN0sCwzysoiqhWcqtVX7isaQHQ7w==
+cozy-client@^32.3.0:
+  version "32.3.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-32.3.0.tgz#e099de403c2df8992a2b7411d02f4a6666911217"
+  integrity sha512-3GEjF8YKGGMYxTxMgA/Q9LjnXxAqihRmdwEKEttSZGgMhNYnPm3T4sBDkxZftLGJgOtlXllJUGI6Z5voDRlhkQ==
   dependencies:
     "@cozy/minilog" "1.0.0"
     "@types/jest" "^26.0.20"
@@ -6265,15 +6265,6 @@ cozy-stack-client@^27.21.0:
   integrity sha512-sDJ1k+VkFS+vU4Z2e57MyI1o44yogtO9iYVX1gjmITOlMCcyh8nC4+eBlL6R7uU/oPbdWqAozPvnR8QlwxyZDQ==
   dependencies:
     cozy-flags "2.7.1"
-    detect-node "^2.0.4"
-    mime "^2.4.0"
-    qs "^6.7.0"
-
-cozy-stack-client@^32.2.3:
-  version "32.2.3"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-32.2.3.tgz#9129185659a640b736cb19102bd273c5497ffaf3"
-  integrity sha512-LxbzQlygEN9yAtNyiCZbMmDjsR7qtilWKy1N7LAHnCcBoz1NorlF/5SmL/7jpNMgVgi/AqcoTq3aXA5Kr4/0Mw==
-  dependencies:
     detect-node "^2.0.4"
     mime "^2.4.0"
     qs "^6.7.0"
