@@ -6254,6 +6254,15 @@ cozy-stack-client@^32.2.3:
     mime "^2.4.0"
     qs "^6.7.0"
 
+cozy-stack-client@^32.2.5:
+  version "32.2.5"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-32.2.5.tgz#ffb798fb8a9de6126d53abbf68b7b6f90a0db9e2"
+  integrity sha512-RJKOc7Vd6CAmDEpdohU84PT8KYTnC/UsYm1IsBPrqzzeZCZXceHJWtALB1rpwfTdLTvu3heYYAuLjJqtqVbBGQ==
+  dependencies:
+    detect-node "^2.0.4"
+    mime "^2.4.0"
+    qs "^6.7.0"
+
 cozy-ui@22.3.1:
   version "22.3.1"
   resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-22.3.1.tgz#9bd22099255e88ab2a9694a8b18d21cde3f627f5"
