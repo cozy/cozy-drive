@@ -1,47 +1,39 @@
 {
-  "name": "renovate-config-cozy",
-  "version": "0.8.5",
-  "description": "Renovate config for Cozy (Cozy Cloud)",
-  "renovate-config": {
-    "default": {
+  "extends": [
+    "config:base",
+    ":semanticCommitTypeAll(fix)"
+  ],
+  "rangeStrategy": "pin",
+  "packageRules": [
+    {
+      "excludePackagePrefixes": [
+        "cozy-"
+      ],
       "extends": [
-        "config:base",
-        ":semanticCommitTypeAll(fix)"
+        "schedule:monthly"
       ],
-      "rangeStrategy": "pin",
-      "packageRules": [
-        {
-          "excludePackagePrefixes": [
-            "cozy-"
-          ],
-          "extends": [
-            "schedule:monthly"
-          ],
-          "rangeStrategy": "pin"
-        },
-        {
-        "matchPackageNames": [
-          "cozy-client",
-          "cozy-stack-client",
-          "cozy-pouch-link"
-        ],
-        "groupName": "Cozy Client",
-        "rangeStrategy": "bump",
-        },
-        {
-          "matchPackagePrefixes": [
-            "cozy-"
-          ],
-          "rangeStrategy": "bump"
-        }
+      "rangeStrategy": "pin"
+    },
+    {
+      "matchPackageNames": [
+        "cozy-client",
+        "cozy-stack-client",
+        "cozy-pouch-link"
       ],
-      "timezone": "Europe/Paris",
-      "addLabels": [
-        "dependencies"
+      "groupName": "Cozy Client",
+      "rangeStrategy": "bump"
+    },
+    {
+      "matchPackagePrefixes": [
+        "cozy-"
       ],
-      "prHourlyLimit": 1,
-      "updateNotScheduled": false
+      "rangeStrategy": "bump"
     }
-  },
-  "license": "MIT"
+  ],
+  "timezone": "Europe/Paris",
+  "addLabels": [
+    "dependencies"
+  ],
+  "prHourlyLimit": 1,
+  "updateNotScheduled": false
 }
