@@ -12,6 +12,7 @@
 
 * Improve cozy-bar implementation to fix UI bugs in Amirale
 * Fix navigation through mobile Flagship on Note creation and opening
+* Remove unused contacts permissions on Photos 
 
 ## 🔧 Tech
 
