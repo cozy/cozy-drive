@@ -11,6 +11,7 @@
 ## 🐛 Bug Fixes
 
 * Improve cozy-bar implementation to fix UI bugs in Amirale
+* Fix navigation through mobile Flagship on Note creation and opening
 
 ## 🔧 Tech
 
