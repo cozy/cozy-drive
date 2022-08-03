@@ -1,6 +1,9 @@
 import React from 'react'
 import get from 'lodash/get'
 
+import { isFlagshipApp } from 'cozy-device-helper'
+import { useWebviewIntent } from 'cozy-intent'
+
 import {
   withClient,
   models,
@@ -21,6 +24,7 @@ const CreateNoteItem = ({ client, t, displayedFolder }) => {
     capabilities,
     'capabilities.data.attributes.flat_subdomains'
   )
+  const webviewIntent = useWebviewIntent()
 
   let notesAppUrl = undefined
   let notesAppIsInstalled = true
@@ -55,11 +59,20 @@ const CreateNoteItem = ({ client, t, displayedFolder }) => {
             dir_id: displayedFolder.id
           })
 
-          window.location.href = await models.note.generatePrivateUrl(
+          const privateUrl = await models.note.generatePrivateUrl(
             notesAppUrl,
             file,
             { returnUrl }
           )
+
+          /**
+           * Not using AppLinker here because it would require too much refactoring and would be risky
+           * Instead we use the webviewIntent programmatically to open the cozy-note app on the note href
+           */
+          if (isFlagshipApp() && webviewIntent)
+            return webviewIntent.call('openApp', privateUrl, { slug: 'notes' })
+
+          window.location.href = privateUrl
         } else {
           window.location.href = notesAppUrl
         }
