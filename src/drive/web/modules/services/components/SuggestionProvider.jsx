@@ -1,15 +1,16 @@
-/* global cozy */
 import React from 'react'
 import FuzzyPathSearch from '../FuzzyPathSearch'
 import { withClient } from 'cozy-client'
 
 import { TYPE_DIRECTORY, makeNormalizedFile } from './helpers'
 import { getIconUrl } from './iconContext'
+import { DOCTYPE_FILES } from 'drive/lib/doctypes'
+import { prepareSuggestionQuery } from '../../queries'
 
 class SuggestionProvider extends React.Component {
   componentDidMount() {
     const { intent } = this.props
-    this.hasIndexedFiles = false
+    this.hasIndexFilesBeenLaunched = false
 
     // re-attach the message listener for the intent to receive the suggestion requests
     window.addEventListener('message', event => {
@@ -22,8 +23,25 @@ class SuggestionProvider extends React.Component {
     })
   }
 
+  /**
+   * Provide Suggestions to calling Intent
+   *
+   * This method called when intent provide query will indexFiles once
+   * to fill FuzzyPathSearch. Then will re-post message to the intent
+   * with updated search results containing `files` as `suggestions`
+   * for SearchBar need.
+   *
+   *  ⚠️ For note file, we don't provide url to open, but onSelect method
+   *  to be called on click. Less API calls expected. But a note will be opened
+   *  slower. See helpers.js
+   *
+   * @param query - Query to find file
+   * @param id
+   * @param intent - Intent calling
+   * @returns {Promise<void>} nothing
+   */
   async provideSuggestions(query, id, intent) {
-    if (!this.hasIndexedFiles) {
+    if (!this.hasIndexFilesBeenLaunched) {
       await this.indexFiles()
     }
 
@@ -38,7 +56,7 @@ class SuggestionProvider extends React.Component {
           title: result.name,
           subtitle: result.path,
           term: result.name,
-          onSelect: 'open:' + result.url,
+          onSelect: result.onSelect || 'open:' + result.url,
           icon: result.icon
         }))
       },
@@ -46,44 +64,42 @@ class SuggestionProvider extends React.Component {
     )
   }
 
-  // fetches pretty much all the files and preloads FuzzyPathSearch
+  /**
+   * Fetches all files without trashed and preloads FuzzyPathSearch
+   *
+   * Using _find route (from findAll) improves performance:
+   * - using partial index to reduce amount of data fetched
+   * - removing trashed data directly
+   *
+   * Also, this method:
+   * - set first the `hasIndexFilesBeenLaunched` to prevent multiple calls
+   * - removes orphan file
+   * - normalize file to match <SearchBar> expectation
+   * - preloads FuzzyPathSearch
+   *
+   * @returns {Promise<void>} nothing
+   */
   async indexFiles() {
     const { client } = this.props
-    // TODO: fix me
-    // eslint-disable-next-line no-async-promise-executor
-    return new Promise(async resolve => {
-      const resp = await cozy.client.fetchJSON(
-        'GET',
-        `/data/io.cozy.files/_all_docs?include_docs=true`
-      )
-      const files = resp.rows
-        // TODO: fix me
-        // eslint-disable-next-line no-prototype-builtins
-        .filter(row => !row.doc.hasOwnProperty('views'))
-        .map(row => ({ id: row.id, ...row.doc }))
+    this.hasIndexFilesBeenLaunched = true
 
-      const folders = files.filter(file => file.type === TYPE_DIRECTORY)
+    const { selector, options } = prepareSuggestionQuery()
+    const files = await client
+      .collection(DOCTYPE_FILES)
+      .findAll(selector, options)
 
-      const notInTrash = file =>
-        !file.trashed && !/^\/\.cozy_trash/.test(file.path)
-      const notOrphans = file =>
-        folders.find(folder => folder._id === file.dir_id) !== undefined
+    const folders = files.filter(file => file.type === TYPE_DIRECTORY)
 
-      const normalizedFilesPrevious = files
-        .filter(notInTrash)
-        .filter(notOrphans)
+    const notOrphans = file =>
+      folders.find(folder => folder._id === file.dir_id) !== undefined
 
-      const normalizedFiles = await Promise.all(
-        normalizedFilesPrevious.map(
-          async file =>
-            await makeNormalizedFile(client, folders, file, getIconUrl)
-        )
-      )
+    const normalizedFilesPrevious = files.filter(notOrphans)
 
-      this.fuzzyPathSearch = new FuzzyPathSearch(normalizedFiles)
-      this.hasIndexedFiles = true
-      resolve()
-    })
+    const normalizedFiles = normalizedFilesPrevious.map(file =>
+      makeNormalizedFile(client, folders, file, getIconUrl)
+    )
+
+    this.fuzzyPathSearch = new FuzzyPathSearch(normalizedFiles)
   }
 
   render() {

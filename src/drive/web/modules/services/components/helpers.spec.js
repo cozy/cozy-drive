@@ -19,7 +19,7 @@ const noteFileProps = {
 }
 
 describe('makeNormalizedFile', () => {
-  it('should return correct values for a directory', async () => {
+  it('should return correct values for a directory', () => {
     const folders = []
     const file = {
       _id: 'fileId',
@@ -28,12 +28,7 @@ describe('makeNormalizedFile', () => {
       name: 'fileName'
     }
 
-    const normalizedFile = await makeNormalizedFile(
-      client,
-      folders,
-      file,
-      getIconUrl
-    )
+    const normalizedFile = makeNormalizedFile(client, folders, file, getIconUrl)
 
     expect(normalizedFile).toMatchObject({
       id: 'fileId',
@@ -43,7 +38,7 @@ describe('makeNormalizedFile', () => {
     })
   })
 
-  it('should return correct values for a file', async () => {
+  it('should return correct values for a file', () => {
     const folders = [{ _id: 'folderId', path: 'folderPath' }]
     const file = {
       _id: 'fileId',
@@ -52,12 +47,7 @@ describe('makeNormalizedFile', () => {
       name: 'fileName'
     }
 
-    const normalizedFile = await makeNormalizedFile(
-      client,
-      folders,
-      file,
-      getIconUrl
-    )
+    const normalizedFile = makeNormalizedFile(client, folders, file, getIconUrl)
 
     expect(normalizedFile).toMatchObject({
       id: 'fileId',
@@ -67,7 +57,7 @@ describe('makeNormalizedFile', () => {
     })
   })
 
-  it('should return correct values for a note', async () => {
+  it('should return correct values for a note with on Select function - better for performance', () => {
     const folders = [{ _id: 'folderId', path: 'folderPath' }]
     const file = {
       _id: 'fileId',
@@ -77,18 +67,13 @@ describe('makeNormalizedFile', () => {
       ...noteFileProps
     }
 
-    const normalizedFile = await makeNormalizedFile(
-      client,
-      folders,
-      file,
-      getIconUrl
-    )
+    const normalizedFile = makeNormalizedFile(client, folders, file, getIconUrl)
 
     expect(normalizedFile).toMatchObject({
       id: 'fileId',
       name: 'note.cozy-note',
       path: 'folderPath',
-      url: 'noteUrl'
+      onSelect: expect.any(Function)
     })
   })
 })

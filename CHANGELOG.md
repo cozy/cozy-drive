@@ -4,6 +4,7 @@
 
 * Upgrade cozy-stack-client@32.7.0 to be able to findAll in FileCollection
 * Upgrade cozy-bar@7.20.0 to be able to call onSelect function
+* Improve speed of search suggestion by querying fewer data
 * Update cozy-stack-client and cozy-pouch-link to sync with cozy-client version
 * Update cozy-ui
   - Modify Viewers to handle [68.0.0 BC](https://github.com/cozy/cozy-ui/releases/tag/v68.0.0)

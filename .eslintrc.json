@@ -4,7 +4,6 @@
     "no-console": 1,
     "no-param-reassign": "error",
     "react-hooks/exhaustive-deps": "error"
-
   },
   "globals": {
     "fixture": false
@@ -13,5 +12,13 @@
     "react": {
       "version": "detect"
     }
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.spec.js[x]"],
+      "rules": {
+        "react/display-name": "off"
+      }
+    }
+  ]
 }
