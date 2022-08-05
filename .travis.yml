@@ -1,7 +1,6 @@
 node-preset: &node # Used internally to share configuration, ignored by travis.
   language: node_js
   node_js:
-    - 12
     - 16
   cache:
     yarn: true
@@ -29,12 +28,6 @@ jobs:
       <<: *node
       node_js:
         - 16
-      script: yarn test
-    - name: "Unit tests node 12"
-      stage: "prebuild"
-      <<: *node
-      node_js:
-        - 12
       script: yarn test
     - &build-web
       name: "Drive web"

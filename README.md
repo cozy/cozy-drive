@@ -43,7 +43,7 @@ $ cd cozy-drive
 $ yarn install
 ```
 
-:pushpin: Don't forget to set your local node version `12` before doing a `yarn install`.
+:pushpin: Don't forget to set the local node version indicated in the `.nvmrc` before doing a `yarn install`.
 
 :warning: During its early ages, _cozy-drive_ uses beta versions of [cozy-ui] and [cozy-client-js], take a look at the ["living on the edge" note](#living-on-the-edge) below to know how to install and configure the latest available versions.
 
