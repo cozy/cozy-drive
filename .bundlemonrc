@@ -1,45 +1,44 @@
 {
-  "verbose": true,
-  "baseDir": "./build/drive",
+  "baseDir": "./build",
   "files": [
     {
-      "path": "app/drive.<hash>.js",
+      "path": "drive/app/drive.<hash>.js",
       "maxSize": "234 KB"
     },
     {
-      "path": "app/drive.<hash>.min.css",
+      "path": "drive/app/drive.<hash>.min.css",
       "maxSize": "55 KB"
     },
     {
-      "path": "public/cozy-bar.css",
+      "path": "drive/public/cozy-bar.css",
       "maxSize": "24 KB"
     },
     {
-      "path": "public/drive.<hash>.js",
+      "path": "drive/public/drive.<hash>.js",
       "maxSize": "1.60 MB"
     },
     {
-      "path": "public/drive.<hash>.min.css",
+      "path": "drive/public/drive.<hash>.min.css",
       "maxSize": "86 KB"
     },
     {
-      "path": "public/pdf.worker.entry.<hash>.worker.js",
+      "path": "drive/public/pdf.worker.entry.<hash>.worker.js",
       "maxSize": "221 KB"
     },
     {
-      "path": "services/dacc/drive.js",
+      "path": "drive/services/dacc/drive.js",
       "maxSize": "249 KB"
     },
     {
-      "path": "services/qualificationMigration/drive.js",
+      "path": "drive/services/qualificationMigration/drive.js",
       "maxSize": "244 KB"
     },
     {
-      "path": "vendors/drive.<hash>.<hash>.min.css",
+      "path": "drive/vendors/drive.<hash>.<hash>.min.css",
       "maxSize": "35 KB"
     },
     {
-      "path": "vendors/drive.<hash>.js",
+      "path": "drive/vendors/drive.<hash>.js",
       "maxSize": "1.54 MB"
     }
   ],
