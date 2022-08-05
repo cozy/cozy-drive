@@ -10,8 +10,44 @@
       "maxSize": "55 KB"
     },
     {
+      "path": "drive/img/app-icon.<hash>.svg",
+      "maxSize": "1 KB"
+    },
+    {
+      "path": "drive/intents/drive.<hash>.js",
+      "maxSize": "171 KB"
+    },
+    {
+      "path": "drive/intents/drive.<hash>.min.css",
+      "maxSize": "37 KB"
+    },
+    {
+      "path": "drive/intents/index.html",
+      "maxSize": "1 KB"
+    },
+    {
+      "path": "drive/onlyOffice/slide.pptx",
+      "maxSize": "25 KB"
+    },
+    {
+      "path": "drive/onlyOffice/spreadsheet.xlsx",
+      "maxSize": "6 KB"
+    },
+    {
+      "path": "drive/onlyOffice/text.docx",
+      "maxSize": "6 KB"
+    },
+    {
       "path": "drive/public/cozy-bar.css",
       "maxSize": "24 KB"
+    },
+    {
+      "path": "drive/public/cozy-bar.js",
+      "maxSize": "854 KB"
+    },
+    {
+      "path": "drive/public/cozy-client-js.js",
+      "maxSize": "160 KB"
     },
     {
       "path": "drive/public/drive.<hash>.js",
@@ -40,6 +76,160 @@
     {
       "path": "drive/vendors/drive.<hash>.js",
       "maxSize": "1.54 MB"
+    },
+    {
+      "path": "drive/<hash>.worker.js",
+      "maxSize": "221 KB"
+    },
+    {
+      "path": "drive/app-drive.<hash>.min.css",
+      "maxSize": "55 KB"
+    },
+    {
+      "path": "drive/index.html",
+      "maxSize": "1 KB"
+    },
+    {
+      "path": "drive/intents-drive.<hash>.min.css",
+      "maxSize": "40 KB"
+    },
+    {
+      "path": "drive/manifest.json",
+      "maxSize": "1 KB"
+    },
+    {
+      "path": "drive/manifest.webapp",
+      "maxSize": "2 KB"
+    },
+    {
+      "path": "drive/public-drive.<hash>.min.css",
+      "maxSize": "86 KB"
+    },
+    {
+      "path": "drive/vendors-drive.<hash>.min.css",
+      "maxSize": "1 B"
+    },
+    {
+      "path": "photos/app/photos.<hash>.js",
+      "maxSize": "62 KB"
+    },
+    {
+      "path": "photos/app/photos.<hash>.min.css",
+      "maxSize": "22 KB"
+    },
+    {
+      "path": "photos/public/cozy-bar.css",
+      "maxSize": "19 KB"
+    },
+    {
+      "path": "photos/public/cozy-bar.js",
+      "maxSize": "854 KB"
+    },
+    {
+      "path": "photos/public/cozy-client-js.js",
+      "maxSize": "160 KB"
+    },
+    {
+      "path": "photos/public/photos.<hash>.js",
+      "maxSize": "914 KB"
+    },
+    {
+      "path": "photos/public/photos.<hash>.min.css",
+      "maxSize": "50 KB"
+    },
+    {
+      "path": "photos/services/onPhotoUpload/photos.js",
+      "maxSize": "250 KB"
+    },
+    {
+      "path": "photos/vendors/photos.<hash>.<hash>.min.css",
+      "maxSize": "35 KB"
+    },
+    {
+      "path": "photos/vendors/photos.<hash>.js",
+      "maxSize": "1 MB"
+    },
+    {
+      "path": "photos/<hash>.worker.js",
+      "maxSize": "221 KB"
+    },
+    {
+      "path": "photos/app-photos.<hash>.min.css",
+      "maxSize": "22 KB"
+    },
+    {
+      "path": "photos/index.html",
+      "maxSize": "1 KB"
+    },
+    {
+      "path": "photos/manifest.json",
+      "maxSize": "1 KB"
+    },
+    {
+      "path": "photos/manifest.webapp",
+      "maxSize": "2 KB"
+    },
+    {
+      "path": "photos/public-photos.<hash>.min.css",
+      "maxSize": "50 KB"
+    },
+    {
+      "path": "photos/vendors-photos.<hash>.min.css",
+      "maxSize": "1 B"
+    }
+  ],
+  "groups": [
+    {
+      "path": "drive/app/**",
+      "maxPercentIncrease": 0.1
+    },
+    {
+      "path": "drive/img/**",
+      "maxPercentIncrease": 0.1
+    },
+    {
+      "path": "drive/intents/**",
+      "maxPercentIncrease": 0.1
+    },
+    {
+      "path": "drive/onlyOffice/**",
+      "maxPercentIncrease": 0.1
+    },
+    {
+      "path": "drive/public/**",
+      "maxPercentIncrease": 0.1
+    },
+    {
+      "path": "drive/screenshots/**",
+      "maxPercentIncrease": 0.1
+    },
+    {
+      "path": "drive/services/**",
+      "maxPercentIncrease": 0.1
+    },
+    {
+      "path": "drive/vendors/**",
+      "maxPercentIncrease": 0.1
+    },
+    {
+      "path": "photos/app/**",
+      "maxPercentIncrease": 0.1
+    },
+    {
+      "path": "photos/public/**",
+      "maxPercentIncrease": 0.1
+    },
+    {
+      "path": "photos/screenshots/**",
+      "maxPercentIncrease": 0.1
+    },
+    {
+      "path": "photos/services/**",
+      "maxPercentIncrease": 0.1
+    },
+    {
+      "path": "photos/vendors/**",
+      "maxPercentIncrease": 0.1
     }
   ],
   "reportOutput": ["github"]
