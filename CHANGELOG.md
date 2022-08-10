@@ -2,6 +2,7 @@
 
 ## ✨ Features
 
+* Upgrade cozy-bar@7.20.1 to be able to call onSelect function
 * Update cozy-stack-client and cozy-pouch-link to sync with cozy-client version
 * Update cozy-ui
   - Modify Viewers to handle [68.0.0 BC](https://github.com/cozy/cozy-ui/releases/tag/v68.0.0)
@@ -12,7 +13,7 @@
 
 * Improve cozy-bar implementation to fix UI bugs in Amirale
 * Fix navigation through mobile Flagship on Note creation and opening
-* Remove unused contacts permissions on Photos 
+* Remove unused contacts permissions on Photos
 * Do not display Download actions on iOS Flagship app until we fix the navigation bug
 
 ## 🔧 Tech
