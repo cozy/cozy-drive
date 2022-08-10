@@ -2,6 +2,7 @@
 
 ## ✨ Features
 
+* Upgrade cozy-stack-client@32.7.0 to be able to findAll in FileCollection
 * Upgrade cozy-bar@7.20.0 to be able to call onSelect function
 * Update cozy-stack-client and cozy-pouch-link to sync with cozy-client version
 * Update cozy-ui
