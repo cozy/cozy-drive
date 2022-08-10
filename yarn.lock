@@ -5924,10 +5924,10 @@ cozy-authentication@2.8.3:
     snarkdown "1.2.2"
     url-polyfill "1.1.7"
 
-cozy-bar@7.19.1:
-  version "7.19.1"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-7.19.1.tgz#ed20e3909ed2452a07596c1afb214499165a61bb"
-  integrity sha512-0lgy5PayOUTtaoyrvdMzbNr5nEesK1n3B5VV+Za8BhZReJx5/GXp+5yTgNJcwLBLwR6/Dl6EhvNogLiCgtO1yg==
+cozy-bar@7.20.1:
+  version "7.20.1"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-7.20.1.tgz#9ae1f112c2e9f5a5c8369f1ceea686d9f63c77bb"
+  integrity sha512-Aa9R9G8lCjCscOLeX8MaG/PB1LXpvflaBUtG/LFpBOYW9gfNVP7YM2YNQKcN7hKKhhGjY5/52sU1K9HOb+ke1g==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     cozy-client "^27.14.4"
