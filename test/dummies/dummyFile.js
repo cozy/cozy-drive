@@ -1,13 +1,17 @@
+// eslint-disable-next-line no-unused-vars
+const { IOCozyFile } = require('cozy-client/dist/types')
+
 /**
  * Create a dummy file, with overridden value of given param
  *
- * @param file
- * @returns {*&{path: string, name: string, icon: string, id: string, _id: string, dir_id: string, type: string}}  a dummy file
+ * @param {?IOCozyFile} [file={}] - optional file with value to keep
+ * @returns {IOCozyFile} a dummy file
  */
 export const dummyFile = file => ({
+  _id: 'id-file',
+  _type: 'doctype-file',
   name: 'name',
   id: 'id-file',
-  _id: 'id-file',
   icon: 'icon',
   path: '/path',
   type: 'directory',
@@ -15,10 +19,10 @@ export const dummyFile = file => ({
 })
 
 /**
-
+ * Create a dummy note, with overridden value of given param
  *
- * @param note
- * @returns {*&{path: string, name: string, icon: string, id: string, _id: string, dir_id: string, type: string, metadata: object}}  a dummy note
+ * @param {?IOCozyFile} [note={}]
+ * @returns {IOCozyFile} a dummy note
  */
 export const dummyNote = note => ({
   ...dummyFile(),
