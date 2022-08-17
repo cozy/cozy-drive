@@ -29,7 +29,7 @@ const createFileOpeningHandler =
     const isOnlyOffice = models.file.shouldBeOpenedByOnlyOffice(file)
 
     if (isShortcut) {
-      if (isMobileApp()) {
+      if (isMobileApp() || isFlagshipApp()) {
         try {
           const resp = await client.query(
             Q(DOCTYPE_FILES_SHORTCUT).getById(file.id)
