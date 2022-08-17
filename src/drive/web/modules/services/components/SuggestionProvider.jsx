@@ -83,10 +83,8 @@ class SuggestionProvider extends React.Component {
     const { client } = this.props
     this.hasIndexFilesBeenLaunched = true
 
-    const { selector, options } = prepareSuggestionQuery()
-    const files = await client
-      .collection(DOCTYPE_FILES)
-      .findAll(selector, options)
+    const options = prepareSuggestionQuery()
+    const files = await client.collection(DOCTYPE_FILES).findAll(null, options)
 
     const folders = files.filter(file => file.type === TYPE_DIRECTORY)
 

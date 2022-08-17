@@ -326,35 +326,27 @@ export const buildEncryptionByIdQuery = id => ({
 })
 
 /**
- * Provide selector and options to fetch files
+ * Provide options to fetch files
  *
- * @returns {{options: {MangoQueryOptions}, selector: object}} A minimalist file list
+ * @returns {MangoQueryOptions} A minimalist file list
  */
-export const prepareSuggestionQuery = () => {
-  const selector = {
+export const prepareSuggestionQuery = () => ({
+  partialFilter: {
     _id: {
-      $gt: null
-    }
-  }
-  const options = {
-    partialFilter: {
-      _id: {
-        $ne: TRASH_DIR_ID
-      },
-      path: {
-        // this predicate is necessary until the trashed attribute is more reliable
-        $or: [{ $exists: false }, { $regex: '^(?!/.cozy_trash)' }]
-      },
-      trashed: {
-        $or: [{ $exists: false }, { $eq: false }]
-      }
+      $ne: TRASH_DIR_ID
     },
-    fields: ['_id', 'trashed', 'dir_id', 'name', 'path', 'type', 'mime'],
-    indexedFields: ['_id'],
-    limit: 1000
-  }
-  return { selector, options }
-}
+    path: {
+      // this predicate is necessary until the trashed attribute is more reliable
+      $or: [{ $exists: false }, { $regex: '^(?!/.cozy_trash)' }]
+    },
+    trashed: {
+      $or: [{ $exists: false }, { $eq: false }]
+    }
+  },
+  fields: ['_id', 'trashed', 'dir_id', 'name', 'path', 'type', 'mime'],
+  indexedFields: ['_id'],
+  limit: 1000
+})
 
 export {
   buildDriveQuery,

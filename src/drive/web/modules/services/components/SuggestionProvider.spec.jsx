@@ -51,23 +51,16 @@ describe('SuggestionProvider', () => {
 
     // Then
     expect(mockClient.collection).toHaveBeenCalledWith('io.cozy.files')
-    expect(mockFindAll).toHaveBeenCalledWith(
-      {
-        _id: {
-          $gt: null
-        }
-      },
-      {
-        fields: ['_id', 'trashed', 'dir_id', 'name', 'path', 'type', 'mime'],
-        indexedFields: ['_id'],
-        limit: 1000,
-        partialFilter: {
-          _id: { $ne: 'io.cozy.files.trash-dir' },
-          path: { $or: [{ $exists: false }, { $regex: '^(?!/.cozy_trash)' }] },
-          trashed: { $or: [{ $exists: false }, { $eq: false }] }
-        }
+    expect(mockFindAll).toHaveBeenCalledWith(null, {
+      fields: ['_id', 'trashed', 'dir_id', 'name', 'path', 'type', 'mime'],
+      indexedFields: ['_id'],
+      limit: 1000,
+      partialFilter: {
+        _id: { $ne: 'io.cozy.files.trash-dir' },
+        path: { $or: [{ $exists: false }, { $regex: '^(?!/.cozy_trash)' }] },
+        trashed: { $or: [{ $exists: false }, { $eq: false }] }
       }
-    )
+    })
   })
 
   it('should provide onSelect with open url when file is not a note + and function when it is a note', async () => {
