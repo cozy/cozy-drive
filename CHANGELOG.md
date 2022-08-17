@@ -17,6 +17,7 @@
 ## 🔧 Tech
 
 * Move dacc-run file to a lib folder to prevent it occurring in build
+* Shortcut links are now opened directly in the webview when executed inside of the Flagship mobile app
 
 # 1.42.1
 
