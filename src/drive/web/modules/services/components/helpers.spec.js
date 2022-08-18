@@ -61,6 +61,7 @@ describe('makeNormalizedFile', () => {
     const folders = [{ _id: 'folderId', path: 'folderPath' }]
     const file = {
       _id: 'fileId',
+      id: 'noteId',
       dir_id: 'folderId',
       type: 'file',
       name: 'fileName',
@@ -73,7 +74,7 @@ describe('makeNormalizedFile', () => {
       id: 'fileId',
       name: 'note.cozy-note',
       path: 'folderPath',
-      onSelect: expect.any(Function)
+      onSelect: 'id_note:noteId'
     })
   })
 })

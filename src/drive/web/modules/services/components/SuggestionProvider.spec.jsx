@@ -96,7 +96,7 @@ describe('SuggestionProvider', () => {
             {
               icon: 'iconUrl',
               id: 'id-file',
-              onSelect: expect.any(Function),
+              onSelect: 'id_note:id-file',
               subtitle: '/path',
               term: 'name.cozy-note',
               title: 'name.cozy-note'

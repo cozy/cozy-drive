@@ -28,7 +28,7 @@ export const makeNormalizedFile = (client, folders, file, getIconUrl) => {
     const parentDir = folders.find(folder => folder._id === file.dir_id)
     path = parentDir && parentDir.path ? parentDir.path : ''
     if (models.file.isNote(file)) {
-      onSelect = () => models.note.fetchURL(client, file)
+      onSelect = `id_note:${file.id}`
     } else {
       url = `${urlToFolder}/file/${file._id}`
     }
