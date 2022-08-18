@@ -52,7 +52,16 @@ describe('SuggestionProvider', () => {
     // Then
     expect(mockClient.collection).toHaveBeenCalledWith('io.cozy.files')
     expect(mockFindAll).toHaveBeenCalledWith(null, {
-      fields: ['_id', 'trashed', 'dir_id', 'name', 'path', 'type', 'mime'],
+      fields: [
+        '_id',
+        'trashed',
+        'dir_id',
+        'name',
+        'path',
+        'type',
+        'mime',
+        'metadata'
+      ],
       indexedFields: ['_id'],
       limit: 1000,
       partialFilter: {

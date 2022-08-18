@@ -343,7 +343,16 @@ export const prepareSuggestionQuery = () => ({
       $or: [{ $exists: false }, { $eq: false }]
     }
   },
-  fields: ['_id', 'trashed', 'dir_id', 'name', 'path', 'type', 'mime'],
+  fields: [
+    '_id',
+    'trashed',
+    'dir_id',
+    'name',
+    'path',
+    'type',
+    'mime',
+    'metadata'
+  ],
   indexedFields: ['_id'],
   limit: 1000
 })
