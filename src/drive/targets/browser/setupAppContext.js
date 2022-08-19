@@ -2,7 +2,7 @@
 
 import memoize from 'lodash/memoize'
 import { initTranslation } from 'cozy-ui/transpiled/react/I18n'
-import CozyClient from 'cozy-client'
+import CozyClient, { StackLink } from 'cozy-client'
 import {
   shouldEnableTracking,
   getTracker
@@ -12,9 +12,78 @@ import registerClientPlugins from 'drive/lib/registerClientPlugins'
 
 import appMetadata from 'drive/appMetadata'
 import configureStore from 'drive/store/configureStore'
-import { schema } from 'drive/lib/doctypes'
+import { schema, DOCTYPE_FILES } from 'drive/lib/doctypes'
 import { Document } from 'cozy-doctypes'
 import { hashHistory } from 'react-router'
+import {
+  getAdapterPlugin,
+  getOauthOptions,
+  getOldAdapterName
+} from '../../mobile/lib/cozy-helper'
+import { isIOSApp, isMobileApp } from 'cozy-device-helper'
+import PouchLink from 'cozy-pouch-link'
+
+/**
+ * Init Client
+ *
+ * @param {string} cozyUrl - Url
+ * @param {string} token - token
+ * @returns {CozyClient}
+ */
+const initClient = (cozyUrl, token) => {
+  const stackLink = new StackLink()
+  const adapter = getOldAdapterName()
+
+  const pouchLinkOptions = {
+    doctypes: [DOCTYPE_FILES],
+    doctypesReplicationOptions: {
+      [DOCTYPE_FILES]: {
+        strategy: 'fromRemote',
+        warmupQueries: [
+          // buildDriveQuery({
+          //   currentFolderId: 'io.cozy.files.root-dir',
+          //   type: 'directory',
+          //   sortAttribute: 'name',
+          //   sortOrder: 'asc'
+          // }),
+          // buildRecentQuery(),
+          // buildFolderQuery('io.cozy.files.root-dir')
+        ]
+      }
+    },
+    pouch: {
+      plugins: [getAdapterPlugin(adapter)],
+      options: {
+        adapter,
+        location: 'default'
+      }
+    },
+    initialSync: true
+  }
+
+  // TODO: is it useful?
+  // if (isMobileApp() && isIOSApp()) {
+  //   pouchLinkOptions.pouch = {
+  //     plugins: [getAdapterPlugin(adapter)],
+  //     options: {
+  //       adapter,
+  //       location: 'default'
+  //     }
+  //   }
+  // }
+
+  const pouchLink = new PouchLink(pouchLinkOptions)
+
+  return new CozyClient({
+    uri: cozyUrl,
+    token: token, // TODO: NEEDED? Previously used to login https://github.com/cozy/cozy-client/blob/cfeec8b59893d6083aa9b814f895be774a7f8693/packages/cozy-client/src/CozyClient.js#L219
+    // oauth: getOauthOptions(), // TODO: NEW
+    appMetadata,
+    schema,
+    links: [pouchLink, stackLink], // TODO: NEW
+    store: false
+  })
+}
 
 const setupApp = memoize(() => {
   const root = document.querySelector('[role=application]')
@@ -25,13 +94,9 @@ const setupApp = memoize(() => {
 
   configureReporter()
   setCozyUrl(cozyUrl)
-  const client = new CozyClient({
-    uri: cozyUrl,
-    token: data.token,
-    appMetadata,
-    schema,
-    store: false
-  })
+  const client = initClient(cozyUrl, data.token)
+
+  console.log({ client })
 
   if (!Document.cozyClient) {
     Document.registerClient(client)
