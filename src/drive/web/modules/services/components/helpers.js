@@ -1,6 +1,25 @@
-import { models } from 'cozy-client'
-
 export const TYPE_DIRECTORY = 'directory'
+const FILE_TYPE = 'file'
+
+/**
+ * Is file param a correct note
+ *
+ * Inspired by https://github.com/cozy/cozy-client/blob/b7ffdd97d017bbd52226e0b61099da3090d8253f/packages/cozy-client/src/models/file.js#L52
+ * but don't check metadata (not provided while fetching Suggestions)
+ *
+ * @param {IOCozyFile} file io.cozy.files
+ * @returns {boolean}
+ */
+export const isNote = file => {
+  if (
+    file &&
+    file.name &&
+    file.name.endsWith('.cozy-note') &&
+    file.type === FILE_TYPE
+  )
+    return true
+  return false
+}
 
 /**
  * Normalize file for Front usage in <AutoSuggestion> component inside <SearchBar>
@@ -27,7 +46,7 @@ export const makeNormalizedFile = (client, folders, file, getIconUrl) => {
   } else {
     const parentDir = folders.find(folder => folder._id === file.dir_id)
     path = parentDir && parentDir.path ? parentDir.path : ''
-    if (models.file.isNote(file)) {
+    if (isNote(file)) {
       onSelect = `id_note:${file.id}`
     } else {
       url = `${urlToFolder}/file/${file._id}`

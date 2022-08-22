@@ -1,5 +1,4 @@
-import { TYPE_DIRECTORY } from './helpers'
-import { models } from 'cozy-client'
+import { isNote, TYPE_DIRECTORY } from './helpers'
 import { isEncryptedFolder } from 'drive/lib/encryption'
 import { getFileMimetype } from 'drive/lib/getFileMimetype'
 
@@ -23,7 +22,7 @@ export function getIconUrl(file) {
       keyIcon = 'folder'
     }
   } else {
-    keyIcon = models.file.isNote(file)
+    keyIcon = isNote(file)
       ? 'note'
       : getFileMimetype(icons)(file.mime, file.name) || 'files'
   }

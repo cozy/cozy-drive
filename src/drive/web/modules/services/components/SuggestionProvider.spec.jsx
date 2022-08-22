@@ -60,7 +60,8 @@ describe('SuggestionProvider', () => {
         'path',
         'type',
         'mime',
-        'metadata'
+        'metadata.title',
+        'metadata.version'
       ],
       indexedFields: ['_id'],
       limit: 1000,

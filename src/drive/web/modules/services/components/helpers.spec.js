@@ -77,4 +77,24 @@ describe('makeNormalizedFile', () => {
       onSelect: 'id_note:noteId'
     })
   })
+
+  it('should return correct values for a note without metadata', () => {
+    const folders = [{ _id: 'folderId', path: 'folderPath' }]
+    const file = {
+      _id: 'fileId',
+      id: 'noteId',
+      dir_id: 'folderId',
+      type: 'file',
+      name: 'note.cozy-note'
+    }
+
+    const normalizedFile = makeNormalizedFile(client, folders, file, getIconUrl)
+
+    expect(normalizedFile).toMatchObject({
+      id: 'fileId',
+      name: 'note.cozy-note',
+      path: 'folderPath',
+      onSelect: 'id_note:noteId'
+    })
+  })
 })
