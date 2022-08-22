@@ -2477,6 +2477,24 @@
   resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.3.0.tgz#2e7a2935adbfae46f9efbd1e1455254ee7ea2219"
   integrity sha512-P1v2nvK7z2gOLVM/bveIRLG9L99uEahTGgTltyF03zixZAjI9YmKLj5Z9MpS9wBIUt5WDoQORT2lXvLOIF89iA==
 
+"@material-ui/core@4.12.3":
+  version "4.12.3"
+  resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-4.12.3.tgz#80d665caf0f1f034e52355c5450c0e38b099d3ca"
+  integrity sha512-sdpgI/PL56QVsEJldwEe4FFaFTLUqN+rd7sSZiRCdx2E/C7z5yK0y/khAWVBH24tXwto7I1hCzNWfJGZIYJKnw==
+  dependencies:
+    "@babel/runtime" "^7.4.4"
+    "@material-ui/styles" "^4.11.4"
+    "@material-ui/system" "^4.12.1"
+    "@material-ui/types" "5.1.0"
+    "@material-ui/utils" "^4.11.2"
+    "@types/react-transition-group" "^4.2.0"
+    clsx "^1.0.4"
+    hoist-non-react-statics "^3.3.2"
+    popper.js "1.16.1-lts"
+    prop-types "^15.7.2"
+    react-is "^16.8.0 || ^17.0.0"
+    react-transition-group "^4.4.0"
+
 "@material-ui/core@4.12.4":
   version "4.12.4"
   resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-4.12.4.tgz#4ac17488e8fcaf55eb6a7f5efb2a131e10138a73"
@@ -2495,7 +2513,18 @@
     react-is "^16.8.0 || ^17.0.0"
     react-transition-group "^4.4.0"
 
-"@material-ui/styles@^4.11.5":
+"@material-ui/lab@^4.0.0-alpha.61":
+  version "4.0.0-alpha.61"
+  resolved "https://registry.yarnpkg.com/@material-ui/lab/-/lab-4.0.0-alpha.61.tgz#9bf8eb389c0c26c15e40933cc114d4ad85e3d978"
+  integrity sha512-rSzm+XKiNUjKegj8bzt5+pygZeckNLOr+IjykH8sYdVk7dE9y2ZuUSofiMV2bJk3qU+JHwexmw+q0RyNZB9ugg==
+  dependencies:
+    "@babel/runtime" "^7.4.4"
+    "@material-ui/utils" "^4.11.3"
+    clsx "^1.0.4"
+    prop-types "^15.7.2"
+    react-is "^16.8.0 || ^17.0.0"
+
+"@material-ui/styles@^4.11.4", "@material-ui/styles@^4.11.5":
   version "4.11.5"
   resolved "https://registry.yarnpkg.com/@material-ui/styles/-/styles-4.11.5.tgz#19f84457df3aafd956ac863dbe156b1d88e2bbfb"
   integrity sha512-o/41ot5JJiUsIETME9wVLAJrmIWL3j0R0Bj2kCOLbSfqEkKf0fmaPt+5vtblUh5eXr2S+J/8J3DaCb10+CzPGA==
@@ -2517,7 +2546,7 @@
     jss-plugin-vendor-prefixer "^10.5.1"
     prop-types "^15.7.2"
 
-"@material-ui/system@^4.12.2":
+"@material-ui/system@^4.12.1", "@material-ui/system@^4.12.2":
   version "4.12.2"
   resolved "https://registry.yarnpkg.com/@material-ui/system/-/system-4.12.2.tgz#f5c389adf3fce4146edd489bf4082d461d86aa8b"
   integrity sha512-6CSKu2MtmiJgcCGf6nBQpM8fLkuB9F55EKfbdTC80NND5wpTmKzwdhLYLH3zL4cLlK0gVaaltW7/wMuyTnN0Lw==
@@ -2532,7 +2561,7 @@
   resolved "https://registry.yarnpkg.com/@material-ui/types/-/types-5.1.0.tgz#efa1c7a0b0eaa4c7c87ac0390445f0f88b0d88f2"
   integrity sha512-7cqRjrY50b8QzRSYyhSpx4WRw2YuO0KKIGQEVk5J8uoz2BanawykgZGoWEqKm7pVIbzFDN0SpPcVV4IhOFkl8A==
 
-"@material-ui/utils@^4.11.3":
+"@material-ui/utils@^4.11.2", "@material-ui/utils@^4.11.3":
   version "4.11.3"
   resolved "https://registry.yarnpkg.com/@material-ui/utils/-/utils-4.11.3.tgz#232bd86c4ea81dab714f21edad70b7fdf0253942"
   integrity sha512-ZuQPV4rBK/V1j2dIkSSEcH5uT6AaHuKWFfotADHsC0wVL1NLd2WkFCm4ZZbX33iO4ydl6V0GPngKm8HZQ2oujg==
@@ -6278,12 +6307,14 @@ cozy-ui@22.3.1:
     react-pdf "^4.0.5"
     react-select "2.2.0"
 
-cozy-ui@^68.4.0:
-  version "68.4.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-68.4.0.tgz#251319995e962a93ddd5df406eccdb161bc5b852"
-  integrity sha512-nhtERwnIinvBXMag2zO5/T24NlIiU+Q9T6r2jLzCXdf0a4Rj1L8LM0kOrqzHGPmMWPOZaRctyrzFSI9TSbzZ2g==
+cozy-ui@^70.6.2:
+  version "70.6.2"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-70.6.2.tgz#e13182d28d97f7e762fa3f761eec213565c2c833"
+  integrity sha512-NbPIicACol5LF9dcNsmEiu15pTGIev1jE5StaiosUwYp5yG/fZfMDoOm07TmNtv8PnL+Xak2/d8dPox6tipj7g==
   dependencies:
     "@babel/runtime" "^7.3.4"
+    "@material-ui/core" "4.12.3"
+    "@material-ui/lab" "^4.0.0-alpha.61"
     "@popperjs/core" "^2.4.4"
     bundlemon "^1.3.2"
     chart.js "3.7.1"
@@ -6294,7 +6325,7 @@ cozy-ui@^68.4.0:
     hammerjs "^2.0.8"
     intersection-observer "0.11.0"
     mime-types "2.1.35"
-    mui-bottom-sheet "https://github.com/cozy/mui-bottom-sheet.git#v1.0.6"
+    mui-bottom-sheet "https://github.com/cozy/mui-bottom-sheet.git#v1.0.8"
     node-polyglot "^2.2.2"
     normalize.css "^8.0.0"
     piwik-react-router "0.12.1"
@@ -13006,6 +13037,16 @@ msgpack5@^4.0.2:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
     safe-buffer "^5.1.2"
+
+"mui-bottom-sheet@git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.8":
+  version "1.0.8"
+  resolved "git+https://github.com/cozy/mui-bottom-sheet.git#8535a9da5c334890dcf95ae4e6aeb4f6ec2d56a0"
+  dependencies:
+    "@juggle/resize-observer" "^3.1.3"
+    jest-environment-jsdom-sixteen "^1.0.3"
+    react-spring "9.0.0-rc.3"
+    react-use-gesture "^7.0.8"
+    react-use-measure "^2.0.0"
 
 "mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.6":
   version "1.0.6"
