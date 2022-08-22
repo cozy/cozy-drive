@@ -17,11 +17,16 @@ import { Document } from 'cozy-doctypes'
 import { hashHistory } from 'react-router'
 import {
   getAdapterPlugin,
-  getOauthOptions,
   getOldAdapterName
 } from '../../mobile/lib/cozy-helper'
 import { isIOSApp, isMobileApp } from 'cozy-device-helper'
 import PouchLink from 'cozy-pouch-link'
+import {
+  buildSuggestionQuery,
+  buildRecentQuery,
+  buildDriveQuery,
+  buildFolderQuery
+} from 'drive/web/modules/queries'
 
 /**
  * Init Client
@@ -40,14 +45,15 @@ const initClient = (cozyUrl, token) => {
       [DOCTYPE_FILES]: {
         strategy: 'fromRemote',
         warmupQueries: [
-          // buildDriveQuery({
-          //   currentFolderId: 'io.cozy.files.root-dir',
-          //   type: 'directory',
-          //   sortAttribute: 'name',
-          //   sortOrder: 'asc'
-          // }),
-          // buildRecentQuery(),
-          // buildFolderQuery('io.cozy.files.root-dir')
+          buildDriveQuery({
+            currentFolderId: 'io.cozy.files.root-dir',
+            type: 'directory',
+            sortAttribute: 'name',
+            sortOrder: 'asc'
+          }),
+          buildRecentQuery(),
+          buildFolderQuery('io.cozy.files.root-dir'),
+          buildSuggestionQuery()
         ]
       }
     },

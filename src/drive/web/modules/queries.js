@@ -1,6 +1,6 @@
 import CozyClient, { Q } from 'cozy-client'
 import { TRASH_DIR_ID } from 'drive/constants/config'
-import { DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
+import { DOCTYPE_FILES, DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
 
 // Needs to be less than 10 minutes, since "thumbnails" links
 // are only valid for 10 minutes.
@@ -357,10 +357,47 @@ export const prepareSuggestionQuery = () => ({
   limit: 1000
 })
 
+const buildSuggestionQuery = () => {
+  console.log('buildSuggestionQuery')
+  return {
+    definition: () =>
+      Q(DOCTYPE_FILES)
+        // .partialIndex({
+        //   _id: {
+        //     $ne: TRASH_DIR_ID
+        //   },
+        //   path: {
+        //     // this predicate is necessary until the trashed attribute is more reliable
+        //     $or: [{ $exists: false }, { $regex: '^(?!/.cozy_trash)' }]
+        //   },
+        //   trashed: {
+        //     $or: [{ $exists: false }, { $eq: false }]
+        //   }
+        // })
+        .indexFields(['_id'])
+        // .include([
+        //   '_id',
+        //   'trashed',
+        //   'dir_id',
+        //   'name',
+        //   'path',
+        //   'type',
+        //   'mime',
+        //   'metadata'
+        // ])
+        .limitBy(1000),
+    options: {
+      as: `${DOCTYPE_FILES}/suggestions`,
+      fetchPolicy: defaultFetchPolicy
+    }
+  }
+}
+
 export {
   buildDriveQuery,
   buildRecentQuery,
   buildParentsByIdsQuery,
   buildSharingsQuery,
+  buildSuggestionQuery,
   buildTrashQuery
 }
