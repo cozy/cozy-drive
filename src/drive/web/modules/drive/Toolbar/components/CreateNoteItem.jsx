@@ -19,11 +19,8 @@ import IconNote from 'cozy-ui/transpiled/react/Icons/FileTypeNote'
 import toolbarContainer from 'drive/web/modules/drive/Toolbar/toolbar'
 
 const CreateNoteItem = ({ client, t, displayedFolder }) => {
-  const capabilities = useCapabilities(client)
-  const isFlatDomain = get(
-    capabilities,
-    'capabilities.data.attributes.flat_subdomains'
-  )
+  const { capabilities } = useCapabilities(client)
+  const isFlatDomain = get(capabilities, 'flat_subdomains')
   const webviewIntent = useWebviewIntent()
 
   let notesAppUrl = undefined
