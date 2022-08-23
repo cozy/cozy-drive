@@ -33,7 +33,7 @@ const HistoryModal = ({
   const capabilities = useCapabilities(client)
   const isFileVersioningEnabled = get(
     capabilities,
-    'capabilities.data.attributes.file_versioning'
+    'capabilities.file_versioning'
   )
   return (
     <Dialog

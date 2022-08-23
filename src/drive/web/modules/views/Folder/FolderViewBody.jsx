@@ -63,11 +63,8 @@ const FolderViewBody = ({
     [setSortOrder]
   )
 
-  const capabilities = useCapabilities(client)
-  const isFlatDomain = get(
-    capabilities,
-    'capabilities.data.attributes.flat_subdomains'
-  )
+  const { capabilities } = useCapabilities(client)
+  const isFlatDomain = get(capabilities, 'flat_subdomains')
   const dispatch = useDispatch()
 
   const handleFileOpen = useCallback(
