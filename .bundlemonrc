@@ -32,7 +32,7 @@
     },
     {
       "path": "services/qualificationMigration/drive.js",
-      "maxSize": "242 KB"
+      "maxSize": "244 KB"
     },
     {
       "path": "vendors/drive.<hash>.<hash>.min.css",
