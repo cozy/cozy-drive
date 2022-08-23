@@ -2,7 +2,7 @@ import React from 'react'
 
 import { isFile } from 'cozy-client/dist/models/file'
 import { ShareModal } from 'cozy-sharing'
-import { isIOSApp, isMobileApp } from 'cozy-device-helper'
+import { isFlagshipApp, isIOS, isIOSApp, isMobileApp } from 'cozy-device-helper'
 import { EditDocumentQualification } from 'cozy-scanner'
 import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
@@ -92,6 +92,11 @@ export const download = ({ client, vaultClient }) => {
     : {
         icon: 'download',
         displayCondition: files => {
+          // Temporarily disable Download button on iOS Flagship app until
+          // the download feature is fixed on this platform
+          // When fixed on this platform, revert this commit from PR #2672
+          if (isFlagshipApp() && isIOS()) return null
+
           // We cannot generate archive for encrypted files, for now.
           // Then, we do not display the download button when the selection
           // includes an encrypted folder or several encrypted files
