@@ -4,7 +4,6 @@ import FuzzyPathSearch from '../FuzzyPathSearch'
 import { withClient } from 'cozy-client'
 
 import { TYPE_DIRECTORY, makeNormalizedFile } from './helpers'
-import { getIconUrl } from './iconContext'
 
 class SuggestionProvider extends React.Component {
   componentDidMount() {
@@ -38,7 +37,7 @@ class SuggestionProvider extends React.Component {
           title: result.name,
           subtitle: result.path,
           term: result.name,
-          onSelect: 'open:' + result.url,
+          onSelect: result.onSelect || 'open:' + result.url,
           icon: result.icon
         }))
       },
@@ -54,7 +53,7 @@ class SuggestionProvider extends React.Component {
     return new Promise(async resolve => {
       const resp = await cozy.client.fetchJSON(
         'GET',
-        `/data/io.cozy.files/_all_docs?include_docs=true`
+        '/data/io.cozy.files/_all_docs?include_docs=true'
       )
       const files = resp.rows
         // TODO: fix me
@@ -73,11 +72,8 @@ class SuggestionProvider extends React.Component {
         .filter(notInTrash)
         .filter(notOrphans)
 
-      const normalizedFiles = await Promise.all(
-        normalizedFilesPrevious.map(
-          async file =>
-            await makeNormalizedFile(client, folders, file, getIconUrl)
-        )
+      const normalizedFiles = normalizedFilesPrevious.map(file =>
+        makeNormalizedFile(client, folders, file)
       )
 
       this.fuzzyPathSearch = new FuzzyPathSearch(normalizedFiles)

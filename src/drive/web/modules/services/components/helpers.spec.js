@@ -1,7 +1,6 @@
 import { createMockClient, models } from 'cozy-client'
 
 import { makeNormalizedFile, TYPE_DIRECTORY } from './helpers'
-import { getIconUrl } from './iconContext'
 
 jest.mock('./iconContext', () => ({ getIconUrl: () => 'iconUrl' }))
 models.note.fetchURL = jest.fn(() => 'noteUrl')
@@ -19,7 +18,7 @@ const noteFileProps = {
 }
 
 describe('makeNormalizedFile', () => {
-  it('should return correct values for a directory', async () => {
+  it('should return correct values for a directory', () => {
     const folders = []
     const file = {
       _id: 'fileId',
@@ -28,14 +27,10 @@ describe('makeNormalizedFile', () => {
       name: 'fileName'
     }
 
-    const normalizedFile = await makeNormalizedFile(
-      client,
-      folders,
-      file,
-      getIconUrl
-    )
+    const normalizedFile = makeNormalizedFile(client, folders, file)
 
-    expect(normalizedFile).toMatchObject({
+    expect(normalizedFile).toEqual({
+      icon: 'iconUrl',
       id: 'fileId',
       name: 'fileName',
       path: 'filePath',
@@ -43,7 +38,7 @@ describe('makeNormalizedFile', () => {
     })
   })
 
-  it('should return correct values for a file', async () => {
+  it('should return correct values for a file', () => {
     const folders = [{ _id: 'folderId', path: 'folderPath' }]
     const file = {
       _id: 'fileId',
@@ -52,14 +47,10 @@ describe('makeNormalizedFile', () => {
       name: 'fileName'
     }
 
-    const normalizedFile = await makeNormalizedFile(
-      client,
-      folders,
-      file,
-      getIconUrl
-    )
+    const normalizedFile = makeNormalizedFile(client, folders, file)
 
-    expect(normalizedFile).toMatchObject({
+    expect(normalizedFile).toEqual({
+      icon: 'iconUrl',
       id: 'fileId',
       name: 'fileName',
       path: 'folderPath',
@@ -67,28 +58,47 @@ describe('makeNormalizedFile', () => {
     })
   })
 
-  it('should return correct values for a note', async () => {
+  it('should return correct values for a note with on Select function - better for performance', () => {
     const folders = [{ _id: 'folderId', path: 'folderPath' }]
     const file = {
       _id: 'fileId',
+      id: 'noteId',
       dir_id: 'folderId',
       type: 'file',
       name: 'fileName',
       ...noteFileProps
     }
 
-    const normalizedFile = await makeNormalizedFile(
-      client,
-      folders,
-      file,
-      getIconUrl
-    )
+    const normalizedFile = makeNormalizedFile(client, folders, file)
 
-    expect(normalizedFile).toMatchObject({
+    expect(normalizedFile).toEqual({
+      icon: 'iconUrl',
       id: 'fileId',
       name: 'note.cozy-note',
       path: 'folderPath',
-      url: 'noteUrl'
+      onSelect: 'id_note:noteId'
+    })
+  })
+
+  it('should not return filled onSelect for a note without metadata', () => {
+    const folders = [{ _id: 'folderId', path: 'folderPath' }]
+    const file = {
+      _id: 'fileId',
+      id: 'noteId',
+      dir_id: 'folderId',
+      type: 'file',
+      name: 'note.cozy-note'
+    }
+
+    const normalizedFile = makeNormalizedFile(client, folders, file)
+
+    expect(normalizedFile).toEqual({
+      icon: 'iconUrl',
+      id: 'fileId',
+      name: 'note.cozy-note',
+      path: 'folderPath',
+      onSelect: undefined,
+      url: 'http://localhost/#/folder/folderId/file/fileId'
     })
   })
 })

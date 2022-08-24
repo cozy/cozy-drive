@@ -1,13 +1,26 @@
 import { models } from 'cozy-client'
+import { getIconUrl } from './iconContext'
 
 export const TYPE_DIRECTORY = 'directory'
 
-export const makeNormalizedFile = async (client, folders, file, getIconUrl) => {
+/**
+ * Normalize file for Front usage in <AutoSuggestion> component inside <SearchBar>
+ *
+ * To reduce API call, the fetching of Note URL has been delayed
+ * inside an onSelect function called only if provided to <SearchBar>
+ * see https://github.com/cozy/cozy-drive/pull/2663#discussion_r938671963
+ *
+ * @param {CozyClient} client - cozy client instance
+ * @param {[IOCozyFile]} folders - all the folders returned by API
+ * @param {IOCozyFile} file - file to normalize
+ * @returns file with normalized field to be used in AutoSuggestion
+ */
+export const makeNormalizedFile = (client, folders, file) => {
   const isDir = file.type === TYPE_DIRECTORY
   const dirId = isDir ? file._id : file.dir_id
   const urlToFolder = `${window.location.origin}/#/folder/${dirId}`
 
-  let path, url
+  let path, url, onSelect
   if (isDir) {
     path = file.path
     url = urlToFolder
@@ -15,7 +28,7 @@ export const makeNormalizedFile = async (client, folders, file, getIconUrl) => {
     const parentDir = folders.find(folder => folder._id === file.dir_id)
     path = parentDir && parentDir.path ? parentDir.path : ''
     if (models.file.isNote(file)) {
-      url = await models.note.fetchURL(client, file)
+      onSelect = `id_note:${file.id}`
     } else {
       url = `${urlToFolder}/file/${file._id}`
     }
@@ -26,6 +39,7 @@ export const makeNormalizedFile = async (client, folders, file, getIconUrl) => {
     name: file.name,
     path,
     url,
+    onSelect,
     icon: getIconUrl(file)
   }
 }
