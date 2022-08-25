@@ -1,8 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 
-import { isQueryLoading } from 'cozy-client'
+import { isQueryLoading, generateWebLink } from 'cozy-client'
 import useFetchJSON from 'cozy-client/dist/hooks/useFetchJSON'
-import { generateWebLink } from 'cozy-client'
 
 import {
   isOnlyOfficeReadOnly,

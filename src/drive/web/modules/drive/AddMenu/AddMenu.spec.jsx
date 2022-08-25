@@ -1,6 +1,5 @@
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
-import { act } from '@testing-library/react'
+import { render, fireEvent, act } from '@testing-library/react'
 
 import { isMobileApp } from 'cozy-device-helper'
 
