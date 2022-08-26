@@ -1,5 +1,5 @@
 import React, { useContext, useCallback } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 
 import RenameIcon from 'cozy-ui/transpiled/react/Icons/Rename'
 import CheckIcon from 'cozy-ui/transpiled/react/Icons/Check'

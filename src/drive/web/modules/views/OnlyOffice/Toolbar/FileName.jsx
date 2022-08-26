@@ -1,7 +1,7 @@
 import React, { useState, useContext, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 import cx from 'classnames'
 
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
