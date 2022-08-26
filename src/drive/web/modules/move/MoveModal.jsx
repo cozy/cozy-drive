@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/core/styles'
+import { withStyles } from 'cozy-ui/transpiled/react/styles'
 
 import { Query, cancelable, withClient, Q } from 'cozy-client'
 import { CozyFile } from 'models'
