@@ -21,6 +21,23 @@ class SuggestionProvider extends React.Component {
     })
   }
 
+  /**
+   * Provide Suggestions to calling Intent
+   *
+   * This method called when intent provide query will indexFiles once
+   * to fill FuzzyPathSearch. Then will re-post message to the intent
+   * with updated search results containing `files` as `suggestions`
+   * for SearchBar need.
+   *
+   *  ⚠️ For note file, we don't provide url to open, but onSelect method
+   *  to be called on click. Less API calls expected. But a note will be opened
+   *  slower. See helpers.js
+   *
+   * @param query - Query to find file
+   * @param id
+   * @param intent - Intent calling
+   * @returns {Promise<void>} nothing
+   */
   async provideSuggestions(query, id, intent) {
     if (!this.hasIndexedFiles) {
       await this.indexFiles()
@@ -45,7 +62,19 @@ class SuggestionProvider extends React.Component {
     )
   }
 
-  // fetches pretty much all the files and preloads FuzzyPathSearch
+  /**
+   * Fetches all files without trashed and preloads FuzzyPathSearch
+   *
+   * Using _all_docs route
+   *
+   * Also, this method:
+   * - removing trashed data directly
+   * - removes orphan file
+   * - normalize file to match <SearchBar> expectation
+   * - preloads FuzzyPathSearch
+   *
+   * @returns {Promise<void>} nothing
+   */
   async indexFiles() {
     const { client } = this.props
     // TODO: fix me
