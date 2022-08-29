@@ -81,12 +81,7 @@ class SuggestionProvider extends React.Component {
       'GET',
       '/data/io.cozy.files/_all_docs?Fields=_id,trashed,dir_id,name,path,type,mime,metadata.title,metadata.version&DesignDocs=false'
     )
-    const files = resp.rows
-      // TODO: fix me
-      // eslint-disable-next-line no-prototype-builtins
-      .filter(row => !row.doc.hasOwnProperty('views'))
-      .map(row => ({ id: row.id, ...row.doc }))
-
+    const files = resp.rows.map(row => ({ id: row.id, ...row.doc }))
     const folders = files.filter(file => file.type === TYPE_DIRECTORY)
 
     const notInTrash = file =>
