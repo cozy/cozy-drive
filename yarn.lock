@@ -5966,10 +5966,10 @@ cozy-ci@0.4.1:
   resolved "https://registry.yarnpkg.com/cozy-ci/-/cozy-ci-0.4.1.tgz#f5991f9acc8fb81480003441e190d4be3a0f8446"
   integrity sha512-SKlFoecbneXe4ctop0Al3jQ6jts8bu5pJij9XU5HjhxwKx4whkzwPOkpJ+F1k5lkgstfNU7k9YQPE+nizp6W9Q==
 
-cozy-client-js@0.19.0:
-  version "0.19.0"
-  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.19.0.tgz#ccfb0572d6c6f3aa7c187978c23dd89f04caf796"
-  integrity sha512-3EPLxLu7mg/GSmAHauW7rfdVMynCQb9Yj1vHvDO1Rpda/CV0xN04HRH1eq+3HhZiIx1g1L76zSh0jN1shgCknQ==
+cozy-client-js@0.20.0:
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.20.0.tgz#a507ef9ccbeb340aacd58ca1f1d0cdc9d000e853"
+  integrity sha512-ppguq9hkmtGpS2y+3pE4Pw0CcNOB25Lb82/q0I5r2k+pxCgrbI+6HB85TWQH8OEt/qJVoCCCa9dWE5WSZBUDYw==
   dependencies:
     core-js "^3.6.5"
     cross-fetch "^3.0.6"
@@ -13038,9 +13038,9 @@ msgpack5@^4.0.2:
     readable-stream "^2.3.6"
     safe-buffer "^5.1.2"
 
-"mui-bottom-sheet@git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.8":
-  version "1.0.8"
-  resolved "git+https://github.com/cozy/mui-bottom-sheet.git#8535a9da5c334890dcf95ae4e6aeb4f6ec2d56a0"
+"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.6":
+  version "1.0.6"
+  resolved "https://github.com/cozy/mui-bottom-sheet.git#494c40416ecde95732c864f9b921e7e545075aa5"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
     jest-environment-jsdom-sixteen "^1.0.3"
@@ -13048,9 +13048,10 @@ msgpack5@^4.0.2:
     react-use-gesture "^7.0.8"
     react-use-measure "^2.0.0"
 
-"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.6":
-  version "1.0.6"
-  resolved "https://github.com/cozy/mui-bottom-sheet.git#494c40416ecde95732c864f9b921e7e545075aa5"
+"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.8":
+  version "1.0.8"
+  uid "8535a9da5c334890dcf95ae4e6aeb4f6ec2d56a0"
+  resolved "https://github.com/cozy/mui-bottom-sheet.git#8535a9da5c334890dcf95ae4e6aeb4f6ec2d56a0"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
     jest-environment-jsdom-sixteen "^1.0.3"
