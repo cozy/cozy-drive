@@ -77,38 +77,31 @@ class SuggestionProvider extends React.Component {
    */
   async indexFiles() {
     const { client } = this.props
-    // TODO: fix me
-    // eslint-disable-next-line no-async-promise-executor
-    return new Promise(async resolve => {
-      const resp = await cozy.client.fetchJSON(
-        'GET',
-        '/data/io.cozy.files/_all_docs?include_docs=true'
-      )
-      const files = resp.rows
-        // TODO: fix me
-        // eslint-disable-next-line no-prototype-builtins
-        .filter(row => !row.doc.hasOwnProperty('views'))
-        .map(row => ({ id: row.id, ...row.doc }))
+    const resp = await cozy.client.fetchJSON(
+      'GET',
+      '/data/io.cozy.files/_all_docs?include_docs=true'
+    )
+    const files = resp.rows
+      // TODO: fix me
+      // eslint-disable-next-line no-prototype-builtins
+      .filter(row => !row.doc.hasOwnProperty('views'))
+      .map(row => ({ id: row.id, ...row.doc }))
 
-      const folders = files.filter(file => file.type === TYPE_DIRECTORY)
+    const folders = files.filter(file => file.type === TYPE_DIRECTORY)
 
-      const notInTrash = file =>
-        !file.trashed && !/^\/\.cozy_trash/.test(file.path)
-      const notOrphans = file =>
-        folders.find(folder => folder._id === file.dir_id) !== undefined
+    const notInTrash = file =>
+      !file.trashed && !/^\/\.cozy_trash/.test(file.path)
+    const notOrphans = file =>
+      folders.find(folder => folder._id === file.dir_id) !== undefined
 
-      const normalizedFilesPrevious = files
-        .filter(notInTrash)
-        .filter(notOrphans)
+    const normalizedFilesPrevious = files.filter(notInTrash).filter(notOrphans)
 
-      const normalizedFiles = normalizedFilesPrevious.map(file =>
-        makeNormalizedFile(client, folders, file)
-      )
+    const normalizedFiles = normalizedFilesPrevious.map(file =>
+      makeNormalizedFile(client, folders, file)
+    )
 
-      this.fuzzyPathSearch = new FuzzyPathSearch(normalizedFiles)
-      this.hasIndexedFiles = true
-      resolve()
-    })
+    this.fuzzyPathSearch = new FuzzyPathSearch(normalizedFiles)
+    this.hasIndexedFiles = true
   }
 
   render() {
