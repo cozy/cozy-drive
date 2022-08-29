@@ -79,7 +79,7 @@ class SuggestionProvider extends React.Component {
     const { client } = this.props
     const resp = await cozy.client.fetchJSON(
       'GET',
-      '/data/io.cozy.files/_all_docs?include_docs=true'
+      '/data/io.cozy.files/_all_docs?Fields=_id,trashed,dir_id,name,path,type,mime,metadata.title,metadata.version&DesignDocs=false'
     )
     const files = resp.rows
       // TODO: fix me
