@@ -89,7 +89,7 @@ class SuggestionProvider extends React.Component {
     const notOrphans = file =>
       folders.find(folder => folder._id === file.dir_id) !== undefined
 
-    const normalizedFilesPrevious = files.filter(notInTrash).filter(notOrphans)
+    const normalizedFilesPrevious = files.filter(notInTrash || notOrphans)
 
     const normalizedFiles = normalizedFilesPrevious.map(file =>
       makeNormalizedFile(client, folders, file)
