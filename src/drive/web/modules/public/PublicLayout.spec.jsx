@@ -5,6 +5,9 @@ import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import AppLike from 'test/components/AppLike'
 import PublicLayout from './PublicLayout'
 
+jest.mock('drive/web/modules/upload/UploadQueue', () => () => {
+  return null
+})
 const client = new createMockClient({})
 
 describe('PublicLayout', () => {
