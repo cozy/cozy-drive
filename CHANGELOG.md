@@ -9,6 +9,7 @@
   - Modify Viewers to handle [68.0.0 BC](https://github.com/cozy/cozy-ui/releases/tag/v68.0.0)
   - Fix on progress bar when uploading files [[68.4.0]](https://github.com/cozy/cozy-ui/releases/tag/v68.4.0)
 * Update cozy-scripts for Amirale development
+* Add visual feedback when uploading on a public view
 
 ## 🐛 Bug Fixes
 
