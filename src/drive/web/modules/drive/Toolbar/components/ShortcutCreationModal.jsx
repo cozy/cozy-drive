@@ -110,7 +110,7 @@ const ShortcutCreationModal = ({ onClose, onCreated, displayedFolder }) => {
     <FixedDialog
       onClose={onClose}
       title={t('Shortcut.title_modal')}
-      opened={true}
+      open={true}
       content={
         <Stack>
           <div>
