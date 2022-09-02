@@ -8,7 +8,7 @@ import { TYPE_DIRECTORY, makeNormalizedFile } from './helpers'
 class SuggestionProvider extends React.Component {
   componentDidMount() {
     const { intent } = this.props
-    this.hasIndexedFiles = false
+    this.hasIndexFilesBeenLaunched = false
 
     // re-attach the message listener for the intent to receive the suggestion requests
     window.addEventListener('message', event => {
@@ -39,7 +39,8 @@ class SuggestionProvider extends React.Component {
    * @returns {Promise<void>} nothing
    */
   async provideSuggestions(query, id, intent) {
-    if (!this.hasIndexedFiles) {
+    if (!this.hasIndexFilesBeenLaunched) {
+      this.hasIndexFilesBeenLaunched = true
       await this.indexFiles()
     }
 
@@ -96,7 +97,6 @@ class SuggestionProvider extends React.Component {
     )
 
     this.fuzzyPathSearch = new FuzzyPathSearch(normalizedFiles)
-    this.hasIndexedFiles = true
   }
 
   render() {
