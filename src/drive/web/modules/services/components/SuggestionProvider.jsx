@@ -3,7 +3,8 @@ import React from 'react'
 import FuzzyPathSearch from '../FuzzyPathSearch'
 import { withClient } from 'cozy-client'
 
-import { TYPE_DIRECTORY, makeNormalizedFile } from './helpers'
+import { makeNormalizedFile, TYPE_DIRECTORY } from './helpers'
+import { ROOT_DIR_ID } from 'drive/constants/config'
 
 class SuggestionProvider extends React.Component {
   componentDidMount() {
@@ -89,8 +90,11 @@ class SuggestionProvider extends React.Component {
       !file.trashed && !/^\/\.cozy_trash/.test(file.path)
     const notOrphans = file =>
       folders.find(folder => folder._id === file.dir_id) !== undefined
+    const notRoot = file => file._id !== ROOT_DIR_ID
 
-    const normalizedFilesPrevious = files.filter(notInTrash && notOrphans)
+    const normalizedFilesPrevious = files.filter(
+      file => notInTrash(file) && notOrphans(file) && notRoot(file)
+    )
 
     const normalizedFiles = normalizedFilesPrevious.map(file =>
       makeNormalizedFile(client, folders, file)
