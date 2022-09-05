@@ -83,14 +83,6 @@ describe('SuggestionProvider', () => {
             {
               icon: 'iconUrl',
               id: 'id-file',
-              onSelect: 'open:http://localhost/#/folder/id-file',
-              subtitle: '/path',
-              term: 'name',
-              title: 'name'
-            },
-            {
-              icon: 'iconUrl',
-              id: 'id-file',
               onSelect: 'id_note:id-file',
               subtitle: '/path',
               term: 'name.cozy-note',
