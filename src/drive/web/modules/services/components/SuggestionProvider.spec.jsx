@@ -2,18 +2,27 @@ import React from 'react'
 import { render, waitFor } from '@testing-library/react'
 import SuggestionProvider from './SuggestionProvider'
 import { dummyFile, dummyNote } from 'test/dummies/dummyFile'
+import { ROOT_DIR_ID } from 'drive/constants/config'
 
 const makeFileWithDoc = file => ({ ...file, doc: file })
-const parentFolder = makeFileWithDoc(dummyFile({ _id: 'id-file' }))
-const folder = makeFileWithDoc(dummyFile({ dir_id: 'id-file' }))
+const orphanParentFolder = makeFileWithDoc(
+  dummyFile({ _id: 'id-parent', name: 'parent-name' })
+)
+const folder = makeFileWithDoc(
+  dummyFile({ dir_id: 'id-parent', name: 'folder-name' })
+)
 const note = makeFileWithDoc(
   dummyNote({
     dir_id: 'id-file',
     name: 'name.cozy-note'
   })
 )
+const rootDir = makeFileWithDoc(dummyFile({ _id: ROOT_DIR_ID }))
+
 const mockClient = {
-  fetchJSON: jest.fn().mockReturnValue({ rows: [parentFolder, folder, note] })
+  fetchJSON: jest
+    .fn()
+    .mockReturnValue({ rows: [orphanParentFolder, folder, note, rootDir] })
 }
 const mockIntentAttributesClient = 'intent-attributes-client'
 
@@ -77,8 +86,8 @@ describe('SuggestionProvider', () => {
               id: 'id-file',
               onSelect: 'open:http://localhost/#/folder/id-file',
               subtitle: '/path',
-              term: 'name',
-              title: 'name'
+              term: 'folder-name',
+              title: 'folder-name'
             },
             {
               icon: 'iconUrl',
