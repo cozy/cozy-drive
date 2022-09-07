@@ -10,7 +10,8 @@
   - Fix on progress bar when uploading files [[68.4.0]](https://github.com/cozy/cozy-ui/releases/tag/v68.4.0)
 * Update cozy-scripts for Amirale development
 * Add visual feedback when uploading on a public view
-
+* Cache on clients request. Specially useful when the user didn't hide the "Install Cozy Drive for desktop" banner.
+  
 ## 🐛 Bug Fixes
 
 * Improve cozy-bar implementation to fix UI bugs in Amirale
