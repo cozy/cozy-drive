@@ -124,7 +124,7 @@
     "cozy-harvest-lib": "5.10.5",
     "cozy-intent": "^1.17.1",
     "cozy-keys-lib": "4.1.9",
-    "cozy-logger": "1.9.0",
+    "cozy-logger": "1.9.1",
     "cozy-pouch-link": "33.0.6",
     "cozy-realtime": "3.14.4",
     "cozy-scanner": "2.0.2",
