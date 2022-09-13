@@ -31,7 +31,16 @@ const TIMELINE_QUERY = client =>
       trashed: false
     })
     .indexFields(['class', 'metadata.datetime'])
-    .select(['dir_id', 'name', 'size', 'updated_at', 'metadata'])
+    .select([
+      'dir_id',
+      'name',
+      'size',
+      'updated_at',
+      'metadata',
+      'metadata.datetime',
+      'trashed',
+      'class'
+    ])
     .sortBy([
       {
         class: 'desc'
