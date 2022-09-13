@@ -16,20 +16,23 @@
 * Update cozy-ui
   - Modify Viewers to handle [68.0.0 BC](https://github.com/cozy/cozy-ui/releases/tag/v68.0.0)
   - Fix on progress bar when uploading files [[68.4.0]](https://github.com/cozy/cozy-ui/releases/tag/v68.4.0)
+  - re-enable the Viewer's download button from cozy/cozy-ui#2234 [[74.4.0]](https://github.com/cozy/cozy-ui/releases/tag/v74.4.0)
 * Update cozy-scripts for Amirale development
 * Add visual feedback when uploading on a public view
 * Cache on clients request. Specially useful when the user didn't hide the "Install Cozy Drive for desktop" banner.
-  
+
 ## 🐛 Bug Fixes
 
 * Improve cozy-bar implementation to fix UI bugs in Amirale
 * Fix navigation through mobile Flagship on Note creation and opening
 * Remove unused contacts permissions on Photos
+* fix in photos: timeline query needs select fields to be completed
 
 ## 🔧 Tech
 
 * Move dacc-run file to a lib folder to prevent it occurring in build
-* Shortcut links are now opened directly in the webview when executed inside of the Flagship mobile app
+* Shortcut links are now opened directly in the webview when executed inside the Flagship mobile app
+* fix: Viewer issue, make search backward compatible, add cache to the clients query
 
 # 1.42.1
 
