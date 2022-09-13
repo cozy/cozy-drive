@@ -200,78 +200,75 @@ const PublicFolderView = ({
     !showNewBreadcrumbFlag || showNewBreadcrumbFlag !== true
 
   return (
-    <>
-      <Main isPublic={true}>
-        <ModalStack />
-        <ModalManager />
-        <SharingBannerPlugin />
-        <div className={cx({ 'u-pt-2': !isMobile })}>
-          <FolderViewHeader>
-            {currentFolderId && (
-              <>
-                {isOldBreadcrumb ? (
-                  <OldFolderViewBreadcrumb
-                    currentFolderId={currentFolderId}
-                    getBreadcrumbPath={geTranslatedBreadcrumbPath}
-                    navigateToFolder={navigateToFolder}
-                  />
-                ) : (
-                  <FolderViewBreadcrumb
-                    rootBreadcrumbPath={rootBreadcrumbPath}
-                    currentFolderId={currentFolderId}
-                    navigateToFolder={navigateToFolder}
-                  />
-                )}
-                <PublicToolbar
-                  files={files}
-                  hasWriteAccess={hasWritePermissions}
-                  refreshFolderContent={refreshFolderContent}
-                  sharingInfos={sharingInfos}
-                />
-              </>
+    <Main isPublic={true}>
+      <ModalStack />
+      <ModalManager />
+      <SharingBannerPlugin />
+      <span className={cx({ 'u-pt-2': !isMobile })} />
+      <FolderViewHeader>
+        {currentFolderId && (
+          <>
+            {isOldBreadcrumb ? (
+              <OldFolderViewBreadcrumb
+                currentFolderId={currentFolderId}
+                getBreadcrumbPath={geTranslatedBreadcrumbPath}
+                navigateToFolder={navigateToFolder}
+              />
+            ) : (
+              <FolderViewBreadcrumb
+                rootBreadcrumbPath={rootBreadcrumbPath}
+                currentFolderId={currentFolderId}
+                navigateToFolder={navigateToFolder}
+              />
             )}
-          </FolderViewHeader>
-          <Content>
-            <FolderViewBody
-              navigateToFolder={navigateToFolder}
-              navigateToFile={navigateToFile}
-              actions={actions}
-              queryResults={[filesResult]}
-              canSort={false}
-              currentFolderId={currentFolderId}
+            <PublicToolbar
+              files={files}
+              hasWriteAccess={hasWritePermissions}
               refreshFolderContent={refreshFolderContent}
-              canUpload={hasWritePermissions}
-              extraColumns={extraColumns}
+              sharingInfos={sharingInfos}
             />
-            {isFabDisplayed && (
-              <AddMenuProvider
-                canCreateFolder={hasWritePermissions}
-                canUpload={hasWritePermissions}
-                refreshFolderContent={refreshFolderContent}
-                isPublic={true}
-              >
-                <FabWithMenuContext noSidebar={true} />
-              </AddMenuProvider>
-            )}
-            {viewerOpened && viewableFiles.length > 0 && (
-              <Overlay>
-                <PublicViewer
-                  files={viewableFiles}
-                  currentIndex={currentViewerIndex}
-                  onChangeRequest={showInViewer}
-                  onCloseRequest={closeViewer}
-                >
-                  <FooterActionButtons>
-                    <ForwardOrDownloadButton />
-                  </FooterActionButtons>
-                </PublicViewer>
-              </Overlay>
-            )}
-            {children}
-          </Content>
-        </div>
-      </Main>
-    </>
+          </>
+        )}
+      </FolderViewHeader>
+      <Content>
+        <FolderViewBody
+          navigateToFolder={navigateToFolder}
+          navigateToFile={navigateToFile}
+          actions={actions}
+          queryResults={[filesResult]}
+          canSort={false}
+          currentFolderId={currentFolderId}
+          refreshFolderContent={refreshFolderContent}
+          canUpload={hasWritePermissions}
+          extraColumns={extraColumns}
+        />
+        {isFabDisplayed && (
+          <AddMenuProvider
+            canCreateFolder={hasWritePermissions}
+            canUpload={hasWritePermissions}
+            refreshFolderContent={refreshFolderContent}
+            isPublic={true}
+          >
+            <FabWithMenuContext noSidebar={true} />
+          </AddMenuProvider>
+        )}
+        {viewerOpened && viewableFiles.length > 0 && (
+          <Overlay>
+            <PublicViewer
+              files={viewableFiles}
+              currentIndex={currentViewerIndex}
+              onChangeRequest={showInViewer}
+              onCloseRequest={closeViewer}
+            >
+              <FooterActionButtons>
+                <ForwardOrDownloadButton />
+              </FooterActionButtons>
+            </PublicViewer>
+          </Overlay>
+        )}
+        {children}
+      </Content>
+    </Main>
   )
 }
 
