@@ -8,11 +8,11 @@ export const getActionName = actionObject => {
 }
 
 // We need to clean Actions since action has a displayable
-// conditions and we can't know from the begining what the
+// conditions, and we can't know from the beginning what the
 // behavior will be. For instance, we can't know that
-// hr will be the latest action in the sharing views for a
+// <hr> will be the latest action in the sharing views for a
 // folder.
-// Or we can't know that we'll have two following hr if the
+// Or we can't know that we'll have two following <hr> if the
 // display condition for the actions between are true or false
 export const getOnlyNeededActions = (actions, file) => {
   let previousAction = ''
@@ -34,7 +34,7 @@ export const getOnlyNeededActions = (actions, file) => {
     }
     cleanedActions.push(actionObject)
   })
-  // We don't want to have an hr as the latest actions available
+  // We don't want to have an <hr> as the latest actions available
   while (getActionName(cleanedActions[cleanedActions.length - 1]) === 'hr') {
     cleanedActions.pop()
   }
