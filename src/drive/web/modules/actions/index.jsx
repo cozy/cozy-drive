@@ -9,6 +9,7 @@ import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
+import CopyIcon from 'cozy-ui/transpiled/react/Icons/Copy'
 import RenameIcon from 'cozy-ui/transpiled/react/Icons/Rename'
 import MovetoIcon from 'cozy-ui/transpiled/react/Icons/Moveto'
 import QualifyIcon from 'cozy-ui/transpiled/react/Icons/Qualify'
@@ -30,6 +31,7 @@ import ShareMenuItem from 'drive/web/modules/drive/ShareMenuItem'
 import MakeAvailableOfflineMenuItem from 'drive/web/modules/drive/MakeAvailableOfflineMenuItem'
 import DestroyConfirm from 'drive/web/modules/trash/components/DestroyConfirm'
 import { startRenamingAsync } from 'drive/web/modules/drive/rename'
+import { duplicateFiles } from 'drive/web/modules/drive/duplicate'
 
 import {
   isAnyFileReferencedByAlbum,
@@ -223,6 +225,25 @@ export const move = ({ canMove, pushModal, popModal }) => {
           left={<Icon icon={MovetoIcon} />}
         >
           {t('SelectionBar.moveto')}
+        </ActionMenuItem>
+      )
+    }
+  }
+}
+
+export const duplicate = ({ client, vaultClient, hasWriteAccess }) => {
+  return {
+    icon: 'copy',
+    displayCondition: selection => hasWriteAccess && selection.length === 1, // todo check
+    action: files => duplicateFiles(client, files, null), // todo - modal ? confirm? comme rename? direct? => copie immédiate
+    Component: function MoveTo(props) {
+      const { t } = useI18n()
+      return (
+        <ActionMenuItem
+          onClick={() => duplicateFiles(client, props.files, t)}
+          left={<Icon icon={CopyIcon} />}
+        >
+          {t('SelectionBar.copy')}
         </ActionMenuItem>
       )
     }

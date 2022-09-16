@@ -18,6 +18,7 @@ import {
   download,
   open,
   rename,
+  duplicate,
   move,
   qualify,
   versions,
@@ -96,7 +97,19 @@ export const SharingsView = ({
   }
 
   const actions = useActions(
-    [share, download, hr, qualify, rename, move, hr, offline, open, versions],
+    [
+      share,
+      download,
+      hr,
+      qualify,
+      rename,
+      duplicate,
+      move,
+      hr,
+      offline,
+      open,
+      versions
+    ],
     actionsOptions
   )
 

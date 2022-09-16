@@ -23,7 +23,13 @@ import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/Forw
 import { ModalStack, ModalContext } from 'drive/lib/ModalContext'
 import useActions from 'drive/web/modules/actions/useActions'
 import Main from 'drive/web/modules/layout/Main'
-import { download, trash, rename, versions } from 'drive/web/modules/actions'
+import {
+  download,
+  trash,
+  rename,
+  duplicate,
+  versions
+} from 'drive/web/modules/actions'
 import FolderViewHeader from '../Folder/FolderViewHeader'
 import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
@@ -170,7 +176,10 @@ const PublicFolderView = ({
     hasWriteAccess: hasWritePermissions,
     canMove: false
   }
-  const actions = useActions([download, trash, rename, versions], actionOptions)
+  const actions = useActions(
+    [download, trash, rename, duplicate, versions],
+    actionOptions
+  )
 
   const { t } = useI18n()
   const geTranslatedBreadcrumbPath = useCallback(
