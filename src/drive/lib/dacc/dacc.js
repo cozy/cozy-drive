@@ -43,7 +43,7 @@ export const sendToRemoteDoctype = async (
       measureName,
       startDate,
       value: sizesBySlug[slug],
-      group1: { slug: slug }
+      groups: [{ slug: slug }]
     }
     await sendMeasureToDACC(client, remoteDoctype, measure)
   }
