@@ -1,10 +1,10 @@
-/* global cozy */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import cx from 'classnames'
 
+import cozyBar from 'lib/cozyBar'
 import { withClient } from 'cozy-client'
 import SharingProvider, { SharedDocument } from 'cozy-sharing'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
@@ -68,7 +68,7 @@ class Toolbar extends Component {
     if (disabled) {
       return null
     }
-    const { BarRight } = cozy.bar
+    const { BarRight } = cozyBar
 
     return (
       <div

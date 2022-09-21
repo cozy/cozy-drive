@@ -1,4 +1,4 @@
-/* global cozy __DEVELOPMENT__ */
+/* global __DEVELOPMENT__ */
 
 import 'cozy-ui/transpiled/react/stylesheet.css'
 
@@ -18,6 +18,7 @@ import SharingProvider from 'cozy-sharing'
 import { WebviewIntentProvider } from 'cozy-intent'
 
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
+import cozyBar from 'lib/cozyBar'
 
 import appReducers from 'photos/reducers'
 import AppRoute from 'photos/components/AppRoute'
@@ -76,7 +77,7 @@ const setupAppContext = memoize(() => {
   )
   client.setStore(store)
   const locale = data.locale
-  cozy.bar.init({
+  cozyBar.init({
     appName: data.app.name,
     appEditor: data.app.editor,
     cozyClient: client,

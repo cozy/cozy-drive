@@ -1,5 +1,6 @@
-/* global cozy */
-const { BarRight } = cozy.bar
+import cozyBar from 'lib/cozyBar'
+
+const { BarRight } = cozyBar
 
 import React from 'react'
 

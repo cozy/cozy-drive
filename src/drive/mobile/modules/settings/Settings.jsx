@@ -1,9 +1,9 @@
-/* globals __DEVELOPMENT__ cozy */
-
+/* globals __DEVELOPMENT__ */
 import React, { Component } from 'react'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { RealTimeQueries } from 'cozy-client'
+import cozyBar from 'lib/cozyBar'
 
 import Main from 'drive/web/modules/layout/Main'
 
@@ -16,7 +16,7 @@ import FeedbackForm from './components/FeedbackForm'
 import ScrollToTop from 'drive/web/modules/navigation/ScrollToTop'
 import styles from './styles.styl'
 
-const { BarCenter } = cozy.bar
+const { BarCenter } = cozyBar
 
 class Settings extends Component {
   state = {

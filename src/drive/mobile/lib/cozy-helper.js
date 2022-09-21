@@ -5,6 +5,7 @@ import PouchLink from 'cozy-pouch-link'
 import { isMobileApp, isIOSApp, getDeviceName } from 'cozy-device-helper'
 import { SOFTWARE_ID, SOFTWARE_NAME } from './constants'
 import { disableBackgroundService } from './background'
+import cozyBar from 'lib/cozyBar'
 import { schema, DOCTYPE_FILES } from 'drive/lib/doctypes'
 import appMetadata from 'drive/appMetadata'
 import { getRedirectUri } from 'drive/mobile/lib/redirect'
@@ -132,7 +133,7 @@ export const initBar = async client => {
   if (document.getElementById('coz-bar')) {
     return
   }
-  await cozy.bar.init({
+  await cozyBar.init({
     appName: 'Drive',
     appNamePrefix: 'Cozy',
     appSlug: 'drive',

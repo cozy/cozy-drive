@@ -1,8 +1,8 @@
 /* global cozy */
-
 import memoize from 'lodash/memoize'
 import { initTranslation } from 'cozy-ui/transpiled/react/I18n'
 import CozyClient from 'cozy-client'
+import cozyBar from 'lib/cozyBar'
 import {
   shouldEnableTracking,
   getTracker
@@ -54,7 +54,7 @@ const setupApp = memoize(() => {
     token: data.token
   })
 
-  cozy.bar.init({
+  cozyBar.init({
     appName: data.app.name,
     appEditor: data.app.editor,
     cozyClient: client,

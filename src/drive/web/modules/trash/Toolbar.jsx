@@ -1,8 +1,8 @@
-/* global cozy */
 import React, { useState, useCallback, useContext } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 
+import cozyBar from 'lib/cozyBar'
 import { useClient } from 'cozy-client'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
@@ -29,7 +29,7 @@ export const Toolbar = ({
   breakpoints: { isMobile }
 }) => {
   const client = useClient()
-  const { BarRight } = cozy.bar
+  const { BarRight } = cozyBar
   const [menuIsVisible, setMenuVisible] = useState(false)
   const anchorRef = React.createRef()
   const openMenu = useCallback(() => setMenuVisible(true), [setMenuVisible])

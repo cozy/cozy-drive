@@ -1,5 +1,4 @@
 /* global cozy */
-
 import 'whatwg-fetch'
 import React from 'react'
 import { render } from 'react-dom'
@@ -13,6 +12,7 @@ import { Document } from 'cozy-doctypes'
 import { I18n, initTranslation } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import getSharedDocument from 'cozy-sharing/dist/getSharedDocument'
+import cozyBar from 'lib/cozyBar'
 
 import registerClientPlugins from 'drive/lib/registerClientPlugins'
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
@@ -34,7 +34,7 @@ import StyledApp from 'drive/web/modules/drive/StyledApp'
 
 const initCozyBar = (data, client) => {
   if (data.app.name && data.app.editor && data.app.icon && data.locale) {
-    cozy.bar.init({
+    cozyBar.init({
       appName: data.app.name,
       appEditor: data.app.editor,
       cozyClient: client,

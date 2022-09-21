@@ -1,5 +1,3 @@
-/* global cozy */
-
 import 'cozy-ui/transpiled/react/stylesheet.css'
 
 import React from 'react'
@@ -11,6 +9,7 @@ import { createLogger } from 'redux-logger'
 import { Router, Redirect, hashHistory, Route } from 'react-router'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { RealtimePlugin } from 'cozy-realtime'
+import cozyBar from 'lib/cozyBar'
 
 import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { I18n } from 'cozy-ui/transpiled/react/I18n'
@@ -60,7 +59,7 @@ async function init() {
   let app = null
   client.setStore(store)
   if (data.app.name && data.app.editor && data.app.icon && data.locale) {
-    cozy.bar.init({
+    cozyBar.init({
       appName: data.app.name,
       appEditor: data.app.editor,
       cozyClient: client,
