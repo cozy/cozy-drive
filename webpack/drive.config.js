@@ -2,6 +2,14 @@ const { DefinePlugin } = require('webpack')
 const CopyPlugin = require('copy-webpack-plugin')
 
 module.exports = {
+  module: {
+    rules: [
+      {
+        test: /cozy-bar\/dist\/cozy-bar\.js$/,
+        loader: 'imports-loader?css=./cozy-bar.css'
+      }
+    ]
+  },
   plugins: [
     new DefinePlugin({
       __PIWIK_SITEID_MOBILE__: 12,
