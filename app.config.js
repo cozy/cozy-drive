@@ -17,6 +17,8 @@ configurationFiles.push(
 const isDrive = process.env.COZY_APP_SLUG === 'drive'
 const isPhotos = process.env.COZY_APP_SLUG === 'photos'
 
+console.log('here')
+
 if (isDrive) configurationFiles.push(require('./webpack/drive.config.js'))
 
 if (isDrive && target === 'mobile')
@@ -39,6 +41,10 @@ const extraConfig = {
             }
           }
         ]
+      },
+      {
+        test: /cozy-bar\/dist\/cozy-bar\.js$/,
+        loader: 'imports-loader?css=./cozy-bar.css'
       }
     ]
   },
@@ -78,5 +84,10 @@ if (
   }
   // DO NOT REUSE THIS HACK CODE ABOVE
 }
+
+configurationFiles.map(configurationFile => {
+  console.log(configurationFile?.module?.rules)
+  return configurationFile
+})
 
 module.exports = configurationFiles
