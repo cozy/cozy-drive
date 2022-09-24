@@ -107,7 +107,7 @@ export class MoveModal extends React.Component {
       const response = await this.registerCancelable(
         client.query(Q('io.cozy.files').getById(folderId))
       )
-      const targetName = response.data.name
+      const targetName = response.data.name || t('breadcrumb.title_drive')
       Alerter.info('Move.success', {
         subject: entries.length === 1 ? entries[0].name : '',
         target: targetName,
