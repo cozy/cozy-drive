@@ -107,7 +107,7 @@ const getProgress = (state, action) => {
     if (!timeout) {
       timeout = setTimeout(() => {
         averageRemainingTime =
-          remainingTimes.reduce((a, b) => a + b) / remainingTimes.length
+          remainingTimes.reduce((a, b) => a + b, 0) / remainingTimes.length
 
         clearTimeout(timeout)
         timeout = undefined
