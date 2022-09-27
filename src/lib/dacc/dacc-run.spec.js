@@ -48,7 +48,10 @@ describe('dacc', () => {
     await run()
 
     // Then
-    expect(aggregateFilesSize).toHaveBeenCalledWith(client, maxDate)
+    expect(aggregateFilesSize).toHaveBeenCalledWith(client, maxDate, {
+      excludedSlug: 'excludedSlug',
+      nonExcludedGroupLabel: 'nonExcludedGroupLabel'
+    })
   })
 
   it('should aggregateFilesSize with end date of this month when max file date query not found', async () => {
@@ -57,7 +60,7 @@ describe('dacc', () => {
     CozyClient.fromEnv.mockReturnValue(client)
     aggregateFilesSize.mockResolvedValueOnce([])
     flag.mockReturnValue({
-      excludedSlug: false,
+      excludedSlug: 'excludedSlug',
       nonExcludedGroupLabel: 'nonExcludedGroupLabel',
       measureName: 'measureName',
       remoteDoctype: 'remoteDoctype'
@@ -70,7 +73,10 @@ describe('dacc', () => {
     await run()
 
     // Then
-    expect(aggregateFilesSize).toHaveBeenCalledWith(client, endOfThisMonth)
+    expect(aggregateFilesSize).toHaveBeenCalledWith(client, endOfThisMonth, {
+      excludedSlug: 'excludedSlug',
+      nonExcludedGroupLabel: 'nonExcludedGroupLabel'
+    })
   })
 
   it('should log when there is no sizes by slug', async () => {
