@@ -4,11 +4,7 @@ import { schema } from 'drive/lib/doctypes'
 import flag from 'cozy-flags'
 import { endOfMonth, startOfMonth, format, subMonths } from 'date-fns'
 
-import {
-  aggregateFilesSize,
-  aggregateNonExcludedSlugs,
-  sendToRemoteDoctype
-} from 'drive/lib/dacc/dacc'
+import { aggregateFilesSize, sendToRemoteDoctype } from 'drive/lib/dacc/dacc'
 
 /**
  * This service aggregates files size by createdByApps slug and send them to the DACC.
@@ -41,17 +37,12 @@ export const run = async () => {
     maxFileDateQuery || endOfMonth(subMonths(new Date(), 1))
   ).toISOString()
 
-  const sizesBySlug = await aggregateFilesSize(client, aggregationDate)
+  const sizesBySlug = await aggregateFilesSize(client, aggregationDate, {
+    excludedSlug,
+    nonExcludedGroupLabel
+  })
   if (Object.keys(sizesBySlug).length < 1) {
     log('info', `No files found to aggregate with date ${aggregationDate}`)
-  }
-
-  if (excludedSlug && nonExcludedGroupLabel) {
-    const totalNonExcluded = aggregateNonExcludedSlugs(
-      sizesBySlug,
-      excludedSlug
-    )
-    sizesBySlug[nonExcludedGroupLabel] = totalNonExcluded
   }
 
   const startDateMeasure = format(startOfMonth(aggregationDate), 'YYYY-MM-DD')

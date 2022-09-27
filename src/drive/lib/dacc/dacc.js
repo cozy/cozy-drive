@@ -1,9 +1,21 @@
-import { queryFilesByDate } from 'drive/lib/dacc/query'
+// @ts-check
 import { queryAllDocsWithFields } from 'drive/lib/dacc/query'
 import log from 'cozy-logger'
 
+/**
+ * @typedef {object} Measure
+ * See https://github.com/cozy/DACC for more insights
+ *
+ * @property {string} [createdBy] - The app slug that created the measure
+ * @property {string} [measureName] - The measure name
+ * @property {string} [startDate] - The startDate of the aggregation
+ * @property {number} [value] - The measure value
+ * @property {Array<object>} [groups] - The measure groups
+ */
+
 const sendMeasureToDACC = async (client, remoteDoctype, measure) => {
   try {
+    log('info', `Send ${JSON.stringify(measure)} to ${remoteDoctype}`)
     await client
       .getStackClient()
       .fetchJSON('POST', `/remote/${remoteDoctype}`, {
@@ -56,17 +68,17 @@ const convertFileSizeInMB = file => {
 }
 
 /**
- * Aggregate values by slug
+ * Aggregate file size values by slug
  *
  * @param {object} client - The CozyClient instance
- * @param {string} endDate - The max file date to query
- * @returns {object} The hash table of values by slug
+ * @param {Date} endDate - The max file date to query
+ * @returns {Promise<object>} The hash table of values by slug
  */
-export const aggregateFilesSize = async (client, endDate) => {
-  let hasNext = true
-  let bookmark
-  const sizesBySlug = {}
-  while (hasNext) {
+export const aggregateFilesSize = async (
+  client,
+  endDate,
+  { excludedSlug = '', nonExcludedGroupLabel = '' } = {}
+) => {
   const sizesBySlug = {
     trashed: 0
   }
@@ -96,10 +108,17 @@ export const aggregateFilesSize = async (client, endDate) => {
     }
   }
 
-    if (!resp || !resp.next) {
-      hasNext = false
-    }
-    bookmark = resp.bookmark
+  if (excludedSlug && nonExcludedGroupLabel) {
+    // Aggregate values
+    const totalNonExcluded = aggregateNonExcludedSlugs(
+      sizesBySlug,
+      excludedSlug
+    )
+    sizesBySlug[nonExcludedGroupLabel] = totalNonExcluded
+  }
+  // Round values
+  for (const slug of Object.keys(sizesBySlug)) {
+    sizesBySlug[slug] = Math.round(sizesBySlug[slug] * 100) / 100
   }
 
   return sizesBySlug
