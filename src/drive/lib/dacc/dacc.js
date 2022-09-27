@@ -1,4 +1,5 @@
 import { queryFilesByDate } from 'drive/lib/dacc/query'
+import { queryAllDocsWithFields } from 'drive/lib/dacc/query'
 import log from 'cozy-logger'
 
 const sendMeasureToDACC = async (client, remoteDoctype, measure) => {
@@ -66,18 +67,34 @@ export const aggregateFilesSize = async (client, endDate) => {
   let bookmark
   const sizesBySlug = {}
   while (hasNext) {
-    const resp = await queryFilesByDate(client, endDate, bookmark)
-    for (const file of resp.data) {
-      const slug = file.cozyMetadata.createdByApp
-      if (!slug) {
-        continue
-      }
+  const sizesBySlug = {
+    trashed: 0
+  }
+  const resp = await queryAllDocsWithFields(client)
+
+  for (const entry of resp) {
+    const file = entry.doc
+    if (
+      file.type !== 'file' ||
+      new Date(file.cozyMetadata.uploadedAt) > endDate
+    ) {
+      // Skip this doc
+      continue
+    }
+    const slug = file.cozyMetadata?.createdByApp || 'unknown'
+    const sizeMB = convertFileSizeInMB(file)
+
+    if (file.trashed) {
+      // Special case for trashed files
+      sizesBySlug.trashed += sizeMB
+    } else {
       if (slug in sizesBySlug) {
-        sizesBySlug[slug] += convertFileSizeInMB(file)
+        sizesBySlug[slug] += sizeMB
       } else {
-        sizesBySlug[slug] = convertFileSizeInMB(file)
+        sizesBySlug[slug] = sizeMB
       }
     }
+  }
 
     if (!resp || !resp.next) {
       hasNext = false
@@ -97,7 +114,7 @@ export const aggregateFilesSize = async (client, endDate) => {
 export const aggregateNonExcludedSlugs = (sizesBySlug, exclusionSlug) => {
   let totalSize = 0
   for (const slug of Object.keys(sizesBySlug)) {
-    if (!slug.includes(exclusionSlug)) {
+    if (!slug.includes(exclusionSlug) && slug !== 'trashed') {
       totalSize += sizesBySlug[slug]
     }
   }
