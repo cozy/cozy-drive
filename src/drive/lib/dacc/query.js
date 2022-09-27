@@ -1,34 +1,17 @@
 import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 
 /**
- * Query files by created_at
+ * Query all files by filtering on required fields
  *
  * @param {object} client - The CozyClient instance
- * @param {string} endDate - The max file date to query
- * @param {string} bookmark - The query bookmark
- * @returns {Array} The files sorted by (createdByApp, created_at)
+ * @returns {Promise<Array>} The files array
  */
-export const queryFilesByDate = async (client, endDate, bookmark = '') => {
-  const selector = {
-    'cozyMetadata.createdByApp': {
-      $gt: null
-    },
-    'cozyMetadata.uploadedAt': { $lte: endDate }
-  }
-  const options = {
-    partialFilter: {
-      type: 'file',
-      trashed: false
-    },
-    fields: ['cozyMetadata.createdByApp', 'size'],
-    indexedFields: ['cozyMetadata.createdByApp', 'cozyMetadata.uploadedAt'],
-    sort: [
-      { 'cozyMetadata.createdByApp': 'asc' },
-      { 'cozyMetadata.uploadedAt': 'asc' }
-    ],
-    limit: 1000,
-    bookmark
-  }
-  // We directly use the collection to avoid using the store for nothing.
-  return client.collection(DOCTYPE_FILES).find(selector, options)
+export const queryAllDocsWithFields = async client => {
+  const resp = await client
+    .getStackClient()
+    .fetchJSON(
+      'GET',
+      `/data/${DOCTYPE_FILES}/_all_docs?Fields=_id,trashed,name,size,type,cozyMetadata&DesignDocs=false&include_docs=true`
+    )
+  return resp.rows
 }
