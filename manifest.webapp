@@ -112,7 +112,7 @@
     "dacc": {
       "type": "node",
       "file": "services/dacc/drive.js",
-      "trigger": "@monthly on the 1-3 before 5am"
+      "trigger": "@monthly on the 3-5 between 2pm and 7pm"
     }
   },
   "permissions": {
