@@ -85152,36 +85152,38 @@ var run = /*#__PURE__*/function () {
             daccFileSizeFlag = cozy_flags__WEBPACK_IMPORTED_MODULE_3___default()('drive.dacc-files-size-by-slug');
 
             if (daccFileSizeFlag) {
-              _context.next = 7;
+              _context.next = 8;
               break;
             }
 
+            console.log('wrong flag');
             return _context.abrupt("return");
 
-          case 7:
+          case 8:
             excludedSlug = daccFileSizeFlag.excludedSlug, nonExcludedGroupLabel = daccFileSizeFlag.nonExcludedGroupLabel, measureName = daccFileSizeFlag.measureName, remoteDoctype = daccFileSizeFlag.remoteDoctype, maxFileDateQuery = daccFileSizeFlag.maxFileDateQuery;
             aggregationDate = new Date(maxFileDateQuery || Object(date_fns__WEBPACK_IMPORTED_MODULE_4__["endOfMonth"])(Object(date_fns__WEBPACK_IMPORTED_MODULE_4__["subMonths"])(new Date(), 1))).toISOString();
-            _context.next = 11;
+            _context.next = 12;
             return Object(drive_lib_dacc_dacc__WEBPACK_IMPORTED_MODULE_5__["aggregateFilesSize"])(client, aggregationDate, {
               excludedSlug: excludedSlug,
               nonExcludedGroupLabel: nonExcludedGroupLabel
             });
 
-          case 11:
+          case 12:
             sizesBySlug = _context.sent;
+            console.log('sizes by slugs keys : ', Object.keys(sizesBySlug));
 
             if (Object.keys(sizesBySlug).length < 1) {
               cozy_logger__WEBPACK_IMPORTED_MODULE_0___default()('info', "No files found to aggregate with date ".concat(aggregationDate));
             }
 
             startDateMeasure = Object(date_fns__WEBPACK_IMPORTED_MODULE_4__["format"])(Object(date_fns__WEBPACK_IMPORTED_MODULE_4__["startOfMonth"])(aggregationDate), 'YYYY-MM-DD');
-            _context.next = 16;
+            _context.next = 18;
             return Object(drive_lib_dacc_dacc__WEBPACK_IMPORTED_MODULE_5__["sendToRemoteDoctype"])(client, remoteDoctype, sizesBySlug, {
               measureName: measureName,
               startDate: startDateMeasure
             });
 
-          case 16:
+          case 18:
           case "end":
             return _context.stop();
         }
