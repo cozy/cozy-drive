@@ -86,10 +86,8 @@ export const aggregateFilesSize = async (
 
   for (const entry of resp) {
     const file = entry.doc
-    if (
-      file.type !== 'file' ||
-      new Date(file.cozyMetadata.uploadedAt) > endDate
-    ) {
+    const uploadedAt = new Date(file?.cozyMetadata?.uploadedAt || Date.now())
+    if (file.type !== 'file' || uploadedAt > endDate) {
       // Skip this doc
       continue
     }
