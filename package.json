@@ -167,6 +167,7 @@
     "redux-mock-store": "1.5.4",
     "redux-raven-middleware": "1.2.0",
     "redux-thunk": "2.3.0",
+    "rrd6": "npm:react-router-dom@6.4.1",
     "scheduler": "0.20.2",
     "snarkdown": "2.0.0",
     "webpack-node-externals": "3.0.0",
