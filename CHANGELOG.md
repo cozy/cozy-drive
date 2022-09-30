@@ -1,10 +1,28 @@
+# 1.45.0
+
+## ✨ Features
+## 🐛 Bug Fixes
+## 🔧 Tech
+
+
 # 1.44.0
 
 ## ✨ Features
 
+* Improvements to DACC service
+
 ## 🐛 Bug Fixes
 
+* Remove double elevator on file list on public pages
+* Fix issue on file upload
+* Fix display when moving element to the root
+
 ## 🔧 Tech
+
+* Use new DACC API
+* Remove verbose mode
+* Add all files for bundlemon and make it drastically sensitive 
+
 
 # 1.43.0
 
