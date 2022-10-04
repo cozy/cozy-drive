@@ -109,6 +109,16 @@
       "verbs": ["POST"],
       "selector": "worker",
       "values": ["service"]
+    },
+    "triggersviewer": {
+      "description": "Required to display the konnector block status",
+      "type": "io.cozy.triggers",
+      "verbs": ["GET"]
+    },
+    "konnectors": {
+      "description": "Required to display the information of the konnector that retrieved the photos",
+      "type": "io.cozy.konnectors",
+      "verbs": ["GET"]
     }
   }
 }
