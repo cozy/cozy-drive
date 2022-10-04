@@ -127,23 +127,36 @@ Consider using [rlink] instead of `yarn link`
 
 ### Tests
 
-Tests are run by [mocha] under the hood, and written using [chai] and [sinon]. You can easily run the tests suite with:
+Tests are run by jest under the hood. You can easily run the tests suite with:
 
 ```sh
 $ cd cozy-drive
 $ yarn test
 ```
 
-:pushpin: Don't forget to update / create new tests when you contribute to code to keep the app the consistent.
+:pushpin: Don't forget to update / create new tests when you contribute to prevent any regression.
 
+### Release & version bumping
 
-### Open a Pull-Request
+To release a new version, [follow the release guide](https://docs.cozy.io/en/cozy-app-publish/#release-workflow).
 
-If you want to work on Drive and submit code modifications, feel free to open pull-requests! See the [contributing guide][contribute] for more information about how to properly open pull-requests.
+To bump the app version, you have a dedicated command that will upgrade the version number in all the required files: `yarn version`.
+
+ℹ️ If you are running on Ubuntu, you might enconteer a `Bad substitution` error. 
+In which case, you need to create a `.npmrc` file and add:
+```sh
+script-shell=/bin/bash
+```
+
+This is because Ubuntu uses `/bin/dash` as default shell, that does not support string substitution syntax.
 
 
 Community
 ---------
+
+### Open a Pull-Request
+
+If you want to work on Drive and submit code modifications, feel free to open pull-requests! See the [contributing guide][contribute] for more information about how to properly open pull-requests.
 
 ### Localization
 
