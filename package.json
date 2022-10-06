@@ -101,7 +101,7 @@
     "replace": "1.2.1",
     "splashicon-generator": "0.2.12",
     "stylint": "1.5.9",
-    "tar": "4.4.18",
+    "tar": "6.1.11",
     "testcafe": "1.18.3",
     "unzipper": "0.10.11",
     "visualreview-client": "git+https://github.com/cozy/VisualReview-node-client.git#v0.0.4",
