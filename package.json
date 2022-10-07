@@ -118,7 +118,7 @@
     "cozy-ci": "0.4.1",
     "cozy-client": "33.0.6",
     "cozy-client-js": "0.19.0",
-    "cozy-device-helper": "^2.1.0",
+    "cozy-device-helper": "^2.5.0",
     "cozy-doctypes": "1.82.2",
     "cozy-flags": "2.8.6",
     "cozy-harvest-lib": "5.10.5",
