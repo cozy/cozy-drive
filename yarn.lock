@@ -6082,6 +6082,13 @@ cozy-doctypes@^1.82.1, cozy-doctypes@^1.83.7:
     lodash "^4.17.19"
     prop-types "^15.7.2"
 
+cozy-flags@2.10.2:
+  version "2.10.2"
+  resolved "https://registry.yarnpkg.com/cozy-flags/-/cozy-flags-2.10.2.tgz#af9c257c5406abbd465a6796dc39a404efd3f4aa"
+  integrity sha512-mWbFG6qpDt9FS0T+3u0lZFty9KX7Po93LnlDmoufIluBW9qVU1qLMAkT1BqMe239B8WBJdvZhREdvQJ9HAOzNw==
+  dependencies:
+    microee "^0.0.6"
+
 cozy-flags@2.7.1:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/cozy-flags/-/cozy-flags-2.7.1.tgz#f37251fee248ef9bef079a22bc52954f1a892dfc"
@@ -6089,7 +6096,7 @@ cozy-flags@2.7.1:
   dependencies:
     microee "^0.0.6"
 
-cozy-flags@2.8.6, cozy-flags@^2.8.5:
+cozy-flags@^2.8.5:
   version "2.8.6"
   resolved "https://registry.yarnpkg.com/cozy-flags/-/cozy-flags-2.8.6.tgz#8739c5cf411bf75a99423fa8b2273925c510af73"
   integrity sha512-gq//cSdWoh3JItZwbOChogJZRdKHbwiRNcSGmp+1O3IKhj8BAHXzdG1XC2NykDHXYF8JB+t+ay/bLviLPI8YgQ==
