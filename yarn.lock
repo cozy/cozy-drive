@@ -6032,7 +6032,7 @@ cozy-client@^27.14.4:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
-cozy-device-helper@^1.12.0, cozy-device-helper@^1.13.2, cozy-device-helper@^1.16.1, cozy-device-helper@^1.17.0, cozy-device-helper@^1.7.5:
+cozy-device-helper@^1.12.0, cozy-device-helper@^1.16.1, cozy-device-helper@^1.17.0, cozy-device-helper@^1.7.5:
   version "1.17.0"
   resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.17.0.tgz#fbce9737ea83c67969b2b173163b37299a36283c"
   integrity sha512-G61i75dPe/JwLUxN0foWG34lnm+0iybMu05AjoXv/UU2fRsTPfNnsHH4ZRi5JS6OPK4ccuj+ffRmabdywo23TA==
@@ -6050,6 +6050,13 @@ cozy-device-helper@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-2.1.0.tgz#6e94215ecf7831093eeb6b260923262cb7331f81"
   integrity sha512-FhiplXS7R4kY7FobGDbmR6GSWMcgrZMnjDz2DcHVyX2sSNewVKk71zRh0vWeWuJRraoXpd32n8B327SjERkEXw==
+  dependencies:
+    lodash "^4.17.19"
+
+cozy-device-helper@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-2.5.0.tgz#4a5b18ad07a2c66c468988ae9daee014ba876e5b"
+  integrity sha512-+KKX6obYg8UmdmPvBuZDFMfzdSMOSKbnCf6ZIJTkW3Xs95aDZYhh/6x61Ok5+oTusHBL/khd6A+P1Qx5tL7mrw==
   dependencies:
     lodash "^4.17.19"
 
@@ -6202,12 +6209,12 @@ cozy-release@1.10.0:
   dependencies:
     exec-sh "0.3.2"
 
-cozy-scanner@2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/cozy-scanner/-/cozy-scanner-2.0.2.tgz#0014d9399c56e655c45a873823c113dbba342a68"
-  integrity sha512-THU/2m2VgK38J/oq3EGnZSzlJMpiSKyrz91OdWX3rKvP2ZndblBSmUa3laEUyx8reosrZ8eDwio6GjdUYlMhIA==
+cozy-scanner@2.4.6:
+  version "2.4.6"
+  resolved "https://registry.yarnpkg.com/cozy-scanner/-/cozy-scanner-2.4.6.tgz#c28e5ef6a90c43396e0a0503986a62090d723674"
+  integrity sha512-c1JPSzW19xiK+PVN06+7waXP4NGxGn9IXkaWJOsF+Ao/iT2nUII5EMzNy3VWZkOSX4RqpWrAYnGF6Rd+MuzwOg==
   dependencies:
-    cozy-device-helper "^1.13.2"
+    cozy-device-helper "^2.5.0"
 
 cozy-scripts@^6.3.8:
   version "6.3.8"
