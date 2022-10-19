@@ -22,7 +22,8 @@ import {
   qualify,
   versions,
   offline,
-  hr
+  hr,
+  share
 } from 'drive/web/modules/actions'
 import {
   buildRecentQuery,
@@ -86,6 +87,7 @@ export const RecentView = ({ router, location, children }) => {
 
   const actions = useActions(
     [
+      share,
       download,
       hr,
       qualify,
