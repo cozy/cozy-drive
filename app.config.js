@@ -6,6 +6,7 @@ const pkg = require(path.resolve(__dirname, './package.json'))
 const SRC_DIR = path.resolve(__dirname, './src')
 const configurationFiles = []
 
+configurationFiles.push(require('./webpack/base.config.js'))
 configurationFiles.push(
   require('cozy-scripts/config/webpack.bundle.default.js')
 )
