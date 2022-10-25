@@ -55,7 +55,7 @@ Using a watcher - with Hot Module Replacement:
 ```sh
 $ cd cozy-drive
 $ yarn watch:drive:browser
-$ cozy-stack serve --appdir drive:/<project_absolute_path>/cozy-drive/build/drive
+$ cozy-stack serve --appdir drive:/<project_absolute_path>/cozy-drive/build/drive --disable-csp
 ```
 
 Or directly build the app (static file generated):
