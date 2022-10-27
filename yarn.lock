@@ -6204,10 +6204,10 @@ cozy-scanner@2.0.2:
   dependencies:
     cozy-device-helper "^1.13.2"
 
-cozy-scripts@^6.3.8:
-  version "6.3.8"
-  resolved "https://registry.yarnpkg.com/cozy-scripts/-/cozy-scripts-6.3.8.tgz#a6618b4bf46a4e20ea57cc1bf434891a6b14ff7a"
-  integrity sha512-Jfjpa4gkFxSzeDFvgtEHF62urdl4ZIHyGKq15ZNzae9IdylKy1+c2V5KER1s1wgJcOWBefAlRG3yiTDx76DkrA==
+cozy-scripts@^6.3.11:
+  version "6.3.11"
+  resolved "https://registry.yarnpkg.com/cozy-scripts/-/cozy-scripts-6.3.11.tgz#d2a1e101754210c7720026168e27d443b48df770"
+  integrity sha512-9Njzguyyy85eACuguCBSjID4RuWwH4BNg6jApagUhwtiBJjWt4c1l7m8tfiiwF9IA7rkocNw+szX8C16zDnRwg==
   dependencies:
     "@babel/core" "7.9.0"
     "@babel/polyfill" "^7.10.4"
@@ -13058,7 +13058,6 @@ msgpack5@^4.0.2:
 
 "mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
   version "1.0.8"
-  uid "3dc4c2a245ab39079bc2f73546bccf80847be14c"
   resolved "https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
