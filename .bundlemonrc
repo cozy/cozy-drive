@@ -2,112 +2,110 @@
   "baseDir": "./build",
   "files": [
     {
-      "path": "drive/app/drive.<hash>.js",
-      "maxSize": "234 KB"
+      "path": "drive/app/drive.<hash>.js"
+
     },
     {
-      "path": "drive/app/drive.<hash>.min.css",
-      "maxSize": "55 KB"
+      "path": "drive/app/drive.<hash>.min.css"
+
     },
     {
-      "path": "drive/img/app-icon.<hash>.svg",
-      "maxSize": "1 KB"
+      "path": "drive/img/app-icon.<hash>.svg"
+
     },
     {
-      "path": "drive/intents/drive.<hash>.js",
-      "maxSize": "171 KB"
+      "path": "drive/intents/drive.<hash>.js"
+
     },
     {
-      "path": "drive/intents/drive.<hash>.min.css",
-      "maxSize": "37 KB"
+      "path": "drive/intents/drive.<hash>.min.css"
+
     },
     {
-      "path": "drive/intents/index.html",
-      "maxSize": "1 KB"
+      "path": "drive/intents/index.html"
+
     },
     {
-      "path": "drive/onlyOffice/slide.pptx",
-      "maxSize": "25 KB"
+      "path": "drive/onlyOffice/slide.pptx"
+
     },
     {
-      "path": "drive/onlyOffice/spreadsheet.xlsx",
-      "maxSize": "6 KB"
+      "path": "drive/onlyOffice/spreadsheet.xlsx"
+
     },
     {
-      "path": "drive/onlyOffice/text.docx",
-      "maxSize": "6 KB"
+      "path": "drive/onlyOffice/text.docx"
+
     },
     {
-      "path": "drive/public/cozy-bar.css",
-      "maxSize": "24 KB"
+      "path": "drive/public/cozy-bar.css"
+
     },
     {
-      "path": "drive/public/cozy-bar.js",
-      "maxSize": "854 KB"
+      "path": "drive/public/cozy-bar.js"
+
     },
     {
-      "path": "drive/public/cozy-client-js.js",
-      "maxSize": "160 KB"
+      "path": "drive/public/cozy-client-js.js"
+
     },
     {
-      "path": "drive/public/drive.<hash>.js",
-      "maxSize": "1.60 MB"
+      "path": "drive/public/drive.<hash>.js"
+
     },
     {
-      "path": "drive/public/drive.<hash>.min.css",
-      "maxSize": "86 KB"
+      "path": "drive/public/drive.<hash>.min.css"
+
     },
     {
-      "path": "drive/public/pdf.worker.entry.<hash>.worker.js",
-      "maxSize": "221 KB"
+      "path": "drive/public/pdf.worker.entry.<hash>.worker.js"
+
     },
     {
-      "path": "drive/services/dacc/drive.js",
-      "maxSize": "249 KB"
+      "path": "drive/services/dacc/drive.js"
+
     },
     {
-      "path": "drive/services/qualificationMigration/drive.js",
-      "maxSize": "244 KB"
+      "path": "drive/services/qualificationMigration/drive.js"
+
     },
     {
-      "path": "drive/vendors/drive.<hash>.<hash>.min.css",
-      "maxSize": "35 KB"
+      "path": "drive/vendors/drive.<hash>.<hash>.min.css"
+
     },
     {
-      "path": "drive/vendors/drive.<hash>.js",
-      "maxSize": "1.54 MB"
+      "path": "drive/vendors/drive.<hash>.js"
+
     },
     {
-      "path": "drive/<hash>.worker.js",
-      "maxSize": "221 KB"
+      "path": "drive/<hash>.worker.js"
+
     },
     {
-      "path": "drive/app-drive.<hash>.min.css",
-      "maxSize": "55 KB"
+      "path": "drive/app-drive.<hash>.min.css"
+
     },
     {
-      "path": "drive/index.html",
-      "maxSize": "1 KB"
+      "path": "drive/index.html"
+
     },
     {
-      "path": "drive/intents-drive.<hash>.min.css",
-      "maxSize": "40 KB"
+      "path": "drive/intents-drive.<hash>.min.css"
+
     },
     {
-      "path": "drive/manifest.json",
-      "maxSize": "1 KB"
+      "path": "drive/manifest.json"
+
     },
     {
-      "path": "drive/manifest.webapp",
-      "maxSize": "2 KB"
+      "path": "drive/manifest.webapp"
+
     },
     {
-      "path": "drive/public-drive.<hash>.min.css",
-      "maxSize": "86 KB"
+      "path": "drive/public-drive.<hash>.min.css"
     },
     {
-      "path": "drive/vendors-drive.<hash>.min.css",
-      "maxSize": "1 B"
+      "path": "drive/vendors-drive.<hash>.min.css"
     }
   ],
   "groups": [
