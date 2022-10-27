@@ -38,7 +38,7 @@ const useConfig = () => {
 
   useEffect(() => {
     if (!isQueryLoading(queryResult) && fetchStatus !== 'error' && !config) {
-      if (!isPublic && shouldBeOpenedOnOtherInstance(data)) {
+      if (shouldBeOpenedOnOtherInstance(data)) {
         const {
           protocol,
           instance,
