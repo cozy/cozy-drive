@@ -65,56 +65,56 @@ export const share = ({ hasWriteAccess, pushModal, popModal }) => {
 export const download = ({ client, vaultClient }) => {
   return isMobileApp()
     ? {
-        icon: 'download',
-        displayCondition: files => {
-          if (isIOSApp()) return files.length === 1 && isFile(files[0])
-          return files.reduce(
-            (onlyFiles, file) => onlyFiles && isFile(file),
-            true
-          )
-        },
-        action: files => exportFilesNative(client, files, { vaultClient }),
-        label: 'forwardTo',
-        Component: function Download(props) {
-          const { t } = useI18n()
-          return (
-            <ActionMenuItem
-              onClick={() => {
-                return exportFilesNative(client, props.files, { vaultClient })
-              }}
-              left={<Icon icon={isIOSApp() ? ShareIosIcon : ReplyIcon} />}
-            >
-              {t('SelectionBar.forwardTo')}
-            </ActionMenuItem>
-          )
-        }
+      icon: 'download',
+      displayCondition: files => {
+        if (isIOSApp()) return files.length === 1 && isFile(files[0])
+        return files.reduce(
+          (onlyFiles, file) => onlyFiles && isFile(file),
+          true
+        )
+      },
+      action: files => exportFilesNative(client, files, { vaultClient }),
+      label: 'forwardTo',
+      Component: function Download(props) {
+        const { t } = useI18n()
+        return (
+          <ActionMenuItem
+            onClick={() => {
+              return exportFilesNative(client, props.files, { vaultClient })
+            }}
+            left={<Icon icon={isIOSApp() ? ShareIosIcon : ReplyIcon} />}
+          >
+            {t('SelectionBar.forwardTo')}
+          </ActionMenuItem>
+        )
       }
+    }
     : {
-        icon: 'download',
-        displayCondition: files => {
-          // We cannot generate archive for encrypted files, for now.
-          // Then, we do not display the download button when the selection
-          // includes an encrypted folder or several encrypted files
-          return (
-            !files.some(file => isEncryptedFolder(file)) &&
-            !(files.length > 1 && files.some(file => isEncryptedFile(file)))
-          )
-        },
-        action: files => downloadFiles(client, files, { vaultClient }),
-        Component: function Download(props) {
-          const { t } = useI18n()
-          return (
-            <ActionMenuItem
-              onClick={() => {
-                return downloadFiles(client, props.files, { vaultClient })
-              }}
-              left={<Icon icon={DownloadIcon} />}
-            >
-              {t('SelectionBar.download')}
-            </ActionMenuItem>
-          )
-        }
+      icon: 'download',
+      displayCondition: files => {
+        // We cannot generate archive for encrypted files, for now.
+        // Then, we do not display the download button when the selection
+        // includes an encrypted folder or several encrypted files
+        return (
+          !files.some(file => isEncryptedFolder(file)) &&
+          !(files.length > 1 && files.some(file => isEncryptedFile(file)))
+        )
+      },
+      action: files => downloadFiles(client, files, { vaultClient }),
+      Component: function Download(props) {
+        const { t } = useI18n()
+        return (
+          <ActionMenuItem
+            onClick={() => {
+              return downloadFiles(client, props.files, { vaultClient })
+            }}
+            left={<Icon icon={DownloadIcon} />}
+          >
+            {t('SelectionBar.download')}
+          </ActionMenuItem>
+        )
       }
+    }
 }
 
 export const hr = () => {
@@ -238,10 +238,6 @@ export const qualify = ({ pushModal, popModal }) => {
       pushModal(
         <EditDocumentQualification
           document={files[0]}
-          onQualified={() => {
-            popModal()
-            // changes should be retrieved through cozy-client
-          }}
           onClose={popModal}
         />
       ),
@@ -253,10 +249,6 @@ export const qualify = ({ pushModal, popModal }) => {
             pushModal(
               <EditDocumentQualification
                 document={props.files[0]}
-                onQualified={() => {
-                  popModal()
-                  // changes should be retrieved through cozy-client
-                }}
                 onClose={popModal}
               />
             )
