@@ -263,14 +263,7 @@ export const qualify = ({ pushModal, popModal }) => {
       selection.length === 1 && isFile(selection[0]),
     action: files =>
       pushModal(
-        <EditDocumentQualification
-          document={files[0]}
-          onQualified={() => {
-            popModal()
-            // changes should be retrieved through cozy-client
-          }}
-          onClose={popModal}
-        />
+        <EditDocumentQualification document={files[0]} onClose={popModal} />
       ),
     Component: function Qualify(props) {
       const { t } = useI18n()
@@ -280,10 +273,6 @@ export const qualify = ({ pushModal, popModal }) => {
             pushModal(
               <EditDocumentQualification
                 document={props.files[0]}
-                onQualified={() => {
-                  popModal()
-                  // changes should be retrieved through cozy-client
-                }}
                 onClose={popModal}
               />
             )
