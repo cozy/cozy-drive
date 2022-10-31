@@ -63,11 +63,11 @@
     },
     {
       "path": "drive/services/dacc/drive.js",
-      "maxSize": "249 KB"
+      "maxSize": "500 KB"
     },
     {
       "path": "drive/services/qualificationMigration/drive.js",
-      "maxSize": "244 KB"
+      "maxSize": "500 KB"
     },
     {
       "path": "drive/vendors/drive.<hash>.<hash>.min.css",
@@ -137,7 +137,7 @@
     },
     {
       "path": "drive/services/**",
-      "maxPercentIncrease": 0.1
+      "maxPercentIncrease": 0.5
     },
     {
       "path": "drive/vendors/**",
