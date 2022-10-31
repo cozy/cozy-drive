@@ -27,6 +27,7 @@ import FolderView from '../Folder/FolderView'
 import FolderViewHeader from '../Folder/FolderViewHeader'
 import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
+import useHead from 'components/useHead'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
@@ -35,9 +36,12 @@ const TrashFolderView = ({
   currentFolderId,
   displayedFolder,
   router,
+  params,
   children
 }) => {
   const { isMobile } = useBreakpoints()
+
+  useHead(params)
 
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
     isMobile,

@@ -33,13 +33,16 @@ import {
 import { useFilesQueryWithPath } from 'drive/web/modules/views/hooks'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
+import useHead from 'components/useHead'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-export const RecentView = ({ router, location, children }) => {
+export const RecentView = ({ router, location, params, children }) => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
+
+  useHead(params)
 
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
     isMobile,

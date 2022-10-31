@@ -36,6 +36,8 @@ jest.mock('drive/web/modules/views/hooks', () => ({
   useFilesQueryWithPath: jest.fn()
 }))
 
+jest.mock('components/useHead', () => jest.fn())
+
 const Folder = () => <div>Folder</div>
 
 const setup = () => {
