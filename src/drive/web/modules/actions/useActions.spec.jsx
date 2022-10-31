@@ -73,6 +73,7 @@ describe('useActions', () => {
   beforeEach(() => {
     jest.resetAllMocks()
     global.__TARGET__ = 'browser'
+    global.window.cordova = { platformId: 'web' }
   })
 
   const renderActionsHook = hookArgs => {

@@ -67,6 +67,7 @@ export const download = ({ client, vaultClient }) => {
   return isMobileApp()
     ? {
         icon: 'download',
+        label: 'forwardTo',
         displayCondition: files => {
           if (isIOSApp()) return files.length === 1 && isFile(files[0])
           return files.reduce(
@@ -75,7 +76,6 @@ export const download = ({ client, vaultClient }) => {
           )
         },
         action: files => exportFilesNative(client, files, { vaultClient }),
-        label: 'forwardTo',
         Component: function Download(props) {
           const { t } = useI18n()
           return (
@@ -83,13 +83,14 @@ export const download = ({ client, vaultClient }) => {
               onClick={props.onClick}
               left={<Icon icon={isIOSApp() ? ShareIosIcon : ReplyIcon} />}
             >
-              {t('SelectionBar.forwardTo')}
+              {t('SelectionBar.' + props.label)}
             </ActionMenuItem>
           )
         }
       }
     : {
         icon: 'download',
+        label: 'download',
         displayCondition: files => {
           // We cannot generate archive for encrypted files, for now.
           // Then, we do not display the download button when the selection
@@ -107,7 +108,7 @@ export const download = ({ client, vaultClient }) => {
               onClick={props.onClick}
               left={<Icon icon={DownloadIcon} />}
             >
-              {t('SelectionBar.download')}
+              {t('SelectionBar.' + props.label)}
             </ActionMenuItem>
           )
         }
@@ -127,6 +128,7 @@ export const hr = () => {
 export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
   return {
     icon: 'trash',
+    label: 'trash',
     displayCondition: () => hasWriteAccess,
     action: files =>
       pushModal(
@@ -146,7 +148,7 @@ export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
           onClick={props.onClick}
           left={<Icon icon={TrashIcon} color="var(--errorColor)" />}
         >
-          <span className="u-error">{t('SelectionBar.trash')}</span>
+          <span className="u-error">{t('SelectionBar.' + props.label)}</span>
         </ActionMenuItem>
       )
     }
@@ -155,6 +157,7 @@ export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
 export const open = ({ client, vaultClient }) => {
   return {
     icon: 'openWith',
+    label: isIOSApp() ? 'applePreview' : 'openWith',
     displayCondition: selection =>
       isMobileApp() && selection.length === 1 && isFile(selection[0]),
     action: files => openFileWith(client, files[0], { vaultClient }),
@@ -165,9 +168,7 @@ export const open = ({ client, vaultClient }) => {
           onClick={props.onClick}
           left={<Icon icon={isIOSApp() ? EyeIcon : LinkOutIcon} />}
         >
-          {isIOSApp()
-            ? t('SelectionBar.applePreview')
-            : t('SelectionBar.openWith')}
+          {t('SelectionBar.' + props.label)}
         </ActionMenuItem>
       )
     }
@@ -177,6 +178,7 @@ export const open = ({ client, vaultClient }) => {
 export const rename = ({ hasWriteAccess, dispatch }) => {
   return {
     icon: 'rename',
+    label: 'rename',
     displayCondition: selection => hasWriteAccess && selection.length === 1,
     action: files => dispatch(startRenamingAsync(files[0])),
     Component: function Rename(props) {
@@ -186,7 +188,7 @@ export const rename = ({ hasWriteAccess, dispatch }) => {
           onClick={props.onClick}
           left={<Icon icon={RenameIcon} />}
         >
-          {t('SelectionBar.rename')}
+          {t('SelectionBar.' + props.label)}
         </ActionMenuItem>
       )
     }
@@ -196,6 +198,7 @@ export const rename = ({ hasWriteAccess, dispatch }) => {
 export const move = ({ canMove, pushModal, popModal }) => {
   return {
     icon: 'moveto',
+    label: 'moveto',
     displayCondition: () => canMove,
     action: files =>
       pushModal(<MoveModal entries={files} onClose={popModal} />),
@@ -206,7 +209,7 @@ export const move = ({ canMove, pushModal, popModal }) => {
           onClick={props.onClick}
           left={<Icon icon={MovetoIcon} />}
         >
-          {t('SelectionBar.moveto')}
+          {t('SelectionBar.' + props.label)}
         </ActionMenuItem>
       )
     }
@@ -216,6 +219,7 @@ export const move = ({ canMove, pushModal, popModal }) => {
 export const copy = ({ client, hasWriteAccess, refresh, isPublic }) => {
   return {
     icon: 'copy',
+    label: 'copy',
     displayCondition: selection =>
       selection.length === 1 && isFile(selection[0]) && hasWriteAccess,
     action: async files => {
@@ -226,7 +230,7 @@ export const copy = ({ client, hasWriteAccess, refresh, isPublic }) => {
       const { t } = useI18n()
       return (
         <ActionMenuItem onClick={props.onClick} left={<Icon icon={CopyIcon} />}>
-          {t('SelectionBar.copy')}
+          {t('SelectionBar.' + props.label)}
         </ActionMenuItem>
       )
     }
@@ -236,6 +240,7 @@ export const copy = ({ client, hasWriteAccess, refresh, isPublic }) => {
 export const qualify = ({ pushModal, popModal }) => {
   return {
     icon: 'qualify',
+    label: 'qualify',
     displayCondition: selection =>
       selection.length === 1 && isFile(selection[0]),
     action: files =>
@@ -249,7 +254,7 @@ export const qualify = ({ pushModal, popModal }) => {
           onClick={props.onClick}
           left={<Icon icon={QualifyIcon} />}
         >
-          {t('SelectionBar.qualify')}
+          {t('SelectionBar.' + props.label)}
         </ActionMenuItem>
       )
     }
@@ -259,6 +264,7 @@ export const qualify = ({ pushModal, popModal }) => {
 export const versions = ({ router, location }) => {
   return {
     icon: 'history',
+    label: 'history',
     displayCondition: selection =>
       selection.length === 1 && isFile(selection[0]),
     action: files => {
@@ -275,7 +281,7 @@ export const versions = ({ router, location }) => {
           onClick={props.onClick}
           left={<Icon icon={HistoryIcon} />}
         >
-          {t('SelectionBar.history')}
+          {t('SelectionBar.' + props.label)}
         </ActionMenuItem>
       )
     }
@@ -296,6 +302,7 @@ export const offline = () => {
 export const restore = ({ refresh, client }) => {
   return {
     icon: 'restore',
+    label: 'restore',
     action: async files => {
       await restoreFiles(client, files)
       refresh()
@@ -307,7 +314,7 @@ export const restore = ({ refresh, client }) => {
           onClick={props.onClick}
           left={<Icon icon={RestoreIcon} />}
         >
-          {t('SelectionBar.restore')}
+          {t('SelectionBar.' + props.label)}
         </ActionMenuItem>
       )
     }
@@ -327,7 +334,7 @@ export const destroy = ({ pushModal, popModal }) => {
           onClick={props.onClick}
           left={<Icon icon={TrashIcon} color="var(--errorColor)" />}
         >
-          <span className="u-error">{t('SelectionBar.destroy')}</span>
+          <span className="u-error">{t('SelectionBar.' + props.label)}</span>
         </ActionMenuItem>
       )
     }
