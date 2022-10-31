@@ -80,9 +80,7 @@ export const download = ({ client, vaultClient }) => {
           const { t } = useI18n()
           return (
             <ActionMenuItem
-              onClick={() => {
-                return exportFilesNative(client, props.files, { vaultClient })
-              }}
+              onClick={props.onClick}
               left={<Icon icon={isIOSApp() ? ShareIosIcon : ReplyIcon} />}
             >
               {t('SelectionBar.forwardTo')}
@@ -106,9 +104,7 @@ export const download = ({ client, vaultClient }) => {
           const { t } = useI18n()
           return (
             <ActionMenuItem
-              onClick={() => {
-                return downloadFiles(client, props.files, { vaultClient })
-              }}
+              onClick={props.onClick}
               left={<Icon icon={DownloadIcon} />}
             >
               {t('SelectionBar.download')}
@@ -147,18 +143,7 @@ export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
       const { t } = useI18n()
       return (
         <ActionMenuItem
-          onClick={() =>
-            pushModal(
-              <DeleteConfirm
-                files={props.files}
-                referenced={isAnyFileReferencedByAlbum(props.files)}
-                afterConfirmation={() => {
-                  refresh()
-                }}
-                onClose={popModal}
-              />
-            )
-          }
+          onClick={props.onClick}
           left={<Icon icon={TrashIcon} color="var(--errorColor)" />}
         >
           <span className="u-error">{t('SelectionBar.trash')}</span>
@@ -177,7 +162,7 @@ export const open = ({ client, vaultClient }) => {
       const { t } = useI18n()
       return (
         <ActionMenuItem
-          onClick={() => openFileWith(client, props.files[0], { vaultClient })}
+          onClick={props.onClick}
           left={<Icon icon={isIOSApp() ? EyeIcon : LinkOutIcon} />}
         >
           {isIOSApp()
@@ -198,7 +183,7 @@ export const rename = ({ hasWriteAccess, dispatch }) => {
       const { t } = useI18n()
       return (
         <ActionMenuItem
-          onClick={() => dispatch(startRenamingAsync(props.files[0]))}
+          onClick={props.onClick}
           left={<Icon icon={RenameIcon} />}
         >
           {t('SelectionBar.rename')}
@@ -218,9 +203,7 @@ export const move = ({ canMove, pushModal, popModal }) => {
       const { t } = useI18n()
       return (
         <ActionMenuItem
-          onClick={() =>
-            pushModal(<MoveModal entries={props.files} onClose={popModal} />)
-          }
+          onClick={props.onClick}
           left={<Icon icon={MovetoIcon} />}
         >
           {t('SelectionBar.moveto')}
@@ -242,13 +225,7 @@ export const copy = ({ client, hasWriteAccess, refresh, isPublic }) => {
     Component: function Copy(props) {
       const { t } = useI18n()
       return (
-        <ActionMenuItem
-          onClick={async () => {
-            await client.collection('io.cozy.files').copy(props.files[0].id)
-            if (isPublic) refresh()
-          }}
-          left={<Icon icon={CopyIcon} />}
-        >
+        <ActionMenuItem onClick={props.onClick} left={<Icon icon={CopyIcon} />}>
           {t('SelectionBar.copy')}
         </ActionMenuItem>
       )
@@ -269,14 +246,7 @@ export const qualify = ({ pushModal, popModal }) => {
       const { t } = useI18n()
       return (
         <ActionMenuItem
-          onClick={() =>
-            pushModal(
-              <EditDocumentQualification
-                document={props.files[0]}
-                onClose={popModal}
-              />
-            )
-          }
+          onClick={props.onClick}
           left={<Icon icon={QualifyIcon} />}
         >
           {t('SelectionBar.qualify')}
@@ -302,20 +272,7 @@ export const versions = ({ router, location }) => {
       const { t } = useI18n()
       return (
         <ActionMenuItem
-          onClick={() => {
-            const tracker = getTracker()
-            if (tracker) {
-              tracker.push([
-                'trackEvent',
-                'Drive',
-                'Versioning',
-                'ClickFromMenuFile'
-              ])
-            }
-            return router.push(
-              `${location.pathname}/file/${props.files[0].id}/revision`
-            )
-          }}
+          onClick={props.onClick}
           left={<Icon icon={HistoryIcon} />}
         >
           {t('SelectionBar.history')}
@@ -347,10 +304,7 @@ export const restore = ({ refresh, client }) => {
       const { t } = useI18n()
       return (
         <ActionMenuItem
-          onClick={async () => {
-            await restoreFiles(client, props.files)
-            refresh()
-          }}
+          onClick={props.onClick}
           left={<Icon icon={RestoreIcon} />}
         >
           {t('SelectionBar.restore')}
@@ -370,9 +324,7 @@ export const destroy = ({ pushModal, popModal }) => {
       const { t } = useI18n()
       return (
         <ActionMenuItem
-          onClick={() =>
-            pushModal(<DestroyConfirm files={props.files} onClose={popModal} />)
-          }
+          onClick={props.onClick}
           left={<Icon icon={TrashIcon} color="var(--errorColor)" />}
         >
           <span className="u-error">{t('SelectionBar.destroy')}</span>
