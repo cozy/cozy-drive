@@ -59,6 +59,7 @@ export const ActionsItems = ({ actions, file, onClose }) => {
     const Component = actionDefinition.Component
     const action = actionDefinition.action
     const label = actionDefinition.label
+    const icon = actionDefinition.icon
 
     const onClick = action
       ? () => {
@@ -75,7 +76,7 @@ export const ActionsItems = ({ actions, file, onClose }) => {
         )}
         key={actionName + i}
       >
-        <Component label={label} onClick={onClick} files={[file]} />
+        <Component icon={icon} label={label} onClick={onClick} files={[file]} />
       </div>
     )
   })

@@ -12,6 +12,8 @@ import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
 import RenameIcon from 'cozy-ui/transpiled/react/Icons/Rename'
 import MovetoIcon from 'cozy-ui/transpiled/react/Icons/Moveto'
 import CopyIcon from 'cozy-ui/transpiled/react/Icons/Copy'
+import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'
+import PhoneDownloadIcon from 'cozy-ui/transpiled/react/Icons/PhoneDownload'
 import QualifyIcon from 'cozy-ui/transpiled/react/Icons/Qualify'
 import HistoryIcon from 'cozy-ui/transpiled/react/Icons/History'
 import RestoreIcon from 'cozy-ui/transpiled/react/Icons/Restore'
@@ -43,7 +45,7 @@ import { useI18n } from 'cozy-ui/transpiled/react'
 
 export const share = ({ hasWriteAccess, pushModal, popModal }) => {
   return {
-    icon: 'share',
+    icon: ShareIcon,
     displayCondition: selection =>
       hasWriteAccess &&
       selection.length === 1 &&
@@ -66,7 +68,7 @@ export const share = ({ hasWriteAccess, pushModal, popModal }) => {
 export const download = ({ client, vaultClient }) => {
   return isMobileApp()
     ? {
-        icon: 'download',
+        icon: isIOSApp() ? ShareIosIcon : ReplyIcon,
         label: 'forwardTo',
         displayCondition: files => {
           if (isIOSApp()) return files.length === 1 && isFile(files[0])
@@ -81,7 +83,7 @@ export const download = ({ client, vaultClient }) => {
           return (
             <ActionMenuItem
               onClick={props.onClick}
-              left={<Icon icon={isIOSApp() ? ShareIosIcon : ReplyIcon} />}
+              left={<Icon icon={props.icon} />}
             >
               {t('SelectionBar.' + props.label)}
             </ActionMenuItem>
@@ -89,7 +91,7 @@ export const download = ({ client, vaultClient }) => {
         }
       }
     : {
-        icon: 'download',
+        icon: DownloadIcon,
         label: 'download',
         displayCondition: files => {
           // We cannot generate archive for encrypted files, for now.
@@ -106,7 +108,7 @@ export const download = ({ client, vaultClient }) => {
           return (
             <ActionMenuItem
               onClick={props.onClick}
-              left={<Icon icon={DownloadIcon} />}
+              left={<Icon icon={props.icon} />}
             >
               {t('SelectionBar.' + props.label)}
             </ActionMenuItem>
@@ -117,7 +119,6 @@ export const download = ({ client, vaultClient }) => {
 
 export const hr = () => {
   return {
-    icon: 'hr',
     displayInSelectionBar: false,
     Component: function hr() {
       return <hr />
@@ -127,7 +128,7 @@ export const hr = () => {
 
 export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
   return {
-    icon: 'trash',
+    icon: TrashIcon,
     label: 'trash',
     displayCondition: () => hasWriteAccess,
     action: files =>
@@ -146,7 +147,7 @@ export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
       return (
         <ActionMenuItem
           onClick={props.onClick}
-          left={<Icon icon={TrashIcon} color="var(--errorColor)" />}
+          left={<Icon icon={props.icon} color="var(--errorColor)" />}
         >
           <span className="u-error">{t('SelectionBar.' + props.label)}</span>
         </ActionMenuItem>
@@ -156,7 +157,7 @@ export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
 }
 export const open = ({ client, vaultClient }) => {
   return {
-    icon: 'openWith',
+    icon: isIOSApp() ? EyeIcon : LinkOutIcon,
     label: isIOSApp() ? 'applePreview' : 'openWith',
     displayCondition: selection =>
       isMobileApp() && selection.length === 1 && isFile(selection[0]),
@@ -166,7 +167,7 @@ export const open = ({ client, vaultClient }) => {
       return (
         <ActionMenuItem
           onClick={props.onClick}
-          left={<Icon icon={isIOSApp() ? EyeIcon : LinkOutIcon} />}
+          left={<Icon icon={props.icon} />}
         >
           {t('SelectionBar.' + props.label)}
         </ActionMenuItem>
@@ -177,7 +178,7 @@ export const open = ({ client, vaultClient }) => {
 
 export const rename = ({ hasWriteAccess, dispatch }) => {
   return {
-    icon: 'rename',
+    icon: RenameIcon,
     label: 'rename',
     displayCondition: selection => hasWriteAccess && selection.length === 1,
     action: files => dispatch(startRenamingAsync(files[0])),
@@ -186,7 +187,7 @@ export const rename = ({ hasWriteAccess, dispatch }) => {
       return (
         <ActionMenuItem
           onClick={props.onClick}
-          left={<Icon icon={RenameIcon} />}
+          left={<Icon icon={props.icon} />}
         >
           {t('SelectionBar.' + props.label)}
         </ActionMenuItem>
@@ -197,7 +198,7 @@ export const rename = ({ hasWriteAccess, dispatch }) => {
 
 export const move = ({ canMove, pushModal, popModal }) => {
   return {
-    icon: 'moveto',
+    icon: MovetoIcon,
     label: 'moveto',
     displayCondition: () => canMove,
     action: files =>
@@ -207,7 +208,7 @@ export const move = ({ canMove, pushModal, popModal }) => {
       return (
         <ActionMenuItem
           onClick={props.onClick}
-          left={<Icon icon={MovetoIcon} />}
+          left={<Icon icon={props.icon} />}
         >
           {t('SelectionBar.' + props.label)}
         </ActionMenuItem>
@@ -218,7 +219,7 @@ export const move = ({ canMove, pushModal, popModal }) => {
 
 export const copy = ({ client, hasWriteAccess, refresh, isPublic }) => {
   return {
-    icon: 'copy',
+    icon: CopyIcon,
     label: 'copy',
     displayCondition: selection =>
       selection.length === 1 && isFile(selection[0]) && hasWriteAccess,
@@ -229,7 +230,7 @@ export const copy = ({ client, hasWriteAccess, refresh, isPublic }) => {
     Component: function Copy(props) {
       const { t } = useI18n()
       return (
-        <ActionMenuItem onClick={props.onClick} left={<Icon icon={CopyIcon} />}>
+        <ActionMenuItem onClick={props.onClick} left={<Icon icon={props.icon} />}>
           {t('SelectionBar.' + props.label)}
         </ActionMenuItem>
       )
@@ -239,7 +240,7 @@ export const copy = ({ client, hasWriteAccess, refresh, isPublic }) => {
 
 export const qualify = ({ pushModal, popModal }) => {
   return {
-    icon: 'qualify',
+    icon: QualifyIcon,
     label: 'qualify',
     displayCondition: selection =>
       selection.length === 1 && isFile(selection[0]),
@@ -252,7 +253,7 @@ export const qualify = ({ pushModal, popModal }) => {
       return (
         <ActionMenuItem
           onClick={props.onClick}
-          left={<Icon icon={QualifyIcon} />}
+          left={<Icon icon={props.icon} />}
         >
           {t('SelectionBar.' + props.label)}
         </ActionMenuItem>
@@ -263,7 +264,7 @@ export const qualify = ({ pushModal, popModal }) => {
 
 export const versions = ({ router, location }) => {
   return {
-    icon: 'history',
+    icon: HistoryIcon,
     label: 'history',
     displayCondition: selection =>
       selection.length === 1 && isFile(selection[0]),
@@ -279,18 +280,18 @@ export const versions = ({ router, location }) => {
       return (
         <ActionMenuItem
           onClick={props.onClick}
-          left={<Icon icon={HistoryIcon} />}
+          left={<Icon icon={props.icon} />}
         >
           {t('SelectionBar.' + props.label)}
         </ActionMenuItem>
       )
     }
   }
-}
+
 
 export const offline = () => {
   return {
-    icon: 'phone-download',
+    icon: PhoneDownloadIcon,
     displayCondition: selections =>
       isMobileApp() && selections.length === 1 && isFile(selections[0]),
     Component: function MakeAvailableOfflineMenuItemInMenu({ files, ...rest }) {
@@ -301,7 +302,7 @@ export const offline = () => {
 
 export const restore = ({ refresh, client }) => {
   return {
-    icon: 'restore',
+    icon: RestoreIcon,
     label: 'restore',
     action: async files => {
       await restoreFiles(client, files)
@@ -312,7 +313,7 @@ export const restore = ({ refresh, client }) => {
       return (
         <ActionMenuItem
           onClick={props.onClick}
-          left={<Icon icon={RestoreIcon} />}
+          left={<Icon icon={props.icon} />}
         >
           {t('SelectionBar.' + props.label)}
         </ActionMenuItem>
@@ -323,7 +324,7 @@ export const restore = ({ refresh, client }) => {
 
 export const destroy = ({ pushModal, popModal }) => {
   return {
-    icon: 'trash',
+    icon: TrashIcon,
     label: 'destroy',
     action: files =>
       pushModal(<DestroyConfirm files={files} onClose={popModal} />),
@@ -332,7 +333,7 @@ export const destroy = ({ pushModal, popModal }) => {
       return (
         <ActionMenuItem
           onClick={props.onClick}
-          left={<Icon icon={TrashIcon} color="var(--errorColor)" />}
+          left={<Icon icon={props.icon} color="var(--errorColor)" />}
         >
           <span className="u-error">{t('SelectionBar.' + props.label)}</span>
         </ActionMenuItem>
