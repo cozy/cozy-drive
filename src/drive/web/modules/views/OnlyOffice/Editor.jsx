@@ -9,7 +9,21 @@ import View from 'drive/web/modules/views/OnlyOffice/View'
 import Error from 'drive/web/modules/views/OnlyOffice/Error'
 import Loading from 'drive/web/modules/views/OnlyOffice/Loading'
 import Title from 'drive/web/modules/views/OnlyOffice/Title'
-import { DEFAULT_EDITOR_TOOLBAR_HEIGHT } from 'drive/web/modules/views/OnlyOffice/config'
+import {
+  DEFAULT_EDITOR_TOOLBAR_HEIGHT_IOS,
+  DEFAULT_EDITOR_TOOLBAR_HEIGHT
+} from 'drive/web/modules/views/OnlyOffice/config'
+import { isIOS } from 'cozy-device-helper'
+
+const getEditorToolbarHeight = editorToolbarHeightFlag => {
+  if (Number.isInteger(editorToolbarHeightFlag)) {
+    return editorToolbarHeightFlag
+  } else if (isIOS()) {
+    return DEFAULT_EDITOR_TOOLBAR_HEIGHT_IOS
+  } else {
+    return DEFAULT_EDITOR_TOOLBAR_HEIGHT
+  }
+}
 
 export const Editor = () => {
   const { config, status } = useConfig()
@@ -20,12 +34,9 @@ export const Editor = () => {
 
   const { serverUrl, apiUrl, docEditorConfig } = config
 
-  const editorToolbarHeight = Number.isInteger(
+  const editorToolbarHeight = getEditorToolbarHeight(
     flag('drive.onlyoffice.editorToolbarHeight')
   )
-    ? flag('drive.onlyoffice.editorToolbarHeight')
-    : DEFAULT_EDITOR_TOOLBAR_HEIGHT
-
   return (
     <>
       <Title />
