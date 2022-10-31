@@ -19,6 +19,7 @@ import {
   open,
   rename,
   move,
+  copy,
   qualify,
   versions,
   offline,
@@ -82,7 +83,8 @@ export const RecentView = ({ router, location, children }) => {
     router,
     location,
     hasWriteAccess: true,
-    canMove: true
+    canMove: true,
+    isPublic: false
   }
 
   const actions = useActions(
@@ -93,6 +95,7 @@ export const RecentView = ({ router, location, children }) => {
       qualify,
       rename,
       move,
+      copy,
       hr,
       offline,
       open,

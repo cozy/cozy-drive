@@ -11,6 +11,7 @@ import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
 import RenameIcon from 'cozy-ui/transpiled/react/Icons/Rename'
 import MovetoIcon from 'cozy-ui/transpiled/react/Icons/Moveto'
+import CopyIcon from 'cozy-ui/transpiled/react/Icons/Copy'
 import QualifyIcon from 'cozy-ui/transpiled/react/Icons/Qualify'
 import HistoryIcon from 'cozy-ui/transpiled/react/Icons/History'
 import RestoreIcon from 'cozy-ui/transpiled/react/Icons/Restore'
@@ -223,6 +224,32 @@ export const move = ({ canMove, pushModal, popModal }) => {
           left={<Icon icon={MovetoIcon} />}
         >
           {t('SelectionBar.moveto')}
+        </ActionMenuItem>
+      )
+    }
+  }
+}
+
+export const copy = ({ client, hasWriteAccess, refresh, isPublic }) => {
+  return {
+    icon: 'copy',
+    displayCondition: selection =>
+      selection.length === 1 && isFile(selection[0]) && hasWriteAccess,
+    action: async files => {
+      await client.collection('io.cozy.files').copy(files[0].id)
+      if (isPublic) refresh()
+    },
+    Component: function Copy(props) {
+      const { t } = useI18n()
+      return (
+        <ActionMenuItem
+          onClick={async () => {
+            await client.collection('io.cozy.files').copy(props.files[0].id)
+            if (isPublic) refresh()
+          }}
+          left={<Icon icon={CopyIcon} />}
+        >
+          {t('SelectionBar.copy')}
         </ActionMenuItem>
       )
     }

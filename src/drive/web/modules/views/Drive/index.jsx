@@ -19,6 +19,7 @@ import {
   open,
   rename,
   move,
+  copy,
   qualify,
   versions,
   offline,
@@ -135,7 +136,8 @@ const DriveView = ({
     router,
     location,
     hasWriteAccess: canWriteToCurrentFolder,
-    canMove: true
+    canMove: true,
+    isPublic: false
   }
   const actions = useActions(
     [
@@ -145,6 +147,7 @@ const DriveView = ({
       qualify,
       rename,
       move,
+      copy,
       hr,
       offline,
       open,

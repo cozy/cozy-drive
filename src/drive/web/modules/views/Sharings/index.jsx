@@ -92,7 +92,8 @@ export const SharingsView = ({
     router,
     location,
     hasWriteAccess: true,
-    canMove: true
+    canMove: true,
+    isPublic: false
   }
 
   const actions = useActions(

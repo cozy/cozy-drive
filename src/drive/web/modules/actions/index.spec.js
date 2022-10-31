@@ -1,4 +1,4 @@
-import { download } from './index'
+import { download, copy } from './index'
 import { DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
 
 describe('download', () => {
@@ -55,5 +55,50 @@ describe('download', () => {
     ]
     const dl = download({ client: {}, vaultClient: {} })
     expect(dl.displayCondition(files)).toBe(true)
+  })
+})
+
+describe('copy', () => {
+  it('should not display when several files are selected', () => {
+    const files = [
+      {
+        type: 'file'
+      },
+      {
+        type: 'file'
+      }
+    ]
+    const cp = copy({ client: {}, hasWriteAccess: true })
+    expect(cp.displayCondition(files)).toBe(false)
+  })
+
+  it('should not display when type is directory', () => {
+    const files = [
+      {
+        type: 'directory'
+      }
+    ]
+    const cp = copy({ client: {}, hasWriteAccess: true })
+    expect(cp.displayCondition(files)).toBe(false)
+  })
+
+  it('should display when type is file', () => {
+    const files = [
+      {
+        type: 'file'
+      }
+    ]
+    const cp = copy({ client: {}, hasWriteAccess: true })
+    expect(cp.displayCondition(files)).toBe(true)
+  })
+
+  it('should not display when no write access', () => {
+    const files = [
+      {
+        type: 'file'
+      }
+    ]
+    const cp = copy({ client: {}, hasWriteAccess: false })
+    expect(cp.displayCondition(files)).toBe(false)
   })
 })
