@@ -33,6 +33,7 @@ import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
+import useHead from 'components/useHead'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
@@ -42,9 +43,12 @@ const SharingsFolderView = ({
   sharedDocumentIds,
   router,
   location,
+  params,
   children
 }) => {
   const { isMobile } = useBreakpoints()
+
+  useHead(params)
 
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
     isMobile,

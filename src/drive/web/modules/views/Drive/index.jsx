@@ -50,6 +50,7 @@ import FolderViewBreadcrumb from 'drive/web/modules/views/Folder/FolderViewBread
 import { useTrashRedirect } from 'drive/web/modules/views/Drive/useTrashRedirect'
 import FabWithMenuContext from 'drive/web/modules/drive/FabWithMenuContext'
 import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
+import useHead from 'components/useHead'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
@@ -57,10 +58,13 @@ const mobileExtraColumnsNames = []
 const DriveView = ({
   currentFolderId,
   router,
+  params,
   location,
   children,
   displayedFolder
 }) => {
+  useHead(params)
+
   const { isMobile } = useBreakpoints()
   const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)
 

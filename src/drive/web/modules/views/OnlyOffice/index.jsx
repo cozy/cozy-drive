@@ -5,6 +5,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import Dialog from 'cozy-ui/transpiled/react/Dialog'
 
 import Editor from 'drive/web/modules/views/OnlyOffice/Editor'
+import useHead from 'components/useHead'
 
 export const OnlyOfficeContext = createContext()
 
@@ -51,6 +52,8 @@ const OnlyOffice = ({
   username,
   isInSharedFolder
 }) => {
+  useHead({ fileId })
+
   return (
     <Dialog open={true} fullScreen transitionDuration={0}>
       <OnlyOfficeProvider

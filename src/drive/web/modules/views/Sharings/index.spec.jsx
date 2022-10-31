@@ -39,6 +39,7 @@ jest.mock('cozy-client/dist/utils', () => ({
   ...jest.requireActual('cozy-client/dist/utils'),
   hasQueryBeenLoaded: jest.fn().mockReturnValue(true)
 }))
+jest.mock('components/useHead', () => jest.fn())
 
 const setup = (allLoaded = true) => {
   const { store, client } = setupStoreAndClient()

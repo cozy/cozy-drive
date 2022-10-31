@@ -33,6 +33,8 @@ jest.mock('cozy-keys-lib', () => ({
   useVaultClient: jest.fn()
 }))
 
+jest.mock('components/useHead', () => jest.fn())
+
 describe('Drive View', () => {
   const setup = () => {
     const { store, client } = setupStoreAndClient()

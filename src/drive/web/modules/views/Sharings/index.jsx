@@ -33,6 +33,7 @@ import { useFilesQueryWithPath } from 'drive/web/modules/views/hooks'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
 import FileListRowsPlaceholder from 'drive/web/modules/filelist/FileListRowsPlaceholder'
+import useHead from 'components/useHead'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
@@ -40,12 +41,15 @@ const mobileExtraColumnsNames = []
 export const SharingsView = ({
   router,
   location,
+  params,
   sharedDocumentIds = [],
   allLoaded = true,
   children
 }) => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
+
+  useHead(params)
 
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
     isMobile,

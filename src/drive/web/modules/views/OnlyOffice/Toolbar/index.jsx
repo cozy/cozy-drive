@@ -15,13 +15,12 @@ import FileIcon from 'drive/web/modules/views/OnlyOffice/Toolbar/FileIcon'
 import FileName from 'drive/web/modules/views/OnlyOffice/Toolbar/FileName'
 import ReadOnly from 'drive/web/modules/views/OnlyOffice/Toolbar/ReadOnly'
 import Sharing from 'drive/web/modules/views/OnlyOffice/Toolbar/Sharing'
-import useUpdateDocumentTitle from 'drive/web/modules/views/useUpdateDocumentTitle'
 
 const Toolbar = () => {
   const { isMobile } = useBreakpoints()
   const { fileId, isPublic, isFromSharing, isEditorReadOnly, isEditorReady } =
     useContext(OnlyOfficeContext)
-  useUpdateDocumentTitle(fileId)
+
   const { data: fileWithPath } = useFileWithPath(fileId)
   const { router } = useRouter()
 
