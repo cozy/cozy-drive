@@ -1,7 +1,40 @@
 import {
   showSharingBanner,
-  makeName
+  makeName,
+  shouldBeOpenedOnOtherInstance
 } from 'drive/web/modules/views/OnlyOffice/helpers'
+
+describe('shouldBeOpenedOnOtherInstance', () => {
+  it('should return true if current instance is different from document instance', () => {
+    expect(
+      shouldBeOpenedOnOtherInstance(
+        {
+          data: {
+            attributes: {
+              instance: 'alice.cozy.localhost:8080'
+            }
+          }
+        },
+        'http://bob.cozy.localhost:8080'
+      )
+    ).toBe(true)
+  })
+
+  it('should return false if current instance is equal to document instance', () => {
+    expect(
+      shouldBeOpenedOnOtherInstance(
+        {
+          data: {
+            attributes: {
+              instance: 'alice.cozy.localhost:8080'
+            }
+          }
+        },
+        'http://alice.cozy.localhost:8080'
+      )
+    ).toBe(false)
+  })
+})
 
 describe('makeName', () => {
   describe('for public route', () => {

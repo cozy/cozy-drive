@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 
-import { isQueryLoading, generateWebLink } from 'cozy-client'
+import { useClient, isQueryLoading, generateWebLink } from 'cozy-client'
 import useFetchJSON from 'cozy-client/dist/hooks/useFetchJSON'
 
 import {
@@ -22,6 +22,9 @@ const useConfig = () => {
     isEditorForcedReadOnly,
     isFromSharing
   } = useContext(OnlyOfficeContext)
+  const client = useClient()
+  const instanceUri = client.getStackClient().uri
+
   const [config, setConfig] = useState()
   const [status, setStatus] = useState('loading')
 
@@ -38,7 +41,7 @@ const useConfig = () => {
 
   useEffect(() => {
     if (!isQueryLoading(queryResult) && fetchStatus !== 'error' && !config) {
-      if (shouldBeOpenedOnOtherInstance(data)) {
+      if (shouldBeOpenedOnOtherInstance(data, instanceUri)) {
         const {
           protocol,
           instance,
@@ -110,7 +113,8 @@ const useConfig = () => {
     isPublic,
     isEditorForcedReadOnly,
     username,
-    isFromSharing
+    isFromSharing,
+    instanceUri
   ])
 
   return { config, status }

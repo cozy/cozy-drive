@@ -15,10 +15,12 @@ export const isOnlyOfficeReadOnly = ({ data }) =>
  * Returns true in case of the document is shared and should be opened on another instance.
  * See https://docs.cozy.io/en/cozy-stack/office/#get-officeidopen
  * @param {object} params - Result of `/office/fileId/open`
+ * @param {string} instanceUri - Current instanceUri
  * @returns {boolean}
  */
-export const shouldBeOpenedOnOtherInstance = ({ data }) =>
-  data.attributes.sharecode
+export const shouldBeOpenedOnOtherInstance = ({ data }, instanceUri) => {
+  return !!instanceUri && !instanceUri.includes(data.attributes.instance)
+}
 
 export const makeOnlyOfficeIconByClass = fileClass => {
   const iconByClass = {
