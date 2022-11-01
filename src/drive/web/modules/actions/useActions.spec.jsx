@@ -18,6 +18,7 @@ import {
 } from './utils'
 import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
 import * as renameModule from 'drive/web/modules/drive/rename'
+import { getActionName } from 'drive/web/modules/actionmenu/ActionsItems'
 import * as selectionModule from 'drive/web/modules/selection/duck'
 
 import useActions from './useActions'
@@ -136,10 +137,10 @@ describe('useActions', () => {
     return action
   }
 
-  it('returns actions keyed by icon', () => {
+  it('returns actions keyed by name', () => {
     const { result } = renderActionsHook(defaultHookArgs)
     const keys = result.current.map(actionObject => {
-      return Object.keys(actionObject)[0]
+      return getActionName(actionObject)
     })
     expect(keys).toEqual([
       'share',
@@ -228,7 +229,7 @@ describe('useActions', () => {
 
       it('is visible for a single file on iOS', () => {
         global.window.cordova = { platformId: 'ios' }
-        const downloadAction = getAction('forwardTo')
+        const downloadAction = getAction('download')
         expect(
           downloadAction.displayCondition([{ id: 'abc', type: 'file' }])
         ).toBe(true)
@@ -251,7 +252,7 @@ describe('useActions', () => {
 
       it('is visible if only files are selected on android', () => {
         global.window.cordova = { platformId: 'android' }
-        const downloadAction = getAction('forwardTo')
+        const downloadAction = getAction('download')
         expect(
           downloadAction.displayCondition([
             { id: 'abc', type: 'file' },
@@ -267,7 +268,7 @@ describe('useActions', () => {
       })
 
       it('export files to the device when activated', () => {
-        const downloadAction = getAction('forwardTo')
+        const downloadAction = getAction('download')
         const mockDocuments = [
           { id: 'abc', name: 'my-file.md' },
           { id: 'def', name: 'my-file-2.md' }

@@ -45,6 +45,7 @@ import { useI18n } from 'cozy-ui/transpiled/react'
 
 export const share = ({ hasWriteAccess, pushModal, popModal }) => {
   return {
+    name: 'share',
     icon: ShareIcon,
     displayCondition: selection =>
       hasWriteAccess &&
@@ -68,6 +69,7 @@ export const share = ({ hasWriteAccess, pushModal, popModal }) => {
 export const download = ({ client, vaultClient }) => {
   return isMobileApp()
     ? {
+        name: 'download',
         icon: isIOSApp() ? ShareIosIcon : ReplyIcon,
         label: 'forwardTo',
         displayCondition: files => {
@@ -91,6 +93,7 @@ export const download = ({ client, vaultClient }) => {
         }
       }
     : {
+        name: 'download',
         icon: DownloadIcon,
         label: 'download',
         displayCondition: files => {
@@ -128,6 +131,7 @@ export const hr = () => {
 
 export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
   return {
+    name: 'trash',
     icon: TrashIcon,
     label: 'trash',
     displayCondition: () => hasWriteAccess,
@@ -157,6 +161,7 @@ export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
 }
 export const open = ({ client, vaultClient }) => {
   return {
+    name: 'openWith',
     icon: isIOSApp() ? EyeIcon : LinkOutIcon,
     label: isIOSApp() ? 'applePreview' : 'openWith',
     displayCondition: selection =>
@@ -178,6 +183,7 @@ export const open = ({ client, vaultClient }) => {
 
 export const rename = ({ hasWriteAccess, dispatch }) => {
   return {
+    name: 'rename',
     icon: RenameIcon,
     label: 'rename',
     displayCondition: selection => hasWriteAccess && selection.length === 1,
@@ -198,6 +204,7 @@ export const rename = ({ hasWriteAccess, dispatch }) => {
 
 export const move = ({ canMove, pushModal, popModal }) => {
   return {
+    name: 'moveto',
     icon: MovetoIcon,
     label: 'moveto',
     displayCondition: () => canMove,
@@ -219,6 +226,7 @@ export const move = ({ canMove, pushModal, popModal }) => {
 
 export const copy = ({ client, hasWriteAccess, refresh, isPublic }) => {
   return {
+    name: 'copy',
     icon: CopyIcon,
     label: 'copy',
     displayCondition: selection =>
@@ -230,7 +238,10 @@ export const copy = ({ client, hasWriteAccess, refresh, isPublic }) => {
     Component: function Copy(props) {
       const { t } = useI18n()
       return (
-        <ActionMenuItem onClick={props.onClick} left={<Icon icon={props.icon} />}>
+        <ActionMenuItem
+          onClick={props.onClick}
+          left={<Icon icon={props.icon} />}
+        >
           {t('SelectionBar.' + props.label)}
         </ActionMenuItem>
       )
@@ -240,6 +251,7 @@ export const copy = ({ client, hasWriteAccess, refresh, isPublic }) => {
 
 export const qualify = ({ pushModal, popModal }) => {
   return {
+    name: 'qualify',
     icon: QualifyIcon,
     label: 'qualify',
     displayCondition: selection =>
@@ -264,6 +276,7 @@ export const qualify = ({ pushModal, popModal }) => {
 
 export const versions = ({ router, location }) => {
   return {
+    name: 'history',
     icon: HistoryIcon,
     label: 'history',
     displayCondition: selection =>
@@ -287,10 +300,11 @@ export const versions = ({ router, location }) => {
       )
     }
   }
-
+}
 
 export const offline = () => {
   return {
+    name: 'phone-download',
     icon: PhoneDownloadIcon,
     displayCondition: selections =>
       isMobileApp() && selections.length === 1 && isFile(selections[0]),
@@ -302,6 +316,7 @@ export const offline = () => {
 
 export const restore = ({ refresh, client }) => {
   return {
+    name: 'restore',
     icon: RestoreIcon,
     label: 'restore',
     action: async files => {
@@ -324,6 +339,7 @@ export const restore = ({ refresh, client }) => {
 
 export const destroy = ({ pushModal, popModal }) => {
   return {
+    name: 'destroy',
     icon: TrashIcon,
     label: 'destroy',
     action: files =>
