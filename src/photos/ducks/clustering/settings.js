@@ -126,11 +126,18 @@ export const shouldReleaseLock = setting => {
 
 export const updateSettingStatus = async (client, setting, count, lastDate) => {
   log('info', `Update setting for last date ${lastDate}`)
+  let currentSettings
+  if (!setting) {
+    currentSettings = await readSetting(client)
+  } else {
+    currentSettings = { ...setting }
+  }
+  const currentEvalCount = currentSettings.evaluationCount || 0
   const evaluationCount =
-    count > 0 ? setting.evaluationCount + count : setting.evaluationCount
-  const runs = setting.runs ? setting.runs + 1 : 1
+    count > 0 ? currentEvalCount + count : currentEvalCount
+  const runs = currentSettings.runs ? currentSettings.runs + 1 : 1
   const updatedSetting = await client.save({
-    ...setting,
+    ...currentSettings,
     evaluationCount,
     lastDate,
     runs
