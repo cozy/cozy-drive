@@ -160,7 +160,7 @@ const runClustering = async (client, setting) => {
   // as it has been already used to compute parameters
   const lastParams = setting.parameters[setting.parameters.length - 1]
   const evalCount =
-    new Date(dataset[0].datetime).getTime() <=
+    new Date(dataset[0]?.datetime || 0).getTime() <=
     new Date(lastParams.evaluation.end).getTime()
       ? 0
       : result.clusteredCount

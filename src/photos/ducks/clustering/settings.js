@@ -60,12 +60,12 @@ export const getDefaultParametersMode = params => {
 export const createParameter = (dataset, epsTemporal, epsSpatial) => {
   return {
     evaluation: {
-      start: dataset[0].datetime,
-      end: dataset[dataset.length - 1].datetime
+      start: dataset[0]?.datetime,
+      end: dataset[dataset.length - 1]?.datetime
     },
     period: {
-      start: dataset[0].datetime,
-      end: dataset[0].datetime
+      start: dataset[0]?.datetime,
+      end: dataset[0]?.datetime
     },
     modes: [
       {
@@ -80,7 +80,7 @@ export const createParameter = (dataset, epsTemporal, epsSpatial) => {
 
 const getPhotosPeriod = (params, photos) => {
   // Photos are sorted from oldest to newest
-  const newest = new Date(photos[photos.length - 1].datetime).getTime()
+  const newest = new Date(photos[photos.length - 1]?.datetime || 0).getTime()
   const endPeriod = new Date(params.period.end).getTime()
 
   // Note: we do not extend the period backwards (an older starting period),
@@ -88,7 +88,7 @@ const getPhotosPeriod = (params, photos) => {
   if (newest > endPeriod) {
     return {
       start: params.period.start,
-      end: photos[photos.length - 1].datetime
+      end: photos[photos.length - 1]?.datetime
     }
   }
   return params.period

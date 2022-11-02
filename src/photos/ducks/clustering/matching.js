@@ -1,7 +1,7 @@
 import { averageTime } from './utils'
 
 const outsideClusteringEdges = (photo, newestAlbum, oldestAlbum) => {
-  const photoDate = new Date(photo.datetime).getTime()
+  const photoDate = new Date(photo?.datetime || 0).getTime()
   const newestEnd = new Date(newestAlbum.period.end).getTime()
   const oldestStart = new Date(oldestAlbum.period.start).getTime()
 
@@ -14,7 +14,7 @@ const outsideClusteringEdges = (photo, newestAlbum, oldestAlbum) => {
 }
 
 const photoInsideCluster = (photo, album) => {
-  const photoDate = new Date(photo.datetime).getTime()
+  const photoDate = new Date(photo?.datetime || 0).getTime()
   const albumStart = new Date(album.period.start).getTime()
   const albumEnd = new Date(album.period.end).getTime()
 
@@ -22,7 +22,7 @@ const photoInsideCluster = (photo, album) => {
 }
 
 const photoBetweenClusters = (photo, newerAlbum, olderAlbum) => {
-  const photoDate = new Date(photo.datetime).getTime()
+  const photoDate = new Date(photo?.datetime || 0).getTime()
   const newerStart = new Date(newerAlbum.period.start).getTime()
   const olderEnd = new Date(olderAlbum.period.end).getTime()
   // Photo between clusters

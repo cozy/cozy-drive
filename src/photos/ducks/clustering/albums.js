@@ -5,21 +5,21 @@ import { Q } from 'cozy-client'
 
 // An auto album name is the date of the first photo
 const albumName = photos => {
-  return photos[0].datetime
+  return photos[0]?.datetime
 }
 
 // An auto album period starts with the first photo and ends with the last one
 const albumPeriod = photos => {
-  const startDate = photos[0].datetime
+  const startDate = photos[0]?.datetime
   const endDate =
-    photos.length > 1 ? photos[photos.length - 1].datetime : startDate
+    photos.length > 1 ? photos[photos.length - 1]?.datetime : startDate
   return { start: startDate, end: endDate }
 }
 
 const updateAlbumPeriod = async (client, photos, album) => {
   const period = albumPeriod(photos)
   if (period.start !== album.period.start || period.end !== album.period.end) {
-    const name = photos[0].datetime
+    const name = photos[0]?.datetime
     const dehydrated = album.photos.dehydrate(album)
     const updatedAlbum = await client.save({ ...dehydrated, period, name })
     return client.hydrateDocument(updatedAlbum.data)
