@@ -23,12 +23,12 @@ export const prepareDataset = (photos, albums = []) => {
       const metadata = attributes.metadata
       if (metadata) {
         photo.datetime = metadata.datetime
-        photo.lat = metadata.gps ? metadata.gps.lat : null
-        photo.lon = metadata.gps ? metadata.gps.long : null
+        photo.lat = metadata.gps?.lat
+        photo.lon = metadata.gps?.long
       } else {
         photo.datetime = attributes.created_at
       }
-      const hours = new Date(photo.datetime).getTime() / 1000 / 3600
+      const hours = new Date(photo?.datetime || 0).getTime() / 1000 / 3600
       photo.timestamp = hours
       // For each photo, we need to check the clusterid, i.e. the auto-album
       // referenced by the file. If there is none, the photo wasn't clustered before
