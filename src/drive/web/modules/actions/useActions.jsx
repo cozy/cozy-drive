@@ -24,7 +24,7 @@ const useActions = (actionCreators, actionOptions = {}) => {
       createAction(actionOptions),
       dispatch
     )
-    const name = enhancedAction.label || enhancedAction.icon
+    const name = enhancedAction.name
 
     actions.push({ [name]: enhancedAction })
   })
