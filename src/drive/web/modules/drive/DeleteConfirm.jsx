@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useClient } from 'cozy-client'
 import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Button from 'cozy-ui/transpiled/react/Button'
-
+import { buildAlbumByIdQuery } from 'drive/web/modules/queries'
 import { Media, Img, Bd } from 'cozy-ui/transpiled/react/Media'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import Stack from 'cozy-ui/transpiled/react/Stack'
@@ -12,6 +12,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import { SharedDocument, SharedRecipientsList } from 'cozy-sharing'
 
 import { trashFiles } from 'drive/web/modules/actions/utils'
+import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
 
 const Message = ({ type, fileCount }) => {
   const ico =
@@ -32,7 +33,6 @@ const Message = ({ type, fileCount }) => {
 
 export const DeleteConfirm = ({
   files,
-  referenced,
   afterConfirmation,
   onClose,
   children
@@ -41,6 +41,39 @@ export const DeleteConfirm = ({
   const fileCount = files.length
   const client = useClient()
   const [isDeleting, setDeleting] = useState(false)
+  const [isReferencedByManualAlbum, setIsReferencedByManualAlbum] =
+    useState(false)
+
+  useEffect(() => {
+    const fetchAlbums = async () => {
+      const albumIdsFromFiles = files.flatMap(file =>
+        (
+          (file &&
+            file.relationships &&
+            file.relationships.referenced_by &&
+            file.relationships.referenced_by.data) ||
+          []
+        )
+          .filter(reference => reference.type === DOCTYPE_ALBUMS)
+          .map(reference => reference.id)
+      )
+
+      const albums = await Promise.all(
+        albumIdsFromFiles.map(albumId => {
+          const albumByIdQuery = buildAlbumByIdQuery(albumId)
+          return client.fetchQueryAndGetFromState({
+            definition: albumByIdQuery.definition,
+            options: albumByIdQuery.options
+          })
+        })
+      )
+
+      setIsReferencedByManualAlbum(
+        !!albums.filter(album => album && album.data && !album.data.auto).length
+      )
+    }
+    fetchAlbums()
+  }, [client, files])
 
   const onDelete = useCallback(async () => {
     setDeleting(true)
@@ -58,7 +91,9 @@ export const DeleteConfirm = ({
         <Stack>
           <Message type="trash" fileCount={fileCount} />
           <Message type="restore" fileCount={fileCount} />
-          {referenced && <Message type="referenced" fileCount={fileCount} />}
+          {isReferencedByManualAlbum && (
+            <Message type="referenced" fileCount={fileCount} />
+          )}
           {children}
         </Stack>
       }

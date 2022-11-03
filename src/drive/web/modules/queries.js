@@ -1,6 +1,6 @@
 import CozyClient, { Q } from 'cozy-client'
 import { TRASH_DIR_ID } from 'drive/constants/config'
-import { DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
+import { DOCTYPE_FILES_ENCRYPTION, DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
 
 // Needs to be less than 10 minutes, since "thumbnails" links
 // are only valid for 10 minutes.
@@ -321,6 +321,14 @@ export const buildEncryptionByIdQuery = id => ({
   definition: Q(DOCTYPE_FILES_ENCRYPTION).getById(id),
   options: {
     as: id,
+    fetchPolicy: defaultFetchPolicy
+  }
+})
+
+export const buildAlbumByIdQuery = id => ({
+  definition: Q(DOCTYPE_ALBUMS).getById(id),
+  options: {
+    as: `io.cozy.photos.albums/${id}`,
     fetchPolicy: defaultFetchPolicy
   }
 })
