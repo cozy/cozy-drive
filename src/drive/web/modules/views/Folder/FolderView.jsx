@@ -16,6 +16,7 @@ const FolderView = ({ children }) => {
   return (
     <Main>
       <RealTimeQueries doctype="io.cozy.files" />
+      <RealTimeQueries doctype="io.cozy.photos.albums" />
       <ModalStack />
       <ModalManager />
       {children}

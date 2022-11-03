@@ -128,7 +128,7 @@
     "albums": {
       "description": "Required to manage photos albums",
       "type": "io.cozy.photos.albums",
-      "verbs": ["PUT"]
+      "verbs": ["PUT", "GET"]
     },
     "contacts": {
       "type": "io.cozy.contacts",

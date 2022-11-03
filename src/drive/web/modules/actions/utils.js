@@ -2,7 +2,7 @@ import {
   saveFileWithCordova,
   saveAndOpenWithCordova
 } from 'cozy-client/dist/models/fsnative'
-import { isDirectory, isReferencedByAlbum } from 'cozy-client/dist/models/file'
+import { isDirectory } from 'cozy-client/dist/models/file'
 import { receiveQueryResult } from 'cozy-client/dist/store'
 import { isMobileApp, isIOS } from 'cozy-device-helper'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
@@ -14,13 +14,6 @@ import {
   isEncryptedFile
 } from 'drive/lib/encryption'
 import { DOCTYPE_FILES } from 'drive/lib/doctypes'
-
-export const isAnyFileReferencedByAlbum = files => {
-  for (let i = 0, l = files.length; i < l; ++i) {
-    if (isReferencedByAlbum(files[i])) return true
-  }
-  return false
-}
 
 const isMissingFileError = error => error.status === 404
 

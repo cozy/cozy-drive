@@ -33,7 +33,6 @@ import DestroyConfirm from 'drive/web/modules/trash/components/DestroyConfirm'
 import { startRenamingAsync } from 'drive/web/modules/drive/rename'
 
 import {
-  isAnyFileReferencedByAlbum,
   exportFilesNative,
   downloadFiles,
   openFileWith,
@@ -136,7 +135,6 @@ export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
       pushModal(
         <DeleteConfirm
           files={files}
-          referenced={isAnyFileReferencedByAlbum(files)}
           afterConfirmation={() => {
             refresh()
           }}
@@ -151,7 +149,6 @@ export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
             pushModal(
               <DeleteConfirm
                 files={props.files}
-                referenced={isAnyFileReferencedByAlbum(props.files)}
                 afterConfirmation={() => {
                   refresh()
                 }}

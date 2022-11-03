@@ -36,7 +36,6 @@ import {
 } from './index'
 
 jest.mock('./utils', () => ({
-  isAnyFileReferencedByAlbum: jest.fn(),
   exportFilesNative: jest.fn(),
   downloadFiles: jest.fn(),
   trashFiles: jest.fn(),
