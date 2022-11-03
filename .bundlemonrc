@@ -113,27 +113,27 @@
   "groups": [
     {
       "path": "drive/app/**",
-      "maxPercentIncrease": 0.1
+      "maxPercentIncrease": 0.4
     },
     {
       "path": "drive/img/**",
-      "maxPercentIncrease": 0.1
+      "maxPercentIncrease": 0.4
     },
     {
       "path": "drive/intents/**",
-      "maxPercentIncrease": 0.1
+      "maxPercentIncrease": 0.4
     },
     {
       "path": "drive/onlyOffice/**",
-      "maxPercentIncrease": 0.1
+      "maxPercentIncrease": 0.4
     },
     {
       "path": "drive/public/**",
-      "maxPercentIncrease": 0.1
+      "maxPercentIncrease": 0.4
     },
     {
       "path": "drive/screenshots/**",
-      "maxPercentIncrease": 0.1
+      "maxPercentIncrease": 0.4
     },
     {
       "path": "drive/services/**",
@@ -141,8 +141,10 @@
     },
     {
       "path": "drive/vendors/**",
-      "maxPercentIncrease": 0.1
+      "maxPercentIncrease": 0.4
     }
   ],
-  "reportOutput": ["github"]
+  "reportOutput": [
+    "github"
+  ]
 }
