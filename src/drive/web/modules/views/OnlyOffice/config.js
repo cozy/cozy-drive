@@ -1,4 +1,4 @@
 export const FRAME_EDITOR_NAME = 'frameEditor'
 
 export const DEFAULT_EDITOR_TOOLBAR_HEIGHT_IOS = 68
-export const DEFAULT_EDITOR_TOOLBAR_HEIGHT = 52
+export const DEFAULT_EDITOR_TOOLBAR_HEIGHT = 32
