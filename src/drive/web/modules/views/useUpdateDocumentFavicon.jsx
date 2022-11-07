@@ -19,7 +19,15 @@ const acceptedTypes = [
 
 const defaultFaviconHref = '/public/app-icon.svg'
 
-const makeFaviconHref = type => {
+const normalizeClass = docClass => {
+  if (docClass === 'spreadsheet') {
+    return 'sheet'
+  }
+  return docClass
+}
+
+const makeFaviconHref = docClass => {
+  const type = normalizeClass(docClass)
   return `/public/icons/icon-type-${
     acceptedTypes.includes(type) ? type : 'files'
   }.svg`
