@@ -329,7 +329,8 @@ export const buildAlbumByIdQuery = id => ({
   definition: Q(DOCTYPE_ALBUMS).getById(id),
   options: {
     as: `io.cozy.photos.albums/${id}`,
-    fetchPolicy: defaultFetchPolicy
+    fetchPolicy: defaultFetchPolicy,
+    singleDocData: true
   }
 })
 
