@@ -102,7 +102,7 @@
     "splashicon-generator": "0.2.12",
     "stylint": "1.5.9",
     "tar": "6.1.12",
-    "testcafe": "1.18.3",
+    "testcafe": "2.0.2",
     "unzipper": "0.10.11",
     "visualreview-client": "git+https://github.com/cozy/VisualReview-node-client.git#v0.0.4",
     "worker-loader": "2.0.0"
