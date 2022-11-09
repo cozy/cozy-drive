@@ -1,9 +1,22 @@
-# 1.45.0
+# 1.46.0
 
 ## ✨ Features
 ## 🐛 Bug Fixes
 ## 🔧 Tech
 
+
+# 1.45.0
+
+## ✨ Features
+
+* Copy a file
+* Change favicon based on file type
+* Adapt OO header in responsive for iOS and Android
+
+## 🐛 Bug Fixes
+
+* Delete warning only when referenced by manual album
+* Shared OO document displayed a blank page due to infinite loop
 
 # 1.44.0
 
