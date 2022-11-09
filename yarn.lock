@@ -5971,10 +5971,10 @@ cozy-ci@0.4.1:
   resolved "https://registry.yarnpkg.com/cozy-ci/-/cozy-ci-0.4.1.tgz#f5991f9acc8fb81480003441e190d4be3a0f8446"
   integrity sha512-SKlFoecbneXe4ctop0Al3jQ6jts8bu5pJij9XU5HjhxwKx4whkzwPOkpJ+F1k5lkgstfNU7k9YQPE+nizp6W9Q==
 
-cozy-client-js@0.19.0:
-  version "0.19.0"
-  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.19.0.tgz#ccfb0572d6c6f3aa7c187978c23dd89f04caf796"
-  integrity sha512-3EPLxLu7mg/GSmAHauW7rfdVMynCQb9Yj1vHvDO1Rpda/CV0xN04HRH1eq+3HhZiIx1g1L76zSh0jN1shgCknQ==
+cozy-client-js@0.20.0:
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/cozy-client-js/-/cozy-client-js-0.20.0.tgz#a507ef9ccbeb340aacd58ca1f1d0cdc9d000e853"
+  integrity sha512-ppguq9hkmtGpS2y+3pE4Pw0CcNOB25Lb82/q0I5r2k+pxCgrbI+6HB85TWQH8OEt/qJVoCCCa9dWE5WSZBUDYw==
   dependencies:
     core-js "^3.6.5"
     cross-fetch "^3.0.6"
@@ -6043,13 +6043,6 @@ cozy-device-helper@^1.15.0:
   version "1.18.0"
   resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.18.0.tgz#45b37e68c30ec1104c8c40180b472d3662bc2534"
   integrity sha512-/s9X5oUH/Fpu3NKx1RS5T/iYzpfOlBD3tRGGsjth4VDYhqATlApUZLghmzvFvskEeC4eCAvNYfEkyo9UPrZbFQ==
-  dependencies:
-    lodash "^4.17.19"
-
-cozy-device-helper@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-2.5.0.tgz#4a5b18ad07a2c66c468988ae9daee014ba876e5b"
-  integrity sha512-+KKX6obYg8UmdmPvBuZDFMfzdSMOSKbnCf6ZIJTkW3Xs95aDZYhh/6x61Ok5+oTusHBL/khd6A+P1Qx5tL7mrw==
   dependencies:
     lodash "^4.17.19"
 
