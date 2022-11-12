@@ -166,7 +166,7 @@
     "redux-logger": "3.0.6",
     "redux-mock-store": "1.5.4",
     "redux-raven-middleware": "1.2.0",
-    "redux-thunk": "2.3.0",
+    "redux-thunk": "2.4.2",
     "scheduler": "0.20.2",
     "snarkdown": "2.0.0",
     "webpack-node-externals": "3.0.0",
