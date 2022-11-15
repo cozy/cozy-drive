@@ -5838,16 +5838,19 @@ cozy-client-js@0.20.0:
     pouchdb-browser "7.0.0"
     pouchdb-find "7.0.0"
 
-cozy-client@33.4.0, cozy-client@^33.4.0:
-  version "33.4.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-33.4.0.tgz#39e713656b3ce847dd453714564b665523001d09"
-  integrity sha512-2e8hg9pOHnmScpIyeHM4TjZ45hW/uTV+CCO7lS9LN1AsGsEdNdKjD+d4fvLYIX1zUcaqRDhFNUYzCCdz1t5Mag==
+cozy-client@^27.14.4:
+  version "27.22.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-27.22.0.tgz#bf3136ae8667222e5709d4dd9e8270cc18f0b330"
+  integrity sha512-ATFrJ0RLwto6GN7lyRdG6P5m86LxJQlO+t/Ap/APGX/VYnXWIXzmkawmP+yK05B7aBJ3ASkJGXEapZUOtyFb1A==
   dependencies:
     "@cozy/minilog" "1.0.0"
     "@types/jest" "^26.0.20"
     "@types/lodash" "^4.14.170"
     btoa "^1.2.1"
-    cozy-stack-client "^33.4.0"
+    cozy-device-helper "^1.12.0"
+    cozy-flags "2.7.1"
+    cozy-logger "^1.6.0"
+    cozy-stack-client "^27.21.0"
     json-stable-stringify "^1.0.1"
     lodash "^4.17.13"
     microee "^0.0.6"
@@ -5862,19 +5865,16 @@ cozy-client@33.4.0, cozy-client@^33.4.0:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
-cozy-client@^27.14.4:
-  version "27.22.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-27.22.0.tgz#bf3136ae8667222e5709d4dd9e8270cc18f0b330"
-  integrity sha512-ATFrJ0RLwto6GN7lyRdG6P5m86LxJQlO+t/Ap/APGX/VYnXWIXzmkawmP+yK05B7aBJ3ASkJGXEapZUOtyFb1A==
+cozy-client@^34.1.4:
+  version "34.1.4"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-34.1.4.tgz#08c4c5d1dce57dab7ba4c200535ef68b77fa0f1f"
+  integrity sha512-r5KQEePE6l9Hg04SZZhMOjobCWHfUXsVRywf4Tt2K81smyoP+or6HUHGEm8A0YEqdR5h7W1juTglVqKZ7CYa6g==
   dependencies:
     "@cozy/minilog" "1.0.0"
     "@types/jest" "^26.0.20"
     "@types/lodash" "^4.14.170"
     btoa "^1.2.1"
-    cozy-device-helper "^1.12.0"
-    cozy-flags "2.7.1"
-    cozy-logger "^1.6.0"
-    cozy-stack-client "^27.21.0"
+    cozy-stack-client "^34.1.4"
     json-stable-stringify "^1.0.1"
     lodash "^4.17.13"
     microee "^0.0.6"
@@ -6027,12 +6027,12 @@ cozy-logger@^1.9.0:
     chalk "^2.4.2"
     json-stringify-safe "5.0.1"
 
-cozy-pouch-link@33.4.0:
-  version "33.4.0"
-  resolved "https://registry.yarnpkg.com/cozy-pouch-link/-/cozy-pouch-link-33.4.0.tgz#ae318d40ade3a5db8f976c6681c99278ce5d8435"
-  integrity sha512-3QP2Wc/ynk5EwPSYbofheXaJDKeuuWczGVeh9+U2+fM4nvmyX3YdGYnhqNON2nBpoV6IaHWMv0zy/Bw1CFCp4A==
+cozy-pouch-link@^34.1.4:
+  version "34.1.4"
+  resolved "https://registry.yarnpkg.com/cozy-pouch-link/-/cozy-pouch-link-34.1.4.tgz#a9fa644566ef420159d4d02100583d224d41c497"
+  integrity sha512-hXrNGJ/eMO2ayrJRuTxwIRMAAXKGL2Ybbw14A8rHvNeCYEmW0HlH9b8s8OcdV7JLOh+Mal/BnfjhpXPaIm6lCA==
   dependencies:
-    cozy-client "^33.4.0"
+    cozy-client "^34.1.4"
     pouchdb-browser "^7.2.2"
     pouchdb-find "^7.2.2"
 
@@ -6141,21 +6141,21 @@ cozy-sharing@4.1.5:
     react-tooltip "^3.11.1"
     snarkdown "^2.0.0"
 
-cozy-stack-client@33.4.0, cozy-stack-client@^33.4.0:
-  version "33.4.0"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-33.4.0.tgz#c0c7ce7f2d65987b10bc8b4a615a3de0eedcf8d4"
-  integrity sha512-DaCwOdNT+aZJL+BZH04iUe0709O5Pi6qTagRlM+hp7oKwXiJvU3lwYIFE1McGss4rdhlWhIXB107ZFSC1+eagw==
-  dependencies:
-    detect-node "^2.0.4"
-    mime "^2.4.0"
-    qs "^6.7.0"
-
 cozy-stack-client@^27.21.0:
   version "27.21.0"
   resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-27.21.0.tgz#2796e5092fc4d69d69a789eede2fb3a21be915bd"
   integrity sha512-sDJ1k+VkFS+vU4Z2e57MyI1o44yogtO9iYVX1gjmITOlMCcyh8nC4+eBlL6R7uU/oPbdWqAozPvnR8QlwxyZDQ==
   dependencies:
     cozy-flags "2.7.1"
+    detect-node "^2.0.4"
+    mime "^2.4.0"
+    qs "^6.7.0"
+
+cozy-stack-client@^34.1.4:
+  version "34.1.4"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-34.1.4.tgz#93c45b6b3b3c76829d509d805c43a23b76c8f196"
+  integrity sha512-7dpCehvec/iyyvYtPFW5G2kTOwNvlvFadSumCt45zrlY0RxgmZHQWrfmYU8ccexPcPs7X0aO9KwqMutzBTlR+g==
+  dependencies:
     detect-node "^2.0.4"
     mime "^2.4.0"
     qs "^6.7.0"
