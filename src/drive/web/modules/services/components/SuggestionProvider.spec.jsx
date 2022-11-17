@@ -64,7 +64,7 @@ describe('SuggestionProvider', () => {
     // Then
     expect(mockClient.fetchJSON).toHaveBeenCalledWith(
       'GET',
-      '/data/io.cozy.files/_all_docs?Fields=_id,trashed,dir_id,name,path,type,mime,metadata.title,metadata.version&DesignDocs=false&include_docs=true'
+      '/data/io.cozy.files/_all_docs?Fields=_id,trashed,dir_id,name,path,type,mime,class,metadata.title,metadata.version&DesignDocs=false&include_docs=true'
     )
   })
 
