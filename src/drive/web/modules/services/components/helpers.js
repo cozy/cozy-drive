@@ -1,6 +1,8 @@
 import { models } from 'cozy-client'
 import { getIconUrl } from './iconContext'
 
+import { makeOnlyOfficeFileRoute } from 'drive/web/modules/views/OnlyOffice/helpers'
+
 export const TYPE_DIRECTORY = 'directory'
 
 /**
@@ -29,6 +31,8 @@ export const makeNormalizedFile = (client, folders, file) => {
     path = parentDir && parentDir.path ? parentDir.path : ''
     if (models.file.isNote(file)) {
       onSelect = `id_note:${file.id}`
+    } else if (models.file.shouldBeOpenedByOnlyOffice(file)) {
+      url = makeOnlyOfficeFileRoute(file)
     } else {
       url = `${urlToFolder}/file/${file._id}`
     }
