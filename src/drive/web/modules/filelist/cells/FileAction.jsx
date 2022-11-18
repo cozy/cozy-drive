@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react'
 import cx from 'classnames'
 
 import { TableCell } from 'cozy-ui/transpiled/react/Table'
-import Button from 'cozy-ui/transpiled/react/Button'
+import Button from 'cozy-ui/transpiled/react/Buttons'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import palette from 'cozy-ui/transpiled/react/palette'
 import DotsIcon from 'cozy-ui/transpiled/react/Icons/Dots'
@@ -23,19 +23,10 @@ const FileAction = forwardRef(function FileAction(
     >
       <span ref={ref}>
         <Button
-          theme="action"
           {...(!disabled && { onClick })}
-          extension="narrow"
-          icon={
-            <Icon
-              icon={DotsIcon}
-              color={palette.charcoalGrey}
-              width="17"
-              height="17"
-            />
-          }
-          iconOnly
-          label={t('Toolbar.more')}
+          variant="text"
+          label={<Icon icon={DotsIcon} size={17} color={palette.coolGrey} />}
+          arial-label={t('Toolbar.more')}
         />
       </span>
     </TableCell>

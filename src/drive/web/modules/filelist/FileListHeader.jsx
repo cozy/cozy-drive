@@ -2,7 +2,7 @@ import React from 'react'
 import cx from 'classnames'
 
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
-import Button from 'cozy-ui/transpiled/react/Button'
+import Button from 'cozy-ui/transpiled/react/Buttons'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import {
   TableHead,
@@ -86,20 +86,18 @@ const FileListHeader = ({
           {/** in order to not display this button in a MoveModal for instance */}
           {canSort && (
             <Button
-              theme={'action'}
+              variant="text"
               onClick={() => {
                 toggleThumbnailSize()
               }}
-              label={t('table.head_thumbnail_size')}
-              extension="narrow"
-              icon={
+              label={
                 <Icon
                   icon={thumbnailSizeBig ? iconListMin : iconList}
                   size={17}
                   label={t('table.head_thumbnail_size')}
                 />
               }
-              iconOnly
+              aria-label={t('table.head_thumbnail_size')}
             />
           )}
         </TableHeader>

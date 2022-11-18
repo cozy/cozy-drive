@@ -62,7 +62,7 @@ describe('File', () => {
       const { root } = setup()
       const { getByRole, findByText } = root
 
-      fireEvent.click(getByRole('button', { name: 'More' }))
+      fireEvent.click(getByRole('button', { description: 'More' }))
       expect(await findByText('ActionsMenuItem'))
     })
   })
@@ -79,7 +79,7 @@ describe('File', () => {
       const { root } = setup({ isInSyncFromSharing: true })
       const { getByRole, queryByText } = root
 
-      fireEvent.click(getByRole('button', { name: 'More' }))
+      fireEvent.click(getByRole('button', { description: 'More' }))
       expect(queryByText('ActionsMenuItem')).toBeNull()
     })
 
