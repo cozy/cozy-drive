@@ -1,6 +1,6 @@
 {
   "name": "io.cozy.drive.mobile",
-  "version": "1.45.0",
+  "version": "1.46.0",
   "displayName": "Cozy Drive",
   "cordova": {
     "platforms": [

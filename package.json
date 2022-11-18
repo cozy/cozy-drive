@@ -1,6 +1,6 @@
 {
   "name": "cozy-drive",
-  "version": "1.45.0",
+  "version": "1.46.0",
   "main": "src/main.jsx",
   "scripts": {
     "build": "yarn build:drive && yarn build:photos",
