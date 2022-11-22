@@ -34,8 +34,5 @@
   ></div>
   <% _.forEach(htmlWebpackPlugin.files.js, function(file) { %>
   <script src="<%- file %>"></script>
-  <% }); %> <% if (__STACK_ASSETS__ || (__DEVELOPMENT__ && __TARGET__ !==
-  'mobile')) { %>
-  <script src="//{{.Domain}}/assets/js/piwik.js" async></script>
-  <% } %>
+  <% }); %>
 </html>
