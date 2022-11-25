@@ -32,12 +32,10 @@ import RatingModal from 'drive/mobile/modules/settings/RatingModal'
 import FirstUploadModal from 'drive/mobile/modules/mediaBackup/FirstUploadModal'
 import {
   buildDriveQuery,
-  buildFileWithSpecificMetadataAttributeQuery
+  buildFileWithSpecificMetadataAttributeQuery,
+  buildOnlyFolderQuery
 } from 'drive/web/modules/queries'
-import {
-  getCurrentFolderId,
-  getDisplayedFolder
-} from 'drive/web/modules/selectors'
+import { getCurrentFolderId } from 'drive/web/modules/selectors'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
@@ -55,14 +53,7 @@ import useHead from 'components/useHead'
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-const DriveView = ({
-  currentFolderId,
-  router,
-  params,
-  location,
-  children,
-  displayedFolder
-}) => {
+const DriveView = ({ currentFolderId, router, params, location, children }) => {
   useHead(params)
 
   const { isMobile } = useBreakpoints()
@@ -79,7 +70,11 @@ const DriveView = ({
     queryBuilder: buildFileWithSpecificMetadataAttributeQuery,
     currentFolderId
   })
-
+  const displayedFolderQuery = buildOnlyFolderQuery(currentFolderId)
+  const displayedFolder = useQuery(
+    displayedFolderQuery.definition,
+    displayedFolderQuery.options
+  ).data
   useTrashRedirect(displayedFolder)
 
   const [sortOrder] = useFolderSort(currentFolderId)
@@ -167,7 +162,6 @@ const DriveView = ({
     id: ROOT_DIR_ID,
     name: t('breadcrumb.title_drive')
   }
-
   useEffect(() => {
     if (canWriteToCurrentFolder) {
       setIsFabDisplayed(isMobile)
@@ -232,6 +226,5 @@ const DriveView = ({
 }
 
 export default connect(state => ({
-  currentFolderId: getCurrentFolderId(state) || ROOT_DIR_ID,
-  displayedFolder: getDisplayedFolder(state)
+  currentFolderId: getCurrentFolderId(state) || ROOT_DIR_ID
 }))(DriveView)
