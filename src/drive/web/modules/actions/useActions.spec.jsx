@@ -16,7 +16,6 @@ import {
   openFileWith,
   restoreFiles
 } from './utils'
-import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
 import * as renameModule from 'drive/web/modules/drive/rename'
 import * as selectionModule from 'drive/web/modules/selection/duck'
 
@@ -43,9 +42,6 @@ jest.mock('./utils', () => ({
   restoreFiles: jest.fn()
 }))
 
-jest.mock('cozy-ui/transpiled/react/helpers/tracker', () => ({
-  getTracker: jest.fn()
-}))
 jest.mock('cozy-device-helper', () => ({
   ...jest.requireActual('cozy-device-helper'),
   isMobileApp: jest.fn()
@@ -471,30 +467,6 @@ describe('useActions', () => {
       expect(mockRouterContextValue.router.push).toHaveBeenCalledWith(
         '/folder/123/file/abc/revision'
       )
-    })
-
-    it('registers an action with the tracker when activated', () => {
-      const mockTracker = { push: jest.fn() }
-      getTracker.mockReturnValueOnce(mockTracker)
-      const versionsAction = getAction('history')
-      const mockDocument = { id: 'abc' }
-      versionsAction.action([mockDocument])
-      expect(getTracker).toHaveBeenCalled()
-      expect(mockTracker.push).toHaveBeenCalledWith([
-        'trackEvent',
-        'Drive',
-        'Versioning',
-        'ClickFromMenuFile'
-      ])
-    })
-
-    it('does not  fail when no tracker is present', () => {
-      getTracker.mockReturnValueOnce(null)
-      const versionsAction = getAction('history')
-      const mockDocument = { id: 'abc' }
-      versionsAction.action([mockDocument])
-      expect(getTracker).toHaveBeenCalled()
-      expect(mockRouterContextValue.router.push).toHaveBeenCalled()
     })
   })
 

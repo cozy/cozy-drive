@@ -1,15 +1,8 @@
 import get from 'lodash/get'
 
 import CozyClient, { Q } from 'cozy-client'
-import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
 
 export const DESKTOP_SOFTWARE_ID = 'github.com/cozy-labs/cozy-desktop'
-
-export const track = element => {
-  const tracker = getTracker()
-  tracker &&
-    tracker.push(['trackEvent', 'interaction', 'desktop-prompt', element])
-}
 
 export const isLinux = () =>
   window.navigator &&

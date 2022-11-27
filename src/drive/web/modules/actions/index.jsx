@@ -4,7 +4,6 @@ import { isFile } from 'cozy-client/dist/models/file'
 import { ShareModal } from 'cozy-sharing'
 import { isIOSApp, isMobileApp } from 'cozy-device-helper'
 import { EditDocumentQualification } from 'cozy-scanner'
-import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
@@ -300,10 +299,6 @@ export const versions = ({ router, location }) => {
     displayCondition: selection =>
       selection.length === 1 && isFile(selection[0]),
     action: files => {
-      const tracker = getTracker()
-      if (tracker) {
-        tracker.push(['trackEvent', 'Drive', 'Versioning', 'ClickFromMenuFile'])
-      }
       return router.push(`${location.pathname}/file/${files[0].id}/revision`)
     },
     Component: function History(props) {
@@ -311,15 +306,6 @@ export const versions = ({ router, location }) => {
       return (
         <ActionMenuItem
           onClick={() => {
-            const tracker = getTracker()
-            if (tracker) {
-              tracker.push([
-                'trackEvent',
-                'Drive',
-                'Versioning',
-                'ClickFromMenuFile'
-              ])
-            }
             return router.push(
               `${location.pathname}/file/${props.files[0].id}/revision`
             )

@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setAnalytics } from 'drive/mobile/modules/settings/duck'
 import OnBoardingStep from './OnBoardingStep'
 
 export const Analytics = ({ onActivate, onSkip, breadcrumbs }) => (
@@ -14,11 +13,9 @@ export const Analytics = ({ onActivate, onSkip, breadcrumbs }) => (
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onActivate: () => {
-    dispatch(setAnalytics(true, 'onboarbing'))
     ownProps.nextStep()
   },
   onSkip: () => {
-    dispatch(setAnalytics(false))
     ownProps.nextStep()
   }
 })

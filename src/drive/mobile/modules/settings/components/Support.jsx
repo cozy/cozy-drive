@@ -8,16 +8,9 @@ import SettingCategory, {
   ELEMENT_CHECKBOX,
   ELEMENT_BUTTON
 } from './SettingCategory'
-import { setAnalytics, getServerUrl, isAnalyticsOn } from '../duck'
+import { getServerUrl } from '../duck'
 
-export const Support = ({
-  t,
-  analytics,
-  setAnalytics,
-  isDebug,
-  serverUrl,
-  sendFeedback
-}) => (
+export const Support = ({ t, isDebug, serverUrl, sendFeedback }) => (
   <SettingCategory
     title={t('mobile.settings.support.title')}
     elements={[
@@ -25,9 +18,7 @@ export const Support = ({
         type: ELEMENT_CHECKBOX,
         title: t('mobile.settings.support.analytics.title'),
         label: t('mobile.settings.support.analytics.label'),
-        id: 'analytics_checkbox',
-        checked: analytics,
-        onChange: setAnalytics
+        id: 'analytics_checkbox'
       },
       {
         type: ELEMENT_BUTTON,
@@ -64,15 +55,7 @@ export const Support = ({
 )
 
 const mapStateToProps = state => ({
-  analytics: isAnalyticsOn(state),
   serverUrl: getServerUrl(state)
 })
 
-const mapDispatchToProps = dispatch => ({
-  setAnalytics: value => dispatch(setAnalytics(value))
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(translate()(Support))
+export default connect(mapStateToProps)(translate()(Support))

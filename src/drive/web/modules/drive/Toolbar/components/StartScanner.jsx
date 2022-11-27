@@ -4,7 +4,6 @@ import { SCANNER_UPLOADING } from 'cozy-scanner'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
 import CameraIcon from 'cozy-ui/transpiled/react/Icons/Camera'
 
 import { ScannerContext } from './ScanWrapper'
@@ -27,17 +26,9 @@ const StartScanner = ({ t }) => {
     return startScanner
   })()
 
-  const trackEvent = () => {
-    const tracker = getTracker()
-    if (tracker) {
-      tracker.push(['trackEvent', 'Drive', 'Scanner', 'Scan Click'])
-    }
-  }
-
   return (
     <ActionMenuItem
       onClick={() => {
-        trackEvent()
         actionOnClick()
       }}
       left={<Icon icon={CameraIcon} />}

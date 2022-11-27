@@ -1,10 +1,4 @@
-export {
-  setUrl,
-  setAnalytics,
-  setOffline,
-  setBackupImages,
-  setWifiOnly
-} from './actions'
+export { setUrl, setOffline, setBackupImages, setWifiOnly } from './actions'
 
 export {
   default,

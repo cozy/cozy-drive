@@ -22,11 +22,6 @@ import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
 import appReducers from 'photos/reducers'
 import AppRoute from 'photos/components/AppRoute'
 import StyledApp from 'photos/components/StyledApp'
-import {
-  shouldEnableTracking,
-  getTracker,
-  createTrackerMiddleware
-} from 'cozy-ui/transpiled/react/helpers/tracker'
 import memoize from 'lodash/memoize'
 
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
@@ -58,13 +53,6 @@ const setupAppContext = memoize(() => {
   setCozyUrl(cozyUrl)
   let history = hashHistory
   let middlewares = [thunkMiddleware, loggerMiddleware]
-
-  if (shouldEnableTracking() && getTracker()) {
-    let trackerInstance = getTracker()
-    history = trackerInstance.connectToHistory(hashHistory)
-    trackerInstance.track(hashHistory.getCurrentLocation()) // when using a hash history, the initial visit is not tracked by piwik react router
-    middlewares.push(createTrackerMiddleware())
-  }
 
   // Enable Redux dev tools
   const composeEnhancers =

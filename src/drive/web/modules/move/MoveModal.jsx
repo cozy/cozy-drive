@@ -13,7 +13,6 @@ import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
-import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
 import { withBreakpoints } from 'cozy-ui/transpiled/react'
 
 import { ROOT_DIR_ID } from 'drive/constants/config'
@@ -115,7 +114,6 @@ export class MoveModal extends React.Component {
         buttonText: t('Move.cancel'),
         buttonAction: () => this.cancelMove(entries, trashedFiles, callback)
       })
-      this.trackEvent(entries.length)
       if (callback) callback()
     } catch (e) {
       logger.warn(e)
@@ -166,13 +164,6 @@ export class MoveModal extends React.Component {
       Alerter.error('Move.cancelled_error', { smart_count: entries.length })
     } finally {
       if (callback) callback()
-    }
-  }
-
-  trackEvent(eventValue) {
-    const tracker = getTracker()
-    if (tracker) {
-      tracker.push(['trackEvent', 'Drive', 'move', 'moveTo', eventValue])
     }
   }
 

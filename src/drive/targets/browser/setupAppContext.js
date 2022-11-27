@@ -3,10 +3,6 @@
 import memoize from 'lodash/memoize'
 import { initTranslation } from 'cozy-ui/transpiled/react/I18n'
 import CozyClient from 'cozy-client'
-import {
-  shouldEnableTracking,
-  getTracker
-} from 'cozy-ui/transpiled/react/helpers/tracker'
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 import registerClientPlugins from 'drive/lib/registerClientPlugins'
 
@@ -65,11 +61,6 @@ const setupApp = memoize(() => {
     appNamePrefix: data.app.prefix
   })
 
-  if (shouldEnableTracking() && getTracker()) {
-    let trackerInstance = getTracker()
-    history = trackerInstance.connectToHistory(hashHistory)
-    trackerInstance.track(hashHistory.getCurrentLocation()) // when using a hash history, the initial visit is not tracked by piwik react router
-  }
   return { locale, polyglot, client, history, store, root }
 })
 
