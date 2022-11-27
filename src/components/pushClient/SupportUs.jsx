@@ -5,7 +5,6 @@ import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import Stack from 'cozy-ui/transpiled/react/Stack'
 import { ButtonLink } from 'cozy-ui/transpiled/react/Button'
-import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
 
 import { withClient } from 'cozy-client'
 import { isMobileApp, isFlagshipApp } from 'cozy-device-helper'
@@ -16,13 +15,6 @@ import withDiskUsage from './withDiskUsage'
 import styles from './supportUs.styl'
 const GB = 1000 * 1000 * 1000
 const PREMIUM_QUOTA = 50 * GB
-
-const trackEvent = () => {
-  const tracker = getTracker()
-  if (tracker) {
-    tracker.push(['trackEvent', 'Drive', 'CTAOffers', 'LEFT_BUTTON'])
-  }
-}
 
 const buildPremiumLink = (uuid, managerUrl) =>
   `${managerUrl}/cozy/instances/${uuid}/premium`
@@ -68,7 +60,6 @@ const SupportUs = ({ t, client }) => {
           label={t('Nav.support-us')}
           className={styles['Supportus__button']}
           theme="secondary"
-          onClick={trackEvent}
         />
       </Stack>
     )

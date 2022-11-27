@@ -5,7 +5,6 @@ import {
   setUrl,
   setBackupImages,
   setWifiOnly,
-  setAnalytics,
   wrongAddressError,
   ERROR,
   wrongAddressErrorMsg
@@ -35,22 +34,6 @@ describe('backup images actions creators', () => {
   it('should disable backup on wifi only', () => {
     const state = reducer({}, setWifiOnly(false))
     expect(state).toEqual({ wifiOnly: false })
-  })
-})
-
-describe('analytics actions creators', () => {
-  it('should enable analytics', () => {
-    const store = mockStore({})
-    store.dispatch(setAnalytics(true))
-    const state = store.getActions().reduce(reducer, store.getState())
-    expect(state).toEqual({ analytics: true })
-  })
-
-  it('should disable analytics', () => {
-    const store = mockStore({})
-    store.dispatch(setAnalytics(false))
-    const state = store.getActions().reduce(reducer, store.getState())
-    expect(state).toEqual({ analytics: false })
   })
 })
 

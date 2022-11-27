@@ -10,7 +10,6 @@ import {
   startMediaBackup,
   cancelMediaBackup
 } from 'drive/mobile/modules/mediaBackup/duck'
-import { getTracker } from 'cozy-ui/transpiled/react/helpers/tracker'
 
 import toolbarContainer from '../toolbar'
 import { connect } from 'react-redux'
@@ -52,10 +51,6 @@ const ScanWrapper = ({
           // big enough
           onBeforeUpload={() => stopMediaBackup()}
           onFinish={() => {
-            const tracker = getTracker()
-            if (tracker) {
-              tracker.push(['trackEvent', 'Drive', 'Scanner', 'Finished'])
-            }
             startMediaBackup()
           }}
         >

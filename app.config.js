@@ -58,8 +58,6 @@ const extraConfig = {
   },
   plugins: [
     new DefinePlugin({
-      __PIWIK_SITEID__: 8,
-      __PIWIK_TRACKER_URL__: JSON.stringify('https://matomo.cozycloud.cc'),
       __APP_VERSION__: JSON.stringify(pkg.version),
       __APP_SLUG__: JSON.stringify(process.env.COZY_APP_SLUG)
     })

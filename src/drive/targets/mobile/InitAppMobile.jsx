@@ -17,12 +17,6 @@ import configureStore from 'drive/store/configureStore'
 import logger from 'lib/logger'
 import { startBackgroundService } from 'drive/mobile/lib/background'
 import { configureReporter, logException } from 'drive/lib/reporter'
-import {
-  startTracker,
-  useHistoryForTracker,
-  startHeartBeat,
-  stopHeartBeat
-} from 'drive/mobile/lib/tracker'
 import { getLang, initClient } from 'drive/mobile/lib/cozy-helper'
 import registerClientPlugins from 'drive/lib/registerClientPlugins'
 import DriveMobileRouter from 'drive/mobile/modules/authorization/DriveMobileRouter'
@@ -31,7 +25,6 @@ import {
   getClientSettings,
   getToken
 } from 'drive/mobile/modules/authorization/duck'
-import { getServerUrl, isAnalyticsOn } from 'drive/mobile/modules/settings/duck'
 import { ONBOARDED_ITEM } from 'drive/mobile/modules/onboarding/OnBoarding'
 
 import App from 'components/App/App'
@@ -161,7 +154,6 @@ class InitAppMobile {
   onResume = async () => {
     const store = await this.getStore()
     store.dispatch(backupImages())
-    if (isAnalyticsOn(store.getState())) startHeartBeat()
   }
   /**
    * onPause is called when the app goes to background.
@@ -171,7 +163,6 @@ class InitAppMobile {
    */
   onPause = async () => {
     const store = await this.getStore()
-    if (isAnalyticsOn(store.getState())) stopHeartBeat()
     // TODO: selector
     // We don't want to send the notification for now
     /* if (store.getState().mobile.mediaBackup.currentUpload && isIOSApp()) {
@@ -266,12 +257,6 @@ class InitAppMobile {
 
     if (!__DEVELOPMENT__) configureReporter()
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useHistoryForTracker(hashHistory)
-
-    if (isAnalyticsOn(store.getState())) {
-      startTracker(getServerUrl(store.getState()))
-    }
     const root = document.querySelector('[role=application]')
 
     render(
