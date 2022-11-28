@@ -6,6 +6,7 @@ import { useWebviewIntent } from 'cozy-intent'
 
 import {
   withClient,
+  generateWebLink,
   models,
   useAppLinkWithStoreFallback,
   useCapabilities
@@ -37,12 +38,21 @@ const CreateNoteItem = ({ client, t, displayedFolder }) => {
 
   let returnUrl = ''
   if (displayedFolder) {
-    returnUrl = generateUniversalLink({
-      slug: 'drive',
-      cozyUrl: client.getStackClient().uri,
-      subDomainType: isFlatDomain ? 'flat' : 'nested',
-      nativePath: `/files/${displayedFolder.id}`
-    })
+    if (isFlagshipApp() && webviewIntent) {
+      returnUrl = generateWebLink({
+        slug: 'drive',
+        cozyUrl: client.getStackClient().uri,
+        subDomainType: isFlatDomain ? 'flat' : 'nested',
+        pathname: `/files/${displayedFolder.id}`
+      })
+    } else {
+      returnUrl = generateUniversalLink({
+        slug: 'drive',
+        cozyUrl: client.getStackClient().uri,
+        subDomainType: isFlatDomain ? 'flat' : 'nested',
+        nativePath: `/files/${displayedFolder.id}`
+      })
+    }
   }
 
   return (
