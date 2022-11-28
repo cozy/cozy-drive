@@ -12,12 +12,10 @@ import { restore, destroy } from 'drive/web/modules/actions'
 import { TRASH_DIR_ID } from 'drive/constants/config'
 import {
   buildTrashQuery,
-  buildFileWithSpecificMetadataAttributeQuery
+  buildFileWithSpecificMetadataAttributeQuery,
+  buildOnlyFolderQuery
 } from 'drive/web/modules/queries'
-import {
-  getCurrentFolderId,
-  getDisplayedFolder
-} from 'drive/web/modules/selectors'
+import { getCurrentFolderId } from 'drive/web/modules/selectors'
 import { ModalContext } from 'drive/lib/ModalContext'
 import TrashToolbar from 'drive/web/modules/trash/Toolbar'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
@@ -32,16 +30,15 @@ import useHead from 'components/useHead'
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-const TrashFolderView = ({
-  currentFolderId,
-  displayedFolder,
-  router,
-  params,
-  children
-}) => {
+const TrashFolderView = ({ currentFolderId, router, params, children }) => {
   const { isMobile } = useBreakpoints()
 
   useHead(params)
+  const displayedFolderQuery = buildOnlyFolderQuery(currentFolderId)
+  const displayedFolder = useQuery(
+    displayedFolderQuery.definition,
+    displayedFolderQuery.options
+  ).data
 
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
     isMobile,
@@ -133,6 +130,5 @@ const TrashFolderView = ({
 }
 
 export default connect(state => ({
-  currentFolderId: getCurrentFolderId(state),
-  displayedFolder: getDisplayedFolder(state)
+  currentFolderId: getCurrentFolderId(state)
 }))(TrashFolderView)
