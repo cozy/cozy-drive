@@ -35,11 +35,10 @@ const TrashFolderView = ({ currentFolderId, router, params, children }) => {
 
   useHead(params)
   const displayedFolderQuery = buildOnlyFolderQuery(currentFolderId)
-  const displayedFolder = useQuery(
-    displayedFolderQuery.definition,
-    displayedFolderQuery.options
-  ).data
-
+  const displayedFolder = useQuery(displayedFolderQuery.definition, {
+    ...displayedFolderQuery.options,
+    enabled: !!currentFolderId
+  }).data
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
     isMobile,
     desktopExtraColumnsNames,
@@ -129,6 +128,25 @@ const TrashFolderView = ({ currentFolderId, router, params, children }) => {
   )
 }
 
+const TrashFolderViewWrapper = ({
+  currentFolderId,
+  router,
+  params,
+  children
+}) => {
+  // Since playing with qDef.options.enabled is not enought
+  // at the moment. See https://github.com/cozy/cozy-client/pull/1273
+  if (!currentFolderId) return null
+  return (
+    <TrashFolderView
+      currentFolderId={currentFolderId}
+      router={router}
+      params={params}
+    >
+      {children}
+    </TrashFolderView>
+  )
+}
 export default connect(state => ({
   currentFolderId: getCurrentFolderId(state)
-}))(TrashFolderView)
+}))(TrashFolderViewWrapper)
