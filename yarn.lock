@@ -6177,10 +6177,10 @@ cozy-ui@22.3.1:
     react-pdf "^4.0.5"
     react-select "2.2.0"
 
-cozy-ui@74.4.2:
-  version "74.4.2"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-74.4.2.tgz#20cdde22fb50e27bcb7eceee397f257bda775531"
-  integrity sha512-vmCvU7OsGzvqyCHjhpiT4Opsj/CPrGPDjndJsexCI0S0xsH7qCm2cgSegzVaZyzDL3MBIZDi8sSptlGwQCTRng==
+cozy-ui@^77.9.2:
+  version "77.9.2"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-77.9.2.tgz#1785aa2734580fe4aac78ce3e1c83388dc12e76d"
+  integrity sha512-oZD45M9WCEzmb5lG7CySMpUtP+Fdk9anjtbH2YQ7p3KaLfZdtMgLSRuE4MX1e2QOV7jCTZlSX3SpkL4nsP6Gpg==
   dependencies:
     "@babel/runtime" "^7.3.4"
     "@material-ui/core" "4.12.3"
@@ -12976,9 +12976,9 @@ msgpack5@^4.0.2:
     readable-stream "^2.3.6"
     safe-buffer "^5.1.2"
 
-"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.6":
-  version "1.0.6"
-  resolved "https://github.com/cozy/mui-bottom-sheet.git#494c40416ecde95732c864f9b921e7e545075aa5"
+"mui-bottom-sheet@git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
+  version "1.0.8"
+  resolved "git+https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
     jest-environment-jsdom-sixteen "^1.0.3"
@@ -12986,9 +12986,9 @@ msgpack5@^4.0.2:
     react-use-gesture "^7.0.8"
     react-use-measure "^2.0.0"
 
-"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
-  version "1.0.8"
-  resolved "https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
+"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.6":
+  version "1.0.6"
+  resolved "https://github.com/cozy/mui-bottom-sheet.git#494c40416ecde95732c864f9b921e7e545075aa5"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
     jest-environment-jsdom-sixteen "^1.0.3"
