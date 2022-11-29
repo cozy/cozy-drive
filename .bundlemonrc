@@ -141,7 +141,7 @@
     },
     {
       "path": "drive/vendors/**",
-      "maxPercentIncrease": 0.4
+      "maxPercentIncrease": 0.5
     }
   ],
   "reportOutput": [
