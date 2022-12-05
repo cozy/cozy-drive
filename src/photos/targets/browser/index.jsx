@@ -8,7 +8,6 @@ import { Provider } from 'react-redux'
 import { compose, createStore, combineReducers, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
-import { Router, hashHistory } from 'react-router'
 
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { RealtimePlugin } from 'cozy-realtime'
@@ -20,7 +19,7 @@ import { WebviewIntentProvider } from 'cozy-intent'
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
 
 import appReducers from 'photos/reducers'
-import AppRoute from 'photos/components/AppRoute'
+import AppRouter from 'photos/components/AppRouter'
 import StyledApp from 'photos/components/StyledApp'
 import memoize from 'lodash/memoize'
 
@@ -53,7 +52,6 @@ const setupAppContext = memoize(() => {
 
   configureReporter()
   setCozyUrl(cozyUrl)
-  let history = hashHistory
   let middlewares = [thunkMiddleware, loggerMiddleware]
 
   // Enable Redux dev tools
@@ -76,7 +74,7 @@ const setupAppContext = memoize(() => {
     appSlug: data.app.slug,
     appNamePrefix: data.app.prefix
   })
-  return { store, locale, client, history, root }
+  return { store, locale, client, root }
 })
 
 const App = props => {
@@ -104,21 +102,13 @@ const App = props => {
 
 const AppWithRouter = props => (
   <App {...props}>
-    <Router history={props.history} routes={AppRoute} />
+    <AppRouter />
   </App>
 )
 
 const init = () => {
-  const { store, locale, client, history, root } = setupAppContext()
-  render(
-    <AppWithRouter
-      store={store}
-      locale={locale}
-      client={client}
-      history={history}
-    />,
-    root
-  )
+  const { store, locale, client, root } = setupAppContext()
+  render(<AppWithRouter store={store} locale={locale} client={client} />, root)
 }
 document.addEventListener('DOMContentLoaded', () => {
   init()
