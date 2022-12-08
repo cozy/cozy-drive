@@ -43,7 +43,8 @@ const CreateNoteItem = ({ client, t, displayedFolder }) => {
         slug: 'drive',
         cozyUrl: client.getStackClient().uri,
         subDomainType: isFlatDomain ? 'flat' : 'nested',
-        pathname: `/files/${displayedFolder.id}`
+        pathname: '',
+        hash: `/files/${displayedFolder.id}`
       })
     } else {
       returnUrl = generateUniversalLink({
