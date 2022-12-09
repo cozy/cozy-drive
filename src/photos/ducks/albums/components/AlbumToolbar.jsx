@@ -14,11 +14,14 @@ import { MoreButton } from 'components/Button'
 
 import styles from 'photos/styles/toolbar.styl'
 
+import { useNavigate, useLocation } from 'react-router-dom'
+
 class AlbumToolbar extends Component {
   render() {
     const {
       t,
-      router,
+      navigate,
+      pathname,
       album,
       sharedWithMe,
       // sharedByMe,
@@ -101,7 +104,7 @@ class AlbumToolbar extends Component {
             <MenuItem
               data-testid="menu-add-photos-to-album"
               icon={<Icon icon={AlbumAddIcon} />}
-              onSelect={() => router.push(`${router.location.pathname}/edit`)}
+              onSelect={() => navigate.push(`${pathname}/edit`)}
             >
               {t('Toolbar.menu.add_photos')}
             </MenuItem>
@@ -131,4 +134,10 @@ class AlbumToolbar extends Component {
   }
 }
 
-export default withBreakpoints()(AlbumToolbar)
+const AlbumToolbarWrapper = props => {
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
+  return <AlbumToolbar {...props} navigate={navigate} pathname={pathname} />
+}
+
+export default withBreakpoints()(AlbumToolbarWrapper)
