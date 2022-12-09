@@ -7,9 +7,9 @@ import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import ActionMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import AlbumAddIcon from 'cozy-ui/transpiled/react/Icons/AlbumAdd'
 
-const newAlbum = router => () => ({
+const newAlbum = navigate => () => ({
   name: 'newAlbum',
-  action: () => router.push('/albums/new'),
+  action: () => navigate('/albums/new'),
   Component: forwardRef(function NewAlbum(props, ref) {
     const { t } = useI18n()
     return (
