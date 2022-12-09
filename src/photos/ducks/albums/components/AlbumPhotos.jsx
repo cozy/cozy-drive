@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router'
 
 import { withClient } from 'cozy-client'
 
@@ -236,7 +235,6 @@ AlbumPhotos.propTypes = {
 
 export default flow(
   connect(null, mapDispatchToProps),
-  withRouter,
   withClient,
   translate()
 )(AlbumPhotos)

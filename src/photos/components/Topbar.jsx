@@ -4,7 +4,6 @@ import React, { Component } from 'react'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { withBreakpoints, BarContextProvider } from 'cozy-ui/transpiled/react'
 import { withClient } from 'cozy-client'
-import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import flow from 'lodash/flow'
 import SharingProvider from 'cozy-sharing'
@@ -110,9 +109,4 @@ Topbar.defaultProps = {
   onEdit: () => {}
 }
 
-export default flow(
-  withRouter,
-  withClient,
-  withBreakpoints(),
-  translate()
-)(Topbar)
+export default flow(withClient, withBreakpoints(), translate())(Topbar)
