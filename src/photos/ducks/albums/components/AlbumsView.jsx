@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import styles from '../../../styles/layout.styl'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import { withRouter } from 'react-router'
 
 import AlbumsToolbar from './AlbumsToolbar'
 import AlbumsList from './AlbumsList'
@@ -42,4 +41,4 @@ class AlbumsView extends Component {
   }
 }
 
-export default translate()(withRouter(AlbumsView))
+export default translate()(AlbumsView)
