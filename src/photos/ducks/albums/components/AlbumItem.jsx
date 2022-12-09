@@ -2,7 +2,7 @@ import styles from '../../../styles/albumsList.styl'
 import classNames from 'classnames'
 
 import React, { Component } from 'react'
-import { Link, withRouter } from 'react-router'
+import { Link } from 'react-router'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import FileImageLoader from 'cozy-ui/transpiled/react/FileImageLoader'
 
@@ -21,7 +21,7 @@ const AlbumItemLink = ({ router, album, image, title, desc }) => {
     </Link>
   )
 }
-const LinkedAlbumItem = withRouter(AlbumItemLink)
+const LinkedAlbumItem = AlbumItemLink
 
 const ClickableAlbumItem = ({
   album,

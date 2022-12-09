@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router'
 import { Button } from 'cozy-ui/transpiled/react'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 
@@ -127,4 +126,4 @@ class PhotosPicker extends Component {
   }
 }
 
-export default translate()(withRouter(PhotosPicker))
+export default translate()(PhotosPicker)
