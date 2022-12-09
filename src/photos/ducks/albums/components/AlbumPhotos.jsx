@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { useNavigate } from 'react-router-dom'
 
 import { withClient } from 'cozy-client'
-
 import { showModal } from 'react-cozy-helpers'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
@@ -19,6 +19,7 @@ import PhotoBoard from 'photos/components/PhotoBoard'
 import Topbar from 'photos/components/Topbar'
 import DestroyConfirm from 'photos/components/DestroyConfirm'
 import Selection from '../../selection'
+
 class AlbumPhotos extends Component {
   state = {
     editing: false,
@@ -87,7 +88,7 @@ class AlbumPhotos extends Component {
     })
   }
   renderDestroyConfirm = () => {
-    const { t, router, album, deleteAlbum } = this.props
+    const { t, navigate, album, deleteAlbum } = this.props
 
     return (
       <DestroyConfirm
@@ -99,7 +100,7 @@ class AlbumPhotos extends Component {
             // TODO: fix me
             // eslint-disable-next-line promise/always-return
             .then(() => {
-              router.replace('albums')
+              navigate('albums', { replace: true })
               Alerter.success('Albums.remove_album.success', {
                 name: album.name
               })
@@ -120,16 +121,8 @@ class AlbumPhotos extends Component {
       return null
     }
 
-    const {
-      t,
-      router,
-      album,
-      shareAlbum,
-      photos,
-      hasMore,
-      fetchMore,
-      lastFetch
-    } = this.props
+    const { t, album, shareAlbum, photos, hasMore, fetchMore, lastFetch } =
+      this.props
     const { editing } = this.state
     const shared = {}
 
@@ -156,7 +149,6 @@ class AlbumPhotos extends Component {
               >
                 <AlbumToolbar
                   t={t}
-                  router={router}
                   album={album}
                   sharedWithMe={shared.withMe}
                   sharedByMe={shared.byMe}
@@ -229,12 +221,17 @@ AlbumPhotos.propTypes = {
   shareAlbum: PropTypes.func,
   photos: PropTypes.array.isRequired,
   t: PropTypes.func.isRequired,
-  router: PropTypes.object.isRequired,
+  navigate: PropTypes.object.isRequired,
   lastFetch: PropTypes.string
+}
+
+const AlbumPhotosWrapper = props => {
+  const navigate = useNavigate()
+  return <AlbumPhotos {...props} navigate={navigate} />
 }
 
 export default flow(
   connect(null, mapDispatchToProps),
   withClient,
   translate()
-)(AlbumPhotos)
+)(AlbumPhotosWrapper)

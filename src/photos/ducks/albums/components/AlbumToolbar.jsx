@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { ShareButton, SharedRecipients } from 'cozy-sharing'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
@@ -21,7 +22,6 @@ function insertIf(condition, element) {
 
 const AlbumToolbar = ({
   t,
-  router,
   album,
   sharedWithMe,
   readOnly,
@@ -33,12 +33,13 @@ const AlbumToolbar = ({
   shareAlbum
 }) => {
   const { isMobile } = useBreakpoints()
+  const navigate = useNavigate()
 
   const actions = [
     ...insertIf(!sharedWithMe && isMobile, shareAlbumAction(shareAlbum, album)),
     download(downloadAlbum, t('Toolbar.menu.download_album')),
     renameAlbum(onRename),
-    ...insertIf(!readOnly, editAlbum(router)),
+    ...insertIf(!readOnly, editAlbum(navigate)),
     ...insertIf(isMobile, divider),
     ...insertIf(isMobile, selectItemsAction(selectItems)),
     divider,

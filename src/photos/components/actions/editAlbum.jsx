@@ -7,9 +7,9 @@ import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import ActionMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import AlbumAddIcon from 'cozy-ui/transpiled/react/Icons/AlbumAdd'
 
-const editAlbum = router => () => ({
+const editAlbum = navigate => () => ({
   name: 'editAlbum',
-  action: () => router.push(`${router.location.pathname}/edit`),
+  action: () => navigate(`./edit`),
   Component: forwardRef(function EditAlbum(props, ref) {
     const { t } = useI18n()
     return (

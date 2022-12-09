@@ -9,11 +9,14 @@ import styles from 'photos/styles/toolbar.styl'
 import MoreMenu from '../../../components/MoreMenu'
 import { newAlbum } from '../../../components/actions'
 
-const AlbumsToolbar = ({ router }) => {
+import { useNavigate } from 'react-router-dom'
+
+const AlbumsToolbar = () => {
   const { isMobile } = useBreakpoints()
   const { t } = useI18n()
+  const navigate = useNavigate()
 
-  const actions = [newAlbum(router)]
+  const actions = [newAlbum(navigate)]
 
   return (
     <div
