@@ -2,7 +2,7 @@ import styles from '../styles/photoList.styl'
 
 import React from 'react'
 import classNames from 'classnames'
-import { Link, withRouter } from 'react-router'
+import { Link } from 'react-router'
 
 import FileImageLoader from 'cozy-ui/transpiled/react/FileImageLoader'
 
@@ -72,4 +72,4 @@ const Photo = props => {
   )
 }
 
-export default withRouter(Photo)
+export default Photo

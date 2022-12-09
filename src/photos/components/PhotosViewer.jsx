@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router'
 
 import Overlay from 'cozy-ui/transpiled/react/Overlay'
 import Viewer from 'cozy-ui/transpiled/react/Viewer'
@@ -44,4 +43,4 @@ class PhotosViewer extends Component {
   }
 }
 
-export default withRouter(PhotosViewer)
+export default PhotosViewer

@@ -1,5 +1,4 @@
 import React from 'react'
-import { withRouter } from 'react-router'
 
 import { Query, withMutations, Q } from 'cozy-client'
 import { Alerter } from 'cozy-ui/transpiled/react/'
@@ -163,17 +162,17 @@ export const AlbumPhotosWithLoader =
     }
   }
 
-export const ConnectedAlbumPhotos = withRouter(props => (
+export const ConnectedAlbumPhotos = props => (
   <Query query={ALBUM_QUERY} {...props} mutations={ALBUM_MUTATIONS}>
     {AlbumPhotosWithLoader({
       children: props.children
     })}
   </Query>
-))
+)
 
 const CreateAlbumPicker = withMutations(ALBUMS_MUTATIONS)(PhotosPicker)
 
-const ConnectedPhotosPicker = withRouter(({ params, ...props }) => {
+const ConnectedPhotosPicker = ({ params, ...props }) => {
   return params.albumId ? (
     <Query query={ALBUM_QUERY} mutations={ALBUMS_MUTATIONS} {...props}>
       {({ data }, { addPhotos }) => (
@@ -183,7 +182,7 @@ const ConnectedPhotosPicker = withRouter(({ params, ...props }) => {
   ) : (
     <CreateAlbumPicker />
   )
-})
+}
 
 export {
   ConnectedAlbumsView as AlbumsView,
