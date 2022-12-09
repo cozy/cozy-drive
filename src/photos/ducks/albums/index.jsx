@@ -21,6 +21,7 @@ const ALBUMS_QUERY = client =>
     .include(['photos'])
     .sortBy([{ created_at: 'desc' }])
 
+// TODO: remove router to use only albumId
 export const ALBUM_QUERY = (client, ownProps) =>
   Q(DOCTYPE_ALBUMS).getById(ownProps.router.params.albumId).include(['photos'])
 

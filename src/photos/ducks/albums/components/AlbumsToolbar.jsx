@@ -8,34 +8,39 @@ import { MoreButton } from 'components/Button'
 
 import styles from 'photos/styles/toolbar.styl'
 
-const AlbumsToolbar = ({ t, router }) => (
-  <div
-    data-testid="pho-toolbar-albums"
-    className={styles['pho-toolbar']}
-    role="toolbar"
-  >
-    <div className={'u-hide--mob'}>
-      <ButtonLink
-        data-testid="album-add"
-        theme="secondary"
-        href="#/albums/new"
-        icon={AlbumAddIcon}
-        label={t('Toolbar.album_new')}
-      />
-    </div>
-    <Menu
-      className={classNames(styles['pho-toolbar-menu'], 'u-hide--desk')}
-      component={<MoreButton />}
-      position="right"
+import { useNavigate } from 'react-router-dom'
+
+const AlbumsToolbar = ({ t }) => {
+  const { navigate } = useNavigate()
+  return (
+    <div
+      data-testid="pho-toolbar-albums"
+      className={styles['pho-toolbar']}
+      role="toolbar"
     >
-      <MenuItem
-        onSelect={() => router.push('/albums/new')}
-        icon={<Icon icon={AlbumAddIcon} />}
+      <div className={'u-hide--mob'}>
+        <ButtonLink
+          data-testid="album-add"
+          theme="secondary"
+          href="#/albums/new"
+          icon={AlbumAddIcon}
+          label={t('Toolbar.album_new')}
+        />
+      </div>
+      <Menu
+        className={classNames(styles['pho-toolbar-menu'], 'u-hide--desk')}
+        component={<MoreButton />}
+        position="right"
       >
-        {t('Toolbar.album_new')}
-      </MenuItem>
-    </Menu>
-  </div>
-)
+        <MenuItem
+          onSelect={() => navigate.push('/albums/new')}
+          icon={<Icon icon={AlbumAddIcon} />}
+        >
+          {t('Toolbar.album_new')}
+        </MenuItem>
+      </Menu>
+    </div>
+  )
+}
 
 export default AlbumsToolbar

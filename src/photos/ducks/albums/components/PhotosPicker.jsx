@@ -6,6 +6,7 @@ import { TimelineBoard } from '../../timeline'
 import Selection from '../../selection'
 
 import styles from '../../../styles/newAlbum.styl'
+import { useNavigate } from 'react-router-dom'
 
 class PhotosPicker extends Component {
   constructor(props) {
@@ -20,14 +21,14 @@ class PhotosPicker extends Component {
   }
 
   onCancel = () => {
-    this.props.router.goBack()
+    this.props.navigate.goBack()
   }
 
   onCreate = selected => {
     const { name } = this.state
     this.props
       .createAlbum(name, selected)
-      .then(album => this.props.router.push(`/albums/${album.id}`))
+      .then(album => this.props.navigate.push(`/albums/${album.id}`))
       .catch(() => {
         this.input.focus()
         this.input.select()
@@ -40,7 +41,7 @@ class PhotosPicker extends Component {
     // eslint-disable-next-line promise/catch-or-return
     this.props
       .addPhotos(album, selected)
-      .then(() => this.props.router.push(`/albums/${album.id}`))
+      .then(() => this.props.navigate.push(`/albums/${album.id}`))
   }
 
   componentDidMount() {
@@ -126,4 +127,9 @@ class PhotosPicker extends Component {
   }
 }
 
-export default translate()(PhotosPicker)
+const PhotosPickerWrapper = props => {
+  const navigate = useNavigate()
+  return <PhotosPicker {...props} navigate={navigate} />
+}
+
+export default translate()(PhotosPickerWrapper)

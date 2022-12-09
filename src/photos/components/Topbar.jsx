@@ -8,6 +8,7 @@ import PropTypes from 'prop-types'
 import flow from 'lodash/flow'
 import SharingProvider from 'cozy-sharing'
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 import { BarCenter, BarRight, BarLeft } from 'components/Bar'
 
@@ -90,7 +91,7 @@ export class Topbar extends Component {
     store: PropTypes.object.isRequired
   }
   componentDidMount() {
-    const url = this.props.router.location.pathname
+    const url = this.props.pathname
     this.parentUrl = url.substring(0, url.lastIndexOf('/'))
   }
 
@@ -109,7 +110,7 @@ export class Topbar extends Component {
       children,
       viewName,
       breakpoints: { isMobile },
-      router,
+      navigate,
       client,
       t
     } = this.props
@@ -129,7 +130,7 @@ export class Topbar extends Component {
     )
 
     const backButton = (
-      <BackToAlbumsButton onClick={() => router.push(this.parentUrl)} />
+      <BackToAlbumsButton onClick={() => navigate.push(this.parentUrl)} />
     )
     const responsiveBackButton = isMobile ? (
       <BarLeft>{backButton}</BarLeft>
@@ -154,7 +155,6 @@ Topbar.propTypes = {
   editing: PropTypes.bool,
   onEdit: PropTypes.func,
   breakpoints: PropTypes.object.isRequired,
-  router: PropTypes.object.isRequired,
   children: PropTypes.node
 }
 
@@ -163,4 +163,10 @@ Topbar.defaultProps = {
   onEdit: () => {}
 }
 
-export default flow(withClient, withBreakpoints(), translate())(Topbar)
+const TopbarWrapper = props => {
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
+  return <Topbar {...props} navigate={navigate} pathname={pathname} />
+}
+
+export default flow(withClient, withBreakpoints(), translate())(TopbarWrapper)
