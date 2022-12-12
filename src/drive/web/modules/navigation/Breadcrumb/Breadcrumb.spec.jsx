@@ -75,9 +75,8 @@ describe('Breadcrumbs', () => {
       // Then
       expect(container.querySelector('.deployed')).toBeInTheDocument()
       expect(document.addEventListener).toHaveBeenCalledWith(
-        'click',
-        expect.any(Function),
-        true
+        'mousedown',
+        expect.any(Function)
       )
     })
 
@@ -93,11 +92,6 @@ describe('Breadcrumbs', () => {
       fireEvent.click(container.querySelector('.fil-path-current'))
 
       // Then
-      expect(document.removeEventListener).toHaveBeenCalledWith(
-        'click',
-        expect.any(Function),
-        true
-      )
       expect(container.querySelector('.deployed')).not.toBeInTheDocument()
     })
   })
