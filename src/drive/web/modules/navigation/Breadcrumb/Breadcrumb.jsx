@@ -1,5 +1,5 @@
 /* global __TARGET__ */
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 
@@ -17,26 +17,29 @@ const Breadcrumb = ({
   className = ''
 }) => {
   const [deployed, setDeployed] = useState(false)
-  const [menu, setMenu] = useState(undefined)
+  const wrapperRef = useRef(null)
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        closeMenu()
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [wrapperRef, closeMenu])
 
   const toggleDeploy = () => (deployed ? closeMenu() : openMenu())
 
-  const openMenu = () => {
+  const openMenu = useCallback(() => {
     setDeployed(true)
-    document.addEventListener('click', handleClickOutside, true)
-  }
+  }, [setDeployed])
 
-  const closeMenu = () => {
+  const closeMenu = useCallback(() => {
     setDeployed(false)
-    document.removeEventListener('click', handleClickOutside, true)
-  }
-
-  const handleClickOutside = e => {
-    if (menu && !menu.contains(e.target)) {
-      e.stopPropagation()
-      closeMenu()
-    }
-  }
+  }, [setDeployed])
 
   if (!path) return false
 
@@ -53,10 +56,8 @@ const Breadcrumb = ({
       <h2
         data-testid="path-title"
         className={styles['fil-path-title']}
+        ref={wrapperRef}
         onClick={toggleDeploy}
-        ref={ref => {
-          setMenu(ref)
-        }}
       >
         {path.map((folder, index) => {
           if (index < path.length - 1) {
