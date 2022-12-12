@@ -13,7 +13,7 @@ import Nav, {
   NavText,
   genNavLink
 } from 'cozy-ui/transpiled/react/Nav'
-import { Link as RRNavLink } from 'react-router'
+import { Link } from 'react-router-dom'
 import ButtonClient from '../../components/pushClient/Button'
 import BannerClient from '../../components/pushClient/Banner'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
@@ -21,10 +21,12 @@ import { UploadQueue } from '../ducks/upload'
 import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { ModalManager } from 'react-cozy-helpers'
 import { isFlagshipApp } from 'cozy-device-helper'
+import { Outlet } from 'react-router-dom'
 
-const NavLink = genNavLink(RRNavLink)
+// TODO : apply style back on active
+const NavLink = genNavLink(Link)
 
-export const Layout = ({ t, children }) => (
+export const Layout = ({ t }) => (
   <LayoutUI>
     <Sidebar className={styles['pho-sidebar']}>
       <Nav>
@@ -48,7 +50,7 @@ export const Layout = ({ t, children }) => (
     <UploadQueue />
     <Main className={styles['pho-content']}>
       {__TARGET__ !== 'mobile' && !isFlagshipApp() && <BannerClient />}
-      {children}
+      <Outlet />
     </Main>
     <ModalManager />
 

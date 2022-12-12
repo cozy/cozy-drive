@@ -174,6 +174,7 @@ export const ConnectedAlbumPhotos = props => (
 const CreateAlbumPicker = withMutations(ALBUMS_MUTATIONS)(PhotosPicker)
 
 const ConnectedPhotosPicker = ({ params, ...props }) => {
+  console.log('ConnectedPhotosPicker')
   return params.albumId ? (
     <Query query={ALBUM_QUERY} mutations={ALBUMS_MUTATIONS} {...props}>
       {({ data }, { addPhotos }) => (
