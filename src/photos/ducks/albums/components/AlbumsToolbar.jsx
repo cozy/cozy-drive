@@ -1,7 +1,13 @@
 import React from 'react'
 import classNames from 'classnames'
 
-import { ButtonLink, Menu, MenuItem, Icon } from 'cozy-ui/transpiled/react'
+import {
+  ButtonLink,
+  Menu,
+  MenuItem,
+  Icon,
+  useI18n
+} from 'cozy-ui/transpiled/react'
 import AlbumAddIcon from 'cozy-ui/transpiled/react/Icons/AlbumAdd'
 
 import { MoreButton } from 'components/Button'
@@ -10,8 +16,9 @@ import styles from 'photos/styles/toolbar.styl'
 
 import { useNavigate } from 'react-router-dom'
 
-const AlbumsToolbar = ({ t }) => {
+const AlbumsToolbar = () => {
   const { navigate } = useNavigate()
+  const { t } = useI18n()
   return (
     <div
       data-testid="pho-toolbar-albums"

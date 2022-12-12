@@ -1,27 +1,57 @@
 import React from 'react'
-import { Route, Router, Redirect, hashHistory } from 'react-router'
+import { createHashRouter, RouterProvider } from 'react-router-dom'
 
 import Layout from './Layout'
 import Timeline from '../ducks/timeline'
 import { AlbumsView, AlbumPhotos, PhotosPicker } from '../ducks/albums'
 import PhotosViewer from './PhotosViewer'
+import { Spinner } from 'cozy-ui/transpiled/react'
+
+const router = createHashRouter([
+  {
+    path: '/',
+    element: <Layout />,
+    children: [
+      {
+        path: 'photos',
+        element: <Timeline />,
+        children: [
+          {
+            path: ':photoId',
+            element: <PhotosViewer />
+          }
+        ]
+      },
+      {
+        path: 'albums',
+        element: <AlbumsView />,
+        children: [
+          {
+            path: 'new',
+            element: <PhotosPicker />
+          },
+          {
+            path: ':albumId',
+            element: <AlbumPhotos />,
+            children: [
+              {
+                path: 'edit',
+                element: <PhotosPicker />
+              },
+              {
+                path: ':photoId',
+                element: <PhotosViewer />
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+])
 
 const AppRouter = () => (
-  <Router history={hashHistory}>
-    <Route component={Layout}>
-      <Route path="photos" component={Timeline}>
-        <Route path=":photoId" component={PhotosViewer} />
-      </Route>
-      <Route path="albums" component={AlbumsView}>
-        <Route path="new" component={PhotosPicker} />
-        <Route path=":albumId" component={AlbumPhotos}>
-          <Route path="edit" component={PhotosPicker} />
-          <Route path=":photoId" component={PhotosViewer} />
-        </Route>
-      </Route>
-      <Redirect from="/*" to="photos" />
-    </Route>
-  </Router>
+  <RouterProvider router={router} fallbackElement={<Spinner />} />
 )
 
 export default AppRouter
