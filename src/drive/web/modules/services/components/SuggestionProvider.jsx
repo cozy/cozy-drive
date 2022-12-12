@@ -9,7 +9,7 @@ import { ROOT_DIR_ID } from 'drive/constants/config'
 class SuggestionProvider extends React.Component {
   componentDidMount() {
     const { intent } = this.props
-    this.hasIndexFilesBeenLaunched = false
+    this.hasIndexedFiles = false
 
     // re-attach the message listener for the intent to receive the suggestion requests
     window.addEventListener('message', event => {
@@ -40,9 +40,9 @@ class SuggestionProvider extends React.Component {
    * @returns {Promise<void>} nothing
    */
   async provideSuggestions(query, id, intent) {
-    if (!this.hasIndexFilesBeenLaunched) {
-      this.hasIndexFilesBeenLaunched = true
+    if (!this.hasIndexedFiles) {
       await this.indexFiles()
+      this.hasIndexedFiles = true
     }
 
     const searchResults = this.fuzzyPathSearch.search(query)
