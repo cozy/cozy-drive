@@ -55,7 +55,7 @@
     },
     {
       "path": "drive/public/drive.<hash>.min.css",
-      "maxSize": "86 KB"
+      "maxSize": "100 KB"
     },
     {
       "path": "drive/public/pdf.worker.entry.<hash>.worker.js",
@@ -103,7 +103,7 @@
     },
     {
       "path": "drive/public-drive.<hash>.min.css",
-      "maxSize": "86 KB"
+      "maxSize": "100 KB"
     },
     {
       "path": "drive/vendors-drive.<hash>.min.css",
