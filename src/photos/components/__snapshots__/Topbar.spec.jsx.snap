@@ -5,9 +5,30 @@ exports[`Topbar renders the topbar for mobile and the child have the expected ro
   class="pho-content-header"
 >
   <div
-    router="[object Object]"
+    class="u-flex u-flex-items-center palette__CozyTheme--normal___3UmMb"
   >
-     Child 
+    <div
+      class="pho-content-album-previous"
+      data-testid="pho-content-album-previous"
+      role="button"
+    />
+  </div>
+  <div
+    class="u-flex u-flex-items-center u-ellipsis palette__CozyTheme--normal___3UmMb"
+  >
+    <h2
+      class="pho-content-title"
+      data-testid="pho-content-title"
+    />
+  </div>
+  <div
+    class="u-flex u-flex-items-center palette__CozyTheme--normal___3UmMb"
+  >
+    <div
+      router="[object Object]"
+    >
+       Child 
+    </div>
   </div>
 </div>
 `;

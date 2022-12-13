@@ -1,5 +1,4 @@
-/* global cozy */
-const { BarRight } = cozy.bar
+import { BarRight } from 'components/Bar'
 
 import React from 'react'
 

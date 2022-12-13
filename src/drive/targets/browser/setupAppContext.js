@@ -11,6 +11,7 @@ import configureStore from 'drive/store/configureStore'
 import { schema } from 'drive/lib/doctypes'
 import { Document } from 'cozy-doctypes'
 import { hashHistory } from 'react-router'
+import cozyBar from 'lib/cozyBar'
 
 const setupApp = memoize(() => {
   const root = document.querySelector('[role=application]')
@@ -50,7 +51,7 @@ const setupApp = memoize(() => {
     token: data.token
   })
 
-  cozy.bar.init({
+  cozyBar.init({
     appName: data.app.name,
     appEditor: data.app.editor,
     cozyClient: client,

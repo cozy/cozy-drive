@@ -7,10 +7,11 @@ import { ThumbnailSizeContextProvider } from 'drive/lib/ThumbnailSizeContext'
 import { ModalContextProvider } from 'drive/lib/ModalContext'
 import { AcceptingSharingProvider } from 'drive/lib/AcceptingSharingContext'
 import { WebviewIntentProvider } from 'cozy-intent'
+import cozyBar from 'lib/cozyBar'
 
 const App = ({ store, client, lang, polyglot, children }) => {
   return (
-    <WebviewIntentProvider>
+    <WebviewIntentProvider setBarContext={cozyBar.setWebviewContext}>
       <Provider store={store}>
         <DriveProvider client={client} lang={lang} polyglot={polyglot}>
           <AcceptingSharingProvider>

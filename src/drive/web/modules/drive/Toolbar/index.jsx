@@ -1,4 +1,3 @@
-/* global cozy */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -23,6 +22,8 @@ import SharedRecipients from 'drive/web/modules/drive/Toolbar/share/SharedRecipi
 import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
 
 import styles from 'drive/styles/toolbar.styl'
+
+import { BarRight } from 'components/Bar'
 
 class Toolbar extends Component {
   static contextTypes = {
@@ -68,7 +69,6 @@ class Toolbar extends Component {
     if (disabled) {
       return null
     }
-    const { BarRight } = cozy.bar
 
     return (
       <div

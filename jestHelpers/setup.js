@@ -10,13 +10,13 @@ jest.mock('cozy-ui/transpiled/react/utils/color', () => ({
   getCssVariableValue: () => '#fff'
 }))
 
-global.cozy = {
-  bar: {
-    BarLeft: () => null,
-    BarRight: ({ children }) => children,
-    BarCenter: () => null,
-    setTheme: () => null
-  }
-}
+global.cozy = {}
+
+jest.mock('cozy-bar/transpiled', () => ({
+  BarLeft: ({ children }) => children,
+  BarRight: ({ children }) => children,
+  BarCenter: ({ children }) => children,
+  setTheme: () => null
+}))
 
 Enzyme.configure({ adapter: new Adapter() })

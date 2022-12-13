@@ -1,4 +1,3 @@
-/* global cozy */
 import React, { useState, useCallback, useContext } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
@@ -21,6 +20,7 @@ import EmptyTrashConfirm from './components/EmptyTrashConfirm'
 
 import styles from 'drive/styles/toolbar.styl'
 import { useWebviewIntent } from 'cozy-intent'
+import { BarRight } from 'components/Bar'
 
 export const Toolbar = ({
   t,
@@ -29,7 +29,6 @@ export const Toolbar = ({
   breakpoints: { isMobile }
 }) => {
   const client = useClient()
-  const { BarRight } = cozy.bar
   const [menuIsVisible, setMenuVisible] = useState(false)
   const anchorRef = React.createRef()
   const openMenu = useCallback(() => setMenuVisible(true), [setMenuVisible])

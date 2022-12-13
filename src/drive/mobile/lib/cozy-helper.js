@@ -15,6 +15,7 @@ import {
 } from 'drive/web/modules/queries'
 import { ONBOARDED_ITEM } from 'drive/mobile/modules/onboarding/OnBoarding'
 import localForage from 'localforage'
+import cozyBar from 'lib/cozyBar'
 
 export const getLang = () =>
   navigator && navigator.language ? navigator.language.slice(0, 2) : 'en'
@@ -132,7 +133,7 @@ export const initBar = async client => {
   if (document.getElementById('coz-bar')) {
     return
   }
-  await cozy.bar.init({
+  await cozyBar.init({
     appName: 'Drive',
     appNamePrefix: 'Cozy',
     appSlug: 'drive',

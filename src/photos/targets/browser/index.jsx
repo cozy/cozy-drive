@@ -27,6 +27,8 @@ import memoize from 'lodash/memoize'
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 import appMetadata from 'photos/appMetadata'
 import doctypes from './doctypes'
+import cozyBar from 'lib/cozyBar'
+
 const loggerMiddleware = createLogger()
 
 const setupAppContext = memoize(() => {
@@ -64,7 +66,7 @@ const setupAppContext = memoize(() => {
   )
   client.setStore(store)
   const locale = data.locale
-  cozy.bar.init({
+  cozyBar.init({
     appName: data.app.name,
     appEditor: data.app.editor,
     cozyClient: client,
