@@ -15,7 +15,6 @@ import DeviceLaptopIcon from 'cozy-ui/transpiled/react/Icons/DeviceLaptop'
 import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 
 import {
-  track,
   isLinux,
   isAndroid,
   isIOS,
@@ -48,10 +47,9 @@ class BannerClient extends Component {
     this.willUnmount = true
   }
 
-  markAsSeen(element) {
+  markAsSeen() {
     localforage.setItem(DESKTOP_BANNER, true)
     this.setState({ mustShow: false })
-    track(element)
   }
 
   render() {
