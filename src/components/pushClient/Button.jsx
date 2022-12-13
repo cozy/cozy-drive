@@ -6,7 +6,7 @@ import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { default as UIButtonClient } from 'cozy-ui/transpiled/react/PushClientButton'
 import { isFlagshipApp } from 'cozy-device-helper'
 
-import { track, isLinux, isClientAlreadyInstalled, DESKTOP_BANNER } from '.'
+import { isLinux, isClientAlreadyInstalled, DESKTOP_BANNER } from '.'
 import Config from 'drive/config/config.json'
 
 class ButtonClient extends Component {
@@ -39,7 +39,6 @@ class ButtonClient extends Component {
       <UIButtonClient
         label={t('Nav.btn-client')}
         href={t(isLinux() ? 'Nav.link-client' : 'Nav.link-client-desktop')}
-        onClick={() => track('button')}
         className={'u-m-1 u-dn-m'}
       />
     )
