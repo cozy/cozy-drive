@@ -1,5 +1,3 @@
-/* global cozy */
-
 import 'cozy-ui/transpiled/react/stylesheet.css'
 
 import React from 'react'
@@ -28,6 +26,7 @@ import StyledApp from 'photos/components/StyledApp'
 
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 import { WebviewIntentProvider } from 'cozy-intent'
+import cozyBar from 'lib/cozyBar'
 
 document.addEventListener('DOMContentLoaded', init)
 
@@ -60,7 +59,7 @@ async function init() {
   let app = null
   client.setStore(store)
   if (data.app.name && data.app.editor && data.app.icon && data.locale) {
-    cozy.bar.init({
+    cozyBar.init({
       appName: data.app.name,
       appEditor: data.app.editor,
       cozyClient: client,

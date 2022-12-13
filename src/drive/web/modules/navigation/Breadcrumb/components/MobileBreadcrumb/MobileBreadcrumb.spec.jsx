@@ -7,10 +7,6 @@ import MobileBreadcrumb from './MobileBreadcrumb'
 
 describe('MobileBreadcrumb', () => {
   it('works', async () => {
-    const BarComponentMock = ({ children }) => <div>{children}</div>
-    global.cozy.bar.BarCenter = BarComponentMock
-    global.cozy.bar.BarLeft = BarComponentMock
-
     const path = [
       { id: '1', name: 'root folder' },
       { id: '2', name: 'parent folder' },

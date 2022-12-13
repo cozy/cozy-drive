@@ -31,10 +31,11 @@ import logger from 'lib/logger'
 import App from 'components/App/App'
 import ExternalRedirect from 'drive/web/modules/navigation/ExternalRedirect'
 import StyledApp from 'drive/web/modules/drive/StyledApp'
+import cozyBar from 'lib/cozyBar'
 
 const initCozyBar = (data, client) => {
   if (data.app.name && data.app.editor && data.app.icon && data.locale) {
-    cozy.bar.init({
+    cozyBar.init({
       appName: data.app.name,
       appEditor: data.app.editor,
       cozyClient: client,

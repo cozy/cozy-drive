@@ -1,11 +1,12 @@
 {
-    "compilerOptions": {
-      "baseUrl": ".",
-      "paths": {
-        "components/*": ["./src/components/*"],
-        "drive/*": ["./src/drive/*"],
-        "test/*": ["./test/*"],
-      }
-    },
-    "exclude": ["node_modules", "build", "storage"]
-  }
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "components/*": ["./src/components/*"],
+      "drive/*": ["./src/drive/*"],
+      "test/*": ["./test/*"],
+      "lib/*": ["./src/lib/*"]
+    }
+  },
+  "exclude": ["node_modules", "build", "storage"]
+}
