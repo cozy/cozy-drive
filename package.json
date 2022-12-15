@@ -128,7 +128,7 @@
     "cozy-pouch-link": "^34.1.5",
     "cozy-realtime": "3.14.4",
     "cozy-scanner": "2.4.6",
-    "cozy-scripts": "^6.3.8",
+    "cozy-scripts": "^7.0.0",
     "cozy-sharing": "4.8.1",
     "cozy-stack-client": "^34.1.5",
     "cozy-ui": "^77.9.2",
