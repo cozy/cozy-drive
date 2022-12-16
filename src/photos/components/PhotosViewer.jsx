@@ -6,24 +6,38 @@ import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterAc
 import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
 import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useQueryAll } from 'cozy-client'
-import { buildTimelineQuery } from '../queries/queries'
+import { useQuery, useQueryAll } from 'cozy-client'
+import { buildTimelineQuery, buildAlbumsQuery } from '../queries/queries'
 
-const PhotosViewer = () => {
-  const navigate = useNavigate()
-  let { photoId } = useParams()
-
+export const TimelinePhotosViewer = () => {
   const timelineQuery = buildTimelineQuery()
 
   const results = useQueryAll(timelineQuery.definition, timelineQuery.options)
-  const photos = results.data
+
+  if (results.fetchStatus != 'loaded') return null
+
+  return <PhotosViewer photos={results.data} />
+}
+
+export const AlbumPhotosViewer = () => {
+  const { albumId } = useParams()
+  const albumsQuery = buildAlbumsQuery(albumId)
+
+  const results = useQuery(albumsQuery.definition, albumsQuery.options)
+
+  if (results.fetchStatus != 'loaded') return null
+
+  return <PhotosViewer photos={results.data.photos.data} />
+}
+
+const PhotosViewer = ({ photos }) => {
+  const navigate = useNavigate()
+  let { photoId } = useParams()
 
   const currentIndex = useMemo(
     () => (photos ? photos.findIndex(p => p.id === photoId) : 0),
     [photos, photoId]
   )
-
-  if (results.fetchStatus != 'loaded') return null
 
   return (
     <Overlay>
