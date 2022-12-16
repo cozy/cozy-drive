@@ -19,7 +19,7 @@ import PhotoBoard from 'photos/components/PhotoBoard'
 import Topbar from 'photos/components/Topbar'
 import DestroyConfirm from 'photos/components/DestroyConfirm'
 import Selection from '../../selection'
-import { useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 class AlbumPhotos extends Component {
   state = {
     editing: false,
@@ -184,19 +184,10 @@ class AlbumPhotos extends Component {
                 lastFetch={lastFetch}
               />
             )}
-            {this.renderViewer(this.props.children)}
+            <Outlet />
           </div>
         )}
       </Selection>
-    )
-  }
-
-  renderViewer(children) {
-    if (!children) return null
-    return React.Children.map(children, child =>
-      React.cloneElement(child, {
-        photos: this.props.photos
-      })
     )
   }
 

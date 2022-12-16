@@ -21,14 +21,14 @@ class PhotosPicker extends Component {
   }
 
   onCancel = () => {
-    this.props.navigate.goBack()
+    this.props.navigate(-1)
   }
 
   onCreate = selected => {
     const { name } = this.state
     this.props
       .createAlbum(name, selected)
-      .then(album => this.props.navigate.push(`/albums/${album.id}`))
+      .then(album => this.props.navigate(`/albums/${album.id}`))
       .catch(() => {
         this.input.focus()
         this.input.select()
@@ -41,7 +41,7 @@ class PhotosPicker extends Component {
     // eslint-disable-next-line promise/catch-or-return
     this.props
       .addPhotos(album, selected)
-      .then(() => this.props.navigate.push(`/albums/${album.id}`))
+      .then(() => this.props.navigate(`/albums/${album.id}`))
   }
 
   componentDidMount() {
