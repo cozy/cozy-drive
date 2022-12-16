@@ -40,7 +40,7 @@ const AlbumsToolbar = () => {
         position="right"
       >
         <MenuItem
-          onSelect={() => navigate.push('/albums/new')}
+          onSelect={() => navigate('/albums/new')}
           icon={<Icon icon={AlbumAddIcon} />}
         >
           {t('Toolbar.album_new')}

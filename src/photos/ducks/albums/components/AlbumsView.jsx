@@ -7,7 +7,7 @@ import AlbumsList from './AlbumsList'
 import Loading from '../../../components/Loading'
 import ErrorComponent from 'components/Error/ErrorComponent'
 import Topbar from '../../../components/Topbar'
-import Outlet from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 
 const Content = ({ list }) => {
   const { fetchStatus, lastFetch } = list
