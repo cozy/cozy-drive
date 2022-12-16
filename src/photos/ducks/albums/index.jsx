@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Query, withMutations, Q } from 'cozy-client'
+import { Query, withMutations } from 'cozy-client'
 import { Alerter } from 'cozy-ui/transpiled/react/'
 
 import AlbumsView from './components/AlbumsView'
@@ -10,6 +10,8 @@ import AddToAlbumModal from './components/AddToAlbumModal'
 import Loading from '../../components/Loading'
 
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
+import { useParams } from 'react-router'
+import { buildAlbumsQuery } from '../../queries/queries'
 
 const ALBUMS_QUERY = client =>
   client
@@ -20,10 +22,6 @@ const ALBUMS_QUERY = client =>
     .indexFields(['created_at'])
     .include(['photos'])
     .sortBy([{ created_at: 'desc' }])
-
-// TODO: remove router to use only albumId
-export const ALBUM_QUERY = (client, ownProps) =>
-  Q(DOCTYPE_ALBUMS).getById(ownProps.router.params.albumId).include(['photos'])
 
 const addPhotos = async (album, photos) => {
   try {
@@ -163,26 +161,35 @@ export const AlbumPhotosWithLoader =
     }
   }
 
-export const ConnectedAlbumPhotos = props => (
-  <Query query={ALBUM_QUERY} {...props} mutations={ALBUM_MUTATIONS}>
-    {AlbumPhotosWithLoader({
-      children: props.children
-    })}
-  </Query>
-)
+export const ConnectedAlbumPhotos = props => {
+  const { albumId } = useParams()
+  const albumsQuery = buildAlbumsQuery(albumId)
+  return (
+    <Query query={albumsQuery} {...props} mutations={ALBUM_MUTATIONS}>
+      {AlbumPhotosWithLoader({
+        children: props.children
+      })}
+    </Query>
+  )
+}
 
 const CreateAlbumPicker = withMutations(ALBUMS_MUTATIONS)(PhotosPicker)
 
-const ConnectedPhotosPicker = ({ params, ...props }) => {
-  return params.albumId ? (
-    <Query query={ALBUM_QUERY} mutations={ALBUMS_MUTATIONS} {...props}>
-      {({ data }, { addPhotos }) => (
-        <PhotosPicker album={data} addPhotos={addPhotos} />
-      )}
-    </Query>
-  ) : (
-    <CreateAlbumPicker />
-  )
+const ConnectedPhotosPicker = ({ ...props }) => {
+  const { albumId } = useParams()
+
+  if (albumId) {
+    const albumsQuery = buildAlbumsQuery(albumId)
+    return (
+      <Query query={albumsQuery} mutations={ALBUMS_MUTATIONS} {...props}>
+        {({ data }, { addPhotos }) => (
+          <PhotosPicker album={data} addPhotos={addPhotos} />
+        )}
+      </Query>
+    )
+  }
+
+  return <CreateAlbumPicker />
 }
 
 export {
