@@ -104,7 +104,7 @@ class AlbumToolbar extends Component {
             <MenuItem
               data-testid="menu-add-photos-to-album"
               icon={<Icon icon={AlbumAddIcon} />}
-              onSelect={() => navigate.push(`${pathname}/edit`)}
+              onSelect={() => navigate(`${pathname}/edit`)}
             >
               {t('Toolbar.menu.add_photos')}
             </MenuItem>

@@ -1,5 +1,7 @@
 import { Q, fetchPolicies } from 'cozy-client'
 
+import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
+
 const older30s = 30 * 1000
 
 // Export to doctypes
@@ -41,3 +43,9 @@ export const buildTimelineQuery = () => ({
     fetchPolicy: fetchPolicies.olderThan(older30s)
   }
 })
+
+// Albums doctype -------------
+
+export const buildAlbumsQuery = albumId => {
+  return Q(DOCTYPE_ALBUMS).getById(albumId).include(['photos'])
+}
