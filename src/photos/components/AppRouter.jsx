@@ -24,8 +24,11 @@ const router = createHashRouter([
       },
       {
         path: 'albums',
-        element: <AlbumsView />,
         children: [
+          {
+            path: '',
+            element: <AlbumsView />
+          },
           {
             path: 'new',
             element: <PhotosPicker />
