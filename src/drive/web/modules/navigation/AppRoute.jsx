@@ -1,11 +1,10 @@
 /* global __TARGET__ */
 import React from 'react'
-import { Route, IndexRoute, Redirect } from 'react-router'
+import { Routes, Route, Outlet } from 'react-router-dom'
 
 import Settings from 'drive/mobile/modules/settings/Settings'
 import OnBoarding from 'drive/mobile/modules/onboarding/OnBoarding'
 
-import { RouterContextProvider } from 'drive/lib/RouterContext'
 import Layout from 'drive/web/modules/layout/Layout'
 import FileOpenerExternal from 'drive/web/modules/viewer/FileOpenerExternal'
 import FileHistory from 'components/FileHistory'
@@ -47,76 +46,79 @@ export const routes = [
   '/onlyoffice/create/:folderId/:fileClass'
 ]
 
-const RootComponent = routerProps => (
+const RootComponent = () => (
   <Layout>
-    <RouterContextProvider {...routerProps} />
+    <Outlet />
   </Layout>
 )
 
-const AppRoute = (
-  <Route>
-    <Route path="external/:fileId" component={ExternalRedirect} />
-    <Route component={RootComponent}>
+const AppRoute = () => (
+  <Routes>
+    <Route path="external/:fileId" element={<ExternalRedirect />} />
+    <Route element={<RootComponent />}>
       {__TARGET__ === 'mobile' && (
-        <Route path="uploadfrommobile" component={UploadFromMobile} />
+        <Route path="uploadfrommobile" element={<UploadFromMobile />} />
       )}
-      <Redirect from="/files/:folderId" to="/folder/:folderId" />
-      <Route path="/" component={Index} />
+      {/* <Redirect from="/files/:folderId" to="/folder/:folderId" /> */}
+      <Route path="/" element={<Index />} />
 
-      <Route path="folder" component={DriveView}>
+      <Route path="folder" element={<DriveView />}>
         {/* For FilesViewer and FileHistory, we want 2 routes to match: `/folder/:folderId/file/:fileId` and `/folder/file/:fileId`. The `:folderId` is not present when opening a file from the root folder. */}
         <Route path=":folderId">
-          <Route path="file/:fileId" component={FilesViewerDrive} />
-          <Route path="file/:fileId/revision" component={FileHistory} />
+          <Route path="file/:fileId" element={<FilesViewerDrive />} />
+          <Route path="file/:fileId/revision" element={<FileHistory />} />
         </Route>
-        <Route path="file/:fileId" component={FilesViewerDrive} />
-        <Route path="file/:fileId/revision" component={FileHistory} />
+        <Route path="file/:fileId" element={<FilesViewerDrive />} />
+        <Route path="file/:fileId/revision" element={<FileHistory />} />
       </Route>
 
-      <Route path="recent" component={RecentView}>
-        <Route path="file/:fileId" component={FilesViewerRecent} />
-        <Route path="file/:fileId/revision" component={FileHistory} />
+      <Route path="recent" element={<RecentView />}>
+        <Route path="file/:fileId" element={<FilesViewerRecent />} />
+        <Route path="file/:fileId/revision" element={<FileHistory />} />
       </Route>
 
       <Route path="trash">
-        <IndexRoute component={TrashFolderView} />
-        <Route path=":folderId" component={TrashFolderView}>
-          <Route path="file/:fileId" component={FilesViewerTrash} />
-          <Route path="file/:fileId/revision" component={FileHistory} />
+        <Route index element={<TrashFolderView />} />
+        <Route path=":folderId" element={<TrashFolderView />}>
+          <Route path="file/:fileId" element={<FilesViewerTrash />} />
+          <Route path="file/:fileId/revision" element={<FileHistory />} />
         </Route>
       </Route>
 
       <Route path="sharings">
-        <IndexRoute component={SharingsView} />
-        <Route component={SharingsView}>
-          <Route path="file/:fileId" component={SharingsFilesViewer} />
+        <Route index element={<SharingsView />} />
+        <Route element={<SharingsView />}>
+          <Route path="file/:fileId" element={<SharingsFilesViewer />} />
           {/* This route must be a child of SharingsView so the modal opens on top of the sharing view */}
-          <Route path="file/:fileId/revision" component={FileHistory} />
+          <Route path="file/:fileId/revision" element={<FileHistory />} />
         </Route>
         {/* This route must be inside the /sharing path for the nav to have an activate state */}
-        <Route path=":folderId" component={SharingsFolderView}>
-          <Route path="file/:fileId" component={SharingsFilesViewer} />
+        <Route path=":folderId" element={<SharingsFolderView />}>
+          <Route path="file/:fileId" element={<SharingsFilesViewer />} />
           {/* This route must be a child of SharingsFolderView so the modal opens on top of the folder view */}
-          <Route path="file/:fileId/revision" component={FileHistory} />
+          <Route path="file/:fileId/revision" element={<FileHistory />} />
         </Route>
       </Route>
 
-      <Route path="onlyoffice/:fileId" component={OnlyOfficeView} />
-      <Route path="onlyoffice/:fileId/fromCreate" component={OnlyOfficeView} />
+      <Route path="onlyoffice/:fileId" element={<OnlyOfficeView />} />
+      <Route
+        path="onlyoffice/:fileId/fromCreate"
+        element={<OnlyOfficeView />}
+      />
       <Route
         path="onlyoffice/create/:folderId/:fileClass"
-        component={OnlyOfficeCreateView}
+        element={<OnlyOfficeCreateView />}
       />
 
       {__TARGET__ === 'mobile' && (
-        <Route path="settings" component={Settings} />
+        <Route path="settings" element={<Settings />} />
       )}
-      <Route path="file/:fileId" component={FileOpenerExternal} />
+      <Route path="file/:fileId" element={<FileOpenerExternal />} />
     </Route>
     {__TARGET__ === 'mobile' && (
-      <Route path="onboarding" component={OnBoarding} />
+      <Route path="onboarding" element={<OnBoarding />} />
     )}
-  </Route>
+  </Routes>
 )
 
 export default AppRoute
