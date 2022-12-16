@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 import { withClient } from 'cozy-client'
 import { showModal } from 'react-cozy-helpers'
@@ -184,19 +184,10 @@ class AlbumPhotos extends Component {
                 lastFetch={lastFetch}
               />
             )}
-            {this.renderViewer(this.props.children)}
+            <Outlet />
           </div>
         )}
       </Selection>
-    )
-  }
-
-  renderViewer(children) {
-    if (!children) return null
-    return React.Children.map(children, child =>
-      React.cloneElement(child, {
-        photos: this.props.photos
-      })
     )
   }
 

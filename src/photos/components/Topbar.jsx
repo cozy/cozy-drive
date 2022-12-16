@@ -76,7 +76,7 @@ export class Topbar extends Component {
     )
 
     const backButton = (
-      <BackToAlbumsButton onClick={() => navigate.push(this.parentUrl)} />
+      <BackToAlbumsButton onClick={() => navigate(this.parentUrl)} />
     )
     const responsiveBackButton = isMobile ? (
       <BarLeft>{backButton}</BarLeft>
