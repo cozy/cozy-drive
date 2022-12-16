@@ -10,7 +10,6 @@ import appMetadata from 'drive/appMetadata'
 import configureStore from 'drive/store/configureStore'
 import { schema } from 'drive/lib/doctypes'
 import { Document } from 'cozy-doctypes'
-import { hashHistory } from 'react-router'
 import cozyBar from 'lib/cozyBar'
 
 const setupApp = memoize(() => {
@@ -38,12 +37,10 @@ const setupApp = memoize(() => {
   const polyglot = initTranslation(locale, lang =>
     require(`drive/locales/${lang}`)
   )
-  let history = hashHistory
 
   const store = configureStore({
     client,
-    t: polyglot.t.bind(polyglot),
-    history
+    t: polyglot.t.bind(polyglot)
   })
 
   cozy.client.init({
@@ -62,7 +59,7 @@ const setupApp = memoize(() => {
     appNamePrefix: data.app.prefix
   })
 
-  return { locale, polyglot, client, history, store, root }
+  return { locale, polyglot, client, store, root }
 })
 
 export default setupApp
