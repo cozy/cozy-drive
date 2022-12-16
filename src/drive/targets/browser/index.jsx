@@ -11,7 +11,7 @@ import mainStyles from 'drive/styles/main.styl'
 import 'whatwg-fetch'
 import React from 'react'
 import { render } from 'react-dom'
-import { Router } from 'react-router'
+import { HashRouter } from 'react-router-dom'
 import flag from 'cozy-flags'
 
 import AppRoute from 'drive/web/modules/navigation/AppRoute'
@@ -27,19 +27,20 @@ if (__DEVELOPMENT__) {
 const AppComponent = props => (
   <App {...props}>
     <AppBarSearch />
-    <Router history={props.history} routes={AppRoute} />
+    <HashRouter>
+      <AppRoute />
+    </HashRouter>
   </App>
 )
 
 const init = () => {
-  const { locale, polyglot, client, history, store, root } = setupApp()
+  const { locale, polyglot, client, store, root } = setupApp()
 
   render(
     <AppComponent
       lang={locale}
       polyglot={polyglot}
       client={client}
-      history={history}
       store={store}
     />,
     root
