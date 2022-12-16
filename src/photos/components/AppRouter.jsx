@@ -6,7 +6,7 @@ import { Spinner } from 'cozy-ui/transpiled/react'
 import Layout from './Layout'
 import Timeline from '../ducks/timeline'
 import { AlbumsView, AlbumPhotos, PhotosPicker } from '../ducks/albums'
-import PhotosViewer from './PhotosViewer'
+import { TimelinePhotosViewer, AlbumPhotosViewer } from './PhotosViewer'
 
 const router = createHashRouter([
   {
@@ -22,7 +22,7 @@ const router = createHashRouter([
         children: [
           {
             path: ':photoId',
-            element: <PhotosViewer />
+            element: <TimelinePhotosViewer />
           }
         ]
       },
@@ -47,7 +47,7 @@ const router = createHashRouter([
               },
               {
                 path: ':photoId',
-                element: <PhotosViewer />
+                element: <AlbumPhotosViewer />
               }
             ]
           }

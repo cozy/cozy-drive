@@ -46,6 +46,10 @@ export const buildTimelineQuery = () => ({
 
 // Albums doctype -------------
 
-export const buildAlbumsQuery = albumId => {
-  return Q(DOCTYPE_ALBUMS).getById(albumId).include(['photos'])
-}
+export const buildAlbumsQuery = albumId => ({
+  definition: Q(DOCTYPE_ALBUMS).getById(albumId).include(['photos']),
+  options: {
+    as: `albums-${albumId}`,
+    singleDocData: true
+  }
+})
