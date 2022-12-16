@@ -165,7 +165,11 @@ export const ConnectedAlbumPhotos = props => {
   const { albumId } = useParams()
   const albumsQuery = buildAlbumsQuery(albumId)
   return (
-    <Query query={albumsQuery} {...props} mutations={ALBUM_MUTATIONS}>
+    <Query
+      query={albumsQuery.definition}
+      {...props}
+      mutations={ALBUM_MUTATIONS}
+    >
       {AlbumPhotosWithLoader({
         children: props.children
       })}
@@ -181,7 +185,11 @@ const ConnectedPhotosPicker = ({ ...props }) => {
   if (albumId) {
     const albumsQuery = buildAlbumsQuery(albumId)
     return (
-      <Query query={albumsQuery} mutations={ALBUMS_MUTATIONS} {...props}>
+      <Query
+        query={albumsQuery.definition}
+        mutations={ALBUMS_MUTATIONS}
+        {...props}
+      >
         {({ data }, { addPhotos }) => (
           <PhotosPicker album={data} addPhotos={addPhotos} />
         )}
