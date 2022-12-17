@@ -5786,10 +5786,10 @@ cozy-authentication@2.10.10:
     snarkdown "1.2.2"
     url-polyfill "1.1.7"
 
-cozy-bar@7.21.0:
-  version "7.21.0"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-7.21.0.tgz#c9dd450655045a0a8aaf91e3120da8b9fbc9c0dd"
-  integrity sha512-TxneoLXtmlb47PpAY9wjOF4sSLE+xhVXkXLG5U+wGRQ0wl5rpgV3G8EKnexD9nznL5DIwO+r+ZASw3LW0OxGGg==
+cozy-bar@7.23.1:
+  version "7.23.1"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-7.23.1.tgz#67abf8feb6a580ffca77f6e7763374056581d488"
+  integrity sha512-7QW41Mx45sO0sf7QDf5pqvGHvZhtSHvli1dnxZBT4InLt8WTRORoDfV61uGgT3u0m7BYRmgWTsj4BuaqDitFnw==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     cozy-client "^27.14.4"
@@ -5805,7 +5805,6 @@ cozy-bar@7.21.0:
     lodash.debounce "4.0.8"
     lodash.set "^4.3.2"
     lodash.unionwith "4.6.0"
-    piwik-react-router "0.12.1"
     prop-types "15.7.2"
     react-autosuggest "9.4.3"
     react-redux "5.1.1"
