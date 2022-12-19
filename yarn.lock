@@ -5672,12 +5672,12 @@ cozy-app-publish@^0.27.2:
     request "^2.88.0"
     tar "^4.4.13"
 
-cozy-authentication@2.10.10:
-  version "2.10.10"
-  resolved "https://registry.yarnpkg.com/cozy-authentication/-/cozy-authentication-2.10.10.tgz#276ce5ef17137dda8b017e05adda87069a7ab4ea"
-  integrity sha512-7x2ODKU9FsbKJmIaTs1rQKrekodwq1+dtURy+buBE+ObCdR0UumhXDgYhP5nGiYTbnC1c1djex8XkgcMALKGZw==
+cozy-authentication@2.10.11:
+  version "2.10.11"
+  resolved "https://registry.yarnpkg.com/cozy-authentication/-/cozy-authentication-2.10.11.tgz#9d38b398010324552fbe9001690e4df5675918c3"
+  integrity sha512-JkXu5xrxzZ0a5/kFxhKPVzkNPfhOoZb2d54NY/85MHxPO+nnMFwEBFi1RWqbPqSlQCMbXyi+HYCUxL0BwZOqHg==
   dependencies:
-    cozy-device-helper "^2.5.0"
+    cozy-device-helper "^2.6.0"
     localforage "1.7.3"
     prop-types "15.7.2"
     snarkdown "1.2.2"
@@ -5748,28 +5748,14 @@ cozy-client@^34.1.5:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
-cozy-device-helper@^1.15.0:
+cozy-device-helper@^1.15.0, cozy-device-helper@^1.7.5:
   version "1.18.0"
   resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.18.0.tgz#45b37e68c30ec1104c8c40180b472d3662bc2534"
   integrity sha512-/s9X5oUH/Fpu3NKx1RS5T/iYzpfOlBD3tRGGsjth4VDYhqATlApUZLghmzvFvskEeC4eCAvNYfEkyo9UPrZbFQ==
   dependencies:
     lodash "^4.17.19"
 
-cozy-device-helper@^1.7.5:
-  version "1.17.0"
-  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.17.0.tgz#fbce9737ea83c67969b2b173163b37299a36283c"
-  integrity sha512-G61i75dPe/JwLUxN0foWG34lnm+0iybMu05AjoXv/UU2fRsTPfNnsHH4ZRi5JS6OPK4ccuj+ffRmabdywo23TA==
-  dependencies:
-    lodash "^4.17.19"
-
-cozy-device-helper@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-2.5.0.tgz#4a5b18ad07a2c66c468988ae9daee014ba876e5b"
-  integrity sha512-+KKX6obYg8UmdmPvBuZDFMfzdSMOSKbnCf6ZIJTkW3Xs95aDZYhh/6x61Ok5+oTusHBL/khd6A+P1Qx5tL7mrw==
-  dependencies:
-    lodash "^4.17.19"
-
-cozy-device-helper@^2.6.0:
+cozy-device-helper@^2.5.0, cozy-device-helper@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-2.6.0.tgz#07d83e6e412244f92bba30a0e04560bf3e1abb79"
   integrity sha512-9loS2xUnA1szP8z8rBu8ni69zZj95eZKH8OqPTspWeRgUtzCAMlJoXusqEUTgVbj37JrvbYkifyxf3IkCZDXAg==
