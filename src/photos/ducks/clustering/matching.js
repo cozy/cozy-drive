@@ -1,4 +1,5 @@
 import { averageTime } from './utils'
+import log from 'cozy-logger'
 
 const outsideClusteringEdges = (photo, newestAlbum, oldestAlbum) => {
   const photoDate = new Date(photo?.datetime || 0).getTime()
@@ -42,21 +43,29 @@ const photoBetweenClusters = (photo, newerAlbum, olderAlbum) => {
  * @returns {Object[]} An array of matching clusters. length can be 0, 1 or 2.
  */
 export const getMatchingClusters = (photo, albums) => {
-  const newestAlbum = albums[0]
-  const oldestAlbum = albums[albums.length - 1]
-  const edge = outsideClusteringEdges(photo, newestAlbum, oldestAlbum)
-  if (edge) {
-    return [edge]
-  }
-  for (let i = 0; i < albums.length; i++) {
-    if (photoInsideCluster(photo, albums[i])) {
-      return [albums[i]]
-    } else if (
-      albums[i + 1] &&
-      photoBetweenClusters(photo, albums[i], albums[i + 1])
-    ) {
-      return [albums[i], albums[i + 1]]
+  try {
+    const newestAlbum = albums[0]
+    const oldestAlbum = albums[albums.length - 1]
+    const edge = outsideClusteringEdges(photo, newestAlbum, oldestAlbum)
+    if (edge) {
+      return [edge]
     }
+    for (let i = 0; i < albums.length; i++) {
+      if (photoInsideCluster(photo, albums[i])) {
+        return [albums[i]]
+      } else if (
+        albums[i + 1] &&
+        photoBetweenClusters(photo, albums[i], albums[i + 1])
+      ) {
+        return [albums[i], albums[i + 1]]
+      }
+    }
+  } catch (e) {
+    log(
+      'error',
+      `Error when searching for clusters for photo: ${JSON.stringify(photo)}`
+    )
+    throw e
   }
   return []
 }
