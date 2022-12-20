@@ -6,7 +6,7 @@ import CozyClient from 'cozy-client'
 import AppBarSearch from 'drive/web/modules/search/AppBarSearch'
 import AppLike from 'test/components/AppLike'
 
-jest.mock('drive/web/modules/services/components/iconContext', () => ({
+jest.mock('drive/web/modules/search/components/iconContext', () => ({
   getIconUrl: () => 'iconUrl'
 }))
 

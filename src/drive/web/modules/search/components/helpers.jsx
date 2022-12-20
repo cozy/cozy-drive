@@ -2,8 +2,8 @@ import React from 'react'
 
 import { models } from 'cozy-client'
 
-import { getIconUrl } from 'drive/web/modules/services/components/iconContext.js'
-import FuzzyPathSearch from 'drive/web/modules/services/FuzzyPathSearch.js'
+import { getIconUrl } from 'drive/web/modules/search/components/iconContext.js'
+import FuzzyPathSearch from 'drive/lib/FuzzyPathSearch.js'
 import { makeOnlyOfficeFileRoute } from 'drive/web/modules/views/OnlyOffice/helpers'
 import { ROOT_DIR_ID } from 'drive/constants/config'
 

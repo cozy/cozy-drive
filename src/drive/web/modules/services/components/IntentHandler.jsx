@@ -3,7 +3,6 @@ import React from 'react'
 
 import Embeder from './Embeder'
 import URLGetter from './URLGetter'
-import SuggestionProvider from './SuggestionProvider'
 
 class IntentHandler extends React.Component {
   constructor(props) {
@@ -31,11 +30,6 @@ class IntentHandler extends React.Component {
       intent = service.getIntent()
 
       if (
-        intent.attributes.action === 'OPEN' &&
-        intent.attributes.type === 'io.cozy.suggestions'
-      ) {
-        component = SuggestionProvider
-      } else if (
         intent.attributes.action === 'OPEN' &&
         intent.attributes.type === 'io.cozy.files'
       ) {
