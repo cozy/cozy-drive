@@ -8,7 +8,7 @@ import { Button, Icon } from 'cozy-ui/transpiled/react'
 import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import DotsIcon from 'cozy-ui/transpiled/react/Icons/Dots'
 
-import getHomeLinkHref from 'components/Button/getHomeLinkHref'
+import { HOME_LINK_HREF } from 'drive/constants/config'
 import SelectableItem from 'drive/web/modules/drive/Toolbar/selectable/SelectableItem'
 import { downloadFiles } from 'drive/web/modules/actions/utils'
 import CozyBarRightMobile from 'drive/web/modules/public/CozyBarRightMobile'
@@ -58,7 +58,7 @@ const MoreMenu = ({ files, isMobile }) => {
         <ActionMenu onClose={closeMenu} autoclose>
           {isMobile && (
             <ActionMenuItem
-              onClick={() => getHomeLinkHref('sharing-drive')}
+              onClick={() => HOME_LINK_HREF}
               left={<Icon icon={'to-the-cloud'} />}
             >
               {t('Share.create-cozy')}

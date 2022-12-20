@@ -7,7 +7,7 @@ export default class PublicDrivePage extends DrivePage {
   // @param {string} type : 'file' or 'folder' : the toolbar is different depending on share type
   async checkActionMenuPublicDesktop(type) {
     const isFile = type === 'file' ? true : false
-    await t //Mobile elements don't exist
+    await t // Mobile elements don't exist
       .expect(selectors.btnMoreMenu.exists)
       .notOk('selectors.btnMoreMenu exists')
       .expect(selectors.innerPublicMoreMenu.exists)
@@ -30,7 +30,7 @@ export default class PublicDrivePage extends DrivePage {
     await t
       .expect(selectors.btnPublicDownloadDrive.exists)
       .notOk('selectors.btnPublicDownloadDrive exists')
-      //On File Sharing, logo still exist on mobile, but is not visible (no problem on folder)
+      // On File Sharing, logo still exist on mobile, but is not visible (no problem on folder)
       .expect(isFile ? selectors.logo.visible : selectors.logo.exists)
       .notOk('selectors.logo exists/visible')
       .expect(
@@ -43,11 +43,7 @@ export default class PublicDrivePage extends DrivePage {
   }
 
   async checkCreateCozy() {
-    await t
-      .expect(getPageUrl())
-      .eql(
-        'https://manager.cozycloud.cc/cozy/create?pk_campaign=sharing-drive&pk_kwd=cozy'
-      )
+    await t.expect(getPageUrl()).eql('https://manager.cozycloud.cc/cozy/create')
 
     await goBack()
   }

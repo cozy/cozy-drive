@@ -14,11 +14,7 @@ export default class PublicPhotos extends Photos {
   }
 
   async checkCreateCozy() {
-    await t
-      .expect(getPageUrl())
-      .eql(
-        'https://manager.cozycloud.cc/cozy/create?pk_campaign=sharing-photos&pk_kwd=cozy'
-      )
+    await t.expect(getPageUrl()).eql('https://manager.cozycloud.cc/cozy/create')
     await goBack()
     await this.waitForLoading()
   }
@@ -49,6 +45,6 @@ export default class PublicPhotos extends Photos {
     await isExistingAndVisible('selectors.errorAvailable')
     await t
       .expect(selectors.errorAvailable.innerText)
-      .contains('Sorry, this link is no longer available.') //!FIXME
+      .contains('Sorry, this link is no longer available.') // !FIXME
   }
 }

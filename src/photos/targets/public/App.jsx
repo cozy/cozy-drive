@@ -12,7 +12,7 @@ import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 
 import Selection from 'photos/ducks/selection'
 import { MoreButton, CozyHomeLink } from 'components/Button'
-import getHomeLinkHref from 'components/Button/getHomeLinkHref'
+import { HOME_LINK_HREF } from 'photos/constants/config'
 import PhotoBoard from 'photos/components/PhotoBoard'
 import { ALBUM_QUERY } from '../../../../src/photos/ducks/albums/index'
 import ErrorUnsharedComponent from 'photos/components/ErrorUnshared'
@@ -91,10 +91,7 @@ export class App extends Component {
                     className={styles['pho-toolbar']}
                     role="toolbar"
                   >
-                    <CozyHomeLink
-                      from="sharing-photos"
-                      className={styles['pho-public-mycozy']}
-                    />
+                    <CozyHomeLink className={styles['pho-public-mycozy']} />
                     <Button
                       theme="secondary"
                       data-testid="album-public-download"
@@ -113,9 +110,7 @@ export class App extends Component {
                     >
                       <MenuItem
                         data-testid="album-public-create-cozy-mobile"
-                        onSelect={() =>
-                          (window.location = getHomeLinkHref('sharing-photos'))
-                        }
+                        onSelect={() => (window.location = HOME_LINK_HREF)}
                         icon={<Icon icon={CloudIcon} />}
                       >
                         {t('Share.create-cozy')}
