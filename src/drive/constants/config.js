@@ -10,3 +10,4 @@ export const APPS_DIR_PATH = '/.cozy_apps'
 export const TRASH_DIR_PATH = '/.cozy_trash'
 export const KONNECTORS_DIR_PATH = '/.cozy_konnectors'
 export const FILES_FETCH_LIMIT = 100
+export const HOME_LINK_HREF = 'https://manager.cozycloud.cc/cozy/create'

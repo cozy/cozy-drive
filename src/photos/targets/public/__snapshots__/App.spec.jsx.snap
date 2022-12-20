@@ -19,7 +19,7 @@ exports[`Public view should render children when they are present 1`] = `
         >
           <CozyHomeLink
             className="pho-public-mycozy"
-            from="sharing-photos"
+            from=""
           />
           <Button
             align="center"
@@ -121,7 +121,7 @@ exports[`Public view should render the album 1`] = `
         >
           <CozyHomeLink
             className="pho-public-mycozy"
-            from="sharing-photos"
+            from=""
           />
           <Button
             align="center"
