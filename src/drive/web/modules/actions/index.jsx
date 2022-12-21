@@ -10,7 +10,7 @@ import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
 import RenameIcon from 'cozy-ui/transpiled/react/Icons/Rename'
 import MovetoIcon from 'cozy-ui/transpiled/react/Icons/Moveto'
-import CopyIcon from 'cozy-ui/transpiled/react/Icons/Copy'
+import MultiFilesIcon from 'cozy-ui/transpiled/react/Icons/MultiFiles'
 import QualifyIcon from 'cozy-ui/transpiled/react/Icons/Qualify'
 import HistoryIcon from 'cozy-ui/transpiled/react/Icons/History'
 import RestoreIcon from 'cozy-ui/transpiled/react/Icons/Restore'
@@ -243,9 +243,9 @@ export const copy = ({ client, hasWriteAccess, refresh, isPublic }) => {
             await client.collection('io.cozy.files').copy(props.files[0].id)
             if (isPublic) refresh()
           }}
-          left={<Icon icon={CopyIcon} />}
+          left={<Icon icon={MultiFilesIcon} />}
         >
-          {t('SelectionBar.copy')}
+          {t('SelectionBar.duplicate')}
         </ActionMenuItem>
       )
     }
