@@ -5683,17 +5683,16 @@ cozy-authentication@2.10.10:
     snarkdown "1.2.2"
     url-polyfill "1.1.7"
 
-cozy-bar@8.11.2:
-  version "8.11.2"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-8.11.2.tgz#9be9eeaa131b3b3c885fee8a88d67c4adff27fdb"
-  integrity sha512-xYSwDFkrP5xLC+y2GFd1aKAaa900+lZPJwdCTKYh574CFGSVBd5r/owVRWR8axOOnPMZI8lq8Xt53JEgTklghg==
+cozy-bar@8.12.0:
+  version "8.12.0"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-8.12.0.tgz#be5b8e480b1633e4fc04db92d41eba92fe912750"
+  integrity sha512-UCTMErxucVyaOAYUIJ7lVz0f9WHKo0JS0REAU9UEMH89VIqO5ktoyXgmMBppnmxkZitOZt/mL1E3+IL1HDPL7A==
   dependencies:
     hammerjs "2.0.8"
     lodash.debounce "4.0.8"
     lodash.set "^4.3.2"
     lodash.unionwith "4.6.0"
     prop-types "15.7.2"
-    react-autosuggest "9.4.3"
     react-redux "5.1.1"
     redux "4.1.2"
     redux-persist "5.10.0"
@@ -14875,7 +14874,7 @@ react-addons-test-utils@15.6.2:
   resolved "https://registry.yarnpkg.com/react-addons-test-utils/-/react-addons-test-utils-15.6.2.tgz#c12b6efdc2247c10da7b8770d185080a7b047156"
   integrity sha1-wStu/cIkfBDae4dw0YUICnsEcVY=
 
-react-autosuggest@9.4.3, react-autosuggest@^9.4.3:
+react-autosuggest@^9.4.3:
   version "9.4.3"
   resolved "https://registry.yarnpkg.com/react-autosuggest/-/react-autosuggest-9.4.3.tgz#eb46852422a48144ab9f39fb5470319222f26c7c"
   integrity sha512-wFbp5QpgFQRfw9cwKvcgLR8theikOUkv8PFsuLYqI2PUgVlx186Cz8MYt5bLxculi+jxGGUUVt+h0esaBZZouw==
