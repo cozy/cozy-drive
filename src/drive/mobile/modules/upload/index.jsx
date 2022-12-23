@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import localforage from 'localforage'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
 import { Query, withClient } from 'cozy-client'
@@ -188,7 +187,6 @@ const mapDispatchToProps = dispatch => ({
 
 export default compose(
   translate(),
-  withRouter,
   withClient,
   withVaultClient,
   connect(null, mapDispatchToProps)
