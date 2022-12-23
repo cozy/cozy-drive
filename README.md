@@ -177,6 +177,8 @@ As a _translator_, you can login to [Transifex][tx-signin] (using your Github ac
 
 As a _developer_, you must [configure the transifex client][tx-client], and claim access as _maintainer_ to the [app repository][tx-app]. Then please **only update** the source locale file (usually `en.json` in client and/or server parts), and push it to Transifex repository using the `tx push -s` command.
 
+The transifex configuration file is still in an old version. Please use the previous client for the moment [https://github.com/transifex/transifex-client/](https://github.com/transifex/transifex-client/).
+
 ###### Drive specificity
 
 CozyDrive and CozyPhotos share this mono-repository but the translations are split into two projects Transifex.
