@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router'
 import { withClient } from 'cozy-client'
 import { connect } from 'react-redux'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
@@ -49,6 +48,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   }
 })
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(translate()(withClient(Unlink)))
-)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(translate()(withClient(Unlink)))

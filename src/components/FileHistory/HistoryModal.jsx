@@ -7,7 +7,6 @@ import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 
 import { withClient, useCapabilities } from 'cozy-client'
-import { withRouter } from 'react-router'
 
 import HistoryRow from 'cozy-ui/transpiled/react/HistoryRow'
 import styles from './styles.styl'
@@ -113,4 +112,4 @@ HistoryModal.propTypes = {
   t: PropTypes.func.isRequired,
   revisionsFetchStatus: PropTypes.string.isRequired
 }
-export default translate()(withRouter(withClient(HistoryModal)))
+export default translate()(withClient(HistoryModal))

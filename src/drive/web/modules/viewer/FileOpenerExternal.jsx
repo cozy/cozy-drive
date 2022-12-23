@@ -8,7 +8,6 @@
 
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router'
 import get from 'lodash/get'
 import { RemoveScroll } from 'react-remove-scroll'
 
@@ -120,4 +119,4 @@ FileOpener.propTypes = {
   fileId: PropTypes.string
 }
 
-export default translate()(withRouter(FileOpener))
+export default translate()(FileOpener)
