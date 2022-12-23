@@ -69,21 +69,6 @@ export const getLatestFolderQueryResults = (rootState, folderId) => {
   return []
 }
 
-const fetchStatusPriorities = {
-  pending: 0,
-  loading: 1,
-  loaded: 2
-}
-export const getCurrentViewFetchStatus = rootState => {
-  const folderId = getCurrentFolderId(rootState)
-  const results = getLatestFolderQueryResults(rootState, folderId)
-  if (!results || !results.length) {
-    return 'loading'
-  } else {
-    return maxBy(results, r => fetchStatusPriorities[r.fetchStatus]).fetchStatus
-  }
-}
-
 export const getFolderContent = (rootState, folderId) => {
   const results = getLatestFolderQueryResults(rootState, folderId)
   if (results.length > 0) {
