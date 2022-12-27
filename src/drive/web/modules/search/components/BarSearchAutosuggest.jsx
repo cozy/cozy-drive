@@ -40,6 +40,11 @@ const BarSearchAutosuggest = ({ t }) => {
     clearSuggestions()
   }
 
+  const handleCleanInput = () => {
+    clearSuggestions()
+    setInput('')
+  }
+
   const onSuggestionSelected = async (event, { suggestion }) => {
     await openOnSelect(client, suggestion.onSelect)
     clearSuggestions()
@@ -64,7 +69,12 @@ const BarSearchAutosuggest = ({ t }) => {
   }
 
   const renderInputComponent = inputProps => (
-    <BarSearchInputGroup isBusy={isBusy} isFocus={focused}>
+    <BarSearchInputGroup
+      isBusy={isBusy}
+      isFocus={focused}
+      isInputNotEmpty={input !== ''}
+      onClean={handleCleanInput}
+    >
       <input {...inputProps} />
     </BarSearchInputGroup>
   )

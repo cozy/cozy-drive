@@ -19,8 +19,14 @@ import SearchEmpty from './components/SearchEmpty'
 
 const SearchView = () => {
   const { t } = useI18n()
-  const { isBusy, suggestions, fetchSuggestions, hasSuggestions, query } =
-    useSearch()
+  const {
+    isBusy,
+    suggestions,
+    fetchSuggestions,
+    clearSuggestions,
+    hasSuggestions,
+    query
+  } = useSearch()
   const { router } = useRouter()
   const client = useClient()
   const { isMobile } = useBreakpoints()
@@ -43,6 +49,11 @@ const SearchView = () => {
     [client]
   )
 
+  const handleCleanInput = () => {
+    clearSuggestions()
+    setInput('')
+  }
+
   const isSearchEmpty = query !== '' && !hasSuggestions && !isBusy
 
   return (
@@ -60,7 +71,10 @@ const SearchView = () => {
           )}
           role="search"
         >
-          <BarSearchInputGroup>
+          <BarSearchInputGroup
+            isInputNotEmpty={input !== ''}
+            onClean={handleCleanInput}
+          >
             <Input
               fullwidth={true}
               value={input}
