@@ -66,9 +66,9 @@ const highlightQueryTerms = (searchResult, query) => {
 
   for (let i = 0, l = mergedIntervals.length; i < l; ++i) {
     slicedOriginalResult.push(
-      <b>
+      <span className="u-primaryColor">
         {searchResult.slice(mergedIntervals[i].from, mergedIntervals[i].to)}
-      </b>
+      </span>
     )
     if (i + 1 < l)
       slicedOriginalResult.push(
