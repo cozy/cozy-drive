@@ -1,6 +1,5 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState } from 'react'
 import Autosuggest from 'react-autosuggest'
-import cx from 'classnames'
 
 import { useClient, models } from 'cozy-client'
 import List from 'cozy-ui/transpiled/react/MuiCozyTheme/List'
@@ -24,23 +23,14 @@ const BarSearchAutosuggest = ({ t }) => {
   const [focused, setFocused] = useState(false)
   const [input, setInput] = useState('')
 
-  const theme = useMemo(
-    () => ({
-      container: cx(
-        styles['coz-searchbar-autosuggest-container'],
-        isBusy ? styles['--searching'] : '',
-        focused ? styles['--focused'] : ''
-      ),
-      input: styles['coz-searchbar-autosuggest-input'],
-      inputFocused: styles['coz-searchbar-autosuggest-input-focused'],
-      suggestionsContainer:
-        styles['coz-searchbar-autosuggest-suggestions-container'],
-      suggestionsContainerOpen:
-        styles['coz-searchbar-autosuggest-suggestions-container--open'],
-      suggestionsList: styles['coz-searchbar-autosuggest-suggestions-list']
-    }),
-    [isBusy, focused]
-  )
+  const theme = {
+    container: 'u-w-100',
+    suggestionsContainer:
+      styles['bar-search-autosuggest-suggestions-container'],
+    suggestionsContainerOpen:
+      styles['bar-search-autosuggest-suggestions-container--open'],
+    suggestionsList: styles['bar-search-autosuggest-suggestions-list']
+  }
 
   const onSuggestionsFetchRequested = ({ value }) => {
     fetchSuggestions(value)
@@ -115,7 +105,7 @@ const BarSearchAutosuggest = ({ t }) => {
         focusInputOnSuggestionClick={false}
       />
       {isSearchEmpty && (
-        <div className={styles['coz-searchbar-autosuggest-status-container']}>
+        <div className={styles['bar-search-autosuggest-status-container']}>
           {t('searchbar.empty', { query })}
         </div>
       )}
