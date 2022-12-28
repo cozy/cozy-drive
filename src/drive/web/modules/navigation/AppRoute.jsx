@@ -23,6 +23,7 @@ import SharingsFilesViewer from '../views/Sharings/FilesViewerSharings'
 import SharingsFolderView from '../views/Sharings/SharingsFolderView'
 import OnlyOfficeView from '../views/OnlyOffice'
 import OnlyOfficeCreateView from '../views/OnlyOffice/Create'
+import SearchView from '../views/Search/SearchView'
 
 import FilesViewerRecent from '../views/Recent/FilesViewerRecent'
 
@@ -112,6 +113,7 @@ const AppRoute = (
         <Route path="settings" component={Settings} />
       )}
       <Route path="file/:fileId" component={FileOpenerExternal} />
+      <Route path="search" component={SearchView} />
     </Route>
     {__TARGET__ === 'mobile' && (
       <Route path="onboarding" component={OnBoarding} />

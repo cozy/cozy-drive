@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 
 import ListItem from 'cozy-ui/transpiled/react/MuiCozyTheme/ListItem'
 import ListItemIcon from 'cozy-ui/transpiled/react/MuiCozyTheme/ListItemIcon'
@@ -94,7 +94,13 @@ const highlightQueryTerms = (searchResult, query) => {
   return slicedOriginalResult
 }
 
-const SuggestionItem = ({ suggestion, query }) => {
+const SuggestionItem = ({ suggestion, query, onClick }) => {
+  const openSuggestion = useCallback(() => {
+    if (typeof onClick == 'function') {
+      onClick(suggestion)
+    }
+  }, [suggestion, onClick])
+
   const renderHighlitedItems = items => {
     if (Array.isArray(items)) {
       return items.map((item, idx) => ({
@@ -106,7 +112,7 @@ const SuggestionItem = ({ suggestion, query }) => {
   }
 
   return (
-    <ListItem button>
+    <ListItem button onClick={openSuggestion}>
       <ListItemIcon>
         {suggestion.icon && (
           <img src={suggestion.icon} alt="icon" width={32} height={32} />

@@ -6,10 +6,6 @@ import CozyClient from 'cozy-client'
 import AppBarSearch from 'drive/web/modules/search/AppBarSearch'
 import AppLike from 'test/components/AppLike'
 
-jest.mock('drive/web/modules/search/components/iconContext', () => ({
-  getIconUrl: () => 'iconUrl'
-}))
-
 it('should display the Searchbar', () => {
   const client = new CozyClient({})
   const appBarSearch = render(
