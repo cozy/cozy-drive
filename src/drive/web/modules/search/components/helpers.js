@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { models } from 'cozy-client'
 
 import { getIconUrl } from 'drive/web/modules/search/components/iconContext.js'
@@ -9,7 +7,7 @@ import { ROOT_DIR_ID } from 'drive/constants/config'
 
 export const TYPE_DIRECTORY = 'directory'
 
-const normalizeString = str =>
+export const normalizeString = str =>
   str
     .toString()
     .toLowerCase()
@@ -17,87 +15,6 @@ const normalizeString = str =>
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .split(' ')
-
-/**
- * Add <b> on part that equls query into each result
- *
- * @param {Array} searchResult - list of results
- * @param {string} query - search input
- * @returns list of results with the query highlighted
- */
-export const highlightQueryTerms = (searchResult, query) => {
-  const normalizedQueryTerms = normalizeString(query)
-  const normalizedResultTerms = normalizeString(searchResult)
-
-  const matchedIntervals = []
-  const spacerLength = 1
-  let currentIndex = 0
-
-  normalizedResultTerms.forEach(resultTerm => {
-    normalizedQueryTerms.forEach(queryTerm => {
-      const index = resultTerm.indexOf(queryTerm)
-      if (index >= 0) {
-        matchedIntervals.push({
-          from: currentIndex + index,
-          to: currentIndex + index + queryTerm.length
-        })
-      }
-    })
-
-    currentIndex += resultTerm.length + spacerLength
-  })
-
-  // matchedIntervals can overlap, so we merge them.
-  // - sort the intervals by starting index
-  // - add the first interval to the stack
-  // - for every interval,
-  // - - add it to the stack if it doesn't overlap with the stack top
-  // - - or extend the stack top if the start overlaps and the new interval's top is bigger
-  const mergedIntervals = matchedIntervals
-    .sort((intervalA, intervalB) => intervalA.from > intervalB.from)
-    .reduce((computedIntervals, newInterval) => {
-      if (
-        computedIntervals.length === 0 ||
-        computedIntervals[computedIntervals.length - 1].to < newInterval.from
-      ) {
-        computedIntervals.push(newInterval)
-      } else if (
-        computedIntervals[computedIntervals.length - 1].to < newInterval.to
-      ) {
-        computedIntervals[computedIntervals.length - 1].to = newInterval.to
-      }
-
-      return computedIntervals
-    }, [])
-
-  // create an array containing the entire search result, with special characters, and the intervals surrounded y `<b>` tags
-  const slicedOriginalResult =
-    mergedIntervals.length > 0
-      ? [searchResult.slice(0, mergedIntervals[0].from)]
-      : searchResult
-
-  for (let i = 0, l = mergedIntervals.length; i < l; ++i) {
-    slicedOriginalResult.push(
-      <b>
-        {searchResult.slice(mergedIntervals[i].from, mergedIntervals[i].to)}
-      </b>
-    )
-    if (i + 1 < l)
-      slicedOriginalResult.push(
-        searchResult.slice(mergedIntervals[i].to, mergedIntervals[i + 1].from)
-      )
-  }
-
-  if (mergedIntervals.length > 0)
-    slicedOriginalResult.push(
-      searchResult.slice(
-        mergedIntervals[mergedIntervals.length - 1].to,
-        searchResult.length
-      )
-    )
-
-  return slicedOriginalResult
-}
 
 /**
  * Normalize file for Front usage in <AutoSuggestion> component inside <BarSearchAutosuggest>
