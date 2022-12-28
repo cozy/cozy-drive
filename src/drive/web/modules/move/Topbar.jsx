@@ -5,7 +5,7 @@ import uniqBy from 'lodash/uniqBy'
 import Topbar from 'drive/web/modules/layout/Topbar'
 import { withBreakpoints } from 'cozy-ui/transpiled/react'
 import Breadcrumb from 'drive/web/modules/navigation/Breadcrumb/Breadcrumb'
-import PreviousButton from 'drive/web/modules/navigation/Breadcrumb/PreviousButton'
+import BackButton from 'components/Button/BackButton'
 import { ROOT_DIR_ID } from 'drive/constants/config'
 
 const getBreadcrumbPath = (t, displayedFolder) =>
@@ -41,7 +41,7 @@ const MoveTopbar = (
   return (
     <Topbar hideOnMobile={false}>
       {showPreviousButton && (
-        <PreviousButton onClick={() => navigateTo(path[path.length - 2])} />
+        <BackButton onClick={() => navigateTo(path[path.length - 2])} t={t} />
       )}
       <Breadcrumb
         path={path}

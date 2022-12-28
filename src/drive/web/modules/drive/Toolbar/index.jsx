@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import cx from 'classnames'
+import { withRouter } from 'react-router'
 
 import { withClient } from 'cozy-client'
 import SharingProvider, { SharedDocument } from 'cozy-sharing'
@@ -20,6 +21,7 @@ import MoreMenu from 'drive/web/modules/drive/Toolbar/components/MoreMenu'
 import ShareButton from 'drive/web/modules/drive/Toolbar/share/ShareButton'
 import SharedRecipients from 'drive/web/modules/drive/Toolbar/share/SharedRecipients'
 import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
+import SearchButton from 'drive/web/modules/drive/Toolbar/components/SearchButton'
 
 import styles from 'drive/styles/toolbar.styl'
 
@@ -62,7 +64,8 @@ class Toolbar extends Component {
       hasWriteAccess,
       breakpoints: { isMobile },
       client,
-      webviewService
+      webviewService,
+      router
     } = this.props
 
     const isDisabled = disabled || selectionModeActive
@@ -95,6 +98,7 @@ class Toolbar extends Component {
 
         {isMobile ? (
           <BarRight>
+            <SearchButton router={router} t={t} />
             <BarContextProvider
               client={client}
               store={this.context.store}
@@ -158,6 +162,7 @@ ToolbarWithSharingContext.displayName = 'ToolbarWithSharingContext'
 export default compose(
   translate(),
   withClient,
+  withRouter,
   connect(mapStateToProps, null),
   withBreakpoints()
 )(ToolbarWithSharingContext)

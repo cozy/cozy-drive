@@ -97,3 +97,23 @@ export const indexFiles = async client => {
 
   return new FuzzyPathSearch(normalizedFiles)
 }
+
+/**
+ * Open the page corresponding to onSelect
+ *
+ * @param {*} client - The CozyClient instance
+ * @param {*} onSelect - is a string that describes what should happen when the suggestion is selected. Currently, the only format we're supporting is `open:http://example.com` to change the url of the current page.
+ */
+export const openOnSelect = async (client, onSelect) => {
+  if (/^id_note:/.test(onSelect)) {
+    const url = await models.note.fetchURL(client, {
+      id: onSelect.substr(8)
+    })
+    window.location.href = url
+  } else if (/^open:/.test(onSelect)) {
+    window.location.href = onSelect.substr(5)
+  } else {
+    // eslint-disable-next-line no-console
+    console.log('suggestion onSelect (' + onSelect + ') could not be executed')
+  }
+}

@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import Autosuggest from 'react-autosuggest'
 
-import { useClient, models } from 'cozy-client'
+import { useClient } from 'cozy-client'
 import List from 'cozy-ui/transpiled/react/MuiCozyTheme/List'
 
 import styles from 'drive/web/modules/search/components/styles.styl'
 import BarSearchInputGroup from 'drive/web/modules/search/components/BarSearchInputGroup'
 import useSearch from 'drive/web/modules/search/hooks/useSearch'
 import SuggestionItem from 'drive/web/modules/search/components/SuggestionItem'
+import { openOnSelect } from 'drive/web/modules/search/components/helpers'
 
 const BarSearchAutosuggest = ({ t }) => {
   const client = useClient()
@@ -40,22 +41,7 @@ const BarSearchAutosuggest = ({ t }) => {
   }
 
   const onSuggestionSelected = async (event, { suggestion }) => {
-    // `onSelect` is a string that describes what should happen when the suggestion is selected. Currently, the only format we're supporting is `open:http://example.com` to change the url of the current page.
-    const onSelect = suggestion.onSelect
-
-    if (/^id_note:/.test(onSelect)) {
-      const url = await models.note.fetchURL(client, {
-        id: onSelect.substr(8)
-      })
-      window.location.href = url
-    } else if (/^open:/.test(onSelect)) {
-      window.location.href = onSelect.substr(5)
-    } else {
-      // eslint-disable-next-line no-console
-      console.log(
-        'suggestion onSelect (' + onSelect + ') could not be executed'
-      )
-    }
+    await openOnSelect(client, suggestion.onSelect)
     clearSuggestions()
     setInput('')
   }

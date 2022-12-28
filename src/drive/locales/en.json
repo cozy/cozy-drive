@@ -736,5 +736,15 @@
   "searchbar": {
     "placeholder": "Search anything",
     "empty": "No result has been found for the query “%{query}”"
+  },
+  "button": {
+    "back": "Back"
+  },
+  "search": {
+    "action": "Search",
+    "empty": {
+      "title": "No result",
+      "subtitle": "No result has been found for the query “%{query}”"
+    }
   }
 }
