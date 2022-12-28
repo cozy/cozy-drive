@@ -1,34 +1,33 @@
-import React, { useState, useMemo, useCallback } from 'react'
+import React, { useState, useMemo } from 'react'
 import Autosuggest from 'react-autosuggest'
-import debounce from 'lodash/debounce'
 import cx from 'classnames'
 
 import { useClient, models } from 'cozy-client'
 
-import {
-  highlightQueryTerms,
-  indexFiles
-} from 'drive/web/modules/search/components/helpers'
+import { highlightQueryTerms } from 'drive/web/modules/search/components/helpers'
 import styles from 'drive/web/modules/search/components/styles.styl'
 import BarSearchInputGroup from 'drive/web/modules/search/components/BarSearchInputGroup'
-
-const SUGGESTIONS_PER_SOURCE = 10
+import useSearch from 'drive/web/modules/search/hooks/useSearch'
 
 const BarSearchAutosuggest = ({ t }) => {
   const client = useClient()
+  const {
+    suggestions,
+    fetchSuggestions,
+    hasSuggestions,
+    clearSuggestions,
+    isBusy,
+    query
+  } = useSearch()
 
-  const [searching, setSearching] = useState(false)
   const [focused, setFocused] = useState(false)
-  const [query, setQuery] = useState(null)
   const [input, setInput] = useState('')
-  const [suggestions, setSuggestions] = useState([])
-  const [fuzzy, setFuzzy] = useState(null)
 
   const theme = useMemo(
     () => ({
       container: cx(
         styles['coz-searchbar-autosuggest-container'],
-        searching ? styles['--searching'] : '',
+        isBusy ? styles['--searching'] : '',
         focused ? styles['--focused'] : ''
       ),
       input: styles['coz-searchbar-autosuggest-input'],
@@ -43,44 +42,14 @@ const BarSearchAutosuggest = ({ t }) => {
         styles['coz-searchbar-autosuggest-suggestion-highlighted'],
       sectionTitle: styles['coz-searchbar-autosuggest-section-title']
     }),
-    [searching, focused]
+    [isBusy, focused]
   )
 
-  const debouncedOnSuggestionsFetchRequested = debounce(
-    value => onSuggestionsFetchRequested(value),
-    250
-  )
-
-  const onSuggestionsFetchRequested = useCallback(
-    async ({ value }) => {
-      setQuery(value)
-      setSearching(true)
-      let currentFuzzy = fuzzy
-      if (currentFuzzy == null) {
-        currentFuzzy = await indexFiles(client)
-        setFuzzy(currentFuzzy)
-      }
-
-      const suggestions = currentFuzzy.search(value).map(result => ({
-        id: result.id,
-        title: result.name,
-        subtitle: result.path,
-        term: result.name,
-        onSelect: result.onSelect || 'open:' + result.url,
-        icon: result.icon
-      }))
-
-      setSuggestions(suggestions.slice(0, SUGGESTIONS_PER_SOURCE))
-      setSearching(false)
-    },
-    [client, fuzzy]
-  )
-
+  const onSuggestionsFetchRequested = ({ value }) => {
+    fetchSuggestions(value)
+  }
   const onSuggestionsClearRequested = () => {
-    setSuggestions([])
-    debouncedOnSuggestionsFetchRequested.cancel()
-    setQuery(null)
-    setSearching(false)
+    clearSuggestions()
   }
 
   const onSuggestionSelected = async (event, { suggestion }) => {
@@ -100,9 +69,8 @@ const BarSearchAutosuggest = ({ t }) => {
         'suggestion onSelect (' + onSelect + ') could not be executed'
       )
     }
-
+    clearSuggestions()
     setInput('')
-    setQuery(null)
   }
 
   // We want the user to find folders in which he can then navigate into, so we return the path here
@@ -147,20 +115,19 @@ const BarSearchAutosuggest = ({ t }) => {
   }
 
   const renderInputComponent = inputProps => (
-    <BarSearchInputGroup isBusy={searching} isFocus={focused}>
+    <BarSearchInputGroup isBusy={isBusy} isFocus={focused}>
       <input {...inputProps} />
     </BarSearchInputGroup>
   )
 
-  const isInitialSearch = input !== '' && query === null
-  const hasSuggestions = suggestions.length > 0
+  const isSearchEmpty = query !== '' && focused && !hasSuggestions && !isBusy
 
   return (
     <div className={styles['bar-search-container']} role="search">
       <Autosuggest
         theme={theme}
         suggestions={suggestions}
-        onSuggestionsFetchRequested={debouncedOnSuggestionsFetchRequested}
+        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
         onSuggestionsClearRequested={onSuggestionsClearRequested}
         onSuggestionSelected={onSuggestionSelected}
         getSuggestionValue={getSuggestionValue}
@@ -169,9 +136,9 @@ const BarSearchAutosuggest = ({ t }) => {
         inputProps={inputProps}
         focusInputOnSuggestionClick={false}
       />
-      {input !== '' && !isInitialSearch && focused && !hasSuggestions && (
+      {isSearchEmpty && (
         <div className={styles['coz-searchbar-autosuggest-status-container']}>
-          {t('searchbar.empty', { query: input })}
+          {t('searchbar.empty', { query })}
         </div>
       )}
     </div>
