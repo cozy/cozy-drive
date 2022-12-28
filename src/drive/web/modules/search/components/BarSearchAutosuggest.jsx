@@ -3,11 +3,12 @@ import Autosuggest from 'react-autosuggest'
 import cx from 'classnames'
 
 import { useClient, models } from 'cozy-client'
+import List from 'cozy-ui/transpiled/react/MuiCozyTheme/List'
 
-import { highlightQueryTerms } from 'drive/web/modules/search/components/helpers'
 import styles from 'drive/web/modules/search/components/styles.styl'
 import BarSearchInputGroup from 'drive/web/modules/search/components/BarSearchInputGroup'
 import useSearch from 'drive/web/modules/search/hooks/useSearch'
+import SuggestionItem from 'drive/web/modules/search/components/SuggestionItem'
 
 const BarSearchAutosuggest = ({ t }) => {
   const client = useClient()
@@ -36,11 +37,7 @@ const BarSearchAutosuggest = ({ t }) => {
         styles['coz-searchbar-autosuggest-suggestions-container'],
       suggestionsContainerOpen:
         styles['coz-searchbar-autosuggest-suggestions-container--open'],
-      suggestionsList: styles['coz-searchbar-autosuggest-suggestions-list'],
-      suggestion: styles['coz-searchbar-autosuggest-suggestion'],
-      suggestionHighlighted:
-        styles['coz-searchbar-autosuggest-suggestion-highlighted'],
-      sectionTitle: styles['coz-searchbar-autosuggest-section-title']
+      suggestionsList: styles['coz-searchbar-autosuggest-suggestions-list']
     }),
     [isBusy, focused]
   )
@@ -77,31 +74,7 @@ const BarSearchAutosuggest = ({ t }) => {
   const getSuggestionValue = suggestion => suggestion.subtitle
 
   const renderSuggestion = suggestion => {
-    return (
-      <div className={styles['coz-searchbar-autosuggest-suggestion-item']}>
-        {suggestion.icon && (
-          <img
-            className={styles['coz-searchbar-autosuggest-suggestion-icon']}
-            src={suggestion.icon}
-            alt="icon"
-          />
-        )}
-        <div className={styles['coz-searchbar-autosuggest-suggestion-content']}>
-          <div className={styles['coz-searchbar-autosuggest-suggestion-title']}>
-            {highlightQueryTerms(suggestion.title, query)}
-          </div>
-          {suggestion.subtitle && (
-            <div
-              className={
-                styles['coz-searchbar-autosuggest-suggestion-subtitle']
-              }
-            >
-              {highlightQueryTerms(suggestion.subtitle, query)}
-            </div>
-          )}
-        </div>
-      </div>
-    )
+    return <SuggestionItem suggestion={suggestion} query={query} />
   }
 
   const inputProps = {
@@ -120,6 +93,10 @@ const BarSearchAutosuggest = ({ t }) => {
     </BarSearchInputGroup>
   )
 
+  const renderSuggestionsContainer = ({ containerProps, children }) => {
+    return <List {...containerProps}>{children}</List>
+  }
+
   const isSearchEmpty = query !== '' && focused && !hasSuggestions && !isBusy
 
   return (
@@ -133,6 +110,7 @@ const BarSearchAutosuggest = ({ t }) => {
         getSuggestionValue={getSuggestionValue}
         renderSuggestion={renderSuggestion}
         renderInputComponent={renderInputComponent}
+        renderSuggestionsContainer={renderSuggestionsContainer}
         inputProps={inputProps}
         focusInputOnSuggestionClick={false}
       />
