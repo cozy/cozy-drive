@@ -15,6 +15,7 @@ import { Router } from 'react-router'
 import flag from 'cozy-flags'
 
 import AppRoute from 'drive/web/modules/navigation/AppRoute'
+import AppBarSearch from 'drive/web/modules/search/AppBarSearch'
 
 import App from 'components/App/App'
 import setupApp from './setupAppContext'
@@ -25,6 +26,7 @@ if (__DEVELOPMENT__) {
 
 const AppComponent = props => (
   <App {...props}>
+    <AppBarSearch />
     <Router history={props.history} routes={AppRoute} />
   </App>
 )

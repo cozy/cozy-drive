@@ -1,0 +1,119 @@
+[role=banner]
+
+    .coz-searchbar-autosuggest-container
+        width 100%
+        position relative
+
+    .coz-searchbar-autosuggest-suggestions-container
+        position absolute
+        top 100%
+        margin-top 3px
+        width 100%
+        max-height em(170px)
+        overflow auto
+        border-width 1px
+        border-style solid
+        border-color var(--silver)
+        border-radius 4px
+        background white
+        box-shadow 0 1px 3px 0 rgba(50, 54, 63, .19), 0 6px 18px 0 rgba(50, 54, 63, .19)
+        display none
+        box-sizing border-box
+    .coz-searchbar-autosuggest-suggestions-container--open
+        display block
+    .coz-searchbar-autosuggest-status-container
+        position absolute
+        top 100%
+        left 0
+        right 0
+        margin -.3em .8em .3em
+        padding .8em .5em
+        max-height em(170px)
+        overflow auto
+        border-width 1px
+        border-style solid
+        border-color var(--silver)
+        border-radius 4px
+        background white
+        box-shadow 0 1px 3px 0 rgba(50, 54, 63, .19), 0 6px 18px 0 rgba(50, 54, 63, .19)
+    .coz-searchbar-autosuggest-suggestions-list
+        margin 0
+        padding 0
+        list-style none
+        b
+            font-weight bolder
+            color var(--scienceBlue)
+    .coz-searchbar-autosuggest-suggestion
+        padding .8em .5em
+        border-width 0
+        border-bottom-width 1px
+        border-style solid
+        border-color var(--silver)
+        cursor pointer
+        &:last-child
+            border-bottom-width 0
+    .coz-searchbar-autosuggest-suggestion-item
+        display flex
+        flex-direction row
+        justify-content flex-start
+        align-items center
+    .coz-searchbar-autosuggest-suggestion-icon
+        max-height 2rem
+        min-height 2rem
+        margin-right 1rem
+    .coz-searchbar-autosuggest-suggestion-content
+        flex-grow 1
+        white-space nowrap
+        overflow hidden
+        text-overflow ellipsis
+        display flex
+        flex-direction column
+    .coz-searchbar-autosuggest-suggestion-subtitle
+        color var(--coolGrey)
+    .coz-searchbar-autosuggest-suggestion-highlighted
+        background var(--paleGrey)
+        box-shadow inset 4px 0 0 0 var(--dodgerBlue)
+    .coz-searchbar-autosuggest-section-title
+        padding .5em
+        font-size .8em
+
+    .bar-search-container
+        height 100%
+        display flex
+        justify-content flex-start
+        align-items center
+        flex-grow 1
+        padding .3em .8em .3em .7em
+        box-sizing border-box
+        position relative
+
+        .bar-search-input-group
+            height 100%
+            padding-left .5em
+            border 1px solid transparent
+            border-radius 4px
+            transition all .2s ease-out
+            opacity .4
+
+            &:hover
+                border-color var(--silver)
+
+            &.--focused, &:focus-within
+                opacity 1
+                outline 0
+                border-color var(--dodgerBlue)
+
+            input
+                width 100%
+                height 100%
+                padding .5em
+
+[role=banner] .coz-searchbar-autosuggest-input:focus,
+    [role=banner] .coz-searchbar-autosuggest-input-focused
+        outline 0
+        border-color var(--dodgerBlue)
+
+@media (max-width: 48em)
+    [role=banner]
+        .coz-searchbar
+            display 0

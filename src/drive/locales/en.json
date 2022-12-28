@@ -732,5 +732,9 @@
     "content": "Cozy Drive needs to update in order to improve its performances. This might take up to several minutes during which you cannot use your app. Do you want to do it now? If you refuse, we will ask you again next time",
     "confirm": "Ok, let's do it!",
     "cancel": "No, not now"
+  },
+  "searchbar": {
+    "placeholder": "Search anything",
+    "empty": "No result has been found for the query “%{query}”"
   }
 }

@@ -155,6 +155,7 @@
     "propagating-hammerjs": "^2.0.1",
     "raven-js": "3.27.2",
     "react": "16.14.0",
+    "react-autosuggest": "^10.1.0",
     "react-dom": "16.14.0",
     "react-dropzone": "5.1.1",
     "react-hot-loader": "^4.13.1",

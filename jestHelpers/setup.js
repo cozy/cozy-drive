@@ -16,6 +16,7 @@ jest.mock('cozy-bar/transpiled', () => ({
   BarLeft: ({ children }) => children,
   BarRight: ({ children }) => children,
   BarCenter: ({ children }) => children,
+  BarSearch: ({ children }) => children,
   setTheme: () => null
 }))
 
