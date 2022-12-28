@@ -2,16 +2,14 @@ import React from 'react'
 import CozyTheme from 'cozy-ui/transpiled/react/CozyTheme'
 import cx from 'classnames'
 import cozyBar from 'lib/cozyBar'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 const wrap = (Component, className) => {
   const WrappedBarComponent = ({ children }) => {
-    const { isMobile } = useBreakpoints()
     return (
       <Component>
         <CozyTheme
           className={cx('u-flex u-flex-items-center', className)}
-          variant={isMobile ? 'inverted' : 'normal'}
+          variant="normal"
         >
           {children}
         </CozyTheme>
