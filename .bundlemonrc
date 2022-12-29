@@ -3,7 +3,7 @@
   "files": [
     {
       "path": "drive/app/drive.<hash>.js",
-      "maxSize": "250 KB"
+      "maxSize": "255 KB"
     },
     {
       "path": "drive/app/drive.<hash>.min.css",
@@ -113,7 +113,7 @@
   "groups": [
     {
       "path": "drive/app/**",
-      "maxPercentIncrease": 7
+      "maxPercentIncrease": 1
     },
     {
       "path": "drive/img/**",
@@ -129,7 +129,7 @@
     },
     {
       "path": "drive/public/**",
-      "maxPercentIncrease": 0.4
+      "maxPercentIncrease": 1
     },
     {
       "path": "drive/screenshots/**",
