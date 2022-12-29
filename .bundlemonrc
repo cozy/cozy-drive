@@ -3,7 +3,7 @@
   "files": [
     {
       "path": "drive/app/drive.<hash>.js",
-      "maxSize": "234 KB"
+      "maxSize": "250 KB"
     },
     {
       "path": "drive/app/drive.<hash>.min.css",
@@ -83,7 +83,7 @@
     },
     {
       "path": "drive/app-drive.<hash>.min.css",
-      "maxSize": "55 KB"
+      "maxSize": "56 KB"
     },
     {
       "path": "drive/index.html",
@@ -113,7 +113,7 @@
   "groups": [
     {
       "path": "drive/app/**",
-      "maxPercentIncrease": 0.4
+      "maxPercentIncrease": 7
     },
     {
       "path": "drive/img/**",
@@ -141,7 +141,7 @@
     },
     {
       "path": "drive/vendors/**",
-      "maxPercentIncrease": 0.5
+      "maxPercentIncrease": 0.6
     }
   ],
   "reportOutput": [
