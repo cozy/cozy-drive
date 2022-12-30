@@ -1,7 +1,8 @@
 /* global __TARGET__ */
 
 import React from 'react'
-import { Outlet, Link } from 'react-router-dom'
+import { Outlet, NavLink as RouterLink } from 'react-router-dom'
+
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { Layout as LayoutUI, Main } from 'cozy-ui/transpiled/react/Layout'
@@ -10,7 +11,7 @@ import Nav, {
   NavItem,
   NavIcon,
   NavText,
-  genNavLink
+  genNavLinkForV6
 } from 'cozy-ui/transpiled/react/Nav'
 import CozyDevtools from 'cozy-client/dist/devtools'
 import { ModalManager } from 'react-cozy-helpers'
@@ -24,8 +25,7 @@ import { UploadQueue } from '../ducks/upload'
 
 import styles from '../styles/layout'
 
-// TODO : apply style back on active
-const NavLink = genNavLink(Link)
+const NavLink = genNavLinkForV6(RouterLink)
 
 export const Layout = ({ t }) => (
   <LayoutUI>
