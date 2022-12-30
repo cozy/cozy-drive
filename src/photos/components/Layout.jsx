@@ -11,9 +11,9 @@ import Nav, {
   NavItem,
   NavIcon,
   NavText,
-  genNavLink
+  genNavLinkForV6
 } from 'cozy-ui/transpiled/react/Nav'
-import { Link } from 'react-router-dom'
+import { NavLink as RouterLink } from 'react-router-dom'
 import ButtonClient from '../../components/pushClient/Button'
 import BannerClient from '../../components/pushClient/Banner'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
@@ -23,8 +23,7 @@ import { ModalManager } from 'react-cozy-helpers'
 import { isFlagshipApp } from 'cozy-device-helper'
 import { Outlet } from 'react-router-dom'
 
-// TODO : apply style back on active
-const NavLink = genNavLink(Link)
+const NavLink = genNavLinkForV6(RouterLink)
 
 export const Layout = ({ t }) => (
   <LayoutUI>
