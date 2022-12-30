@@ -33,13 +33,18 @@ export const makeNormalizedFile = (client, folders, file) => {
   const dirId = isDir ? file._id : file.dir_id
   const urlToFolder = `${window.location.origin}/#/folder/${dirId}`
 
-  let path, url, onSelect
+  let path, url, onSelect, parentUrl
   if (isDir) {
     path = file.path
     url = urlToFolder
+    parentUrl = urlToFolder
   } else {
     const parentDir = folders.find(folder => folder._id === file.dir_id)
     path = parentDir && parentDir.path ? parentDir.path : ''
+    parentUrl =
+      parentDir && parentDir._id
+        ? `${window.location.origin}/#/folder/${parentDir._id}`
+        : ''
     if (models.file.isNote(file)) {
       onSelect = `id_note:${file.id}`
     } else if (models.file.shouldBeOpenedByOnlyOffice(file)) {
@@ -55,6 +60,7 @@ export const makeNormalizedFile = (client, folders, file) => {
     path,
     url,
     onSelect,
+    parentUrl,
     icon: getIconUrl(file)
   }
 }

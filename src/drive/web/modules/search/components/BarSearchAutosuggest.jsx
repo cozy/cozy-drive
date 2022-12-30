@@ -43,7 +43,7 @@ const BarSearchAutosuggest = ({ t }) => {
     clearSuggestions()
   }
 
-  const handleCleanInput = () => {
+  const cleanSearch = () => {
     clearSuggestions()
     setInput('')
   }
@@ -58,7 +58,13 @@ const BarSearchAutosuggest = ({ t }) => {
   const getSuggestionValue = suggestion => suggestion.subtitle
 
   const renderSuggestion = suggestion => {
-    return <SuggestionItem suggestion={suggestion} query={query} />
+    return (
+      <SuggestionItem
+        suggestion={suggestion}
+        query={query}
+        onParentOpened={cleanSearch}
+      />
+    )
   }
 
   const inputProps = {
@@ -77,7 +83,7 @@ const BarSearchAutosuggest = ({ t }) => {
   const renderInputComponent = inputProps => (
     <BarSearchInputGroup
       isInputNotEmpty={input !== ''}
-      onClean={handleCleanInput}
+      onClean={cleanSearch}
     >
       <input {...inputProps} />
     </BarSearchInputGroup>

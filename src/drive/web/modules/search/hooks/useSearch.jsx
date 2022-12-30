@@ -39,7 +39,8 @@ const useSearch = () => {
         subtitle: result.path,
         term: result.name,
         onSelect: result.onSelect || 'open:' + result.url,
-        icon: result.icon
+        icon: result.icon,
+        parentUrl: result.parentUrl
       }))
 
     setBusy(value === '') // To prevent empty state to appear at the first search
