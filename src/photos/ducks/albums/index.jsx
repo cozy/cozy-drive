@@ -143,7 +143,7 @@ export const AlbumPhotosWithLoader =
           updateAlbum={updateAlbum}
           deleteAlbum={deleteAlbum}
           removePhotos={removePhotos}
-          hasMore={album.photos.hasMore}
+          hasMore={album.photos.hasMore !== undefined}
           fetchMore={album.photos.fetchMore.bind(album.photos)}
           lastFetch={lastFetch}
         >
