@@ -100,7 +100,7 @@ class AlbumPhotos extends Component {
             // TODO: fix me
             // eslint-disable-next-line promise/always-return
             .then(() => {
-              navigate('albums', { replace: true })
+              navigate('/albums')
               Alerter.success('Albums.remove_album.success', {
                 name: album.name
               })
@@ -212,8 +212,8 @@ AlbumPhotos.propTypes = {
   shareAlbum: PropTypes.func,
   photos: PropTypes.array.isRequired,
   t: PropTypes.func.isRequired,
-  navigate: PropTypes.object.isRequired,
-  lastFetch: PropTypes.string
+  navigate: PropTypes.func.isRequired,
+  lastFetch: PropTypes.number
 }
 
 const AlbumPhotosWrapper = props => {
