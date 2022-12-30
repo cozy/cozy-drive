@@ -102,6 +102,7 @@ const SearchView = () => {
                 query={query}
                 key={suggestion.id}
                 onClick={openSuggestion}
+                isMobile={isMobile}
               />
             ))}
           </List>

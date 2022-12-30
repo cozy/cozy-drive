@@ -34,7 +34,8 @@ describe('makeNormalizedFile', () => {
       id: 'fileId',
       name: 'fileName',
       path: 'filePath',
-      url: 'http://localhost/#/folder/fileId'
+      url: 'http://localhost/#/folder/fileId',
+      parentUrl: 'http://localhost/#/folder/fileId'
     })
   })
 
@@ -54,7 +55,8 @@ describe('makeNormalizedFile', () => {
       id: 'fileId',
       name: 'fileName',
       path: 'folderPath',
-      url: 'http://localhost/#/folder/folderId/file/fileId'
+      url: 'http://localhost/#/folder/folderId/file/fileId',
+      parentUrl: 'http://localhost/#/folder/folderId'
     })
   })
 
@@ -76,7 +78,8 @@ describe('makeNormalizedFile', () => {
       id: 'fileId',
       name: 'note.cozy-note',
       path: 'folderPath',
-      onSelect: 'id_note:noteId'
+      onSelect: 'id_note:noteId',
+      parentUrl: 'http://localhost/#/folder/folderId'
     })
   })
 
@@ -98,7 +101,8 @@ describe('makeNormalizedFile', () => {
       name: 'note.cozy-note',
       path: 'folderPath',
       onSelect: undefined,
-      url: 'http://localhost/#/folder/folderId/file/fileId'
+      url: 'http://localhost/#/folder/folderId/file/fileId',
+      parentUrl: 'http://localhost/#/folder/folderId'
     })
   })
 })
