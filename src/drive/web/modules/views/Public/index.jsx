@@ -25,7 +25,7 @@ import useActions from 'drive/web/modules/actions/useActions'
 import Main from 'drive/web/modules/layout/Main'
 import {
   download,
-  copy,
+  duplicate,
   trash,
   rename,
   versions
@@ -178,7 +178,7 @@ const PublicFolderView = ({
     isPublic: true
   }
   const actions = useActions(
-    [download, copy, trash, rename, versions],
+    [download, duplicate, trash, rename, versions],
     actionOptions
   )
 

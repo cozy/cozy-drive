@@ -1,4 +1,4 @@
-import { download, copy } from './index'
+import { download, duplicate } from './index'
 import { DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
 
 describe('download', () => {
@@ -58,7 +58,7 @@ describe('download', () => {
   })
 })
 
-describe('copy', () => {
+describe('duplicate', () => {
   it('should not display when several files are selected', () => {
     const files = [
       {
@@ -68,7 +68,7 @@ describe('copy', () => {
         type: 'file'
       }
     ]
-    const cp = copy({ client: {}, hasWriteAccess: true })
+    const cp = duplicate({ client: {}, hasWriteAccess: true })
     expect(cp.displayCondition(files)).toBe(false)
   })
 
@@ -78,7 +78,7 @@ describe('copy', () => {
         type: 'directory'
       }
     ]
-    const cp = copy({ client: {}, hasWriteAccess: true })
+    const cp = duplicate({ client: {}, hasWriteAccess: true })
     expect(cp.displayCondition(files)).toBe(false)
   })
 
@@ -88,7 +88,7 @@ describe('copy', () => {
         type: 'file'
       }
     ]
-    const cp = copy({ client: {}, hasWriteAccess: true })
+    const cp = duplicate({ client: {}, hasWriteAccess: true })
     expect(cp.displayCondition(files)).toBe(true)
   })
 
@@ -98,7 +98,7 @@ describe('copy', () => {
         type: 'file'
       }
     ]
-    const cp = copy({ client: {}, hasWriteAccess: false })
+    const cp = duplicate({ client: {}, hasWriteAccess: false })
     expect(cp.displayCondition(files)).toBe(false)
   })
 })
