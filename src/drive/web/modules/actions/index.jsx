@@ -236,7 +236,7 @@ export const move = ({ canMove, pushModal, popModal }) => {
 export const duplicate = ({ client, hasWriteAccess, refresh, isPublic }) => {
   return {
     name: 'duplicate',
-    icon: 'copy',
+    icon: MultiFilesIcon,
     displayCondition: selection =>
       selection.length === 1 && isFile(selection[0]) && hasWriteAccess,
     action: async files => {
