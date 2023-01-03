@@ -41,6 +41,7 @@ import { useI18n } from 'cozy-ui/transpiled/react'
 
 export const share = ({ hasWriteAccess, pushModal, popModal }) => {
   return {
+    name: 'share',
     icon: 'share',
     displayCondition: selection =>
       hasWriteAccess &&
@@ -64,6 +65,7 @@ export const share = ({ hasWriteAccess, pushModal, popModal }) => {
 export const download = ({ client, vaultClient }) => {
   return isMobileApp()
     ? {
+        name: 'forwardTo',
         icon: 'download',
         displayCondition: files => {
           if (isIOSApp()) return files.length === 1 && isFile(files[0])
@@ -73,7 +75,6 @@ export const download = ({ client, vaultClient }) => {
           )
         },
         action: files => exportFilesNative(client, files, { vaultClient }),
-        label: 'forwardTo',
         Component: function Download(props) {
           const { t } = useI18n()
           return (
@@ -89,6 +90,7 @@ export const download = ({ client, vaultClient }) => {
         }
       }
     : {
+        name: 'download',
         icon: 'download',
         displayCondition: files => {
           // We cannot generate archive for encrypted files, for now.
@@ -118,6 +120,7 @@ export const download = ({ client, vaultClient }) => {
 
 export const hr = () => {
   return {
+    name: 'hr',
     icon: 'hr',
     displayInSelectionBar: false,
     Component: function hr() {
@@ -128,6 +131,7 @@ export const hr = () => {
 
 export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
   return {
+    name: 'trash',
     icon: 'trash',
     displayCondition: () => hasWriteAccess,
     action: files =>
@@ -165,6 +169,7 @@ export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
 }
 export const open = ({ client, vaultClient }) => {
   return {
+    name: 'openWith',
     icon: 'openWith',
     displayCondition: selection =>
       isMobileApp() && selection.length === 1 && isFile(selection[0]),
@@ -187,6 +192,7 @@ export const open = ({ client, vaultClient }) => {
 
 export const rename = ({ hasWriteAccess, dispatch }) => {
   return {
+    name: 'rename',
     icon: 'rename',
     displayCondition: selection => hasWriteAccess && selection.length === 1,
     action: files => dispatch(startRenamingAsync(files[0])),
@@ -206,6 +212,7 @@ export const rename = ({ hasWriteAccess, dispatch }) => {
 
 export const move = ({ canMove, pushModal, popModal }) => {
   return {
+    name: 'moveto',
     icon: 'moveto',
     displayCondition: () => canMove,
     action: files =>
@@ -228,7 +235,8 @@ export const move = ({ canMove, pushModal, popModal }) => {
 
 export const duplicate = ({ client, hasWriteAccess, refresh, isPublic }) => {
   return {
-    label: 'duplicate',
+    name: 'duplicate',
+    icon: 'copy',
     displayCondition: selection =>
       selection.length === 1 && isFile(selection[0]) && hasWriteAccess,
     action: async files => {
@@ -254,6 +262,7 @@ export const duplicate = ({ client, hasWriteAccess, refresh, isPublic }) => {
 
 export const qualify = ({ pushModal, popModal }) => {
   return {
+    name: 'qualify',
     icon: 'qualify',
     displayCondition: selection =>
       selection.length === 1 && isFile(selection[0]),
@@ -295,6 +304,7 @@ export const qualify = ({ pushModal, popModal }) => {
 
 export const versions = ({ router, location }) => {
   return {
+    name: 'history',
     icon: 'history',
     displayCondition: selection =>
       selection.length === 1 && isFile(selection[0]),
@@ -321,6 +331,7 @@ export const versions = ({ router, location }) => {
 
 export const offline = () => {
   return {
+    name: 'phone-download',
     icon: 'phone-download',
     displayCondition: selections =>
       isMobileApp() && selections.length === 1 && isFile(selections[0]),
@@ -332,6 +343,7 @@ export const offline = () => {
 
 export const restore = ({ refresh, client }) => {
   return {
+    name: 'restore',
     icon: 'restore',
     action: async files => {
       await restoreFiles(client, files)
@@ -356,8 +368,8 @@ export const restore = ({ refresh, client }) => {
 
 export const destroy = ({ pushModal, popModal }) => {
   return {
+    name: 'destroy',
     icon: 'trash',
-    label: 'destroy',
     action: files =>
       pushModal(<DestroyConfirm files={files} onClose={popModal} />),
     Component: function Destroy(props) {
