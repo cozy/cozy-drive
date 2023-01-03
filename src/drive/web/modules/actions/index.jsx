@@ -226,16 +226,16 @@ export const move = ({ canMove, pushModal, popModal }) => {
   }
 }
 
-export const copy = ({ client, hasWriteAccess, refresh, isPublic }) => {
+export const duplicate = ({ client, hasWriteAccess, refresh, isPublic }) => {
   return {
-    icon: 'copy',
+    label: 'duplicate',
     displayCondition: selection =>
       selection.length === 1 && isFile(selection[0]) && hasWriteAccess,
     action: async files => {
       await client.collection('io.cozy.files').copy(files[0].id)
       if (isPublic) refresh()
     },
-    Component: function Copy(props) {
+    Component: function Duplicate(props) {
       const { t } = useI18n()
       return (
         <ActionMenuItem
