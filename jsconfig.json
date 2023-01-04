@@ -2,10 +2,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "components/*": ["./src/components/*"],
-      "drive/*": ["./src/drive/*"],
-      "test/*": ["./test/*"],
-      "lib/*": ["./src/lib/*"]
+      "components/*": ["src/components/*"],
+      "drive/*": ["src/drive/*"],
+      "test/*": ["test/*"],
+      "lib/*": ["src/lib/*"],
+      "photos/*": ["src/photos/*"]
     }
   },
   "exclude": ["node_modules", "build", "storage"]
