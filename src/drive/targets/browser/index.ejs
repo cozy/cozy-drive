@@ -26,6 +26,7 @@
     />
     <% if (__STACK_ASSETS__) { %>
     {{.CozyClientJS}}
+    {{.CozyFonts}}
     <% } %> <% _.forEach(htmlWebpackPlugin.files.css, function(file) { %>
     <link rel="stylesheet" href="<%- file %>" />
     <% }); %>
