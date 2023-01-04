@@ -31,9 +31,10 @@ export const normalizeString = str =>
 export const makeNormalizedFile = (client, folders, file) => {
   const isDir = file.type === TYPE_DIRECTORY
   const dirId = isDir ? file._id : file.dir_id
-  const urlToFolder = `${window.location.origin}/#/folder/${dirId}`
+  const urlToFolder = `/folder/${dirId}`
 
-  let path, url, onSelect, parentUrl
+  let path, url, parentUrl
+  let openOn = 'drive'
   if (isDir) {
     path = file.path
     url = urlToFolder
@@ -41,12 +42,10 @@ export const makeNormalizedFile = (client, folders, file) => {
   } else {
     const parentDir = folders.find(folder => folder._id === file.dir_id)
     path = parentDir && parentDir.path ? parentDir.path : ''
-    parentUrl =
-      parentDir && parentDir._id
-        ? `${window.location.origin}/#/folder/${parentDir._id}`
-        : ''
+    parentUrl = parentDir && parentDir._id ? `/folder/${parentDir._id}` : ''
     if (models.file.isNote(file)) {
-      onSelect = `id_note:${file.id}`
+      url = `/n/${file.id}`
+      openOn = 'notes'
     } else if (models.file.shouldBeOpenedByOnlyOffice(file)) {
       url = makeOnlyOfficeFileRoute(file)
     } else {
@@ -59,8 +58,8 @@ export const makeNormalizedFile = (client, folders, file) => {
     name: file.name,
     path,
     url,
-    onSelect,
     parentUrl,
+    openOn,
     icon: getIconUrl(file)
   }
 }
@@ -102,24 +101,4 @@ export const indexFiles = async client => {
   )
 
   return new FuzzyPathSearch(normalizedFiles)
-}
-
-/**
- * Open the page corresponding to onSelect
- *
- * @param {*} client - The CozyClient instance
- * @param {*} onSelect - is a string that describes what should happen when the suggestion is selected. Currently, the only format we're supporting is `open:http://example.com` to change the url of the current page.
- */
-export const openOnSelect = async (client, onSelect) => {
-  if (/^id_note:/.test(onSelect)) {
-    const url = await models.note.fetchURL(client, {
-      id: onSelect.substr(8)
-    })
-    window.location.href = url
-  } else if (/^open:/.test(onSelect)) {
-    window.location.href = onSelect.substr(5)
-  } else {
-    // eslint-disable-next-line no-console
-    console.log('suggestion onSelect (' + onSelect + ') could not be executed')
-  }
 }
