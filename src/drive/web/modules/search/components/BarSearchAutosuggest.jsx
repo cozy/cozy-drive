@@ -18,7 +18,8 @@ const BarSearchAutosuggest = ({ t }) => {
     hasSuggestions,
     clearSuggestions,
     isBusy,
-    query
+    query,
+    makeIndexes
   } = useSearch()
 
   const [focused, setFocused] = useState(false)
@@ -64,7 +65,10 @@ const BarSearchAutosuggest = ({ t }) => {
     onChange: (event, { newValue }) => {
       setInput(newValue)
     },
-    onFocus: () => setFocused(true),
+    onFocus: () => {
+      makeIndexes()
+      setFocused(true)
+    },
     onBlur: () => setFocused(false)
   }
 

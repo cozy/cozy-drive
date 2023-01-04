@@ -14,6 +14,12 @@ const useSearch = () => {
   const [isBusy, setBusy] = useState(false)
   const [query, setQuery] = useState('')
 
+  const makeIndexes = async () => {
+    if (fuzzy == null) {
+      setFuzzy(await indexFiles(client))
+    }
+  }
+
   const fetchSuggestions = debounce(value => {
     onFetchSuggestionsRequested(value)
   }, 250)
@@ -56,7 +62,8 @@ const useSearch = () => {
     clearSuggestions,
     hasSuggestions,
     isBusy,
-    query
+    query,
+    makeIndexes
   }
 }
 

@@ -25,7 +25,8 @@ const SearchView = () => {
     fetchSuggestions,
     clearSuggestions,
     hasSuggestions,
-    query
+    query,
+    makeIndexes
   } = useSearch()
   const { router } = useRouter()
   const client = useClient()
@@ -56,6 +57,7 @@ const SearchView = () => {
   }
 
   const handleFocus = () => {
+    makeIndexes()
     setFocused(true)
   }
 
