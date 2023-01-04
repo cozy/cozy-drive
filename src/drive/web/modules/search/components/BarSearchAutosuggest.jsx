@@ -2,17 +2,19 @@ import React, { useState } from 'react'
 import Autosuggest from 'react-autosuggest'
 import cx from 'classnames'
 
-import { useClient } from 'cozy-client'
 import List from 'cozy-ui/transpiled/react/MuiCozyTheme/List'
+import { isFlagshipApp } from 'cozy-device-helper'
+import { useWebviewIntent } from 'cozy-intent'
+import { models, useClient } from 'cozy-client'
 
 import styles from 'drive/web/modules/search/components/styles.styl'
 import BarSearchInputGroup from 'drive/web/modules/search/components/BarSearchInputGroup'
 import useSearch from 'drive/web/modules/search/hooks/useSearch'
 import SuggestionItem from 'drive/web/modules/search/components/SuggestionItem'
-import { openOnSelect } from 'drive/web/modules/search/components/helpers'
 import SuggestionListSkeleton from 'drive/web/modules/search/components/SuggestionListSkeleton'
 
 const BarSearchAutosuggest = ({ t }) => {
+  const webviewIntent = useWebviewIntent()
   const client = useClient()
   const {
     suggestions,
@@ -49,7 +51,23 @@ const BarSearchAutosuggest = ({ t }) => {
   }
 
   const onSuggestionSelected = async (event, { suggestion }) => {
-    await openOnSelect(client, suggestion.onSelect)
+    let url = `${window.location.origin}/#${suggestion.url}`
+    if (suggestion.openOn === 'notes') {
+      url = await models.note.fetchURL(client, {
+        id: suggestion.url.substr(3)
+      })
+    }
+
+    if (url) {
+      if (isFlagshipApp()) {
+        webviewIntent.call('openApp', url, { slug: suggestion.openOn })
+      } else {
+        window.location.assign(url)
+      }
+    } else {
+      console.error(`openSuggestion (${suggestion.name}) could not be executed`)
+    }
+
     clearSuggestions()
     setInput('')
   }
@@ -81,10 +99,7 @@ const BarSearchAutosuggest = ({ t }) => {
   }
 
   const renderInputComponent = inputProps => (
-    <BarSearchInputGroup
-      isInputNotEmpty={input !== ''}
-      onClean={cleanSearch}
-    >
+    <BarSearchInputGroup isInputNotEmpty={input !== ''} onClean={cleanSearch}>
       <input {...inputProps} />
     </BarSearchInputGroup>
   )

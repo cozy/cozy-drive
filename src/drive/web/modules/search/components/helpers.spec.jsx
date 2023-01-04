@@ -34,8 +34,9 @@ describe('makeNormalizedFile', () => {
       id: 'fileId',
       name: 'fileName',
       path: 'filePath',
-      url: 'http://localhost/#/folder/fileId',
-      parentUrl: 'http://localhost/#/folder/fileId'
+      url: '/folder/fileId',
+      parentUrl: '/folder/fileId',
+      openOn: 'drive'
     })
   })
 
@@ -55,8 +56,9 @@ describe('makeNormalizedFile', () => {
       id: 'fileId',
       name: 'fileName',
       path: 'folderPath',
-      url: 'http://localhost/#/folder/folderId/file/fileId',
-      parentUrl: 'http://localhost/#/folder/folderId'
+      url: '/folder/folderId/file/fileId',
+      parentUrl: '/folder/folderId',
+      openOn: 'drive'
     })
   })
 
@@ -78,8 +80,9 @@ describe('makeNormalizedFile', () => {
       id: 'fileId',
       name: 'note.cozy-note',
       path: 'folderPath',
-      onSelect: 'id_note:noteId',
-      parentUrl: 'http://localhost/#/folder/folderId'
+      url: '/n/noteId',
+      parentUrl: '/folder/folderId',
+      openOn: 'notes'
     })
   })
 
@@ -100,9 +103,9 @@ describe('makeNormalizedFile', () => {
       id: 'fileId',
       name: 'note.cozy-note',
       path: 'folderPath',
-      onSelect: undefined,
-      url: 'http://localhost/#/folder/folderId/file/fileId',
-      parentUrl: 'http://localhost/#/folder/folderId'
+      url: '/folder/folderId/file/fileId',
+      parentUrl: '/folder/folderId',
+      openOn: 'drive'
     })
   })
 })
