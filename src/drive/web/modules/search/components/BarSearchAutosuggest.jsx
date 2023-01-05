@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Autosuggest from 'react-autosuggest'
+import cx from 'classnames'
 
 import { useClient } from 'cozy-client'
 import List from 'cozy-ui/transpiled/react/MuiCozyTheme/List'
@@ -9,6 +10,7 @@ import BarSearchInputGroup from 'drive/web/modules/search/components/BarSearchIn
 import useSearch from 'drive/web/modules/search/hooks/useSearch'
 import SuggestionItem from 'drive/web/modules/search/components/SuggestionItem'
 import { openOnSelect } from 'drive/web/modules/search/components/helpers'
+import SuggestionListSkeleton from 'drive/web/modules/search/components/SuggestionListSkeleton'
 
 const BarSearchAutosuggest = ({ t }) => {
   const client = useClient()
@@ -74,7 +76,6 @@ const BarSearchAutosuggest = ({ t }) => {
 
   const renderInputComponent = inputProps => (
     <BarSearchInputGroup
-      isBusy={isBusy}
       isInputNotEmpty={input !== ''}
       onClean={handleCleanInput}
     >
@@ -86,7 +87,7 @@ const BarSearchAutosuggest = ({ t }) => {
     return <List {...containerProps}>{children}</List>
   }
 
-  const isSearchEmpty = query !== '' && focused && !hasSuggestions && !isBusy
+  const hasNoSearchResult = input !== '' && focused && !hasSuggestions
 
   return (
     <div className={styles['bar-search-container']} role="search">
@@ -103,9 +104,19 @@ const BarSearchAutosuggest = ({ t }) => {
         inputProps={inputProps}
         focusInputOnSuggestionClick={false}
       />
-      {isSearchEmpty && (
-        <div className={styles['bar-search-autosuggest-status-container']}>
+      {hasNoSearchResult && !isBusy && (
+        <div
+          className={cx(
+            styles['bar-search-autosuggest-status-container'],
+            styles['--empty']
+          )}
+        >
           {t('searchbar.empty', { query })}
+        </div>
+      )}
+      {hasNoSearchResult && isBusy && (
+        <div className={styles['bar-search-autosuggest-status-container']}>
+          <SuggestionListSkeleton />
         </div>
       )}
     </div>

@@ -12,6 +12,7 @@ import { BarLeft, BarSearch } from 'components/Bar'
 import { openOnSelect } from 'drive/web/modules/search/components/helpers'
 import useSearch from 'drive/web/modules/search/hooks/useSearch'
 import SuggestionItem from 'drive/web/modules/search/components/SuggestionItem'
+import SuggestionListSkeleton from 'drive/web/modules/search/components/SuggestionListSkeleton'
 import BarSearchInputGroup from 'drive/web/modules/search/components/BarSearchInputGroup'
 import styles from 'drive/web/modules/search/components/styles.styl'
 import { useRouter } from 'drive/lib/RouterContext'
@@ -59,7 +60,7 @@ const SearchView = () => {
     makeIndexes()
   }
 
-  const isSearchEmpty = query !== '' && !hasSuggestions && !isBusy
+  const hasNoSearchResult = input !== '' && !hasSuggestions
 
   return (
     <>
@@ -77,9 +78,9 @@ const SearchView = () => {
           role="search"
         >
           <BarSearchInputGroup
+            isMobile={isMobile}
             isInputNotEmpty={input !== ''}
             onClean={handleCleanInput}
-            isBusy={isBusy}
           >
             <Input
               fullwidth={true}
@@ -93,9 +94,7 @@ const SearchView = () => {
         </div>
       </BarSearch>
       <div className="u-flex u-flex-column u-w-100">
-        {isSearchEmpty ? (
-          <SearchEmpty query={query} />
-        ) : (
+        {hasSuggestions && (
           <List>
             {suggestions.map(suggestion => (
               <SuggestionItem
@@ -107,6 +106,8 @@ const SearchView = () => {
             ))}
           </List>
         )}
+        {hasNoSearchResult && !isBusy && <SearchEmpty query={query} />}
+        {hasNoSearchResult && isBusy && <SuggestionListSkeleton count={10} />}
       </div>
     </>
   )

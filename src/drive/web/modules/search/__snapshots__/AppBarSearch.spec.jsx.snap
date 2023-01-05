@@ -26,7 +26,8 @@ Object {
                 class="styles__c-inputgroup-side___60v0v"
               >
                 <svg
-                  class="styles__icon___23x3R"
+                  aria-hidden="true"
+                  class="bar-search-input-group-append styles__icon___23x3R"
                   height="16"
                   style="fill: #95999D;"
                   viewBox="0 0 16 16"
@@ -83,7 +84,8 @@ Object {
               class="styles__c-inputgroup-side___60v0v"
             >
               <svg
-                class="styles__icon___23x3R"
+                aria-hidden="true"
+                class="bar-search-input-group-append styles__icon___23x3R"
                 height="16"
                 style="fill: #95999D;"
                 viewBox="0 0 16 16"

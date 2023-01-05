@@ -11,7 +11,7 @@ const useSearch = () => {
   const client = useClient()
   const [suggestions, setSuggestions] = useState([])
   const [fuzzy, setFuzzy] = useState(null)
-  const [isBusy, setBusy] = useState(false)
+  const [isBusy, setBusy] = useState(true)
   const [query, setQuery] = useState('')
 
   const makeIndexes = async () => {
@@ -25,14 +25,12 @@ const useSearch = () => {
   }, 250)
 
   const onFetchSuggestionsRequested = async value => {
-    setQuery(value)
     setBusy(true)
     let currentFuzzy = fuzzy
     if (currentFuzzy == null) {
       currentFuzzy = await indexFiles(client)
       setFuzzy(currentFuzzy)
     }
-
     const suggestions = currentFuzzy
       .search(value, { limit: MAX_SUGGESTIONS })
       .map(result => ({
@@ -44,14 +42,16 @@ const useSearch = () => {
         icon: result.icon
       }))
 
+    setBusy(value === '') // To prevent empty state to appear at the first search
+    setQuery(value)
     setSuggestions(suggestions.slice(0, MAX_SUGGESTIONS))
-    setBusy(false)
   }
 
   const hasSuggestions = useMemo(() => suggestions.length > 0, [suggestions])
 
   const clearSuggestions = () => {
     fetchSuggestions.cancel()
+    setBusy(true)
     setQuery('')
     setSuggestions([])
   }
