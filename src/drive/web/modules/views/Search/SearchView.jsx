@@ -17,6 +17,7 @@ import BarSearchInputGroup from 'drive/web/modules/search/components/BarSearchIn
 import styles from 'drive/web/modules/search/components/styles.styl'
 import { useRouter } from 'drive/lib/RouterContext'
 import SearchEmpty from './components/SearchEmpty'
+import { useEffect } from 'react'
 
 const SearchView = () => {
   const { t } = useI18n()
@@ -34,6 +35,10 @@ const SearchView = () => {
   const { isMobile } = useBreakpoints()
 
   const [input, setInput] = useState('')
+
+  useEffect(() => {
+    makeIndexes()
+  }, [makeIndexes])
 
   const onInputChanged = event => {
     setInput(event.target.value)
@@ -54,10 +59,6 @@ const SearchView = () => {
   const handleCleanInput = () => {
     clearSuggestions()
     setInput('')
-  }
-
-  const handleFocus = () => {
-    makeIndexes()
   }
 
   const hasNoSearchResult = input !== '' && !hasSuggestions
@@ -87,7 +88,6 @@ const SearchView = () => {
               value={input}
               onChange={onInputChanged}
               placeholder={t('searchbar.placeholder')}
-              onFocus={handleFocus}
               autoFocus
             />
           </BarSearchInputGroup>
