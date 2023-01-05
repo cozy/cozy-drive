@@ -75,7 +75,6 @@ const BarSearchAutosuggest = ({ t }) => {
   const renderInputComponent = inputProps => (
     <BarSearchInputGroup
       isBusy={isBusy}
-      isFocus={focused}
       isInputNotEmpty={input !== ''}
       onClean={handleCleanInput}
     >
