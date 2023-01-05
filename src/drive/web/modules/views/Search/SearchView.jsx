@@ -33,7 +33,6 @@ const SearchView = () => {
   const { isMobile } = useBreakpoints()
 
   const [input, setInput] = useState('')
-  const [focused, setFocused] = useState(false)
 
   const onInputChanged = event => {
     setInput(event.target.value)
@@ -58,11 +57,6 @@ const SearchView = () => {
 
   const handleFocus = () => {
     makeIndexes()
-    setFocused(true)
-  }
-
-  const handleBlur = () => {
-    setFocused(false)
   }
 
   const isSearchEmpty = query !== '' && !hasSuggestions && !isBusy
@@ -86,7 +80,6 @@ const SearchView = () => {
             isInputNotEmpty={input !== ''}
             onClean={handleCleanInput}
             isBusy={isBusy}
-            isFocus={focused}
           >
             <Input
               fullwidth={true}
@@ -94,7 +87,6 @@ const SearchView = () => {
               onChange={onInputChanged}
               placeholder={t('searchbar.placeholder')}
               onFocus={handleFocus}
-              onBlur={handleBlur}
               autoFocus
             />
           </BarSearchInputGroup>

@@ -1,5 +1,4 @@
 import React from 'react'
-import cx from 'classnames'
 
 import InputGroup from 'cozy-ui/transpiled/react/InputGroup'
 import IconButton from 'cozy-ui/transpiled/react/IconButton'
@@ -13,17 +12,13 @@ import styles from 'drive/web/modules/search/components/styles.styl'
 const BarSearchInputGroup = ({
   children,
   isBusy,
-  isFocus,
   onClean,
   isInputNotEmpty
 }) => {
   return (
     <InputGroup
       fullwidth={true}
-      className={cx(
-        styles['bar-search-input-group'],
-        isFocus ? styles['--focused'] : ''
-      )}
+      className={styles['bar-search-input-group']}
       prepend={
         isBusy ? (
           <Icon icon={Spinner} color="#297EF2" spin />
@@ -33,11 +28,7 @@ const BarSearchInputGroup = ({
       }
       append={
         isInputNotEmpty ? (
-          <IconButton
-            size="medium"
-            onClick={onClean}
-            className={styles['bar-search-input-group-clean-button']}
-          >
+          <IconButton size="medium" onClick={onClean}>
             <Icon icon={CrossCircleIcon} />
           </IconButton>
         ) : null
