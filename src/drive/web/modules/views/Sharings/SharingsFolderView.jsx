@@ -39,7 +39,7 @@ import useHead from 'components/useHead'
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-const SharingsFolderView = ({ sharedDocumentIds, router, children }) => {
+const SharingsFolderView = ({ sharedDocumentIds, children }) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const currentFolderId = useCurrentFolderId()
@@ -78,17 +78,17 @@ const SharingsFolderView = ({ sharedDocumentIds, router, children }) => {
 
   const navigateToFolder = useCallback(
     folderId => {
-      if (folderId) router.push(`/sharings/${folderId}`)
-      else router.push('/sharings')
+      if (folderId) navigate(`/sharings/${folderId}`)
+      else navigate('/sharings')
     },
-    [router]
+    [navigate]
   )
 
   const navigateToFile = useCallback(
     file => {
-      router.push(`/sharings/${currentFolderId}/file/${file.id}`)
+      navigate(`/sharings/${currentFolderId}/file/${file.id}`)
     },
-    [router, currentFolderId]
+    [navigate, currentFolderId]
   )
 
   const client = useClient()
