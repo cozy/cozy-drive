@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import snarkdown from 'snarkdown'
 import PropTypes from 'prop-types'
+import { useNavigate } from 'react-router-dom'
 
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import Button from 'cozy-ui/transpiled/react/Button'
@@ -76,13 +77,14 @@ class UserActionRequired extends Component {
   }
 
   checkIfUserActionIsRequired = async () => {
-    const { client, router } = this.context
+    const { client } = this.context
+    const { navigate } = this.props
     try {
       await client.getStackClient().fetch('GET', '/data/')
       const wasBlocked = this.state.warnings.length !== 0
       if (wasBlocked) {
         this.setState({ warnings: [] })
-        router.replace('/')
+        navigate('/')
       }
     } catch (e) {
       if (e.status === 402) {
@@ -92,23 +94,24 @@ class UserActionRequired extends Component {
   }
 
   acceptUpdatedTos = async () => {
-    const { client, router } = this.context
+    const { client } = this.context
+    const { navigate } = this.props
     try {
       await client.getClient().fetch('PUT', '/settings/instance/sign_tos')
       this.setState({
         warnings: this.state.warnings.filter(w => w.code !== 'tos-updated')
       })
-      router.replace('/')
+      navigate('/')
     } catch (e) {
       Alerter.error('TOS.updated.error')
     }
   }
 
   disconnect = async () => {
-    const { client, router } = this.context
-    const { unlink, clientSettings } = this.props
+    const { client } = this.context
+    const { unlink, clientSettings, navigate } = this.props
     unlink(client, clientSettings)
-    router.replace('/onboarding')
+    navigate('/onboarding')
   }
 
   render() {
@@ -136,4 +139,12 @@ const mapDispatchToProps = dispatch => ({
   unlink: (client, clientSettings) => dispatch(unlink(client, clientSettings))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserActionRequired)
+const UserActionRequiredWrapper = ({ props }) => {
+  const navigate = useNavigate()
+  return <UserActionRequired {...props} navigate={navigate} />
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserActionRequiredWrapper)
