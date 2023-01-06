@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import Wizard from './components/Wizard'
 import Files from './components/Files'
@@ -6,22 +6,23 @@ import BackupPhotosVideos from './components/BackupPhotosVideos'
 import Analytics from './components/Analytics'
 import localforage from 'localforage'
 export const ONBOARDED_ITEM = 'ONBOARDED'
-export default class OnBoarding extends Component {
-  onboardingSteps = [Files, BackupPhotosVideos, Analytics]
 
-  async redirectToApp() {
-    this.props.router.replace('/')
+const OnBoarding = ({ router }) => {
+  const onboardingSteps = [Files, BackupPhotosVideos, Analytics]
+
+  const redirectToApp = async () => {
+    router.replace('/')
   }
 
-  render() {
-    return (
-      <Wizard
-        steps={this.onboardingSteps}
-        onComplete={() => {
-          localforage.setItem(ONBOARDED_ITEM, true)
-          return this.redirectToApp()
-        }}
-      />
-    )
-  }
+  return (
+    <Wizard
+      steps={onboardingSteps}
+      onComplete={() => {
+        localforage.setItem(ONBOARDED_ITEM, true)
+        return redirectToApp()
+      }}
+    />
+  )
 }
+
+export default OnBoarding
