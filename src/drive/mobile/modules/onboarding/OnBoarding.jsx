@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import Wizard from './components/Wizard'
 import Files from './components/Files'
@@ -7,19 +8,16 @@ import Analytics from './components/Analytics'
 import localforage from 'localforage'
 export const ONBOARDED_ITEM = 'ONBOARDED'
 
-const OnBoarding = ({ router }) => {
+const OnBoarding = () => {
+  const navigate = useNavigate()
   const onboardingSteps = [Files, BackupPhotosVideos, Analytics]
-
-  const redirectToApp = async () => {
-    router.replace('/')
-  }
 
   return (
     <Wizard
       steps={onboardingSteps}
       onComplete={() => {
         localforage.setItem(ONBOARDED_ITEM, true)
-        return redirectToApp()
+        navigate('/')
       }}
     />
   )
