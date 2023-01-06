@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import cx from 'classnames'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import get from 'lodash/get'
 
 import { useClient } from 'cozy-client'
