@@ -12,6 +12,7 @@ import Stack from 'cozy-ui/transpiled/react/Stack'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 import { DOCTYPE_FILES_SHORTCUT } from 'drive/lib/doctypes'
+import { useDisplayedFolder } from 'drive/web/modules/selectors'
 
 const ENTER_KEY = 13
 
@@ -29,7 +30,8 @@ const makeURLValid = str => {
   else if (isURLValid(`https://${str}`)) return `https://${str}`
   return false
 }
-const ShortcutCreationModal = ({ onClose, onCreated, displayedFolder }) => {
+const ShortcutCreationModal = ({ onClose, onCreated }) => {
+  const displayedFolder = useDisplayedFolder()
   const { t } = useI18n()
   const [fileName, setFilename] = useState('')
   const [url, setUrl] = useState('')

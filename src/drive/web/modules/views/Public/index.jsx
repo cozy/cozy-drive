@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useContext, useEffect } from 'react'
-import { connect, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { ModalManager } from 'react-cozy-helpers'
 import cx from 'classnames'
 import flag from 'cozy-flags'
@@ -36,9 +36,9 @@ import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
 import PublicToolbar from 'drive/web/modules/public/PublicToolbar'
 import PublicViewer from 'drive/web/modules/viewer/PublicViewer'
 import {
-  getCurrentFolderId,
-  getDisplayedFolder,
-  getParentFolder
+  useCurrentFolderId,
+  useDisplayedFolder,
+  useParentFolder
 } from 'drive/web/modules/selectors'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
@@ -74,16 +74,14 @@ const getBreadcrumbPath = (t, displayedFolder, parentFolder) =>
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-const PublicFolderView = ({
-  currentFolderId,
-  parentFolder,
-  router,
-  location,
-  children
-}) => {
+const PublicFolderView = ({ router, location, children }) => {
   const client = useClient()
   const { isMobile } = useBreakpoints()
   const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)
+  const currentFolderId = useCurrentFolderId()
+  const displayedFolder = useDisplayedFolder()
+  const parentDirId = get(displayedFolder, 'dir_id')
+  const parentFolder = useParentFolder(parentDirId)
 
   const sharingInfos = useSharingInfos()
 
@@ -282,12 +280,4 @@ const PublicFolderView = ({
   )
 }
 
-export default connect(state => {
-  const displayedFolder = getDisplayedFolder(state)
-  const parentDirId = get(displayedFolder, 'dir_id')
-  return {
-    currentFolderId: getCurrentFolderId(state),
-    displayedFolder,
-    parentFolder: getParentFolder(state, parentDirId)
-  }
-})(PublicFolderView)
+export default PublicFolderView

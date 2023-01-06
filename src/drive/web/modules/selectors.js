@@ -1,39 +1,44 @@
 import maxBy from 'lodash/maxBy'
-import get from 'lodash/get'
 
 import { getDocumentFromState } from 'cozy-client/dist/store'
 
 import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import { getMirrorQueryId, parseFolderQueryId } from './queries'
+import { useParams, useLocation } from 'react-router-dom'
 
-export const getCurrentFolderId = rootState => {
-  if (get(rootState, 'router.params.folderId')) {
-    return rootState.router.params.folderId
-  } else if (get(rootState, 'router.location.pathname') == '/folder') {
+export const useCurrentFolderId = () => {
+  const { folderId } = useParams()
+  const { pathname } = useLocation()
+
+  if (folderId) {
+    return folderId
+  } else if (pathname === '/folder') {
     return ROOT_DIR_ID
-  } else if (get(rootState, 'router.location.pathname') == '/trash') {
+  } else if (pathname === '/trash') {
     return TRASH_DIR_ID
   }
   return null
 }
 
-export const getCurrentFileId = rootState => {
-  return get(rootState, 'router.params.fileId', null)
+export const useCurrentFileId = () => {
+  const { fileId } = useParams()
+
+  return fileId
 }
 
-export const getDisplayedFolder = rootState => {
-  const folderId = getCurrentFolderId(rootState)
+export const useDisplayedFolder = () => {
+  const folderId = useCurrentFolderId()
   if (folderId) {
-    const doc = getDocumentFromState(rootState, DOCTYPE_FILES, folderId)
+    const doc = getDocumentFromState(DOCTYPE_FILES, folderId)
     return doc
   }
   return null
 }
 
-export const getParentFolder = (rootState, parentFolderId) => {
+export const useParentFolder = parentFolderId => {
   if (parentFolderId) {
-    const doc = getDocumentFromState(rootState, DOCTYPE_FILES, parentFolderId)
+    const doc = getDocumentFromState(DOCTYPE_FILES, parentFolderId)
     return doc
   }
   return null

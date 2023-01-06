@@ -17,9 +17,10 @@ import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconNote from 'cozy-ui/transpiled/react/Icons/FileTypeNote'
 
-import toolbarContainer from 'drive/web/modules/drive/Toolbar/toolbar'
+import { useDisplayedFolder } from 'drive/web/modules/selectors'
 
-const CreateNoteItem = ({ client, t, displayedFolder }) => {
+const CreateNoteItem = ({ client, t }) => {
+  const displayedFolder = useDisplayedFolder()
   const { capabilities } = useCapabilities(client)
   const isFlatDomain = get(capabilities, 'flat_subdomains')
   const webviewIntent = useWebviewIntent()
@@ -91,4 +92,4 @@ const CreateNoteItem = ({ client, t, displayedFolder }) => {
   )
 }
 
-export default translate()(withClient(toolbarContainer(CreateNoteItem)))
+export default translate()(withClient(CreateNoteItem))

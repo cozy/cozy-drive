@@ -25,27 +25,6 @@ import OnlyOfficeCreateView from '../views/OnlyOffice/Create'
 
 import FilesViewerRecent from '../views/Recent/FilesViewerRecent'
 
-// To keep in sync with AppRoute below, used to extract params
-// in the "router" redux slice. Innermost routes should be
-// first
-export const routes = [
-  '/folder/:folderId',
-  '/folder/:folderId/file/:fileId',
-  '/folder/:folderId/file/:fileId/revision',
-  '/recent/file/:fileId',
-  '/recent/file/:fileId/revision',
-  '/sharings/:folderId',
-  '/sharings/:folderId/file/:fileId',
-  '/sharings/:folderId/file/:fileId/revision',
-  '/sharings/file/:fileId',
-  '/sharings/file/:fileId/revision',
-  '/trash/:folderId/file/:fileId',
-  '/trash/:folderId',
-  '/file/:fileId',
-  '/onlyoffice/:fileId/fromCreate',
-  '/onlyoffice/create/:folderId/:fileClass'
-]
-
 const RootComponent = () => (
   <Layout>
     <Outlet />

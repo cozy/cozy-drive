@@ -2,18 +2,14 @@ import React from 'react'
 import { useQuery } from 'cozy-client'
 import { useRouter } from 'drive/lib/RouterContext'
 import { buildTrashQuery } from 'drive/web/modules/queries'
-import {
-  getCurrentFileId,
-  getCurrentFolderId
-} from 'drive/web/modules/selectors'
+import { useCurrentFolderId } from 'drive/web/modules/selectors'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
 
-import { connect } from 'react-redux'
 import FilesViewer, {
   FilesViewerLoading
 } from 'drive/web/modules/viewer/FilesViewer'
 const FilesViewerWithQuery = props => {
-  const currentFolderId = props.currentFolderId
+  const currentFolderId = useCurrentFolderId()
   const [sortOrder] = useFolderSort(currentFolderId)
 
   const fileQuery = buildTrashQuery({
@@ -49,9 +45,4 @@ const FilesViewerWithQuery = props => {
   }
 }
 
-const mapStateToProps = state => ({
-  fileId: getCurrentFileId(state),
-  currentFolderId: getCurrentFolderId(state)
-})
-
-export default connect(mapStateToProps)(FilesViewerWithQuery)
+export default FilesViewerWithQuery
