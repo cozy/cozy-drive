@@ -38,11 +38,11 @@ import useHead from 'components/useHead'
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-export const RecentView = ({ router, location, params, children }) => {
+export const RecentView = ({ router, location, children }) => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
 
-  useHead(params)
+  useHead()
 
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
     isMobile,
