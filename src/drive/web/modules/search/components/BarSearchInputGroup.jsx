@@ -4,7 +4,7 @@ import InputGroup from 'cozy-ui/transpiled/react/InputGroup'
 import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import Magnifier from 'cozy-ui/transpiled/react/Icons/Magnifier'
-import CrossCircleIcon from 'cozy-ui/transpiled/react/Icons/CrossCircle'
+import CrossCircleOutlineIcon from 'cozy-ui/transpiled/react/Icons/CrossCircleOutline'
 
 import styles from 'drive/web/modules/search/components/styles.styl'
 
@@ -30,7 +30,7 @@ const BarSearchInputGroup = ({
       append={
         isInputNotEmpty ? (
           <IconButton size="medium" onClick={onClean}>
-            <Icon icon={CrossCircleIcon} />
+            <Icon icon={CrossCircleOutlineIcon} />
           </IconButton>
         ) : null
       }
