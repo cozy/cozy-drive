@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
+import { useNavigate } from 'react-router-dom'
 
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { SharingBannerPlugin, useSharingInfos } from 'cozy-sharing'
 import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
 import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
 
-import { useRouter } from 'drive/lib/RouterContext'
 import PublicViewer from 'drive/web/modules/viewer/PublicViewer'
 import PublicToolbar from 'drive/web/modules/public/PublicToolbar'
 import {
@@ -20,11 +20,12 @@ import styles from 'drive/web/modules/viewer/barviewer.styl'
 const LightFileViewer = ({ files }) => {
   const sharingInfos = useSharingInfos()
   const { isDesktop, isMobile } = useBreakpoints()
-  const { router } = useRouter()
+
+  const navigate = useNavigate()
 
   const onlyOfficeOpener = useCallback(
-    file => router.push(makeOnlyOfficeFileRoute(file, true)),
-    [router]
+    file => navigate(makeOnlyOfficeFileRoute(file, true)),
+    [navigate]
   )
 
   return (
