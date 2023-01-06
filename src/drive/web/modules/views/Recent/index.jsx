@@ -39,7 +39,7 @@ import useHead from 'components/useHead'
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-export const RecentView = ({ router, children }) => {
+export const RecentView = ({ children }) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const { t } = useI18n()
@@ -63,16 +63,16 @@ export const RecentView = ({ router, children }) => {
 
   const navigateToFolder = useCallback(
     folderId => {
-      router.push(`/folder/${folderId}`)
+      navigate(`/folder/${folderId}`)
     },
-    [router]
+    [navigate]
   )
 
   const navigateToFile = useCallback(
     file => {
-      router.push(`/recent/file/${file.id}`)
+      navigate(`/recent/file/${file.id}`)
     },
-    [router]
+    [navigate]
   )
 
   const client = useClient()
