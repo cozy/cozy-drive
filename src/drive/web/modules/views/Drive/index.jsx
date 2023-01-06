@@ -2,7 +2,7 @@
 
 import React, { useCallback, useContext, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { useNavigate, useLocation } from 'react-router-com'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 import { SharingContext } from 'cozy-sharing'
 import { useQuery, useClient } from 'cozy-client'
@@ -54,7 +54,7 @@ import useHead from 'components/useHead'
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-const DriveView = ({ children }) => {
+const DriveView = ({ router, children }) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const currentFolderId = useCurrentFolderId() || ROOT_DIR_ID
@@ -109,16 +109,16 @@ const DriveView = ({ children }) => {
 
   const navigateToFolder = useCallback(
     folderId => {
-      navigate(`/folder/${folderId}`)
+      router.push(`/folder/${folderId}`)
     },
-    [navigate]
+    [router]
   )
 
   const navigateToFile = useCallback(
     file => {
-      navigate(`/folder/${currentFolderId}/file/${file.id}`)
+      router.push(`/folder/${currentFolderId}/file/${file.id}`)
     },
-    [navigate, currentFolderId]
+    [router, currentFolderId]
   )
 
   const { hasWriteAccess } = useContext(SharingContext)
