@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import get from 'lodash/get'
+import { useNavigate } from 'react-router-dom'
 
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
@@ -15,13 +16,13 @@ import { CozyFile } from 'models'
 import { isMobileApp } from 'cozy-device-helper'
 import { exportFilesNative } from 'drive/web/modules/actions/utils'
 import { Dialog } from 'cozy-ui/transpiled/react/CozyDialogs'
+
 const formatDate = (date, f) => {
   return f(date, 'DD MMMM - HH:mm')
 }
 
 const HistoryModal = ({
   file,
-  router,
   revisions,
   client,
   f,
@@ -34,9 +35,11 @@ const HistoryModal = ({
     capabilities,
     'capabilities.file_versioning'
   )
+  const navigate = useNavigate()
+
   return (
     <Dialog
-      onClose={router.goBack}
+      onClose={navigate('../')}
       opened={true}
       title={file.name}
       content={
