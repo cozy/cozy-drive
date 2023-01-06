@@ -1,26 +1,21 @@
 import React, { useCallback, useMemo } from 'react'
-import get from 'lodash/get'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 
 import { ROOT_DIR_ID } from 'drive/constants/config'
-import { useRouter } from 'drive/lib/RouterContext'
 import { makeOnlyOfficeIconByClass } from 'drive/web/modules/views/OnlyOffice/helpers'
 
 const CreateOnlyOfficeItem = ({ fileClass }) => {
   const { t } = useI18n()
-  const { router } = useRouter()
-
-  const folderId = useMemo(
-    () => get(router, 'params.folderId', ROOT_DIR_ID),
-    [router]
-  )
+  const navigate = useNavigate()
+  const { folderId = ROOT_DIR_ID } = useParams()
 
   const handleClick = useCallback(
-    () => router.push(`/onlyoffice/create/${folderId}/${fileClass}`),
-    [router, fileClass, folderId]
+    () => navigate(`/onlyoffice/create/${folderId}/${fileClass}`),
+    [navigate, fileClass, folderId]
   )
 
   const ClassIcon = useMemo(
