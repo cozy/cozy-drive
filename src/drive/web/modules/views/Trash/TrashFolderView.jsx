@@ -1,4 +1,6 @@
 import React, { useCallback, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import { useQuery, useClient } from 'cozy-client'
 import { SharingContext } from 'cozy-sharing'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
@@ -28,9 +30,10 @@ import useHead from 'components/useHead'
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-const TrashFolderView = ({ router, params, children }) => {
+const TrashFolderView = ({ params, children }) => {
   const { isMobile } = useBreakpoints()
   const currentFolderId = useCurrentFolderId()
+  const navigate = useNavigate()
 
   useHead(params)
   const displayedFolderQuery = buildOnlyFolderQuery(currentFolderId)
@@ -71,16 +74,16 @@ const TrashFolderView = ({ router, params, children }) => {
 
   const navigateToFolder = useCallback(
     folderId => {
-      router.push(`/trash/${folderId}`)
+      navigate(`/trash/${folderId}`)
     },
-    [router]
+    [navigate]
   )
 
   const navigateToFile = useCallback(
     file => {
-      router.push(`/trash/${currentFolderId}/file/${file.id}`)
+      navigate(`/trash/${currentFolderId}/file/${file.id}`)
     },
-    [router, currentFolderId]
+    [navigate, currentFolderId]
   )
 
   const { refresh } = useContext(SharingContext)
