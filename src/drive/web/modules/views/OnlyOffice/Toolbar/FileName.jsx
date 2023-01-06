@@ -1,6 +1,6 @@
 import React, { useState, useContext, useCallback } from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 import cx from 'classnames'
 
