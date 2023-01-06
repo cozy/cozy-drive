@@ -30,12 +30,12 @@ import useHead from 'components/useHead'
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-const TrashFolderView = ({ params, children }) => {
+const TrashFolderView = ({ children }) => {
   const { isMobile } = useBreakpoints()
   const currentFolderId = useCurrentFolderId()
   const navigate = useNavigate()
 
-  useHead(params)
+  useHead()
   const displayedFolderQuery = buildOnlyFolderQuery(currentFolderId)
   const displayedFolder = useQuery(displayedFolderQuery.definition, {
     ...displayedFolderQuery.options,
