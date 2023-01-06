@@ -13,17 +13,18 @@ import FileInput from 'cozy-ui/transpiled/react/FileInput'
 import UploadIcon from 'cozy-ui/transpiled/react/Icons/Upload'
 
 import { uploadFiles } from 'drive/web/modules/navigation/duck'
-import toolbarContainer from '../toolbar'
+import { useDisplayedFolder } from 'drive/web/modules/selectors'
 
 const UploadItem = ({ t, isDisabled, onUpload }) => {
   const client = useClient()
+  const displayedFolder = useDisplayedFolder()
   const vaultClient = useVaultClient()
   return (
     <FileInput
       label={t('toolbar.menu_upload')}
       disabled={isDisabled}
       multiple
-      onChange={files => onUpload(client, vaultClient, files)}
+      onChange={files => onUpload(client, vaultClient, files, displayedFolder)}
       data-testid="upload-btn"
       value={[]}
       // FileInput needs to stay rendered until the onChange event, so we prevent the event from bubbling
@@ -39,11 +40,8 @@ const UploadItem = ({ t, isDisabled, onUpload }) => {
   )
 }
 
-const mapDispatchToProps = (
-  dispatch,
-  { displayedFolder, sharingState, onUploaded }
-) => ({
-  onUpload: (client, vaultClient, files) => {
+const mapDispatchToProps = (dispatch, { sharingState, onUploaded }) => ({
+  onUpload: (client, vaultClient, files, displayedFolder) => {
     dispatch(
       uploadFiles(files, displayedFolder.id, sharingState, onUploaded, {
         client,
@@ -55,7 +53,6 @@ const mapDispatchToProps = (
 
 export default compose(
   withSharingState,
-  toolbarContainer,
   translate(),
   connect(null, mapDispatchToProps)
 )(UploadItem)
