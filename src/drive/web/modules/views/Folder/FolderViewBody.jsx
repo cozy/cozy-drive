@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import get from 'lodash/get'
+import { useNavigate } from 'react-router-dom'
 
 import { useClient, useCapabilities } from 'cozy-client'
 import { useVaultClient, VaultUnlocker } from 'cozy-keys-lib'
@@ -8,7 +9,6 @@ import { isSharingShortcut } from 'cozy-client/dist/models/file'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 import { ThumbnailSizeContext } from 'drive/lib/ThumbnailSizeContext'
-import { useRouter } from 'drive/lib/RouterContext'
 import AcceptingSharingContext from 'drive/lib/AcceptingSharingContext'
 import { FileList } from 'drive/web/modules/filelist/FileList'
 import FileListBody from 'drive/web/modules/filelist/FileListBody'
@@ -47,7 +47,7 @@ const FolderViewBody = ({
   refreshFolderContent = null,
   extraColumns
 }) => {
-  const { router } = useRouter()
+  const navigate = useNavigate()
   const { isDesktop } = useBreakpoints()
   const client = useClient()
   const { isBigThumbnail, toggleThumbnailSize } =
@@ -76,7 +76,7 @@ const FolderViewBody = ({
         navigateToFile,
         replaceCurrentUrl: url => (window.location.href = url),
         openInNewTab: url => window.open(url, '_blank'),
-        routeTo: url => router.push(url),
+        routeTo: url => navigate(url),
         isOnlyOfficeEnabled: isOnlyOfficeEnabled(),
         webviewIntent
       })({
@@ -85,7 +85,7 @@ const FolderViewBody = ({
         isAvailableOffline
       })
     },
-    [client, dispatch, navigateToFile, isFlatDomain, router, webviewIntent]
+    [client, dispatch, navigateToFile, isFlatDomain, navigate, webviewIntent]
   )
 
   const isInError = queryResults.some(query => query.fetchStatus === 'failed')
@@ -142,7 +142,7 @@ const FolderViewBody = ({
       <VaultUnlocker
         onDismiss={() => {
           setShouldUnlock(false)
-          return router.push(`/folder`)
+          return navigate('/folder')
         }}
         onUnlock={() => setShouldUnlock(false)}
       />
