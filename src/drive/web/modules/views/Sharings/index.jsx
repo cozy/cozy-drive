@@ -40,7 +40,6 @@ const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
 export const SharingsView = ({
-  router,
   sharedDocumentIds = [],
   allLoaded = true,
   children
@@ -72,16 +71,16 @@ export const SharingsView = ({
 
   const navigateToFolder = useCallback(
     folderId => {
-      router.push(`/sharings/${folderId}`)
+      navigate(`/sharings/${folderId}`)
     },
-    [router]
+    [navigate]
   )
 
   const navigateToFile = useCallback(
     file => {
-      router.push(`/sharings/file/${file.id}`)
+      navigate(`/sharings/file/${file.id}`)
     },
-    [router]
+    [navigate]
   )
 
   const client = useClient()
