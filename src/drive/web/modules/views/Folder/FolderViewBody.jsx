@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import get from 'lodash/get'
+import { useNavigate } from 'react-router-dom'
 
 import { useClient, useCapabilities } from 'cozy-client'
 import { useVaultClient, VaultUnlocker } from 'cozy-keys-lib'
@@ -8,7 +9,6 @@ import { isSharingShortcut } from 'cozy-client/dist/models/file'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 import { ThumbnailSizeContext } from 'drive/lib/ThumbnailSizeContext'
-import { useRouter } from 'drive/lib/RouterContext'
 import AcceptingSharingContext from 'drive/lib/AcceptingSharingContext'
 import { FileList } from 'drive/web/modules/filelist/FileList'
 import FileListBody from 'drive/web/modules/filelist/FileListBody'
@@ -48,7 +48,7 @@ const FolderViewBody = ({
   extraColumns
 }) => {
   const { isDesktop } = useBreakpoints()
-  const { router } = useRouter()
+  const navigate = useNavigate()
   const client = useClient()
   /**
    *  Since we are not able to restore the scroll correctly,
@@ -100,7 +100,7 @@ const FolderViewBody = ({
         navigateToFile,
         replaceCurrentUrl: url => (window.location.href = url),
         openInNewTab: url => window.open(url, '_blank'),
-        routeTo: url => router.push(url),
+        routeTo: url => navigate(url),
         isOfficeEnabled: isOfficeEnabled(isDesktop),
         webviewIntent
       })({
@@ -114,7 +114,7 @@ const FolderViewBody = ({
       dispatch,
       navigateToFile,
       isFlatDomain,
-      router,
+      navigate,
       webviewIntent,
       isDesktop
     ]
@@ -174,7 +174,7 @@ const FolderViewBody = ({
       <VaultUnlocker
         onDismiss={() => {
           setShouldUnlock(false)
-          return router.push(`/folder`)
+          return navigate('/folder')
         }}
         onUnlock={() => setShouldUnlock(false)}
       />
