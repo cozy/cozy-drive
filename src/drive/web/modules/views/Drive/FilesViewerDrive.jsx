@@ -1,8 +1,9 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import { useQuery } from 'cozy-client'
 import { buildDriveQuery } from 'drive/web/modules/queries'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
-import { useRouter } from 'drive/lib/RouterContext'
 
 import { useCurrentFolderId } from 'drive/web/modules/selectors'
 import FilesViewer, {
@@ -11,7 +12,7 @@ import FilesViewer, {
 import { getFolderPath } from 'drive/web/modules/routeUtils'
 
 const FilesViewerWithQuery = props => {
-  const { router } = useRouter()
+  const navigate = useNavigate()
   const [sortOrder] = useFolderSort()
   const folderId = useCurrentFolderId()
 
@@ -33,15 +34,9 @@ const FilesViewerWithQuery = props => {
         {...props}
         files={viewableFiles}
         filesQuery={filesQuery}
-        onClose={() =>
-          router.push({
-            pathname: getFolderPath(folderId)
-          })
-        }
+        onClose={() => navigate(getFolderPath(folderId))}
         onChange={fileId =>
-          router.push({
-            pathname: getFolderPath(folderId) + '/file/' + fileId
-          })
+          navigate(`${getFolderPath(folderId)}/file/${fileId}`)
         }
       />
     )
