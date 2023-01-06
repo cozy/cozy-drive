@@ -7,6 +7,7 @@
  */
 
 import React, { Component } from 'react'
+import { useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import get from 'lodash/get'
 import { RemoveScroll } from 'react-remove-scroll'
@@ -68,7 +69,7 @@ export class FileOpener extends Component {
 
   render() {
     const { file, loading, fileNotFound } = this.state
-    const { t, service, router } = this.props
+    const { t, service, navigate } = this.props
 
     return (
       <div className="u-pos-absolute u-w-100 u-h-100 u-bg-charcoalGrey">
@@ -87,8 +88,7 @@ export class FileOpener extends Component {
                 )}
                 onlyOfficeProps={{
                   isEnabled: isOnlyOfficeEnabled(),
-                  opener: file =>
-                    router.push(makeOnlyOfficeFileRoute(file, true))
+                  opener: file => navigate(makeOnlyOfficeFileRoute(file, true))
                 }}
               >
                 <FooterActionButtons>
@@ -117,4 +117,10 @@ FileOpener.propTypes = {
   fileId: PropTypes.string
 }
 
-export default translate()(FileOpener)
+const FileOpenerWrapper = ({ props }) => {
+  const navigate = useNavigate()
+
+  return <FileOpener {...props} navigate={navigate} />
+}
+
+export default translate()(FileOpenerWrapper)
