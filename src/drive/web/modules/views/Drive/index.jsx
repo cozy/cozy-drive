@@ -54,7 +54,7 @@ import useHead from 'components/useHead'
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-const DriveView = ({ router, children }) => {
+const DriveView = ({ children }) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const currentFolderId = useCurrentFolderId() || ROOT_DIR_ID
@@ -109,16 +109,16 @@ const DriveView = ({ router, children }) => {
 
   const navigateToFolder = useCallback(
     folderId => {
-      router.push(`/folder/${folderId}`)
+      navigate(`/folder/${folderId}`)
     },
-    [router]
+    [navigate]
   )
 
   const navigateToFile = useCallback(
     file => {
-      router.push(`/folder/${currentFolderId}/file/${file.id}`)
+      navigate(`/folder/${currentFolderId}/file/${file.id}`)
     },
-    [router, currentFolderId]
+    [navigate, currentFolderId]
   )
 
   const { hasWriteAccess } = useContext(SharingContext)
