@@ -53,9 +53,9 @@ import useHead from 'components/useHead'
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-const DriveView = ({ router, params, location, children }) => {
+const DriveView = ({ router, location, children }) => {
   const currentFolderId = useCurrentFolderId() || ROOT_DIR_ID
-  useHead(params)
+  useHead()
 
   const { isMobile } = useBreakpoints()
   const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)

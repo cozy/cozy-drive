@@ -1,9 +1,9 @@
 import React, { createContext, useState, useMemo, useEffect } from 'react'
+import { useLocation, useParams } from 'react-router-dom'
 
 import Dialog from 'cozy-ui/transpiled/react/Dialog'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
-import { useRouter } from 'drive/lib/RouterContext'
 import Editor from 'drive/web/modules/views/OnlyOffice/Editor'
 import useHead from 'components/useHead'
 import { officeDefaultMode } from 'drive/web/modules/views/OnlyOffice/helpers'
@@ -19,8 +19,8 @@ const OnlyOfficeProvider = ({
   isInSharedFolder,
   children
 }) => {
-  const { router } = useRouter()
   const { isDesktop, isMobile } = useBreakpoints()
+  const { pathname } = useLocation()
 
   const [isEditorReady, setIsEditorReady] = useState(false)
 
@@ -30,8 +30,8 @@ const OnlyOfficeProvider = ({
   const isEditorModeView = useMemo(() => editorMode === 'view', [editorMode])
 
   const isFromCreate = useMemo(
-    () => router.location.pathname.endsWith('/fromCreate'),
-    [router]
+    () => pathname.endsWith('/fromCreate'),
+    [pathname]
   )
 
   useEffect(() => {
@@ -63,7 +63,6 @@ const OnlyOfficeProvider = ({
 }
 
 const OnlyOffice = ({
-  params: { fileId },
   isPublic,
   isReadOnly = false,
   isFromSharing,
@@ -71,7 +70,8 @@ const OnlyOffice = ({
   isInSharedFolder,
   children
 }) => {
-  useHead({ fileId })
+  const { fileId } = useParams()
+  useHead()
 
   return (
     <Dialog open={true} fullScreen transitionDuration={0}>
