@@ -1,14 +1,18 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import { useQuery } from 'cozy-client'
-import { useRouter } from 'drive/lib/RouterContext'
+
 import { buildRecentQuery } from 'drive/web/modules/queries'
 import FilesViewer, {
   FilesViewerLoading
 } from 'drive/web/modules/viewer/FilesViewer'
+
 const FilesViewerWithQuery = props => {
   const filesQuery = buildRecentQuery()
   const results = useQuery(filesQuery.definition, filesQuery.options)
-  const { router } = useRouter()
+  const navigate = useNavigate()
+
   if (results.data) {
     const viewableFiles = results.data
     return (
@@ -16,12 +20,8 @@ const FilesViewerWithQuery = props => {
         {...props}
         files={viewableFiles}
         filesQuery={results}
-        onClose={() => router.push('/recent')}
-        onChange={fileId =>
-          router.push({
-            pathname: '/recent/file/' + fileId
-          })
-        }
+        onClose={() => navigate('/recent')}
+        onChange={fileId => navigate(`/recent/file/${fileId}`)}
       />
     )
   } else {
