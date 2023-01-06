@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useContext, useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { ModalManager } from 'react-cozy-helpers'
 import cx from 'classnames'
@@ -74,7 +75,9 @@ const getBreadcrumbPath = (t, displayedFolder, parentFolder) =>
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-const PublicFolderView = ({ router, location, children }) => {
+const PublicFolderView = ({ router, children }) => {
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
   const client = useClient()
   const { isMobile } = useBreakpoints()
   const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)
@@ -169,8 +172,8 @@ const PublicFolderView = ({ router, location, children }) => {
     popModal,
     refresh: refreshAfterChange,
     dispatch,
-    router,
-    location,
+    navigate,
+    pathname,
     hasWriteAccess: hasWritePermissions,
     canMove: false,
     isPublic: true

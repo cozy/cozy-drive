@@ -1,4 +1,5 @@
 import React, { useCallback, useContext } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 import { useQuery, useClient } from 'cozy-client'
@@ -38,12 +39,9 @@ import useHead from 'components/useHead'
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-const SharingsFolderView = ({
-  sharedDocumentIds,
-  router,
-  location,
-  children
-}) => {
+const SharingsFolderView = ({ sharedDocumentIds, router, children }) => {
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
   const currentFolderId = useCurrentFolderId()
   const { isMobile } = useBreakpoints()
 
@@ -104,8 +102,8 @@ const SharingsFolderView = ({
     popModal,
     refresh,
     dispatch,
-    router,
-    location,
+    navigate,
+    pathname,
     hasWriteAccess: hasWriteAccess(currentFolderId),
     canMove: true
   }
