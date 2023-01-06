@@ -1,4 +1,5 @@
 import React, { useCallback, useContext } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 import { useClient } from 'cozy-client'
@@ -38,7 +39,9 @@ import useHead from 'components/useHead'
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-export const RecentView = ({ router, location, children }) => {
+export const RecentView = ({ router, children }) => {
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
 
@@ -83,8 +86,8 @@ export const RecentView = ({ router, location, children }) => {
     popModal,
     refresh,
     dispatch,
-    router,
-    location,
+    navigate,
+    pathname,
     hasWriteAccess: true,
     canMove: true,
     isPublic: false

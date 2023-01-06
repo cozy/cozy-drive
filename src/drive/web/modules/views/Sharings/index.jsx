@@ -1,4 +1,5 @@
 import React, { useContext, useCallback, useMemo } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 import { useClient, hasQueryBeenLoaded } from 'cozy-client'
@@ -40,11 +41,12 @@ const mobileExtraColumnsNames = []
 
 export const SharingsView = ({
   router,
-  location,
   sharedDocumentIds = [],
   allLoaded = true,
   children
 }) => {
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
 
@@ -92,8 +94,8 @@ export const SharingsView = ({
     popModal,
     refresh,
     dispatch,
-    router,
-    location,
+    navigate,
+    pathname,
     hasWriteAccess: true,
     canMove: true,
     isPublic: false
