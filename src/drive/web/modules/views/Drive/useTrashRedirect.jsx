@@ -1,14 +1,13 @@
 import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-import { useRouter } from 'drive/lib/RouterContext'
 import { TRASH_DIR_PATH } from 'drive/constants/config'
 export const useTrashRedirect = displayedFolder => {
-  const { router } = useRouter()
+  const navigate = useNavigate()
+
   useEffect(() => {
     if (displayedFolder && displayedFolder.path.startsWith(TRASH_DIR_PATH)) {
-      router.push({
-        pathname: '/trash/' + displayedFolder.id
-      })
+      navigate('/trash/' + displayedFolder.id)
     }
-  }, [router, displayedFolder])
+  }, [navigate, displayedFolder])
 }
