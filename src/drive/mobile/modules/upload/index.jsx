@@ -3,6 +3,7 @@ import localforage from 'localforage'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { useNavigate } from 'react-router-dom'
 
 import { Query, withClient } from 'cozy-client'
 import { withVaultClient } from 'cozy-keys-lib'
@@ -50,7 +51,7 @@ export class DumbUpload extends Component {
 
   async uploadFiles() {
     const { items, folder } = this.state
-    const { router, uploadFilesFromNative, client, vaultClient } = this.props
+    const { navigate, uploadFilesFromNative, client, vaultClient } = this.props
 
     const filesForQueue = generateForQueue(items)
     uploadFilesFromNative(filesForQueue, folder._id, this.callbackSuccess, {
@@ -60,7 +61,7 @@ export class DumbUpload extends Component {
     // just to be sure that first dispatch of uploadFilesFromNative was done
     // we replace the URL to be sure that even with the back button on Android
     // we don't arrive on this component
-    setTimeout(() => router.replace(`/folder/${folder._id}`), 50)
+    setTimeout(() => navigate(`/folder/${folder._id}`), 50)
   }
 
   callbackSuccess = () => {
@@ -76,11 +77,11 @@ export class DumbUpload extends Component {
   }
 
   onClose = () => {
-    const { router } = this.props
+    const { navigate } = this.props
     localforage.removeItem('importedFiles')
     // we replace the URL to be sure that even with the back button on Android
     // we don't arrive on this component
-    router.replace('/')
+    navigate('/')
   }
 
   render() {
@@ -168,6 +169,7 @@ DumbUpload.propTypes = {
   router: PropTypes.func.isRequired,
   uploadFilesFromNative: PropTypes.func.isRequired
 }
+
 const mapDispatchToProps = dispatch => ({
   uploadFilesFromNative: (
     files,
@@ -185,9 +187,14 @@ const mapDispatchToProps = dispatch => ({
   startMediaBackup: () => dispatch(startMediaBackup())
 })
 
+const DumbUploadWrapper = ({ props }) => {
+  const navigate = useNavigate()
+  return <DumbUpload {...props} navigate={navigate} />
+}
+
 export default compose(
   translate(),
   withClient,
   withVaultClient,
   connect(null, mapDispatchToProps)
-)(DumbUpload)
+)(DumbUploadWrapper)
