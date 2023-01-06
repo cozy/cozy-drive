@@ -1,10 +1,10 @@
 import React, { useContext, useCallback, useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { RealTimeQueries } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 import { DOCTYPE_FILES } from 'drive/lib/doctypes'
-import { useRouter } from 'drive/lib/RouterContext'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
 import { useFileWithPath } from 'drive/web/modules/views/hooks'
 import HomeIcon from 'drive/web/modules/views/OnlyOffice/Toolbar/HomeIcon'
@@ -27,9 +27,8 @@ const Toolbar = () => {
     isFromCreate
   } = useContext(OnlyOfficeContext)
 
-  const { router } = useRouter()
-
   const { data: fileWithPath } = useFileWithPath(fileId)
+  const navigate = useNavigate()
 
   const hasOnyMoreHistoryEntry = useMemo(
     () => isFromSharing || isFromCreate,
@@ -47,8 +46,8 @@ const Toolbar = () => {
   )
 
   const handleOnClick = useCallback(
-    () => (hasOnyMoreHistoryEntry ? router.go(-2) : router.goBack()),
-    [hasOnyMoreHistoryEntry, router]
+    () => (hasOnyMoreHistoryEntry ? navigate('../../') : navigate('../')),
+    [hasOnyMoreHistoryEntry, navigate]
   )
 
   return (
