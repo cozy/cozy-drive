@@ -1,23 +1,23 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import Dialog, { DialogContent } from 'cozy-ui/transpiled/react/Dialog'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 
 import Oops from 'components/Error/Oops'
-import { useRouter } from 'drive/lib/RouterContext'
 
 import useCreateFile from 'drive/web/modules/views/OnlyOffice/useCreateFile'
 
 const Create = ({ params: { folderId, fileClass } }) => {
+  const navigate = useNavigate()
   const { status, fileId } = useCreateFile(folderId, fileClass)
-  const { router } = useRouter()
 
   if (status === 'error') {
     return <Oops />
   }
 
   if (status === 'loaded' && fileId) {
-    return router.push(`/onlyoffice/${fileId}/fromCreate`)
+    return navigate(`/onlyoffice/${fileId}/fromCreate`)
   }
 
   return (
