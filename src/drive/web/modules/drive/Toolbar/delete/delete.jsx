@@ -1,16 +1,17 @@
 import React, { useCallback } from 'react'
 import { connect } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import { showModal } from 'react-cozy-helpers'
-import { useRouter } from 'drive/lib/RouterContext'
 
 import DeleteConfirm from '../../DeleteConfirm'
 
 const EnhancedDeleteConfirm = ({ folder, ...rest }) => {
-  const { router } = useRouter()
+  const navigate = useNavigate()
+
   const navigateToParentFolder = useCallback(
-    () => router.push(`/folder/${folder.dir_id}`),
-    [router, folder]
+    () => navigate(`/folder/${folder.dir_id}`),
+    [navigate, folder]
   )
 
   return (
