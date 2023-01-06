@@ -1,8 +1,11 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import { useQuery } from 'cozy-client'
-import { useRouter } from 'drive/lib/RouterContext'
+
 import { buildSharingsQuery } from 'drive/web/modules/queries'
 import { useCurrentFolderId } from 'drive/web/modules/selectors'
+
 import FilesViewer, {
   FilesViewerLoading
 } from 'drive/web/modules/viewer/FilesViewer'
@@ -12,7 +15,8 @@ const FilesViewerWithQuery = ({ sharedDocumentIds, ...props }) => {
   const currentFolderId = useCurrentFolderId()
   const filesQuery = buildSharingsQuery({ ids: sharedDocumentIds })
   const results = useQuery(filesQuery.definition, filesQuery.options)
-  const { router } = useRouter()
+  const navigate = useNavigate()
+
   if (results.data) {
     const viewableFiles = results.data.filter(f => f.type !== 'directory')
     const basePath = currentFolderId
@@ -23,12 +27,8 @@ const FilesViewerWithQuery = ({ sharedDocumentIds, ...props }) => {
         {...props}
         files={viewableFiles}
         filesQuery={results}
-        onClose={() => router.push(basePath)}
-        onChange={fileId =>
-          router.push({
-            pathname: `${basePath}/file/${fileId}`
-          })
-        }
+        onClose={() => navigate(basePath)}
+        onChange={fileId => navigate(`${basePath}/file/${fileId}`)}
       />
     )
   } else {
