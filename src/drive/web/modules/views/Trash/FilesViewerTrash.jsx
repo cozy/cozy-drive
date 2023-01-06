@@ -1,16 +1,19 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import { useQuery } from 'cozy-client'
-import { useRouter } from 'drive/lib/RouterContext'
+
 import { buildTrashQuery } from 'drive/web/modules/queries'
 import { useCurrentFolderId } from 'drive/web/modules/selectors'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
-
 import FilesViewer, {
   FilesViewerLoading
 } from 'drive/web/modules/viewer/FilesViewer'
+
 const FilesViewerWithQuery = props => {
   const currentFolderId = useCurrentFolderId()
   const [sortOrder] = useFolderSort(currentFolderId)
+  const navigate = useNavigate()
 
   const fileQuery = buildTrashQuery({
     currentFolderId,
@@ -20,7 +23,6 @@ const FilesViewerWithQuery = props => {
   })
 
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
-  const { router } = useRouter()
   if (filesResult.data) {
     const viewableFiles = filesResult.data
     return (
@@ -28,15 +30,9 @@ const FilesViewerWithQuery = props => {
         {...props}
         files={viewableFiles}
         filesQuery={filesResult}
-        onClose={() =>
-          router.push({
-            pathname: `/trash/${props.currentFolderId}`
-          })
-        }
+        onClose={() => navigate(`/trash/${props.currentFolderId}`)}
         onChange={fileId =>
-          router.push({
-            pathname: `/trash/${props.currentFolderId}/file/${fileId}`
-          })
+          navigate(`/trash/${props.currentFolderId}/file/${fileId}`)
         }
       />
     )
