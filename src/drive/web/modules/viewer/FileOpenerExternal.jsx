@@ -7,6 +7,7 @@
  */
 
 import React, { Component } from 'react'
+import { useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import get from 'lodash/get'
 import { RemoveScroll } from 'react-remove-scroll'
@@ -72,7 +73,7 @@ export class FileOpener extends Component {
     const {
       t,
       service,
-      router,
+      navigate,
       breakpoints: { isDesktop }
     } = this.props
 
@@ -95,7 +96,7 @@ export class FileOpener extends Component {
                   OnlyOfficeViewer: {
                     isEnabled: isOfficeEnabled(isDesktop),
                     opener: file =>
-                      router.push(makeOnlyOfficeFileRoute(file, true))
+                      navigate(makeOnlyOfficeFileRoute(file, true))
                   }
                 }}
               >
@@ -125,4 +126,10 @@ FileOpener.propTypes = {
   fileId: PropTypes.string
 }
 
-export default withBreakpoints()(translate()(FileOpener))
+const FileOpenerWrapper = ({ props }) => {
+  const navigate = useNavigate()
+
+  return <FileOpener {...props} navigate={navigate} />
+}
+
+export default withBreakpoints()(translate()(FileOpenerWrapper))
