@@ -5747,6 +5747,31 @@ cozy-client@^34.1.5:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
+cozy-client@^34.7.1:
+  version "34.7.1"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-34.7.1.tgz#d0641b43dbf67ca33a4ccae2a9a62b24784c2e1f"
+  integrity sha512-3KDrVOCMVnsxLcuCggM/rL13cIh+jY2MKZmHDZVM0cF8HeGMDHOJSH7cGwyL6vEoEzo6K2bxqPafJaIRqgw9Mw==
+  dependencies:
+    "@cozy/minilog" "1.0.0"
+    "@types/jest" "^26.0.20"
+    "@types/lodash" "^4.14.170"
+    btoa "^1.2.1"
+    cozy-stack-client "^34.7.1"
+    date-fns "2.29.3"
+    json-stable-stringify "^1.0.1"
+    lodash "^4.17.13"
+    microee "^0.0.6"
+    node-fetch "^2.6.1"
+    node-polyglot "2.4.2"
+    open "7.4.2"
+    prop-types "^15.6.2"
+    react-redux "^7.2.0"
+    redux "3 || 4"
+    redux-thunk "^2.3.0"
+    server-destroy "^1.0.1"
+    sift "^6.0.0"
+    url-search-params-polyfill "^8.0.0"
+
 cozy-device-helper@^1.15.0:
   version "1.18.0"
   resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-1.18.0.tgz#45b37e68c30ec1104c8c40180b472d3662bc2534"
@@ -6001,6 +6026,15 @@ cozy-stack-client@^34.1.5:
   version "34.1.5"
   resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-34.1.5.tgz#28fbc22b72f6343d968d4899d91c70f0261252f4"
   integrity sha512-i0GsaaHNI2XmXUncbNPzuFY+DDC4/io3m7mwCmhAFyI/REHPdqOi3Oo5Mb7Euuky4A6iZjAWn5t0F69itv3rvg==
+  dependencies:
+    detect-node "^2.0.4"
+    mime "^2.4.0"
+    qs "^6.7.0"
+
+cozy-stack-client@^34.7.1:
+  version "34.7.1"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-34.7.1.tgz#f1b81cce2c88ba558a1b5995a91674462f3e629c"
+  integrity sha512-iarCc6y79HCcQKM7ITQX+y3Tvhi1SjtMGonKAkA98MOtB7qBBolU0CJd9CTLyRfzJAVT/VpXHpwBwTLQ5tyo4g==
   dependencies:
     detect-node "^2.0.4"
     mime "^2.4.0"
@@ -6402,6 +6436,11 @@ date-fns@1.30.1, date-fns@^1.28.5, date-fns@^1.30.1:
   version "1.30.1"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.30.1.tgz#2e71bf0b119153dbb4cc4e88d9ea5acfb50dc05c"
   integrity sha512-hBSVCvSmWC+QypYObzwGOd9wqdDpOt+0wl0KbU+R+uuZBS1jN8VsD1ss3irQDknRj5NvxiTF6oj/nDRnN/UQNw==
+
+date-fns@2.29.3:
+  version "2.29.3"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.29.3.tgz#27402d2fc67eb442b511b70bbdf98e6411cd68a8"
+  integrity sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==
 
 debounce@^1.2.0:
   version "1.2.1"
