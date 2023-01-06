@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState, useMemo } from 'react'
 import { RemoveScroll } from 'react-remove-scroll'
+import { useNavigate } from 'react-router-dom'
 
 import { Q, useClient } from 'cozy-client'
 import { useVaultClient } from 'cozy-keys-lib'
@@ -15,7 +16,6 @@ import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/Forw
 import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
 import { useCurrentFileId } from 'drive/web/modules/selectors'
 
-import { useRouter } from 'drive/lib/RouterContext'
 import Fallback from 'drive/web/modules/viewer/Fallback'
 import {
   isOnlyOfficeEnabled,
@@ -63,8 +63,8 @@ const FilesViewer = ({ filesQuery, files, onClose, onChange }) => {
 
   const client = useClient()
   const { t } = useI18n()
-  const { router } = useRouter()
   const vaultClient = useVaultClient()
+  const navigate = useNavigate()
 
   const handleOnClose = useCallback(() => {
     if (onClose) {
@@ -207,7 +207,7 @@ const FilesViewer = ({ filesQuery, files, onClose, onChange }) => {
           componentsProps={{
             OnlyOfficeViewer: {
               isEnabled: isOnlyOfficeEnabled(),
-              opener: file => router.push(makeOnlyOfficeFileRoute(file, true))
+              opener: file => navigate(makeOnlyOfficeFileRoute(file, true))
             }
           }}
         >
