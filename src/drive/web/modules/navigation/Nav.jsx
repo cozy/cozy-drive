@@ -1,6 +1,7 @@
 /* global __TARGET__ */
 import React, { useState } from 'react'
 import cx from 'classnames'
+import { useLocation } from 'react-router-dom'
 
 import { useI18n } from 'cozy-ui/transpiled/react'
 
@@ -24,15 +25,13 @@ const navLinkMatch = (rx, to, pathname) => {
  * to have a faster change of active (not waiting for the route to completely
  * change).
  */
-export const NavLink = props => {
-  const {
-    children,
-    to,
-    rx,
-    location,
-    clickState: [lastClicked, setLastClicked]
-  } = props
-
+export const NavLink = ({
+  children,
+  to,
+  rx,
+  clickState: [lastClicked, setLastClicked]
+}) => {
+  const location = useLocation()
   const pathname = lastClicked ? lastClicked : location.pathname
   const isActive = navLinkMatch(rx, to, pathname)
   return (
