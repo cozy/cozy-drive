@@ -41,7 +41,6 @@ const mobileExtraColumnsNames = []
 export const SharingsView = ({
   router,
   location,
-  params,
   sharedDocumentIds = [],
   allLoaded = true,
   children
@@ -49,7 +48,7 @@ export const SharingsView = ({
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
 
-  useHead(params)
+  useHead()
 
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
     isMobile,

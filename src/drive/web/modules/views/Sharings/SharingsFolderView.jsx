@@ -1,5 +1,5 @@
 import React, { useCallback, useContext } from 'react'
-import { connect, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { useQuery, useClient } from 'cozy-client'
 import { SharingContext } from 'cozy-sharing'
@@ -42,13 +42,12 @@ const SharingsFolderView = ({
   sharedDocumentIds,
   router,
   location,
-  params,
   children
 }) => {
   const currentFolderId = useCurrentFolderId()
   const { isMobile } = useBreakpoints()
 
-  useHead(params)
+  useHead()
 
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
     isMobile,

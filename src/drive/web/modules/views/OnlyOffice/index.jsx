@@ -1,4 +1,5 @@
 import React, { createContext, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 import flag from 'cozy-flags'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
@@ -46,13 +47,13 @@ const OnlyOfficeProvider = ({
 }
 
 const OnlyOffice = ({
-  params: { fileId },
   isPublic,
   isFromSharing,
   username,
   isInSharedFolder
 }) => {
-  useHead({ fileId })
+  const { fileId } = useParams()
+  useHead()
 
   return (
     <Dialog open={true} fullScreen transitionDuration={0}>
