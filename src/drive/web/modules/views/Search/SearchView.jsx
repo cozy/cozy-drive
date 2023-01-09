@@ -49,7 +49,9 @@ const SearchView = () => {
   }
 
   const navigateBack = useCallback(() => {
-    router.goBack()
+    const params = new URLSearchParams(router.location.search)
+    const returnPath = params.get('returnPath')
+    router.push(returnPath ? returnPath : '/')
   }, [router])
 
   const openSuggestion = useCallback(
