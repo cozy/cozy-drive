@@ -5,7 +5,7 @@ import Magnifier from 'cozy-ui/transpiled/react/Icons/Magnifier'
 
 const SearchButton = ({ router, t }) => {
   const goToSearch = useCallback(() => {
-    router.push(`/search`)
+    router.push(`/search?returnPath=${router.location.pathname}`)
   }, [router])
 
   return (
