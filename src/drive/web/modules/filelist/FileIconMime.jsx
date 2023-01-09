@@ -8,7 +8,7 @@ import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
 
 const FileIcon = ({ file, size = 32, isEncrypted = false }) => {
   const isDir = isDirectory(file)
-  const isDirEncrypted = isEncrypted || (isDirectory && isEncryptedFolder(file))
+  const isDirEncrypted = isEncrypted || (isDirectory && isEncryptedFolder(file)) // use file.ref + file.type
 
   return (
     <Icon
@@ -22,7 +22,7 @@ const FileIcon = ({ file, size = 32, isEncrypted = false }) => {
 
 FileIcon.propTypes = {
   file: PropTypes.shape({
-    class: PropTypes.string,
+    type: PropTypes.string,
     mime: PropTypes.string,
     name: PropTypes.string
   }).isRequired,
