@@ -1,9 +1,9 @@
 import { models } from 'cozy-client'
 
-import { getIconUrl } from 'drive/web/modules/search/components/iconContext.js'
 import FuzzyPathSearch from 'drive/lib/FuzzyPathSearch.js'
 import { makeOnlyOfficeFileRoute } from 'drive/web/modules/views/OnlyOffice/helpers'
 import { ROOT_DIR_ID } from 'drive/constants/config'
+import { isEncryptedFolder } from 'drive/lib/encryption'
 
 export const TYPE_DIRECTORY = 'directory'
 
@@ -55,12 +55,14 @@ export const makeNormalizedFile = (client, folders, file) => {
 
   return {
     id: file._id,
+    type: file.type,
     name: file.name,
+    mime: file.mime,
     path,
     url,
     parentUrl,
     openOn,
-    icon: getIconUrl(file)
+    isEncrypted: isEncryptedFolder(file)
   }
 }
 

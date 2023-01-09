@@ -2,7 +2,6 @@ import { createMockClient, models } from 'cozy-client'
 
 import { makeNormalizedFile, TYPE_DIRECTORY } from './helpers'
 
-jest.mock('./iconContext', () => ({ getIconUrl: () => 'iconUrl' }))
 models.note.fetchURL = jest.fn(() => 'noteUrl')
 
 const client = createMockClient({})
@@ -30,13 +29,15 @@ describe('makeNormalizedFile', () => {
     const normalizedFile = makeNormalizedFile(client, folders, file)
 
     expect(normalizedFile).toEqual({
-      icon: 'iconUrl',
       id: 'fileId',
       name: 'fileName',
       path: 'filePath',
       url: '/folder/fileId',
       parentUrl: '/folder/fileId',
-      openOn: 'drive'
+      openOn: 'drive',
+      isEncrypted: false,
+      mime: undefined,
+      type: 'directory'
     })
   })
 
@@ -52,13 +53,15 @@ describe('makeNormalizedFile', () => {
     const normalizedFile = makeNormalizedFile(client, folders, file)
 
     expect(normalizedFile).toEqual({
-      icon: 'iconUrl',
       id: 'fileId',
       name: 'fileName',
       path: 'folderPath',
       url: '/folder/folderId/file/fileId',
       parentUrl: '/folder/folderId',
-      openOn: 'drive'
+      openOn: 'drive',
+      isEncrypted: false,
+      mime: undefined,
+      type: 'file'
     })
   })
 
@@ -76,13 +79,15 @@ describe('makeNormalizedFile', () => {
     const normalizedFile = makeNormalizedFile(client, folders, file)
 
     expect(normalizedFile).toEqual({
-      icon: 'iconUrl',
       id: 'fileId',
       name: 'note.cozy-note',
       path: 'folderPath',
       url: '/n/noteId',
       parentUrl: '/folder/folderId',
-      openOn: 'notes'
+      openOn: 'notes',
+      isEncrypted: false,
+      mime: undefined,
+      type: 'file'
     })
   })
 
@@ -99,13 +104,15 @@ describe('makeNormalizedFile', () => {
     const normalizedFile = makeNormalizedFile(client, folders, file)
 
     expect(normalizedFile).toEqual({
-      icon: 'iconUrl',
       id: 'fileId',
       name: 'note.cozy-note',
       path: 'folderPath',
       url: '/folder/folderId/file/fileId',
       parentUrl: '/folder/folderId',
-      openOn: 'drive'
+      openOn: 'drive',
+      isEncrypted: false,
+      mime: undefined,
+      type: 'file'
     })
   })
 })
