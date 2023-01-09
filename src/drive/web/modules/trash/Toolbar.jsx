@@ -21,6 +21,8 @@ import EmptyTrashConfirm from './components/EmptyTrashConfirm'
 import styles from 'drive/styles/toolbar.styl'
 import { useWebviewIntent } from 'cozy-intent'
 import { BarRight } from 'components/Bar'
+import SearchButton from 'drive/web/modules/drive/Toolbar/components/SearchButton'
+import { useRouter } from 'drive/lib/RouterContext'
 
 export const Toolbar = ({
   t,
@@ -34,6 +36,7 @@ export const Toolbar = ({
   const openMenu = useCallback(() => setMenuVisible(true), [setMenuVisible])
   const closeMenu = useCallback(() => setMenuVisible(false), [setMenuVisible])
   const webviewIntent = useWebviewIntent()
+  const { router } = useRouter()
 
   const { pushModal, popModal } = useContext(ModalContext)
 
@@ -95,6 +98,7 @@ export const Toolbar = ({
 
       {isMobile ? (
         <BarRight>
+          <SearchButton router={router} t={t} />
           <BarContextProvider
             client={client}
             t={t}
