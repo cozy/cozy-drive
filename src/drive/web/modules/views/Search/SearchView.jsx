@@ -40,7 +40,8 @@ const SearchView = () => {
 
   useEffect(() => {
     makeIndexes()
-  }, [makeIndexes])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const onInputChanged = event => {
     setInput(event.target.value)
