@@ -40,7 +40,9 @@ const useSearch = () => {
         url: result.url,
         parentUrl: result.parentUrl,
         openOn: result.openOn,
-        icon: result.icon
+        type: result.type,
+        mine: result.mine,
+        isEncrypted: result.isEncrypted
       }))
 
     setBusy(value === '') // To prevent empty state to appear at the first search

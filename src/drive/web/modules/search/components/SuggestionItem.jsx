@@ -3,6 +3,7 @@ import React, { useCallback } from 'react'
 import ListItem from 'cozy-ui/transpiled/react/MuiCozyTheme/ListItem'
 import ListItemIcon from 'cozy-ui/transpiled/react/MuiCozyTheme/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
+import FileIconMime from 'drive/web/modules/filelist/FileIconMime'
 
 import SuggestionItemTextHighlighted from 'drive/web/modules/search/components/SuggestionItemTextHighlighted'
 import SuggestionItemTextSecondary from 'drive/web/modules/search/components/SuggestionItemTextSecondary'
@@ -23,9 +24,14 @@ const SuggestionItem = ({
   return (
     <ListItem button onClick={openSuggestion}>
       <ListItemIcon>
-        {suggestion.icon && (
-          <img src={suggestion.icon} alt="icon" width={32} height={32} />
-        )}
+        <FileIconMime
+          file={{
+            type: suggestion.type,
+            mime: suggestion.mime,
+            name: suggestion.title
+          }}
+          isEncrypted={suggestion.isEncrypted}
+        />
       </ListItemIcon>
       <ListItemText
         primary={

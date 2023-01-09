@@ -10,10 +10,6 @@ jest.mock('cozy-ui/transpiled/react/utils/color', () => ({
   getCssVariableValue: () => '#fff'
 }))
 
-jest.mock('drive/web/modules/search/components/iconContext', () => ({
-  getIconUrl: () => 'iconUrl'
-}))
-
 global.cozy = {}
 
 jest.mock('cozy-bar/transpiled', () => ({
