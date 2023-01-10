@@ -8,6 +8,7 @@ import List from 'cozy-ui/transpiled/react/MuiCozyTheme/List'
 import { isFlagshipApp } from 'cozy-device-helper'
 import { useWebviewIntent } from 'cozy-intent'
 import { models, useClient } from 'cozy-client'
+import LoadMore from 'cozy-ui/transpiled/react/LoadMore'
 
 import BackButton from 'components/Button/BackButton'
 import { BarLeft, BarSearch } from 'components/Bar'
@@ -29,8 +30,10 @@ const SearchView = () => {
     clearSuggestions,
     hasSuggestions,
     query,
-    makeIndexes
-  } = useSearch()
+    makeIndexes,
+    hasMore,
+    fetchMore
+  } = useSearch({ limit: 25 })
   const webviewIntent = useWebviewIntent()
   const { router } = useRouter()
   const { isMobile } = useBreakpoints()
@@ -115,7 +118,7 @@ const SearchView = () => {
           </BarSearchInputGroup>
         </div>
       </BarSearch>
-      <div className="u-flex u-flex-column u-w-100">
+      <div className="u-flex u-flex-column u-w-100 u-ov-auto">
         {hasSuggestions && (
           <List>
             {suggestions.map(suggestion => (
@@ -128,6 +131,11 @@ const SearchView = () => {
               />
             ))}
           </List>
+        )}
+        {hasMore && (
+          <div className="u-flex u-flex-justify-center">
+            <LoadMore label={t('table.load_more')} fetchMore={fetchMore} />
+          </div>
         )}
         {hasNoSearchResult && !isBusy && <SearchEmpty query={query} />}
         {hasNoSearchResult && isBusy && <SuggestionListSkeleton count={10} />}
