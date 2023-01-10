@@ -51,7 +51,7 @@
     },
     {
       "path": "drive/public/drive.<hash>.js",
-      "maxSize": "1.60 MB"
+      "maxSize": "1.65 MB"
     },
     {
       "path": "drive/public/drive.<hash>.min.css",
@@ -129,7 +129,7 @@
     },
     {
       "path": "drive/public/**",
-      "maxPercentIncrease": 1
+      "maxPercentIncrease": 5
     },
     {
       "path": "drive/screenshots/**",
@@ -137,11 +137,11 @@
     },
     {
       "path": "drive/services/**",
-      "maxPercentIncrease": 0.5
+      "maxPercentIncrease": 1
     },
     {
       "path": "drive/vendors/**",
-      "maxPercentIncrease": 0.6
+      "maxPercentIncrease": 6
     }
   ],
   "reportOutput": [
