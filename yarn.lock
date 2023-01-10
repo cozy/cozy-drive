@@ -5723,6 +5723,30 @@ cozy-client-js@0.20.0:
     pouchdb-browser "7.0.0"
     pouchdb-find "7.0.0"
 
+cozy-client@34.3.0:
+  version "34.3.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-34.3.0.tgz#10a376e5a74046987d7b11e3c8cd2104b09c8d9a"
+  integrity sha512-yIKXVJZa6Vjjc0i3+LsfNx6ada+ytZ1aoTu/JW8ryK/saBDMRaBRZ++0YbMXZ7Q1iI51xSkc5/ue+9c4VDOwpg==
+  dependencies:
+    "@cozy/minilog" "1.0.0"
+    "@types/jest" "^26.0.20"
+    "@types/lodash" "^4.14.170"
+    btoa "^1.2.1"
+    cozy-stack-client "^34.1.5"
+    json-stable-stringify "^1.0.1"
+    lodash "^4.17.13"
+    microee "^0.0.6"
+    node-fetch "^2.6.1"
+    node-polyglot "2.4.2"
+    open "7.4.2"
+    prop-types "^15.6.2"
+    react-redux "^7.2.0"
+    redux "3 || 4"
+    redux-thunk "^2.3.0"
+    server-destroy "^1.0.1"
+    sift "^6.0.0"
+    url-search-params-polyfill "^8.0.0"
+
 cozy-client@^34.1.5:
   version "34.1.5"
   resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-34.1.5.tgz#6f9d24ac3ff84173130de1f7d93ff68beb7d7458"
