@@ -5,10 +5,9 @@ import { useClient } from 'cozy-client'
 
 import { indexFiles } from 'drive/web/modules/search/components/helpers'
 
-const MAX_SUGGESTIONS = 10
-
-const useSearch = () => {
+const useSearch = ({ limit = 10 } = {}) => {
   const client = useClient()
+  const [allSuggestions, setAllSuggestions] = useState([])
   const [suggestions, setSuggestions] = useState([])
   const [fuzzy, setFuzzy] = useState(null)
   const [isBusy, setBusy] = useState(true)
@@ -31,26 +30,34 @@ const useSearch = () => {
       currentFuzzy = await indexFiles(client)
       setFuzzy(currentFuzzy)
     }
-    const suggestions = currentFuzzy
-      .search(value, { limit: MAX_SUGGESTIONS })
-      .map(result => ({
-        id: result.id,
-        title: result.name,
-        subtitle: result.path,
-        url: result.url,
-        parentUrl: result.parentUrl,
-        openOn: result.openOn,
-        type: result.type,
-        mine: result.mine,
-        isEncrypted: result.isEncrypted
-      }))
+    const suggestions = currentFuzzy.search(value).map(result => ({
+      id: result.id,
+      title: result.name,
+      subtitle: result.path,
+      url: result.url,
+      parentUrl: result.parentUrl,
+      openOn: result.openOn,
+      type: result.type,
+      mine: result.mine,
+      isEncrypted: result.isEncrypted
+    }))
 
     setBusy(value === '') // To prevent empty state to appear at the first search
     setQuery(value)
-    setSuggestions(suggestions.slice(0, MAX_SUGGESTIONS))
+    setAllSuggestions(suggestions)
+    setSuggestions(suggestions.slice(0, limit))
   }
 
   const hasSuggestions = useMemo(() => suggestions.length > 0, [suggestions])
+
+  const hasMore = useMemo(
+    () => suggestions.length < allSuggestions.length,
+    [suggestions, allSuggestions]
+  )
+
+  const fetchMore = async () => {
+    setSuggestions(allSuggestions.slice(0, suggestions.length + limit))
+  }
 
   const clearSuggestions = () => {
     fetchSuggestions.cancel()
@@ -64,9 +71,11 @@ const useSearch = () => {
     fetchSuggestions,
     clearSuggestions,
     hasSuggestions,
+    hasMore,
     isBusy,
     query,
-    makeIndexes
+    makeIndexes,
+    fetchMore
   }
 }
 
