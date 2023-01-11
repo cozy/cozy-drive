@@ -173,5 +173,8 @@
     "snarkdown": "2.0.0",
     "webpack-node-externals": "3.0.0",
     "whatwg-fetch": "3.0.0"
+  },
+  "resolutions": {
+    "date-fns": "1.30.1"
   }
 }
