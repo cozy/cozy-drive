@@ -13,7 +13,7 @@ import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
 import { useWebviewIntent } from 'cozy-intent'
 
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
-import { getCurrentFolderId } from 'drive/web/modules/selectors'
+import { useCurrentFolderId } from 'drive/web/modules/selectors'
 
 import AddButton from 'drive/web/modules/drive/Toolbar/components/AddButton'
 import InsideRegularFolder from 'drive/web/modules/drive/Toolbar/components/InsideRegularFolder'
@@ -123,7 +123,6 @@ class Toolbar extends Component {
 }
 
 const mapStateToProps = state => ({
-  folderId: getCurrentFolderId(state),
   selectionModeActive: isSelectionBarVisible(state)
 })
 
@@ -140,10 +139,12 @@ const ToolbarWithWebviewContext = props => {
  * no sharing information is provided to the Toolbar.
  */
 const ToolbarWithSharingContext = props => {
-  return !props.folderId ? (
+  const folderId = useCurrentFolderId()
+
+  return !folderId ? (
     <ToolbarWithWebviewContext {...props} />
   ) : (
-    <SharedDocument docId={props.folderId}>
+    <SharedDocument docId={folderId}>
       {sharingProps => {
         const { hasWriteAccess } = sharingProps
         return (

@@ -2,21 +2,14 @@ import React from 'react'
 import { useQuery } from 'cozy-client'
 import { useRouter } from 'drive/lib/RouterContext'
 import { buildSharingsQuery } from 'drive/web/modules/queries'
-import {
-  getCurrentFileId,
-  getCurrentFolderId
-} from 'drive/web/modules/selectors'
-import { connect } from 'react-redux'
+import { useCurrentFolderId } from 'drive/web/modules/selectors'
 import FilesViewer, {
   FilesViewerLoading
 } from 'drive/web/modules/viewer/FilesViewer'
 import withSharedDocumentIds from './withSharedDocumentIds'
 
-const FilesViewerWithQuery = ({
-  sharedDocumentIds,
-  currentFolderId,
-  ...props
-}) => {
+const FilesViewerWithQuery = ({ sharedDocumentIds, ...props }) => {
+  const currentFolderId = useCurrentFolderId()
   const filesQuery = buildSharingsQuery({ ids: sharedDocumentIds })
   const results = useQuery(filesQuery.definition, filesQuery.options)
   const { router } = useRouter()
@@ -43,11 +36,4 @@ const FilesViewerWithQuery = ({
   }
 }
 
-const mapStateToProps = state => ({
-  fileId: getCurrentFileId(state),
-  currentFolderId: getCurrentFolderId(state)
-})
-
-const FilesViewerWithFolderId = connect(mapStateToProps)(FilesViewerWithQuery)
-
-export default withSharedDocumentIds(FilesViewerWithFolderId)
+export default withSharedDocumentIds(FilesViewerWithQuery)

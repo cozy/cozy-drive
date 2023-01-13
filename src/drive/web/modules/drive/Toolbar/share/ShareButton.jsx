@@ -3,10 +3,13 @@ import cx from 'classnames'
 
 import { ShareButton } from 'cozy-sharing'
 
+import { useDisplayedFolder } from 'drive/web/modules/selectors'
 import shareContainer from './share'
 import styles from './styles.styl'
 
-const ShareButtonWithProps = ({ displayedFolder, share, isDisabled }) => {
+const ShareButtonWithProps = ({ share, isDisabled }) => {
+  const displayedFolder = useDisplayedFolder()
+
   return (
     <ShareButton
       docId={displayedFolder.id}

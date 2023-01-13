@@ -1,40 +1,51 @@
 import maxBy from 'lodash/maxBy'
-import get from 'lodash/get'
 
 import { getDocumentFromState } from 'cozy-client/dist/store'
 
 import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import { getMirrorQueryId, parseFolderQueryId } from './queries'
+import { useParams, useLocation } from 'react-router-dom'
+import { useClient } from 'cozy-client'
 
-export const getCurrentFolderId = rootState => {
-  if (get(rootState, 'router.params.folderId')) {
-    return rootState.router.params.folderId
-  } else if (get(rootState, 'router.location.pathname') == '/folder') {
+export const useCurrentFolderId = () => {
+  const { folderId } = useParams()
+  const { pathname } = useLocation()
+
+  if (folderId) {
+    return folderId
+  } else if (pathname === '/folder') {
     return ROOT_DIR_ID
-  } else if (get(rootState, 'router.location.pathname') == '/trash') {
+  } else if (pathname === '/trash') {
     return TRASH_DIR_ID
   }
   return null
 }
 
-export const getCurrentFileId = rootState => {
-  return get(rootState, 'router.params.fileId', null)
-}
+export const useCurrentFileId = () => {
+  const { fileId } = useParams()
 
-export const getDisplayedFolder = rootState => {
-  const folderId = getCurrentFolderId(rootState)
-  if (folderId) {
-    const doc = getDocumentFromState(rootState, DOCTYPE_FILES, folderId)
-    return doc
+  if (fileId) {
+    return fileId
   }
   return null
 }
 
-export const getParentFolder = (rootState, parentFolderId) => {
+export const useDisplayedFolder = () => {
+  const client = useClient()
+  const folderId = useCurrentFolderId()
+
+  if (folderId) {
+    return client.getDocumentFromState(DOCTYPE_FILES, folderId)
+  }
+  return null
+}
+
+export const useParentFolder = parentFolderId => {
+  const client = useClient()
+
   if (parentFolderId) {
-    const doc = getDocumentFromState(rootState, DOCTYPE_FILES, parentFolderId)
-    return doc
+    return client.getDocumentFromState(DOCTYPE_FILES, parentFolderId)
   }
   return null
 }

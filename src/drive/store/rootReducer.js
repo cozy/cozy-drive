@@ -17,8 +17,6 @@ import {
   default as authorization,
   UNLINK
 } from 'drive/mobile/modules/authorization/duck'
-import { createReducer as createRouterReducer } from './connectedRouter'
-import { routes } from 'drive/web/modules/navigation/AppRoute'
 
 // Per Dan Abramov: https://stackoverflow.com/questions/35622588/how-to-reset-the-state-of-a-redux-store/35641992#35641992
 const createRootReducer = client => {
@@ -38,14 +36,9 @@ const createRootReducer = client => {
     mediaBackup
   })
 
-  const routerReducer = createRouterReducer({
-    routes
-  })
-
   const reducers = {
     ...baseReducers,
-    cozy: client.reducer(),
-    router: routerReducer
+    cozy: client.reducer()
   }
 
   if (__TARGET__ === 'mobile') {

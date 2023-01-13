@@ -1,9 +1,12 @@
 import React from 'react'
-import toolbarContainer from '../toolbar'
 import { SharedRecipients } from 'cozy-sharing'
 import shareContainer from './share'
 
-const SharedRecipientsComponent = ({ displayedFolder, share }) => {
+import { useDisplayedFolder } from 'drive/web/modules/selectors'
+
+const SharedRecipientsComponent = ({ share }) => {
+  const displayedFolder = useDisplayedFolder()
+
   return (
     <SharedRecipients
       docId={displayedFolder && displayedFolder.id}
@@ -12,4 +15,4 @@ const SharedRecipientsComponent = ({ displayedFolder, share }) => {
   )
 }
 
-export default toolbarContainer(shareContainer(SharedRecipientsComponent))
+export default shareContainer(SharedRecipientsComponent)

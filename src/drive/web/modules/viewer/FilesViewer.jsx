@@ -13,6 +13,7 @@ import palette from 'cozy-ui/transpiled/react/palette'
 import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
 import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
 import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
+import { useCurrentFileId } from 'drive/web/modules/selectors'
 
 import { useRouter } from 'drive/lib/RouterContext'
 import Fallback from 'drive/web/modules/viewer/Fallback'
@@ -54,7 +55,8 @@ const styleStatusBar = switcher => {
  *   fetchMore() on the query
  */
 
-const FilesViewer = ({ filesQuery, files, fileId, onClose, onChange }) => {
+const FilesViewer = ({ filesQuery, files, onClose, onChange }) => {
+  const fileId = useCurrentFileId()
   const [currentFile, setCurrentFile] = useState(null)
   const [currentDecryptedFileURL, setCurrentDecryptedFileURL] = useState(null)
   const [fetchingMore, setFetchingMore] = useState(false)

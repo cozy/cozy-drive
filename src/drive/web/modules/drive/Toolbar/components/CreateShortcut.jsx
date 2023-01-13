@@ -7,7 +7,7 @@ import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import DeviceBrowserIcon from 'cozy-ui/transpiled/react/Icons/DeviceBrowser'
 
-import ShortcutCreationModal from './ShortcutCreationModalConnected'
+import ShortcutCreationModal from './ShortcutCreationModal'
 
 const CreateShortcutWrapper = ({ openModal }) => {
   const { t } = useI18n()
