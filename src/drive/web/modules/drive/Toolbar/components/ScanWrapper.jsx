@@ -5,7 +5,7 @@ import { isMobileApp } from 'cozy-device-helper'
 import PortaledQueue from './PortaledQueue'
 import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
 import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
-import { useDisplayedFolder } from 'drive/web/modules/selectors'
+import { useDisplayedFolder } from 'drive/hooks'
 
 import {
   startMediaBackup,
