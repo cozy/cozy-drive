@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import cx from 'classnames'
-import { withRouter } from 'react-router'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import { withClient } from 'cozy-client'
 import SharingProvider, { SharedDocument } from 'cozy-sharing'
@@ -64,8 +64,9 @@ class Toolbar extends Component {
       hasWriteAccess,
       breakpoints: { isMobile },
       client,
-      webviewService,
-      router
+      navigate,
+      pathname,
+      webviewService
     } = this.props
 
     const isDisabled = disabled || selectionModeActive
@@ -98,7 +99,7 @@ class Toolbar extends Component {
 
         {isMobile ? (
           <BarRight>
-            <SearchButton router={router} t={t} />
+            <SearchButton navigate={navigate} pathname={pathname} t={t} />
             <BarContextProvider
               client={client}
               store={this.context.store}
@@ -126,10 +127,19 @@ const mapStateToProps = state => ({
   selectionModeActive: isSelectionBarVisible(state)
 })
 
-const ToolbarWithWebviewContext = props => {
+const ToolbarWrapper = props => {
   const webviewIntent = useWebviewIntent()
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
 
-  return <Toolbar webviewService={webviewIntent} {...props} />
+  return (
+    <Toolbar
+      webviewService={webviewIntent}
+      navigate={navigate}
+      pathname={pathname}
+      {...props}
+    />
+  )
 }
 
 /**
@@ -142,17 +152,12 @@ const ToolbarWithSharingContext = props => {
   const folderId = useCurrentFolderId()
 
   return !folderId ? (
-    <ToolbarWithWebviewContext {...props} />
+    <ToolbarWrapper {...props} />
   ) : (
     <SharedDocument docId={folderId}>
       {sharingProps => {
         const { hasWriteAccess } = sharingProps
-        return (
-          <ToolbarWithWebviewContext
-            {...props}
-            hasWriteAccess={hasWriteAccess}
-          />
-        )
+        return <ToolbarWrapper {...props} hasWriteAccess={hasWriteAccess} />
       }}
     </SharedDocument>
   )
@@ -163,7 +168,6 @@ ToolbarWithSharingContext.displayName = 'ToolbarWithSharingContext'
 export default compose(
   translate(),
   withClient,
-  withRouter,
   connect(mapStateToProps, null),
   withBreakpoints()
 )(ToolbarWithSharingContext)
