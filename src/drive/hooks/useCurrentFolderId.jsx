@@ -1,7 +1,7 @@
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import { useParams, useLocation } from 'react-router-dom'
 
-export const useCurrentFolderId = () => {
+const useCurrentFolderId = () => {
   const { folderId } = useParams()
   const { pathname } = useLocation()
 
@@ -14,3 +14,5 @@ export const useCurrentFolderId = () => {
   }
   return null
 }
+
+export default useCurrentFolderId
