@@ -63,6 +63,7 @@ const useSearch = ({ limit = 10 } = {}) => {
     fetchSuggestions.cancel()
     setBusy(true)
     setQuery('')
+    setAllSuggestions([])
     setSuggestions([])
   }
 
