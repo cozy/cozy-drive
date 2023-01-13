@@ -6,17 +6,6 @@ import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 
 import { getMirrorQueryId, parseFolderQueryId } from './queries'
 
-import { useClient } from 'cozy-client'
-
-export const useParentFolder = parentFolderId => {
-  const client = useClient()
-
-  if (parentFolderId) {
-    return client.getDocumentFromState(DOCTYPE_FILES, parentFolderId)
-  }
-  return null
-}
-
 const getFolderContentQueries = (rootState, folderId) => {
   const queries = rootState.cozy.queries
   const folderContentQueries = Object.entries(queries)
