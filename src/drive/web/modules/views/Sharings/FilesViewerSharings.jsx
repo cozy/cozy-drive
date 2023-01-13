@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useQuery } from 'cozy-client'
 
 import { buildSharingsQuery } from 'drive/web/modules/queries'
-import { useCurrentFolderId } from 'drive/web/modules/selectors'
+import { useCurrentFolderId } from 'drive/hooks'
 
 import FilesViewer, {
   FilesViewerLoading

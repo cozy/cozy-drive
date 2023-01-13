@@ -15,7 +15,7 @@ import {
   buildFileWithSpecificMetadataAttributeQuery,
   buildOnlyFolderQuery
 } from 'drive/web/modules/queries'
-import { useCurrentFolderId } from 'drive/web/modules/selectors'
+import { useCurrentFolderId } from 'drive/hooks'
 import { ModalContext } from 'drive/lib/ModalContext'
 import TrashToolbar from 'drive/web/modules/trash/Toolbar'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
