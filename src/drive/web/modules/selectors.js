@@ -3,24 +3,11 @@ import maxBy from 'lodash/maxBy'
 import { getDocumentFromState } from 'cozy-client/dist/store'
 
 import { DOCTYPE_FILES } from 'drive/lib/doctypes'
-import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
+
 import { getMirrorQueryId, parseFolderQueryId } from './queries'
-import { useParams, useLocation } from 'react-router-dom'
+
 import { useClient } from 'cozy-client'
-
-export const useCurrentFolderId = () => {
-  const { folderId } = useParams()
-  const { pathname } = useLocation()
-
-  if (folderId) {
-    return folderId
-  } else if (pathname === '/folder') {
-    return ROOT_DIR_ID
-  } else if (pathname === '/trash') {
-    return TRASH_DIR_ID
-  }
-  return null
-}
+import { useCurrentFolderId } from 'drive/hooks'
 
 export const useDisplayedFolder = () => {
   const client = useClient()
