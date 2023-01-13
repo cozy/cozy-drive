@@ -22,15 +22,6 @@ export const useCurrentFolderId = () => {
   return null
 }
 
-export const useCurrentFileId = () => {
-  const { fileId } = useParams()
-
-  if (fileId) {
-    return fileId
-  }
-  return null
-}
-
 export const useDisplayedFolder = () => {
   const client = useClient()
   const folderId = useCurrentFolderId()
