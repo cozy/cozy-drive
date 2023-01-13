@@ -17,9 +17,9 @@ import SuggestionItem from 'drive/web/modules/search/components/SuggestionItem'
 import SuggestionListSkeleton from 'drive/web/modules/search/components/SuggestionListSkeleton'
 import BarSearchInputGroup from 'drive/web/modules/search/components/BarSearchInputGroup'
 import styles from 'drive/web/modules/search/components/styles.styl'
-import { useRouter } from 'drive/lib/RouterContext'
 import SearchEmpty from './components/SearchEmpty'
 import { useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const SearchView = () => {
   const { t } = useI18n()
@@ -35,7 +35,8 @@ const SearchView = () => {
     fetchMore
   } = useSearch({ limit: 25 })
   const webviewIntent = useWebviewIntent()
-  const { router } = useRouter()
+  const { search } = useLocation()
+  const navigate = useNavigate()
   const { isMobile } = useBreakpoints()
   const client = useClient()
 
@@ -52,15 +53,15 @@ const SearchView = () => {
   }
 
   const navigateBack = useCallback(() => {
-    const params = new URLSearchParams(router.location.search)
+    const params = new URLSearchParams(search)
     const returnPath = params.get('returnPath')
-    router.push(returnPath ? returnPath : '/')
-  }, [router])
+    navigate(returnPath ? returnPath : '/')
+  }, [navigate, search])
 
   const openSuggestion = useCallback(
     async suggestion => {
       if (suggestion.openOn === 'drive') {
-        router.push(suggestion.url)
+        navigate(suggestion.url)
       } else if (suggestion.openOn === 'notes') {
         const url = await models.note.fetchURL(client, {
           id: suggestion.url.substr(3)
@@ -78,7 +79,7 @@ const SearchView = () => {
         )
       }
     },
-    [router, webviewIntent, client]
+    [navigate, webviewIntent, client]
   )
 
   const handleCleanInput = () => {
