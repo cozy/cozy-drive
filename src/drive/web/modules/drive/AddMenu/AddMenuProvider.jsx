@@ -7,7 +7,7 @@ import React, {
 } from 'react'
 import { useSelector } from 'react-redux'
 import { logException } from 'drive/lib/reporter'
-import { useDisplayedFolder } from 'drive/web/modules/selectors'
+import { useDisplayedFolder } from 'drive/hooks'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 

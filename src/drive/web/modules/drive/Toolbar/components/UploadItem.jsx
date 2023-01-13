@@ -13,7 +13,7 @@ import FileInput from 'cozy-ui/transpiled/react/FileInput'
 import UploadIcon from 'cozy-ui/transpiled/react/Icons/Upload'
 
 import { uploadFiles } from 'drive/web/modules/navigation/duck'
-import { useDisplayedFolder } from 'drive/web/modules/selectors'
+import { useDisplayedFolder } from 'drive/hooks'
 
 const UploadItem = ({ t, isDisabled, onUpload }) => {
   const client = useClient()
