@@ -13,7 +13,7 @@ import {
   buildDriveQuery,
   buildFileWithSpecificMetadataAttributeQuery
 } from 'drive/web/modules/queries'
-import { getCurrentFolderId } from 'drive/web/modules/selectors'
+import { useCurrentFolderId } from 'drive/web/modules/selectors'
 import useActions from 'drive/web/modules/actions/useActions'
 import {
   share,
@@ -39,13 +39,13 @@ const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
 const SharingsFolderView = ({
-  currentFolderId,
   sharedDocumentIds,
   router,
   location,
   params,
   children
 }) => {
+  const currentFolderId = useCurrentFolderId()
   const { isMobile } = useBreakpoints()
 
   useHead(params)
@@ -154,6 +154,4 @@ const FolderViewWithSharings = props => (
   </SharedDocuments>
 )
 
-export default connect(state => ({
-  currentFolderId: getCurrentFolderId(state)
-}))(FolderViewWithSharings)
+export default FolderViewWithSharings

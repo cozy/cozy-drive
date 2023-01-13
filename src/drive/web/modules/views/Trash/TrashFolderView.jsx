@@ -1,6 +1,4 @@
 import React, { useCallback, useContext } from 'react'
-import { connect } from 'react-redux'
-
 import { useQuery, useClient } from 'cozy-client'
 import { SharingContext } from 'cozy-sharing'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
@@ -15,7 +13,7 @@ import {
   buildFileWithSpecificMetadataAttributeQuery,
   buildOnlyFolderQuery
 } from 'drive/web/modules/queries'
-import { getCurrentFolderId } from 'drive/web/modules/selectors'
+import { useCurrentFolderId } from 'drive/web/modules/selectors'
 import { ModalContext } from 'drive/lib/ModalContext'
 import TrashToolbar from 'drive/web/modules/trash/Toolbar'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
@@ -30,8 +28,9 @@ import useHead from 'components/useHead'
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-const TrashFolderView = ({ currentFolderId, router, params, children }) => {
+const TrashFolderView = ({ router, params, children }) => {
   const { isMobile } = useBreakpoints()
+  const currentFolderId = useCurrentFolderId()
 
   useHead(params)
   const displayedFolderQuery = buildOnlyFolderQuery(currentFolderId)
@@ -147,6 +146,4 @@ const TrashFolderViewWrapper = ({
     </TrashFolderView>
   )
 }
-export default connect(state => ({
-  currentFolderId: getCurrentFolderId(state)
-}))(TrashFolderViewWrapper)
+export default TrashFolderViewWrapper

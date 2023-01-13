@@ -1,7 +1,7 @@
 /* global __TARGET__ */
 
 import React, { useCallback, useContext, useEffect } from 'react'
-import { connect, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { SharingContext } from 'cozy-sharing'
 import { useQuery, useClient } from 'cozy-client'
@@ -35,7 +35,7 @@ import {
   buildFileWithSpecificMetadataAttributeQuery,
   buildOnlyFolderQuery
 } from 'drive/web/modules/queries'
-import { getCurrentFolderId } from 'drive/web/modules/selectors'
+import { useCurrentFolderId } from 'drive/web/modules/selectors'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
@@ -53,7 +53,8 @@ import useHead from 'components/useHead'
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-const DriveView = ({ currentFolderId, router, params, location, children }) => {
+const DriveView = ({ router, params, location, children }) => {
+  const currentFolderId = useCurrentFolderId() || ROOT_DIR_ID
   useHead(params)
 
   const { isMobile } = useBreakpoints()
@@ -225,6 +226,4 @@ const DriveView = ({ currentFolderId, router, params, location, children }) => {
   )
 }
 
-export default connect(state => ({
-  currentFolderId: getCurrentFolderId(state) || ROOT_DIR_ID
-}))(DriveView)
+export default DriveView

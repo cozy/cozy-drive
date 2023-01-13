@@ -1,4 +1,3 @@
-import compose from 'lodash/flowRight'
 import React, { useCallback } from 'react'
 import { connect } from 'react-redux'
 
@@ -6,7 +5,6 @@ import { showModal } from 'react-cozy-helpers'
 import { useRouter } from 'drive/lib/RouterContext'
 
 import DeleteConfirm from '../../DeleteConfirm'
-import toolbarContainer from '../toolbar'
 
 const EnhancedDeleteConfirm = ({ folder, ...rest }) => {
   const { router } = useRouter()
@@ -31,9 +29,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(showModal(<EnhancedDeleteConfirm folder={folder} />))
 })
 
-const deleteContainer = compose(
-  toolbarContainer,
-  connect(null, mapDispatchToProps)
-)
+const deleteContainer = connect(null, mapDispatchToProps)
 
 export default deleteContainer

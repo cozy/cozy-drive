@@ -5,16 +5,20 @@ import { translate } from 'cozy-ui/transpiled/react'
 import styles from 'drive/styles/toolbar.styl'
 import { compose } from 'redux'
 
-import toolbarContainer from '../toolbar'
+import { useDisplayedFolder } from 'drive/web/modules/selectors'
 
-const UploadButtonItem = ({ t, displayedFolder, isDisabled, onUploaded }) => (
-  <UploadButton
-    disabled={isDisabled}
-    displayedFolder={displayedFolder}
-    label={t('toolbar.item_upload')}
-    className={classNames(styles['c-btn'], 'u-hide--mob')}
-    onUploaded={onUploaded}
-  />
-)
+const UploadButtonItem = ({ t, isDisabled, onUploaded }) => {
+  const displayedFolder = useDisplayedFolder()
 
-export default compose(toolbarContainer, translate())(UploadButtonItem)
+  return (
+    <UploadButton
+      disabled={isDisabled}
+      displayedFolder={displayedFolder}
+      label={t('toolbar.item_upload')}
+      className={classNames(styles['c-btn'], 'u-hide--mob')}
+      onUploaded={onUploaded}
+    />
+  )
+}
+
+export default compose(translate())(UploadButtonItem)
