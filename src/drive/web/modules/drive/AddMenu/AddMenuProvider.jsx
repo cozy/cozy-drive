@@ -7,7 +7,7 @@ import React, {
 } from 'react'
 import { useSelector } from 'react-redux'
 import { logException } from 'drive/lib/reporter'
-
+import { useDisplayedFolder } from 'drive/web/modules/selectors'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
@@ -18,7 +18,6 @@ import {
 } from 'drive/web/modules/drive/Toolbar/components/MoreMenu'
 import AddMenu from 'drive/web/modules/drive/AddMenu/AddMenu'
 import ScanWrapper from 'drive/web/modules/drive/Toolbar/components/ScanWrapper'
-import toolbarContainer from 'drive/web/modules/drive/Toolbar/toolbar'
 import { isEncryptedFolder } from 'drive/lib/encryption'
 
 export const AddMenuContext = createContext()
@@ -29,9 +28,9 @@ const AddMenuProvider = ({
   canUpload,
   refreshFolderContent,
   children,
-  isPublic,
-  displayedFolder
+  isPublic
 }) => {
+  const displayedFolder = useDisplayedFolder()
   const [menuIsVisible, setMenuVisible] = useState(false)
   const selectionModeActive = useSelector(isSelectionBarVisible)
   const isOffline = useBrowserOffline()
@@ -100,4 +99,4 @@ const AddMenuProvider = ({
   )
 }
 
-export default React.memo(toolbarContainer(AddMenuProvider))
+export default React.memo(AddMenuProvider)

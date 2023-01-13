@@ -8,7 +8,7 @@ import SharingProvider, { SharedDocument } from 'cozy-sharing'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
-import { getCurrentFolderId } from 'drive/web/modules/selectors'
+import { useCurrentFolderId } from 'drive/web/modules/selectors'
 import AddButton from 'drive/web/modules/drive/Toolbar/components/AddButton'
 import InsideRegularFolder from 'drive/web/modules/drive/Toolbar/components/InsideRegularFolder'
 import MoreMenu from 'drive/web/modules/drive/Toolbar/components/MoreMenu'
@@ -102,7 +102,6 @@ class Toolbar extends Component {
 }
 
 const mapStateToProps = state => ({
-  folderId: getCurrentFolderId(state),
   selectionModeActive: isSelectionBarVisible(state)
 })
 
@@ -113,10 +112,12 @@ const mapStateToProps = state => ({
  * no sharing information is provided to the Toolbar.
  */
 const ToolbarWithSharingContext = props => {
-  return !props.folderId ? (
+  const folderId = useCurrentFolderId()
+
+  return !folderId ? (
     <Toolbar {...props} />
   ) : (
-    <SharedDocument docId={props.folderId}>
+    <SharedDocument docId={folderId}>
       {sharingProps => {
         const { hasWriteAccess } = sharingProps
         return <Toolbar {...props} hasWriteAccess={hasWriteAccess} />

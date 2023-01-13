@@ -9,9 +9,10 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 
 import { downloadFiles } from 'drive/web/modules/actions/utils'
-import toolbarContainer from '../toolbar'
+import { useDisplayedFolder } from 'drive/web/modules/selectors'
 
-const DownloadButtonItem = ({ t, displayedFolder, downloadAll }) => {
+const DownloadButtonItem = ({ t, downloadAll }) => {
+  const displayedFolder = useDisplayedFolder()
   return (
     <ActionMenuItem
       left={<Icon icon={DownloadIcon} />}
@@ -32,6 +33,5 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export default compose(
   withClient,
   translate(),
-  connect(null, mapDispatchToProps),
-  toolbarContainer
+  connect(null, mapDispatchToProps)
 )(DownloadButtonItem)

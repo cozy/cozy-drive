@@ -6,7 +6,6 @@ import RavenMiddleWare from 'redux-raven-middleware'
 import thunkMiddleware from 'redux-thunk'
 import createRootReducer from './rootReducer'
 import { ANALYTICS_URL, getReporterConfiguration } from 'drive/lib/reporter'
-import { connectStoreToHistory } from './connectedRouter'
 
 /**
  * Creates the redux store
@@ -16,12 +15,11 @@ import { connectStoreToHistory } from './connectedRouter'
  * @param  {Object} options Options
  * @param  {Object} options.client CozyClient
  * @param  {Object} options.t Polygot t function
- * @param  {Object} options.history History
  *
  * @return {ReduxStore}
  */
 const configureStore = options => {
-  const { client, t, initialState = {}, history } = options
+  const { client, t, initialState = {} } = options
 
   const middlewares = [thunkMiddleware.withExtraArgument({ client, t })]
   if (__TARGET__ === 'mobile' && !__DEVELOPMENT__) {
@@ -43,10 +41,6 @@ const configureStore = options => {
     initialState,
     composeEnhancers(applyMiddleware(...middlewares))
   )
-
-  if (history) {
-    connectStoreToHistory(store, history)
-  }
 
   client.setStore(store)
 

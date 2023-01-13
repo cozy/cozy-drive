@@ -2,8 +2,6 @@ import React from 'react'
 import { useQuery } from 'cozy-client'
 import { useRouter } from 'drive/lib/RouterContext'
 import { buildRecentQuery } from 'drive/web/modules/queries'
-import { getCurrentFileId } from 'drive/web/modules/selectors'
-import { connect } from 'react-redux'
 import FilesViewer, {
   FilesViewerLoading
 } from 'drive/web/modules/viewer/FilesViewer'
@@ -31,8 +29,4 @@ const FilesViewerWithQuery = props => {
   }
 }
 
-const mapStateToProps = state => ({
-  fileId: getCurrentFileId(state)
-})
-
-export default connect(mapStateToProps)(FilesViewerWithQuery)
+export default FilesViewerWithQuery
