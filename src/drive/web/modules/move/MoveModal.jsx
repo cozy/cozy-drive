@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { compose } from 'redux'
-import { connect } from 'react-redux'
 import { withStyles } from 'cozy-ui/transpiled/react/styles'
 
 import { Query, cancelable, withClient, Q } from 'cozy-client'
@@ -24,7 +23,7 @@ import LoadMore from 'drive/web/modules/move/LoadMore'
 import Footer from 'drive/web/modules/move/Footer'
 import Topbar from 'drive/web/modules/move/Topbar'
 
-import { useDisplayedFolder } from 'drive/web/modules/selectors'
+import { useDisplayedFolder } from 'drive/hooks'
 import {
   buildMoveOrImportQuery,
   buildOnlyFolderQuery

@@ -12,7 +12,7 @@ import Stack from 'cozy-ui/transpiled/react/Stack'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 import { DOCTYPE_FILES_SHORTCUT } from 'drive/lib/doctypes'
-import { useDisplayedFolder } from 'drive/web/modules/selectors'
+import { useDisplayedFolder } from 'drive/hooks'
 
 const ENTER_KEY = 13
 
