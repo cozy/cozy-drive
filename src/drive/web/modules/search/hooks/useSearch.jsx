@@ -38,7 +38,7 @@ const useSearch = ({ limit = 10 } = {}) => {
       parentUrl: result.parentUrl,
       openOn: result.openOn,
       type: result.type,
-      mine: result.mine,
+      mime: result.mime,
       isEncrypted: result.isEncrypted
     }))
 
