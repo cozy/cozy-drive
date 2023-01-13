@@ -1,0 +1,1 @@
+export { useCurrentFileId } from './useCurrentFileId'
