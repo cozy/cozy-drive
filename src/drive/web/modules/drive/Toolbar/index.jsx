@@ -13,7 +13,7 @@ import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
 import { useWebviewIntent } from 'cozy-intent'
 
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
-import { useCurrentFolderId } from 'drive/web/modules/selectors'
+import { useCurrentFolderId } from 'drive/hooks'
 
 import AddButton from 'drive/web/modules/drive/Toolbar/components/AddButton'
 import InsideRegularFolder from 'drive/web/modules/drive/Toolbar/components/InsideRegularFolder'

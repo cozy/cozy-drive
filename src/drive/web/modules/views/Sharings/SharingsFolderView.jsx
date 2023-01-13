@@ -14,7 +14,7 @@ import {
   buildDriveQuery,
   buildFileWithSpecificMetadataAttributeQuery
 } from 'drive/web/modules/queries'
-import { useCurrentFolderId } from 'drive/web/modules/selectors'
+import { useCurrentFolderId } from 'drive/hooks'
 import useActions from 'drive/web/modules/actions/useActions'
 import {
   share,

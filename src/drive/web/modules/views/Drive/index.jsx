@@ -36,7 +36,7 @@ import {
   buildFileWithSpecificMetadataAttributeQuery,
   buildOnlyFolderQuery
 } from 'drive/web/modules/queries'
-import { useCurrentFolderId } from 'drive/web/modules/selectors'
+import { useCurrentFolderId } from 'drive/hooks'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
