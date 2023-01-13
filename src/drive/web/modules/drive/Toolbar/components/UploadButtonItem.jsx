@@ -5,7 +5,7 @@ import { translate } from 'cozy-ui/transpiled/react'
 import styles from 'drive/styles/toolbar.styl'
 import { compose } from 'redux'
 
-import { useDisplayedFolder } from 'drive/web/modules/selectors'
+import { useDisplayedFolder } from 'drive/hooks'
 
 const UploadButtonItem = ({ t, isDisabled, onUploaded }) => {
   const displayedFolder = useDisplayedFolder()
