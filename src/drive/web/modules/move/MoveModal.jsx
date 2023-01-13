@@ -24,7 +24,7 @@ import LoadMore from 'drive/web/modules/move/LoadMore'
 import Footer from 'drive/web/modules/move/Footer'
 import Topbar from 'drive/web/modules/move/Topbar'
 
-import { getDisplayedFolder } from 'drive/web/modules/selectors'
+import { useDisplayedFolder } from 'drive/web/modules/selectors'
 import {
   buildMoveOrImportQuery,
   buildOnlyFolderQuery
@@ -259,15 +259,16 @@ MoveModal.propTypes = {
   sharingState: PropTypes.object
 }
 
-const mapStateToProps = state => ({
-  displayedFolder: getDisplayedFolder(state)
-})
+const MoveModalWrapper = props => {
+  const displayedFolder = useDisplayedFolder()
+
+  return <MoveModal displayedFolder={displayedFolder} {...props} />
+}
 
 export default compose(
-  connect(mapStateToProps),
   translate(),
   withClient,
   withSharingState,
   withStyles(styles),
   withBreakpoints()
-)(MoveModal)
+)(MoveModalWrapper)
