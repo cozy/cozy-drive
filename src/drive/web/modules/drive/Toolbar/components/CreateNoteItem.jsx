@@ -17,7 +17,7 @@ import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconNote from 'cozy-ui/transpiled/react/Icons/FileTypeNote'
 
-import { useDisplayedFolder } from 'drive/web/modules/selectors'
+import { useDisplayedFolder } from 'drive/hooks'
 
 const CreateNoteItem = ({ client, t }) => {
   const displayedFolder = useDisplayedFolder()

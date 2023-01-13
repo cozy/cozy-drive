@@ -3,7 +3,7 @@ import cx from 'classnames'
 
 import { ShareButton } from 'cozy-sharing'
 
-import { useDisplayedFolder } from 'drive/web/modules/selectors'
+import { useDisplayedFolder } from 'drive/hooks'
 import shareContainer from './share'
 import styles from './styles.styl'
 

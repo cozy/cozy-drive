@@ -7,17 +7,6 @@ import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 import { getMirrorQueryId, parseFolderQueryId } from './queries'
 
 import { useClient } from 'cozy-client'
-import { useCurrentFolderId } from 'drive/hooks'
-
-export const useDisplayedFolder = () => {
-  const client = useClient()
-  const folderId = useCurrentFolderId()
-
-  if (folderId) {
-    return client.getDocumentFromState(DOCTYPE_FILES, folderId)
-  }
-  return null
-}
 
 export const useParentFolder = parentFolderId => {
   const client = useClient()
