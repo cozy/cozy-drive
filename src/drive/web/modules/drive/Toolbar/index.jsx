@@ -8,7 +8,7 @@ import SharingProvider, { SharedDocument } from 'cozy-sharing'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
-import { useCurrentFolderId } from 'drive/web/modules/selectors'
+import { useCurrentFolderId } from 'drive/hooks'
 import AddButton from 'drive/web/modules/drive/Toolbar/components/AddButton'
 import InsideRegularFolder from 'drive/web/modules/drive/Toolbar/components/InsideRegularFolder'
 import MoreMenu from 'drive/web/modules/drive/Toolbar/components/MoreMenu'
