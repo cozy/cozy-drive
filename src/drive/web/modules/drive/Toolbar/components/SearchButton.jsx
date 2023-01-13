@@ -3,10 +3,10 @@ import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import Magnifier from 'cozy-ui/transpiled/react/Icons/Magnifier'
 
-const SearchButton = ({ router, t }) => {
+const SearchButton = ({ navigate, pathname, t }) => {
   const goToSearch = useCallback(() => {
-    router.push(`/search?returnPath=${router.location.pathname}`)
-  }, [router])
+    navigate(`/search?returnPath=${pathname}`)
+  }, [navigate, pathname])
 
   return (
     <IconButton onClick={goToSearch} aria-label={t('search.action')}>
