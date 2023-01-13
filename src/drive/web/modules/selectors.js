@@ -6,6 +6,7 @@ import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
 import { getMirrorQueryId, parseFolderQueryId } from './queries'
 import { useParams, useLocation } from 'react-router-dom'
+import { useClient } from 'cozy-client'
 
 export const useCurrentFolderId = () => {
   const { folderId } = useParams()
@@ -24,22 +25,27 @@ export const useCurrentFolderId = () => {
 export const useCurrentFileId = () => {
   const { fileId } = useParams()
 
-  return fileId
+  if (fileId) {
+    return fileId
+  }
+  return null
 }
 
 export const useDisplayedFolder = () => {
+  const client = useClient()
   const folderId = useCurrentFolderId()
+
   if (folderId) {
-    const doc = getDocumentFromState(DOCTYPE_FILES, folderId)
-    return doc
+    return client.getDocumentFromState(DOCTYPE_FILES, folderId)
   }
   return null
 }
 
 export const useParentFolder = parentFolderId => {
+  const client = useClient()
+
   if (parentFolderId) {
-    const doc = getDocumentFromState(DOCTYPE_FILES, parentFolderId)
-    return doc
+    return client.getDocumentFromState(DOCTYPE_FILES, parentFolderId)
   }
   return null
 }
