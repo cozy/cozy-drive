@@ -20,7 +20,6 @@ import {
   REF_UPLOAD
 } from 'folder-references'
 import { withClient } from 'cozy-client'
-import { Outlet } from 'react-router-dom'
 
 const getUploadDir = async (client, t) => {
   const referencedFolders = await getReferencedFolders(client, REF_UPLOAD)
@@ -157,7 +156,6 @@ class Timeline extends Component {
                 lastFetch={lastFetch}
               />
             </Content>
-            <Outlet />
           </div>
         )}
       </Selection>

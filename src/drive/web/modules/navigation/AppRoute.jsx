@@ -25,6 +25,7 @@ import OnlyOfficeCreateView from '../views/OnlyOffice/Create'
 import SearchView from '../views/Search/SearchView'
 
 import FilesViewerRecent from '../views/Recent/FilesViewerRecent'
+import OutletWrapper from 'components/OutletWrapper'
 
 const RootComponent = () => (
   <Layout>
@@ -42,7 +43,7 @@ const AppRoute = () => (
       {/* <Redirect from="/files/:folderId" to="/folder/:folderId" /> */}
       <Route path="/" element={<Index />} />
 
-      <Route path="folder" element={<DriveView />}>
+      <Route path="folder" element={<OutletWrapper component={DriveView} />}>
         {/* For FilesViewer and FileHistory, we want 2 routes to match: `/folder/:folderId/file/:fileId` and `/folder/file/:fileId`. The `:folderId` is not present when opening a file from the root folder. */}
         <Route path=":folderId">
           <Route path="file/:fileId" element={<FilesViewerDrive />} />

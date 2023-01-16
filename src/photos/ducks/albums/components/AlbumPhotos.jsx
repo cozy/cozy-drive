@@ -19,7 +19,7 @@ import PhotoBoard from 'photos/components/PhotoBoard'
 import Topbar from 'photos/components/Topbar'
 import DestroyConfirm from 'photos/components/DestroyConfirm'
 import Selection from '../../selection'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 class AlbumPhotos extends Component {
   state = {
     editing: false,
@@ -184,7 +184,6 @@ class AlbumPhotos extends Component {
                 lastFetch={lastFetch}
               />
             )}
-            <Outlet />
           </div>
         )}
       </Selection>
