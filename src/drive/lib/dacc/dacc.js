@@ -116,7 +116,7 @@ export const aggregateFilesSize = async (
   }
   // Round values
   for (const slug of Object.keys(sizesBySlug)) {
-    sizesBySlug[slug] = Math.round(sizesBySlug[slug] * 100) / 100
+    sizesBySlug[slug] = Math.round(sizesBySlug[slug] * 1000) / 1000
   }
 
   return sizesBySlug

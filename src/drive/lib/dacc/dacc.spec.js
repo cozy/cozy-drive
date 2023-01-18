@@ -92,10 +92,10 @@ describe('aggregateFilesSize', () => {
       'maif',
       'maif-vie'
     ])
-    expect(sizesBySlug['drive']).toEqual(4.19)
-    expect(sizesBySlug['edf']).toEqual(2.1)
-    expect(sizesBySlug['maif']).toEqual(8.39)
-    expect(sizesBySlug['maif-vie']).toEqual(6.29)
+    expect(sizesBySlug['drive']).toEqual(4.194)
+    expect(sizesBySlug['edf']).toEqual(2.097)
+    expect(sizesBySlug['maif']).toEqual(8.389)
+    expect(sizesBySlug['maif-vie']).toEqual(6.291)
     expect(sizesBySlug['trashed']).toEqual(2.29)
   })
 
@@ -105,7 +105,7 @@ describe('aggregateFilesSize', () => {
       nonExcludedGroupLabel: 'not-maif'
     })
     const expectedValue =
-      Math.round((sizesBySlug['drive'] + sizesBySlug['edf']) * 100) / 100
+      Math.round((sizesBySlug['drive'] + sizesBySlug['edf']) * 1000) / 1000
     expect(sizesBySlug['not-maif']).toEqual(expectedValue)
   })
 
