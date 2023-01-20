@@ -82,9 +82,15 @@ const mapStateToProps = state => ({
 const createFolderAfterSubmit =
   (ownProps, name) => async (dispatch, getState) => {
     return dispatch(
-      createFolder(ownProps.client, ownProps.vaultClient, name, {
-        isEncryptedFolder: isEncryptedFolder(getState())
-      })
+      createFolder(
+        ownProps.client,
+        ownProps.vaultClient,
+        name,
+        ownProps.currentFolderId,
+        {
+          isEncryptedFolder: isEncryptedFolder(getState())
+        }
+      )
     ).then(() => {
       if (ownProps.refreshFolderContent) ownProps.refreshFolderContent()
       return dispatch(hideNewFolderInput())
