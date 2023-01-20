@@ -53,16 +53,6 @@ export const mockCozyClientRequestQuery = () => {
   })
 }
 
-const getStoreStateWhenViewingFolder = folderId => {
-  return {
-    router: {
-      params: {
-        folderId
-      }
-    }
-  }
-}
-
 export const setupStoreAndClient = ({ initialStoreState } = {}) => {
   const client = new CozyClient({
     store: false
@@ -87,10 +77,7 @@ export const setupStoreAndClient = ({ initialStoreState } = {}) => {
  */
 const setupFolderContent = async ({ folderId, initialStoreState }) => {
   const { client, store } = setupStoreAndClient({
-    initialStoreState: {
-      ...getStoreStateWhenViewingFolder(folderId),
-      ...initialStoreState
-    }
+    initialStoreState
   })
 
   const sortOrder = {
