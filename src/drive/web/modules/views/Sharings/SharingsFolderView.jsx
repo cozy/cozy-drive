@@ -1,5 +1,5 @@
 import React, { useCallback, useContext } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, Outlet } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 import { useQuery, useClient } from 'cozy-client'
@@ -39,7 +39,7 @@ import useHead from 'components/useHead'
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-const SharingsFolderView = ({ sharedDocumentIds, children }) => {
+const SharingsFolderView = ({ sharedDocumentIds }) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const currentFolderId = useCurrentFolderId()
@@ -138,7 +138,7 @@ const SharingsFolderView = ({ sharedDocumentIds, children }) => {
         canSort
         extraColumns={extraColumns}
       />
-      {children}
+      <Outlet />
     </FolderView>
   )
 }
