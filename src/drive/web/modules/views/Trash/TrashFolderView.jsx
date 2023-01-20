@@ -30,9 +30,8 @@ import useHead from 'components/useHead'
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-const TrashFolderView = ({ children }) => {
+const TrashFolderView = ({ currentFolderId }) => {
   const { isMobile } = useBreakpoints()
-  const currentFolderId = useCurrentFolderId()
   const navigate = useNavigate()
 
   useHead()
@@ -125,23 +124,17 @@ const TrashFolderView = ({ children }) => {
         canSort
         extraColumns={extraColumns}
       />
-      {children}
+      <Outlet />
     </FolderView>
   )
 }
 
-const TrashFolderViewWrapper = ({ currentFolderId, router, params }) => {
+const TrashFolderViewWrapper = () => {
+  const currentFolderId = useCurrentFolderId()
+
   // Since playing with qDef.options.enabled is not enought
   // at the moment. See https://github.com/cozy/cozy-client/pull/1273
   if (!currentFolderId) return null
-  return (
-    <TrashFolderView
-      currentFolderId={currentFolderId}
-      router={router}
-      params={params}
-    >
-      <Outlet />
-    </TrashFolderView>
-  )
+  return <TrashFolderView currentFolderId={currentFolderId} />
 }
 export default TrashFolderViewWrapper
