@@ -97,7 +97,7 @@ const AppRoute = () => (
         <Route path="settings" element={<Settings />} />
       )}
       <Route path="file/:fileId" element={<FileOpenerExternal />} />
-      <Route path="search" component={<SearchView />} />
+      <Route path="search" element={<SearchView />} />
     </Route>
     {__TARGET__ === 'mobile' && (
       <Route path="onboarding" element={<OnBoarding />} />
