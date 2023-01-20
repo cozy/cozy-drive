@@ -5,6 +5,13 @@ import { setupStoreAndClient } from 'test/setup'
 import { EnhancedDeleteConfirm } from './delete'
 import DeleteConfirm from '../../DeleteConfirm'
 
+const mockNavigate = jest.fn()
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockNavigate
+}))
+
 describe('EnhancedDeleteConfirm', () => {
   const setup = () => {
     const folder = {
@@ -18,31 +25,22 @@ describe('EnhancedDeleteConfirm', () => {
       getRecipients: () => [],
       getSharingLink: () => null
     }
-    const mockRouterContextValue = {
-      router: {
-        push: jest.fn()
-      },
-      location: { pathname: '/folder' }
-    }
     const root = mount(
       <AppLike
         client={client}
         store={store}
         sharingContextValue={mockSharingContext}
-        routerContextValue={mockRouterContextValue}
       >
         <EnhancedDeleteConfirm folder={folder} onClose={() => null} />
       </AppLike>
     )
-    return { root, folder, client, mockRouterContextValue }
+    return { root, folder, client }
   }
 
   it('should trashFiles on confirmation', async () => {
-    const { root, mockRouterContextValue } = setup()
+    const { root } = setup()
     const confirmProps = root.find(DeleteConfirm).props()
     await confirmProps.afterConfirmation()
-    expect(mockRouterContextValue.router.push).toHaveBeenCalledWith(
-      '/folder/parent-folder-id'
-    )
+    expect(mockNavigate).toHaveBeenCalledWith('/folder/parent-folder-id')
   })
 })
