@@ -1,5 +1,5 @@
 import React, { useContext, useCallback, useMemo } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, Outlet } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 import { useClient, hasQueryBeenLoaded } from 'cozy-client'
@@ -39,11 +39,7 @@ import useHead from 'components/useHead'
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-export const SharingsView = ({
-  sharedDocumentIds = [],
-  allLoaded = true,
-  children
-}) => {
+export const SharingsView = ({ sharedDocumentIds = [], allLoaded = true }) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const { t } = useI18n()
@@ -124,7 +120,7 @@ export const SharingsView = ({
             withFilePath={true}
             extraColumns={extraColumns}
           />
-          {children}
+          <Outlet />
         </>
       )}
     </FolderView>

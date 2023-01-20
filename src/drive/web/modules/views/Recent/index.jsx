@@ -1,5 +1,5 @@
 import React, { useCallback, useContext } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, Outlet } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 import { useClient } from 'cozy-client'
@@ -39,7 +39,7 @@ import useHead from 'components/useHead'
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-export const RecentView = ({ children }) => {
+export const RecentView = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const { t } = useI18n()
@@ -127,7 +127,7 @@ export const RecentView = ({ children }) => {
         withFilePath={true}
         extraColumns={extraColumns}
       />
-      {children}
+      <Outlet />
     </FolderView>
   )
 }

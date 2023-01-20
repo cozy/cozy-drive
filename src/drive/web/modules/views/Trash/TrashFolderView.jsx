@@ -1,5 +1,5 @@
 import React, { useCallback, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Outlet } from 'react-router-dom'
 
 import { useQuery, useClient } from 'cozy-client'
 import { SharingContext } from 'cozy-sharing'
@@ -130,12 +130,7 @@ const TrashFolderView = ({ children }) => {
   )
 }
 
-const TrashFolderViewWrapper = ({
-  currentFolderId,
-  router,
-  params,
-  children
-}) => {
+const TrashFolderViewWrapper = ({ currentFolderId, router, params }) => {
   // Since playing with qDef.options.enabled is not enought
   // at the moment. See https://github.com/cozy/cozy-client/pull/1273
   if (!currentFolderId) return null
@@ -145,7 +140,7 @@ const TrashFolderViewWrapper = ({
       router={router}
       params={params}
     >
-      {children}
+      <Outlet />
     </TrashFolderView>
   )
 }
