@@ -42,13 +42,3 @@ export const generateFile = ({
     ...optional
   }
 }
-
-export const getStoreStateWhenViewingFolder = folderId => {
-  return {
-    router: {
-      params: {
-        folderId
-      }
-    }
-  }
-}

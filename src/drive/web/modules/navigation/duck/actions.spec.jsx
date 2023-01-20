@@ -2,7 +2,7 @@ import CozyClient from 'cozy-client'
 import { WebVaultClient } from 'cozy-keys-lib'
 
 import { setupFolderContent } from 'test/setup'
-import { generateFile, getStoreStateWhenViewingFolder } from 'test/generate'
+import { generateFile } from 'test/generate'
 
 import { createFolder } from './actions'
 
@@ -41,8 +41,7 @@ describe('createFolder', () => {
   it('should not be possible to create a folder with a same name of an existing folder', async () => {
     const folderId = 'folder123456'
     const { client, store } = await setupFolderContent({
-      folderId,
-      initialStoreState: getStoreStateWhenViewingFolder(folderId)
+      folderId
     })
     await expect(
       store.dispatch(createFolder(client, vaultClient, 'foobar2', folderId))
@@ -52,8 +51,7 @@ describe('createFolder', () => {
   it('should be possible to create a folder', async () => {
     const folderId = 'folder123456'
     const { client, store } = await setupFolderContent({
-      folderId,
-      initialStoreState: getStoreStateWhenViewingFolder(folderId)
+      folderId
     })
     await store.dispatch(createFolder(client, vaultClient, 'foobar5', folderId))
     expect(client.create).toHaveBeenCalledWith('io.cozy.files', {
