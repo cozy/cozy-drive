@@ -39,8 +39,8 @@ const HistoryModal = ({
 
   return (
     <Dialog
-      onClose={navigate('../')}
-      opened={true}
+      onClose={() => navigate('../')}
+      open={true}
       title={file.name}
       content={
         <>
@@ -108,7 +108,6 @@ const HistoryModal = ({
 
 HistoryModal.propTypes = {
   file: PropTypes.object.isRequired,
-  router: PropTypes.object.isRequired,
   revisions: PropTypes.array,
   client: PropTypes.object.isRequired,
   f: PropTypes.func.isRequired,
