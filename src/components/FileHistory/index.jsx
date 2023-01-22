@@ -1,11 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { useParams } from 'react-router-dom'
 
 import { Query, Q } from 'cozy-client'
 
 import HistoryModal from './HistoryModal'
 
-const FileHistory = ({ params: { fileId } }) => {
+const FileHistory = () => {
+  const { fileId } = useParams()
   return (
     <Query query={() => Q('io.cozy.files').getById(fileId)}>
       {({ data: file, fetchStatus: fileFetchStatus }) => {
@@ -44,9 +45,5 @@ const FileHistory = ({ params: { fileId } }) => {
     </Query>
   )
 }
-FileHistory.propTypes = {
-  params: PropTypes.shape({
-    fileId: PropTypes.string.isRequired
-  })
-}
+
 export default FileHistory
