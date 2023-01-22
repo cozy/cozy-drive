@@ -302,21 +302,21 @@ export const qualify = ({ pushModal, popModal }) => {
   }
 }
 
-export const versions = ({ navigate, pathname }) => {
+export const versions = ({ navigate }) => {
   return {
     name: 'history',
     icon: 'history',
     displayCondition: selection =>
       selection.length === 1 && isFile(selection[0]),
     action: files => {
-      return navigate(`${pathname}/file/${files[0].id}/revision`)
+      return navigate(`./file/${files[0].id}/revision`)
     },
     Component: function History(props) {
       const { t } = useI18n()
       return (
         <ActionMenuItem
           onClick={() => {
-            return navigate(`${pathname}/file/${props.files[0].id}/revision`)
+            return navigate(`./file/${props.files[0].id}/revision`)
           }}
           left={<Icon icon={HistoryIcon} />}
         >
