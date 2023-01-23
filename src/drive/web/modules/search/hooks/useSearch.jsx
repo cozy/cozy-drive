@@ -39,7 +39,8 @@ const useSearch = ({ limit = 10 } = {}) => {
       openOn: result.openOn,
       type: result.type,
       mime: result.mime,
-      isEncrypted: result.isEncrypted
+      isEncrypted: result.isEncrypted,
+      class: result.class
     }))
 
     setBusy(value === '') // To prevent empty state to appear at the first search

@@ -58,6 +58,7 @@ export const makeNormalizedFile = (client, folders, file) => {
     type: file.type,
     name: file.name,
     mime: file.mime,
+    class: file.class,
     path,
     url,
     parentUrl,
