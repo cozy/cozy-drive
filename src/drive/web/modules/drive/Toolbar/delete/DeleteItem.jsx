@@ -39,7 +39,6 @@ const DeleteItem = ({ t, isSharedWithMe, trashFolder, onLeave }) => {
 DeleteItem.propTypes = {
   t: PropTypes.func.isRequired,
   isSharedWithMe: PropTypes.bool.isRequired,
-  displayedFolder: PropTypes.object.isRequired,
   trashFolder: PropTypes.func.isRequired,
   onLeave: PropTypes.func.isRequired
 }
