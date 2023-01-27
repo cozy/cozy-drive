@@ -46,6 +46,7 @@ jest.mock('cozy-device-helper', () => ({
   ...jest.requireActual('cozy-device-helper'),
   isMobileApp: jest.fn()
 }))
+
 describe('useActions', () => {
   const mockStore = createStore(() => ({
     mobile: {
@@ -456,17 +457,11 @@ describe('useActions', () => {
     })
 
     it('redirects to the history view when activated', () => {
-      const versionsAction = getAction('history')
+      const navigate = jest.fn()
+      const versionsAction = getAction('history', { navigate })
       const mockDocument = { id: 'abc' }
       versionsAction.action([mockDocument])
-      expect(mockRouterContextValue.router.push).toHaveBeenCalledWith(
-        '/folder/file/abc/revision'
-      )
-      mockRouterContextValue.location.pathname = '/folder/123'
-      versionsAction.action([mockDocument])
-      expect(mockRouterContextValue.router.push).toHaveBeenCalledWith(
-        '/folder/123/file/abc/revision'
-      )
+      expect(navigate).toHaveBeenCalledWith('./file/abc/revision')
     })
   })
 
