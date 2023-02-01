@@ -7,8 +7,6 @@ import { prepareDataset } from './utils'
 import flatten from 'lodash/flatten'
 import log from 'cozy-logger'
 
-jest.mock('cozy-logger')
-
 // Insert the new photo into the sorted photos set
 const insertNewPhoto = (photos, newPhoto) => {
   const photoAlreadyExists = photos.find(p => p.id === newPhoto.id)
