@@ -65,7 +65,6 @@ const clusterizePhotos = async (client, setting, dataset, albums) => {
   if (albums && albums.length > 0) {
     // Build the clusterize Map, based on the dataset and existing photos
     const clusterize = await albumsToClusterize(client, dataset, albums)
-    log('info', 'Create the actual clusters')
     if (clusterize) {
       for (const [clusterAlbums, photos] of clusterize.entries()) {
         // Retrieve the relevant parameters to compute this cluster
@@ -182,32 +181,25 @@ export const onPhotoUpload = async () => {
     schema: doctypes
   }
   const client = CozyClient.fromEnv(null, options)
-
   let setting = await readSetting(client)
-  try {
-    if (!setting) {
-      // Create setting
-      const files = await getAllPhotos(client)
-      const dataset = prepareDataset(files)
-      if (dataset.length == 0) {
-        return 0
-      }
-      const params =
-        dataset.length > EVALUATION_THRESHOLD
-          ? initParameters(dataset)
-          : createParameter(dataset)
-      setting = await createSetting(client, params)
-      log(
-        'info',
-        `Setting saved with ${JSON.stringify(
-          params.modes
-        )} on period ${JSON.stringify(params.period)}`
-      )
+  if (!setting) {
+    // Create setting
+    const files = await getAllPhotos(client)
+    const dataset = prepareDataset(files)
+    if (dataset.length == 0) {
+      return 0
     }
-  } catch (e) {
-    log('error', 'Failure during the clustering initialization')
-    log('error', e)
-    return
+    const params =
+      dataset.length > EVALUATION_THRESHOLD
+        ? initParameters(dataset)
+        : createParameter(dataset)
+    setting = await createSetting(client, params)
+    log(
+      'info',
+      `Setting saved with ${JSON.stringify(
+        params.modes
+      )} on period ${JSON.stringify(params.period)}`
+    )
   }
 
   /*

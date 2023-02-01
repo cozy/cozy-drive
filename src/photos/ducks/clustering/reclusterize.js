@@ -5,9 +5,6 @@ import { getMatchingClusters } from './matching'
 import { getFilesByAutoAlbum } from './files'
 import { prepareDataset } from './utils'
 import flatten from 'lodash/flatten'
-import log from 'cozy-logger'
-
-jest.mock('cozy-logger')
 
 // Insert the new photo into the sorted photos set
 const insertNewPhoto = (photos, newPhoto) => {
@@ -21,8 +18,6 @@ const insertNewPhoto = (photos, newPhoto) => {
 }
 
 const findPhotosToReclusterize = async (client, albums) => {
-  log('info', 'Find new photos to reclusterize...')
-
   const photos = flatten(
     await Promise.all(
       albums.map(async album => {

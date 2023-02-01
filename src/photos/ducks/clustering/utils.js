@@ -1,7 +1,6 @@
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
 import { DAY_DURATION_IN_MS } from './consts'
 import get from 'lodash/get'
-import log from 'cozy-logger'
 
 /**
  * Returns the photos metadata sorted by date, from oldest to newest
@@ -9,49 +8,43 @@ import log from 'cozy-logger'
  * @returns {Object[]} The metadata's photos sorted by date
  */
 export const prepareDataset = (photos, albums = []) => {
-  try {
-    log('info', `Prepare dataset on ${photos.length} photos...`)
-    const albumIds = albums.map(album => album._id)
+  const albumIds = albums.map(album => album._id)
 
-    const info = photos
-      .map(file => {
-        const photo = {
-          id: file._id || file.id,
-          clusterId: file.clusterId,
-          albums: file.albums
+  const info = photos
+    .map(file => {
+      const photo = {
+        id: file._id || file.id,
+        clusterId: file.clusterId,
+        albums: file.albums
+      }
+      // Depending on the query, the attributes object might exists, or not
+      const attributes = file.attributes ? file.attributes : file
+      photo.name = attributes.name
+      const metadata = attributes.metadata
+      if (metadata) {
+        photo.datetime = metadata.datetime
+        photo.lat = metadata.gps?.lat
+        photo.lon = metadata.gps?.long
+      } else {
+        photo.datetime = attributes.created_at
+      }
+      const hours = new Date(photo?.datetime || 0).getTime() / 1000 / 3600
+      photo.timestamp = hours
+      // For each photo, we need to check the clusterid, i.e. the auto-album
+      // referenced by the file. If there is none, the photo wasn't clustered before
+      if (!photo.clusterId && get(file, 'relationships.referenced_by.data')) {
+        const ref = file.relationships.referenced_by.data.find(
+          ref => ref.type === DOCTYPE_ALBUMS && albumIds.includes(ref.id)
+        )
+        if (ref) {
+          photo.clusterId = ref.id
         }
-        // Depending on the query, the attributes object might exists, or not
-        const attributes = file.attributes ? file.attributes : file
-        photo.name = attributes.name
-        const metadata = attributes.metadata
-        if (metadata) {
-          photo.datetime = metadata.datetime
-          photo.lat = metadata.gps?.lat
-          photo.lon = metadata.gps?.long
-        } else {
-          photo.datetime = attributes.created_at
-        }
-        const hours = new Date(photo?.datetime || 0).getTime() / 1000 / 3600
-        photo.timestamp = hours
-        // For each photo, we need to check the clusterid, i.e. the auto-album
-        // referenced by the file. If there is none, the photo wasn't clustered before
-        if (!photo.clusterId && get(file, 'relationships.referenced_by.data')) {
-          const ref = file.relationships.referenced_by.data.find(
-            ref => ref.type === DOCTYPE_ALBUMS && albumIds.includes(ref.id)
-          )
-          if (ref) {
-            photo.clusterId = ref.id
-          }
-        }
-        return photo
-      })
-      .sort((pa, pb) => pa.timestamp - pb.timestamp)
+      }
+      return photo
+    })
+    .sort((pa, pb) => pa.timestamp - pb.timestamp)
 
-    return info
-  } catch (e) {
-    log('error', 'Error during dataset preparation')
-    throw e
-  }
+  return info
 }
 
 /**
