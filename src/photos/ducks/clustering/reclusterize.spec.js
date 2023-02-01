@@ -4,6 +4,7 @@ import { getFilesByAutoAlbum } from './files'
 import { albumsToClusterize } from './reclusterize'
 import { prepareDataset } from './utils'
 import CozyClient from 'cozy-client'
+jest.mock('cozy-logger')
 
 const client = new CozyClient({})
 
