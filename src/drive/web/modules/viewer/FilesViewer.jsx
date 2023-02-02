@@ -202,9 +202,11 @@ const FilesViewer = ({ filesQuery, files, fileId, onClose, onChange }) => {
           onChangeRequest={handleOnChange}
           onCloseRequest={handleOnClose}
           renderFallbackExtraContent={file => <Fallback file={file} t={t} />}
-          onlyOfficeProps={{
-            isEnabled: isOnlyOfficeEnabled(),
-            opener: file => router.push(makeOnlyOfficeFileRoute(file, true))
+          componentsProps={{
+            OnlyOfficeViewer: {
+              isEnabled: isOnlyOfficeEnabled(),
+              opener: file => router.push(makeOnlyOfficeFileRoute(file, true))
+            }
           }}
         >
           <FooterActionButtons>

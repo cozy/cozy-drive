@@ -86,10 +86,12 @@ export class FileOpener extends Component {
                 renderFallbackExtraContent={file => (
                   <Fallback file={file} t={t} />
                 )}
-                onlyOfficeProps={{
-                  isEnabled: isOnlyOfficeEnabled(),
-                  opener: file =>
-                    router.push(makeOnlyOfficeFileRoute(file, true))
+                componentsProps={{
+                  OnlyOfficeViewer: {
+                    isEnabled: isOnlyOfficeEnabled(),
+                    opener: file =>
+                      router.push(makeOnlyOfficeFileRoute(file, true))
+                  }
                 }}
               >
                 <FooterActionButtons>
