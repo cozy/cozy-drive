@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import { ShareButton, SharedRecipients, SharedDocument } from 'cozy-sharing'
-import { RecipientsAvatars } from 'cozy-sharing/dist/components/Recipient'
+import RecipientsAvatars from 'cozy-sharing/dist/components/Recipient/Recipient'
 import { Menu, MenuItem, Icon, withBreakpoints } from 'cozy-ui/transpiled/react'
 import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'
 import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
