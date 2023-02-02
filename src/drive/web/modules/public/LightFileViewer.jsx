@@ -41,9 +41,11 @@ const LightFileViewer = ({ files }) => {
         <PublicViewer
           files={files}
           currentIndex={0}
-          onlyOfficeProps={{
-            isEnabled: isOnlyOfficeEnabled(),
-            opener: onlyOfficeOpener
+          componentsProps={{
+            OnlyOfficeViewer: {
+              isEnabled: isOnlyOfficeEnabled(),
+              opener: onlyOfficeOpener
+            }
           }}
           toolbarProps={{ showToolbar: isDesktop }}
         >
