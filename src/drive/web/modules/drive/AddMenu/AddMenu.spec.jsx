@@ -8,6 +8,7 @@ import { useAppLinkWithStoreFallback } from 'cozy-client'
 import ScanWrapper from 'drive/web/modules/drive/Toolbar/components/ScanWrapper'
 import AppLike from 'test/components/AppLike'
 import { ActionMenuContent } from './AddMenu'
+import { useDisplayedFolder } from 'drive/hooks'
 
 jest.mock('cozy-client/dist/hooks/useAppLinkWithStoreFallback', () => jest.fn())
 
@@ -17,6 +18,8 @@ jest.mock('cozy-device-helper', () => ({
 }))
 
 mockCozyClientRequestQuery()
+
+jest.mock('drive/hooks')
 
 const setup = async (
   { folderId = 'directory-foobar0' } = {},
@@ -32,6 +35,8 @@ const setup = async (
   const { client, store } = await setupFolderContent({
     folderId
   })
+
+  useDisplayedFolder.mockReturnValue(folderId ? { id: folderId } : folderId)
 
   client.stackClient.uri = 'http://cozy.localhost'
 
