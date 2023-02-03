@@ -1,4 +1,5 @@
 import { useEffect, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { useClient, Q, models } from 'cozy-client'
 
@@ -34,7 +35,7 @@ const computeSharingsValue = async ({ client, sharingId, sharingsValue }) => {
  * @param {object} params.sharingsValue - Sharing Context value
  * @param {function} params.setSharingsValue - Sharing Context setter
  * @param {function} params.setFileValue - Sharing Context file setter
- * @param {object} params.router - App router
+ * @param {object} params.navigate - Lets you navigate programmatically
  * @param {string} params.sharingId - Id of an io.cozy.sharings doc
  */
 export const fetchSharing = async ({
@@ -42,11 +43,11 @@ export const fetchSharing = async ({
   sharingsValue,
   setSharingsValue,
   setFileValue,
-  router,
+  navigate,
   sharingId
 }) => {
   if (!sharingId) {
-    return router.replace('/folder')
+    return navigate('/folder', { replace: true })
   }
 
   try {
@@ -77,20 +78,21 @@ export const fetchSharing = async ({
     }
 
     if (!hasReferencedFile) {
-      return router.replace(`/folder/${SHAREDWITHME_DIR_ID}`)
+      return navigate(`/folder/${SHAREDWITHME_DIR_ID}`, { replace: true })
     }
-    return router.replace(`/folder/${referencedFile.dir_id}`)
+    return navigate(`/folder/${referencedFile.dir_id}`, { replace: true })
   } catch (e) {
     // eslint-disable-next-line
     console.warn(
       `fetchSharing error : ${e}. Redirect to /folder/${SHAREDWITHME_DIR_ID}`
     )
-    return router.replace(`/folder/${SHAREDWITHME_DIR_ID}`)
+    return navigate(`/folder/${SHAREDWITHME_DIR_ID}`, { replace: true })
   }
 }
 
-const Index = ({ router }) => {
+const Index = () => {
   const client = useClient()
+  const navigate = useNavigate()
   const { sharingsValue, setFileValue, setSharingsValue } = useContext(
     AcceptingSharingContext
   )
@@ -102,11 +104,18 @@ const Index = ({ router }) => {
       client,
       sharingsValue,
       setSharingsValue,
-      router,
+      navigate,
       sharingId,
       setFileValue
     })
-  }, [client, sharingId, router, setSharingsValue, setFileValue, sharingsValue])
+  }, [
+    client,
+    sharingId,
+    navigate,
+    setSharingsValue,
+    setFileValue,
+    sharingsValue
+  ])
 
   return null
 }
