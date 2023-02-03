@@ -18,6 +18,9 @@ jest.mock('cozy-keys-lib', () => ({
   useVaultClient: jest.fn(),
   WebVaultClient: jest.fn().mockReturnValue({})
 }))
+
+const CURRENT_FOLDER_ID = 'id'
+
 describe('AddFolder', () => {
   const setup = () => {
     const { client, store } = setupStoreAndClient({})
@@ -25,11 +28,13 @@ describe('AddFolder', () => {
     jest.spyOn(client, 'create').mockResolvedValue({})
     const root = mount(
       <AppLike client={client} store={store}>
-        <AddFolder vaultClient={vaultClient} />
+        <AddFolder
+          vaultClient={vaultClient}
+          currentFolderId={CURRENT_FOLDER_ID}
+        />
       </AppLike>
     )
     const component = root.find(DumbAddFolder)
-
     return { root, client, component, vaultClient }
   }
 
@@ -55,6 +60,7 @@ describe('AddFolder', () => {
         client,
         vaultClient,
         'Mes photos de chat',
+        CURRENT_FOLDER_ID,
         { isEncryptedFolder: false }
       )
     })
