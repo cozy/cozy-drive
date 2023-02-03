@@ -44,7 +44,7 @@ describe('createFolder', () => {
       folderId
     })
     await expect(
-      store.dispatch(createFolder(client, vaultClient, 'foobar2'))
+      store.dispatch(createFolder(client, vaultClient, 'foobar2', folderId))
     ).rejects.toEqual(new Error('alert.folder_name'))
   })
 
@@ -53,7 +53,7 @@ describe('createFolder', () => {
     const { client, store } = await setupFolderContent({
       folderId
     })
-    await store.dispatch(createFolder(client, vaultClient, 'foobar5'))
+    await store.dispatch(createFolder(client, vaultClient, 'foobar5', folderId))
     expect(client.create).toHaveBeenCalledWith('io.cozy.files', {
       dirId: 'folder123456',
       name: 'foobar5',
