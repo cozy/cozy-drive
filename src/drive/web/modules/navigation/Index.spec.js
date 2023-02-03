@@ -10,7 +10,7 @@ jest.mock('cozy-keys-lib', () => ({
   useVaultClient: jest.fn()
 }))
 const client = createMockClient({})
-const router = { replace: jest.fn() }
+const navigate = jest.fn()
 const setSharingsValue = jest.fn()
 const setFileValue = jest.fn()
 const sharingRes = { data: { id: '123' } }
@@ -31,7 +31,7 @@ const setup = async ({ sharingId, withReferencedFiles, withShortcut } = {}) => {
 
   await fetchSharing({
     client,
-    router,
+    navigate,
     sharingsValue: {},
     setSharingsValue: setSharingsValue,
     setFileValue: setFileValue,
@@ -51,7 +51,7 @@ describe('fetchSharing', () => {
 
     expect(setSharingsValue).not.toHaveBeenCalled()
     expect(setFileValue).not.toHaveBeenCalled()
-    expect(router.replace).toHaveBeenCalledWith('/folder')
+    expect(navigate).toHaveBeenCalledWith('/folder', { replace: true })
   })
 
   it('should redirect to /shared-with-me-dir and store sharing in context, if sharing id but no referenced file', async () => {
@@ -61,9 +61,9 @@ describe('fetchSharing', () => {
 
     expect(setSharingsValue).toHaveBeenCalled()
     expect(setFileValue).not.toHaveBeenCalled()
-    expect(router.replace).toHaveBeenCalledWith(
-      `/folder/${SHAREDWITHME_DIR_ID}`
-    )
+    expect(navigate).toHaveBeenCalledWith(`/folder/${SHAREDWITHME_DIR_ID}`, {
+      replace: true
+    })
   })
 
   it('should redirect to /folder/dirId and store nothing in context, if sharing id and referenced file but no shortcut', async () => {
@@ -74,7 +74,7 @@ describe('fetchSharing', () => {
 
     expect(setSharingsValue).not.toHaveBeenCalled()
     expect(setFileValue).not.toHaveBeenCalled()
-    expect(router.replace).toHaveBeenCalledWith('/folder/dirId')
+    expect(navigate).toHaveBeenCalledWith('/folder/dirId', { replace: true })
   })
 
   it('should redirect to /folder/dirId and store sharing and file in context, if sharing id, referenced file and shortcut', async () => {
@@ -86,6 +86,6 @@ describe('fetchSharing', () => {
 
     expect(setSharingsValue).toHaveBeenCalled()
     expect(setFileValue).toHaveBeenCalled()
-    expect(router.replace).toHaveBeenCalledWith('/folder/dirId')
+    expect(navigate).toHaveBeenCalledWith('/folder/dirId', { replace: true })
   })
 })
