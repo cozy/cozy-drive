@@ -1,13 +1,10 @@
 import React from 'react'
 import { render, fireEvent, act } from '@testing-library/react'
-import { Router, hashHistory, Route, Redirect } from 'react-router'
 import { setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
 import usePublicFilesQuery from './usePublicFilesQuery'
-import FileHistory from 'components/FileHistory'
 import { generateFileFixtures, getByTextWithMarkup } from '../testUtils'
-
-import PublicFolderView from './index'
+import AppRoute from 'drive/web/modules/navigation/AppRoute'
 
 jest.mock('cozy-client/dist/hooks/useCapabilities', () =>
   jest.fn().mockReturnValue({ capabilities: {} })
@@ -30,14 +27,14 @@ jest.mock('../Folder/FolderViewBreadcrumb', () =>
   )
 )
 
-jest.mock('drive/web/modules/selectors', () => ({
-  getCurrentFolderId: () => '1234',
-  getDisplayedFolder: () => ({
+jest.mock('drive/hooks', () => ({
+  useCurrentFolderId: jest.fn().mockReturnValue('1234'),
+  useDisplayedFolder: jest.fn().mockReturnValue({
     dir_id: 'parent-folder-id',
     _id: 'displayed-folder-id',
     name: 'My Folder'
   }),
-  getParentFolder: () => '5678'
+  useParentFolder: jest.fn().mockReturnValue('5678')
 }))
 
 jest.mock('./usePublicFilesQuery', () => {
@@ -66,12 +63,7 @@ describe('Public View', () => {
 
     const rendered = render(
       <AppLike client={client} store={store}>
-        <Router history={hashHistory}>
-          <Redirect from="/" to="/folder/123" />
-          <Route path="folder(/:folderId)" component={PublicFolderView}>
-            <Route path="file/:fileId/revision" component={FileHistory} />
-          </Route>
-        </Router>
+        <AppRoute />
       </AppLike>
     )
     return { ...rendered, client }
