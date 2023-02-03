@@ -8,7 +8,6 @@ import { addToUploadQueue } from 'drive/web/modules/upload'
 import logger from 'lib/logger'
 import QuotaAlert from 'drive/web/modules/upload/QuotaAlert'
 import { getFolderContent } from 'drive/web/modules/selectors'
-import { useCurrentFolderId } from 'drive/hooks'
 import { createEncryptedDir } from 'drive/lib/encryption'
 import { logException } from 'drive/lib/reporter'
 
@@ -135,11 +134,12 @@ export const createFolder = (
   client,
   vaultClient,
   name,
+  currentFolderId,
   { isEncryptedFolder = false } = {}
 ) => {
   return async (dispatch, getState) => {
     const state = getState()
-    const currentFolderId = useCurrentFolderId()
+
     const existingFolder = doesFolderExistByName(state, currentFolderId, name)
 
     if (existingFolder) {
