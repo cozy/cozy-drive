@@ -2,9 +2,6 @@ import React from 'react'
 import { act, render } from '@testing-library/react'
 import { setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
-import { hashHistory, Redirect, Route, Router } from 'react-router'
-
-import DriveView from './index'
 
 jest.mock('drive/web/modules/views/Drive/useTrashRedirect', () => ({
   useTrashRedirect: jest.fn()
@@ -24,9 +21,9 @@ jest.mock('../Folder/FolderViewBreadcrumb', () =>
   )
 )
 
-jest.mock('drive/web/modules/selectors', () => ({
-  getCurrentFolderId: () => '1234',
-  getDisplayedFolder: () => '5678'
+jest.mock('drive/hooks', () => ({
+  useCurrentFolderId: jest.fn().mockReturnValue('1234'),
+  useDisplayedFolder: jest.fn().mockReturnValue('5678')
 }))
 
 jest.mock('cozy-keys-lib', () => ({
@@ -34,6 +31,7 @@ jest.mock('cozy-keys-lib', () => ({
 }))
 
 jest.mock('components/useHead', () => jest.fn())
+import AppRoute from 'drive/web/modules/navigation/AppRoute'
 
 describe('Drive View', () => {
   const setup = () => {
@@ -46,10 +44,7 @@ describe('Drive View', () => {
 
     const rendered = render(
       <AppLike client={client} store={store}>
-        <Router history={hashHistory}>
-          <Redirect from="/" to="/folder/123" />
-          <Route path="folder(/:folderId)" component={DriveView} />
-        </Router>
+        <AppRoute />
       </AppLike>
     )
     return { ...rendered, client }
