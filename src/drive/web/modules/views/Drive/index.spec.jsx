@@ -2,6 +2,7 @@ import React from 'react'
 import { act, render } from '@testing-library/react'
 import { setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
+import AppRoute from 'drive/web/modules/navigation/AppRoute'
 
 jest.mock('drive/web/modules/views/Drive/useTrashRedirect', () => ({
   useTrashRedirect: jest.fn()
@@ -31,7 +32,6 @@ jest.mock('cozy-keys-lib', () => ({
 }))
 
 jest.mock('components/useHead', () => jest.fn())
-import AppRoute from 'drive/web/modules/navigation/AppRoute'
 
 describe('Drive View', () => {
   const setup = () => {
@@ -51,8 +51,6 @@ describe('Drive View', () => {
   }
 
   it('should use FolderViewBreadcrumb with correct rootBreadcrumbPath', async () => {
-    jest.spyOn(console, 'error').mockImplementation() // TODO: to be removed with https://github.com/cozy/cozy-libs/pull/1457
-
     let render
 
     await act(async () => {
