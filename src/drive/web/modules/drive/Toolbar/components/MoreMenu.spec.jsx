@@ -12,6 +12,13 @@ jest.mock('drive/web/modules/actions/utils', () => ({
 
 mockCozyClientRequestQuery()
 
+jest.mock('drive/hooks/useCurrentFolderId', () =>
+  jest.fn().mockReturnValue('id1')
+)
+jest.mock('drive/hooks/useDisplayedFolder', () =>
+  jest.fn().mockReturnValue({ id: 'id2' })
+)
+
 describe('MoreMenu', () => {
   const setup = async ({ folderId = 'directory-foobar0' } = {}) => {
     const { client, store } = await setupFolderContent({
