@@ -2,7 +2,7 @@
   "name": "Drive",
   "name_prefix": "Cozy",
   "slug": "drive",
-  "version": "1.48.0",
+  "version": "1.48.1",
   "type": "webapp",
   "licence": "AGPL-3.0",
   "icon": "public/app-icon.svg",
