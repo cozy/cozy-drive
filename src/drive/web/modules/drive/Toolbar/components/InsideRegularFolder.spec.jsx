@@ -2,7 +2,10 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import InsideRegularFolder from './InsideRegularFolder'
 
-jest.mock('drive/web/modules/drive/Toolbar/toolbar', () => children => children)
+jest.mock('drive/hooks', () => ({
+  useCurrentFolderId: jest.fn().mockReturnValue('id1'),
+  useDisplayedFolder: jest.fn().mockReturnValue({ id: 'id2' })
+}))
 
 describe('InsideRegularFolder', () => {
   it('should return null when insideRegularFolder undefined', () => {
