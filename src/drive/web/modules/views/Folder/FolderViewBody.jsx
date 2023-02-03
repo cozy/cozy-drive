@@ -178,6 +178,7 @@ const FolderViewBody = ({
               vaultClient={vaultClient}
               refreshFolderContent={refreshFolderContent}
               extraColumns={extraColumns}
+              currentFolderId={currentFolderId}
             />
             {isInError && <Oops />}
             {(needsToWait || isLoading) && <FileListRowsPlaceholder />}
