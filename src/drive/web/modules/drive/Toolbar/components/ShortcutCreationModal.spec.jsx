@@ -11,14 +11,16 @@ import ShortcutCreationModal from './ShortcutCreationModal'
 import AppLike from 'test/components/AppLike'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 import { DOCTYPE_FILES_SHORTCUT } from 'drive/lib/doctypes'
+import useDisplayedFolder from 'drive/hooks/useDisplayedFolder'
 
 const tMock = jest.fn()
-
 jest.mock('cozy-ui/transpiled/react/hooks/useBrowserOffline')
 jest.mock('cozy-ui/transpiled/react/Alerter', () => ({
   error: jest.fn(),
   success: jest.fn()
 }))
+
+jest.mock('drive/hooks/useDisplayedFolder')
 
 function createMatchMedia(width) {
   return query => ({
@@ -44,6 +46,7 @@ describe('ShortcutCreationModal', () => {
     // TODO: cozy-ui  Material-UI: You are trying to override a style that does not exist - Fix the `borderWidth` key of `theme.overrides.MuiTextField`
     jest.spyOn(console, 'error').mockImplementation()
     jest.spyOn(console, 'warn').mockImplementation()
+    useDisplayedFolder.mockReturnValue({ id: 'id' })
     window.matchMedia = createMatchMedia(window.innerWidth)
     tMock.mockImplementation(key => key)
   })
