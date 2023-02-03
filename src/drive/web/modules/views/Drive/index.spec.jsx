@@ -2,9 +2,7 @@ import React from 'react'
 import { act, render } from '@testing-library/react'
 import { setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
-import { hashHistory, Redirect, Route, Router } from 'react-router'
-
-import DriveView from './index'
+import AppRoute from 'drive/web/modules/navigation/AppRoute'
 
 jest.mock('drive/web/modules/views/Drive/useTrashRedirect', () => ({
   useTrashRedirect: jest.fn()
@@ -24,9 +22,9 @@ jest.mock('../Folder/FolderViewBreadcrumb', () =>
   )
 )
 
-jest.mock('drive/web/modules/selectors', () => ({
-  getCurrentFolderId: () => '1234',
-  getDisplayedFolder: () => '5678'
+jest.mock('drive/hooks', () => ({
+  useCurrentFolderId: jest.fn().mockReturnValue('1234'),
+  useDisplayedFolder: jest.fn().mockReturnValue('5678')
 }))
 
 jest.mock('cozy-keys-lib', () => ({
@@ -46,18 +44,13 @@ describe('Drive View', () => {
     client.fetchQueryAndGetFromState = jest.fn().mockReturnValue({ data: [] })
     const rendered = render(
       <AppLike client={client} store={store}>
-        <Router history={hashHistory}>
-          <Redirect from="/" to="/folder/123" />
-          <Route path="folder(/:folderId)" component={DriveView} />
-        </Router>
+        <AppRoute />
       </AppLike>
     )
     return { ...rendered, client }
   }
 
   it('should use FolderViewBreadcrumb with correct rootBreadcrumbPath', async () => {
-    jest.spyOn(console, 'error').mockImplementation() // TODO: to be removed with https://github.com/cozy/cozy-libs/pull/1457
-
     let render
 
     await act(async () => {
