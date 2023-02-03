@@ -7,6 +7,7 @@ import AppLike from 'test/components/AppLike'
 import { generateFile } from 'test/generate'
 import { act } from 'react-dom/test-utils'
 import { getEncryptionKeyFromDirId } from 'drive/lib/encryption'
+import { useCurrentFileId } from 'drive/hooks'
 
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 jest.mock('cozy-keys-lib', () => ({
@@ -18,6 +19,8 @@ jest.mock('drive/lib/encryption', () => ({
   getEncryptionKeyFromDirId: jest.fn(),
   getDecryptedFileURL: jest.fn()
 }))
+
+jest.mock('drive/hooks')
 
 const sleep = duration => new Promise(resolve => setTimeout(resolve, duration))
 
@@ -39,12 +42,6 @@ describe('FilesViewer', () => {
             sortAttribute: 'name',
             sortOrder: 'desc'
           }
-        },
-        router: {
-          params: {
-            fileId: fileId,
-            folderId: 'folder-id'
-          }
         }
       })
     }
@@ -62,12 +59,11 @@ describe('FilesViewer', () => {
     }
     useQuery.mockReturnValue(mockedUseQueryReturnedValues)
 
+    useCurrentFileId.mockReturnValue(fileId)
+
     const root = mount(
       <AppLike client={client} vaultClient={vaultClient} store={store}>
         <FilesViewer
-          client={client}
-          vaultClient={vaultClient}
-          fileId={fileId}
           files={filesFixture}
           filesQuery={mockedUseQueryReturnedValues}
         />
