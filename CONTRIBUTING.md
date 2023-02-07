@@ -131,5 +131,5 @@ You can help us by making our community even more vibrant. For example, you can 
 [localization]: https://github.com/cozy/cozy-drive/blob/master/README.md#localization
 [hub]: https://hub.github.com/
 [tx]: https://www.transifex.com/cozy/
-[tx-start]: http://docs.transifex.com/getting-started/translators/
+[tx-start]: https://help.transifex.com/en/articles/6248698-getting-started-as-a-translator
 [forum]: https://forum.cozy.io/

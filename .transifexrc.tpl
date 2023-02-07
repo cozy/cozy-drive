@@ -1,4 +1,2 @@
 [https://www.transifex.com]
-hostname = https://www.transifex.com
-username = cozy
-token =
+rest_hostname = https://rest.api.transifex.com
