@@ -8,7 +8,7 @@ node-preset: &node # Used internally to share configuration, ignored by travis.
       - node_modules
   before_install:
     - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.22.4
-    - export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+    - export PATH="$HOME/build/cozy/cozy-drive:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 branches:
   only:
     - master
@@ -82,3 +82,4 @@ env:
     # To generate a new key: travis encrypt GH_TOKEN=<token> -r cozy/cozy-drive
     - secure: SaS/oRY5vQ1gVu7nwUB2/hml85eU7ZOveOppzjqDBSdwx+1189hPjEdOmiNhpGT2p8k5dV5RTOtEIw4dwt1FrHSo86mlb8hZgUkAWOcO/Ewfz0pZ7JW0rFgfYgIRfwHqRIkJQpDDrSekQLfHPVZe9yip+BQJ7vksWckj2G3zs6YbFCr8AbXdg++i0Ypoku+oTlqb1eqRymSbdl694LfMPA2wvHNvQhHtBPdsm+V4LUjv+fxtVadfJ52nCSgd70PuKbIhEUpGI/IvKPZ/BHXuSTfO9p3Ds5srD+SjrGl9sAxokQKbtib+tlJt6baZJe0y7BgHyG5b6apB2f2VIXyms93lH76CaYIU0mQTO1N3XplVUn/iU6oLQKi9tcttRRNy7t9I5uCBiv4NXY0qKAmR2hfmvBS4AgFEUuRG9gZts1ZYAMYVe34Hj2NXiGh4dl3qkgSEey2NiajIhcXeYTMdMeZ8W0PTmDdaH+TDfAAfU5vGqG7gzT3i7Ca/gwUH95lcFIimPC1CqIqPNV2LU60mr3PG9KnUq3yUiaalwbHu1w3f2jjPRzQs7WEbmKa5XlPzUtasB+GkS4PDBuKAWUe63BeeSX/CN4dd6rhRd4tNgi8Dc/9pTryNdUtRQXq5BBNw+Ngu/L2p9fr6mjyQby353nn9VAVNPCeW1tVkkVvGn7g= #GH_TOKEN
     - secure: 0nsxnmSyJ6981wPVo3w7L4HLN91SwcIWXFvvGlVsnWvSkzJ3anUHlWno47Ro4HR0GUDL9DUP7Xr7Gg80GF2IrmN+Yv6nrZ+luHL+TQt3nD03j/ENpQy9JtQTgWmBWMQNoKYTzlgcZqO+k3G/5gRi+Z/M+uY8XJVDRzg8vcmXBGIHnxHRzG9ObV0yxyuJfPbiDpPD+r0x0PM/St+Y32PdOApD7BWDv/jz17MVM84fpdl7e/NdFieu8sx8bokr2n7X237Qlx+pylntAdZsHFK6QRwHAwgwK/mnEBU+ch0xTGV3+em3MFIWBBD6dWUChT+8BEoXHr7F07ZfTVZHx5HyxzLGy11O/sVGGQNR5idRq6DsOmmnPukYcxahAh1iSc77W5JS7Yc+8fn6z21S4T9LW92n0+HtUzEA9rXqnBE7vlaVp0BOyeP2lPbqEAYTamGdhhlWRLhvdBgNMTJUjwM43bTp66O/MAbtw5YJ4ccSWCwffhkZ9nEPlYrMdowKzOVdKLUYZWPZ38BMSdfHoA0sGZDUFPQhHJTBXdEb/WRj9BcnOoJY5/Or4QVDhdMkjpFxPMHk4zJSFh/QQPnRNpAZuMTSJTohoUopRg+f1kEnnlzoCfozLQ4JgDBkdZYQLE9HlEVnhxFY/vbQbggmSHuBloWvonec9zH0R0bc2ETAlt8= # RUNDECK_TOKEN
+    - secure: MUD/mY/nkwfRcZ6sE3Vp+vXspCgx6wjGMSmpgQCsJr+rfwsJnqukrY/NzlnzQAbh57cuJHDC6aXsQv156GneJkXf7/IQNgla20UnWs07xN2zHosRReTROqYy4vPdcRa2kZ1CZgXXQWWvkrhd//6KKjyHa3Bv0TlkD4EK19gffP8Nw/lmvZpvwrwmBl986QcyCTYE/5HS01dkWr4yvUKAQCPYeEySuDF9ISZ0qV2V1jdaJ2Hc0BZaGdYpYWctQCSwV6r7E+1r2OkeuWk1Zgs1zads89UHywy0dabfMxYDZhvm5EZ8OjZ2Sxb32mSxuy1jB61kqkFgvFNzu0BamCWf73zm1Z9qfjd3mlVd1cR+c2EkXIIMEW3o4ai+vzyBNNDFuICg7nuVeLE1F9a6w9qOGfwKF0zSyjwyIjLfGSClOqMv9IfVSFovPt1Gu4EgeOtATSRQQje3BUrqWe7HfaqeRegtWKReFWFNCgRBJ+ER05M1cGXOLYLjYMLEdOhvqqXv66bme7zTt6bf++Qpt98U8n8iwHiu4jHJ78kwP9MrNloAe6piwtX/2H9dPZ9Vebx9ZU0ytfndadXHDPeX7r4y/U1kbQ0J1ZQYl85iEB91+bkyY2JYFmr/qCuEGOT6Bz2A208RHAZ325kJh4uFkf4rNPZWnmPcht7frSbjLOBfphI= # TX_TOKEN
