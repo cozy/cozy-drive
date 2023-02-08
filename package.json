@@ -115,7 +115,7 @@
     "copy-text-to-clipboard": "1.0.4",
     "cozy-authentication": "2.10.10",
     "cozy-bar": "8.13.1",
-    "cozy-ci": "0.4.1",
+    "cozy-ci": "0.5.2",
     "cozy-client": "^34.11.0",
     "cozy-client-js": "0.20.0",
     "cozy-device-helper": "^2.5.0",
