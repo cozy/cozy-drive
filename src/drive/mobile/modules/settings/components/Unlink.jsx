@@ -3,14 +3,14 @@ import PropTypes from 'prop-types'
 import { useClient } from 'cozy-client'
 import { connect } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { translate, useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import SettingCategory, { ELEMENT_BUTTON } from './SettingCategory'
 import {
   unlink,
   getClientSettings
 } from 'drive/mobile/modules/authorization/duck'
 
-const Unlink = ({ unlink, clientSettings }) => {
+export const Unlink = ({ unlink, clientSettings }) => {
   const { t } = useI18n()
   const client = useClient()
   const navigate = useNavigate()
@@ -43,8 +43,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   unlink: (client, clientSettings, navigate) => {
     dispatch(unlink(client, clientSettings))
-    navigate('/onboarding')
+    navigate('/onboarding', { replace: true })
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(Unlink))
+export default connect(mapStateToProps, mapDispatchToProps)(Unlink)
