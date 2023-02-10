@@ -22,6 +22,7 @@ describe('Topbar', () => {
           viewName="albumContent"
           t={x => x}
           client={client}
+          pathname="pathname"
         >
           <Child router={mockedRouter} />
         </Topbar>
