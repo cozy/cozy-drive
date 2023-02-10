@@ -42,56 +42,89 @@ exports[`Dropzone should match snapshot 1`] = `
           lang="en"
         >
           <AcceptingSharingProvider>
-            <ThumbnailSizeContextProvider>
-              <BreakpointsProvider>
-                <FabProvider>
-                  <WithSharingState(withClient(withVaultClient(Connect(Dropzone))))
-                    displayedFolder={
-                      Object {
-                        "id": "directory-foobar0",
-                      }
-                    }
-                  >
-                    <withClient(withVaultClient(Connect(Dropzone)))
-                      displayedFolder={
-                        Object {
-                          "id": "directory-foobar0",
-                        }
-                      }
-                      sharingState={
-                        Object {
-                          "getRecipients": [MockFunction],
-                          "getSharingLink": [MockFunction],
-                          "hasWriteAccess": [MockFunction],
-                          "refresh": [MockFunction],
-                        }
-                      }
-                    >
-                      <withVaultClient(Connect(Dropzone))
-                        client={
-                          CozyClient {
-                            "uri": undefined,
-                          }
-                        }
+            <HashRouter>
+              <Router
+                location={
+                  Object {
+                    "hash": "",
+                    "key": "default",
+                    "pathname": "/",
+                    "search": "",
+                    "state": null,
+                  }
+                }
+                navigationType="POP"
+                navigator={
+                  Object {
+                    "action": "POP",
+                    "createHref": [Function],
+                    "encodeLocation": [Function],
+                    "go": [Function],
+                    "listen": [Function],
+                    "location": Object {
+                      "hash": "",
+                      "key": "default",
+                      "pathname": "/",
+                      "search": "",
+                      "state": null,
+                    },
+                    "push": [Function],
+                    "replace": [Function],
+                  }
+                }
+              >
+                <ThumbnailSizeContextProvider>
+                  <BreakpointsProvider>
+                    <FabProvider>
+                      <WithSharingState(withClient(withVaultClient(Connect(Dropzone))))
                         displayedFolder={
                           Object {
                             "id": "directory-foobar0",
                           }
                         }
-                        sharingState={
-                          Object {
-                            "getRecipients": [MockFunction],
-                            "getSharingLink": [MockFunction],
-                            "hasWriteAccess": [MockFunction],
-                            "refresh": [MockFunction],
+                      >
+                        <withClient(withVaultClient(Connect(Dropzone)))
+                          displayedFolder={
+                            Object {
+                              "id": "directory-foobar0",
+                            }
                           }
-                        }
-                      />
-                    </withClient(withVaultClient(Connect(Dropzone)))>
-                  </WithSharingState(withClient(withVaultClient(Connect(Dropzone))))>
-                </FabProvider>
-              </BreakpointsProvider>
-            </ThumbnailSizeContextProvider>
+                          sharingState={
+                            Object {
+                              "getRecipients": [MockFunction],
+                              "getSharingLink": [MockFunction],
+                              "hasWriteAccess": [MockFunction],
+                              "refresh": [MockFunction],
+                            }
+                          }
+                        >
+                          <withVaultClient(Connect(Dropzone))
+                            client={
+                              CozyClient {
+                                "uri": undefined,
+                              }
+                            }
+                            displayedFolder={
+                              Object {
+                                "id": "directory-foobar0",
+                              }
+                            }
+                            sharingState={
+                              Object {
+                                "getRecipients": [MockFunction],
+                                "getSharingLink": [MockFunction],
+                                "hasWriteAccess": [MockFunction],
+                                "refresh": [MockFunction],
+                              }
+                            }
+                          />
+                        </withClient(withVaultClient(Connect(Dropzone)))>
+                      </WithSharingState(withClient(withVaultClient(Connect(Dropzone))))>
+                    </FabProvider>
+                  </BreakpointsProvider>
+                </ThumbnailSizeContextProvider>
+              </Router>
+            </HashRouter>
           </AcceptingSharingProvider>
         </I18n>
       </TestI18n>
