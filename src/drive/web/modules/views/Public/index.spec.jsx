@@ -4,7 +4,7 @@ import { setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
 import usePublicFilesQuery from './usePublicFilesQuery'
 import { generateFileFixtures, getByTextWithMarkup } from '../testUtils'
-import AppRoute from 'drive/web/modules/navigation/AppRoute'
+import PublicFolderView from './index'
 
 jest.mock('cozy-client/dist/hooks/useCapabilities', () =>
   jest.fn().mockReturnValue({ capabilities: {} })
@@ -63,7 +63,7 @@ describe('Public View', () => {
 
     const rendered = render(
       <AppLike client={client} store={store}>
-        <AppRoute />
+        <PublicFolderView />
       </AppLike>
     )
     return { ...rendered, client }
@@ -92,7 +92,6 @@ describe('Public View', () => {
     // TODO : Fix https://github.com/cozy/cozy-drive/issues/2913
     jest.spyOn(console, 'warn').mockImplementation()
     const { getByText } = await setup()
-
     await act(async () => {
       const sleep = duration =>
         new Promise(resolve => setTimeout(resolve, duration))
