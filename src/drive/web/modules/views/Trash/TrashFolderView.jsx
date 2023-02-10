@@ -30,7 +30,7 @@ import useHead from 'components/useHead'
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-const TrashFolderView = ({ currentFolderId }) => {
+export const TrashFolderView = ({ currentFolderId }) => {
   const { isMobile } = useBreakpoints()
   const navigate = useNavigate()
 

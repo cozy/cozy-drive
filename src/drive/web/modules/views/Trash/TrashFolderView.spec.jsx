@@ -1,13 +1,13 @@
 import React from 'react'
 import { useQuery } from 'cozy-client'
 import { render, act } from '@testing-library/react'
-import { Router, hashHistory, Route, Redirect } from 'react-router'
+import { TRASH_DIR_ID } from 'drive/constants/config'
 
 import { setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
 
 import { generateFileFixtures } from '../testUtils'
-import TrashFolderView from './TrashFolderView'
+import { TrashFolderView } from './TrashFolderView'
 
 import FolderViewBody from '../Folder/FolderViewBody'
 
@@ -17,11 +17,7 @@ jest.mock('components/useHead', () => jest.fn())
 
 describe('TrashFolderView', () => {
   const mockClient = () => {
-    const { store, client } = setupStoreAndClient({
-      initialStoreState: {
-        router: { location: { pathname: '/trash' } }
-      }
-    })
+    const { store, client } = setupStoreAndClient({})
 
     client.plugins.realtime = {
       subscribe: jest.fn(),
@@ -38,11 +34,7 @@ describe('TrashFolderView', () => {
 
     const rendered = render(
       <AppLike client={client} store={store}>
-        <Router history={hashHistory}>
-          <Redirect from="/" to="/trash" />
-          <Route path="/trash" component={TrashFolderView} />
-          <Route path="/folder/:id" component={TrashFolderView} />
-        </Router>
+        <TrashFolderView currentFolderId={TRASH_DIR_ID} />
       </AppLike>
     )
     return { ...rendered, client }
@@ -98,8 +90,6 @@ describe('TrashFolderView', () => {
   })
 
   it('renders the empty trash view', async () => {
-    jest.spyOn(console, 'error').mockImplementation() // TODO: to be removed with https://github.com/cozy/cozy-libs/pull/1457
-
     useQuery.mockReturnValue({
       data: [],
       count: 0
