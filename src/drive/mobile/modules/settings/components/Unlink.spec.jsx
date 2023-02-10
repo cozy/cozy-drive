@@ -1,43 +1,32 @@
 import React from 'react'
-import { mount } from 'enzyme'
+import { render, fireEvent } from '@testing-library/react'
+import { createMockClient } from 'cozy-client'
+import AppLike from 'test/components/AppLike'
 import { Unlink } from './Unlink'
 
+const mockNavigate = jest.fn()
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockNavigate
+}))
+
 describe('Unlink', () => {
-  const client = {
-    stackClient: {
-      token: {
-        token: '1'
-      },
-      uri: 'http://mycozy.cloud'
-    }
-  }
-
-  const unlink = jest.fn()
-  const t = jest.fn(s => s)
-  const clientSettings = {
-    data: 'foo'
-  }
-  const comp = mount(
-    <Unlink
-      t={t}
-      unlink={unlink}
-      clientSettings={clientSettings}
-      client={client}
-    />
-  )
-
-  afterEach(() => {
-    jest.restoreAllMocks()
-  })
-
-  it('should render the Component', () => {
-    expect(comp).toMatchSnapshot()
-  })
-
   it('should call the unlink function', () => {
-    const button = comp.find('Button')
-    button.prop('onClick')()
+    const unlink = jest.fn()
+    const client = createMockClient({})
+    const clientSettings = {
+      data: 'foo'
+    }
+    const { getByText } = render(
+      <AppLike client={client}>
+        <Unlink unlink={unlink} clientSettings={clientSettings} />
+      </AppLike>
+    )
 
-    expect(unlink).toHaveBeenCalledWith(client, clientSettings)
+    const unlinkButton = getByText('Sign out')
+    fireEvent.click(unlinkButton)
+
+    expect(unlink).toHaveBeenCalledWith(client, clientSettings, mockNavigate)
   })
 })
