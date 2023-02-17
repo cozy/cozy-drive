@@ -12,14 +12,14 @@ import {
 } from '../testUtils'
 import { useFilesQueryWithPath } from 'drive/web/modules/views/hooks'
 
+const mockNavigate = jest.fn()
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockNavigate
+}))
+
 jest.mock('components/pushClient')
-jest.mock(
-  'components/FileHistory',
-  () =>
-    function FileHistoryStub() {
-      return <div>FileHistory stub</div>
-    }
-)
 jest.mock('cozy-client/dist/hooks/useQuery', () =>
   jest.fn(() => ({
     fetchStatus: '',
@@ -103,22 +103,10 @@ describe('Sharings View', () => {
     })
   })
 
-  it.skip('tests the sharings view', async () => {
+  it('tests the sharings view', async () => {
     useFilesQueryWithPath.mockReturnValue(filesFixtureWithPath)
 
-    const { getByText, findByText } = setup()
-
-    // // Display placeholder when all files are not loaded
-    // expect(
-    //   container.querySelector('.fil-content-file-placeholder')
-    // ).not.toBeNull()
-
-    // await act(async () => {
-    //   await new Promise(resolve => setTimeout(resolve, 100))
-    // })
-
-    // // Do not display placeholder when all files are loaded
-    // expect(container.querySelector('.fil-content-file-placeholder')).toBeNull()
+    const { getByText } = setup()
 
     await waitFor(() => {
       // Get the HTMLElement containing the filename if exist. If not throw
@@ -152,6 +140,6 @@ describe('Sharings View', () => {
       fireEvent.click(historyItem)
     })
 
-    await expect(findByText('FileHistory stub')).resolves.toBeTruthy()
+    expect(mockNavigate).toHaveBeenCalledWith('./file/file-foobar0/revision')
   })
 })
