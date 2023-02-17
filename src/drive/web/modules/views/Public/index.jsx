@@ -75,7 +75,7 @@ const getBreadcrumbPath = (t, displayedFolder, parentFolder) =>
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-const PublicFolderView = ({ router, children }) => {
+const PublicFolderView = ({ children }) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const client = useClient()
@@ -113,9 +113,9 @@ const PublicFolderView = ({ router, children }) => {
 
   const navigateToFolder = useCallback(
     folderId => {
-      router.push(`/folder/${folderId}`)
+      navigate(`/folder/${folderId}`)
     },
-    [router]
+    [navigate]
   )
 
   const navigateToFile = async file => {
