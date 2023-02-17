@@ -1,7 +1,5 @@
 import React from 'react'
 import { render, fireEvent, waitFor } from '@testing-library/react'
-import { Router, hashHistory, Route, Redirect } from 'react-router'
-import FileHistory from 'components/FileHistory'
 
 import { setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
@@ -14,14 +12,14 @@ import {
 } from '../testUtils'
 import { useFilesQueryWithPath } from 'drive/web/modules/views/hooks'
 
+const mockNavigate = jest.fn()
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockNavigate
+}))
+
 jest.mock('components/pushClient')
-jest.mock(
-  'components/FileHistory',
-  () =>
-    function FileHistoryStub() {
-      return <div>FileHistory stub</div>
-    }
-)
 jest.mock('cozy-client/dist/hooks/useQuery', () =>
   jest.fn(() => ({
     fetchStatus: '',
@@ -55,15 +53,7 @@ const setup = (allLoaded = true) => {
 
   const rendered = render(
     <AppLike client={client} store={store}>
-      <Router history={hashHistory}>
-        <Redirect from="/" to="/sharings" />
-        <Route
-          path="sharings"
-          component={props => <SharingsView {...props} allLoaded={allLoaded} />}
-        >
-          <Route path="file/:fileId/revision" component={FileHistory} />
-        </Route>
-      </Router>
+      <SharingsView allLoaded={allLoaded} />
     </AppLike>
   )
   return { ...rendered, client }
@@ -92,8 +82,6 @@ describe('Sharings View', () => {
   }
 
   it('should display placeholder when all files are not loaded', async () => {
-    jest.spyOn(console, 'error').mockImplementation() // TODO: to be removed with https://github.com/cozy/cozy-libs/pull/1457
-
     const { container } = setup(false)
 
     await waitFor(() => {
@@ -118,19 +106,7 @@ describe('Sharings View', () => {
   it('tests the sharings view', async () => {
     useFilesQueryWithPath.mockReturnValue(filesFixtureWithPath)
 
-    const { getByText, findByText } = setup()
-
-    // // Display placeholder when all files are not loaded
-    // expect(
-    //   container.querySelector('.fil-content-file-placeholder')
-    // ).not.toBeNull()
-
-    // await act(async () => {
-    //   await new Promise(resolve => setTimeout(resolve, 100))
-    // })
-
-    // // Do not display placeholder when all files are loaded
-    // expect(container.querySelector('.fil-content-file-placeholder')).toBeNull()
+    const { getByText } = setup()
 
     await waitFor(() => {
       // Get the HTMLElement containing the filename if exist. If not throw
@@ -164,6 +140,6 @@ describe('Sharings View', () => {
       fireEvent.click(historyItem)
     })
 
-    await expect(findByText('FileHistory stub')).resolves.toBeTruthy()
+    expect(mockNavigate).toHaveBeenCalledWith('./file/file-foobar0/revision')
   })
 })
