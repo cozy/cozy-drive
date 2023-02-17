@@ -2,16 +2,15 @@ import styles from '../../../styles/albumsList.styl'
 import classNames from 'classnames'
 
 import React, { Component } from 'react'
-import { Link, useLocation } from 'react-router'
+import { Link } from 'react-router-dom'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import FileImageLoader from 'cozy-ui/transpiled/react/FileImageLoader'
 
 import { SharedBadge, SharedDocument } from 'cozy-sharing'
 
 const AlbumItemLink = ({ album, image, title, desc }) => {
-  const { pathname } = useLocation()
   return (
-    <Link to={`${pathname}/${album._id}`} className={styles['pho-album-link']}>
+    <Link to={album._id} className={styles['pho-album-link']}>
       {image}
       {title}
       {desc}

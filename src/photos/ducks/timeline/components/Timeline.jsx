@@ -20,6 +20,7 @@ import {
   REF_UPLOAD
 } from 'folder-references'
 import { withClient } from 'cozy-client'
+import { Outlet } from 'react-router-dom'
 
 const getUploadDir = async (client, t) => {
   const referencedFolders = await getReferencedFolders(client, REF_UPLOAD)
@@ -156,19 +157,10 @@ class Timeline extends Component {
                 lastFetch={lastFetch}
               />
             </Content>
-            {this.renderViewer(this.props.children)}
+            <Outlet />
           </div>
         )}
       </Selection>
-    )
-  }
-
-  renderViewer(children) {
-    if (!children) return null
-    return React.Children.map(children, child =>
-      React.cloneElement(child, {
-        photos: this.props.data || []
-      })
     )
   }
 }
