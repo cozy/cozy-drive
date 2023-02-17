@@ -1,38 +1,37 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 
 import Overlay from 'cozy-ui/transpiled/react/Overlay'
 import Viewer from 'cozy-ui/transpiled/react/Viewer'
 import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
 import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
 import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useQueryAll } from 'cozy-client'
+import { buildTimelineQuery } from '../queries/queries'
 
-const getParentPath = url => {
-  return url.substring(0, url.lastIndexOf('/'))
-}
-
-const PhotosViewer = ({ photos, params }) => {
+const PhotosViewer = () => {
   const navigate = useNavigate()
-  const { query, pathname } = useLocation()
-  const currentIndex = photos.findIndex(p => p.id === params.photoId)
+  let { photoId } = useParams()
+
+  const timelineQuery = buildTimelineQuery()
+
+  const results = useQueryAll(timelineQuery.definition, timelineQuery.options)
+  const photos = results.data
+
+  const currentIndex = useMemo(
+    () => (photos ? photos.findIndex(p => p.id === photoId) : 0),
+    [photos, photoId]
+  )
+
+  if (results.fetchStatus != 'loaded') return null
 
   return (
     <Overlay>
       <Viewer
         files={photos}
         currentIndex={currentIndex}
-        onChangeRequest={nextPhoto =>
-          navigate.push({
-            pathname: `${getParentPath(pathname)}/${nextPhoto.id}`,
-            query
-          })
-        }
-        onCloseRequest={() =>
-          navigate.push({
-            pathname: getParentPath(pathname),
-            query
-          })
-        }
+        onChangeRequest={nextPhoto => navigate(`../${nextPhoto.id}`)}
+        onCloseRequest={() => navigate('..')}
       >
         <FooterActionButtons>
           <SharingButton />
