@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styles from '../../../styles/layout.styl'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 
@@ -7,6 +7,7 @@ import AlbumsList from './AlbumsList'
 import Loading from '../../../components/Loading'
 import ErrorComponent from 'components/Error/ErrorComponent'
 import Topbar from '../../../components/Topbar'
+import Outlet from 'react-router-dom'
 
 const Content = ({ list }) => {
   const { fetchStatus, lastFetch } = list
@@ -20,25 +21,22 @@ const Content = ({ list }) => {
   return <AlbumsList {...list} />
 }
 
-class AlbumsView extends Component {
-  render() {
-    const { t, router } = this.props
-    if (this.props.children) return this.props.children
-    if (!this.props.albums) {
-      return null
-    }
-    return (
-      <div
-        data-testid="album-pho-content-wrapper"
-        className={styles['pho-content-wrapper']}
-      >
-        <Topbar viewName="albums">
-          <AlbumsToolbar t={t} router={router} />
-        </Topbar>
-        <Content list={this.props.albums} />
-      </div>
-    )
+const AlbumsView = ({ albums }) => {
+  if (!albums) {
+    return null
   }
+  return (
+    <div
+      data-testid="album-pho-content-wrapper"
+      className={styles['pho-content-wrapper']}
+    >
+      <Topbar viewName="albums">
+        <AlbumsToolbar />
+      </Topbar>
+      <Content list={albums} />
+      <Outlet />
+    </div>
+  )
 }
 
 export default translate()(AlbumsView)

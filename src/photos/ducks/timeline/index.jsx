@@ -18,7 +18,7 @@ import { translate } from 'cozy-ui/transpiled/react/I18n'
 const TIMELINE = 'timeline'
 const FILES_DOCTYPE = 'io.cozy.files'
 
-const TIMELINE_QUERY = client =>
+export const TIMELINE_QUERY = client =>
   client
     .find(FILES_DOCTYPE)
     .where({

@@ -2,7 +2,7 @@ import styles from '../styles/photoList.styl'
 
 import React from 'react'
 import classNames from 'classnames'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import FileImageLoader from 'cozy-ui/transpiled/react/FileImageLoader'
 
@@ -27,8 +27,8 @@ const getStyleFromBox = box => {
 
 const Photo = props => {
   const { photo, box, selected = false, onToggle } = props
-  const { pathname, query } = useLocation()
   const style = getStyleFromBox(box)
+  // TODO : add back query to link
   return (
     <div
       style={style}
@@ -49,12 +49,8 @@ const Photo = props => {
           <input type="checkbox" checked={selected} onChange={() => {}} />
           <label />
         </span>
-        <Link
-          to={{
-            pathname: `${pathname}/${photo.id}`,
-            query
-          }}
-        >
+
+        <Link to={photo.id}>
           <FileImageLoader
             file={photo}
             linkType="small"
