@@ -1,8 +1,7 @@
 /* global __TARGET__ */
 
 import React from 'react'
-import { Link as RRNavLink } from 'react-router'
-
+import { Outlet, Link } from 'react-router-dom'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { Layout as LayoutUI, Main } from 'cozy-ui/transpiled/react/Layout'
@@ -25,9 +24,10 @@ import { UploadQueue } from '../ducks/upload'
 
 import styles from '../styles/layout'
 
-const NavLink = genNavLink(RRNavLink)
+// TODO : apply style back on active
+const NavLink = genNavLink(Link)
 
-export const Layout = ({ t, children }) => (
+export const Layout = ({ t }) => (
   <LayoutUI>
     <Sidebar className={styles['pho-sidebar']}>
       <Nav>
@@ -51,7 +51,7 @@ export const Layout = ({ t, children }) => (
     <UploadQueue />
     <Main className={styles['pho-content']}>
       {__TARGET__ !== 'mobile' && !isFlagshipApp() && <BannerClient />}
-      {children}
+      <Outlet />
     </Main>
     <ModalManager />
     <Sprite />
