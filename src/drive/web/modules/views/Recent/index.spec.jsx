@@ -1,6 +1,5 @@
 import React from 'react'
 import { render, fireEvent, act } from '@testing-library/react'
-import { hashHistory } from 'react-router'
 
 import { setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
@@ -13,6 +12,13 @@ import {
   removeNonASCII
 } from '../testUtils'
 
+const mockNavigate = jest.fn()
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockNavigate
+}))
+
 jest.mock('components/pushClient')
 jest.mock('cozy-client/dist/hooks/useQuery', () =>
   jest.fn(() => ({
@@ -23,13 +29,6 @@ jest.mock('cozy-client/dist/hooks/useQuery', () =>
 jest.mock('cozy-keys-lib', () => ({
   useVaultClient: jest.fn()
 }))
-jest.mock(
-  'components/FileHistory',
-  () =>
-    function FileHistoryStub() {
-      return <div>FileHistory stub</div>
-    }
-)
 jest.mock('drive/web/modules/views/hooks', () => ({
   ...jest.requireActual('drive/web/modules/views/hooks'),
   useFilesQueryWithPath: jest.fn()
@@ -57,14 +56,12 @@ const setup = () => {
   return { ...rendered, client }
 }
 
-const nbFiles = 2
-const path = '/test'
-const dir_id = '123'
-const updated_at = '2020-05-14T10:33:31.365224+02:00'
-
 describe('Recent View', () => {
   it('tests the recent view', async () => {
-    jest.spyOn(console, 'error').mockImplementation() // TODO: to be removed with https://github.com/cozy/cozy-libs/pull/1457
+    const nbFiles = 2
+    const path = '/test'
+    const dir_id = '123'
+    const updated_at = '2020-05-14T10:33:31.365224+02:00'
 
     const filesFixture = generateFileFixtures({
       nbFiles,
@@ -119,54 +116,10 @@ describe('Recent View', () => {
         parentDiv1.getElementsByClassName('fil-file-path')[0].textContent
       )
     ).toEqual(path)
-  })
-
-  it.skip('it should navigate into history', async () => {
-    const { getByText, findByText } = setup({
-      nbFiles,
-      path,
-      dir_id,
-      updated_at
-    })
-
-    const sleep = duration =>
-      new Promise(resolve => setTimeout(resolve, duration))
-    await act(async () => {
-      await sleep(100)
-    })
 
     // navigates  to the history view
     const historyItem = getByText('History')
     fireEvent.click(historyItem)
-    await expect(findByText('FileHistory stub')).resolves.toBeTruthy()
-
-    hashHistory.goBack()
-  })
-
-  it.skip('it should navigate into folder view', async () => {
-    const { getByText, findByText } = setup({
-      nbFiles,
-      path,
-      dir_id,
-      updated_at
-    })
-
-    const sleep = duration =>
-      new Promise(resolve => setTimeout(resolve, duration))
-    await act(async () => {
-      await sleep(100)
-    })
-
-    const el0 = getByText(`foobar0`)
-    const fileRow0 = el0.closest('.fil-content-row')
-    const linkElement0 = fileRow0.getElementsByClassName('fil-file-path')[0]
-
-    // Navigate to foldier view, not file view
-    fireEvent.click(linkElement0)
-    await expect(findByText('Folder')).resolves.toBeTruthy()
-
-    // Going back to recent view, not file view
-    hashHistory.goBack()
-    await expect(findByText('Recent')).resolves.toBeTruthy()
+    expect(mockNavigate).toHaveBeenCalledWith('./file/file-foobar0/revision')
   })
 })
