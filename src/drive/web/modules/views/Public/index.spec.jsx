@@ -10,6 +10,13 @@ jest.mock('cozy-client/dist/hooks/useCapabilities', () =>
   jest.fn().mockReturnValue({ capabilities: {} })
 )
 
+const mockNavigate = jest.fn()
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockNavigate
+}))
+
 jest.mock('cozy-intent', () => ({
   WebviewIntentProvider: ({ children }) => children,
   useWebviewIntent: () => ({ call: () => {} })
@@ -43,13 +50,6 @@ jest.mock('./usePublicFilesQuery', () => {
 jest.mock('cozy-keys-lib', () => ({
   useVaultClient: jest.fn()
 }))
-jest.mock(
-  'components/FileHistory',
-  () =>
-    function FileHistoryStub() {
-      return <div>FileHistory stub</div>
-    }
-)
 jest.mock('components/pushClient')
 
 describe('Public View', () => {
@@ -88,8 +88,9 @@ describe('Public View', () => {
     })
   })
 
-  it.skip('renders the public view', async () => {
-    const { getByText, findByText } = await setup()
+  it('renders the public view', async () => {
+    const { getByText } = await setup()
+
     await act(async () => {
       const sleep = duration =>
         new Promise(resolve => setTimeout(resolve, duration))
@@ -113,7 +114,7 @@ describe('Public View', () => {
     const historyItem = getByText('History')
     fireEvent.click(historyItem)
 
-    await expect(findByText('FileHistory stub')).resolves.toBeTruthy()
+    expect(mockNavigate).toHaveBeenCalledWith('./file/file-foobar0/revision')
   })
 
   it('should use FolderViewBreadcrumb with correct rootBreadcrumbPath', async () => {
