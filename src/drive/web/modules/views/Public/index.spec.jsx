@@ -1,17 +1,21 @@
 import React from 'react'
 import { render, fireEvent, act } from '@testing-library/react'
-import { Router, hashHistory, Route, Redirect } from 'react-router'
 import { setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
 import usePublicFilesQuery from './usePublicFilesQuery'
-import FileHistory from 'components/FileHistory'
 import { generateFileFixtures, getByTextWithMarkup } from '../testUtils'
-
-import PublicFolderView from './index'
+import AppRoute from 'drive/web/modules/navigation/AppRoute'
 
 jest.mock('cozy-client/dist/hooks/useCapabilities', () =>
   jest.fn().mockReturnValue({ capabilities: {} })
 )
+
+const mockNavigate = jest.fn()
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockNavigate
+}))
 
 jest.mock('cozy-intent', () => ({
   WebviewIntentProvider: ({ children }) => children,
@@ -30,14 +34,14 @@ jest.mock('../Folder/FolderViewBreadcrumb', () =>
   )
 )
 
-jest.mock('drive/web/modules/selectors', () => ({
-  getCurrentFolderId: () => '1234',
-  getDisplayedFolder: () => ({
+jest.mock('drive/hooks', () => ({
+  useCurrentFolderId: jest.fn().mockReturnValue('1234'),
+  useDisplayedFolder: jest.fn().mockReturnValue({
     dir_id: 'parent-folder-id',
     _id: 'displayed-folder-id',
     name: 'My Folder'
   }),
-  getParentFolder: () => '5678'
+  useParentFolder: jest.fn().mockReturnValue('5678')
 }))
 
 jest.mock('./usePublicFilesQuery', () => {
@@ -46,13 +50,6 @@ jest.mock('./usePublicFilesQuery', () => {
 jest.mock('cozy-keys-lib', () => ({
   useVaultClient: jest.fn()
 }))
-jest.mock(
-  'components/FileHistory',
-  () =>
-    function FileHistoryStub() {
-      return <div>FileHistory stub</div>
-    }
-)
 jest.mock('components/pushClient')
 
 describe('Public View', () => {
@@ -66,12 +63,7 @@ describe('Public View', () => {
 
     const rendered = render(
       <AppLike client={client} store={store}>
-        <Router history={hashHistory}>
-          <Redirect from="/" to="/folder/123" />
-          <Route path="folder(/:folderId)" component={PublicFolderView}>
-            <Route path="file/:fileId/revision" component={FileHistory} />
-          </Route>
-        </Router>
+        <AppRoute />
       </AppLike>
     )
     return { ...rendered, client }
@@ -99,7 +91,8 @@ describe('Public View', () => {
   it('renders the public view', async () => {
     // TODO : Fix https://github.com/cozy/cozy-drive/issues/2913
     jest.spyOn(console, 'warn').mockImplementation()
-    const { getByText, findByText } = await setup()
+    const { getByText } = await setup()
+
     await act(async () => {
       const sleep = duration =>
         new Promise(resolve => setTimeout(resolve, duration))
@@ -123,7 +116,7 @@ describe('Public View', () => {
     const historyItem = getByText('History')
     fireEvent.click(historyItem)
 
-    await expect(findByText('FileHistory stub')).resolves.toBeTruthy()
+    expect(mockNavigate).toHaveBeenCalledWith('./file/file-foobar0/revision')
   })
 
   it('should use FolderViewBreadcrumb with correct rootBreadcrumbPath', async () => {
