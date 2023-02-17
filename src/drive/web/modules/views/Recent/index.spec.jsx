@@ -1,7 +1,5 @@
 import React from 'react'
 import { render, fireEvent, act } from '@testing-library/react'
-import { Router, hashHistory, Route, Redirect } from 'react-router'
-import FileHistory from 'components/FileHistory'
 
 import { setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
@@ -14,6 +12,13 @@ import {
   removeNonASCII
 } from '../testUtils'
 
+const mockNavigate = jest.fn()
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockNavigate
+}))
+
 jest.mock('components/pushClient')
 jest.mock('cozy-client/dist/hooks/useQuery', () =>
   jest.fn(() => ({
@@ -24,21 +29,12 @@ jest.mock('cozy-client/dist/hooks/useQuery', () =>
 jest.mock('cozy-keys-lib', () => ({
   useVaultClient: jest.fn()
 }))
-jest.mock(
-  'components/FileHistory',
-  () =>
-    function FileHistoryStub() {
-      return <div>FileHistory stub</div>
-    }
-)
 jest.mock('drive/web/modules/views/hooks', () => ({
   ...jest.requireActual('drive/web/modules/views/hooks'),
   useFilesQueryWithPath: jest.fn()
 }))
 
 jest.mock('components/useHead', () => jest.fn())
-
-const Folder = () => <div>Folder</div>
 
 const setup = () => {
   const { store, client } = setupStoreAndClient()
@@ -54,14 +50,7 @@ const setup = () => {
 
   const rendered = render(
     <AppLike client={client} store={store}>
-      <Router history={hashHistory}>
-        <Redirect from="/folder" to="/folder" />
-        <Redirect from="/" to="/recent" />
-        <Route path="/recent" component={RecentViewWithProvider}>
-          <Route path="file/:fileId/revision" component={FileHistory} />
-        </Route>
-        <Route path="/folder/:dirId" component={Folder} />
-      </Router>
+      <RecentViewWithProvider />
     </AppLike>
   )
   return { ...rendered, client }
@@ -69,8 +58,6 @@ const setup = () => {
 
 describe('Recent View', () => {
   it('tests the recent view', async () => {
-    jest.spyOn(console, 'error').mockImplementation() // TODO: to be removed with https://github.com/cozy/cozy-libs/pull/1457
-
     const nbFiles = 2
     const path = '/test'
     const dir_id = '123'
@@ -93,7 +80,7 @@ describe('Recent View', () => {
     }
     useFilesQueryWithPath.mockReturnValue(filesFixtureWithPath)
 
-    const { getByText, findByText } = setup({
+    const { getByText } = setup({
       nbFiles,
       path,
       dir_id,
@@ -133,16 +120,6 @@ describe('Recent View', () => {
     // navigates  to the history view
     const historyItem = getByText('History')
     fireEvent.click(historyItem)
-    await expect(findByText('FileHistory stub')).resolves.toBeTruthy()
-
-    hashHistory.goBack()
-
-    // Navigate to foldier view, not file view
-    fireEvent.click(linkElement0)
-    await expect(findByText('Folder')).resolves.toBeTruthy()
-
-    // Going back to recent view, not file view
-    hashHistory.goBack()
-    await expect(findByText('Recent')).resolves.toBeTruthy()
+    expect(mockNavigate).toHaveBeenCalledWith('./file/file-foobar0/revision')
   })
 })
