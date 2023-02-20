@@ -18,16 +18,19 @@ import Sharing from 'drive/web/modules/views/OnlyOffice/Toolbar/Sharing'
 
 const Toolbar = () => {
   const { isMobile } = useBreakpoints()
-  const { fileId, isPublic, isFromSharing, isEditorReadOnly, isEditorReady } =
-    useContext(OnlyOfficeContext)
+  const {
+    fileId,
+    isPublic,
+    isFromSharing,
+    isEditorReadOnly,
+    isEditorReady,
+    isFromCreate
+  } = useContext(OnlyOfficeContext)
 
-  const { data: fileWithPath } = useFileWithPath(fileId)
   const { router } = useRouter()
 
-  const isFromCreate = useMemo(
-    () => router.location.pathname.endsWith('/fromCreate'),
-    [router]
-  )
+  const { data: fileWithPath } = useFileWithPath(fileId)
+
   const hasOnyMoreHistoryEntry = useMemo(
     () => isFromSharing || isFromCreate,
     [isFromSharing, isFromCreate]

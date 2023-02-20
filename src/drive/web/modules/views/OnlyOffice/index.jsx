@@ -1,9 +1,10 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useState, useMemo } from 'react'
 
 import flag from 'cozy-flags'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import Dialog from 'cozy-ui/transpiled/react/Dialog'
 
+import { useRouter } from 'drive/lib/RouterContext'
 import Editor from 'drive/web/modules/views/OnlyOffice/Editor'
 import useHead from 'components/useHead'
 
@@ -18,10 +19,17 @@ const OnlyOfficeProvider = ({
   children
 }) => {
   const { isMobile } = useBreakpoints()
+  const { router } = useRouter()
+
   const [isEditorReadOnly, setIsEditorReadOnly] = useState()
   const [isEditorReady, setIsEditorReady] = useState(false)
   const [isEditorForcedReadOnly, setIsEditorForcedReadOnly] = useState(
     isMobile || flag('drive.onlyoffice.forceReadOnlyOnDesktop')
+  )
+
+  const isFromCreate = useMemo(
+    () => router.location.pathname.endsWith('/fromCreate'),
+    [router]
   )
 
   return (
@@ -37,7 +45,8 @@ const OnlyOfficeProvider = ({
         isEditorReady,
         setIsEditorReady,
         isEditorForcedReadOnly,
-        setIsEditorForcedReadOnly
+        setIsEditorForcedReadOnly,
+        isFromCreate
       }}
     >
       {children}
