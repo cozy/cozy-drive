@@ -728,6 +728,10 @@
     },
     "toolbar": {
       "goToHome": "Go to home"
+    },
+    "actions": {
+      "edit": "Edit",
+      "validate": "Validate"
     }
   },
   "Migration": {
@@ -741,7 +745,8 @@
     "empty": "No result has been found for the query “%{query}”"
   },
   "button": {
-    "back": "Back"
+    "back": "Back",
+    "add": "Add"
   },
   "search": {
     "action": "Search",

@@ -1,7 +1,6 @@
 import React, { useEffect, useCallback, useState, useContext } from 'react'
 import PropTypes from 'prop-types'
 
-import flag from 'cozy-flags'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 
@@ -17,7 +16,8 @@ const forceIframeHeight = value => {
 
 const View = ({ id, apiUrl, docEditorConfig }) => {
   const [isError, setIsError] = useState(false)
-  const { isEditorReady, isEditorReadOnly } = useContext(OnlyOfficeContext)
+  const { isEditorReady, isEditorReadOnly, isEditorForcedReadOnly } =
+    useContext(OnlyOfficeContext)
   const { isMobile } = useBreakpoints()
 
   const initEditor = useCallback(() => {
@@ -52,9 +52,7 @@ const View = ({ id, apiUrl, docEditorConfig }) => {
   }, [isEditorReady])
 
   const showReadOnlyFab =
-    isEditorReady &&
-    !isEditorReadOnly &&
-    (isMobile || flag('drive.onlyoffice.forceReadOnlyOnDesktop'))
+    isEditorReady && !isEditorReadOnly && (isMobile || isEditorForcedReadOnly)
 
   if (isError) return <Error />
 

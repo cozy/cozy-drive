@@ -1,8 +1,11 @@
 import React, { useContext, useCallback } from 'react'
-import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 
+import { makeStyles } from 'cozy-ui/transpiled/react/styles'
+import Icon from 'cozy-ui/transpiled/react/Icon'
 import RenameIcon from 'cozy-ui/transpiled/react/Icons/Rename'
 import CheckIcon from 'cozy-ui/transpiled/react/Icons/Check'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
 import Fab from 'drive/web/modules/drive/Fab'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
@@ -18,6 +21,9 @@ const useStyles = makeStyles(theme => ({
 
 const ReadOnlyFab = () => {
   const styles = useStyles()
+  const { t } = useI18n()
+  const { isMobile } = useBreakpoints()
+
   const { isEditorForcedReadOnly, setIsEditorForcedReadOnly } =
     useContext(OnlyOfficeContext)
 
@@ -25,14 +31,31 @@ const ReadOnlyFab = () => {
     setIsEditorForcedReadOnly(v => !v)
   }, [setIsEditorForcedReadOnly])
 
+  const label = isEditorForcedReadOnly
+    ? t('OnlyOffice.actions.edit')
+    : t('OnlyOffice.actions.validate')
+
+  const fabProps = isMobile
+    ? {
+        classes: {
+          root: styles.root
+        },
+        'aria-label': label
+      }
+    : {
+        color: 'primary',
+        variant: 'extended'
+      }
+
   return (
-    <Fab
-      data-testid="onlyoffice-readonlyfab"
-      classes={{ root: styles.root }}
-      noSidebar={true}
-      icon={isEditorForcedReadOnly ? RenameIcon : CheckIcon}
-      onClick={handleClick}
-    />
+    <Fab noSidebar={true} onClick={handleClick} {...fabProps}>
+      <Icon
+        icon={isEditorForcedReadOnly ? RenameIcon : CheckIcon}
+        className={!isMobile ? 'u-mr-half' : ''}
+        aria-hidden="true"
+      />
+      {!isMobile && label}
+    </Fab>
   )
 }
 

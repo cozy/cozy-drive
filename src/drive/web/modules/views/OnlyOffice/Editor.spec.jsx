@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 
 import { createMockClient, useQuery } from 'cozy-client'
 import useFetchJSON from 'cozy-client/dist/hooks/useFetchJSON'
@@ -44,7 +44,6 @@ client.plugins = {
 
 const setup = ({ isMobile = false, isEditorForcedReadOnly = true } = {}) => {
   useBreakpoints.mockReturnValue({ isMobile })
-
   const root = render(
     <AppLike
       client={client}
@@ -105,8 +104,6 @@ describe('Editor', () => {
   })
 
   it('should show the title and the container view if the only office server is installed', () => {
-    jest.spyOn(console, 'error').mockImplementation() // TODO: to be removed with https://github.com/cozy/cozy-libs/pull/1457
-
     useFetchJSON.mockReturnValue({
       fetchStatus: 'loaded',
       data: officeDocParam
@@ -218,13 +215,12 @@ describe('Editor', () => {
       useQuery.mockReturnValue(officeDocParam)
       isOnlyOfficeEnabled.mockReturnValue(true)
 
-      const { root } = setup({ isMobile: true })
-      const { queryByTestId } = root
+      setup({ isMobile: true })
 
-      expect(queryByTestId('onlyoffice-readonlyfab')).toBeTruthy()
+      expect(screen.queryByLabelText('Edit')).toBeTruthy()
     })
 
-    it('should not show the readOnlyFab on desktop', () => {
+    it('should show the readOnlyFab on desktop when isEditorForcedReadOnly is true', () => {
       useFetchJSON.mockReturnValue({
         fetchStatus: 'loaded',
         data: officeDocParam
@@ -232,10 +228,22 @@ describe('Editor', () => {
       useQuery.mockReturnValue(officeDocParam)
       isOnlyOfficeEnabled.mockReturnValue(true)
 
-      const { root } = setup({ isMobile: false })
-      const { queryByTestId } = root
+      setup({ isMobile: false })
 
-      expect(queryByTestId('onlyoffice-readonlyfab')).toBeFalsy()
+      expect(screen.queryByText('Edit')).toBeTruthy()
+    })
+
+    it('should hide the readOnlyFab on desktop when isEditorForcedReadOnly is false', () => {
+      useFetchJSON.mockReturnValue({
+        fetchStatus: 'loaded',
+        data: officeDocParam
+      })
+      useQuery.mockReturnValue(officeDocParam)
+      isOnlyOfficeEnabled.mockReturnValue(true)
+
+      setup({ isMobile: false, isEditorForcedReadOnly: false })
+
+      expect(screen.queryByText('Edit')).toBeFalsy()
     })
   })
 })
