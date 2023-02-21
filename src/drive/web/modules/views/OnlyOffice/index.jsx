@@ -1,7 +1,5 @@
-import React, { createContext, useState, useMemo } from 'react'
+import React, { createContext, useState, useMemo, useEffect } from 'react'
 
-import flag from 'cozy-flags'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import Dialog from 'cozy-ui/transpiled/react/Dialog'
 
 import { useRouter } from 'drive/lib/RouterContext'
@@ -18,19 +16,22 @@ const OnlyOfficeProvider = ({
   isInSharedFolder,
   children
 }) => {
-  const { isMobile } = useBreakpoints()
   const { router } = useRouter()
 
   const [isEditorReadOnly, setIsEditorReadOnly] = useState()
   const [isEditorReady, setIsEditorReady] = useState(false)
-  const [isEditorForcedReadOnly, setIsEditorForcedReadOnly] = useState(
-    isMobile || flag('drive.onlyoffice.forceReadOnlyOnDesktop')
-  )
+  const [isEditorForcedReadOnly, setIsEditorForcedReadOnly] = useState(true)
 
   const isFromCreate = useMemo(
     () => router.location.pathname.endsWith('/fromCreate'),
     [router]
   )
+
+  useEffect(() => {
+    if (isFromCreate) {
+      setIsEditorForcedReadOnly(false)
+    }
+  }, [isFromCreate])
 
   return (
     <OnlyOfficeContext.Provider
