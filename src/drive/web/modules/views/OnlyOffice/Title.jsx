@@ -1,11 +1,10 @@
 import React, { useContext, useMemo } from 'react'
 import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 
-import flag from 'cozy-flags'
 import { SharingBannerPlugin } from 'cozy-sharing'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { DialogTitle } from 'cozy-ui/transpiled/react/Dialog'
 import Divider from 'cozy-ui/transpiled/react/MuiCozyTheme/Divider'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
 import { showSharingBanner } from 'drive/web/modules/views/OnlyOffice/helpers'
@@ -20,10 +19,10 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Title = () => {
+  const { isMobile } = useBreakpoints()
   const { isPublic, isFromSharing, isInSharedFolder, isEditorForcedReadOnly } =
     useContext(OnlyOfficeContext)
   const styles = useStyles()
-  const { isMobile } = useBreakpoints()
 
   const showBanner = useMemo(
     () =>
@@ -35,13 +34,11 @@ const Title = () => {
     [isPublic, isFromSharing, isInSharedFolder]
   )
 
-  const hideDialogToolbar =
-    (isMobile || flag('drive.onlyoffice.forceReadOnlyOnDesktop')) &&
-    !isEditorForcedReadOnly
+  const showDialogToolbar = isEditorForcedReadOnly || !isMobile
 
   return (
     <div style={{ zIndex: 'var(--zIndex-nav)' }}>
-      {!hideDialogToolbar && (
+      {showDialogToolbar && (
         <>
           <DialogTitle
             data-testid="onlyoffice-title"
