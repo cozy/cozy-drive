@@ -1,7 +1,13 @@
 import React from 'react'
 
-import { useClient, useQuery, isQueryLoading } from 'cozy-client'
-import AppLinker, { generateWebLink } from 'cozy-ui/transpiled/react/AppLinker'
+import {
+  useClient,
+  useQuery,
+  isQueryLoading,
+  generateWebLink
+} from 'cozy-client'
+import AppLinker from 'cozy-ui/transpiled/react/AppLinker'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
 import {
   buildAppsQuery,
@@ -10,6 +16,7 @@ import {
 import { computeHomeApp } from 'drive/web/modules/views/OnlyOffice/Toolbar/helpers'
 
 const HomeLinker = ({ children }) => {
+  const { t } = useI18n()
   const client = useClient()
   const appsQuery = buildAppsQuery()
   const contextQuery = buildSettingsByIdQuery('context')
@@ -24,17 +31,22 @@ const HomeLinker = ({ children }) => {
     apps: appsResult.data,
     context: contextResult.data
   })
-  const homeSlug = homeApp.slug
+
   const homeHref = generateWebLink({
     cozyUrl: client.getStackClient().uri,
-    slug: homeSlug,
+    slug: homeApp.slug,
+    pathname: '/',
     subDomainType: client.getInstanceOptions().subdomain
   })
 
   return (
-    <AppLinker slug={homeSlug} href={homeHref}>
+    <AppLinker app={homeApp} href={homeHref}>
       {({ onClick, href }) => (
-        <a href={href} onClick={onClick}>
+        <a
+          href={href}
+          onClick={onClick}
+          aria-label={t('OnlyOffice.toolbar.goToHome')}
+        >
           {children}
         </a>
       )}
