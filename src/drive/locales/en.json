@@ -725,6 +725,9 @@
       "text": "New text document",
       "spreadsheet": "New spreadsheet",
       "slide": "New presentation"
+    },
+    "toolbar": {
+      "goToHome": "Go to home"
     }
   },
   "Migration": {
