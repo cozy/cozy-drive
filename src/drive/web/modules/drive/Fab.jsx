@@ -2,7 +2,6 @@ import React from 'react'
 import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 
 import UiFab from 'cozy-ui/transpiled/react/Fab'
-import Icon from 'cozy-ui/transpiled/react/Icon'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -13,13 +12,12 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-// TODO: should be in cozy-ui
-const Fab = ({ noSidebar, icon, ...rest }) => {
+const Fab = ({ noSidebar, children, ...rest }) => {
   const styles = useStyles({ noSidebar })
 
   return (
     <UiFab className={styles.root} {...rest}>
-      <Icon icon={icon} />
+      {children}
     </UiFab>
   )
 }

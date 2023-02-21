@@ -4,8 +4,12 @@ import PlusIcon from 'cozy-ui/transpiled/react/Icons/Plus'
 
 import Fab from 'drive/web/modules/drive/Fab'
 import { AddMenuContext } from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
 const FabWithMenuContext = ({ noSidebar }) => {
+  const { t } = useI18n()
+
   const { anchorRef, handleToggle, isDisabled, handleOfflineClick, isOffline } =
     useContext(AddMenuContext)
 
@@ -16,12 +20,13 @@ const FabWithMenuContext = ({ noSidebar }) => {
     >
       <Fab
         noSidebar={noSidebar}
-        aria-label="add"
+        aria-label={t('button.add')}
         disabled={isDisabled || isOffline}
-        icon={PlusIcon}
         color="primary"
         onClick={handleToggle}
-      />
+      >
+        <Icon icon={PlusIcon} />
+      </Fab>
     </div>
   )
 }
