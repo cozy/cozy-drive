@@ -69,7 +69,7 @@ const clusterizePhotos = async (client, setting, dataset, albums) => {
     if (clusterize) {
       for (const [clusterAlbums, photos] of clusterize.entries()) {
         // Retrieve the relevant parameters to compute this cluster
-        const params = getMatchingParameters(setting.parameters, photos)
+        const params = getMatchingParameters(newSetting.parameters, photos)
         const paramsMode = getDefaultParametersMode(params)
         if (!paramsMode) {
           log('warn', 'No parameters for clustering found')
@@ -82,7 +82,12 @@ const clusterizePhotos = async (client, setting, dataset, albums) => {
           clusterAlbums,
           photos
         )
-        newSetting = await updateParamsPeriod(client, setting, params, dataset)
+        newSetting = await updateParamsPeriod(
+          client,
+          newSetting,
+          params,
+          dataset
+        )
       }
     } else {
       return
