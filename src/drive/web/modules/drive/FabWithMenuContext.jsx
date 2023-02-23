@@ -19,7 +19,7 @@ const FabWithMenuContext = ({ noSidebar }) => {
       onClick={isOffline ? handleOfflineClick : undefined}
     >
       <Fab
-        noSidebar={noSidebar}
+        bottom={noSidebar ? '1rem' : 'calc(var(--sidebarHeight) + 1rem)'}
         aria-label={t('button.add')}
         disabled={isDisabled || isOffline}
         color="primary"

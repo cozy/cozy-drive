@@ -24,10 +24,12 @@ const ReadOnlyFab = () => {
     ? t('OnlyOffice.actions.edit')
     : t('OnlyOffice.actions.validate')
 
-  const fabProps = isMobile ? { 'aria-label': label } : { variant: 'extended' }
+  const fabProps = isMobile
+    ? { 'aria-label': label }
+    : { variant: 'extended', right: '30px', bottom: '55px' }
 
   return (
-    <Fab color="primary" noSidebar={true} onClick={handleClick} {...fabProps}>
+    <Fab color="primary" onClick={handleClick} {...fabProps}>
       <Icon
         icon={isEditorForcedReadOnly ? RenameIcon : CheckIcon}
         className={!isMobile ? 'u-mr-half' : ''}
