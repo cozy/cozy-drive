@@ -6,14 +6,13 @@ import UiFab from 'cozy-ui/transpiled/react/Fab'
 const useStyles = makeStyles(() => ({
   root: {
     position: 'fixed',
-    right: '1rem',
-    bottom: ({ noSidebar }) =>
-      noSidebar ? '1rem' : 'calc(var(--sidebarHeight) + 1rem)'
+    right: ({ right }) => (right ? right : '1rem'),
+    bottom: ({ bottom }) => (bottom ? bottom : '1rem')
   }
 }))
 
-const Fab = ({ noSidebar, children, ...rest }) => {
-  const styles = useStyles({ noSidebar })
+const Fab = ({ right, bottom, children, ...rest }) => {
+  const styles = useStyles({ right, bottom })
 
   return (
     <UiFab className={styles.root} {...rest}>
