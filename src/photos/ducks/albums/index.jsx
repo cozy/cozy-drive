@@ -10,7 +10,7 @@ import AddToAlbumModal from './components/AddToAlbumModal'
 import Loading from '../../components/Loading'
 
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { buildAlbumsQuery } from '../../queries/queries'
 
 const ALBUMS_QUERY = client =>
