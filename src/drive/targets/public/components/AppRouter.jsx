@@ -1,5 +1,5 @@
 import React from 'react'
-import { Router, Route, Redirect, hashHistory } from 'react-router'
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 import { models } from 'cozy-client'
 
@@ -8,7 +8,6 @@ import PublicFolderView from 'drive/web/modules/views/Public'
 import LightFileViewer from 'drive/web/modules/public/LightFileViewer'
 import FileHistory from 'components/FileHistory'
 import OnlyOfficePaywallView from 'drive/web/modules/views/OnlyOffice/OnlyOfficePaywallView'
-import { redirectToOnlyOfficePaywall } from 'drive/web/modules/views/OnlyOffice/helpers'
 import OnlyOfficeView from 'drive/web/modules/views/OnlyOffice'
 import OnlyOfficeCreateView from 'drive/web/modules/views/OnlyOffice/Create'
 import { isOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
@@ -20,87 +19,94 @@ const AppRouter = ({
   username,
   isOnlyOfficeDocShared,
   sharedDocumentId,
-  data,
-  history = hashHistory
+  data
 }) => {
   const { isDesktop } = useBreakpoints()
   const isFile = data && data.type === 'file'
 
   return (
-    <Router history={history}>
-      <Route component={PublicLayout}>
-        {isOfficeEnabled(isDesktop) ? (
-          <>
-            <Route
-              path="onlyoffice/:fileId"
-              component={props => (
-                <OnlyOfficeView
-                  {...props}
-                  isPublic={true}
-                  isReadOnly={isReadOnly}
-                  username={username}
-                  isFromSharing={isOnlyOfficeDocShared}
-                  isInSharedFolder={!isFile}
+    <HashRouter>
+      <Routes>
+        <Route element={<PublicLayout />}>
+          {isOfficeEnabled(isDesktop) ? (
+            <>
+              <Route
+                path="onlyoffice/:fileId"
+                element={
+                  <OnlyOfficeView
+                    isPublic={true}
+                    isReadOnly={isReadOnly}
+                    username={username}
+                    isFromSharing={isOnlyOfficeDocShared}
+                    isInSharedFolder={!isFile}
+                  />
+                }
+              >
+                <Route
+                  path="paywall"
+                  element={<OnlyOfficePaywallView isPublic={true} />}
+                />
+              </Route>
+              <Route
+                path="onlyoffice/:fileId/fromCreate"
+                element={
+                  <OnlyOfficeView
+                    isPublic={true}
+                    isReadOnly={isReadOnly}
+                    isInSharedFolder={!isFile}
+                  />
+                }
+              />
+              <Route
+                path="onlyoffice/create/:folderId/:fileClass"
+                element={<OnlyOfficeCreateView />}
+              />
+              {models.file.shouldBeOpenedByOnlyOffice(data) && (
+                <Route
+                  path="/"
+                  element={<Navigate to={`onlyoffice/${data.id}`} />}
                 />
               )}
-            >
+            </>
+          ) : (
+            <Route path="onlyoffice/*" element={<Navigate to="/" />} />
+          )}
+
+          {isFile && (
+            <Route path="/" element={<LightFileViewer files={[data]} />} />
+          )}
+
+          {!isFile && (
+            <>
               <Route
-                path="paywall"
-                component={props => (
-                  <OnlyOfficePaywallView {...props} isPublic={true} />
-                )}
+                path="/files/:folderId"
+                element={<Navigate to="/folder/:folderId" />}
               />
-            </Route>
-            <Route
-              path="onlyoffice/:fileId/fromCreate"
-              component={props => (
-                <OnlyOfficeView
-                  {...props}
-                  isPublic={true}
-                  isReadOnly={isReadOnly}
-                  isInSharedFolder={!isFile}
+              <Route path="folder" element={<PublicFolderView />}>
+                <Route path="file/:fileId/revision" element={<FileHistory />} />
+                <Route
+                  path="paywall"
+                  element={<OnlyOfficePaywallView isPublic={true} />}
                 />
-              )}
-            />
-            <Route
-              onEnter={redirectToOnlyOfficePaywall}
-              path="onlyoffice/create/:folderId/:fileClass"
-              component={OnlyOfficeCreateView}
-            />
-            {models.file.shouldBeOpenedByOnlyOffice(data) && (
-              <Redirect from="/" to={`onlyoffice/${data.id}`} />
-            )}
-          </>
-        ) : (
-          <Redirect from="onlyoffice/*" to="/" />
-        )}
+              </Route>
+              <Route path="folder/:folderId" element={<PublicFolderView />}>
+                <Route path="file/:fileId/revision" element={<FileHistory />} />
+                <Route
+                  path="paywall"
+                  element={<OnlyOfficePaywallView isPublic={true} />}
+                />
+              </Route>
 
-        {isFile && (
-          <Route
-            path="/"
-            component={() => <LightFileViewer files={[data]} />}
-          />
-        )}
-
-        {!isFile && (
-          <>
-            <Redirect from="/files/:folderId" to="/folder/:folderId" />
-            <Route path="folder(/:folderId)" component={PublicFolderView}>
-              <Route path="file/:fileId/revision" component={FileHistory} />
+              <Route path="external/:fileId" element={<ExternalRedirect />} />
               <Route
-                path="paywall"
-                component={props => (
-                  <OnlyOfficePaywallView {...props} isPublic={true} />
-                )}
+                path="/*"
+                element={<Navigate to={`folder/${sharedDocumentId}`} />}
               />
-            </Route>
-
-            <Route path="external/:fileId" component={ExternalRedirect} />
-            <Redirect from="/*" to={`folder/${sharedDocumentId}`} />
-          </>
-        )}
-      </Route>
-    </Router>
+            </>
+          )}
+        </Route>
+      </Routes>
+    </HashRouter>
   )
 }
 

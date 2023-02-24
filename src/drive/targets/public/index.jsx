@@ -3,7 +3,6 @@
 import 'whatwg-fetch'
 import React from 'react'
 import { render } from 'react-dom'
-import { hashHistory } from 'react-router'
 
 import 'cozy-ui/transpiled/react/stylesheet.css'
 
@@ -90,8 +89,7 @@ const init = async () => {
 
   const store = configureStore({
     client,
-    t: polyglot.t.bind(polyglot),
-    history: hashHistory
+    t: polyglot.t.bind(polyglot)
   })
 
   try {
