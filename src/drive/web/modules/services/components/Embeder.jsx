@@ -1,5 +1,5 @@
 import React from 'react'
-import { Router, Route, hashHistory } from 'react-router'
+import { HashRouter, Routes, Route } from 'react-router-dom'
 
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
@@ -43,20 +43,22 @@ class Embeder extends React.Component {
           <pre className="u-error">{this.state.error.toString()}</pre>
         )}
         {this.state.fileId && (
-          <Router history={hashHistory}>
-            <Route
-              path="/"
-              component={() => (
-                <FileOpenerExternal
-                  service={service}
-                  fileId={this.state.fileId}
-                />
+          <HashRouter>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <FileOpenerExternal
+                    service={service}
+                    fileId={this.state.fileId}
+                  />
+                }
+              />
+              {isOnlyOfficeEnabled() && (
+                <Route path="onlyoffice/:fileId" element={<OnlyOfficeView />} />
               )}
-            />
-            {isOnlyOfficeEnabled() && (
-              <Route path="onlyoffice/:fileId" component={OnlyOfficeView} />
-            )}
-          </Router>
+            </Routes>
+          </HashRouter>
         )}
         <Sprite />
       </div>
