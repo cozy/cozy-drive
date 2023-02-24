@@ -12,8 +12,9 @@ import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 import Selection from 'photos/ducks/selection'
 import { CozyHomeLink } from 'components/Button'
 import PhotoBoard from 'photos/components/PhotoBoard'
-import { ALBUM_QUERY } from '../../../../src/photos/ducks/albums/index'
 import ErrorUnsharedComponent from 'photos/components/ErrorUnshared'
+import { buildAlbumsQuery } from '../../queries/queries'
+import { Outlet, useParams } from 'react-router-dom'
 
 import styles from './index.styl'
 import MoreMenu from '../../components/MoreMenu'
@@ -55,19 +56,8 @@ export class App extends Component {
     )
   }
 
-  renderViewer(children) {
-    // children are injected by react-router when navigating a photo of the album
-    if (!children) return null
-    return React.Children.map(children, child =>
-      React.cloneElement(child, {
-        photos: this.props.photos
-      })
-    )
-  }
-
   render() {
-    const { album, hasMore, photos, fetchMore, children, isMobile } = this.props
-
+    const { album, hasMore, photos, fetchMore, isMobile } = this.props
     const { t } = this.context
     return (
       <div
@@ -126,7 +116,7 @@ export class App extends Component {
                   hasMore={hasMore}
                   fetchMore={fetchMore}
                 />
-                {this.renderViewer(children)}
+                <Outlet />
               </div>
             )}
           </Selection>
@@ -144,9 +134,11 @@ App.propTypes = {
 }
 
 const ConnectedApp = props => {
+  const { albumId } = useParams()
   const { isMobile } = useBreakpoints()
+  const albumsQuery = buildAlbumsQuery(albumId)
   return (
-    <Query query={ALBUM_QUERY} {...props}>
+    <Query query={albumsQuery.definition} as={albumsQuery.as} {...props}>
       {({ data: album, fetchStatus }) => {
         if (fetchStatus === 'failed') {
           return <ErrorUnsharedComponent />
