@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
-import { Router, Redirect, hashHistory, Route } from 'react-router'
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { RealtimePlugin } from 'cozy-realtime'
 
@@ -21,7 +21,7 @@ import appMetadata from 'photos/appMetadata'
 import doctypes from '../browser/doctypes'
 
 import App from './App'
-import PhotosViewer from 'photos/components/PhotosViewer'
+import { AlbumPhotosViewer } from 'photos/components/PhotosViewer'
 import StyledApp from 'photos/components/StyledApp'
 
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
@@ -79,12 +79,17 @@ async function init() {
           <CozyProvider client={client}>
             <BreakpointsProvider>
               <StyledApp>
-                <Router history={hashHistory}>
-                  <Route path="shared/:albumId" component={App}>
-                    <Route path=":photoId" component={PhotosViewer} />
-                  </Route>
-                  <Redirect from="/*" to={`shared/${id}`} />
-                </Router>
+                <HashRouter>
+                  <Routes>
+                    <Route path="shared/:albumId" element={<App />}>
+                      <Route path=":photoId" element={<AlbumPhotosViewer />} />
+                    </Route>
+                    <Route
+                      path="*"
+                      element={<Navigate to={`shared/${id}`} />}
+                    />
+                  </Routes>
+                </HashRouter>
               </StyledApp>
             </BreakpointsProvider>
           </CozyProvider>
