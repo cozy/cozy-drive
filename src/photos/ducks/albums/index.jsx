@@ -167,6 +167,7 @@ export const ConnectedAlbumPhotos = props => {
   return (
     <Query
       query={albumsQuery.definition}
+      as={albumsQuery.as}
       {...props}
       mutations={ALBUM_MUTATIONS}
     >
@@ -187,6 +188,7 @@ const ConnectedPhotosPicker = ({ ...props }) => {
     return (
       <Query
         query={albumsQuery.definition}
+        as={albumsQuery.as}
         mutations={ALBUMS_MUTATIONS}
         {...props}
       >

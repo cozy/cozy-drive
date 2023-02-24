@@ -14,8 +14,9 @@ import Selection from 'photos/ducks/selection'
 import { MoreButton, CozyHomeLink } from 'components/Button'
 import { HOME_LINK_HREF } from 'photos/constants/config'
 import PhotoBoard from 'photos/components/PhotoBoard'
-import { ALBUM_QUERY } from '../../../../src/photos/ducks/albums/index'
 import ErrorUnsharedComponent from 'photos/components/ErrorUnshared'
+import { buildAlbumsQuery } from '../../queries/queries'
+import { Outlet, useParams } from 'react-router-dom'
 
 import styles from './index.styl'
 
@@ -55,18 +56,8 @@ export class App extends Component {
     )
   }
 
-  renderViewer(children) {
-    // children are injected by react-router when navigating a photo of the album
-    if (!children) return null
-    return React.Children.map(children, child =>
-      React.cloneElement(child, {
-        photos: this.props.photos
-      })
-    )
-  }
-
   render() {
-    const { album, hasMore, photos, fetchMore, children } = this.props
+    const { album, hasMore, photos, fetchMore } = this.props
 
     const { t } = this.context
     return (
@@ -137,7 +128,7 @@ export class App extends Component {
                   hasMore={hasMore}
                   fetchMore={fetchMore}
                 />
-                {this.renderViewer(children)}
+                <Outlet />
               </div>
             )}
           </Selection>
@@ -154,35 +145,39 @@ App.propTypes = {
   fetchMore: PropTypes.func.isRequired
 }
 
-const ConnectedApp = props => (
-  <Query query={ALBUM_QUERY} {...props}>
-    {({ data: album, fetchStatus }) => {
-      if (fetchStatus === 'failed') {
-        return <ErrorUnsharedComponent />
-      }
-      if (fetchStatus === 'loaded') {
-        return (
-          <App
-            album={album}
-            photos={album.photos.data}
-            hasMore={album.photos.hasMore}
-            fetchMore={album.photos.fetchMore.bind(album.photos)}
-          >
-            {props.children}
-          </App>
-        )
-      } else {
-        return (
-          <Spinner
-            size={'xxlarge'}
-            loadingType={'photos_fetching'}
-            middle={true}
-            color={palette.dodgerBlue}
-          />
-        )
-      }
-    }}
-  </Query>
-)
+const ConnectedApp = props => {
+  const { albumId } = useParams()
+  const albumsQuery = buildAlbumsQuery(albumId)
+  return (
+    <Query query={albumsQuery.definition} as={albumsQuery.as} {...props}>
+      {({ data: album, fetchStatus }) => {
+        if (fetchStatus === 'failed') {
+          return <ErrorUnsharedComponent />
+        }
+        if (fetchStatus === 'loaded') {
+          return (
+            <App
+              album={album}
+              photos={album.photos.data}
+              hasMore={album.photos.hasMore}
+              fetchMore={album.photos.fetchMore.bind(album.photos)}
+            >
+              {props.children}
+            </App>
+          )
+        } else {
+          return (
+            <Spinner
+              size={'xxlarge'}
+              loadingType={'photos_fetching'}
+              middle={true}
+              color={palette.dodgerBlue}
+            />
+          )
+        }
+      }}
+    </Query>
+  )
+}
 
 export default ConnectedApp
