@@ -1,10 +1,9 @@
 import React from 'react'
 
 import AppLinker, {
-  generateWebLink,
   generateUniversalLink
 } from 'cozy-ui/transpiled/react/AppLinker'
-import { useClient } from 'cozy-client'
+import { generateWebLink, useClient } from 'cozy-client'
 import { isFlagshipApp } from 'cozy-device-helper'
 
 import styles from 'drive/web/modules/search/components/styles.styl'
