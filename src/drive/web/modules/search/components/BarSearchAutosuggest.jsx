@@ -16,18 +16,12 @@ import SuggestionListSkeleton from 'drive/web/modules/search/components/Suggesti
 const BarSearchAutosuggest = ({ t }) => {
   const webviewIntent = useWebviewIntent()
   const client = useClient()
-  const {
-    suggestions,
-    fetchSuggestions,
-    hasSuggestions,
-    clearSuggestions,
-    isBusy,
-    query,
-    makeIndexes
-  } = useSearch()
 
-  const [focused, setFocused] = useState(false)
   const [input, setInput] = useState('')
+  const [searchTerm, setSearchTerm] = useState('')
+  const { suggestions, hasSuggestions, isBusy, query, makeIndexes } =
+    useSearch(searchTerm)
+  const [focused, setFocused] = useState(false)
 
   const theme = {
     container: 'u-w-100',
@@ -39,15 +33,15 @@ const BarSearchAutosuggest = ({ t }) => {
   }
 
   const onSuggestionsFetchRequested = ({ value }) => {
-    fetchSuggestions(value)
+    setSearchTerm(value)
   }
   const onSuggestionsClearRequested = () => {
-    clearSuggestions()
+    setSearchTerm('')
   }
 
   const cleanSearch = () => {
-    clearSuggestions()
     setInput('')
+    setSearchTerm('')
   }
 
   const onSuggestionSelected = async (event, { suggestion }) => {
@@ -67,9 +61,7 @@ const BarSearchAutosuggest = ({ t }) => {
     } else {
       console.error(`openSuggestion (${suggestion.name}) could not be executed`)
     }
-
-    clearSuggestions()
-    setInput('')
+    cleanSearch()
   }
 
   // We want the user to find folders in which he can then navigate into, so we return the path here
@@ -108,7 +100,7 @@ const BarSearchAutosuggest = ({ t }) => {
     return <List {...containerProps}>{children}</List>
   }
 
-  const hasNoSearchResult = input !== '' && focused && !hasSuggestions
+  const hasNoSearchResult = searchTerm !== '' && focused && !hasSuggestions
 
   return (
     <div className={styles['bar-search-container']} role="search">

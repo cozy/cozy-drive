@@ -22,24 +22,22 @@ import SearchEmpty from './components/SearchEmpty'
 import { useEffect } from 'react'
 
 const SearchView = () => {
-  const { t } = useI18n()
-  const {
-    isBusy,
-    suggestions,
-    fetchSuggestions,
-    clearSuggestions,
-    hasSuggestions,
-    query,
-    makeIndexes,
-    hasMore,
-    fetchMore
-  } = useSearch({ limit: 25 })
   const webviewIntent = useWebviewIntent()
   const { router } = useRouter()
   const { isMobile } = useBreakpoints()
   const client = useClient()
 
-  const [input, setInput] = useState('')
+  const [searchTerm, setSearchTerm] = useState('')
+  const { t } = useI18n()
+  const {
+    isBusy,
+    suggestions,
+    hasSuggestions,
+    query,
+    makeIndexes,
+    hasMore,
+    fetchMore
+  } = useSearch(searchTerm, { limit: 25 })
 
   useEffect(() => {
     makeIndexes()
@@ -47,8 +45,7 @@ const SearchView = () => {
   }, [])
 
   const onInputChanged = event => {
-    setInput(event.target.value)
-    fetchSuggestions(event.target.value)
+    setSearchTerm(event.target.value)
   }
 
   const navigateBack = useCallback(() => {
@@ -82,11 +79,10 @@ const SearchView = () => {
   )
 
   const handleCleanInput = () => {
-    clearSuggestions()
-    setInput('')
+    setSearchTerm('')
   }
 
-  const hasNoSearchResult = input !== '' && !hasSuggestions
+  const hasNoSearchResult = searchTerm !== '' && !hasSuggestions
 
   return (
     <>
@@ -105,12 +101,12 @@ const SearchView = () => {
         >
           <BarSearchInputGroup
             isMobile={isMobile}
-            isInputNotEmpty={input !== ''}
+            isInputNotEmpty={searchTerm !== ''}
             onClean={handleCleanInput}
           >
             <Input
               fullwidth={true}
-              value={input}
+              value={searchTerm}
               onChange={onInputChanged}
               placeholder={t('searchbar.placeholder')}
               autoFocus
