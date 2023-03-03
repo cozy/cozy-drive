@@ -59,7 +59,9 @@ export const Toolbar = ({
       </div>
       {menuIsVisible && (
         <ActionMenu
-          placement="bottom-end"
+          popperOptions={{
+            placement: 'bottom-end'
+          }}
           anchorElRef={anchorRef}
           onClose={closeMenu}
           autoclose
