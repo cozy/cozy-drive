@@ -1,11 +1,14 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
+
 import { useClient, useFetchShortcut } from 'cozy-client'
 import Empty from 'cozy-ui/transpiled/react/Empty'
 import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import EmptyIcon from 'assets/icons/icon-folder-broken.svg'
 
-const ExternalRedirect = ({ params: { fileId }, t }) => {
+const ExternalRedirect = ({ t }) => {
+  const { fileId } = useParams()
   const client = useClient()
   const { shortcutInfos, fetchStatus } = useFetchShortcut(client, fileId)
   if (shortcutInfos) {
