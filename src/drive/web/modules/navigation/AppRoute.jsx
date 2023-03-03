@@ -1,6 +1,6 @@
 /* global __TARGET__ */
 import React from 'react'
-import { Routes, Route, Outlet } from 'react-router-dom'
+import { Routes, Route, Outlet, useParams, Navigate } from 'react-router-dom'
 
 import Settings from 'drive/mobile/modules/settings/Settings'
 import OnBoarding from 'drive/mobile/modules/onboarding/OnBoarding'
@@ -27,6 +27,11 @@ import OnlyOfficePaywallView from '../views/OnlyOffice/OnlyOfficePaywallView'
 
 import FilesViewerRecent from '../views/Recent/FilesViewerRecent'
 
+const FilesRedirect = () => {
+  const { folderId } = useParams()
+  return <Navigate to={`/folder/${folderId}`} replace={true} />
+}
+
 const RootComponent = () => (
   <Layout>
     <Outlet />
@@ -40,7 +45,7 @@ const AppRoute = () => (
       {__TARGET__ === 'mobile' && (
         <Route path="uploadfrommobile" element={<UploadFromMobile />} />
       )}
-      {/* <Redirect from="/files/:folderId" to="/folder/:folderId" /> */}
+      <Route path="/files/:folderId" element={<FilesRedirect />} />
       <Route path="/" element={<Index />} />
 
       <Route path="folder" element={<DriveView />}>
