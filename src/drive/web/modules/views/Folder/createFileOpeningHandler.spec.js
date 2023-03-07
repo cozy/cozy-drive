@@ -78,8 +78,8 @@ describe('createFileOpeningHandler', () => {
     onlyofficeFile.class = 'slide'
 
     setup = (
-      { isOnlyOfficeEnabled, webviewIntent } = {
-        isOnlyOfficeEnabled: true,
+      { isOfficeEnabled, webviewIntent } = {
+        isOfficeEnabled: true,
         webviewIntent: { call: mockUseWebviewIntent }
       }
     ) =>
@@ -91,7 +91,7 @@ describe('createFileOpeningHandler', () => {
         replaceCurrentUrl,
         openInNewTab,
         routeTo,
-        isOnlyOfficeEnabled,
+        isOfficeEnabled,
         webviewIntent
       })
   })
@@ -200,7 +200,7 @@ describe('createFileOpeningHandler', () => {
 
   it('should redirect to the file for an onlyoffice document with onlyoffice deactivated', async () => {
     shouldBeOpenedByOnlyOffice.mockReturnValue(true)
-    const handler = setup({ isOnlyOfficeEnabled: false })
+    const handler = setup({ isOfficeEnabled: false })
     await handler({ file: onlyofficeFile, isAvailableOffline: false })
     expect(navigateToFile).toHaveBeenCalledWith(onlyofficeFile)
   })

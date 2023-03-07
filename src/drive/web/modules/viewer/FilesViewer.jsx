@@ -17,7 +17,7 @@ import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
 import { useRouter } from 'drive/lib/RouterContext'
 import Fallback from 'drive/web/modules/viewer/Fallback'
 import {
-  isOnlyOfficeEnabled,
+  isOfficeEnabled,
   makeOnlyOfficeFileRoute
 } from 'drive/web/modules/views/OnlyOffice/helpers'
 
@@ -204,7 +204,7 @@ const FilesViewer = ({ filesQuery, files, fileId, onClose, onChange }) => {
           renderFallbackExtraContent={file => <Fallback file={file} t={t} />}
           componentsProps={{
             OnlyOfficeViewer: {
-              isEnabled: isOnlyOfficeEnabled(),
+              isEnabled: isOfficeEnabled(),
               opener: file => router.push(makeOnlyOfficeFileRoute(file, true))
             }
           }}

@@ -3,7 +3,13 @@ import FileTypeSheetIcon from 'cozy-ui/transpiled/react/Icons/FileTypeSheet'
 import FileTypeSlideIcon from 'cozy-ui/transpiled/react/Icons/FileTypeSlide'
 import FileTypeTextIcon from 'cozy-ui/transpiled/react/Icons/FileTypeText'
 
-export const isOnlyOfficeEnabled = () => flag('drive.onlyoffice.enabled')
+export const isOfficeEnabled = () => {
+  const office = flag('drive.office')
+  if (flag('drive.onlyoffice.enabled') || (office && office.enabled)) {
+    return true
+  }
+  return false
+}
 
 export const makeOnlyOfficeFileRoute = (file, isWithRouter) =>
   isWithRouter ? `/onlyoffice/${file.id}` : `/#/onlyoffice/${file.id}`

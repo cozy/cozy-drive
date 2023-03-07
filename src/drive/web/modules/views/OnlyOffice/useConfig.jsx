@@ -6,7 +6,7 @@ import useFetchJSON from 'cozy-client/dist/hooks/useFetchJSON'
 import {
   isOnlyOfficeReadOnly,
   shouldBeOpenedOnOtherInstance,
-  isOnlyOfficeEnabled,
+  isOfficeEnabled,
   makeName
 } from 'drive/web/modules/views/OnlyOffice/helpers'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
@@ -65,7 +65,7 @@ const useConfig = () => {
         })
 
         window.location = link
-      } else if (isOnlyOfficeEnabled()) {
+      } else if (isOfficeEnabled()) {
         if (isEditorReadOnly !== isOnlyOfficeReadOnly(data)) {
           setIsEditorReadOnly(isOnlyOfficeReadOnly(data))
         }

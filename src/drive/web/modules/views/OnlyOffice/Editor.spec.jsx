@@ -8,7 +8,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import AppLike from 'test/components/AppLike'
 import { officeDocParam } from 'test/data'
 
-import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
+import { isOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
 import Editor from 'drive/web/modules/views/OnlyOffice/Editor'
 
@@ -20,7 +20,7 @@ jest.mock('cozy-client/dist/hooks/useFetchJSON', () => ({
 
 jest.mock('drive/web/modules/views/OnlyOffice/helpers', () => ({
   ...jest.requireActual('drive/web/modules/views/OnlyOffice/helpers'),
-  isOnlyOfficeEnabled: jest.fn()
+  isOfficeEnabled: jest.fn()
 }))
 
 jest.mock('cozy-ui/transpiled/react/hooks/useBreakpoints', () => ({
@@ -109,7 +109,7 @@ describe('Editor', () => {
       data: officeDocParam
     })
     useQuery.mockReturnValue(officeDocParam)
-    isOnlyOfficeEnabled.mockReturnValue(true)
+    isOfficeEnabled.mockReturnValue(true)
 
     const { root } = setup()
     const { container, queryByTestId } = root
@@ -125,7 +125,7 @@ describe('Editor', () => {
       data: officeDocParam
     })
     useQuery.mockReturnValue(officeDocParam)
-    isOnlyOfficeEnabled.mockReturnValue(false)
+    isOfficeEnabled.mockReturnValue(false)
 
     const { root } = setup()
     const { container, queryByTestId, getAllByText } = root
@@ -146,7 +146,7 @@ describe('Editor', () => {
           data: officeDocParam
         })
         useQuery.mockReturnValue(officeDocParam)
-        isOnlyOfficeEnabled.mockReturnValue(true)
+        isOfficeEnabled.mockReturnValue(true)
 
         const { root } = setup({
           isMobile: true,
@@ -163,7 +163,7 @@ describe('Editor', () => {
           data: officeDocParam
         })
         useQuery.mockReturnValue(officeDocParam)
-        isOnlyOfficeEnabled.mockReturnValue(true)
+        isOfficeEnabled.mockReturnValue(true)
 
         const { root } = setup({ isMobile: true })
         const { queryByTestId } = root
@@ -179,7 +179,7 @@ describe('Editor', () => {
           data: officeDocParam
         })
         useQuery.mockReturnValue(officeDocParam)
-        isOnlyOfficeEnabled.mockReturnValue(true)
+        isOfficeEnabled.mockReturnValue(true)
 
         const { root } = setup({
           isMobile: false,
@@ -196,7 +196,7 @@ describe('Editor', () => {
           data: officeDocParam
         })
         useQuery.mockReturnValue(officeDocParam)
-        isOnlyOfficeEnabled.mockReturnValue(true)
+        isOfficeEnabled.mockReturnValue(true)
 
         const { root } = setup({ isMobile: false })
         const { queryByTestId } = root
@@ -213,7 +213,7 @@ describe('Editor', () => {
         data: officeDocParam
       })
       useQuery.mockReturnValue(officeDocParam)
-      isOnlyOfficeEnabled.mockReturnValue(true)
+      isOfficeEnabled.mockReturnValue(true)
 
       setup({ isMobile: true })
 
@@ -226,7 +226,7 @@ describe('Editor', () => {
         data: officeDocParam
       })
       useQuery.mockReturnValue(officeDocParam)
-      isOnlyOfficeEnabled.mockReturnValue(true)
+      isOfficeEnabled.mockReturnValue(true)
 
       setup({ isMobile: false })
 
@@ -239,7 +239,7 @@ describe('Editor', () => {
         data: officeDocParam
       })
       useQuery.mockReturnValue(officeDocParam)
-      isOnlyOfficeEnabled.mockReturnValue(true)
+      isOfficeEnabled.mockReturnValue(true)
 
       setup({ isMobile: false, isEditorForcedReadOnly: false })
 

@@ -26,7 +26,7 @@ import { TRASH_DIR_ID } from 'drive/constants/config'
 import createFileOpeningHandler from 'drive/web/modules/views/Folder/createFileOpeningHandler'
 import { useSyncingFakeFile } from './useSyncingFakeFile'
 import { isReferencedByShareInSharingContext } from 'drive/web/modules/views/Folder/syncHelpers'
-import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
+import { isOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
 import { isEncryptedFolder } from 'drive/lib/encryption'
 import { useWebviewIntent } from 'cozy-intent'
 
@@ -77,7 +77,7 @@ const FolderViewBody = ({
         replaceCurrentUrl: url => (window.location.href = url),
         openInNewTab: url => window.open(url, '_blank'),
         routeTo: url => router.push(url),
-        isOnlyOfficeEnabled: isOnlyOfficeEnabled(),
+        isOfficeEnabled: isOfficeEnabled(),
         webviewIntent
       })({
         event,

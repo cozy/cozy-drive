@@ -11,7 +11,7 @@ import { useRouter } from 'drive/lib/RouterContext'
 import PublicViewer from 'drive/web/modules/viewer/PublicViewer'
 import PublicToolbar from 'drive/web/modules/public/PublicToolbar'
 import {
-  isOnlyOfficeEnabled,
+  isOfficeEnabled,
   makeOnlyOfficeFileRoute
 } from 'drive/web/modules/views/OnlyOffice/helpers'
 
@@ -43,7 +43,7 @@ const LightFileViewer = ({ files }) => {
           currentIndex={0}
           componentsProps={{
             OnlyOfficeViewer: {
-              isEnabled: isOnlyOfficeEnabled(),
+              isEnabled: isOfficeEnabled(),
               opener: onlyOfficeOpener
             }
           }}
