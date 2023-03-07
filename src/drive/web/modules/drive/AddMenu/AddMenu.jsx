@@ -13,7 +13,7 @@ import CreateShortcut from 'drive/web/modules/drive/Toolbar/components/CreateSho
 import UploadItem from 'drive/web/modules/drive/Toolbar/components/UploadItem'
 import StartScanner from 'drive/web/modules/drive/Toolbar/components/StartScanner'
 import CreateOnlyOfficeItem from 'drive/web/modules/drive/Toolbar/components/CreateOnlyOfficeItem'
-import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
+import { isOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
 import flag from 'cozy-flags'
 
 export const ActionMenuContent = ({
@@ -42,7 +42,7 @@ export const ActionMenuContent = ({
         <AddEncryptedFolderItem />
       )}
       {!isPublic && !isEncryptedFolder && <CreateNoteItem />}
-      {canUpload && isOnlyOfficeEnabled() && !isEncryptedFolder && (
+      {canUpload && isOfficeEnabled() && !isEncryptedFolder && (
         <>
           <CreateOnlyOfficeItem fileClass="text" />
           <CreateOnlyOfficeItem fileClass="spreadsheet" />

@@ -16,7 +16,7 @@ const createFileOpeningHandler =
     replaceCurrentUrl,
     openInNewTab,
     routeTo,
-    isOnlyOfficeEnabled,
+    isOfficeEnabled,
     webviewIntent
   }) =>
   async ({ event, file, isAvailableOffline }) => {
@@ -57,7 +57,7 @@ const createFileOpeningHandler =
       } catch (e) {
         Alerter.error('alert.offline')
       }
-    } else if (isOnlyOffice && isOnlyOfficeEnabled) {
+    } else if (isOnlyOffice && isOfficeEnabled) {
       if (event.ctrlKey || event.metaKey || event.shiftKey) {
         openInNewTab(makeOnlyOfficeFileRoute(file))
       } else {

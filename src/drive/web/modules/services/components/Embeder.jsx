@@ -5,7 +5,7 @@ import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 
 import FileOpenerExternal from 'drive/web/modules/viewer/FileOpenerExternal'
-import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
+import { isOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
 import OnlyOfficeView from 'drive/web/modules/views/OnlyOffice'
 
 class Embeder extends React.Component {
@@ -53,7 +53,7 @@ class Embeder extends React.Component {
                 />
               )}
             />
-            {isOnlyOfficeEnabled() && (
+            {isOfficeEnabled() && (
               <Route path="onlyoffice/:fileId" component={OnlyOfficeView} />
             )}
           </Router>

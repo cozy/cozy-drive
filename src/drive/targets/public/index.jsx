@@ -25,7 +25,7 @@ import FileHistory from 'components/FileHistory'
 import ErrorShare from 'components/Error/ErrorShare'
 import OnlyOfficeView from 'drive/web/modules/views/OnlyOffice'
 import OnlyOfficeCreateView from 'drive/web/modules/views/OnlyOffice/Create'
-import { isOnlyOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
+import { isOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
 import appMetadata from 'drive/appMetadata'
 import logger from 'lib/logger'
 import App from 'components/App/App'
@@ -122,7 +122,7 @@ const init = async () => {
         <App lang={lang} polyglot={polyglot} client={client} store={store}>
           <Router history={hashHistory}>
             <Route component={PublicLayout}>
-              {isOnlyOfficeEnabled() && (
+              {isOfficeEnabled() && (
                 <>
                   <Route
                     path="onlyoffice/:fileId"
