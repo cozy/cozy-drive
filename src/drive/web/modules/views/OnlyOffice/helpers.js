@@ -27,6 +27,14 @@ export function redirectToOnlyOfficePaywall(nextState, replace) {
   }
 }
 
+export function onlyOfficeDefaultMode() {
+  const office = flag('drive.office')
+  if (office && office.write && office.onlyOffice) {
+    return office.onlyOffice.defaultMode
+  }
+  return 'view'
+}
+
 export const makeOnlyOfficeFileRoute = (file, isWithRouter) =>
   isWithRouter ? `/onlyoffice/${file.id}` : `/#/onlyoffice/${file.id}`
 
