@@ -5,6 +5,7 @@ import Dialog from 'cozy-ui/transpiled/react/Dialog'
 import { useRouter } from 'drive/lib/RouterContext'
 import Editor from 'drive/web/modules/views/OnlyOffice/Editor'
 import useHead from 'components/useHead'
+import { onlyOfficeDefaultMode } from 'drive/web/modules/views/OnlyOffice/helpers'
 
 export const OnlyOfficeContext = createContext()
 
@@ -21,7 +22,7 @@ const OnlyOfficeProvider = ({
 
   const [isEditorReady, setIsEditorReady] = useState(false)
 
-  const [editorMode, setEditorMode] = useState('view')
+  const [editorMode, setEditorMode] = useState(onlyOfficeDefaultMode())
   const isEditorModeView = useMemo(() => {
     return editorMode === 'view'
   }, [editorMode])
