@@ -129,7 +129,7 @@
     "cozy-realtime": "3.14.4",
     "cozy-scanner": "2.4.6",
     "cozy-scripts": "^7.0.0",
-    "cozy-sharing": "6.0.3",
+    "cozy-sharing": "6.0.5",
     "cozy-stack-client": "^34.1.5",
     "cozy-ui": "^81.2.1",
     "date-fns": "1.30.1",
