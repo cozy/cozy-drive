@@ -87,16 +87,7 @@ exports[`Public view should render children when they are present 1`] = `
         selected={Array []}
         showSelection={false}
       />
-      <div
-        key=".0"
-        photos={
-          Array [
-            1,
-            2,
-            3,
-          ]
-        }
-      />
+      <Outlet />
     </div>
   </div>
 </ContextProvider>
@@ -185,6 +176,7 @@ exports[`Public view should render the album 1`] = `
         selected={Array []}
         showSelection={false}
       />
+      <Outlet />
     </div>
   </div>
 </ContextProvider>
