@@ -35,9 +35,10 @@ const SuggestionItemTextSecondary = ({
       slug: 'drive',
       cozyUrl: client.getStackClient().uri,
       subDomainType,
-      nativePath: url
+      nativePath: url,
+      pathname: '/',
+      hash: url
     })
-
   return (
     <AppLinker app={app} href={appWebRef}>
       {({ onClick, href }) => (
