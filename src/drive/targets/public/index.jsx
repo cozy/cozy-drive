@@ -33,6 +33,7 @@ import ExternalRedirect from 'drive/web/modules/navigation/ExternalRedirect'
 import StyledApp from 'drive/web/modules/drive/StyledApp'
 import cozyBar from 'lib/cozyBar'
 import OnlyOfficePaywallView from 'drive/web/modules/views/OnlyOffice/OnlyOfficePaywallView'
+import { redirectToOnlyOfficePaywall } from 'drive/web/modules/views/OnlyOffice/helpers'
 
 const initCozyBar = (data, client) => {
   if (data.app.name && data.app.editor && data.app.icon && data.locale) {
@@ -157,6 +158,7 @@ const init = async () => {
                     )}
                   />
                   <Route
+                    onEnter={redirectToOnlyOfficePaywall}
                     path="onlyoffice/create/:folderId/:fileClass"
                     component={OnlyOfficeCreateView}
                   />

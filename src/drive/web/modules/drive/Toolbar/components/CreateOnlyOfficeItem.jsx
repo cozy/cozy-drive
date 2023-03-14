@@ -7,7 +7,10 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 
 import { ROOT_DIR_ID } from 'drive/constants/config'
 import { useRouter } from 'drive/lib/RouterContext'
-import { makeOnlyOfficeIconByClass } from 'drive/web/modules/views/OnlyOffice/helpers'
+import {
+  makeOnlyOfficeIconByClass,
+  canWriteOfficeDocument
+} from 'drive/web/modules/views/OnlyOffice/helpers'
 
 const CreateOnlyOfficeItem = ({ fileClass }) => {
   const { t } = useI18n()
@@ -18,10 +21,13 @@ const CreateOnlyOfficeItem = ({ fileClass }) => {
     [router]
   )
 
-  const handleClick = useCallback(
-    () => router.push(`/onlyoffice/create/${folderId}/${fileClass}`),
-    [router, fileClass, folderId]
-  )
+  const handleClick = useCallback(() => {
+    if (canWriteOfficeDocument()) {
+      router.push(`/onlyoffice/create/${folderId}/${fileClass}`)
+    } else {
+      router.push(`/folder/${folderId}/paywall`)
+    }
+  }, [router, fileClass, folderId])
 
   const ClassIcon = useMemo(
     () => makeOnlyOfficeIconByClass(fileClass),
