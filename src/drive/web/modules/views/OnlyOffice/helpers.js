@@ -11,6 +11,22 @@ export const isOfficeEnabled = () => {
   return false
 }
 
+export function canWriteOfficeDocument() {
+  const office = flag('drive.office')
+  if (office) {
+    return office.write
+  }
+  return false
+}
+
+export function redirectToOnlyOfficePaywall(nextState, replace) {
+  if (!canWriteOfficeDocument()) {
+    replace({
+      pathname: `/folder/${nextState.params.folderId}/paywall`
+    })
+  }
+}
+
 export const makeOnlyOfficeFileRoute = (file, isWithRouter) =>
   isWithRouter ? `/onlyoffice/${file.id}` : `/#/onlyoffice/${file.id}`
 

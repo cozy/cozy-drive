@@ -10,6 +10,7 @@ import Layout from 'drive/web/modules/layout/Layout'
 import FileOpenerExternal from 'drive/web/modules/viewer/FileOpenerExternal'
 import FileHistory from 'components/FileHistory'
 import UploadFromMobile from 'drive/mobile/modules/upload'
+import { redirectToOnlyOfficePaywall } from 'drive/web/modules/views/OnlyOffice/helpers'
 
 import ExternalRedirect from './ExternalRedirect'
 import Index from './Index'
@@ -111,6 +112,7 @@ const AppRoute = (
 
       <Route path="onlyoffice/:fileId/fromCreate" component={OnlyOfficeView} />
       <Route
+        onEnter={redirectToOnlyOfficePaywall}
         path="onlyoffice/create/:folderId/:fileClass"
         component={OnlyOfficeCreateView}
       />
