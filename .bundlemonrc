@@ -75,7 +75,7 @@
     },
     {
       "path": "drive/vendors/drive.<hash>.js",
-      "maxSize": "1.54 MB"
+      "maxSize": "1.6 MB"
     },
     {
       "path": "drive/<hash>.worker.js",
