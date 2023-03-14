@@ -32,6 +32,7 @@ import App from 'components/App/App'
 import ExternalRedirect from 'drive/web/modules/navigation/ExternalRedirect'
 import StyledApp from 'drive/web/modules/drive/StyledApp'
 import cozyBar from 'lib/cozyBar'
+import OnlyOfficePaywallView from 'drive/web/modules/views/OnlyOffice/OnlyOfficePaywallView'
 
 const initCozyBar = (data, client) => {
   if (data.app.name && data.app.editor && data.app.icon && data.locale) {
@@ -136,7 +137,14 @@ const init = async () => {
                         isInSharedFolder={!isFile}
                       />
                     )}
-                  />
+                  >
+                    <Route
+                      path="paywall"
+                      component={props => (
+                        <OnlyOfficePaywallView {...props} isPublic={true} />
+                      )}
+                    />
+                  </Route>
                   <Route
                     path="onlyoffice/:fileId/fromCreate"
                     component={props => (
@@ -172,6 +180,12 @@ const init = async () => {
                     <Route
                       path="file/:fileId/revision"
                       component={FileHistory}
+                    />
+                    <Route
+                      path="paywall"
+                      component={props => (
+                        <OnlyOfficePaywallView {...props} isPublic={true} />
+                      )}
                     />
                   </Route>
 
