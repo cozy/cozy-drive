@@ -44,7 +44,7 @@ client.plugins = {
 
 const setup = ({
   isMobile = false,
-  isEditorForcedReadOnly = true,
+  isEditorModeView = true,
   isReadOnly = false
 } = {}) => {
   useBreakpoints.mockReturnValue({ isMobile })
@@ -65,7 +65,7 @@ const setup = ({
           isPublic: 'false',
           isReadOnly,
           isEditorReady: true,
-          isEditorForcedReadOnly
+          isEditorModeView
         }}
       >
         <Editor />
@@ -143,7 +143,7 @@ describe('Editor', () => {
 
   describe('Title', () => {
     describe('on mobile', () => {
-      it('should hide title when isEditorForcedReadOnly false', () => {
+      it('should hide title when when the editor is in edit mode', () => {
         useFetchJSON.mockReturnValue({
           fetchStatus: 'loaded',
           data: officeDocParam
@@ -153,14 +153,14 @@ describe('Editor', () => {
 
         const { root } = setup({
           isMobile: true,
-          isEditorForcedReadOnly: false
+          isEditorModeView: false
         })
         const { queryByTestId } = root
 
         expect(queryByTestId('onlyoffice-title')).toBeFalsy()
       })
 
-      it('should show title when isEditorForcedReadOnly true', () => {
+      it('should show title when when the editor is in view mode', () => {
         useFetchJSON.mockReturnValue({
           fetchStatus: 'loaded',
           data: officeDocParam
@@ -176,7 +176,7 @@ describe('Editor', () => {
     })
 
     describe('on desktop', () => {
-      it('should show title when isEditorForcedReadOnly false', () => {
+      it('should show title when when the editor is in edit mode', () => {
         useFetchJSON.mockReturnValue({
           fetchStatus: 'loaded',
           data: officeDocParam
@@ -186,14 +186,14 @@ describe('Editor', () => {
 
         const { root } = setup({
           isMobile: false,
-          isEditorForcedReadOnly: false
+          isEditorModeView: false
         })
         const { queryByTestId } = root
 
         expect(queryByTestId('onlyoffice-title')).toBeTruthy()
       })
 
-      it('should show title when isEditorForcedReadOnly true', () => {
+      it('should show title when when the editor is in view mode', () => {
         useFetchJSON.mockReturnValue({
           fetchStatus: 'loaded',
           data: officeDocParam
@@ -210,59 +210,63 @@ describe('Editor', () => {
   })
 
   describe('ReadOnlyFab', () => {
-    it('should show the readOnlyFab on mobile', () => {
-      useFetchJSON.mockReturnValue({
-        fetchStatus: 'loaded',
-        data: officeDocParam
+    describe('on mobile', () => {
+      it('should show the readOnlyFab', () => {
+        useFetchJSON.mockReturnValue({
+          fetchStatus: 'loaded',
+          data: officeDocParam
+        })
+        useQuery.mockReturnValue(officeDocParam)
+        isOfficeEnabled.mockReturnValue(true)
+
+        setup({ isMobile: true })
+
+        expect(screen.queryByLabelText('Edit')).toBeTruthy()
       })
-      useQuery.mockReturnValue(officeDocParam)
-      isOfficeEnabled.mockReturnValue(true)
-
-      setup({ isMobile: true })
-
-      expect(screen.queryByLabelText('Edit')).toBeTruthy()
     })
 
-    it('should show the readOnlyFab on desktop when isEditorForcedReadOnly is true', () => {
-      useFetchJSON.mockReturnValue({
-        fetchStatus: 'loaded',
-        data: officeDocParam
-      })
-      useQuery.mockReturnValue(officeDocParam)
-      isOfficeEnabled.mockReturnValue(true)
+    describe('on desktop', () => {
+      it('should show the readOnlyFab when the editor is in view mode', () => {
+        useFetchJSON.mockReturnValue({
+          fetchStatus: 'loaded',
+          data: officeDocParam
+        })
+        useQuery.mockReturnValue(officeDocParam)
+        isOfficeEnabled.mockReturnValue(true)
 
-      setup({ isMobile: false })
+        setup({ isMobile: false })
 
-      expect(screen.queryByText('Edit')).toBeTruthy()
-    })
-
-    it('should hide the readOnlyFab on desktop when isEditorForcedReadOnly is false', () => {
-      useFetchJSON.mockReturnValue({
-        fetchStatus: 'loaded',
-        data: officeDocParam
-      })
-      useQuery.mockReturnValue(officeDocParam)
-      isOfficeEnabled.mockReturnValue(true)
-
-      setup({ isMobile: false, isEditorForcedReadOnly: false })
-
-      expect(screen.queryByText('Edit')).toBeFalsy()
-    })
-
-    it('should hide the readOnlyFab on desktop when the document is in read only', () => {
-      useFetchJSON.mockReturnValue({
-        fetchStatus: 'loaded',
-        data: officeDocParam
-      })
-      useQuery.mockReturnValue(officeDocParam)
-      isOfficeEnabled.mockReturnValue(true)
-
-      setup({
-        isMobile: true,
-        isReadOnly: true
+        expect(screen.queryByText('Edit')).toBeTruthy()
       })
 
-      expect(screen.queryByLabelText('Edit')).toBeFalsy()
+      it('should hide the readOnlyFab when the editor is in edit mode', () => {
+        useFetchJSON.mockReturnValue({
+          fetchStatus: 'loaded',
+          data: officeDocParam
+        })
+        useQuery.mockReturnValue(officeDocParam)
+        isOfficeEnabled.mockReturnValue(true)
+
+        setup({ isMobile: false, isEditorModeView: false })
+
+        expect(screen.queryByText('Edit')).toBeFalsy()
+      })
+
+      it('should hide the readOnlyFab when the document is in read only', () => {
+        useFetchJSON.mockReturnValue({
+          fetchStatus: 'loaded',
+          data: officeDocParam
+        })
+        useQuery.mockReturnValue(officeDocParam)
+        isOfficeEnabled.mockReturnValue(true)
+
+        setup({
+          isMobile: true,
+          isReadOnly: true
+        })
+
+        expect(screen.queryByLabelText('Edit')).toBeFalsy()
+      })
     })
   })
 })

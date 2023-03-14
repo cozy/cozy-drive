@@ -14,9 +14,6 @@ export const isOfficeEnabled = () => {
 export const makeOnlyOfficeFileRoute = (file, isWithRouter) =>
   isWithRouter ? `/onlyoffice/${file.id}` : `/#/onlyoffice/${file.id}`
 
-export const isOnlyOfficeReadOnly = ({ data }) =>
-  data.attributes.onlyoffice.editor.mode === 'view'
-
 /**
  * Returns true in case of the document is shared and should be opened on another instance.
  * See https://docs.cozy.io/en/cozy-stack/office/#get-officeidopen

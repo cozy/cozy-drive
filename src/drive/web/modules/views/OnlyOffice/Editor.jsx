@@ -27,7 +27,7 @@ const getEditorToolbarHeight = editorToolbarHeightFlag => {
 
 export const Editor = () => {
   const { config, status } = useConfig()
-  const { isEditorForcedReadOnly } = useContext(OnlyOfficeContext)
+  const { isEditorModeView } = useContext(OnlyOfficeContext)
 
   if (status === 'error') return <Error />
   if (status !== 'loaded' || !config) return <Loading />
@@ -42,7 +42,7 @@ export const Editor = () => {
       <Title />
       <DialogContent
         style={
-          isEditorForcedReadOnly
+          isEditorModeView
             ? {
                 marginTop: `-${editorToolbarHeight}px`
               }
