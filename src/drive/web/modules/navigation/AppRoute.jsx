@@ -24,6 +24,7 @@ import SharingsFolderView from '../views/Sharings/SharingsFolderView'
 import OnlyOfficeView from '../views/OnlyOffice'
 import OnlyOfficeCreateView from '../views/OnlyOffice/Create'
 import SearchView from '../views/Search/SearchView'
+import OnlyOfficePaywallView from '../views/OnlyOffice/OnlyOfficePaywallView'
 
 import FilesViewerRecent from '../views/Recent/FilesViewerRecent'
 
@@ -32,6 +33,7 @@ import FilesViewerRecent from '../views/Recent/FilesViewerRecent'
 // first
 export const routes = [
   '/folder/:folderId',
+  '/folder/:folderId/paywall',
   '/folder/:folderId/file/:fileId',
   '/folder/:folderId/file/:fileId/revision',
   '/recent/file/:fileId',
@@ -69,6 +71,7 @@ const AppRoute = (
         <Route path=":folderId">
           <Route path="file/:fileId" component={FilesViewerDrive} />
           <Route path="file/:fileId/revision" component={FileHistory} />
+          <Route path="paywall" component={OnlyOfficePaywallView} />
         </Route>
         <Route path="file/:fileId" component={FilesViewerDrive} />
         <Route path="file/:fileId/revision" component={FileHistory} />
@@ -102,7 +105,10 @@ const AppRoute = (
         </Route>
       </Route>
 
-      <Route path="onlyoffice/:fileId" component={OnlyOfficeView} />
+      <Route path="onlyoffice/:fileId" component={OnlyOfficeView}>
+        <Route path="paywall" component={OnlyOfficePaywallView} />
+      </Route>
+
       <Route path="onlyoffice/:fileId/fromCreate" component={OnlyOfficeView} />
       <Route
         path="onlyoffice/create/:folderId/:fileClass"

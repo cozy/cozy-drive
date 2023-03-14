@@ -65,7 +65,8 @@ const OnlyOffice = ({
   isReadOnly = false,
   isFromSharing,
   username,
-  isInSharedFolder
+  isInSharedFolder,
+  children
 }) => {
   useHead({ fileId })
 
@@ -80,6 +81,7 @@ const OnlyOffice = ({
         isInSharedFolder={isInSharedFolder}
       >
         <Editor />
+        {children}
       </OnlyOfficeProvider>
     </Dialog>
   )
