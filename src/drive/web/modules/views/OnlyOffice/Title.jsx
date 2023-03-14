@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
 
 const Title = () => {
   const { isMobile } = useBreakpoints()
-  const { isPublic, isFromSharing, isInSharedFolder, isEditorForcedReadOnly } =
+  const { isPublic, isFromSharing, isInSharedFolder, isEditorModeView } =
     useContext(OnlyOfficeContext)
   const styles = useStyles()
 
@@ -34,7 +34,7 @@ const Title = () => {
     [isPublic, isFromSharing, isInSharedFolder]
   )
 
-  const showDialogToolbar = isEditorForcedReadOnly || !isMobile
+  const showDialogToolbar = isEditorModeView || !isMobile
 
   return (
     <div style={{ zIndex: 'var(--zIndex-nav)' }}>

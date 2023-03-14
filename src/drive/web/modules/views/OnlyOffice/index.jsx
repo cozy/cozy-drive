@@ -20,7 +20,11 @@ const OnlyOfficeProvider = ({
   const { router } = useRouter()
 
   const [isEditorReady, setIsEditorReady] = useState(false)
-  const [isEditorForcedReadOnly, setIsEditorForcedReadOnly] = useState(true)
+
+  const [editorMode, setEditorMode] = useState('view')
+  const isEditorModeView = useMemo(() => {
+    return editorMode === 'view'
+  }, [editorMode])
 
   const isFromCreate = useMemo(
     () => router.location.pathname.endsWith('/fromCreate'),
@@ -29,7 +33,7 @@ const OnlyOfficeProvider = ({
 
   useEffect(() => {
     if (isFromCreate) {
-      setIsEditorForcedReadOnly(false)
+      setEditorMode('edit')
     }
   }, [isFromCreate])
 
@@ -44,8 +48,9 @@ const OnlyOfficeProvider = ({
         isInSharedFolder,
         isEditorReady,
         setIsEditorReady,
-        isEditorForcedReadOnly,
-        setIsEditorForcedReadOnly,
+        editorMode,
+        setEditorMode,
+        isEditorModeView,
         isFromCreate
       }}
     >

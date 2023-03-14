@@ -16,8 +16,9 @@ const useConfig = () => {
     setIsEditorReady,
     isPublic,
     username,
-    isEditorForcedReadOnly,
-    isFromSharing
+    isFromSharing,
+    editorMode,
+    isEditorModeView
   } = useContext(OnlyOfficeContext)
   const client = useClient()
   const instanceUri = client.getStackClient().uri
@@ -34,7 +35,7 @@ const useConfig = () => {
 
   useEffect(() => {
     setConfig()
-  }, [isEditorForcedReadOnly])
+  }, [isEditorModeView])
 
   useEffect(() => {
     if (!isQueryLoading(queryResult) && fetchStatus !== 'error' && !config) {
@@ -79,7 +80,7 @@ const useConfig = () => {
           document: onlyoffice.document,
           editorConfig: {
             ...onlyoffice.editor,
-            mode: isEditorForcedReadOnly ? 'view' : onlyoffice.editor.mode,
+            mode: onlyoffice.editor.mode === 'edit' ? editorMode : 'view',
             user: { name }
           },
           token: onlyoffice.token,
@@ -95,6 +96,7 @@ const useConfig = () => {
       }
     }
   }, [
+    editorMode,
     queryResult,
     fetchStatus,
     data,
@@ -102,7 +104,6 @@ const useConfig = () => {
     setConfig,
     setIsEditorReady,
     isPublic,
-    isEditorForcedReadOnly,
     username,
     isFromSharing,
     instanceUri

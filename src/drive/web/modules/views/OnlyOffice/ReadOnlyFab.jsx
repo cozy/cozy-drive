@@ -13,14 +13,14 @@ const ReadOnlyFab = () => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
 
-  const { isEditorForcedReadOnly, setIsEditorForcedReadOnly } =
+  const { isEditorModeView, editorMode, setEditorMode } =
     useContext(OnlyOfficeContext)
 
   const handleClick = useCallback(() => {
-    setIsEditorForcedReadOnly(v => !v)
-  }, [setIsEditorForcedReadOnly])
+    setEditorMode(editorMode === 'view' ? 'edit' : 'view')
+  }, [editorMode, setEditorMode])
 
-  const label = isEditorForcedReadOnly
+  const label = isEditorModeView
     ? t('OnlyOffice.actions.edit')
     : t('OnlyOffice.actions.validate')
 
@@ -31,7 +31,7 @@ const ReadOnlyFab = () => {
   return (
     <Fab color="primary" onClick={handleClick} {...fabProps}>
       <Icon
-        icon={isEditorForcedReadOnly ? RenameIcon : CheckIcon}
+        icon={isEditorModeView ? RenameIcon : CheckIcon}
         className={!isMobile ? 'u-mr-half' : ''}
         aria-hidden="true"
       />
