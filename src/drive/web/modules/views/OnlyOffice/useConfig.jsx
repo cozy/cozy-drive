@@ -4,7 +4,6 @@ import { useClient, isQueryLoading, generateWebLink } from 'cozy-client'
 import useFetchJSON from 'cozy-client/dist/hooks/useFetchJSON'
 
 import {
-  isOnlyOfficeReadOnly,
   shouldBeOpenedOnOtherInstance,
   isOfficeEnabled,
   makeName
@@ -14,8 +13,6 @@ import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
 const useConfig = () => {
   const {
     fileId,
-    isEditorReadOnly,
-    setIsEditorReadOnly,
     setIsEditorReady,
     isPublic,
     username,
@@ -66,10 +63,6 @@ const useConfig = () => {
 
         window.location = link
       } else if (isOfficeEnabled()) {
-        if (isEditorReadOnly !== isOnlyOfficeReadOnly(data)) {
-          setIsEditorReadOnly(isOnlyOfficeReadOnly(data))
-        }
-
         const { attributes } = data.data
         const { onlyoffice, public_name } = attributes
         const name = makeName({
@@ -105,8 +98,6 @@ const useConfig = () => {
     queryResult,
     fetchStatus,
     data,
-    isEditorReadOnly,
-    setIsEditorReadOnly,
     config,
     setConfig,
     setIsEditorReady,

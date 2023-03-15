@@ -22,7 +22,7 @@ const Toolbar = () => {
     fileId,
     isPublic,
     isFromSharing,
-    isEditorReadOnly,
+    isReadOnly,
     isEditorReady,
     isFromCreate
   } = useContext(OnlyOfficeContext)
@@ -73,7 +73,7 @@ const Toolbar = () => {
         )}
         <FileName fileWithPath={fileWithPath} />
       </div>
-      {isEditorReadOnly && <ReadOnly />}
+      {isReadOnly && <ReadOnly />}
       {!isPublic && isEditorReady && <Sharing fileWithPath={fileWithPath} />}
     </>
   )

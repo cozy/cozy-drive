@@ -99,7 +99,7 @@ const init = async () => {
   })
 
   try {
-    const sharedDocumentId = await getSharedDocument(client)
+    const { id: sharedDocumentId, isReadOnly } = await getSharedDocument(client)
 
     // In the case of a shared folder, we want to get the id of the only office file,
     // not the id of the shared document (that is the folder)
@@ -130,6 +130,7 @@ const init = async () => {
                       <OnlyOfficeView
                         {...props}
                         isPublic={true}
+                        isReadOnly={isReadOnly}
                         username={username}
                         isFromSharing={isOnlyOfficeDocShared}
                         isInSharedFolder={!isFile}
@@ -142,6 +143,7 @@ const init = async () => {
                       <OnlyOfficeView
                         {...props}
                         isPublic={true}
+                        isReadOnly={isReadOnly}
                         isInSharedFolder={!isFile}
                       />
                     )}

@@ -32,7 +32,7 @@ client.plugins = {
 }
 
 const setup = ({
-  isEditorReadOnly = false,
+  isReadOnly = false,
   isPublic = false,
   isFromSharing = false,
   isMobile = false
@@ -56,8 +56,7 @@ const setup = ({
           fileId: officeDocParam.id,
           isPublic,
           isFromSharing,
-          isEditorReadOnly,
-          setIsEditorReadOnly: jest.fn(),
+          isReadOnly,
           isEditorReady: true
         }}
       >
@@ -105,7 +104,7 @@ describe('Toolbar', () => {
     it('should be able to rename the file if not in readOnly mode', () => {
       useQuery.mockReturnValue(officeDocParam)
 
-      const { root } = setup({ isEditorReadOnly: false })
+      const { root } = setup({ isReadOnly: false })
       const { getByText, getByRole } = root
 
       fireEvent.click(getByText(officeDocParam.data.name))
@@ -115,7 +114,7 @@ describe('Toolbar', () => {
     it('should not be able to rename the file in readOnly mode', () => {
       useQuery.mockReturnValue(officeDocParam)
 
-      const { root } = setup({ isEditorReadOnly: true })
+      const { root } = setup({ isReadOnly: true })
       const { getByText, queryByRole } = root
 
       fireEvent.click(getByText(officeDocParam.data.name))
@@ -126,7 +125,7 @@ describe('Toolbar', () => {
       it('should be able to rename the file if not in readOnly mode', () => {
         useQuery.mockReturnValue(officeDocParam)
 
-        const { root } = setup({ isEditorReadOnly: false, isMobile: true })
+        const { root } = setup({ isReadOnly: false, isMobile: true })
         const { getByText, getByRole } = root
 
         fireEvent.click(getByText(officeDocParam.data.name))
@@ -171,7 +170,7 @@ describe('Toolbar', () => {
     it('should show text and icon if editor is read only', () => {
       useQuery.mockReturnValue(officeDocParam)
 
-      const { root } = setup({ isEditorReadOnly: true, isMobile: false })
+      const { root } = setup({ isReadOnly: true, isMobile: false })
       const { queryByTestId } = root
 
       expect(queryByTestId('onlyoffice-readonly-icon')).toBeTruthy()
@@ -181,7 +180,7 @@ describe('Toolbar', () => {
     it('should not show text and icon if editor is not read only', () => {
       useQuery.mockReturnValue(officeDocParam)
 
-      const { root } = setup({ isEditorReadOnly: false, isMobile: false })
+      const { root } = setup({ isReadOnly: false, isMobile: false })
       const { queryByTestId } = root
 
       expect(queryByTestId('onlyoffice-readonly-icon')).toBeFalsy()
@@ -192,7 +191,7 @@ describe('Toolbar', () => {
       it('should show only icon if editor is read only', () => {
         useQuery.mockReturnValue(officeDocParam)
 
-        const { root } = setup({ isEditorReadOnly: true, isMobile: true })
+        const { root } = setup({ isReadOnly: true, isMobile: true })
         const { queryByTestId } = root
 
         expect(queryByTestId('onlyoffice-readonly-icon-only')).toBeTruthy()
@@ -202,7 +201,7 @@ describe('Toolbar', () => {
       it('should not show text and icon if editor is not read only', () => {
         useQuery.mockReturnValue(officeDocParam)
 
-        const { root } = setup({ isEditorReadOnly: false, isMobile: true })
+        const { root } = setup({ isReadOnly: false, isMobile: true })
         const { queryByTestId } = root
 
         expect(queryByTestId('onlyoffice-readonly-icon')).toBeFalsy()
