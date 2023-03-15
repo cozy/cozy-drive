@@ -42,7 +42,11 @@ client.plugins = {
   }
 }
 
-const setup = ({ isMobile = false, isEditorForcedReadOnly = true } = {}) => {
+const setup = ({
+  isMobile = false,
+  isEditorForcedReadOnly = true,
+  isReadOnly = false
+} = {}) => {
   useBreakpoints.mockReturnValue({ isMobile })
   const root = render(
     <AppLike
@@ -59,8 +63,7 @@ const setup = ({ isMobile = false, isEditorForcedReadOnly = true } = {}) => {
         value={{
           fileId: '123',
           isPublic: 'false',
-          isEditorReadOnly: false,
-          setIsEditorReadOnly: jest.fn(),
+          isReadOnly,
           isEditorReady: true,
           isEditorForcedReadOnly
         }}
@@ -244,6 +247,22 @@ describe('Editor', () => {
       setup({ isMobile: false, isEditorForcedReadOnly: false })
 
       expect(screen.queryByText('Edit')).toBeFalsy()
+    })
+
+    it('should hide the readOnlyFab on desktop when the document is in read only', () => {
+      useFetchJSON.mockReturnValue({
+        fetchStatus: 'loaded',
+        data: officeDocParam
+      })
+      useQuery.mockReturnValue(officeDocParam)
+      isOfficeEnabled.mockReturnValue(true)
+
+      setup({
+        isMobile: true,
+        isReadOnly: true
+      })
+
+      expect(screen.queryByLabelText('Edit')).toBeFalsy()
     })
   })
 })

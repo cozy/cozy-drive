@@ -72,7 +72,7 @@ async function init() {
     })
   }
   try {
-    const id = await getSharedDocument(client)
+    const { id } = await getSharedDocument(client)
     app = (
       <WebviewIntentProvider>
         <Provider store={store}>

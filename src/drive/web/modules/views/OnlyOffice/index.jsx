@@ -11,6 +11,7 @@ export const OnlyOfficeContext = createContext()
 const OnlyOfficeProvider = ({
   fileId,
   isPublic,
+  isReadOnly,
   isFromSharing,
   username,
   isInSharedFolder,
@@ -18,7 +19,6 @@ const OnlyOfficeProvider = ({
 }) => {
   const { router } = useRouter()
 
-  const [isEditorReadOnly, setIsEditorReadOnly] = useState()
   const [isEditorReady, setIsEditorReady] = useState(false)
   const [isEditorForcedReadOnly, setIsEditorForcedReadOnly] = useState(true)
 
@@ -38,11 +38,10 @@ const OnlyOfficeProvider = ({
       value={{
         fileId,
         isPublic,
+        isReadOnly,
         isFromSharing,
         username,
         isInSharedFolder,
-        isEditorReadOnly,
-        setIsEditorReadOnly,
         isEditorReady,
         setIsEditorReady,
         isEditorForcedReadOnly,
@@ -58,6 +57,7 @@ const OnlyOfficeProvider = ({
 const OnlyOffice = ({
   params: { fileId },
   isPublic,
+  isReadOnly = false,
   isFromSharing,
   username,
   isInSharedFolder
@@ -69,6 +69,7 @@ const OnlyOffice = ({
       <OnlyOfficeProvider
         fileId={fileId}
         isPublic={isPublic}
+        isReadOnly={isReadOnly}
         isFromSharing={isFromSharing}
         username={username}
         isInSharedFolder={isInSharedFolder}

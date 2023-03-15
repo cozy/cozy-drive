@@ -16,7 +16,7 @@ const forceIframeHeight = value => {
 
 const View = ({ id, apiUrl, docEditorConfig }) => {
   const [isError, setIsError] = useState(false)
-  const { isEditorReady, isEditorReadOnly, isEditorForcedReadOnly } =
+  const { isEditorReady, isReadOnly, isEditorForcedReadOnly } =
     useContext(OnlyOfficeContext)
   const { isMobile } = useBreakpoints()
 
@@ -52,7 +52,7 @@ const View = ({ id, apiUrl, docEditorConfig }) => {
   }, [isEditorReady])
 
   const showReadOnlyFab =
-    isEditorReady && !isEditorReadOnly && (isMobile || isEditorForcedReadOnly)
+    isEditorReady && !isReadOnly && (isMobile || isEditorForcedReadOnly)
 
   if (isError) return <Error />
 

@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
 const FileName = ({ fileWithPath }) => {
   const muiStyles = useStyles()
   const { isMobile } = useBreakpoints()
-  const { isEditorReadOnly } = useContext(OnlyOfficeContext)
+  const { isReadOnly } = useContext(OnlyOfficeContext)
   const [isRenaming, setIsRenaming] = useState(false)
 
   const onRename = useCallback(() => setIsRenaming(true), [setIsRenaming])
@@ -57,11 +57,11 @@ const FileName = ({ fileWithPath }) => {
       ) : (
         <Typography
           className={cx(muiStyles.name, {
-            [`${muiStyles.renamable}`]: !isEditorReadOnly
+            [`${muiStyles.renamable}`]: !isReadOnly
           })}
           variant="h6"
           noWrap
-          onClick={!isEditorReadOnly ? onRename : undefined}
+          onClick={!isReadOnly ? onRename : undefined}
         >
           {fileWithPath.name}
         </Typography>
