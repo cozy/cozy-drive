@@ -14,8 +14,6 @@ import { MoreButton } from 'components/Button'
 
 import styles from 'photos/styles/toolbar.styl'
 
-import { useNavigate, useLocation } from 'react-router-dom'
-
 class AlbumToolbar extends Component {
   render() {
     const {
@@ -134,10 +132,4 @@ class AlbumToolbar extends Component {
   }
 }
 
-const AlbumToolbarWrapper = props => {
-  const navigate = useNavigate()
-  const { pathname } = useLocation()
-  return <AlbumToolbar {...props} navigate={navigate} pathname={pathname} />
-}
-
-export default withBreakpoints()(AlbumToolbarWrapper)
+export default withBreakpoints()(AlbumToolbar)

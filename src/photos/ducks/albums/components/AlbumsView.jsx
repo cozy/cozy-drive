@@ -1,4 +1,6 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import styles from '../../../styles/layout.styl'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 
@@ -22,6 +24,8 @@ const Content = ({ list }) => {
 }
 
 const AlbumsView = ({ albums }) => {
+  const { navigate } = useNavigate()
+
   if (!albums) {
     return null
   }
@@ -31,7 +35,7 @@ const AlbumsView = ({ albums }) => {
       className={styles['pho-content-wrapper']}
     >
       <Topbar viewName="albums">
-        <AlbumsToolbar />
+        <AlbumsToolbar navigate={navigate} />
       </Topbar>
       <Content list={albums} />
       <Outlet />

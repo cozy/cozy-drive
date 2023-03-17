@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 
 import { withClient } from 'cozy-client'
 
@@ -19,7 +20,7 @@ import PhotoBoard from 'photos/components/PhotoBoard'
 import Topbar from 'photos/components/Topbar'
 import DestroyConfirm from 'photos/components/DestroyConfirm'
 import Selection from '../../selection'
-import { Outlet, useNavigate } from 'react-router-dom'
+
 class AlbumPhotos extends Component {
   state = {
     editing: false,
@@ -121,8 +122,17 @@ class AlbumPhotos extends Component {
       return null
     }
 
-    const { t, album, shareAlbum, photos, hasMore, fetchMore, lastFetch } =
-      this.props
+    const {
+      t,
+      album,
+      shareAlbum,
+      photos,
+      hasMore,
+      fetchMore,
+      lastFetch,
+      navigate,
+      pathname
+    } = this.props
     const { editing } = this.state
     const shared = {}
 
@@ -148,6 +158,8 @@ class AlbumPhotos extends Component {
                 onEdit={this.renameAlbum}
               >
                 <AlbumToolbar
+                  navigate={navigate}
+                  pathname={pathname}
                   t={t}
                   album={album}
                   sharedWithMe={shared.withMe}
@@ -217,8 +229,9 @@ AlbumPhotos.propTypes = {
 }
 
 const AlbumPhotosWrapper = props => {
+  const { pathname } = useLocation()
   const navigate = useNavigate()
-  return <AlbumPhotos {...props} navigate={navigate} />
+  return <AlbumPhotos {...props} navigate={navigate} pathname={pathname} />
 }
 
 export default flow(

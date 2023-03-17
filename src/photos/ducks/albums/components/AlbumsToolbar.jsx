@@ -14,10 +14,7 @@ import { MoreButton } from 'components/Button'
 
 import styles from 'photos/styles/toolbar.styl'
 
-import { useNavigate } from 'react-router-dom'
-
-const AlbumsToolbar = () => {
-  const { navigate } = useNavigate()
+const AlbumsToolbar = ({ navigate }) => {
   const { t } = useI18n()
   return (
     <div
