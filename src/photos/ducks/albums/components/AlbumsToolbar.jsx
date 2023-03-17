@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { ButtonLink } from 'cozy-ui/transpiled/react'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
@@ -8,8 +9,6 @@ import AlbumAddIcon from 'cozy-ui/transpiled/react/Icons/AlbumAdd'
 import styles from 'photos/styles/toolbar.styl'
 import MoreMenu from '../../../components/MoreMenu'
 import { newAlbum } from '../../../components/actions'
-
-import { useNavigate } from 'react-router-dom'
 
 const AlbumsToolbar = () => {
   const { isMobile } = useBreakpoints()
