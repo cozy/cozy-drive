@@ -8,6 +8,7 @@ import AlbumPhotos from './components/AlbumPhotos'
 import PhotosPicker from './components/PhotosPicker'
 import AddToAlbumModal from './components/AddToAlbumModal'
 import Loading from '../../components/Loading'
+import Oops from 'photos/components/Error/Oops'
 
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
 import { useParams } from 'react-router-dom'
@@ -150,6 +151,8 @@ export const AlbumPhotosWithLoader =
           {children}
         </AlbumPhotos>
       )
+    } else if (fetchStatus === 'failed') {
+      return <Oops />
     } else {
       return (
         <Loading
@@ -164,6 +167,7 @@ export const AlbumPhotosWithLoader =
 export const ConnectedAlbumPhotos = props => {
   const { albumId } = useParams()
   const albumsQuery = buildAlbumsQuery(albumId)
+
   return (
     <Query
       query={albumsQuery.definition}

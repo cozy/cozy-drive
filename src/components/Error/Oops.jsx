@@ -13,13 +13,13 @@ const reload = () => {
   window.location.reload()
 }
 
-const Oops = ({ title }) => {
+const Oops = ({ title, icon }) => {
   const { t } = useI18n()
 
   return (
     <Empty
       title={title ? title : t('error.open_folder')}
-      icon={EmptyIcon}
+      icon={icon ? icon : EmptyIcon}
       className={styles['oops']}
     >
       <Button onClick={reload} label={t('error.button.reload')} />
@@ -28,7 +28,8 @@ const Oops = ({ title }) => {
 }
 
 Oops.propTypes = {
-  title: PropTypes.string
+  title: PropTypes.string,
+  icon: PropTypes.node
 }
 
 export default Oops
