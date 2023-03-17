@@ -1,5 +1,6 @@
 import React from 'react'
-import styles from '../../../styles/layout.styl'
+import { Outlet } from 'react-router-dom'
+
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 
 import AlbumsToolbar from './AlbumsToolbar'
@@ -7,7 +8,7 @@ import AlbumsList from './AlbumsList'
 import Loading from '../../../components/Loading'
 import ErrorComponent from 'components/Error/ErrorComponent'
 import Topbar from '../../../components/Topbar'
-import { Outlet } from 'react-router-dom'
+import styles from '../../../styles/layout.styl'
 
 const Content = ({ list }) => {
   const { fetchStatus, lastFetch } = list
