@@ -8,6 +8,11 @@ import Timeline from '../ducks/timeline'
 import { AlbumsView, AlbumPhotos, PhotosPicker } from '../ducks/albums'
 import { TimelinePhotosViewer, AlbumPhotosViewer } from './PhotosViewer'
 
+function ErrorBoundary() {
+  // If there is error uncaugth we redirect to homepage
+  return <Navigate to="photos" replace />
+}
+
 const router = createHashRouter([
   {
     element: <Layout />,
@@ -22,7 +27,8 @@ const router = createHashRouter([
         children: [
           {
             path: ':photoId',
-            element: <TimelinePhotosViewer />
+            element: <TimelinePhotosViewer />,
+            errorElement: <ErrorBoundary />
           }
         ]
       },
@@ -40,6 +46,7 @@ const router = createHashRouter([
           {
             path: ':albumId',
             element: <AlbumPhotos />,
+            errorElement: <ErrorBoundary />,
             children: [
               {
                 path: 'edit',
@@ -47,7 +54,8 @@ const router = createHashRouter([
               },
               {
                 path: ':photoId',
-                element: <AlbumPhotosViewer />
+                element: <AlbumPhotosViewer />,
+                errorElement: <ErrorBoundary />
               }
             ]
           }

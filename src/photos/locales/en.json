@@ -34,7 +34,8 @@
     "public_album_unshared_text": "One lost, ten found... or just check out with the owner for help. This file might not be lost.",
     "refresh": "Refresh now",
     "generic": "An error occurred, please try again.",
-    "album_rename_abort": "The album name can not be empty."
+    "album_rename_abort": "The album name can not be empty.",
+    "back_homepage": "Back to homepage"
   },
   "Toolbar": {
     "photo_upload": "Upload",
