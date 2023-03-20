@@ -7,6 +7,7 @@ import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import Error from 'drive/web/modules/views/OnlyOffice/Error'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
 import ReadOnlyFab from 'drive/web/modules/views/OnlyOffice/ReadOnlyFab'
+import { isOfficeEditingEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
 import { FRAME_EDITOR_NAME } from 'drive/web/modules/views/OnlyOffice/config'
 
 const forceIframeHeight = value => {
@@ -19,7 +20,7 @@ const View = ({ id, apiUrl, docEditorConfig }) => {
 
   const { isEditorReady, isReadOnly, isEditorModeView } =
     useContext(OnlyOfficeContext)
-  const { isMobile } = useBreakpoints()
+  const { isMobile, isDesktop } = useBreakpoints()
 
   const initEditor = useCallback(() => {
     new window.DocsAPI.DocEditor('onlyOfficeEditor', docEditorConfig)
@@ -53,7 +54,10 @@ const View = ({ id, apiUrl, docEditorConfig }) => {
   }, [isEditorReady])
 
   const showReadOnlyFab =
-    isEditorReady && !isReadOnly && (isMobile || isEditorModeView)
+    isEditorReady &&
+    !isReadOnly &&
+    isOfficeEditingEnabled(isDesktop) &&
+    (isMobile || isEditorModeView)
 
   if (isError) return <Error />
 
