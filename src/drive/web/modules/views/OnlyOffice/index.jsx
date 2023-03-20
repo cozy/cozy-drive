@@ -1,6 +1,7 @@
 import React, { createContext, useState, useMemo, useEffect } from 'react'
 
 import Dialog from 'cozy-ui/transpiled/react/Dialog'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 import { useRouter } from 'drive/lib/RouterContext'
 import Editor from 'drive/web/modules/views/OnlyOffice/Editor'
@@ -19,10 +20,11 @@ const OnlyOfficeProvider = ({
   children
 }) => {
   const { router } = useRouter()
+  const { isDesktop } = useBreakpoints()
 
   const [isEditorReady, setIsEditorReady] = useState(false)
 
-  const [editorMode, setEditorMode] = useState(onlyOfficeDefaultMode())
+  const [editorMode, setEditorMode] = useState(onlyOfficeDefaultMode(isDesktop))
   const isEditorModeView = useMemo(() => {
     return editorMode === 'view'
   }, [editorMode])

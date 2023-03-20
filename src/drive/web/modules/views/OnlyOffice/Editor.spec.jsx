@@ -8,7 +8,10 @@ import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import AppLike from 'test/components/AppLike'
 import { officeDocParam } from 'test/data'
 
-import { isOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
+import {
+  isOfficeEnabled,
+  isOfficeEditingEnabled
+} from 'drive/web/modules/views/OnlyOffice/helpers'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
 import Editor from 'drive/web/modules/views/OnlyOffice/Editor'
 
@@ -20,7 +23,8 @@ jest.mock('cozy-client/dist/hooks/useFetchJSON', () => ({
 
 jest.mock('drive/web/modules/views/OnlyOffice/helpers', () => ({
   ...jest.requireActual('drive/web/modules/views/OnlyOffice/helpers'),
-  isOfficeEnabled: jest.fn()
+  isOfficeEnabled: jest.fn(),
+  isOfficeEditingEnabled: jest.fn()
 }))
 
 jest.mock('cozy-ui/transpiled/react/hooks/useBreakpoints', () => ({
@@ -217,7 +221,20 @@ describe('Editor', () => {
           data: officeDocParam
         })
         useQuery.mockReturnValue(officeDocParam)
-        isOfficeEnabled.mockReturnValue(true)
+        isOfficeEditingEnabled.mockReturnValue(true)
+
+        setup({ isMobile: true })
+
+        expect(screen.queryByLabelText('Edit')).toBeTruthy()
+      })
+
+      it('should show the readOnlyFab', () => {
+        useFetchJSON.mockReturnValue({
+          fetchStatus: 'loaded',
+          data: officeDocParam
+        })
+        useQuery.mockReturnValue(officeDocParam)
+        isOfficeEditingEnabled.mockReturnValue(true)
 
         setup({ isMobile: true })
 
@@ -232,7 +249,7 @@ describe('Editor', () => {
           data: officeDocParam
         })
         useQuery.mockReturnValue(officeDocParam)
-        isOfficeEnabled.mockReturnValue(true)
+        isOfficeEditingEnabled.mockReturnValue(true)
 
         setup({ isMobile: false })
 
@@ -245,7 +262,7 @@ describe('Editor', () => {
           data: officeDocParam
         })
         useQuery.mockReturnValue(officeDocParam)
-        isOfficeEnabled.mockReturnValue(true)
+        isOfficeEditingEnabled.mockReturnValue(true)
 
         setup({ isMobile: false, isEditorModeView: false })
 
@@ -258,7 +275,7 @@ describe('Editor', () => {
           data: officeDocParam
         })
         useQuery.mockReturnValue(officeDocParam)
-        isOfficeEnabled.mockReturnValue(true)
+        isOfficeEditingEnabled.mockReturnValue(true)
 
         setup({
           isMobile: true,

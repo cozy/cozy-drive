@@ -27,12 +27,29 @@ export function redirectToOnlyOfficePaywall(nextState, replace) {
   }
 }
 
-export function onlyOfficeDefaultMode() {
+export function onlyOfficeDefaultMode(isDesktop) {
   const office = flag('drive.office')
+
+  if (!isDesktop && flag('drive.office.disableMobileEditing')) {
+    return 'view'
+  }
+
   if (office && office.write && office.onlyOffice) {
     return office.onlyOffice.defaultMode
   }
   return 'view'
+}
+
+export const isOfficeEditingEnabled = isDesktop => {
+  if (!isOfficeEnabled()) {
+    return false
+  }
+
+  if (!isDesktop && flag('drive.office.disableMobileEditing')) {
+    return false
+  }
+
+  return true
 }
 
 export const makeOnlyOfficeFileRoute = (file, isWithRouter) =>
