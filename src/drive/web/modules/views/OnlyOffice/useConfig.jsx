@@ -79,13 +79,6 @@ const useConfig = () => {
           public_name
         })
 
-        const onWarning = event => {
-          // sessionIdle
-          if (event.data.warningCode === -121) {
-            window.location.reload()
-          }
-        }
-
         const serverUrl = onlyoffice.url
         const apiUrl = `${serverUrl}/web-apps/apps/api/documents/api.js`
         const docEditorConfig = {
@@ -99,8 +92,7 @@ const useConfig = () => {
           token: onlyoffice.token,
           documentType: onlyoffice.documentType,
           events: {
-            onAppReady: () => setIsEditorReady(true),
-            onWarning
+            onAppReady: () => setIsEditorReady(true)
           }
         }
 
