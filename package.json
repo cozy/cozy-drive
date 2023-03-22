@@ -120,7 +120,7 @@
     "cozy-client-js": "0.20.0",
     "cozy-device-helper": "^2.5.0",
     "cozy-doctypes": "1.85.4",
-    "cozy-flags": "2.11.0",
+    "cozy-flags": "2.12.0",
     "cozy-harvest-lib": "5.10.5",
     "cozy-intent": "^2.9.0",
     "cozy-keys-lib": "4.1.9",
