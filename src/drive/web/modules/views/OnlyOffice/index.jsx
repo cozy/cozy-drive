@@ -20,11 +20,13 @@ const OnlyOfficeProvider = ({
   children
 }) => {
   const { router } = useRouter()
-  const { isDesktop } = useBreakpoints()
+  const { isDesktop, isMobile } = useBreakpoints()
 
   const [isEditorReady, setIsEditorReady] = useState(false)
 
-  const [editorMode, setEditorMode] = useState(onlyOfficeDefaultMode(isDesktop))
+  const [editorMode, setEditorMode] = useState(
+    onlyOfficeDefaultMode(isDesktop, isMobile)
+  )
   const isEditorModeView = useMemo(() => {
     return editorMode === 'view'
   }, [editorMode])
