@@ -4,18 +4,12 @@ import FileTypeSlideIcon from 'cozy-ui/transpiled/react/Icons/FileTypeSlide'
 import FileTypeTextIcon from 'cozy-ui/transpiled/react/Icons/FileTypeText'
 
 export const isOfficeEnabled = () => {
-  const office = flag('drive.office')
-  if (flag('drive.onlyoffice.enabled') || (office && office.enabled)) {
-    return true
-  }
+  if (flag('drive.office.enabled')) return true
   return false
 }
 
 export function canWriteOfficeDocument() {
-  const office = flag('drive.office')
-  if (office) {
-    return office.write
-  }
+  if (flag('drive.office.write')) return true
   return false
 }
 
