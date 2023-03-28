@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import classNames from 'classnames'
-import { default as BreadcrumbMui } from '@material-ui/core/Breadcrumbs/Breadcrumbs'
+import BreadcrumbMui from 'cozy-ui/transpiled/react/MuiCozyTheme/MuiBreadcrumbs'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import RightIcon from 'cozy-ui/transpiled/react/Icons/Right'
 
