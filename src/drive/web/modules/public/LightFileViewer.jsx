@@ -43,7 +43,7 @@ const LightFileViewer = ({ files }) => {
           currentIndex={0}
           componentsProps={{
             OnlyOfficeViewer: {
-              isEnabled: isOfficeEnabled(),
+              isEnabled: isOfficeEnabled(isDesktop),
               opener: onlyOfficeOpener
             }
           }}

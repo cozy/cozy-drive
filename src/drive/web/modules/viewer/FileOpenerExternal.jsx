@@ -20,6 +20,7 @@ import Overlay from 'cozy-ui/transpiled/react/Overlay'
 import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
 import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
 import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
+import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 
 import Fallback from 'drive/web/modules/viewer/Fallback'
 import {
@@ -69,7 +70,12 @@ export class FileOpener extends Component {
 
   render() {
     const { file, loading, fileNotFound } = this.state
-    const { t, service, router } = this.props
+    const {
+      t,
+      service,
+      router,
+      breakpoints: { isDesktop }
+    } = this.props
 
     return (
       <div className="u-pos-absolute u-w-100 u-h-100 u-bg-charcoalGrey">
@@ -88,7 +94,7 @@ export class FileOpener extends Component {
                 )}
                 componentsProps={{
                   OnlyOfficeViewer: {
-                    isEnabled: isOfficeEnabled(),
+                    isEnabled: isOfficeEnabled(isDesktop),
                     opener: file =>
                       router.push(makeOnlyOfficeFileRoute(file, true))
                   }
@@ -120,4 +126,4 @@ FileOpener.propTypes = {
   fileId: PropTypes.string
 }
 
-export default translate()(withRouter(FileOpener))
+export default withBreakpoints()(translate()(withRouter(FileOpener)))

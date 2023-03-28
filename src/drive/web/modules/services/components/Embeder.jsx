@@ -3,6 +3,7 @@ import { Router, Route, hashHistory } from 'react-router'
 
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
+import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 
 import FileOpenerExternal from 'drive/web/modules/viewer/FileOpenerExternal'
 import { isOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
@@ -33,7 +34,10 @@ class Embeder extends React.Component {
   }
 
   render() {
-    const { service } = this.props
+    const {
+      service,
+      breakpoints: { isDesktop }
+    } = this.props
     return (
       <div>
         {this.state.loading && (
@@ -53,7 +57,7 @@ class Embeder extends React.Component {
                 />
               )}
             />
-            {isOfficeEnabled() && (
+            {isOfficeEnabled(isDesktop) && (
               <Route path="onlyoffice/:fileId" component={OnlyOfficeView} />
             )}
           </Router>
@@ -64,4 +68,4 @@ class Embeder extends React.Component {
   }
 }
 
-export default Embeder
+export default withBreakpoints()(Embeder)

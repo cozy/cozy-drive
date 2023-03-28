@@ -3,8 +3,10 @@ import FileTypeSheetIcon from 'cozy-ui/transpiled/react/Icons/FileTypeSheet'
 import FileTypeSlideIcon from 'cozy-ui/transpiled/react/Icons/FileTypeSlide'
 import FileTypeTextIcon from 'cozy-ui/transpiled/react/Icons/FileTypeText'
 
-export const isOfficeEnabled = () => {
-  const officeEnabled = flag('drive.office.enabled')
+export const isOfficeEnabled = isDesktop => {
+  const officeEnabled = flag(
+    `drive.office.${!isDesktop ? 'touchScreen.' : ''}enabled`
+  )
   if (officeEnabled !== null) {
     return officeEnabled
   }
@@ -56,7 +58,7 @@ export function officeDefaultMode(isDesktop, isMobile) {
 }
 
 export const isOfficeEditingEnabled = isDesktop => {
-  if (!isOfficeEnabled()) {
+  if (!isOfficeEnabled(isDesktop)) {
     return false
   }
 
