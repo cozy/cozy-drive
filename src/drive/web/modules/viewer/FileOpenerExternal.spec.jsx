@@ -24,6 +24,9 @@ describe('FileOpenerExternal', () => {
         routeParams={{
           fileId: '123'
         }}
+        breakpoints={{
+          isDesktop: true
+        }}
       />,
       {
         disableLifecycleMethods: true
@@ -43,6 +46,9 @@ describe('FileOpenerExternal', () => {
         fileId={'123'}
         routeParams={{
           fileId: '123'
+        }}
+        breakpoints={{
+          isDesktop: true
         }}
       />,
       {

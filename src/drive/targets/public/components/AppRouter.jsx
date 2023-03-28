@@ -13,6 +13,7 @@ import OnlyOfficeView from 'drive/web/modules/views/OnlyOffice'
 import OnlyOfficeCreateView from 'drive/web/modules/views/OnlyOffice/Create'
 import { isOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
 import ExternalRedirect from 'drive/web/modules/navigation/ExternalRedirect'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 const AppRouter = ({
   isReadOnly,
@@ -21,12 +22,13 @@ const AppRouter = ({
   sharedDocumentId,
   data
 }) => {
+  const { isDesktop } = useBreakpoints()
   const isFile = data && data.type === 'file'
 
   return (
     <Router history={hashHistory}>
       <Route component={PublicLayout}>
-        {isOfficeEnabled() && (
+        {isOfficeEnabled(isDesktop) && (
           <>
             <Route
               path="onlyoffice/:fileId"

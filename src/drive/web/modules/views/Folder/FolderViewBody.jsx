@@ -77,7 +77,7 @@ const FolderViewBody = ({
         replaceCurrentUrl: url => (window.location.href = url),
         openInNewTab: url => window.open(url, '_blank'),
         routeTo: url => router.push(url),
-        isOfficeEnabled: isOfficeEnabled(),
+        isOfficeEnabled: isOfficeEnabled(isDesktop),
         webviewIntent
       })({
         event,
@@ -85,7 +85,15 @@ const FolderViewBody = ({
         isAvailableOffline
       })
     },
-    [client, dispatch, navigateToFile, isFlatDomain, router, webviewIntent]
+    [
+      client,
+      dispatch,
+      navigateToFile,
+      isFlatDomain,
+      router,
+      webviewIntent,
+      isDesktop
+    ]
   )
 
   const isInError = queryResults.some(query => query.fetchStatus === 'failed')

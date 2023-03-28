@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { useClient, isQueryLoading, generateWebLink } from 'cozy-client'
 import useFetchJSON from 'cozy-client/dist/hooks/useFetchJSON'
 
@@ -28,6 +29,7 @@ const useConfig = () => {
 
   const queryResult = useFetchJSON('GET', `/office/${fileId}/open`)
   const { data, fetchStatus } = queryResult
+  const { isDesktop } = useBreakpoints()
 
   useEffect(() => {
     setStatus(fetchStatus)
@@ -63,7 +65,7 @@ const useConfig = () => {
         })
 
         window.location = link
-      } else if (isOfficeEnabled()) {
+      } else if (isOfficeEnabled(isDesktop)) {
         const { attributes } = data.data
         const { onlyoffice, public_name } = attributes
         const name = makeName({
@@ -106,7 +108,8 @@ const useConfig = () => {
     isPublic,
     username,
     isFromSharing,
-    instanceUri
+    instanceUri,
+    isDesktop
   ])
 
   return { config, status }
