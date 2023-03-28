@@ -3,10 +3,10 @@
 import 'whatwg-fetch'
 import React from 'react'
 import { render } from 'react-dom'
+import { hashHistory } from 'react-router'
 
 import 'cozy-ui/transpiled/react/stylesheet.css'
 
-import { Router, Route, Redirect, hashHistory } from 'react-router'
 import { getQueryParameter } from 'react-cozy-helpers'
 import CozyClient, { models } from 'cozy-client'
 import { Document } from 'cozy-doctypes'
@@ -18,22 +18,13 @@ import registerClientPlugins from 'drive/lib/registerClientPlugins'
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 import { schema } from 'drive/lib/doctypes'
 import configureStore from 'drive/store/configureStore'
-import PublicLayout from 'drive/web/modules/public/PublicLayout'
-import PublicFolderView from 'drive/web/modules/views/Public'
-import LightFileViewer from 'drive/web/modules/public/LightFileViewer'
-import FileHistory from 'components/FileHistory'
 import ErrorShare from 'components/Error/ErrorShare'
-import OnlyOfficeView from 'drive/web/modules/views/OnlyOffice'
-import OnlyOfficeCreateView from 'drive/web/modules/views/OnlyOffice/Create'
-import { isOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
 import appMetadata from 'drive/appMetadata'
 import logger from 'lib/logger'
 import App from 'components/App/App'
-import ExternalRedirect from 'drive/web/modules/navigation/ExternalRedirect'
 import StyledApp from 'drive/web/modules/drive/StyledApp'
 import cozyBar from 'lib/cozyBar'
-import OnlyOfficePaywallView from 'drive/web/modules/views/OnlyOffice/OnlyOfficePaywallView'
-import { redirectToOnlyOfficePaywall } from 'drive/web/modules/views/OnlyOffice/helpers'
+import AppRouter from 'drive/targets/public/components/AppRouter'
 
 const initCozyBar = (data, client) => {
   if (data.app.name && data.app.editor && data.app.icon && data.locale) {
@@ -109,7 +100,6 @@ const init = async () => {
       .collection('io.cozy.files')
       .get(isOnlyOfficeDocShared ? onlyOfficeDocId : sharedDocumentId)
 
-    const isFile = data && data.type === 'file'
     const isNote = models.file.isNote(data)
 
     if (isNote) {
@@ -122,81 +112,13 @@ const init = async () => {
       initCozyBar(dataset, client)
       render(
         <App lang={lang} polyglot={polyglot} client={client} store={store}>
-          <Router history={hashHistory}>
-            <Route component={PublicLayout}>
-              {isOfficeEnabled() && (
-                <>
-                  <Route
-                    path="onlyoffice/:fileId"
-                    component={props => (
-                      <OnlyOfficeView
-                        {...props}
-                        isPublic={true}
-                        isReadOnly={isReadOnly}
-                        username={username}
-                        isFromSharing={isOnlyOfficeDocShared}
-                        isInSharedFolder={!isFile}
-                      />
-                    )}
-                  >
-                    <Route
-                      path="paywall"
-                      component={props => (
-                        <OnlyOfficePaywallView {...props} isPublic={true} />
-                      )}
-                    />
-                  </Route>
-                  <Route
-                    path="onlyoffice/:fileId/fromCreate"
-                    component={props => (
-                      <OnlyOfficeView
-                        {...props}
-                        isPublic={true}
-                        isReadOnly={isReadOnly}
-                        isInSharedFolder={!isFile}
-                      />
-                    )}
-                  />
-                  <Route
-                    onEnter={redirectToOnlyOfficePaywall}
-                    path="onlyoffice/create/:folderId/:fileClass"
-                    component={OnlyOfficeCreateView}
-                  />
-                  {models.file.shouldBeOpenedByOnlyOffice(data) && (
-                    <Redirect from="/" to={`onlyoffice/${data.id}`} />
-                  )}
-                </>
-              )}
-
-              {isFile && (
-                <Route
-                  path="/"
-                  component={() => <LightFileViewer files={[data]} />}
-                />
-              )}
-
-              {!isFile && (
-                <>
-                  <Redirect from="/files/:folderId" to="/folder/:folderId" />
-                  <Route path="folder(/:folderId)" component={PublicFolderView}>
-                    <Route
-                      path="file/:fileId/revision"
-                      component={FileHistory}
-                    />
-                    <Route
-                      path="paywall"
-                      component={props => (
-                        <OnlyOfficePaywallView {...props} isPublic={true} />
-                      )}
-                    />
-                  </Route>
-
-                  <Route path="external/:fileId" component={ExternalRedirect} />
-                  <Redirect from="/*" to={`folder/${sharedDocumentId}`} />
-                </>
-              )}
-            </Route>
-          </Router>
+          <AppRouter
+            isReadOnly={isReadOnly}
+            username={username}
+            data={data}
+            isOnlyOfficeDocShared={isOnlyOfficeDocShared}
+            sharedDocumentId={sharedDocumentId}
+          />
         </App>,
         root
       )
