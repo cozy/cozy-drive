@@ -28,7 +28,7 @@ export function redirectToOnlyOfficePaywall(nextState, replace) {
 }
 
 export function onlyOfficeDefaultMode(isDesktop, isMobile) {
-  if (!isDesktop && flag('drive.office.disableMobileEditing')) {
+  if (!isDesktop && flag('drive.office.touchScreen.readOnly')) {
     return 'view'
   }
 
@@ -52,7 +52,7 @@ export const isOfficeEditingEnabled = isDesktop => {
     return false
   }
 
-  if (!isDesktop && flag('drive.office.disableMobileEditing')) {
+  if (!isDesktop && flag('drive.office.touchScreen.readOnly')) {
     return false
   }
 
