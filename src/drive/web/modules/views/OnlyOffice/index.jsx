@@ -6,7 +6,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { useRouter } from 'drive/lib/RouterContext'
 import Editor from 'drive/web/modules/views/OnlyOffice/Editor'
 import useHead from 'components/useHead'
-import { onlyOfficeDefaultMode } from 'drive/web/modules/views/OnlyOffice/helpers'
+import { officeDefaultMode } from 'drive/web/modules/views/OnlyOffice/helpers'
 
 export const OnlyOfficeContext = createContext()
 
@@ -25,11 +25,9 @@ const OnlyOfficeProvider = ({
   const [isEditorReady, setIsEditorReady] = useState(false)
 
   const [editorMode, setEditorMode] = useState(
-    onlyOfficeDefaultMode(isDesktop, isMobile)
+    officeDefaultMode(isDesktop, isMobile)
   )
-  const isEditorModeView = useMemo(() => {
-    return editorMode === 'view'
-  }, [editorMode])
+  const isEditorModeView = useMemo(() => editorMode === 'view', [editorMode])
 
   const isFromCreate = useMemo(
     () => router.location.pathname.endsWith('/fromCreate'),
