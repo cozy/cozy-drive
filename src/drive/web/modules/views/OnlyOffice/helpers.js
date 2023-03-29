@@ -27,19 +27,19 @@ export function redirectToOnlyOfficePaywall(nextState, replace) {
   }
 }
 
-export function onlyOfficeDefaultMode(isDesktop, isMobile) {
+export function officeDefaultMode(isDesktop, isMobile) {
   if (!isDesktop && flag('drive.office.touchScreen.readOnly')) {
     return 'view'
   }
 
   const canWrite = canWriteOfficeDocument()
 
-  const mobileDefaultMode = flag('drive.office.onlyOffice.mobileDefaultMode')
+  const mobileDefaultMode = flag('drive.office.mobile.defaultMode')
   if (isMobile && canWrite && mobileDefaultMode !== null) {
     return mobileDefaultMode
   }
 
-  const defaultMode = flag('drive.office.onlyOffice.defaultMode')
+  const defaultMode = flag('drive.office.defaultMode')
   if (canWrite && defaultMode !== null) {
     return defaultMode
   }
