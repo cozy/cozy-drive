@@ -1,11 +1,13 @@
 import flag from 'cozy-flags'
+import { isMobile } from 'cozy-device-helper'
+
 import FileTypeSheetIcon from 'cozy-ui/transpiled/react/Icons/FileTypeSheet'
 import FileTypeSlideIcon from 'cozy-ui/transpiled/react/Icons/FileTypeSlide'
 import FileTypeTextIcon from 'cozy-ui/transpiled/react/Icons/FileTypeText'
 
 export const isOfficeEnabled = isDesktop => {
   const officeEnabled = flag(
-    `drive.office.${!isDesktop ? 'touchScreen.' : ''}enabled`
+    `drive.office.${!isDesktop || isMobile() ? 'touchScreen.' : ''}enabled`
   )
   if (officeEnabled !== null) {
     return officeEnabled
@@ -62,7 +64,7 @@ export const isOfficeEditingEnabled = isDesktop => {
     return false
   }
 
-  if (!isDesktop && flag('drive.office.touchScreen.readOnly')) {
+  if ((!isDesktop || isMobile()) && flag('drive.office.touchScreen.readOnly')) {
     return false
   }
 
