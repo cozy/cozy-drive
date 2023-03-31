@@ -31,14 +31,6 @@ export function canWriteOfficeDocument() {
   return false
 }
 
-export function redirectToOnlyOfficePaywall(nextState, replace) {
-  if (!canWriteOfficeDocument()) {
-    replace({
-      pathname: `/folder/${nextState.params.folderId}/paywall`
-    })
-  }
-}
-
 export function officeDefaultMode(isDesktop, isMobile) {
   if (!isDesktop && flag('drive.office.touchScreen.readOnly')) {
     return 'view'
