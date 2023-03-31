@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams, Navigate } from 'react-router-dom'
 
 import Dialog, { DialogContent } from 'cozy-ui/transpiled/react/Dialog'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
@@ -7,10 +7,16 @@ import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import Oops from 'components/Error/Oops'
 
 import useCreateFile from 'drive/web/modules/views/OnlyOffice/useCreateFile'
+import { canWriteOfficeDocument } from 'drive/web/modules/views/OnlyOffice/helpers'
 
-const Create = ({ params: { folderId, fileClass } }) => {
+const Create = () => {
   const navigate = useNavigate()
+  const { folderId, fileClass } = useParams()
   const { status, fileId } = useCreateFile(folderId, fileClass)
+
+  if (!canWriteOfficeDocument()) {
+    return <Navigate to={`/folder/${folderId}/paywall`} />
+  }
 
   if (status === 'error') {
     return <Oops />

@@ -1,4 +1,5 @@
 import React, { useContext, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import RenameIcon from 'cozy-ui/transpiled/react/Icons/Rename'
@@ -7,13 +8,12 @@ import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import Fab from 'cozy-ui/transpiled/react/Fab'
 
-import { useRouter } from 'drive/lib/RouterContext'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
 import { canWriteOfficeDocument } from 'drive/web/modules/views/OnlyOffice/helpers'
 import { useFabStyles } from 'drive/web/modules/drive/helpers'
 
 const ReadOnlyFab = () => {
-  const { router } = useRouter()
+  const navigate = useNavigate()
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
 
@@ -24,9 +24,9 @@ const ReadOnlyFab = () => {
     if (canWriteOfficeDocument()) {
       setEditorMode(editorMode === 'view' ? 'edit' : 'view')
     } else {
-      router.push(`${router.location.pathname}/paywall`)
+      navigate('./paywall')
     }
-  }, [editorMode, setEditorMode, router])
+  }, [editorMode, setEditorMode, navigate])
 
   const label = isEditorModeView
     ? t('OnlyOffice.actions.edit')

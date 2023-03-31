@@ -1,14 +1,13 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { OnlyOfficePaywall } from 'cozy-ui/transpiled/react/Paywall'
 
-import { useRouter } from 'drive/lib/RouterContext'
-
 const OnlyOfficePaywallView = ({ isPublic = false }) => {
-  const { router } = useRouter()
+  const navigate = useNavigate()
 
   const onClose = () => {
-    router.replace(`${router.location.pathname.replace('/paywall', '')}`)
+    navigate('..')
   }
 
   return <OnlyOfficePaywall isPublic={isPublic} onClose={onClose} />
