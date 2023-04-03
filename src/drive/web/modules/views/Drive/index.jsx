@@ -2,7 +2,7 @@
 
 import React, { useCallback, useContext, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { useNavigate, Outlet } from 'react-router-dom'
+import { useNavigate, Outlet, useLocation } from 'react-router-dom'
 
 import { SharingContext } from 'cozy-sharing'
 import { useQuery, useClient } from 'cozy-client'
@@ -56,6 +56,7 @@ const mobileExtraColumnsNames = []
 
 const DriveView = () => {
   const navigate = useNavigate()
+  const { pathname } = useLocation()
   const currentFolderId = useCurrentFolderId() || ROOT_DIR_ID
   useHead()
 
@@ -136,6 +137,7 @@ const DriveView = () => {
     refresh,
     dispatch,
     navigate,
+    pathname,
     hasWriteAccess: canWriteToCurrentFolder,
     canMove: true,
     isPublic: false

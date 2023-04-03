@@ -116,8 +116,7 @@ describe('useActions', () => {
     popModal: mockModalContextValue.popModal,
     refresh: mockRefresh,
     dispatch: jest.fn(),
-    router: mockRouterContextValue.router,
-    location: mockRouterContextValue.location
+    navigate: jest.fn()
   }
 
   const getAction = (actionKey, hookArgs) => {
@@ -458,10 +457,15 @@ describe('useActions', () => {
 
     it('redirects to the history view when activated', () => {
       const navigate = jest.fn()
-      const versionsAction = getAction('history', { navigate })
+      const versionsAction = getAction('history', {
+        navigate,
+        pathname: 'folder/:folderId'
+      })
       const mockDocument = { id: 'abc' }
       versionsAction.action([mockDocument])
-      expect(navigate).toHaveBeenCalledWith('./file/abc/revision')
+      expect(navigate).toHaveBeenCalledWith(
+        'folder/:folderId/file/abc/revision'
+      )
     })
   })
 
