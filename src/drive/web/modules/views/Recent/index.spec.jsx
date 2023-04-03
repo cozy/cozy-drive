@@ -122,6 +122,6 @@ describe('Recent View', () => {
     // navigates  to the history view
     const historyItem = getByText('History')
     fireEvent.click(historyItem)
-    expect(mockNavigate).toHaveBeenCalledWith('./file/file-foobar0/revision')
+    expect(mockNavigate).toHaveBeenCalledWith('/file/file-foobar0/revision')
   })
 })

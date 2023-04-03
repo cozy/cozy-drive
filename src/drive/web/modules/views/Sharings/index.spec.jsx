@@ -142,6 +142,6 @@ describe('Sharings View', () => {
       fireEvent.click(historyItem)
     })
 
-    expect(mockNavigate).toHaveBeenCalledWith('./file/file-foobar0/revision')
+    expect(mockNavigate).toHaveBeenCalledWith('/file/file-foobar0/revision')
   })
 })
