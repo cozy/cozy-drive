@@ -340,6 +340,10 @@ column-width-thumbnail-bigger = 7rem
         button
             background silver
             opacity 1
+
+.fil-content-body
+    padding-bottom calc(56px + 4rem) // Claudy Fab size + margins around
+
 // -- responsive
 
 +medium-screen()
@@ -352,6 +356,9 @@ column-width-thumbnail-bigger = 7rem
 
 +small-screen()
 // @stylint on
+    .fil-content-body:not(.fil-content-body--withFabActive)
+        padding-bottom 0
+
     .fil-content-row
         height 4rem
 
