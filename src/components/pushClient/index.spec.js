@@ -4,7 +4,7 @@ import CozyClient from 'cozy-client'
 describe('isClientAlreadyInstalled', () => {
   test('isClientAlreadyInstalled is true', async () => {
     const client = new CozyClient({})
-    client.query = jest.fn().mockResolvedValue({
+    client.fetchQueryAndGetFromState = jest.fn().mockResolvedValue({
       data: {
         0: {
           attributes: {
@@ -18,7 +18,7 @@ describe('isClientAlreadyInstalled', () => {
   })
   test('isClientAlreadyInstalled is not installed', async () => {
     const client = new CozyClient({})
-    client.query = jest.fn().mockResolvedValue({
+    client.fetchQueryAndGetFromState = jest.fn().mockResolvedValue({
       data: {
         0: {
           attributes: {

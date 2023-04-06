@@ -19,7 +19,7 @@ export const DESKTOP_BANNER = 'desktop_banner'
 export const NOVIEWER_DESKTOP_CTA = 'noviewer_desktop_cta'
 
 export const isClientAlreadyInstalled = async client => {
-  const { data } = await client.query(
+  const { data } = await client.fetchQueryAndGetFromState(
     Q('io.cozy.settings').getById('clients'),
     {
       as: 'io.cozy.settings/clients',
