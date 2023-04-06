@@ -43,7 +43,7 @@ describe('Drive View', () => {
       unsubscribe: jest.fn()
     }
     client.query = jest.fn().mockReturnValue({ data: [] })
-
+    client.fetchQueryAndGetFromState = jest.fn().mockReturnValue({ data: [] })
     const rendered = render(
       <AppLike client={client} store={store}>
         <Router history={hashHistory}>
