@@ -6,13 +6,13 @@ import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterAc
 import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
 import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useQuery, useQueryAll } from 'cozy-client'
+import { useQuery } from 'cozy-client'
 import { buildTimelineQuery, buildAlbumsQuery } from '../queries/queries'
 
 export const TimelinePhotosViewer = () => {
   const timelineQuery = buildTimelineQuery()
 
-  const results = useQueryAll(timelineQuery.definition, timelineQuery.options)
+  const results = useQuery(timelineQuery.definition, timelineQuery.options)
 
   if (results.fetchStatus != 'loaded') return null
 
