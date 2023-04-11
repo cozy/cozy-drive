@@ -25,6 +25,7 @@ import App from 'components/App/App'
 import StyledApp from 'drive/web/modules/drive/StyledApp'
 import cozyBar from 'lib/cozyBar'
 import AppRouter from 'drive/targets/public/components/AppRouter'
+import styles from 'drive/styles/main.styl'
 
 const initCozyBar = (data, client) => {
   if (data.app.name && data.app.editor && data.app.icon && data.locale) {
@@ -46,7 +47,9 @@ const renderError = (lang, root) =>
   render(
     <I18n lang={lang} dictRequire={lang => require(`drive/locales/${lang}`)}>
       <StyledApp>
-        <ErrorShare errorType={`public_unshared`} />
+        <main className={styles['center-layout']}>
+          <ErrorShare errorType={`public_unshared`} />
+        </main>
       </StyledApp>
     </I18n>,
     root
