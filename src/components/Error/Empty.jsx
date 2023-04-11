@@ -1,4 +1,5 @@
 import React from 'react'
+import cx from 'classnames'
 
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import Empty from 'cozy-ui/transpiled/react/Empty'
@@ -27,7 +28,7 @@ const EmptyCanvas = ({ type, canUpload, localeKey }) => {
         (localeKey && t(`empty.${localeKey}_text`)) ||
         (canUpload && t('empty.text'))
       }
-      className={styles['empty']}
+      className={cx(styles['empty'], 'u-mh-2')}
     />
   )
 }
