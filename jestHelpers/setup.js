@@ -21,3 +21,5 @@ jest.mock('cozy-bar/transpiled', () => ({
 }))
 
 Enzyme.configure({ adapter: new Adapter() })
+// see https://github.com/jsdom/jsdom/issues/1695
+window.HTMLElement.prototype.scroll = function () {}
