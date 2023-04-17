@@ -32,6 +32,30 @@ import {
 import { extraColumnsPropTypes } from 'drive/web/modules/certifications'
 
 import styles from 'drive/styles/filelist.styl'
+function togleCheckboxBetweenTwoNodes(node1, node2) {
+  var commonNode = node1.parentNode
+  var checkboxToTogle = []
+  var hasFindCheckbox = false
+
+  // Parcours de tous les descendants de commonNode
+  for (var i = 0; i < commonNode.children.length; i++) {
+    var child = commonNode.children[i]
+    // Si on trouve le premier noeud, on commence à chercher les cases à cocher
+    if (child === node1 || child === node2) {
+      if (hasFindCheckbox) {
+        break // On a trouvé le deuxième noeud, on arrête de chercher
+      }
+      hasFindCheckbox = true // On a trouvé le premier noeud, on commence à chercher
+    } else if (hasFindCheckbox) {
+      const toAdd = child.querySelector('.fil-content-file-select--3xRxR')
+      checkboxToTogle.push(toAdd) // On a trouvé une case à cocher, on l'ajoute à la liste
+    }
+  }
+  // Cocher toutes les cases à cocher trouvées
+  checkboxToTogle.forEach(function (checkbox) {
+    checkbox.click()
+  })
+}
 
 const File = props => {
   const [actionMenuVisible, setActionMenuVisible] = useState(false)
@@ -121,7 +145,26 @@ const File = props => {
       <SelectBox
         withSelectionCheckbox={withSelectionCheckbox}
         selected={selected}
-        onClick={e => toggle(e)}
+        onClick={e => {
+          if (e.shiftKey) {
+            // fil-content-row c'est le même fichier,
+            // donc on peut faire une ref sur TableRow, ça devrait le faire
+            const fileLine = e.currentTarget.closest(
+              'div.fil-content-row--3tUJY'
+            )
+            // Je me demande si l'idée, ne serait pas soit de filer en props un tableau
+            // de ref venant de FolderViewBody. Soit on remonte dans le folderViewBody le click ?
+            // ou alors un calback ?
+            const previousSelectedElements =
+              fileLine.parentNode.querySelectorAll(
+                '.fil-content-row-selected--2YE0h'
+              )
+            const lastSelectedElement =
+              previousSelectedElements[previousSelectedElements.length - 1]
+            togleCheckboxBetweenTwoNodes(lastSelectedElement, fileLine)
+          }
+          return toggle(e)
+        }}
         disabled={isRowDisabledOrInSyncFromSharing}
       />
       <FileOpener

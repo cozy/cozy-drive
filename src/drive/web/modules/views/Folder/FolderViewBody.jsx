@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useState, useEffect } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useState,
+  useEffect,
+  useRef
+} from 'react'
 import { useDispatch } from 'react-redux'
 import get from 'lodash/get'
 
@@ -169,6 +175,8 @@ const FolderViewBody = ({
       checkLock()
     }
   }, [vaultClient, isEncFolder, shouldUnlock])
+
+  const selectsRef = useRef([])
   if (isEncFolder && shouldUnlock) {
     return (
       <VaultUnlocker
@@ -259,6 +267,9 @@ const FolderViewBody = ({
                             )
                           }
                           extraColumns={extraColumns}
+                          // L'idée est de stocker l'ensemble des ref de chaque fil dans `selectsRef`
+                          // pour pouvoir l'utiliser plus bas.
+                          ref={selectsRef.current[file._id]}
                         />
                       ))}
                       {query.hasMore && (
