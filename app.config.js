@@ -52,7 +52,7 @@ const extraConfig = {
       'react-cozy-helpers': path.resolve(SRC_DIR, './lib/react-cozy-helpers'),
       'cozy-ui/react': 'cozy-ui/transpiled/react',
       lib: path.resolve(SRC_DIR, './lib/'),
-      'react-pdf$': 'react-pdf/dist/entry.webpack.js',
+      'react-pdf$': 'react-pdf/dist/esm/entry.webpack',
       'react-redux': require.resolve('react-redux')
     }
   },
