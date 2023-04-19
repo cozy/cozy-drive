@@ -10,6 +10,8 @@ import DeleteItem from 'drive/web/modules/drive/Toolbar/delete/DeleteItem'
 import SelectableItem from 'drive/web/modules/drive/Toolbar/selectable/SelectableItem'
 import ShareItem from 'drive/web/modules/drive/Toolbar/share/ShareItem'
 import DownloadButtonItem from 'drive/web/modules/drive/Toolbar/components/DownloadButtonItem'
+import AddMenuItem from 'drive/web/modules/drive/Toolbar/components/AddMenuItem'
+import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
 
 export const openMenu = setMenuVisible => {
   if (window.StatusBar && isIOSApp()) {
@@ -30,7 +32,12 @@ export const toggleMenu = (menuIsVisible, setMenuVisible) => {
   openMenu(setMenuVisible)
 }
 
-const MoreMenu = ({ isDisabled, hasWriteAccess }) => {
+const MoreMenu = ({
+  isDisabled,
+  hasWriteAccess,
+  canUpload,
+  canCreateFolder
+}) => {
   const [menuIsVisible, setMenuVisible] = useState(false)
   const anchorRef = React.createRef()
   const { isMobile } = useBreakpoints()
@@ -49,35 +56,42 @@ const MoreMenu = ({ isDisabled, hasWriteAccess }) => {
       <div ref={anchorRef}>
         <MoreButton onClick={handleToggle} disabled={isDisabled} />
       </div>
-      {menuIsVisible && (
-        <ActionMenu
-          anchorElRef={anchorRef}
-          onClose={handleClose}
-          autoclose={true}
-          popperOptions={{
-            placement: 'bottom-end'
-          }}
-        >
-          {isMobile && (
-            <InsideRegularFolder>
-              <ShareItem />
-            </InsideRegularFolder>
-          )}
-          {!isMobileApp() && (
-            <InsideRegularFolder>
-              <DownloadButtonItem />
-            </InsideRegularFolder>
-          )}
-          <SelectableItem />
-          {hasWriteAccess && (
-            <InsideRegularFolder>
-              <hr />
-              {/* TODO DeleteItem needs props */}
-              <DeleteItem />
-            </InsideRegularFolder>
-          )}
-        </ActionMenu>
-      )}
+      <AddMenuProvider
+        canCreateFolder={canCreateFolder}
+        canUpload={canUpload}
+        disabled={isDisabled}
+      >
+        {menuIsVisible && (
+          <ActionMenu
+            anchorElRef={anchorRef}
+            onClose={handleClose}
+            autoclose={true}
+            popperOptions={{
+              placement: 'bottom-end'
+            }}
+          >
+            {isMobile && (
+              <InsideRegularFolder>
+                <ShareItem />
+              </InsideRegularFolder>
+            )}
+            {!isMobileApp() && (
+              <InsideRegularFolder>
+                <DownloadButtonItem />
+              </InsideRegularFolder>
+            )}
+            {isMobile && hasWriteAccess && <AddMenuItem />}
+            <SelectableItem />
+            {hasWriteAccess && (
+              <InsideRegularFolder>
+                <hr />
+                {/* TODO DeleteItem needs props */}
+                <DeleteItem />
+              </InsideRegularFolder>
+            )}
+          </ActionMenu>
+        )}
+      </AddMenuProvider>
     </div>
   )
 }

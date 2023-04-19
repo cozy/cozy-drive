@@ -16,6 +16,10 @@ jest.mock('cozy-ui/transpiled/react/hooks/useBreakpoints', () => ({
   default: jest.fn(),
   BreakpointsProvider: ({ children }) => children
 }))
+jest.mock('drive/web/modules/selection/duck', () => ({
+  ...jest.requireActual('drive/web/modules/selection/duck'),
+  isSelectionBarVisible: jest.fn()
+}))
 
 const client = new createMockClient({})
 

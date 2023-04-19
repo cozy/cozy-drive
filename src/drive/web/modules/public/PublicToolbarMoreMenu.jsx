@@ -9,8 +9,9 @@ import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import { MoreButton } from 'components/Button'
 import SelectableItem from 'drive/web/modules/drive/Toolbar/selectable/SelectableItem'
 import { downloadFiles } from 'drive/web/modules/actions/utils'
+import AddMenuItem from 'drive/web/modules/drive/Toolbar/components/AddMenuItem'
 
-const PublicToolbarMoreMenu = ({ files, children }) => {
+const PublicToolbarMoreMenu = ({ files, hasWriteAccess, children }) => {
   const anchorRef = useRef()
   const { t } = useI18n()
   const client = useClient()
@@ -41,6 +42,7 @@ const PublicToolbarMoreMenu = ({ files, children }) => {
               {t('toolbar.menu_download')}
             </ActionMenuItem>
           )}
+          {isMobile && hasWriteAccess && <AddMenuItem />}
           {files.length > 1 && <SelectableItem />}
         </ActionMenu>
       )}

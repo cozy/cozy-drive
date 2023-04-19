@@ -54,6 +54,7 @@
     "trash": "Remove",
     "leave": "Leave shared folder & delete it",
     "menu_add": "Add",
+    "menu_add_item": "Add an item",
     "menu_onlyOffice": {
       "text": "Text document",
       "spreadsheet": "Spreadsheet",
