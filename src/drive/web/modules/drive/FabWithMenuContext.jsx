@@ -10,8 +10,14 @@ import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 const FabWithMenuContext = ({ noSidebar }) => {
   const { t } = useI18n()
 
-  const { anchorRef, handleToggle, isDisabled, handleOfflineClick, isOffline } =
-    useContext(AddMenuContext)
+  const {
+    anchorRef,
+    handleToggle,
+    isDisabled,
+    handleOfflineClick,
+    isOffline,
+    a11y
+  } = useContext(AddMenuContext)
 
   return (
     <div
@@ -24,6 +30,7 @@ const FabWithMenuContext = ({ noSidebar }) => {
         disabled={isDisabled || isOffline}
         color="primary"
         onClick={handleToggle}
+        {...a11y}
       >
         <Icon icon={PlusIcon} />
       </Fab>

@@ -8,8 +8,14 @@ import { AddMenuContext } from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
 
 export const AddButton = () => {
   const { t } = useI18n()
-  const { anchorRef, handleToggle, isDisabled, handleOfflineClick, isOffline } =
-    useContext(AddMenuContext)
+  const {
+    anchorRef,
+    handleToggle,
+    isDisabled,
+    handleOfflineClick,
+    isOffline,
+    a11y
+  } = useContext(AddMenuContext)
 
   return (
     <div ref={anchorRef} onClick={isOffline ? handleOfflineClick : undefined}>
@@ -18,6 +24,7 @@ export const AddButton = () => {
         disabled={isDisabled || isOffline}
         icon={PlusIcon}
         label={t('toolbar.menu_add')}
+        {...a11y}
       />
     </div>
   )
