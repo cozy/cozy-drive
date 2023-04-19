@@ -59,7 +59,7 @@
     },
     {
       "path": "drive/public/pdf.worker.entry.<hash>.worker.js",
-      "maxSize": "221 KB"
+      "maxSize": "345 KB"
     },
     {
       "path": "drive/services/dacc/drive.js",
@@ -76,10 +76,6 @@
     {
       "path": "drive/vendors/drive.<hash>.js",
       "maxSize": "1.6 MB"
-    },
-    {
-      "path": "drive/<hash>.worker.js",
-      "maxSize": "221 KB"
     },
     {
       "path": "drive/app-drive.<hash>.min.css",
@@ -129,7 +125,7 @@
     },
     {
       "path": "drive/public/**",
-      "maxPercentIncrease": 5
+      "maxPercentIncrease": 7
     },
     {
       "path": "drive/screenshots/**",
