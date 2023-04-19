@@ -73,13 +73,19 @@ const AddMenuProvider = ({
         isDisabled,
         isOffline,
         handleOfflineClick,
-        isPublic
+        isPublic,
+        a11y: {
+          'aria-controls': menuIsVisible ? 'add-menu' : undefined,
+          'aria-haspopup': true,
+          'aria-expanded': menuIsVisible ? true : undefined
+        }
       }}
     >
       {children}
       <ScanWrapper>
         {menuIsVisible && (
           <AddMenu
+            id="add-menu"
             anchorRef={anchorRef}
             handleClose={handleClose}
             canCreateFolder={canCreateFolder}

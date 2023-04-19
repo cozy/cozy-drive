@@ -69,7 +69,8 @@ const AddMenu = ({
   canUpload,
   refreshFolderContent,
   isPublic,
-  isEncryptedFolder
+  isEncryptedFolder,
+  ...actionMenuProps
 }) => {
   return (
     <ActionMenu
@@ -79,6 +80,7 @@ const AddMenu = ({
       popperOptions={{
         strategy: 'fixed'
       }}
+      {...actionMenuProps}
     >
       <ActionMenuContent
         isDisabled={isDisabled}
