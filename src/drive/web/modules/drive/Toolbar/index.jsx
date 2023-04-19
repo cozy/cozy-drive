@@ -9,7 +9,6 @@ import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 import { getCurrentFolderId } from 'drive/web/modules/selectors'
-
 import AddButton from 'drive/web/modules/drive/Toolbar/components/AddButton'
 import InsideRegularFolder from 'drive/web/modules/drive/Toolbar/components/InsideRegularFolder'
 import MoreMenu from 'drive/web/modules/drive/Toolbar/components/MoreMenu'
@@ -89,7 +88,12 @@ class Toolbar extends Component {
         <BarRightWithProvider store={this.context.store}>
           {isMobile && <SearchButton />}
           <SharingProvider doctype="io.cozy.files" documentType="Files">
-            <MoreMenu isDisabled={isDisabled} hasWriteAccess={hasWriteAccess} />
+            <MoreMenu
+              isDisabled={isDisabled}
+              hasWriteAccess={hasWriteAccess}
+              canCreateFolder={canCreateFolder}
+              canUpload={canUpload}
+            />
           </SharingProvider>
         </BarRightWithProvider>
       </div>

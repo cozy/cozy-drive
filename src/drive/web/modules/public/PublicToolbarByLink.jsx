@@ -29,33 +29,31 @@ const PublicToolbarByLink = ({
 
   return (
     <BarRightWithProvider>
-      {!isMobile && (
-        <>
-          {hasWriteAccess && (
-            <AddMenuProvider
-              canCreateFolder={true}
-              canUpload={true}
-              refreshFolderContent={refreshFolderContent}
-              isPublic={true}
-            >
-              <AddButton />
-            </AddMenuProvider>
-          )}
-          {files.length > 0 && <DownloadFilesButton files={files} />}
-        </>
-      )}
-      {shouldDisplayMoreMenu && (
-        <PublicToolbarMoreMenu files={files}>
-          {isMobile && (
-            <ActionMenuItem
-              onClick={() => openExternalLink(HOME_LINK_HREF)}
-              left={<Icon icon={'to-the-cloud'} />}
-            >
-              {t('Share.create-cozy')}
-            </ActionMenuItem>
-          )}
-        </PublicToolbarMoreMenu>
-      )}
+      <AddMenuProvider
+        canCreateFolder={hasWriteAccess}
+        canUpload={hasWriteAccess}
+        refreshFolderContent={refreshFolderContent}
+        isPublic={true}
+      >
+        {!isMobile && (
+          <>
+            {hasWriteAccess && <AddButton />}
+            {files.length > 0 && <DownloadFilesButton files={files} />}
+          </>
+        )}
+        {shouldDisplayMoreMenu && (
+          <PublicToolbarMoreMenu files={files} hasWriteAccess={hasWriteAccess}>
+            {isMobile && (
+              <ActionMenuItem
+                onClick={() => openExternalLink(HOME_LINK_HREF)}
+                left={<Icon icon={'to-the-cloud'} />}
+              >
+                {t('Share.create-cozy')}
+              </ActionMenuItem>
+            )}
+          </PublicToolbarMoreMenu>
+        )}
+      </AddMenuProvider>
     </BarRightWithProvider>
   )
 }
