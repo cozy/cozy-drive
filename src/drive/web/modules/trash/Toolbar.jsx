@@ -8,21 +8,18 @@ import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 import Button from 'cozy-ui/transpiled/react/Button'
 import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
 import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
 
+import { BarRightWithProvider } from 'components/Bar'
 import { ModalContext } from 'drive/lib/ModalContext'
 import { emptyTrash } from 'drive/web/modules/actions/utils'
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 import SelectableItem from '../drive/Toolbar/selectable/SelectableItem'
 import { MoreButton } from 'components/Button'
 import EmptyTrashConfirm from './components/EmptyTrashConfirm'
+import SearchButton from 'drive/web/modules/drive/Toolbar/components/SearchButton'
 
 import styles from 'drive/styles/toolbar.styl'
-import { useWebviewIntent } from 'cozy-intent'
-import { BarRight } from 'components/Bar'
-import SearchButton from 'drive/web/modules/drive/Toolbar/components/SearchButton'
-import { useRouter } from 'drive/lib/RouterContext'
 
 export const Toolbar = ({
   t,
@@ -35,8 +32,6 @@ export const Toolbar = ({
   const anchorRef = React.createRef()
   const openMenu = useCallback(() => setMenuVisible(true), [setMenuVisible])
   const closeMenu = useCallback(() => setMenuVisible(false), [setMenuVisible])
-  const webviewIntent = useWebviewIntent()
-  const { router } = useRouter()
 
   const { pushModal, popModal } = useContext(ModalContext)
 
@@ -95,22 +90,10 @@ export const Toolbar = ({
           label={t('toolbar.empty_trash')}
         />
       )}
-
-      {isMobile ? (
-        <BarRight>
-          <SearchButton router={router} t={t} />
-          <BarContextProvider
-            client={client}
-            t={t}
-            store={client.store}
-            webviewService={webviewIntent}
-          >
-            {MoreMenu}
-          </BarContextProvider>
-        </BarRight>
-      ) : (
-        MoreMenu
-      )}
+      <BarRightWithProvider>
+        {isMobile && <SearchButton />}
+        {MoreMenu}
+      </BarRightWithProvider>
     </div>
   )
 }
