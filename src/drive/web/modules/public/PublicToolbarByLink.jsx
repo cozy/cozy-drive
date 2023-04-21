@@ -11,9 +11,7 @@ import AddButton from 'drive/web/modules/drive/Toolbar/components/AddButton'
 import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
 import { DownloadFilesButton } from 'drive/web/modules/public/DownloadButton'
 import PublicToolbarMoreMenu from 'drive/web/modules/public/PublicToolbarMoreMenu'
-
-export const isFilesIsFile = files =>
-  files.length === 1 && files[0].type === 'file'
+import { isFilesIsFile } from 'drive/web/modules/public/helpers'
 
 const PublicToolbarByLink = ({
   files,
