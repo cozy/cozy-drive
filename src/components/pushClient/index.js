@@ -23,7 +23,8 @@ export const isClientAlreadyInstalled = async client => {
     definition: Q('io.cozy.settings').getById('clients'),
     options: {
       as: 'io.cozy.settings/clients',
-      fetchPolicy: CozyClient.fetchPolicies.olderThan(30 * 1000)
+      fetchPolicy: CozyClient.fetchPolicies.olderThan(30 * 1000),
+      singleDocData: true
     }
   }
   const { data } = await client.fetchQueryAndGetFromState(query)
