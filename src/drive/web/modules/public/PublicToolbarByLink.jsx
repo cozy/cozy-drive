@@ -11,7 +11,10 @@ import AddButton from 'drive/web/modules/drive/Toolbar/components/AddButton'
 import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
 import { DownloadFilesButton } from 'drive/web/modules/public/DownloadButton'
 import PublicToolbarMoreMenu from 'drive/web/modules/public/PublicToolbarMoreMenu'
-import { isFilesIsFile } from 'drive/web/modules/public/helpers'
+import {
+  isFilesIsFile,
+  openExternalLink
+} from 'drive/web/modules/public/helpers'
 
 const PublicToolbarByLink = ({
   files,
@@ -45,7 +48,7 @@ const PublicToolbarByLink = ({
         <PublicToolbarMoreMenu files={files}>
           {isMobile && (
             <ActionMenuItem
-              onClick={() => HOME_LINK_HREF}
+              onClick={() => openExternalLink(HOME_LINK_HREF)}
               left={<Icon icon={'to-the-cloud'} />}
             >
               {t('Share.create-cozy')}
