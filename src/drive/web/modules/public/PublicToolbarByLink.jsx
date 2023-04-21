@@ -1,80 +1,19 @@
-import React, { useCallback, useState } from 'react'
+import React from 'react'
 
-import { useClient } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
-import { Button, Icon } from 'cozy-ui/transpiled/react'
-import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
-import DotsIcon from 'cozy-ui/transpiled/react/Icons/Dots'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 
 import { BarRightWithProvider } from 'components/Bar'
 import { HOME_LINK_HREF } from 'drive/constants/config'
-import SelectableItem from 'drive/web/modules/drive/Toolbar/selectable/SelectableItem'
-import { downloadFiles } from 'drive/web/modules/actions/utils'
 import AddButton from 'drive/web/modules/drive/Toolbar/components/AddButton'
 import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
-import { DownloadFilesButton } from './DownloadButton'
+import { DownloadFilesButton } from 'drive/web/modules/public/DownloadButton'
+import PublicToolbarMoreMenu from 'drive/web/modules/public/PublicToolbarMoreMenu'
 
 export const isFilesIsFile = files =>
   files.length === 1 && files[0].type === 'file'
-
-const MoreButton = ({ disabled, onClick }) => {
-  const { t } = useI18n()
-  return (
-    <Button
-      data-testid="more-button"
-      theme="secondary"
-      disabled={disabled}
-      onClick={onClick}
-      extension="narrow"
-      icon={DotsIcon}
-      iconOnly
-      label={t('Toolbar.more')}
-    />
-  )
-}
-const MoreMenu = ({ files, isMobile }) => {
-  const { t } = useI18n()
-  const client = useClient()
-  const anchorRef = React.createRef()
-
-  const [menuIsVisible, setMenuVisible] = useState(false)
-
-  const openMenu = useCallback(() => setMenuVisible(true), [setMenuVisible])
-  const closeMenu = useCallback(() => setMenuVisible(false), [setMenuVisible])
-  const toggleMenu = useCallback(() => {
-    if (menuIsVisible) return closeMenu()
-    openMenu()
-  }, [closeMenu, openMenu, menuIsVisible])
-  return (
-    <>
-      <div ref={anchorRef}>
-        <MoreButton onClick={toggleMenu} />
-      </div>
-      {menuIsVisible && (
-        <ActionMenu onClose={closeMenu} autoclose>
-          {isMobile && (
-            <ActionMenuItem
-              onClick={() => HOME_LINK_HREF}
-              left={<Icon icon={'to-the-cloud'} />}
-            >
-              {t('Share.create-cozy')}
-            </ActionMenuItem>
-          )}
-          {isMobile && (
-            <ActionMenuItem
-              onClick={() => downloadFiles(client, files)}
-              left={<Icon icon={'download'} />}
-            >
-              {t('toolbar.menu_download')}
-            </ActionMenuItem>
-          )}
-          {files.length > 1 && <SelectableItem />}
-        </ActionMenu>
-      )}
-    </>
-  )
-}
 
 const PublicToolbarByLink = ({
   files,
@@ -83,6 +22,7 @@ const PublicToolbarByLink = ({
 }) => {
   const isFile = isFilesIsFile(files)
   const { isMobile } = useBreakpoints()
+  const { t } = useI18n()
 
   const shouldDisplayMoreMenu = isMobile || (!isFile && files.length > 0)
 
@@ -104,12 +44,16 @@ const PublicToolbarByLink = ({
         </>
       )}
       {shouldDisplayMoreMenu && (
-        <MoreMenu
-          hasWriteAccess={hasWriteAccess}
-          refreshFolderContent={refreshFolderContent}
-          isMobile={isMobile}
-          files={files}
-        />
+        <PublicToolbarMoreMenu files={files}>
+          {isMobile && (
+            <ActionMenuItem
+              onClick={() => HOME_LINK_HREF}
+              left={<Icon icon={'to-the-cloud'} />}
+            >
+              {t('Share.create-cozy')}
+            </ActionMenuItem>
+          )}
+        </PublicToolbarMoreMenu>
       )}
     </BarRightWithProvider>
   )
