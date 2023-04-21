@@ -2,21 +2,18 @@ import React, { useCallback, useState } from 'react'
 
 import { useClient } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
-import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { Button, Icon } from 'cozy-ui/transpiled/react'
 import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import DotsIcon from 'cozy-ui/transpiled/react/Icons/Dots'
 
+import { BarRightWithProvider } from 'components/Bar'
 import { HOME_LINK_HREF } from 'drive/constants/config'
 import SelectableItem from 'drive/web/modules/drive/Toolbar/selectable/SelectableItem'
 import { downloadFiles } from 'drive/web/modules/actions/utils'
-import CozyBarRightMobile from 'drive/web/modules/public/CozyBarRightMobile'
 import AddButton from 'drive/web/modules/drive/Toolbar/components/AddButton'
 import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
-
 import { DownloadFilesButton } from './DownloadButton'
-import { useWebviewIntent } from 'cozy-intent'
 
 export const isFilesIsFile = files =>
   files.length === 1 && files[0].type === 'file'
@@ -84,47 +81,37 @@ const PublicToolbarByLink = ({
   hasWriteAccess,
   refreshFolderContent
 }) => {
-  const { t } = useI18n()
   const isFile = isFilesIsFile(files)
-  const client = useClient()
   const { isMobile } = useBreakpoints()
-  const webviewIntent = useWebviewIntent()
 
   const shouldDisplayMoreMenu = isMobile || (!isFile && files.length > 0)
 
   return (
-    <CozyBarRightMobile>
-      <BarContextProvider
-        client={client}
-        t={t}
-        store={client.store}
-        webviewService={webviewIntent}
-      >
-        {!isMobile && (
-          <>
-            {hasWriteAccess && (
-              <AddMenuProvider
-                canCreateFolder={true}
-                canUpload={true}
-                refreshFolderContent={refreshFolderContent}
-                isPublic={true}
-              >
-                <AddButton />
-              </AddMenuProvider>
-            )}
-            {files.length > 0 && <DownloadFilesButton files={files} />}
-          </>
-        )}
-        {shouldDisplayMoreMenu && (
-          <MoreMenu
-            hasWriteAccess={hasWriteAccess}
-            refreshFolderContent={refreshFolderContent}
-            isMobile={isMobile}
-            files={files}
-          />
-        )}
-      </BarContextProvider>
-    </CozyBarRightMobile>
+    <BarRightWithProvider>
+      {!isMobile && (
+        <>
+          {hasWriteAccess && (
+            <AddMenuProvider
+              canCreateFolder={true}
+              canUpload={true}
+              refreshFolderContent={refreshFolderContent}
+              isPublic={true}
+            >
+              <AddButton />
+            </AddMenuProvider>
+          )}
+          {files.length > 0 && <DownloadFilesButton files={files} />}
+        </>
+      )}
+      {shouldDisplayMoreMenu && (
+        <MoreMenu
+          hasWriteAccess={hasWriteAccess}
+          refreshFolderContent={refreshFolderContent}
+          isMobile={isMobile}
+          files={files}
+        />
+      )}
+    </BarRightWithProvider>
   )
 }
 

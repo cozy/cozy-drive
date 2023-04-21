@@ -3,14 +3,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import cx from 'classnames'
-import { withRouter } from 'react-router'
 
-import { withClient } from 'cozy-client'
 import SharingProvider, { SharedDocument } from 'cozy-sharing'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
-import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
-import { useWebviewIntent } from 'cozy-intent'
 
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 import { getCurrentFolderId } from 'drive/web/modules/selectors'
@@ -25,7 +20,7 @@ import SearchButton from 'drive/web/modules/drive/Toolbar/components/SearchButto
 
 import styles from 'drive/styles/toolbar.styl'
 
-import { BarRight } from 'components/Bar'
+import { BarRightWithProvider } from 'components/Bar'
 
 class Toolbar extends Component {
   static contextTypes = {
@@ -55,17 +50,12 @@ class Toolbar extends Component {
 
   render() {
     const {
-      t,
-      lang,
       disabled,
       selectionModeActive,
       canUpload,
       canCreateFolder,
       hasWriteAccess,
-      breakpoints: { isMobile },
-      client,
-      webviewService,
-      router
+      breakpoints: { isMobile }
     } = this.props
 
     const isDisabled = disabled || selectionModeActive
@@ -96,27 +86,12 @@ class Toolbar extends Component {
           </AddMenuProvider>
         )}
 
-        {isMobile ? (
-          <BarRight>
-            <SearchButton router={router} t={t} />
-            <BarContextProvider
-              client={client}
-              store={this.context.store}
-              t={t}
-              lang={lang}
-              webviewService={webviewService}
-            >
-              <SharingProvider doctype="io.cozy.files" documentType="Files">
-                <MoreMenu
-                  isDisabled={isDisabled}
-                  hasWriteAccess={hasWriteAccess}
-                />
-              </SharingProvider>
-            </BarContextProvider>
-          </BarRight>
-        ) : (
-          <MoreMenu isDisabled={isDisabled} hasWriteAccess={hasWriteAccess} />
-        )}
+        <BarRightWithProvider store={this.context.store}>
+          {isMobile && <SearchButton />}
+          <SharingProvider doctype="io.cozy.files" documentType="Files">
+            <MoreMenu isDisabled={isDisabled} hasWriteAccess={hasWriteAccess} />
+          </SharingProvider>
+        </BarRightWithProvider>
       </div>
     )
   }
@@ -127,12 +102,6 @@ const mapStateToProps = state => ({
   selectionModeActive: isSelectionBarVisible(state)
 })
 
-const ToolbarWithWebviewContext = props => {
-  const webviewIntent = useWebviewIntent()
-
-  return <Toolbar webviewService={webviewIntent} {...props} />
-}
-
 /**
  * Provides the Toolbar with sharing properties of the current folder.
  *
@@ -141,17 +110,12 @@ const ToolbarWithWebviewContext = props => {
  */
 const ToolbarWithSharingContext = props => {
   return !props.folderId ? (
-    <ToolbarWithWebviewContext {...props} />
+    <Toolbar {...props} />
   ) : (
     <SharedDocument docId={props.folderId}>
       {sharingProps => {
         const { hasWriteAccess } = sharingProps
-        return (
-          <ToolbarWithWebviewContext
-            {...props}
-            hasWriteAccess={hasWriteAccess}
-          />
-        )
+        return <Toolbar {...props} hasWriteAccess={hasWriteAccess} />
       }}
     </SharedDocument>
   )
@@ -160,9 +124,6 @@ const ToolbarWithSharingContext = props => {
 ToolbarWithSharingContext.displayName = 'ToolbarWithSharingContext'
 
 export default compose(
-  translate(),
-  withClient,
-  withRouter,
   connect(mapStateToProps, null),
   withBreakpoints()
 )(ToolbarWithSharingContext)
