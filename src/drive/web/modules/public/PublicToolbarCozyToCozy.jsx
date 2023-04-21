@@ -7,7 +7,7 @@ import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 
 import { BarRightWithProvider } from 'components/Bar'
 import { DownloadFilesButton } from 'drive/web/modules/public/DownloadButton'
-import { isFilesIsFile } from 'drive/web/modules/public/PublicToolbarByLink'
+import { isFilesIsFile } from 'drive/web/modules/public/helpers'
 import PublicToolbarMoreMenu from 'drive/web/modules/public/PublicToolbarMoreMenu'
 
 const openExternalLink = url => (window.location = url)
