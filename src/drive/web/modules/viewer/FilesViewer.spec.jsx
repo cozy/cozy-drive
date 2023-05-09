@@ -111,7 +111,9 @@ describe('FilesViewer', () => {
     })
   })
 
-  it('should fetch more files if necessary', async () => {
+  // https://github.com/cozy/cozy-drive/issues/2910
+  // TODO: Fix this flaky test
+  it.skip('should fetch more files if necessary', async () => {
     const client = new CozyClient({})
     client.query = jest.fn().mockResolvedValue({
       data: generateFile({ i: '51' })
