@@ -81,7 +81,7 @@ const setupAppContext = memoize(() => {
 
 const App = props => {
   return (
-    <WebviewIntentProvider>
+    <WebviewIntentProvider setBarContext={cozyBar.setWebviewContext}>
       <Provider store={props.store}>
         <I18n
           lang={props.locale}

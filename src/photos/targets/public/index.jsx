@@ -74,7 +74,7 @@ async function init() {
   try {
     const { id } = await getSharedDocument(client)
     app = (
-      <WebviewIntentProvider>
+      <WebviewIntentProvider setBarContext={cozyBar.setWebviewContext}>
         <Provider store={store}>
           <CozyProvider client={client}>
             <BreakpointsProvider>
