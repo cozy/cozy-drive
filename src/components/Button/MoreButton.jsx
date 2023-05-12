@@ -6,7 +6,7 @@ import DotsIcon from 'cozy-ui/transpiled/react/Icons/Dots'
 
 import styles from './index.styl'
 
-const MoreButton = ({ disabled, onClick }) => {
+const MoreButton = ({ disabled, onClick, ...props }) => {
   const { t } = useI18n()
   return (
     <Button
@@ -19,6 +19,7 @@ const MoreButton = ({ disabled, onClick }) => {
       icon={DotsIcon}
       iconOnly
       label={t('Toolbar.more')}
+      {...props}
     />
   )
 }
