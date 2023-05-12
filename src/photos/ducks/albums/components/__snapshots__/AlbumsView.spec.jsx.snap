@@ -19,65 +19,30 @@ exports[`AlbumsView displays an empty Component 1`] = `
       data-testid="pho-toolbar-albums"
       role="toolbar"
     >
-      <div
-        class="u-hide--mob"
+      <a
+        class="styles__c-btn___-2Vnj styles__c-btn--secondary___3Br_N"
+        data-testid="album-add"
+        href="#/albums/new"
       >
-        <a
-          class="styles__c-btn___-2Vnj styles__c-btn--secondary___3Br_N"
-          data-testid="album-add"
-          href="#/albums/new"
-        >
+        <span>
+          <svg
+            aria-hidden="true"
+            class="styles__icon___23x3R"
+            focusable="false"
+            height="16"
+            viewBox="0 0 16 16"
+            width="16"
+          >
+            <path
+              d="M1 3.01A3.005 3.005 0 014.003 0h9.99C14.55 0 15 .444 15 1c0 .552-.456 1-1.002 1H4.002a.999.999 0 100 2h9.996C14.55 4 15 4.456 15 5.002v9.996C15 15.55 14.55 16 13.993 16h-9.99A3 3 0 011 12.99V3.01zM8 6h2v3h3v2h-3v3H8v-3H5V9h3V6z"
+              fill-rule="evenodd"
+            />
+          </svg>
           <span>
-            <svg
-              aria-hidden="true"
-              class="styles__icon___23x3R"
-              focusable="false"
-              height="16"
-              viewBox="0 0 16 16"
-              width="16"
-            >
-              <path
-                d="M1 3.01A3.005 3.005 0 014.003 0h9.99C14.55 0 15 .444 15 1c0 .552-.456 1-1.002 1H4.002a.999.999 0 100 2h9.996C14.55 4 15 4.456 15 5.002v9.996C15 15.55 14.55 16 13.993 16h-9.99A3 3 0 011 12.99V3.01zM8 6h2v3h3v2h-3v3H8v-3H5V9h3V6z"
-                fill-rule="evenodd"
-              />
-            </svg>
-            <span>
-              Toolbar.album_new
-            </span>
+            Toolbar.album_new
           </span>
-        </a>
-      </div>
-      <div
-        class="styles__c-menu___2YTiU styles__c-menu--right___3wxbb pho-toolbar-menu u-hide--desk"
-      >
-        <button
-          class="styles__c-btn___-2Vnj styles__c-btn--secondary___3Br_N styles__c-btn--narrow___27FHD styles__c-btn--center___16_Xh dri-btn--more"
-          data-testid="more-button"
-          title="More"
-          type="submit"
-        >
-          <span>
-            <svg
-              aria-hidden="true"
-              class="styles__icon___23x3R"
-              focusable="false"
-              height="16"
-              viewBox="0 0 16 16"
-              width="16"
-            >
-              <path
-                d="M2 10a2 2 0 100-4 2 2 0 000 4zm12 0a2 2 0 100-4 2 2 0 000 4zm-6 0a2 2 0 100-4 2 2 0 000 4z"
-                fill-rule="evenodd"
-              />
-            </svg>
-            <span
-              class="u-visuallyhidden"
-            >
-              More
-            </span>
-          </span>
-        </button>
-      </div>
+        </span>
+      </a>
     </div>
   </div>
   <div
