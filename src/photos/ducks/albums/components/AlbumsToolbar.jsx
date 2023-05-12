@@ -1,41 +1,39 @@
 import React from 'react'
-import classNames from 'classnames'
 
-import { ButtonLink, Menu, MenuItem, Icon } from 'cozy-ui/transpiled/react'
+import { ButtonLink } from 'cozy-ui/transpiled/react'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import AlbumAddIcon from 'cozy-ui/transpiled/react/Icons/AlbumAdd'
 
-import { MoreButton } from 'components/Button'
-
 import styles from 'photos/styles/toolbar.styl'
+import MoreMenu from '../../../components/MoreMenu'
+import { newAlbum } from '../../../components/actions'
 
-const AlbumsToolbar = ({ t, router }) => (
-  <div
-    data-testid="pho-toolbar-albums"
-    className={styles['pho-toolbar']}
-    role="toolbar"
-  >
-    <div className={'u-hide--mob'}>
-      <ButtonLink
-        data-testid="album-add"
-        theme="secondary"
-        href="#/albums/new"
-        icon={AlbumAddIcon}
-        label={t('Toolbar.album_new')}
-      />
-    </div>
-    <Menu
-      className={classNames(styles['pho-toolbar-menu'], 'u-hide--desk')}
-      component={<MoreButton />}
-      position="right"
+const AlbumsToolbar = ({ router }) => {
+  const { isMobile } = useBreakpoints()
+  const { t } = useI18n()
+
+  const actions = [newAlbum(router)]
+
+  return (
+    <div
+      data-testid="pho-toolbar-albums"
+      className={styles['pho-toolbar']}
+      role="toolbar"
     >
-      <MenuItem
-        onSelect={() => router.push('/albums/new')}
-        icon={<Icon icon={AlbumAddIcon} />}
-      >
-        {t('Toolbar.album_new')}
-      </MenuItem>
-    </Menu>
-  </div>
-)
+      {isMobile ? (
+        <MoreMenu actions={actions} />
+      ) : (
+        <ButtonLink
+          data-testid="album-add"
+          theme="secondary"
+          href="#/albums/new"
+          icon={AlbumAddIcon}
+          label={t('Toolbar.album_new')}
+        />
+      )}
+    </div>
+  )
+}
 
 export default AlbumsToolbar
