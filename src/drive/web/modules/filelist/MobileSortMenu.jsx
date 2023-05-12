@@ -1,38 +1,49 @@
 import React from 'react'
-import cx from 'classnames'
+
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
-import ActionMenu from 'cozy-ui/transpiled/react/ActionMenu'
-import { MenuItem } from 'cozy-ui/transpiled/react/Menu'
-import styles from 'drive/styles/filelist.styl'
+import ActionMenuWrapper from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuWrapper'
+import ActionMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
+import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
+import ListItemIcon from 'cozy-ui/transpiled/react/MuiCozyTheme/ListItemIcon'
+import Radio from 'cozy-ui/transpiled/react/Radios'
+
 import { SORTABLE_ATTRIBUTES } from 'drive/config/sort'
 
 const MobileSortMenu = ({ sort, onSort, onClose }) => {
   const { t } = useI18n()
   return (
-    <ActionMenu onClose={onClose}>
-      <div className={styles['fil-sort-menu']}>
-        {SORTABLE_ATTRIBUTES.map(({ attr }) => [
-          { attr, order: 'asc' },
-          { attr, order: 'desc' }
-        ])
-          .reduce((acc, val) => [...acc, ...val], [])
-          .map(({ attr, order }) => (
-            <MenuItem
+    <ActionMenuWrapper open onClose={onClose}>
+      {SORTABLE_ATTRIBUTES.map(({ attr }) => [
+        { attr, order: 'asc' },
+        { attr, order: 'desc' }
+      ])
+        .reduce((acc, val) => [...acc, ...val], [])
+        .map(({ attr, order }) => {
+          const labelId = `sort_by_${attr}_${order}`
+          return (
+            <ActionMenuItem
               key={`key_${attr}_${order}`}
-              className={cx(styles['fil-sort-menu-item'], {
-                [styles['fil-sort-menu-item-selected']]:
-                  sort.order === order && sort.attribute === attr
-              })}
               onClick={() => {
                 onSort(attr, order)
                 onClose()
               }}
             >
-              {t(`table.mobile.head_${attr}_${order}`)}
-            </MenuItem>
-          ))}
-      </div>
-    </ActionMenu>
+              <ListItemIcon>
+                <Radio
+                  checked={sort.order === order && sort.attribute === attr}
+                  tabIndex={-1}
+                  disableRipple
+                  inputProps={{ 'aria-labelledby': labelId }}
+                />
+              </ListItemIcon>
+              <ListItemText
+                id={labelId}
+                primary={t(`table.mobile.head_${attr}_${order}`)}
+              />
+            </ActionMenuItem>
+          )
+        })}
+    </ActionMenuWrapper>
   )
 }
 
