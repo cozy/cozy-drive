@@ -116,6 +116,8 @@ describe('Sharings View', () => {
   })
 
   it('tests the sharings view', async () => {
+    // TODO : Fix https://github.com/cozy/cozy-drive/issues/2913
+    jest.spyOn(console, 'warn').mockImplementation()
     useFilesQueryWithPath.mockReturnValue(filesFixtureWithPath)
 
     const { getByText, findByText } = setup()

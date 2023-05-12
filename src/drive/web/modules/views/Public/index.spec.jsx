@@ -97,6 +97,8 @@ describe('Public View', () => {
   })
 
   it('renders the public view', async () => {
+    // TODO : Fix https://github.com/cozy/cozy-drive/issues/2913
+    jest.spyOn(console, 'warn').mockImplementation()
     const { getByText, findByText } = await setup()
     await act(async () => {
       const sleep = duration =>
