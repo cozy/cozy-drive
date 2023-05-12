@@ -4,20 +4,20 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 import { Query } from 'cozy-client'
-import { Button, Menu, MenuItem, Icon, Spinner } from 'cozy-ui/transpiled/react'
+import { Button, Spinner, useBreakpoints } from 'cozy-ui/transpiled/react'
 import palette from 'cozy-ui/transpiled/react/palette'
 import { Main } from 'cozy-ui/transpiled/react/Layout'
-import CloudIcon from 'cozy-ui/transpiled/react/Icons/Cloud'
 import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 
 import Selection from 'photos/ducks/selection'
-import { MoreButton, CozyHomeLink } from 'components/Button'
-import { HOME_LINK_HREF } from 'photos/constants/config'
+import { CozyHomeLink } from 'components/Button'
 import PhotoBoard from 'photos/components/PhotoBoard'
 import { ALBUM_QUERY } from '../../../../src/photos/ducks/albums/index'
 import ErrorUnsharedComponent from 'photos/components/ErrorUnshared'
 
 import styles from './index.styl'
+import MoreMenu from '../../components/MoreMenu'
+import { createCozy, download } from '../../components/actions'
 
 export class App extends Component {
   static contextTypes = {
@@ -66,7 +66,7 @@ export class App extends Component {
   }
 
   render() {
-    const { album, hasMore, photos, fetchMore, children } = this.props
+    const { album, hasMore, photos, fetchMore, children, isMobile } = this.props
 
     const { t } = this.context
     return (
@@ -101,28 +101,17 @@ export class App extends Component {
                       size="normal"
                       label={t('Toolbar.album_download')}
                     />
-
-                    <Menu
-                      title={t('Toolbar.more')}
-                      component={<MoreButton />}
-                      position="right"
-                      className="u-hide--desk"
-                    >
-                      <MenuItem
-                        data-testid="album-public-create-cozy-mobile"
-                        onSelect={() => (window.location = HOME_LINK_HREF)}
-                        icon={<Icon icon={CloudIcon} />}
-                      >
-                        {t('Share.create-cozy')}
-                      </MenuItem>
-                      <MenuItem
-                        data-testid="album-public-download-mobile"
-                        onSelect={() => this.onDownload(selected)}
-                        icon={<Icon icon={DownloadIcon} />}
-                      >
-                        {t('Toolbar.album_download')}
-                      </MenuItem>
-                    </Menu>
+                    {isMobile && (
+                      <MoreMenu
+                        actions={[
+                          createCozy,
+                          download(
+                            () => this.onDownload(selected),
+                            t('Toolbar.album_download')
+                          )
+                        ]}
+                      />
+                    )}
                   </div>
                 </div>
                 <PhotoBoard
@@ -154,35 +143,39 @@ App.propTypes = {
   fetchMore: PropTypes.func.isRequired
 }
 
-const ConnectedApp = props => (
-  <Query query={ALBUM_QUERY} {...props}>
-    {({ data: album, fetchStatus }) => {
-      if (fetchStatus === 'failed') {
-        return <ErrorUnsharedComponent />
-      }
-      if (fetchStatus === 'loaded') {
-        return (
-          <App
-            album={album}
-            photos={album.photos.data}
-            hasMore={album.photos.hasMore}
-            fetchMore={album.photos.fetchMore.bind(album.photos)}
-          >
-            {props.children}
-          </App>
-        )
-      } else {
-        return (
-          <Spinner
-            size={'xxlarge'}
-            loadingType={'photos_fetching'}
-            middle={true}
-            color={palette.dodgerBlue}
-          />
-        )
-      }
-    }}
-  </Query>
-)
+const ConnectedApp = props => {
+  const { isMobile } = useBreakpoints()
+  return (
+    <Query query={ALBUM_QUERY} {...props}>
+      {({ data: album, fetchStatus }) => {
+        if (fetchStatus === 'failed') {
+          return <ErrorUnsharedComponent />
+        }
+        if (fetchStatus === 'loaded') {
+          return (
+            <App
+              album={album}
+              photos={album.photos.data}
+              hasMore={album.photos.hasMore}
+              fetchMore={album.photos.fetchMore.bind(album.photos)}
+              isMobile={isMobile}
+            >
+              {props.children}
+            </App>
+          )
+        } else {
+          return (
+            <Spinner
+              size={'xxlarge'}
+              loadingType={'photos_fetching'}
+              middle={true}
+              color={palette.dodgerBlue}
+            />
+          )
+        }
+      }}
+    </Query>
+  )
+}
 
 export default ConnectedApp
