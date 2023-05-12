@@ -1,62 +1,39 @@
-import styles from '../../../styles/toolbar.styl'
-
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 
-import { Menu, MenuItem, Icon } from 'cozy-ui/transpiled/react'
-import UploadIcon from 'cozy-ui/transpiled/react/Icons/Upload'
-import CheckboxIcon from 'cozy-ui/transpiled/react/Icons/CheckSquare'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import { divider } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 
 import UploadButton from '../../../components/UploadButton'
-import { MoreButton } from 'components/Button'
+import styles from '../../../styles/toolbar.styl'
+import MoreMenu from '../../../components/MoreMenu'
+import {
+  upload,
+  selectItems as selectItemsAction
+} from '../../../components/actions'
 
-const MoreMenu = ({ t, disabled, uploadPhotos, selectItems }) => (
-  <Menu
-    disabled={disabled}
-    position="right"
-    className={styles['pho-toolbar-menu']}
-    component={<MoreButton />}
-  >
-    <MenuItem icon={<Icon icon={UploadIcon} />} className={'u-hide--desk'}>
-      <UploadButton
-        onUpload={uploadPhotos}
-        disabled={disabled}
-        label={t('Toolbar.menu.photo_upload')}
-        inMenu
-        className={classNames('u-hide--tablet', styles['pho-action-upload'])}
-      />
-    </MenuItem>
-    <hr className={'u-hide--desk'} />
-    <MenuItem onSelect={selectItems} icon={<Icon icon={CheckboxIcon} />}>
-      {t('Toolbar.menu.select_items')}
-    </MenuItem>
-  </Menu>
-)
+const Toolbar = ({ disabled = false, uploadPhotos, selectItems }) => {
+  const { t } = useI18n()
+  const { isMobile } = useBreakpoints()
 
-MoreMenu.propTypes = {
-  disabled: PropTypes.bool,
-  uploadPhotos: PropTypes.func.isRequired,
-  selectItems: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
+  const actions = isMobile
+    ? [upload(uploadPhotos, disabled), divider, selectItemsAction(selectItems)]
+    : [selectItemsAction(selectItems)]
+
+  return (
+    <div className={styles['pho-toolbar']} role="toolbar">
+      {!isMobile && (
+        <UploadButton
+          onUpload={uploadPhotos}
+          disabled={disabled}
+          label={t('Toolbar.photo_upload')}
+        />
+      )}
+      <MoreMenu actions={actions} />
+    </div>
+  )
 }
-
-const Toolbar = ({ t, disabled = false, uploadPhotos, selectItems }) => (
-  <div className={styles['pho-toolbar']} role="toolbar">
-    <UploadButton
-      className={'u-hide--mob'}
-      onUpload={uploadPhotos}
-      disabled={disabled}
-      label={t('Toolbar.photo_upload')}
-    />
-    <MoreMenu
-      t={t}
-      disabled={disabled}
-      uploadPhotos={uploadPhotos}
-      selectItems={selectItems}
-    />
-  </div>
-)
 
 Toolbar.propTypes = {
   disabled: PropTypes.bool,
