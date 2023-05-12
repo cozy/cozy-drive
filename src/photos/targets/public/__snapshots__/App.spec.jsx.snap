@@ -33,37 +33,6 @@ exports[`Public view should render children when they are present 1`] = `
             theme="secondary"
             type="submit"
           />
-          <Menu
-            className="u-hide--desk"
-            component={<MoreButton />}
-            position="right"
-            title="Toolbar.more"
-          >
-            <MenuItem
-              data-testid="album-public-create-cozy-mobile"
-              icon={
-                <Icon
-                  icon={[Function]}
-                  spin={false}
-                />
-              }
-              onSelect={[Function]}
-            >
-              Share.create-cozy
-            </MenuItem>
-            <MenuItem
-              data-testid="album-public-download-mobile"
-              icon={
-                <Icon
-                  icon={[Function]}
-                  spin={false}
-                />
-              }
-              onSelect={[Function]}
-            >
-              Toolbar.album_download
-            </MenuItem>
-          </Menu>
         </div>
       </div>
       <withI18n(WithContentRect)
@@ -135,37 +104,6 @@ exports[`Public view should render the album 1`] = `
             theme="secondary"
             type="submit"
           />
-          <Menu
-            className="u-hide--desk"
-            component={<MoreButton />}
-            position="right"
-            title="Toolbar.more"
-          >
-            <MenuItem
-              data-testid="album-public-create-cozy-mobile"
-              icon={
-                <Icon
-                  icon={[Function]}
-                  spin={false}
-                />
-              }
-              onSelect={[Function]}
-            >
-              Share.create-cozy
-            </MenuItem>
-            <MenuItem
-              data-testid="album-public-download-mobile"
-              icon={
-                <Icon
-                  icon={[Function]}
-                  spin={false}
-                />
-              }
-              onSelect={[Function]}
-            >
-              Toolbar.album_download
-            </MenuItem>
-          </Menu>
         </div>
       </div>
       <withI18n(WithContentRect)
