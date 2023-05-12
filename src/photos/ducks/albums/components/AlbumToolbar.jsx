@@ -1,26 +1,29 @@
 import React from 'react'
 
-import { ShareButton, SharedRecipients, SharedDocument } from 'cozy-sharing'
-import RecipientsAvatars from 'cozy-sharing/dist/components/Recipient/RecipientsAvatars'
-import { Menu, MenuItem, Icon } from 'cozy-ui/transpiled/react'
+import { ShareButton, SharedRecipients } from 'cozy-sharing'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
-import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'
-import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
-import RenameIcon from 'cozy-ui/transpiled/react/Icons/Rename'
-import AlbumAddIcon from 'cozy-ui/transpiled/react/Icons/AlbumAdd'
-import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
-import CheckboxIcon from 'cozy-ui/transpiled/react/Icons/CheckSquare'
+import { divider } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 
-import { MoreButton } from 'components/Button'
-
+import {
+  shareAlbum as shareAlbumAction,
+  download,
+  renameAlbum,
+  editAlbum,
+  selectItems as selectItemsAction,
+  deleteAlbum as deleteAlbumAction
+} from '../../../components/actions'
+import MoreMenu from '../../../components/MoreMenu'
 import styles from 'photos/styles/toolbar.styl'
+
+function insertIf(condition, element) {
+  return condition ? [element] : []
+}
 
 const AlbumToolbar = ({
   t,
   router,
   album,
   sharedWithMe,
-  // sharedByMe,
   readOnly,
   disabled = false,
   downloadAlbum,
@@ -30,6 +33,17 @@ const AlbumToolbar = ({
   shareAlbum
 }) => {
   const { isMobile } = useBreakpoints()
+
+  const actions = [
+    ...insertIf(!sharedWithMe && isMobile, shareAlbumAction(shareAlbum, album)),
+    download(downloadAlbum, t('Toolbar.menu.download_album')),
+    renameAlbum(onRename),
+    ...insertIf(!readOnly, editAlbum(router)),
+    ...insertIf(isMobile, divider),
+    ...insertIf(isMobile, selectItemsAction(selectItems)),
+    divider,
+    ...insertIf(!sharedWithMe, deleteAlbumAction(deleteAlbum))
+  ]
 
   return (
     <div
@@ -51,81 +65,7 @@ const AlbumToolbar = ({
           />
         </>
       )}
-      <Menu
-        data-testid="more-button"
-        disabled={disabled}
-        className={styles['pho-toolbar-menu']}
-        component={<MoreButton />}
-        position="right"
-      >
-        {!sharedWithMe && (
-          <MenuItem
-            className={'u-hide--desk'}
-            icon={<Icon icon={ShareIcon} />}
-            onSelect={() => shareAlbum(album)}
-          >
-            <SharedDocument docId={album.id}>
-              {({ isSharedWithMe, recipients, link }) => (
-                <>
-                  {t(
-                    isSharedWithMe
-                      ? 'Albums.share.sharedWithMe'
-                      : 'Albums.share.cta'
-                  )}
-                  <RecipientsAvatars
-                    className={styles['fil-toolbar-menu-recipients']}
-                    recipients={recipients}
-                    link={link}
-                    size="small"
-                  />
-                </>
-              )}
-            </SharedDocument>
-          </MenuItem>
-        )}
-        <MenuItem
-          data-testid="menu-download-album"
-          onSelect={downloadAlbum}
-          icon={<Icon icon={DownloadIcon} />}
-        >
-          {t('Toolbar.menu.download_album')}
-        </MenuItem>
-        <MenuItem
-          data-testid="menu-rename-album"
-          icon={<Icon icon={RenameIcon} />}
-          onSelect={onRename}
-        >
-          {t('Toolbar.menu.rename_album')}
-        </MenuItem>
-        {!readOnly && (
-          <MenuItem
-            data-testid="menu-add-photos-to-album"
-            icon={<Icon icon={AlbumAddIcon} />}
-            onSelect={() => router.push(`${router.location.pathname}/edit`)}
-          >
-            {t('Toolbar.menu.add_photos')}
-          </MenuItem>
-        )}
-        <hr className={'u-hide--desk'} />
-        <MenuItem
-          className={'u-hide--desk'}
-          icon={<Icon icon={CheckboxIcon} />}
-          onSelect={selectItems}
-        >
-          {t('Toolbar.menu.select_items')}
-        </MenuItem>
-        <hr />
-        {!sharedWithMe && (
-          <MenuItem
-            data-testid="menu-delete-album"
-            className={styles['pho-action-delete']}
-            icon={<Icon icon={TrashIcon} />}
-            onSelect={deleteAlbum}
-          >
-            {t('Toolbar.menu.album_delete')}
-          </MenuItem>
-        )}
-      </Menu>
+      <MoreMenu actions={actions} />
     </div>
   )
 }

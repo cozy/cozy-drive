@@ -20,7 +20,6 @@ const MoreMenu = ({ actions }) => {
     <>
       <div ref={anchorRef}>
         <MoreButton
-          ref={anchorRef}
           aria-controls="more-menu"
           aria-haspopup="true"
           onClick={toggleMenu}
@@ -43,7 +42,7 @@ const MoreMenu = ({ actions }) => {
 }
 
 MoreMenu.propTypes = {
-  actions: PropTypes.func.isRequired
+  actions: PropTypes.array.isRequired
 }
 
 export default MoreMenu
