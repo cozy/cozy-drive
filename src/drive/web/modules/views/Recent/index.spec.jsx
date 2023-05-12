@@ -69,8 +69,8 @@ const setup = () => {
 
 describe('Recent View', () => {
   it('tests the recent view', async () => {
-    jest.spyOn(console, 'error').mockImplementation() // TODO: to be removed with https://github.com/cozy/cozy-libs/pull/1457
-
+    // TODO : Fix https://github.com/cozy/cozy-drive/issues/2913
+    jest.spyOn(console, 'warn').mockImplementation()
     const nbFiles = 2
     const path = '/test'
     const dir_id = '123'

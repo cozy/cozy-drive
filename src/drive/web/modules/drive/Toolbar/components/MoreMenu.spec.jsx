@@ -41,6 +41,8 @@ describe('MoreMenu', () => {
     it('download files', async () => {
       // TODO: remove it when DeleteItem get props
       jest.spyOn(console, 'error').mockImplementation()
+      // TODO : Fix https://github.com/cozy/cozy-drive/issues/2913
+      jest.spyOn(console, 'warn').mockImplementation()
 
       const { getByText } = await setup()
 

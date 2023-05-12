@@ -59,6 +59,8 @@ describe('File', () => {
     })
 
     it('should show actions menu when clicking the actionsMenu button', async () => {
+      // TODO : Fix https://github.com/cozy/cozy-drive/issues/2913
+      jest.spyOn(console, 'warn').mockImplementation()
       const { root } = setup()
       const { getByRole, findByText } = root
 
