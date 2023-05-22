@@ -36,7 +36,11 @@ const MoreMenu = ({
   isDisabled,
   hasWriteAccess,
   canUpload,
-  canCreateFolder
+  canCreateFolder,
+  navigate,
+  params,
+  displayedFolder,
+  folderId
 }) => {
   const [menuIsVisible, setMenuVisible] = useState(false)
   const anchorRef = React.createRef()
@@ -60,6 +64,9 @@ const MoreMenu = ({
         canCreateFolder={canCreateFolder}
         canUpload={canUpload}
         disabled={isDisabled}
+        navigate={navigate}
+        params={params}
+        displayedFolder={displayedFolder}
       >
         {menuIsVisible && (
           <ActionMenu
@@ -71,22 +78,31 @@ const MoreMenu = ({
             }}
           >
             {isMobile && (
-              <InsideRegularFolder>
-                <ShareItem />
+              <InsideRegularFolder
+                displayedFolder={displayedFolder}
+                folderId={folderId}
+              >
+                <ShareItem displayedFolder={displayedFolder} />
               </InsideRegularFolder>
             )}
             {!isMobileApp() && (
-              <InsideRegularFolder>
-                <DownloadButtonItem />
+              <InsideRegularFolder
+                displayedFolder={displayedFolder}
+                folderId={folderId}
+              >
+                <DownloadButtonItem displayedFolder={displayedFolder} />
               </InsideRegularFolder>
             )}
             {isMobile && hasWriteAccess && <AddMenuItem />}
             <SelectableItem />
             {hasWriteAccess && (
-              <InsideRegularFolder>
+              <InsideRegularFolder
+                displayedFolder={displayedFolder}
+                folderId={folderId}
+              >
                 <hr />
                 {/* TODO DeleteItem needs props */}
-                <DeleteItem />
+                <DeleteItem displayedFolder={displayedFolder} />
               </InsideRegularFolder>
             )}
           </ActionMenu>

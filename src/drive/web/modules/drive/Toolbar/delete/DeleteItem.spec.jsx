@@ -4,18 +4,10 @@ import AppLike from 'test/components/AppLike'
 import { setupStoreAndClient } from 'test/setup'
 import DeleteItem from './DeleteItem'
 import { EnhancedDeleteConfirm } from './delete'
-import useDisplayedFolder from 'drive/hooks/useDisplayedFolder'
-
-jest.mock('drive/web/modules/selectors', () => ({
-  getDisplayedFolder: jest.fn(),
-  getCurrentFolderId: jest.fn()
-}))
 
 jest.mock('drive/web/modules/actions/utils', () => ({
   trashFiles: jest.fn().mockResolvedValue()
 }))
-
-jest.mock('drive/hooks/useDisplayedFolder')
 
 describe('DeleteItem', () => {
   const setup = () => {
@@ -23,14 +15,17 @@ describe('DeleteItem', () => {
       _id: 'displayed-folder-id',
       name: 'My Folder'
     }
-    useDisplayedFolder.mockReturnValue(displayedFolder)
     const { client, store } = setupStoreAndClient({})
 
     jest.spyOn(store, 'dispatch')
     const onLeave = jest.fn()
     const root = mount(
       <AppLike client={client} store={store}>
-        <DeleteItem isSharedWithMe={false} onLeave={onLeave} />
+        <DeleteItem
+          isSharedWithMe={false}
+          onLeave={onLeave}
+          displayedFolder={displayedFolder}
+        />
       </AppLike>
     )
     return { root, store, displayedFolder }

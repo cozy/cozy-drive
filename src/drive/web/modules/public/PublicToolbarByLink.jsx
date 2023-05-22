@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
@@ -15,6 +16,7 @@ import {
   isFilesIsFile,
   openExternalLink
 } from 'drive/web/modules/public/helpers'
+import { useDisplayedFolder } from 'drive/hooks'
 
 const PublicToolbarByLink = ({
   files,
@@ -24,6 +26,9 @@ const PublicToolbarByLink = ({
   const isFile = isFilesIsFile(files)
   const { isMobile } = useBreakpoints()
   const { t } = useI18n()
+  const navigate = useNavigate()
+  const params = useParams()
+  const displayedFolder = useDisplayedFolder()
 
   const shouldDisplayMoreMenu = isMobile || (!isFile && files.length > 0)
 
@@ -34,6 +39,9 @@ const PublicToolbarByLink = ({
         canUpload={hasWriteAccess}
         refreshFolderContent={refreshFolderContent}
         isPublic={true}
+        navigate={navigate}
+        params={params}
+        displayedFolder={displayedFolder}
       >
         {!isMobile && (
           <>

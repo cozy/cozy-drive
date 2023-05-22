@@ -22,7 +22,10 @@ export const ActionMenuContent = ({
   canUpload,
   refreshFolderContent,
   isPublic,
-  isEncryptedFolder
+  isEncryptedFolder,
+  navigate,
+  params,
+  displayedFolder
 }) => {
   const { t } = useI18n()
   const { isMobile, isDesktop } = useBreakpoints()
@@ -41,12 +44,26 @@ export const ActionMenuContent = ({
       {canCreateFolder && !isPublic && flag('drive.enable-encryption') && (
         <AddEncryptedFolderItem />
       )}
-      {!isPublic && !isEncryptedFolder && <CreateNoteItem />}
+      {!isPublic && !isEncryptedFolder && (
+        <CreateNoteItem displayedFolder={displayedFolder} />
+      )}
       {canUpload && isOfficeEditingEnabled(isDesktop) && !isEncryptedFolder && (
         <>
-          <CreateOnlyOfficeItem fileClass="text" />
-          <CreateOnlyOfficeItem fileClass="spreadsheet" />
-          <CreateOnlyOfficeItem fileClass="slide" />
+          <CreateOnlyOfficeItem
+            fileClass="text"
+            navigate={navigate}
+            params={params}
+          />
+          <CreateOnlyOfficeItem
+            fileClass="spreadsheet"
+            navigate={navigate}
+            params={params}
+          />
+          <CreateOnlyOfficeItem
+            fileClass="slide"
+            navigate={navigate}
+            params={params}
+          />
         </>
       )}
       {!isEncryptedFolder && (
@@ -54,7 +71,11 @@ export const ActionMenuContent = ({
       )}
       {canUpload && <hr />}
       {canUpload && (
-        <UploadItem disabled={isDisabled} onUploaded={refreshFolderContent} />
+        <UploadItem
+          disabled={isDisabled}
+          onUploaded={refreshFolderContent}
+          displayedFolder={displayedFolder}
+        />
       )}
       {isMobileApp() && canUpload && <StartScanner disabled={isDisabled} />}
     </>
@@ -70,6 +91,9 @@ const AddMenu = ({
   refreshFolderContent,
   isPublic,
   isEncryptedFolder,
+  navigate,
+  params,
+  displayedFolder,
   ...actionMenuProps
 }) => {
   return (
@@ -89,6 +113,9 @@ const AddMenu = ({
         refreshFolderContent={refreshFolderContent}
         isPublic={isPublic}
         isEncryptedFolder={isEncryptedFolder}
+        navigate={navigate}
+        params={params}
+        displayedFolder={displayedFolder}
       />
     </ActionMenu>
   )

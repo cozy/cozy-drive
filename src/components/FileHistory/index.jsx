@@ -7,6 +7,7 @@ import HistoryModal from './HistoryModal'
 
 const FileHistory = () => {
   const { fileId } = useParams()
+
   return (
     <Query query={() => Q('io.cozy.files').getById(fileId)}>
       {({ data: file, fetchStatus: fileFetchStatus }) => {

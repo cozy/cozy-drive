@@ -115,7 +115,7 @@ describe('Public View', () => {
     const historyItem = getByText('History')
     fireEvent.click(historyItem)
 
-    expect(mockNavigate).toHaveBeenCalledWith('./file/file-foobar0/revision')
+    expect(mockNavigate).toHaveBeenCalledWith('/file/file-foobar0/revision')
   })
 
   it('should use FolderViewBreadcrumb with correct rootBreadcrumbPath', async () => {

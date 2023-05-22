@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
 
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
@@ -11,10 +10,12 @@ import {
   canWriteOfficeDocument
 } from 'drive/web/modules/views/OnlyOffice/helpers'
 
-const CreateOnlyOfficeItem = ({ fileClass }) => {
+const CreateOnlyOfficeItem = ({
+  fileClass,
+  navigate,
+  params: { folderId = ROOT_DIR_ID }
+}) => {
   const { t } = useI18n()
-  const navigate = useNavigate()
-  const { folderId = ROOT_DIR_ID } = useParams()
 
   const handleClick = useCallback(() => {
     if (canWriteOfficeDocument()) {

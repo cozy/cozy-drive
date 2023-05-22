@@ -5,7 +5,6 @@ import { isMobileApp } from 'cozy-device-helper'
 import PortaledQueue from './PortaledQueue'
 import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
 import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
-import { useDisplayedFolder } from 'drive/hooks'
 
 import {
   startMediaBackup,
@@ -22,8 +21,12 @@ export const ScannerContext = React.createContext()
  * - Dispatching some events before and after the scan
  * - make the scan infos available through a context
  */
-const ScanWrapper = ({ stopMediaBackup, startMediaBackup, children }) => {
-  const displayedFolder = useDisplayedFolder()
+const ScanWrapper = ({
+  stopMediaBackup,
+  startMediaBackup,
+  children,
+  displayedFolder
+}) => {
   const isFolderOnMobileApp = isMobileApp() && displayedFolder
   if (!isFolderOnMobileApp) return children
 

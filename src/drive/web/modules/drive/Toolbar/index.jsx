@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import cx from 'classnames'
+import { useNavigate, useLocation, useParams } from 'react-router-dom'
 
 import SharingProvider, { SharedDocument } from 'cozy-sharing'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
@@ -16,6 +17,7 @@ import ShareButton from 'drive/web/modules/drive/Toolbar/share/ShareButton'
 import SharedRecipients from 'drive/web/modules/drive/Toolbar/share/SharedRecipients'
 import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
 import SearchButton from 'drive/web/modules/drive/Toolbar/components/SearchButton'
+import { useDisplayedFolder } from 'drive/hooks'
 
 import styles from 'drive/styles/toolbar.styl'
 
@@ -54,7 +56,12 @@ class Toolbar extends Component {
       canUpload,
       canCreateFolder,
       hasWriteAccess,
-      breakpoints: { isMobile }
+      breakpoints: { isMobile },
+      navigate,
+      pathname,
+      params,
+      folderId,
+      displayedFolder
     } = this.props
 
     const isDisabled = disabled || selectionModeActive
@@ -68,10 +75,16 @@ class Toolbar extends Component {
         className={cx(styles['fil-toolbar-files'], 'u-flex-items-center')}
         role="toolbar"
       >
-        <InsideRegularFolder>
+        <InsideRegularFolder
+          displayedFolder={displayedFolder}
+          folderId={folderId}
+        >
           <SharedRecipients />
         </InsideRegularFolder>
-        <InsideRegularFolder>
+        <InsideRegularFolder
+          displayedFolder={displayedFolder}
+          folderId={folderId}
+        >
           <ShareButton isDisabled={isDisabled} />
         </InsideRegularFolder>
 
@@ -80,19 +93,26 @@ class Toolbar extends Component {
             canCreateFolder={canCreateFolder}
             canUpload={canUpload}
             disabled={isDisabled}
+            navigate={navigate}
+            params={params}
+            displayedFolder={displayedFolder}
           >
             <AddButton />
           </AddMenuProvider>
         )}
 
         <BarRightWithProvider store={this.context.store}>
-          {isMobile && <SearchButton />}
+          {isMobile && <SearchButton navigate={navigate} pathname={pathname} />}
           <SharingProvider doctype="io.cozy.files" documentType="Files">
             <MoreMenu
               isDisabled={isDisabled}
               hasWriteAccess={hasWriteAccess}
               canCreateFolder={canCreateFolder}
               canUpload={canUpload}
+              navigate={navigate}
+              params={params}
+              folderId={folderId}
+              displayedFolder={displayedFolder}
             />
           </SharingProvider>
         </BarRightWithProvider>
@@ -113,14 +133,35 @@ const mapStateToProps = state => ({
  */
 const ToolbarWithSharingContext = props => {
   const folderId = useCurrentFolderId()
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
+  const params = useParams()
+  const displayedFolder = useDisplayedFolder()
 
   return !folderId ? (
-    <Toolbar {...props} />
+    <Toolbar
+      {...props}
+      navigate={navigate}
+      pathname={pathname}
+      params={params}
+      displayedFolder={displayedFolder}
+      folderId={folderId}
+    />
   ) : (
     <SharedDocument docId={folderId}>
       {sharingProps => {
         const { hasWriteAccess } = sharingProps
-        return <Toolbar {...props} hasWriteAccess={hasWriteAccess} />
+        return (
+          <Toolbar
+            {...props}
+            hasWriteAccess={hasWriteAccess}
+            navigate={navigate}
+            pathname={pathname}
+            params={params}
+            displayedFolder={displayedFolder}
+            folderId={folderId}
+          />
+        )
       }}
     </SharedDocument>
   )
