@@ -6,13 +6,16 @@ import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
-import { useDisplayedFolder } from 'drive/hooks'
 
 import deleteContainer from './delete'
 
-const DeleteItem = ({ t, isSharedWithMe, trashFolder, onLeave }) => {
-  const displayedFolder = useDisplayedFolder()
-
+const DeleteItem = ({
+  t,
+  isSharedWithMe,
+  trashFolder,
+  onLeave,
+  displayedFolder
+}) => {
   return isSharedWithMe ? (
     <ActionMenuItem
       data-testid="fil-action-delete"
@@ -40,7 +43,8 @@ DeleteItem.propTypes = {
   t: PropTypes.func.isRequired,
   isSharedWithMe: PropTypes.bool.isRequired,
   trashFolder: PropTypes.func.isRequired,
-  onLeave: PropTypes.func.isRequired
+  onLeave: PropTypes.func.isRequired,
+  displayedFolder: PropTypes.object.isRequired
 }
 
 export default compose(translate(), deleteContainer)(DeleteItem)

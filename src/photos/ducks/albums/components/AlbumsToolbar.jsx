@@ -1,5 +1,4 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { ButtonLink } from 'cozy-ui/transpiled/react'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
@@ -10,10 +9,9 @@ import styles from 'photos/styles/toolbar.styl'
 import MoreMenu from '../../../components/MoreMenu'
 import { newAlbum } from '../../../components/actions'
 
-const AlbumsToolbar = () => {
+const AlbumsToolbar = ({ navigate }) => {
   const { isMobile } = useBreakpoints()
   const { t } = useI18n()
-  const navigate = useNavigate()
 
   const actions = [newAlbum(navigate)]
 

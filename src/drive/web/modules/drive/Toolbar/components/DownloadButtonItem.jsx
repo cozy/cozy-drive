@@ -9,10 +9,8 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 
 import { downloadFiles } from 'drive/web/modules/actions/utils'
-import { useDisplayedFolder } from 'drive/hooks'
 
-const DownloadButtonItem = ({ t, downloadAll }) => {
-  const displayedFolder = useDisplayedFolder()
+const DownloadButtonItem = ({ t, downloadAll, displayedFolder }) => {
   return (
     <ActionMenuItem
       left={<Icon icon={DownloadIcon} />}

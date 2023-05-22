@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useContext } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
@@ -28,6 +29,8 @@ export const Toolbar = ({
   breakpoints: { isMobile }
 }) => {
   const client = useClient()
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
   const [menuIsVisible, setMenuVisible] = useState(false)
   const anchorRef = React.createRef()
   const openMenu = useCallback(() => setMenuVisible(true), [setMenuVisible])
@@ -93,7 +96,7 @@ export const Toolbar = ({
         />
       )}
       <BarRightWithProvider>
-        {isMobile && <SearchButton />}
+        {isMobile && <SearchButton navigate={navigate} pathname={pathname} />}
         {MoreMenu}
       </BarRightWithProvider>
     </div>

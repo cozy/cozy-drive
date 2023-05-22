@@ -6,14 +6,11 @@ import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'
-import { useDisplayedFolder } from 'drive/hooks'
 
 import styles from 'drive/styles/toolbar.styl'
 import shareContainer from './share'
 
-const ShareItem = translate()(({ t, share }) => {
-  const displayedFolder = useDisplayedFolder()
-
+const ShareItem = translate()(({ t, share, displayedFolder }) => {
   return (
     <SharedDocument docId={displayedFolder.id}>
       {({ isSharedWithMe, recipients, link }) => (

@@ -7,7 +7,6 @@ import React, {
 } from 'react'
 import { useSelector } from 'react-redux'
 import { logException } from 'drive/lib/reporter'
-import { useDisplayedFolder } from 'drive/hooks'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 
@@ -28,9 +27,11 @@ const AddMenuProvider = ({
   canUpload,
   refreshFolderContent,
   children,
-  isPublic
+  isPublic,
+  navigate,
+  params,
+  displayedFolder
 }) => {
-  const displayedFolder = useDisplayedFolder()
   const [menuIsVisible, setMenuVisible] = useState(false)
   const selectionModeActive = useSelector(isSelectionBarVisible)
   const isOffline = useBrowserOffline()
@@ -81,7 +82,7 @@ const AddMenuProvider = ({
       }}
     >
       {children}
-      <ScanWrapper>
+      <ScanWrapper displayedFolder={displayedFolder}>
         {menuIsVisible && (
           <AddMenu
             id="add-menu"
@@ -92,6 +93,9 @@ const AddMenuProvider = ({
             refreshFolderContent={refreshFolderContent}
             isPublic={isPublic}
             isEncryptedFolder={isEncryptedDir}
+            navigate={navigate}
+            params={params}
+            displayedFolder={displayedFolder}
           />
         )}
       </ScanWrapper>
