@@ -83,7 +83,10 @@ const useConfig = () => {
           editorConfig: {
             ...onlyoffice.editor,
             mode: onlyoffice.editor.mode === 'edit' ? editorMode : 'view',
-            user: { name }
+            user: { name },
+            customization: {
+              reviewDisplay: 'markup'
+            }
           },
           token: onlyoffice.token,
           documentType: onlyoffice.documentType,
