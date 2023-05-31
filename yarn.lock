@@ -5928,10 +5928,10 @@ cozy-release@1.10.0:
   dependencies:
     exec-sh "0.3.2"
 
-cozy-scanner@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/cozy-scanner/-/cozy-scanner-3.0.0.tgz#098e02a3f00c0240490c8d582e033d387315e563"
-  integrity sha512-l76hxPROWbOU+vNcR7ypNZFTFj553PR3hhsWJoFw8+0uCK1tWfV9Pr0Jlti0I8gxL705ooNTPikzL1/jRNTRvw==
+cozy-scanner@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/cozy-scanner/-/cozy-scanner-4.0.0.tgz#1972f3ebae478b68038feccd2dba4b8ad7b9b598"
+  integrity sha512-5Ku8DsSFywY00FpOljH77OIRbCRiiGLRjprtbsnqm+IxJqozE05h2QJ+9mfWRn/IQ4QadVGEtYzKbeupo5RzTA==
   dependencies:
     cozy-device-helper "^2.7.0"
 
