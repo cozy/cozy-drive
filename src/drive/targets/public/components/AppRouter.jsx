@@ -28,7 +28,7 @@ const AppRouter = ({
   return (
     <Router history={hashHistory}>
       <Route component={PublicLayout}>
-        {isOfficeEnabled(isDesktop) && (
+        {isOfficeEnabled(isDesktop) ? (
           <>
             <Route
               path="onlyoffice/:fileId"
@@ -70,6 +70,8 @@ const AppRouter = ({
               <Redirect from="/" to={`onlyoffice/${data.id}`} />
             )}
           </>
+        ) : (
+          <Redirect from="onlyoffice/*" to="/" />
         )}
 
         {isFile && (
