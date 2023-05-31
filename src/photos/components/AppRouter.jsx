@@ -1,10 +1,12 @@
 import React from 'react'
 import { createHashRouter, Navigate, RouterProvider } from 'react-router-dom'
+import { isFlagshipApp } from 'cozy-device-helper'
 
 import { Spinner } from 'cozy-ui/transpiled/react'
 
 import Layout from './Layout'
 import Timeline from '../ducks/timeline'
+import Backup from '../ducks/backup'
 import { AlbumsView, AlbumPhotos, PhotosPicker } from '../ducks/albums'
 import { TimelinePhotosViewer, AlbumPhotosViewer } from './PhotosViewer'
 
@@ -13,13 +15,19 @@ function ErrorBoundary() {
   return <Navigate to="photos" replace />
 }
 
+const DEFAULT_ROUTE = isFlagshipApp() ? 'backup' : 'photos'
+
 const router = createHashRouter([
   {
     element: <Layout />,
     children: [
       {
         path: '/*',
-        element: <Navigate to="photos" replace />
+        element: <Navigate to={DEFAULT_ROUTE} replace />
+      },
+      {
+        path: 'backup',
+        element: <Backup />
       },
       {
         path: 'photos',

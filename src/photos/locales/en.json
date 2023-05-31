@@ -4,6 +4,7 @@
     "albums": "Albums",
     "shared": "Shared by me",
     "trash": "Trash",
+    "backup": "Backup",
     "btn-client": "Get Cozy Drive for desktop",
     "btn-client-web": "Get Cozy",
     "btn-client-mobile": "Get Cozy Drive on your mobile!",
@@ -276,6 +277,36 @@
         "first": "I understand",
         "second": "Check our plans"
       }
+    }
+  },
+  "Backup": {
+    "header": {
+      "title": "Backup my photos & videos"
+    },
+    "actions": {
+      "verification": "Verification",
+      "startBackup": "Start backup",
+      "backupInProgress": "Backup in progress %{alreadyBackupedCount} / %{totalCount}",
+      "saved": "Saved",
+      "cancel": "Cancel"
+    },
+    "description": {
+      "first": "Backing up can take some time and be particularly data-intensive. Choose to connect to a Wi-Fi network, or make sure you have unlimited Internet access with good bandwidth to get started.",
+      "second": "You can leave the application in the background when saving, but the phone must remain switched on."
+    },
+    "info": {
+      "notBackedUpElements": "%{smart_count} element not backed up |||| %{smart_count} elements not backed up",
+      "pressStartBackup": "Press \"Start backup\" to keep them safe in your Cozy."
+    },
+    "InstallAppAlert": {
+      "description": "To save all your mobile photos and videos on your Cozy, please install our Personal Cloud - Cozy application",
+      "install": "Install"
+    },
+    "AllowPermissionsModal": {
+      "title": "Allow access to your photos and videos",
+      "description": "Cozy needs access to the photos and videos stored on your device in order to synchronize them.",
+      "cancel": "Cancel",
+      "allow": "Allow"
     }
   }
 }
