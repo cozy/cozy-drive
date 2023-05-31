@@ -20,13 +20,14 @@ const AppRouter = ({
   username,
   isOnlyOfficeDocShared,
   sharedDocumentId,
-  data
+  data,
+  history = hashHistory
 }) => {
   const { isDesktop } = useBreakpoints()
   const isFile = data && data.type === 'file'
 
   return (
-    <Router history={hashHistory}>
+    <Router history={history}>
       <Route component={PublicLayout}>
         {isOfficeEnabled(isDesktop) ? (
           <>
