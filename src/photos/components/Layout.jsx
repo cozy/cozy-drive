@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet, NavLink as RouterLink } from 'react-router-dom'
 
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n, translate } from 'cozy-ui/transpiled/react/I18n'
 import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { Layout as LayoutUI, Main } from 'cozy-ui/transpiled/react/Layout'
 import Sidebar from 'cozy-ui/transpiled/react/Sidebar'
@@ -25,23 +25,64 @@ import styles from '../styles/layout'
 
 const NavLink = genNavLinkForV6(RouterLink)
 
+const FlagshipNavLinks = () => {
+  const { t } = useI18n()
+
+  return (
+    <>
+      <NavItem>
+        <NavLink to="/backup">
+          <NavIcon icon="phone-upload" />
+          <NavText>{t('Nav.backup')}</NavText>
+        </NavLink>
+      </NavItem>
+      <NavItem>
+        <NavLink to="/photos">
+          <NavIcon icon="image" />
+          <NavText>{t('Nav.photos')}</NavText>
+        </NavLink>
+      </NavItem>
+      <NavItem data-testid="nav-to-albums">
+        <NavLink to="/albums">
+          <NavIcon icon="album" />
+          <NavText>{t('Nav.albums')}</NavText>
+        </NavLink>
+      </NavItem>
+    </>
+  )
+}
+
+const NavLinks = () => {
+  const { t } = useI18n()
+
+  return (
+    <>
+      <NavItem>
+        <NavLink to="/photos">
+          <NavIcon icon="image" />
+          <NavText>{t('Nav.photos')}</NavText>
+        </NavLink>
+      </NavItem>
+      <NavItem data-testid="nav-to-albums">
+        <NavLink to="/albums">
+          <NavIcon icon="album" />
+          <NavText>{t('Nav.albums')}</NavText>
+        </NavLink>
+      </NavItem>
+      <NavItem>
+        <NavLink to="/backup">
+          <NavIcon icon="phone-upload" />
+          <NavText>{t('Nav.backup')}</NavText>
+        </NavLink>
+      </NavItem>
+    </>
+  )
+}
+
 export const Layout = ({ t }) => (
   <LayoutUI>
     <Sidebar className={styles['pho-sidebar']}>
-      <Nav>
-        <NavItem>
-          <NavLink to="/photos">
-            <NavIcon icon="image" />
-            <NavText>{t('Nav.photos')}</NavText>
-          </NavLink>
-        </NavItem>
-        <NavItem data-testid="nav-to-albums">
-          <NavLink to="/albums">
-            <NavIcon icon="album" />
-            <NavText>{t('Nav.albums')}</NavText>
-          </NavLink>
-        </NavItem>
-      </Nav>
+      <Nav>{isFlagshipApp() ? <FlagshipNavLinks /> : <NavLinks />}</Nav>
       {!isFlagshipApp() && <ButtonClient />}
     </Sidebar>
 

@@ -1,0 +1,24 @@
+@require 'settings/breakpoints.styl'
+
+.pho-backup-wrapper
+    position relative
+    display flex
+    flex-direction column
+    flex 1 1 auto
+    align-items center
+    box-sizing border-box
+    height auto
+    overflow-x hidden
+    overflow-y auto
+
+    +small-screen('min')
+        align-items flex-start
+
+.pho-backup-info-wrapper
+    width 100%
+
+.pho-backup-info-field
+    display flex
+    flex-direction column
+    align-items center
+    flex 1

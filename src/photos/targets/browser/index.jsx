@@ -30,6 +30,11 @@ import appMetadata from 'photos/appMetadata'
 import doctypes from './doctypes'
 import cozyBar from 'lib/cozyBar'
 
+import {
+  BackupDataProvider,
+  useBackupData
+} from 'photos/ducks/backup/hooks/useBackupData'
+
 const loggerMiddleware = createLogger()
 
 const setupAppContext = memoize(() => {
@@ -80,8 +85,17 @@ const setupAppContext = memoize(() => {
 })
 
 const App = props => {
+  const { setBackupInfo } = useBackupData()
+
   return (
-    <WebviewIntentProvider setBarContext={cozyBar.setWebviewContext}>
+    <WebviewIntentProvider
+      setBarContext={cozyBar.setWebviewContext}
+      methods={{
+        updateBackupInfo: backupInfo => {
+          setBackupInfo(backupInfo)
+        }
+      }}
+    >
       <Provider store={props.store}>
         <I18n
           lang={props.locale}
@@ -103,9 +117,11 @@ const App = props => {
 }
 
 const AppWithRouter = props => (
-  <App {...props}>
-    <AppRouter />
-  </App>
+  <BackupDataProvider>
+    <App {...props}>
+      <AppRouter />
+    </App>
+  </BackupDataProvider>
 )
 
 const init = () => {
