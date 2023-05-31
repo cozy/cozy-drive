@@ -8,10 +8,11 @@ import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
 import UploadButton from '../UploadButton'
 
-const download = (onUpload, disabled) => () => ({
-  name: 'download',
-  action: () => {},
-  Component: forwardRef(function Download(props, ref) {
+const upload = (onUpload, disabled) => () => ({
+  name: 'upload',
+  // FileInput needs to stay rendered until the onChange event, so we prevent the event from bubbling
+  action: e => e.stopPropagation(),
+  Component: forwardRef(function Upload(props, ref) {
     const { t } = useI18n()
     return (
       <ActionMenuItem {...props} ref={ref}>
@@ -29,4 +30,4 @@ const download = (onUpload, disabled) => () => ({
   })
 })
 
-export default download
+export default upload
