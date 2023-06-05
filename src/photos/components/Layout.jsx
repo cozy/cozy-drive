@@ -1,10 +1,10 @@
 /* global __TARGET__ */
 
-import styles from '../styles/layout'
-
 import React from 'react'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { Link as RRNavLink } from 'react-router'
 
+import { translate } from 'cozy-ui/transpiled/react/I18n'
+import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { Layout as LayoutUI, Main } from 'cozy-ui/transpiled/react/Layout'
 import Sidebar from 'cozy-ui/transpiled/react/Sidebar'
 import Nav, {
@@ -13,14 +13,16 @@ import Nav, {
   NavText,
   genNavLink
 } from 'cozy-ui/transpiled/react/Nav'
-import { Link as RRNavLink } from 'react-router'
+import CozyDevtools from 'cozy-client/dist/devtools'
+import { ModalManager } from 'react-cozy-helpers'
+import { isFlagshipApp } from 'cozy-device-helper'
+
 import ButtonClient from '../../components/pushClient/Button'
 import BannerClient from '../../components/pushClient/Banner'
 import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import { UploadQueue } from '../ducks/upload'
-import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
-import { ModalManager } from 'react-cozy-helpers'
-import { isFlagshipApp } from 'cozy-device-helper'
+
+import styles from '../styles/layout'
 
 const NavLink = genNavLink(RRNavLink)
 
@@ -51,8 +53,8 @@ export const Layout = ({ t, children }) => (
       {children}
     </Main>
     <ModalManager />
-
     <Sprite />
+    {process.env.NODE_ENV !== 'production' ? <CozyDevtools /> : null}
   </LayoutUI>
 )
 

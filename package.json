@@ -158,7 +158,7 @@
     "react-dom": "16.14.0",
     "react-dropzone": "5.1.1",
     "react-hot-loader": "^4.13.1",
-    "react-inspector": "^5.1.0",
+    "react-inspector": "^5.1.1",
     "react-measure": "2.5.0",
     "react-redux": "7.2.0",
     "react-remove-scroll": "^2.4.4",
