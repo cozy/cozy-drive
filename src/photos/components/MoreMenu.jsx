@@ -26,6 +26,8 @@ const MoreMenu = ({ actions }) => {
         />
       </div>
       <ActionMenu
+        disableEnforceFocus
+        disableRestoreFocus
         id="more-menu"
         ref={anchorRef}
         open={isMenuOpen}
