@@ -42,16 +42,6 @@
     "screenshots/fr/screenshot04.png"
   ],
   "langs": ["en", "fr"],
-  "platforms": [
-    {
-      "type": "ios",
-      "url": "https://itunes.apple.com/us/app/cozy-drive/id1224102389?mt=8"
-    },
-    {
-      "type": "android",
-      "url": "https://play.google.com/store/apps/details?id=io.cozy.drive.mobile"
-    }
-  ],
   "routes": {
     "/": {
       "folder": "/",
