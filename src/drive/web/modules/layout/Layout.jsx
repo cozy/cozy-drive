@@ -8,6 +8,7 @@ import Alerter from 'cozy-ui/transpiled/react/Alerter'
 import FlagSwitcher from 'cozy-flags/dist/FlagSwitcher'
 import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import CozyDevtools from 'cozy-client/dist/devtools'
+import flag from 'cozy-flags'
 
 import { initFlags } from 'lib/flags'
 import Nav from 'drive/web/modules/navigation/Nav'
@@ -33,7 +34,7 @@ const Layout = ({ t, children }) => (
     {__TARGET__ === 'mobile' && <UserActionRequired />}
     {children}
     <Sprite />
-    {process.env.NODE_ENV !== 'production' ? <CozyDevtools /> : null}
+    {flag('debug') ? <CozyDevtools /> : null}
   </LayoutUI>
 )
 

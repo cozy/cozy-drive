@@ -16,6 +16,7 @@ import Nav, {
 import CozyDevtools from 'cozy-client/dist/devtools'
 import { ModalManager } from 'react-cozy-helpers'
 import { isFlagshipApp } from 'cozy-device-helper'
+import flag from 'cozy-flags'
 
 import ButtonClient from '../../components/pushClient/Button'
 import BannerClient from '../../components/pushClient/Banner'
@@ -54,7 +55,7 @@ export const Layout = ({ t, children }) => (
     </Main>
     <ModalManager />
     <Sprite />
-    {process.env.NODE_ENV !== 'production' ? <CozyDevtools /> : null}
+    {flag('debug') ? <CozyDevtools /> : null}
   </LayoutUI>
 )
 
