@@ -38,7 +38,17 @@ const AddFolder = ({
           styles['fil-content-file-select']
         )}
       />
-      <FileThumbnail file={{ type: 'directory' }} isEncrypted={isEncrypted} />
+      <TableCell
+        className={cx(
+          styles['fil-content-cell'],
+          styles['fil-file-thumbnail'],
+          {
+            'u-pl-0': !isMobile
+          }
+        )}
+      >
+        <FileThumbnail file={{ type: 'directory' }} isEncrypted={isEncrypted} />
+      </TableCell>
       <TableCell
         className={cx(styles['fil-content-cell'], styles['fil-content-file'])}
       >
