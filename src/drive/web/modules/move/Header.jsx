@@ -4,20 +4,28 @@ import PropTypes from 'prop-types'
 import { Media, Img, Bd } from 'cozy-ui/transpiled/react/Media'
 import Circle from 'cozy-ui/transpiled/react/Circle'
 import Counter from 'cozy-ui/transpiled/react/Counter'
-import Icon from 'cozy-ui/transpiled/react/Icon'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import Card from 'cozy-ui/transpiled/react/Card'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import Icon from 'cozy-ui/transpiled/react/Icon'
 import DriveIcon from 'cozy-ui/transpiled/react/Icons/FileTypeFolder'
-
-const HeaderIlustration = ({ count }) => {
-  return count > 1 ? (
-    <Circle>
-      <Counter count={count} />
-    </Circle>
-  ) : (
-    <Icon icon={DriveIcon} size={32} />
-  )
+import FileThumbnail from '../filelist/FileThumbnail'
+const HeaderIlustration = ({ entries }) => {
+  if (entries.length === 1) {
+    // this is a cozy files
+    if (entries[0].class) {
+      return <FileThumbnail file={entries[0]} />
+    }
+    return <Icon icon={DriveIcon} size={32} />
+  }
+  if (entries.length > 1) {
+    return (
+      <Circle>
+        <Counter count={entries.length} />
+      </Circle>
+    )
+  }
+  return null
 }
 
 const specificCardStyle = {
@@ -37,7 +45,7 @@ const Header = ({ entries, title, subTitle }) => {
     <Card inset className="u-bg-paleGrey" style={specificCardStyle}>
       <Media>
         <Img className="u-mr-1">
-          <HeaderIlustration count={entries.length} />
+          <HeaderIlustration entries={entries} />
         </Img>
         <Bd>
           <Typography variant="h6" noWrap>
