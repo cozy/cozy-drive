@@ -2,6 +2,8 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import Header from './Header'
 import { TestI18n } from 'test/components/AppLike'
+import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+
 import en from 'drive/locales/en.json'
 import Polyglot from 'node-polyglot'
 const onCloseSpy = jest.fn()
@@ -18,9 +20,11 @@ describe('Header', () => {
     const t = polyglot.t.bind(polyglot)
     return {
       ...render(
-        <TestI18n>
-          <Header {...props} />
-        </TestI18n>
+        <BreakpointsProvider>
+          <TestI18n>
+            <Header {...props} />
+          </TestI18n>
+        </BreakpointsProvider>
       ),
       t
     }
@@ -42,7 +46,8 @@ describe('Header', () => {
       title: 'My Title',
       entries: [
         {
-          name: 'FileName.txt'
+          name: 'FileName.txt',
+          class: 'file'
         }
       ]
     })
