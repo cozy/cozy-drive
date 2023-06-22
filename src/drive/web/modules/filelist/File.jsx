@@ -9,7 +9,7 @@ import { isDirectory } from 'cozy-client/dist/models/file'
 import { isIOSApp } from 'cozy-device-helper'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
-import { TableRow } from 'cozy-ui/transpiled/react/Table'
+import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'
 
 import { ActionMenuWithHeader } from 'drive/web/modules/actionmenu/ActionMenuWithHeader'
 import FileThumbnail from 'drive/web/modules/filelist/FileThumbnail'
@@ -133,11 +133,21 @@ const File = props => {
         toggle={toggle}
         isRenaming={isRenaming}
       >
-        <FileThumbnail
-          file={attributes}
-          size={isLargeRow ? 96 : undefined}
-          isInSyncFromSharing={isInSyncFromSharing}
-        />
+        <TableCell
+          className={cx(
+            styles['fil-content-cell'],
+            styles['fil-file-thumbnail'],
+            {
+              'u-pl-0': !isMobile
+            }
+          )}
+        >
+          <FileThumbnail
+            file={attributes}
+            size={isLargeRow ? 96 : undefined}
+            isInSyncFromSharing={isInSyncFromSharing}
+          />
+        </TableCell>
         <FileName
           attributes={attributes}
           isRenaming={isRenaming}
