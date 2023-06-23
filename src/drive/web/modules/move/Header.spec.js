@@ -1,48 +1,40 @@
 import React from 'react'
 import { render } from '@testing-library/react'
-import Header from './Header'
-import { TestI18n } from 'test/components/AppLike'
-import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import CozyClient from 'cozy-client'
 
-import en from 'drive/locales/en.json'
-import Polyglot from 'node-polyglot'
-const onCloseSpy = jest.fn()
+import AppLike from 'test/components/AppLike'
+import Header from './Header'
+
 describe('Header', () => {
-  const setupComponent = ({ entries = [], onClose, title, subTitle }) => {
+  const setupComponent = ({ entries = [], title, subTitle }) => {
     const props = {
       entries,
-      onClose,
+
       title,
       subTitle
     }
-    const polyglot = new Polyglot()
-    polyglot.extend(en)
-    const t = polyglot.t.bind(polyglot)
-    return {
-      ...render(
-        <BreakpointsProvider>
-          <TestI18n>
-            <Header {...props} />
-          </TestI18n>
-        </BreakpointsProvider>
-      ),
-      t
-    }
+    const client = new CozyClient({})
+
+    return render(
+      <AppLike client={client}>
+        <Header {...props} />
+      </AppLike>
+    )
   }
   it('should fallback to Move title if no title is given', () => {
-    const { getByText, t } = setupComponent({ onClose: onCloseSpy })
-    expect(getByText(t('Move.title', { smart_count: 0 })))
+    const { getByText } = setupComponent({
+      entries: [{ file: 1 }, { file: 2 }]
+    })
+    expect(getByText('2 elements'))
   })
   it('should display title if title is given and no file', () => {
     const { getByText } = setupComponent({
-      onClose: onCloseSpy,
       title: 'My Title'
     })
     expect(getByText('My Title'))
   })
-  it('should display the right title if only one file', () => {
+  it('should display the right title if only one io.cozy.files', () => {
     const { getByText } = setupComponent({
-      onClose: onCloseSpy,
       title: 'My Title',
       entries: [
         {
@@ -52,11 +44,21 @@ describe('Header', () => {
       ]
     })
     expect(getByText('FileName.txt'))
-    // expect(component).toMatchSnapshot()
+  })
+
+  it('should display the right title if it comes from the outside', () => {
+    const { getByText } = setupComponent({
+      title: 'My Title',
+      entries: [
+        {
+          name: 'FileName.txt'
+        }
+      ]
+    })
+    expect(getByText('FileName.txt'))
   })
   it('should display the right title if more than one files', () => {
     const { getByText } = setupComponent({
-      onClose: onCloseSpy,
       title: 'My Title',
       entries: [
         {
