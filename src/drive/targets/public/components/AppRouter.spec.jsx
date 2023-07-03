@@ -1,6 +1,5 @@
 // app.test.js
 import { render, screen } from '@testing-library/react'
-import { createMemoryHistory } from 'history'
 import React from 'react'
 import AppLike from 'test/components/AppLike'
 import '@testing-library/jest-dom'
@@ -37,8 +36,7 @@ jest.mock('drive/web/modules/views/OnlyOffice', () => {
 
 describe('Public AppRouter', () => {
   const setupRouter = ({ route = '/', data = {} } = {}) => {
-    const history = createMemoryHistory()
-    history.push(route)
+    window.history.pushState({}, 'Test page', route)
     render(
       <AppLike client={client}>
         <AppRouter history={history} data={data} />
