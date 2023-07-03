@@ -3,6 +3,7 @@
 import 'whatwg-fetch'
 import React from 'react'
 import { render } from 'react-dom'
+import { HashRouter } from 'react-router-dom'
 
 import 'cozy-ui/transpiled/react/stylesheet.css'
 
@@ -113,13 +114,15 @@ const init = async () => {
       initCozyBar(dataset, client)
       render(
         <App lang={lang} polyglot={polyglot} client={client} store={store}>
-          <AppRouter
-            isReadOnly={isReadOnly}
-            username={username}
-            data={data}
-            isOnlyOfficeDocShared={isOnlyOfficeDocShared}
-            sharedDocumentId={sharedDocumentId}
-          />
+          <HashRouter>
+            <AppRouter
+              isReadOnly={isReadOnly}
+              username={username}
+              data={data}
+              isOnlyOfficeDocShared={isOnlyOfficeDocShared}
+              sharedDocumentId={sharedDocumentId}
+            />
+          </HashRouter>
         </App>,
         root
       )
