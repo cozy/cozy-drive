@@ -4,7 +4,7 @@ import get from 'lodash/get'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import Stack from 'cozy-ui/transpiled/react/Stack'
-import { ButtonLink } from 'cozy-ui/transpiled/react/Button'
+import { ButtonLink } from 'cozy-ui/transpiled/react/deprecated/Button'
 
 import { withClient } from 'cozy-client'
 import { isMobileApp, isFlagshipApp } from 'cozy-device-helper'

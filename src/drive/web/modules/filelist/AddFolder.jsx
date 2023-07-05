@@ -6,7 +6,7 @@ import compose from 'lodash/flowRight'
 import { withClient } from 'cozy-client'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
-import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'
 
 import FilenameInput from 'drive/web/modules/filelist/FilenameInput'

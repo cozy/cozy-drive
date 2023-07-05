@@ -5,7 +5,7 @@ import { isDirectory } from 'cozy-client/dist/models/file'
 import { getBoundT } from 'cozy-scanner'
 import ActionMenu, {
   ActionMenuHeader
-} from 'cozy-ui/transpiled/react/ActionMenu'
+} from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'

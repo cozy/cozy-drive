@@ -4,7 +4,7 @@ import { isIOSApp } from 'cozy-device-helper'
 
 import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import Button from 'cozy-ui/transpiled/react/Button'
+import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 
 import withPersistentState from 'drive/mobile/lib/withPersistentState'

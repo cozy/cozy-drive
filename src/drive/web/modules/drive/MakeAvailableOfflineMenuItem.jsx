@@ -7,7 +7,7 @@ import { useVaultClient } from 'cozy-keys-lib'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import Switch from 'cozy-ui/transpiled/react/MuiCozyTheme/Switch'
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
+import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import PhoneDownloadIcon from 'cozy-ui/transpiled/react/Icons/PhoneDownload'
 
 import {

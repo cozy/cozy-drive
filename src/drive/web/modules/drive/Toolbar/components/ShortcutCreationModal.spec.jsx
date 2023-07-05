@@ -5,7 +5,7 @@ import mediaQuery from 'css-mediaquery'
 
 import { createMockClient } from 'cozy-client'
 import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
-import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
 import ShortcutCreationModal from './ShortcutCreationModal'
 import AppLike from 'test/components/AppLike'

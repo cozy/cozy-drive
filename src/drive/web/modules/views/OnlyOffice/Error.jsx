@@ -2,7 +2,7 @@ import React, { useContext, useMemo, useCallback } from 'react'
 import { RemoveScroll } from 'react-remove-scroll'
 
 import { isQueryLoading, useQuery } from 'cozy-client'
-import Overlay from 'cozy-ui/transpiled/react/Overlay'
+import Overlay from 'cozy-ui/transpiled/react/deprecated/Overlay'
 import Viewer from 'cozy-ui/transpiled/react/Viewer'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'

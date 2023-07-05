@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import ProgressionBanner from 'cozy-ui/transpiled/react/ProgressionBanner'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import Button from 'cozy-ui/transpiled/react/Button'
+import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import PaperplaneIcon from 'cozy-ui/transpiled/react/Icons/Paperplane'
 import uploadErrorIcon from '../../../assets/icons/icon-upload-error.svg'
 

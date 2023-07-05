@@ -4,7 +4,7 @@ import cx from 'classnames'
 import { CozyFile } from 'models'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { Dialog } from 'cozy-ui/transpiled/react/CozyDialogs'
-import Button from 'cozy-ui/transpiled/react/Button'
+import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import { isDirectory } from 'cozy-client/dist/models/file'
 

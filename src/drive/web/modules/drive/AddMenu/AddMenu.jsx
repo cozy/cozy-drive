@@ -3,7 +3,7 @@ import React from 'react'
 import { isMobileApp } from 'cozy-device-helper'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
-import ActionMenu from 'cozy-ui/transpiled/react/ActionMenu'
+import ActionMenu from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 
 import AddFolderItem from 'drive/web/modules/drive/Toolbar/components/AddFolderItem'

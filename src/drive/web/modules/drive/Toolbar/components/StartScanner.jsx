@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 
 import { SCANNER_UPLOADING } from 'cozy-scanner'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
+import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import CameraIcon from 'cozy-ui/transpiled/react/Icons/Camera'
 

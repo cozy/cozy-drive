@@ -11,7 +11,7 @@ import { RefreshableSharings } from 'cozy-sharing'
 import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import { withBreakpoints } from 'cozy-ui/transpiled/react'
 
 import { ROOT_DIR_ID } from 'drive/constants/config'

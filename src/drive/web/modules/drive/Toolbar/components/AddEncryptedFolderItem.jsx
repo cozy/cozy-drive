@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
+import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import EncryptedFolderIcon from 'drive/web/modules/views/Folder/EncryptedFolderIcon'
 import { useVaultUnlockContext } from 'cozy-keys-lib'
 import {

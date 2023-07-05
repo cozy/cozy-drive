@@ -3,7 +3,7 @@ import classNames from 'classnames'
 
 import React from 'react'
 import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
-import Button from 'cozy-ui/transpiled/react/Button'
+import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 
 const DestroyConfirm = ({ t, confirm, onClose }) => {
   const confirmationTexts = ['forbidden', 'eye', 'link'].map(type => (

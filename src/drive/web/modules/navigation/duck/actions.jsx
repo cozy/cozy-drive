@@ -2,7 +2,7 @@ import React from 'react'
 
 import { isDirectory } from 'cozy-client/dist/models/file'
 import { showModal } from 'react-cozy-helpers'
-import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
 import { addToUploadQueue } from 'drive/web/modules/upload'
 import logger from 'lib/logger'

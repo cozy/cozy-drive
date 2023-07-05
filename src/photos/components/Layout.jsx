@@ -20,7 +20,7 @@ import flag from 'cozy-flags'
 
 import ButtonClient from '../../components/pushClient/Button'
 import BannerClient from '../../components/pushClient/Banner'
-import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import { UploadQueue } from '../ducks/upload'
 
 import styles from '../styles/layout'
