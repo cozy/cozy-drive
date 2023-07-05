@@ -1,6 +1,6 @@
 import React from 'react'
 
-import List from 'cozy-ui/transpiled/react/MuiCozyTheme/List'
+import List from 'cozy-ui/transpiled/react/List'
 
 import SuggestionItemSkeleton from 'drive/web/modules/search/components/SuggestionItemSkeleton'
 

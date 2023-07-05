@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Autosuggest from 'react-autosuggest'
 import cx from 'classnames'
 
-import List from 'cozy-ui/transpiled/react/MuiCozyTheme/List'
+import List from 'cozy-ui/transpiled/react/List'
 import { isFlagshipApp } from 'cozy-device-helper'
 import { useWebviewIntent } from 'cozy-intent'
 import { models, useClient } from 'cozy-client'

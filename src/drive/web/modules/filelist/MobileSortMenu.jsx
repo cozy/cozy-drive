@@ -4,7 +4,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import ActionMenuWrapper from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuWrapper'
 import ActionMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
-import ListItemIcon from 'cozy-ui/transpiled/react/MuiCozyTheme/ListItemIcon'
+import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import Radio from 'cozy-ui/transpiled/react/Radios'
 
 import { SORTABLE_ATTRIBUTES } from 'drive/config/sort'
