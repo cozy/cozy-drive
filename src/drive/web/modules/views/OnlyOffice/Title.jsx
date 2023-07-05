@@ -3,7 +3,7 @@ import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 
 import { SharingBannerPlugin } from 'cozy-sharing'
 import { DialogTitle } from 'cozy-ui/transpiled/react/Dialog'
-import Divider from 'cozy-ui/transpiled/react/MuiCozyTheme/Divider'
+import Divider from 'cozy-ui/transpiled/react/Divider'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'

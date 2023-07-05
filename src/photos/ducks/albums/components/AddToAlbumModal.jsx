@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import classNames from 'classnames'
 import { Dialog } from 'cozy-ui/transpiled/react/CozyDialogs'
-import Divider from 'cozy-ui/transpiled/react/MuiCozyTheme/Divider'
+import Divider from 'cozy-ui/transpiled/react/Divider'
 
 import CreateAlbumForm from './CreateAlbumForm'
 import SelectAlbumsForm from './SelectAlbumsForm'
