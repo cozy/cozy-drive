@@ -1,5 +1,6 @@
 /* global cozy __DEVELOPMENT__ */
 
+import 'cozy-ui/dist/cozy-ui.min.css'
 import 'cozy-ui/transpiled/react/stylesheet.css'
 
 import React from 'react'
