@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from 'cozy-ui/transpiled/react/Button'
+import { Button } from 'cozy-ui/transpiled/react/deprecated/Button'
 import Toggle from 'cozy-ui/transpiled/react/Toggle'
 
 import styles from '../styles.styl'

@@ -7,7 +7,7 @@ import {
 } from 'cozy-client/dist/models/fsnative'
 import { isMobileApp } from 'cozy-device-helper'
 import { DOCTYPE_FILES } from 'drive/lib/doctypes'
-import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
 import {
   getEncryptionKeyFromDirId,

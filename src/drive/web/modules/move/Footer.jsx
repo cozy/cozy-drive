@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Button from 'cozy-ui/transpiled/react/Button'
+import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 
 const areTargetsInCurrentDir = (targets, currentDirId) => {
   const targetsInCurrentDir = targets.filter(

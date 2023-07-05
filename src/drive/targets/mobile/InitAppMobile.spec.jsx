@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import localforage from 'localforage'
 import { hashHistory } from 'react-router'
 
-import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
 import logger from 'lib/logger'
 

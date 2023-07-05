@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useClient } from 'cozy-client'
 import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
-import Button from 'cozy-ui/transpiled/react/Button'
+import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import { buildAlbumByIdQuery } from 'drive/web/modules/queries'
-import { Media, Img, Bd } from 'cozy-ui/transpiled/react/Media'
+import { Media, Img, Bd } from 'cozy-ui/transpiled/react/deprecated/Media'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import Stack from 'cozy-ui/transpiled/react/Stack'
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
+import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconFolder from 'cozy-ui/transpiled/react/Icons/FileTypeFolder'
 

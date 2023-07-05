@@ -19,7 +19,7 @@ import {
   saveAndOpenWithCordova,
   saveFileWithCordova
 } from 'cozy-client/dist/models/fsnative'
-import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
 jest.mock('drive/web/modules/navigation/AppRoute', () => ({
   routes: []

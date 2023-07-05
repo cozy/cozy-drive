@@ -4,7 +4,9 @@ import { useClient } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
+import ActionMenu, {
+  ActionMenuItem
+} from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 
 import { MoreButton } from 'components/Button'
 import SelectableItem from 'drive/web/modules/drive/Toolbar/selectable/SelectableItem'

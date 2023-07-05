@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react'
 
 import { isMobileApp, isIOSApp } from 'cozy-device-helper'
-import ActionMenu from 'cozy-ui/transpiled/react/ActionMenu'
+import ActionMenu from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 import { MoreButton } from 'components/Button'

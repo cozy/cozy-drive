@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import { createMockClient } from 'cozy-client'
-import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import AppLike from 'test/components/AppLike'
 import PublicLayout from './PublicLayout'
 

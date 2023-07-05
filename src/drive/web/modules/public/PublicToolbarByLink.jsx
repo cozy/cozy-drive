@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
+import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 
 import { BarRightWithProvider } from 'components/Bar'
 import { HOME_LINK_HREF } from 'drive/constants/config'

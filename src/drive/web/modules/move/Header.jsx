@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Media, Img, Bd } from 'cozy-ui/transpiled/react/Media'
+import { Media, Img, Bd } from 'cozy-ui/transpiled/react/deprecated/Media'
 import Circle from 'cozy-ui/transpiled/react/Circle'
 import Counter from 'cozy-ui/transpiled/react/Counter'
 import Typography from 'cozy-ui/transpiled/react/Typography'

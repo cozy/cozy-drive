@@ -6,8 +6,10 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { useClient } from 'cozy-client'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
-import Button from 'cozy-ui/transpiled/react/Button'
-import ActionMenu, { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
+import Button from 'cozy-ui/transpiled/react/deprecated/Button'
+import ActionMenu, {
+  ActionMenuItem
+} from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
 

@@ -1,5 +1,5 @@
 import { models, Q } from 'cozy-client'
-import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import { isFlagshipApp, isMobileApp } from 'cozy-device-helper'
 
 import { openLocalFile } from 'drive/mobile/modules/offline/duck'

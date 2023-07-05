@@ -3,7 +3,7 @@ import React from 'react'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
+import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 
 import { BarRightWithProvider } from 'components/Bar'
 import { DownloadFilesButton } from 'drive/web/modules/public/DownloadButton'

@@ -4,7 +4,7 @@ import compose from 'lodash/flowRight'
 
 import { withClient } from 'cozy-client'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/ActionMenu'
+import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 

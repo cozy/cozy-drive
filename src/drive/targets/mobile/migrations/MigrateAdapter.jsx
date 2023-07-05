@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
-import { Button } from 'cozy-ui/transpiled/react/Button'
+import { Button } from 'cozy-ui/transpiled/react/deprecated/Button'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
 export const MigrateAdapter = ({ handleMigrateModaleAnswer }) => {

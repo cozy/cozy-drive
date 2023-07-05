@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 
-import Overlay from 'cozy-ui/transpiled/react/Overlay'
+import Overlay from 'cozy-ui/transpiled/react/deprecated/Overlay'
 import Viewer from 'cozy-ui/transpiled/react/Viewer'
 import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
 import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'

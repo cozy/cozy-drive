@@ -8,7 +8,7 @@ import React, {
 import { useSelector } from 'react-redux'
 import { logException } from 'drive/lib/reporter'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
-import Alerter from 'cozy-ui/transpiled/react/Alerter'
+import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
 import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 import {

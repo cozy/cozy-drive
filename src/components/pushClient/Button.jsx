@@ -3,7 +3,7 @@ import { withClient } from 'cozy-client'
 import localforage from 'localforage'
 
 import { translate } from 'cozy-ui/transpiled/react/I18n'
-import { default as UIButtonClient } from 'cozy-ui/transpiled/react/PushClientButton'
+import { default as UIButtonClient } from 'cozy-ui/transpiled/react/deprecated/PushClientButton'
 import { isFlagshipApp } from 'cozy-device-helper'
 
 import { isLinux, isClientAlreadyInstalled, DESKTOP_BANNER } from '.'
