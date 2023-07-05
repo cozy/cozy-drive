@@ -40,7 +40,7 @@ jest.mock('cozy-client/dist/models/fsnative', () => ({
   saveFileWithCordova: jest.fn()
 }))
 
-jest.mock('cozy-ui/transpiled/react/Alerter', () => ({
+jest.mock('cozy-ui/transpiled/react/deprecated/Alerter', () => ({
   success: jest.fn(),
   error: jest.fn(),
   info: jest.fn()

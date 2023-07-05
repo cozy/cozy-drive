@@ -20,7 +20,7 @@ exports[`AlbumsView displays an empty Component 1`] = `
       role="toolbar"
     >
       <a
-        class="styles__c-btn___-2Vnj styles__c-btn--secondary___3Br_N"
+        class="styles__c-btn___3kXsk styles__c-btn--secondary___1hLVM"
         data-testid="album-add"
         href="#/albums/new"
       >

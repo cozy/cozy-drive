@@ -11,7 +11,7 @@ import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 
 jest.mock('cozy-ui/transpiled/react/hooks/useBrowserOffline')
-jest.mock('cozy-ui/transpiled/react/Alerter', () => ({
+jest.mock('cozy-ui/transpiled/react/deprecated/Alerter', () => ({
   error: jest.fn(),
   success: jest.fn()
 }))
