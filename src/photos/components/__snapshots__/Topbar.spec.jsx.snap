@@ -5,7 +5,7 @@ exports[`Topbar renders the topbar for mobile and the child have the expected ro
   class="pho-content-header"
 >
   <div
-    class="u-flex u-flex-items-center palette__CozyTheme--normal___3UmMb"
+    class="u-flex u-flex-items-center CozyTheme--normal"
   >
     <div
       class="pho-content-album-previous"
@@ -14,7 +14,7 @@ exports[`Topbar renders the topbar for mobile and the child have the expected ro
     />
   </div>
   <div
-    class="u-flex u-flex-items-center u-ellipsis palette__CozyTheme--normal___3UmMb"
+    class="u-flex u-flex-items-center u-ellipsis CozyTheme--normal"
   >
     <h2
       class="pho-content-title"
@@ -22,7 +22,7 @@ exports[`Topbar renders the topbar for mobile and the child have the expected ro
     />
   </div>
   <div
-    class="u-flex u-flex-items-center palette__CozyTheme--normal___3UmMb"
+    class="u-flex u-flex-items-center CozyTheme--normal"
   >
     <div
       router="[object Object]"

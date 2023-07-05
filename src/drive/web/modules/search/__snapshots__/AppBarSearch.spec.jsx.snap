@@ -6,7 +6,7 @@ Object {
   "baseElement": <body>
     <div>
       <div
-        class="u-flex u-flex-items-center u-flex-grow palette__CozyTheme--normal___3UmMb"
+        class="u-flex u-flex-items-center u-flex-grow CozyTheme--normal"
       >
         <div
           class="bar-search-container"
@@ -63,7 +63,7 @@ Object {
   </body>,
   "container": <div>
     <div
-      class="u-flex u-flex-items-center u-flex-grow palette__CozyTheme--normal___3UmMb"
+      class="u-flex u-flex-items-center u-flex-grow CozyTheme--normal"
     >
       <div
         class="bar-search-container"

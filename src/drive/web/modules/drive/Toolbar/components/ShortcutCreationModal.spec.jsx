@@ -15,7 +15,7 @@ import useDisplayedFolder from 'drive/hooks/useDisplayedFolder'
 
 const tMock = jest.fn()
 jest.mock('cozy-ui/transpiled/react/hooks/useBrowserOffline')
-jest.mock('cozy-ui/transpiled/react/Alerter', () => ({
+jest.mock('cozy-ui/transpiled/react/deprecated/Alerter', () => ({
   error: jest.fn(),
   success: jest.fn()
 }))

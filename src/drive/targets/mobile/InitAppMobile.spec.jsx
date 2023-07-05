@@ -29,7 +29,7 @@ jest.mock('react-dom', () => {
 })
 jest.mock('localforage')
 jest.mock('react-router', () => ({ hashHistory: { push: jest.fn() } }))
-jest.mock('cozy-ui/transpiled/react/Alerter')
+jest.mock('cozy-ui/transpiled/react/deprecated/Alerter')
 jest.mock('drive/lib/reporter', () => ({
   logException: jest.fn(),
   configureReporter: jest.fn()

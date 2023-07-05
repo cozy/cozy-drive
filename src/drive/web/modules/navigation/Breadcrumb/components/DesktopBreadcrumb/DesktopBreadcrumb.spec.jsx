@@ -6,7 +6,7 @@ import { dummyBreadcrumbPath } from 'test/dummies/dummyBreadcrumbPath'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
-jest.mock('cozy-ui/transpiled/react/ActionMenu', () => ({
+jest.mock('cozy-ui/transpiled/react/deprecated/ActionMenu', () => ({
   __esModule: true,
   // eslint-disable-next-line react/display-name
   default: ({ children }) => <div data-testid="action-menu">{children}</div>,
