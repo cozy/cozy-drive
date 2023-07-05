@@ -6033,10 +6033,10 @@ cozy-stack-client@^35.3.1:
     mime "^2.4.0"
     qs "^6.7.0"
 
-cozy-ui@^85.8.1:
-  version "85.8.1"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-85.8.1.tgz#2c3951f215de770101f4719d7dcb01caa38af70d"
-  integrity sha512-iy83ub/R9HXGqL5kNdvh+kwbQAYjivZZLAacZ90T8FiCmLT8putDfpl0B73ZaNSZWfu/y/pGSiMxM7+P4MR2QA==
+cozy-ui@^88.2.1:
+  version "88.2.1"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-88.2.1.tgz#f4f2d8db1d3a2bd17f856c0eeeb7bfa91259367f"
+  integrity sha512-0JdFjHg+lmz+o48C9dLiljx38c04hDDP5Mg9wYTdQ0Sl6Cu3EXcgkPeiAJCcpaK9MNjDmP+WwtaHOeQ04CyD7A==
   dependencies:
     "@babel/runtime" "^7.3.4"
     "@material-ui/core" "4.12.3"
