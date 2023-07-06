@@ -1,5 +1,3 @@
-/* global __TARGET__ */
-
 import React from 'react'
 import { Outlet, NavLink as RouterLink } from 'react-router-dom'
 
@@ -18,10 +16,10 @@ import { ModalManager } from 'react-cozy-helpers'
 import { isFlagshipApp } from 'cozy-device-helper'
 import flag from 'cozy-flags'
 
-import ButtonClient from '../../components/pushClient/Button'
-import BannerClient from '../../components/pushClient/Banner'
+import ButtonClient from 'components/pushClient/Button'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import { UploadQueue } from '../ducks/upload'
+import PushBanner from 'components/PushBanner'
 
 import styles from '../styles/layout'
 
@@ -50,7 +48,7 @@ export const Layout = ({ t }) => (
     <Alerter t={t} />
     <UploadQueue />
     <Main className={styles['pho-content']}>
-      {__TARGET__ !== 'mobile' && !isFlagshipApp() && <BannerClient />}
+      <PushBanner />
       <Outlet />
     </Main>
     <ModalManager />
