@@ -1,5 +1,6 @@
 /* global cozy */
 
+import 'cozy-ui/dist/cozy-ui.min.css'
 import 'cozy-ui/transpiled/react/stylesheet.css'
 import 'whatwg-fetch'
 
