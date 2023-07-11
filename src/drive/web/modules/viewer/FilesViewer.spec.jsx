@@ -22,6 +22,8 @@ jest.mock('drive/lib/encryption', () => ({
 
 jest.mock('drive/hooks')
 
+jest.mock('cozy-ui/transpiled/react/Viewer', () => () => <div>Viewer</div>)
+
 const sleep = duration => new Promise(resolve => setTimeout(resolve, duration))
 
 describe('FilesViewer', () => {
@@ -107,9 +109,7 @@ describe('FilesViewer', () => {
     })
   })
 
-  // https://github.com/cozy/cozy-drive/issues/2910
-  // TODO: Fix this flaky test
-  it.skip('should fetch more files if necessary', async () => {
+  it('should fetch more files if necessary', async () => {
     const client = new CozyClient({})
     client.query = jest.fn().mockResolvedValue({
       data: generateFile({ i: '51' })
@@ -137,11 +137,12 @@ describe('FilesViewer', () => {
     expect(fetchMore).toHaveBeenCalledTimes(1)
   })
 
-  it('should get decyrption key when file is encrypted', async () => {
+  it('should get decryption key when file is encrypted', async () => {
     const client = new CozyClient({})
     client.query = jest.fn().mockResolvedValue({
       data: generateFile({ i: '0', encrypted: true })
     })
+
     await act(async () => {
       const { root } = await setup({
         client,
@@ -150,9 +151,13 @@ describe('FilesViewer', () => {
         fileId: 'file-foobar0',
         isEncrypted: true
       })
-      root.update()
-      expect(root.find(Viewer).length).toBe(1)
 
+      // Let promise resolve
+      await sleep(0)
+
+      root.update()
+
+      expect(root.find(Viewer).length).toBe(1)
       expect(getEncryptionKeyFromDirId).toHaveBeenCalled()
     })
   })
