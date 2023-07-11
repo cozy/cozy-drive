@@ -6,7 +6,8 @@
       "drive/*": ["src/drive/*"],
       "test/*": ["test/*"],
       "lib/*": ["src/lib/*"],
-      "photos/*": ["src/photos/*"]
+      "photos/*": ["src/photos/*"],
+      "hooks/*": ["src/hooks/*"]
     }
   },
   "exclude": ["node_modules", "build", "storage"]

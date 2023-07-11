@@ -18,6 +18,7 @@ module.exports = {
     '^viewer(.*)': '<rootDir>/src/viewer$1',
     '^react-cozy-helpers(.*)': '<rootDir>/src/lib/react-cozy-helpers$1',
     '^components(.*)': '<rootDir>/src/components$1',
+    '^hooks(.*)': '<rootDir>/src/hooks$1',
     '^test(.*)': '<rootDir>/test/$1',
     '^folder-references(.*)': '<rootDir>/src/folder-references$1',
     '^lib(.*)': '<rootDir>/src/lib$1',

@@ -1,50 +1,25 @@
 import React from 'react'
-import get from 'lodash/get'
 
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import Stack from 'cozy-ui/transpiled/react/Stack'
 import { ButtonLink } from 'cozy-ui/transpiled/react/deprecated/Button'
-
-import { withClient } from 'cozy-client'
+import {
+  shouldDisplayOffers,
+  buildPremiumLink
+} from 'cozy-client/dist/models/instance'
 import { isMobileApp, isFlagshipApp } from 'cozy-device-helper'
 
-import withInstance from 'drive/web/modules/upload/withInstance'
-
-import withDiskUsage from './withDiskUsage'
 import styles from './supportUs.styl'
-const GB = 1000 * 1000 * 1000
-const PREMIUM_QUOTA = 50 * GB
+import useInstanceInfo from 'hooks/useInstanceInfo'
 
-const buildPremiumLink = (uuid, managerUrl) =>
-  `${managerUrl}/cozy/instances/${uuid}/premium`
+const SupportUs = () => {
+  const { t } = useI18n()
+  const instanceInfo = useInstanceInfo()
 
-// TODO use cozy-client helpers after https://github.com/cozy/cozy-client/pull/567 merge
-const SupportUs = ({ t, client }) => {
-  if (isMobileApp() || isFlagshipApp()) return null
+  if (!instanceInfo.isLoaded || isMobileApp() || isFlagshipApp()) return null
 
-  const instanceInfo = withInstance(client)
-
-  const uuid = get(instanceInfo, 'instance.data.attributes.uuid')
-  const managerUrl = get(instanceInfo, 'context.data.attributes.manager_url')
-  const enable_premium_links = get(
-    instanceInfo,
-    'context.data.attributes.enable_premium_links'
-  )
-  const diskUsage = withDiskUsage(client)
-  const quota = get(diskUsage, 'data.attributes.quota', false)
-  /**
-   * enable_prenium_links is set on a context (cozy_default and so on)
-   * if quota < 50Gb then, the user is freemium
-   * if managerUrl then user is not self hosted
-   */
-  if (
-    enable_premium_links &&
-    managerUrl &&
-    uuid &&
-    quota &&
-    parseInt(quota) <= PREMIUM_QUOTA
-  )
+  if (shouldDisplayOffers(instanceInfo)) {
     return (
       <Stack className={styles['SupportUs__wrapper']} spacing="s">
         <Typography
@@ -55,7 +30,7 @@ const SupportUs = ({ t, client }) => {
         </Typography>
         <ButtonLink
           size="tiny"
-          href={buildPremiumLink(uuid, managerUrl)}
+          href={buildPremiumLink(instanceInfo)}
           target="_blank"
           label={t('Nav.support-us')}
           className={styles['Supportus__button']}
@@ -63,7 +38,9 @@ const SupportUs = ({ t, client }) => {
         />
       </Stack>
     )
+  }
+
   return null
 }
 
-export default translate()(withClient(SupportUs))
+export default SupportUs
