@@ -2,11 +2,13 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import PropTypes from 'prop-types'
 
+import { WebviewIntentProvider } from 'cozy-intent'
+
 import DriveProvider from 'drive/lib/DriveProvider'
 import { ThumbnailSizeContextProvider } from 'drive/lib/ThumbnailSizeContext'
 import { ModalContextProvider } from 'drive/lib/ModalContext'
 import { AcceptingSharingProvider } from 'drive/lib/AcceptingSharingContext'
-import { WebviewIntentProvider } from 'cozy-intent'
+import PushBannerProvider from 'components/PushBanner/PushBannerProvider'
 import cozyBar from 'lib/cozyBar'
 
 const App = ({ store, client, lang, polyglot, children }) => {
@@ -14,11 +16,13 @@ const App = ({ store, client, lang, polyglot, children }) => {
     <WebviewIntentProvider setBarContext={cozyBar.setWebviewContext}>
       <Provider store={store}>
         <DriveProvider client={client} lang={lang} polyglot={polyglot}>
-          <AcceptingSharingProvider>
-            <ThumbnailSizeContextProvider>
-              <ModalContextProvider>{children}</ModalContextProvider>
-            </ThumbnailSizeContextProvider>
-          </AcceptingSharingProvider>
+          <PushBannerProvider>
+            <AcceptingSharingProvider>
+              <ThumbnailSizeContextProvider>
+                <ModalContextProvider>{children}</ModalContextProvider>
+              </ThumbnailSizeContextProvider>
+            </AcceptingSharingProvider>
+          </PushBannerProvider>
         </DriveProvider>
       </Provider>
     </WebviewIntentProvider>

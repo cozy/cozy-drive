@@ -13,6 +13,7 @@ import { ModalContext } from 'drive/lib/ModalContext'
 import { HashRouter } from 'react-router-dom'
 import { AcceptingSharingProvider } from 'drive/lib/AcceptingSharingContext'
 import FabProvider from 'drive/lib/FabProvider'
+import PushBannerProvider from 'components/PushBanner/PushBannerProvider'
 
 const mockStore = createStore(() => ({
   mobile: {
@@ -57,11 +58,13 @@ const AppLike = ({
             <HashRouter>
               <ThumbnailSizeContextProvider>
                 <BreakpointsProvider>
-                  <ModalContext.Provider
-                    value={modalContextValue || mockModalContextValue}
-                  >
-                    <FabProvider>{children}</FabProvider>
-                  </ModalContext.Provider>
+                  <PushBannerProvider>
+                    <ModalContext.Provider
+                      value={modalContextValue || mockModalContextValue}
+                    >
+                      <FabProvider>{children}</FabProvider>
+                    </ModalContext.Provider>
+                  </PushBannerProvider>
                 </BreakpointsProvider>
               </ThumbnailSizeContextProvider>
             </HashRouter>
