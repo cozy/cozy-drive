@@ -82,12 +82,9 @@ const FilesViewer = ({ filesQuery, files, onClose, onChange }) => {
     [onChange]
   )
 
-  const getCurrentIndex = useCallback(
-    () => files.findIndex(f => f.id === fileId),
-    [files, fileId]
-  )
-
-  const currentIndex = useMemo(() => getCurrentIndex(), [getCurrentIndex])
+  const currentIndex = useMemo(() => {
+    return files.findIndex(f => f.id === fileId)
+  }, [files, fileId])
   const hasCurrentIndex = useMemo(() => currentIndex != -1, [currentIndex])
   const viewerFiles = useMemo(
     () => (hasCurrentIndex ? files : [currentFile]),
@@ -110,7 +107,7 @@ const FilesViewer = ({ filesQuery, files, onClose, onChange }) => {
     // the containing folder (it comes from a fetchMore...) ; we load the file attributes
     // directly as a contingency measure
     const fetchFileIfNecessary = async () => {
-      if (getCurrentIndex() !== -1) return
+      if (hasCurrentIndex) return
       if (currentFile && isMounted) {
         setCurrentFile(null)
       }
