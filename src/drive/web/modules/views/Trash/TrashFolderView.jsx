@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback, useContext, useMemo } from 'react'
 import { useNavigate, Outlet } from 'react-router-dom'
 
 import { useQuery, useClient } from 'cozy-client'
@@ -97,10 +97,13 @@ export const TrashFolderView = ({ currentFolderId }) => {
   const actions = useActions([restore, destroy], actionsOptions)
 
   const { t } = useI18n()
-  const rootBreadcrumbPath = {
-    id: TRASH_DIR_ID,
-    name: t('breadcrumb.title_trash')
-  }
+  const rootBreadcrumbPath = useMemo(
+    () => ({
+      id: TRASH_DIR_ID,
+      name: t('breadcrumb.title_trash')
+    }),
+    [t]
+  )
 
   return (
     <FolderView>
