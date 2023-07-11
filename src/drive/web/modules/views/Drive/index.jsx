@@ -1,6 +1,6 @@
 /* global __TARGET__ */
 
-import React, { useCallback, useContext, useEffect } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate, Outlet, useLocation, useParams } from 'react-router-dom'
 
@@ -163,10 +163,13 @@ const DriveView = () => {
   )
 
   const { t } = useI18n()
-  const rootBreadcrumbPath = {
-    id: ROOT_DIR_ID,
-    name: t('breadcrumb.title_drive')
-  }
+  const rootBreadcrumbPath = useMemo(
+    () => ({
+      id: ROOT_DIR_ID,
+      name: t('breadcrumb.title_drive')
+    }),
+    [t]
+  )
   useEffect(() => {
     if (canWriteToCurrentFolder) {
       setIsFabDisplayed(isMobile)

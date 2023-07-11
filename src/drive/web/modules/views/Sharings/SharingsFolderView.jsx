@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback, useContext, useMemo } from 'react'
 import { useNavigate, Outlet, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
@@ -113,9 +113,13 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
   )
 
   const { t } = useI18n()
-  const rootBreadcrumbPath = {
-    name: t('breadcrumb.title_sharings')
-  }
+
+  const rootBreadcrumbPath = useMemo(
+    () => ({
+      name: t('breadcrumb.title_sharings')
+    }),
+    [t]
+  )
 
   return (
     <FolderView>

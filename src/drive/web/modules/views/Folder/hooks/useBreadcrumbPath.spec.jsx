@@ -80,13 +80,15 @@ describe('useBreadcrumbPath', () => {
     fetchFolder.mockRejectedValue('error')
 
     // When
+    let render
     await act(async () => {
-      await renderHook(() =>
+      render = await renderHook(() =>
         useBreadcrumbPath({ rootBreadcrumbPath, currentFolderId })
       )
     })
 
     // Then
+    expect(render.result.current).toEqual([rootBreadcrumbPath])
     expect(log).toHaveBeenCalledWith(
       'error',
       'Error while fetching folder for breadcrumbs of folder id: 1234, here is the error: error'

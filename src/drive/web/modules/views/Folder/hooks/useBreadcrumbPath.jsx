@@ -46,6 +46,9 @@ export const useBreadcrumbPath = ({
           setPaths(returnedPaths)
         }
       } else {
+        if (isSubscribed && rootBreadcrumbPath) {
+          setPaths([rootBreadcrumbPath])
+        }
         log(
           'error',
           `Error while fetching folder for breadcrumbs of folder id: ${currentFolderId}, here is the error: ${error}`
