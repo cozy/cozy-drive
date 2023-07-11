@@ -19,6 +19,7 @@ import { WebviewIntentProvider } from 'cozy-intent'
 
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
 
+import PushBannerProvider from 'components/PushBanner/PushBannerProvider'
 import appReducers from 'photos/reducers'
 import AppRouter from 'photos/components/AppRouter'
 import StyledApp from 'photos/components/StyledApp'
@@ -90,7 +91,7 @@ const App = props => {
             <BreakpointsProvider>
               <StyledApp>
                 <SharingProvider doctype={DOCTYPE_ALBUMS} documentType="Albums">
-                  {props.children}
+                  <PushBannerProvider>{props.children}</PushBannerProvider>
                 </SharingProvider>
               </StyledApp>
             </BreakpointsProvider>

@@ -10,8 +10,8 @@ import {
   VaultProvider,
   VaultUnlockPlaceholder
 } from 'cozy-keys-lib'
-import FabProvider from 'drive/lib/FabProvider'
 
+import FabProvider from 'drive/lib/FabProvider'
 import StyledApp from 'drive/web/modules/drive/StyledApp'
 
 const DriveProvider = ({ client, lang, polyglot, dictRequire, children }) => {

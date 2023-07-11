@@ -268,5 +268,14 @@
   },
   "button": {
     "back": "Back"
+  },
+  "PushBanner": {
+    "quota": {
+      "text": "You've almost run out of storage space. If you reach the limit, you won't be able to add any more files. You can delete files, empty your bin or change your offer.",
+      "actions": {
+        "first": "I understand",
+        "second": "Check our plans"
+      }
+    }
   }
 }
