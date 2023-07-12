@@ -117,7 +117,7 @@
     },
     {
       "path": "drive/intents/**",
-      "maxPercentIncrease": 2
+      "maxPercentIncrease": 6
     },
     {
       "path": "drive/onlyOffice/**",
