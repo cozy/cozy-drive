@@ -130,7 +130,7 @@
     "cozy-scripts": "^8.1.0",
     "cozy-sharing": "8.0.0",
     "cozy-stack-client": "^34.1.5",
-    "cozy-ui": "^88.5.0",
+    "cozy-ui": "^88.6.0",
     "date-fns": "1.30.1",
     "diacritics": "1.3.0",
     "fastclick": "1.0.6",
