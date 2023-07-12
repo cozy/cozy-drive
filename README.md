@@ -7,7 +7,7 @@
 =====
 
 
-What's Cozy?
+What's Cozy!
 ----
 
 ![Cozy Logo](https://cdn.rawgit.com/cozy/cozy-guidelines/master/templates/cozy_logo_small.svg)
