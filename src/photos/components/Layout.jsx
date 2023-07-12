@@ -79,10 +79,43 @@ const NavLinks = () => {
   )
 }
 
+const NoBackupNavLinks = () => {
+  const { t } = useI18n()
+
+  return (
+    <>
+      <NavItem>
+        <NavLink to="/photos">
+          <NavIcon icon="image" />
+          <NavText>{t('Nav.photos')}</NavText>
+        </NavLink>
+      </NavItem>
+      <NavItem data-testid="nav-to-albums">
+        <NavLink to="/albums">
+          <NavIcon icon="album" />
+          <NavText>{t('Nav.albums')}</NavText>
+        </NavLink>
+      </NavItem>
+    </>
+  )
+}
+
+const getNavLinks = () => {
+  if (flag('flagship.backup.enabled')) {
+    if (isFlagshipApp()) {
+      return <FlagshipNavLinks />
+    } else {
+      return <NavLinks />
+    }
+  }
+
+  return <NoBackupNavLinks />
+}
+
 export const Layout = ({ t }) => (
   <LayoutUI>
     <Sidebar className={styles['pho-sidebar']}>
-      <Nav>{isFlagshipApp() ? <FlagshipNavLinks /> : <NavLinks />}</Nav>
+      <Nav>{getNavLinks()}</Nav>
       {!isFlagshipApp() && <ButtonClient />}
     </Sidebar>
 

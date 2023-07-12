@@ -1,6 +1,7 @@
 import React from 'react'
 import { createHashRouter, Navigate, RouterProvider } from 'react-router-dom'
 import { isFlagshipApp } from 'cozy-device-helper'
+import flag from 'cozy-flags'
 
 import { Spinner } from 'cozy-ui/transpiled/react'
 
@@ -15,7 +16,8 @@ function ErrorBoundary() {
   return <Navigate to="photos" replace />
 }
 
-const DEFAULT_ROUTE = isFlagshipApp() ? 'backup' : 'photos'
+const DEFAULT_ROUTE =
+  flag('flagship.backup.enabled') && isFlagshipApp() ? 'backup' : 'photos'
 
 const router = createHashRouter([
   {
