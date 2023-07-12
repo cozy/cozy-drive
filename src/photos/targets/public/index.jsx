@@ -10,6 +10,7 @@ import { createLogger } from 'redux-logger'
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { RealtimePlugin } from 'cozy-realtime'
+import flag from 'cozy-flags'
 
 import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { I18n } from 'cozy-ui/transpiled/react/I18n'
@@ -47,6 +48,7 @@ async function init() {
   })
 
   client.registerPlugin(RealtimePlugin)
+  client.registerPlugin(flag.plugin)
 
   configureReporter()
   setCozyUrl(cozyUrl)

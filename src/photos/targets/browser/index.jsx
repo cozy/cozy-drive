@@ -12,6 +12,7 @@ import { createLogger } from 'redux-logger'
 
 import CozyClient, { CozyProvider } from 'cozy-client'
 import { RealtimePlugin } from 'cozy-realtime'
+import flag from 'cozy-flags'
 import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { I18n } from 'cozy-ui/transpiled/react/I18n'
 import SharingProvider from 'cozy-sharing'
@@ -51,6 +52,7 @@ const setupAppContext = memoize(() => {
     store: false
   })
   client.registerPlugin(RealtimePlugin)
+  client.registerPlugin(flag.plugin)
   // We still need to init cozy-client-js for the Uploader
   cozy.client.init({
     cozyURL: cozyUrl,
