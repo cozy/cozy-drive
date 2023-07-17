@@ -194,7 +194,7 @@ const FilesViewer = ({ filesQuery, files, onClose, onChange }) => {
 
   return (
     <RemoveScroll>
-      <Overlay>
+      <Overlay data-testid="overlay">
         <Viewer
           files={viewerFiles}
           currentURL={currentDecryptedFileURL}
