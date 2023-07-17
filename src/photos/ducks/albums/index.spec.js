@@ -1,33 +1,81 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { render, screen } from '@testing-library/react'
+
+import { useQuery, createMockClient } from 'cozy-client'
+
 import { AlbumPhotosWithLoader } from './index'
+import { PhotosAppLike } from 'test/components/AppLike'
+import { useParams } from 'react-router-dom'
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useParams: jest.fn()
+}))
+
+jest.mock('cozy-client', () => ({
+  ...jest.requireActual('cozy-client'),
+  useQuery: jest.fn()
+}))
 
 describe('Album view', () => {
-  const AlbumPhotos = AlbumPhotosWithLoader({ children: null })
-
-  it('should show a loader', () => {
-    const component = shallow(<AlbumPhotos data={[]} fetchStatus="loading" />)
-    expect(component).toMatchSnapshot()
-  })
-
-  it('should show an album when loaded', () => {
-    const component = shallow(
-      <AlbumPhotos
-        data={{
-          photos: {
-            data: [],
-            hasMore: false,
-            fetchMore: jest.fn()
-          }
-        }}
-        fetchStatus="loaded"
-      />
+  const setup = ({ albumId = '123' } = {}) => {
+    useParams.mockReturnValue({ albumId })
+    const client = createMockClient({})
+    return render(
+      <PhotosAppLike client={client}>
+        <AlbumPhotosWithLoader />
+      </PhotosAppLike>
     )
-    expect(component).toMatchSnapshot()
+  }
+
+  it('should show a loader', async () => {
+    // Given
+    useQuery.mockReturnValue({
+      data: {},
+      fetchStatus: 'loading'
+    })
+
+    // When
+    setup()
+
+    // Then
+    const label = await screen.findByTestId('loading')
+    expect(label).toBeInTheDocument()
   })
 
-  it('should show a spinner when no album can be loaded', () => {
-    const component = shallow(<AlbumPhotos data={null} fetchStatus="loaded" />)
-    expect(component).toMatchSnapshot()
+  it('should display an empty state when loaded without photos', async () => {
+    // Given
+    useQuery.mockReturnValue({
+      data: {
+        photos: {
+          data: [],
+          hasMore: false,
+          fetchMore: jest.fn()
+        }
+      },
+      fetchStatus: 'loaded'
+    })
+
+    // When
+    setup()
+
+    // Then
+    const label = await screen.findByText("You don't have any photos yet.")
+    expect(label).toBeInTheDocument()
+  })
+
+  it('should show a spinner when no album can be loaded', async () => {
+    // Given
+    useQuery.mockReturnValue({
+      data: null,
+      fetchStatus: 'loaded'
+    })
+
+    // When
+    setup()
+
+    // Then
+    const label = await screen.findByTestId('loading')
+    expect(label).toBeInTheDocument()
   })
 })
