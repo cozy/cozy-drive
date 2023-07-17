@@ -50,6 +50,7 @@ export const buildAlbumsQuery = albumId => ({
   definition: Q(DOCTYPE_ALBUMS).getById(albumId).include(['photos']),
   options: {
     as: `albums-${albumId}`,
-    singleDocData: true
+    singleDocData: true,
+    fetchPolicy: fetchPolicies.olderThan(older30s)
   }
 })

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Query, withMutations } from 'cozy-client'
+import { Query, withMutations, useQuery, useClient } from 'cozy-client'
 import { Alerter } from 'cozy-ui/transpiled/react/'
 
 import AlbumsView from './components/AlbumsView'
@@ -127,59 +127,37 @@ const ConnectedAddToAlbumModal = props => (
   </Query>
 )
 
-// eslint-disable-next-line react/display-name
-export const AlbumPhotosWithLoader =
-  ({ children }) =>
-  // TODO: fix me
-  // eslint-disable-next-line react/display-name
-  (
-    { data: album, fetchStatus, lastFetch },
-    { updateAlbum, deleteAlbum, removePhotos }
-  ) => {
-    if (album && fetchStatus === 'loaded') {
-      return (
-        <AlbumPhotos
-          album={album}
-          photos={album.photos.data}
-          updateAlbum={updateAlbum}
-          deleteAlbum={deleteAlbum}
-          removePhotos={removePhotos}
-          hasMore={album.photos.hasMore !== undefined}
-          fetchMore={album.photos.fetchMore.bind(album.photos)}
-          lastFetch={lastFetch}
-        >
-          {children}
-        </AlbumPhotos>
-      )
-    } else if (fetchStatus === 'failed') {
-      return <Oops />
-    } else {
-      return (
-        <Loading
-          size={'xxlarge'}
-          loadingType={'photos_fetching'}
-          middle={true}
-        />
-      )
-    }
-  }
+export const AlbumPhotosWithLoader = () => {
+  const client = useClient()
+  const { updateAlbum, deleteAlbum, removePhotos } = ALBUM_MUTATIONS(client)
 
-export const ConnectedAlbumPhotos = props => {
   const { albumId } = useParams()
-  const albumsQuery = buildAlbumsQuery(albumId)
 
-  return (
-    <Query
-      query={albumsQuery.definition}
-      as={albumsQuery.as}
-      {...props}
-      mutations={ALBUM_MUTATIONS}
-    >
-      {AlbumPhotosWithLoader({
-        children: props.children
-      })}
-    </Query>
-  )
+  const albumQuery = buildAlbumsQuery(albumId)
+  const albumResult = useQuery(albumQuery.definition, albumQuery.options)
+
+  const { data: album, fetchStatus, lastFetch } = albumResult
+
+  if (album && fetchStatus === 'loaded') {
+    return (
+      <AlbumPhotos
+        album={album}
+        photos={album.photos.data}
+        updateAlbum={updateAlbum}
+        deleteAlbum={deleteAlbum}
+        removePhotos={removePhotos}
+        hasMore={album.photos.hasMore !== undefined}
+        fetchMore={album.photos.fetchMore.bind(album.photos)}
+        lastFetch={lastFetch}
+      />
+    )
+  } else if (fetchStatus === 'failed') {
+    return <Oops />
+  } else {
+    return (
+      <Loading size={'xxlarge'} loadingType={'photos_fetching'} middle={true} />
+    )
+  }
 }
 
 const CreateAlbumPicker = withMutations(ALBUMS_MUTATIONS)(PhotosPicker)
@@ -209,7 +187,7 @@ const ConnectedPhotosPicker = ({ ...props }) => {
 export {
   ConnectedAlbumsView as AlbumsView,
   ConnectedPhotosPicker as PhotosPicker,
-  ConnectedAlbumPhotos as AlbumPhotos,
+  AlbumPhotosWithLoader as AlbumPhotos,
   ConnectedAddToAlbumModal as AddToAlbumModal
 }
 
