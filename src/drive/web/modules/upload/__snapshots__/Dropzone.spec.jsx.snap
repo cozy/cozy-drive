@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Dropzone should match snapshot 1`] = `
-<AppLike
+<DriveAppLike
   client={
     CozyClient {
       "uri": undefined,
@@ -17,7 +17,13 @@ exports[`Dropzone should match snapshot 1`] = `
     }
   }
 >
-  <Provider
+  <AppLike
+    client={
+      CozyClient {
+        "uri": undefined,
+      }
+    }
+    enLocale={[Function]}
     store={
       Object {
         "dispatch": [MockFunction],
@@ -28,83 +34,76 @@ exports[`Dropzone should match snapshot 1`] = `
       }
     }
   >
-    <CozyProvider
-      client={
-        CozyClient {
-          "uri": undefined,
+    <Provider
+      store={
+        Object {
+          "dispatch": [MockFunction],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+          Symbol(observable): [Function],
         }
       }
     >
-      <TestI18n>
-        <I18n
-          defaultLang="en"
-          dictRequire={[Function]}
-          lang="en"
+      <CozyProvider
+        client={
+          CozyClient {
+            "uri": undefined,
+          }
+        }
+      >
+        <TestI18n
+          enLocale={[Function]}
         >
-          <AcceptingSharingProvider>
-            <HashRouter>
-              <Router
-                location={
-                  Object {
-                    "hash": "",
-                    "key": "default",
-                    "pathname": "/",
-                    "search": "",
-                    "state": null,
-                  }
-                }
-                navigationType="POP"
-                navigator={
-                  Object {
-                    "action": "POP",
-                    "createHref": [Function],
-                    "encodeLocation": [Function],
-                    "go": [Function],
-                    "listen": [Function],
-                    "location": Object {
+          <I18n
+            defaultLang="en"
+            dictRequire={[Function]}
+            lang="en"
+          >
+            <AcceptingSharingProvider>
+              <HashRouter>
+                <Router
+                  location={
+                    Object {
                       "hash": "",
                       "key": "default",
                       "pathname": "/",
                       "search": "",
                       "state": null,
-                    },
-                    "push": [Function],
-                    "replace": [Function],
+                    }
                   }
-                }
-              >
-                <ThumbnailSizeContextProvider>
-                  <BreakpointsProvider>
-                    <PushBannerProvider>
-                      <FabProvider>
-                        <WithSharingState(withClient(withVaultClient(Connect(Dropzone))))
-                          displayedFolder={
-                            Object {
-                              "id": "directory-foobar0",
-                            }
-                          }
-                        >
-                          <withClient(withVaultClient(Connect(Dropzone)))
+                  navigationType="POP"
+                  navigator={
+                    Object {
+                      "action": "POP",
+                      "createHref": [Function],
+                      "encodeLocation": [Function],
+                      "go": [Function],
+                      "listen": [Function],
+                      "location": Object {
+                        "hash": "",
+                        "key": "default",
+                        "pathname": "/",
+                        "search": "",
+                        "state": null,
+                      },
+                      "push": [Function],
+                      "replace": [Function],
+                    }
+                  }
+                >
+                  <ThumbnailSizeContextProvider>
+                    <BreakpointsProvider>
+                      <PushBannerProvider>
+                        <FabProvider>
+                          <WithSharingState(withClient(withVaultClient(Connect(Dropzone))))
                             displayedFolder={
                               Object {
                                 "id": "directory-foobar0",
                               }
                             }
-                            sharingState={
-                              Object {
-                                "getRecipients": [MockFunction],
-                                "getSharingLink": [MockFunction],
-                                "hasWriteAccess": [MockFunction],
-                                "refresh": [MockFunction],
-                              }
-                            }
                           >
-                            <withVaultClient(Connect(Dropzone))
-                              client={
-                                CozyClient {
-                                  "uri": undefined,
-                                }
-                              }
+                            <withClient(withVaultClient(Connect(Dropzone)))
                               displayedFolder={
                                 Object {
                                   "id": "directory-foobar0",
@@ -118,19 +117,40 @@ exports[`Dropzone should match snapshot 1`] = `
                                   "refresh": [MockFunction],
                                 }
                               }
-                            />
-                          </withClient(withVaultClient(Connect(Dropzone)))>
-                        </WithSharingState(withClient(withVaultClient(Connect(Dropzone))))>
-                      </FabProvider>
-                    </PushBannerProvider>
-                  </BreakpointsProvider>
-                </ThumbnailSizeContextProvider>
-              </Router>
-            </HashRouter>
-          </AcceptingSharingProvider>
-        </I18n>
-      </TestI18n>
-    </CozyProvider>
-  </Provider>
-</AppLike>
+                            >
+                              <withVaultClient(Connect(Dropzone))
+                                client={
+                                  CozyClient {
+                                    "uri": undefined,
+                                  }
+                                }
+                                displayedFolder={
+                                  Object {
+                                    "id": "directory-foobar0",
+                                  }
+                                }
+                                sharingState={
+                                  Object {
+                                    "getRecipients": [MockFunction],
+                                    "getSharingLink": [MockFunction],
+                                    "hasWriteAccess": [MockFunction],
+                                    "refresh": [MockFunction],
+                                  }
+                                }
+                              />
+                            </withClient(withVaultClient(Connect(Dropzone)))>
+                          </WithSharingState(withClient(withVaultClient(Connect(Dropzone))))>
+                        </FabProvider>
+                      </PushBannerProvider>
+                    </BreakpointsProvider>
+                  </ThumbnailSizeContextProvider>
+                </Router>
+              </HashRouter>
+            </AcceptingSharingProvider>
+          </I18n>
+        </TestI18n>
+      </CozyProvider>
+    </Provider>
+  </AppLike>
+</DriveAppLike>
 `;
