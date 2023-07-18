@@ -6,7 +6,6 @@ import { createStore } from 'redux'
 import { I18n } from 'cozy-ui/transpiled/react'
 import { SharingContext } from 'cozy-sharing'
 
-import langEn from 'drive/locales/en.json'
 import { ThumbnailSizeContextProvider } from 'drive/lib/ThumbnailSizeContext'
 import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import { ModalContext } from 'drive/lib/ModalContext'
@@ -15,15 +14,18 @@ import { AcceptingSharingProvider } from 'drive/lib/AcceptingSharingContext'
 import FabProvider from 'drive/lib/FabProvider'
 import PushBannerProvider from 'components/PushBanner/PushBannerProvider'
 
+import driveEnLocale from 'drive/locales/en.json'
+import photoEnLocale from 'photos/locales/en.json'
+
 const mockStore = createStore(() => ({
   mobile: {
     url: 'cozy-url://'
   }
 }))
 
-export const TestI18n = ({ children }) => {
+export const TestI18n = ({ children, enLocale }) => {
   return (
-    <I18n lang={'en'} dictRequire={() => langEn}>
+    <I18n lang={'en'} dictRequire={enLocale}>
       {children}
     </I18n>
   )
@@ -46,11 +48,12 @@ const AppLike = ({
   store,
   client,
   sharingContextValue,
-  modalContextValue
+  modalContextValue,
+  enLocale
 }) => (
   <Provider store={(client && client.store) || store || mockStore}>
     <CozyProvider client={client}>
-      <TestI18n>
+      <TestI18n enLocale={enLocale}>
         <SharingContext.Provider
           value={sharingContextValue || mockSharingContextValue}
         >
@@ -75,4 +78,13 @@ const AppLike = ({
   </Provider>
 )
 
-export default AppLike
+const DriveAppLike = props => (
+  <AppLike enLocale={() => driveEnLocale} {...props} />
+)
+
+export const PhotosAppLike = props => (
+  <AppLike enLocale={() => photoEnLocale} {...props} />
+)
+
+// For legacy reasons, default is Drive
+export default DriveAppLike
