@@ -13,7 +13,12 @@ import SelectableItem from 'drive/web/modules/drive/Toolbar/selectable/Selectabl
 import { downloadFiles } from 'drive/web/modules/actions/utils'
 import AddMenuItem from 'drive/web/modules/drive/Toolbar/components/AddMenuItem'
 
-const PublicToolbarMoreMenu = ({ files, hasWriteAccess, children }) => {
+const PublicToolbarMoreMenu = ({
+  files,
+  hasWriteAccess,
+  children,
+  showSelectionBar
+}) => {
   const anchorRef = useRef()
   const { t } = useI18n()
   const client = useClient()
@@ -45,7 +50,9 @@ const PublicToolbarMoreMenu = ({ files, hasWriteAccess, children }) => {
             </ActionMenuItem>
           )}
           {isMobile && hasWriteAccess && <AddMenuItem />}
-          {files.length > 1 && <SelectableItem />}
+          {files.length > 1 && (
+            <SelectableItem showSelectionBar={showSelectionBar} />
+          )}
         </ActionMenu>
       )}
     </>

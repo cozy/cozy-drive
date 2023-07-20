@@ -1,35 +1,30 @@
 import React, { useState, useCallback, useContext } from 'react'
-import { compose } from 'redux'
-import { connect } from 'react-redux'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
-import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import ActionMenu, {
   ActionMenuItem
 } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 import { BarRightWithProvider } from 'components/Bar'
 import { ModalContext } from 'drive/lib/ModalContext'
 import { emptyTrash } from 'drive/web/modules/actions/utils'
-import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 import SelectableItem from '../drive/Toolbar/selectable/SelectableItem'
 import { MoreButton } from 'components/Button'
 import EmptyTrashConfirm from './components/EmptyTrashConfirm'
 import SearchButton from 'drive/web/modules/drive/Toolbar/components/SearchButton'
+import { useSelectionContext } from 'drive/web/modules/selection/SelectionProvider'
 
 import styles from 'drive/styles/toolbar.styl'
 
-export const Toolbar = ({
-  t,
-  disabled,
-  selectionModeActive,
-  breakpoints: { isMobile }
-}) => {
+export const Toolbar = ({ disabled }) => {
+  const { t } = useI18n()
+  const { isMobile } = useBreakpoints()
   const client = useClient()
   const navigate = useNavigate()
   const { pathname } = useLocation()
@@ -39,6 +34,7 @@ export const Toolbar = ({
   const closeMenu = useCallback(() => setMenuVisible(false), [setMenuVisible])
 
   const { pushModal, popModal } = useContext(ModalContext)
+  const { showSelectionBar, isSelectionBarVisible } = useSelectionContext()
 
   const onEmptyTrash = useCallback(() => {
     pushModal(
@@ -54,7 +50,10 @@ export const Toolbar = ({
   const MoreMenu = (
     <div>
       <div ref={anchorRef}>
-        <MoreButton onClick={openMenu} />
+        <MoreButton
+          onClick={openMenu}
+          disabled={disabled || isSelectionBarVisible}
+        />
       </div>
       {menuIsVisible && (
         <ActionMenu
@@ -76,7 +75,7 @@ export const Toolbar = ({
               <hr />
             </>
           )}
-          <SelectableItem />
+          <SelectableItem showSelectionBar={showSelectionBar} />
         </ActionMenu>
       )}
     </div>
@@ -92,7 +91,7 @@ export const Toolbar = ({
         <Button
           theme="danger-outline"
           onClick={onEmptyTrash}
-          disabled={disabled || selectionModeActive}
+          disabled={disabled || isSelectionBarVisible}
           icon={TrashIcon}
           label={t('toolbar.empty_trash')}
         />
@@ -105,12 +104,4 @@ export const Toolbar = ({
   )
 }
 
-const mapStateToProps = state => ({
-  selectionModeActive: isSelectionBarVisible(state)
-})
-
-export default compose(
-  translate(),
-  withBreakpoints(),
-  connect(mapStateToProps, null)
-)(Toolbar)
+export default Toolbar

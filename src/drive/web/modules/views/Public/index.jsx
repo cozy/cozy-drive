@@ -51,6 +51,7 @@ import usePublicFilesQuery from './usePublicFilesQuery'
 import usePublicWritePermissions from './usePublicWritePermissions'
 import { ROOT_DIR_ID } from 'drive/constants/config'
 import OldFolderViewBreadcrumb from '../Folder/OldFolderViewBreadcrumb'
+import { useSelectionContext } from 'drive/web/modules/selection/SelectionProvider'
 
 const getBreadcrumbPath = (t, displayedFolder, parentFolder) =>
   uniqBy(
@@ -86,6 +87,7 @@ const PublicFolderView = () => {
   const displayedFolder = useDisplayedFolder()
   const parentDirId = get(displayedFolder, 'dir_id')
   const parentFolder = useParentFolder(parentDirId)
+  const { isSelectionBarVisible } = useSelectionContext()
 
   const sharingInfos = useSharingInfos()
 
@@ -263,6 +265,7 @@ const PublicFolderView = () => {
             navigate={navigate}
             params={params}
             displayedFolder={displayedFolder}
+            isSelectionBarVisible={isSelectionBarVisible}
           >
             <FabWithMenuContext noSidebar={true} />
           </AddMenuProvider>

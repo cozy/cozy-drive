@@ -40,7 +40,9 @@ const MoreMenu = ({
   navigate,
   params,
   displayedFolder,
-  folderId
+  folderId,
+  showSelectionBar,
+  isSelectionBarVisible
 }) => {
   const [menuIsVisible, setMenuVisible] = useState(false)
   const anchorRef = React.createRef()
@@ -67,6 +69,7 @@ const MoreMenu = ({
         navigate={navigate}
         params={params}
         displayedFolder={displayedFolder}
+        isSelectionBarVisible={isSelectionBarVisible}
       >
         {menuIsVisible && (
           <ActionMenu
@@ -94,7 +97,7 @@ const MoreMenu = ({
               </InsideRegularFolder>
             )}
             {isMobile && hasWriteAccess && <AddMenuItem />}
-            <SelectableItem />
+            <SelectableItem showSelectionBar={showSelectionBar} />
             {hasWriteAccess && (
               <InsideRegularFolder
                 displayedFolder={displayedFolder}
