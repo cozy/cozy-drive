@@ -1,7 +1,8 @@
 /* global __TARGET__ */
 import React from 'react'
+import { Outlet } from 'react-router-dom'
 
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import { Layout as LayoutUI } from 'cozy-ui/transpiled/react/Layout'
 import Sidebar from 'cozy-ui/transpiled/react/Sidebar'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
@@ -19,23 +20,26 @@ import UserActionRequired from 'drive/mobile/modules/authorization/UserActionReq
 
 initFlags()
 
-const Layout = ({ t, children }) => (
-  <LayoutUI>
-    <FlagSwitcher />
-    <Sidebar className="u-flex-justify-between">
-      <Nav />
-      <div>
-        <SupportUs />
-        <ButtonClient />
-      </div>
-    </Sidebar>
-    <Alerter t={t} />
-    <UploadQueue />
-    {__TARGET__ === 'mobile' && <UserActionRequired />}
-    {children}
-    <Sprite />
-    {flag('debug') ? <CozyDevtools /> : null}
-  </LayoutUI>
-)
+const Layout = () => {
+  const { t } = useI18n()
+  return (
+    <LayoutUI>
+      <FlagSwitcher />
+      <Sidebar className="u-flex-justify-between">
+        <Nav />
+        <div>
+          <SupportUs />
+          <ButtonClient />
+        </div>
+      </Sidebar>
+      <Alerter t={t} />
+      <UploadQueue />
+      {__TARGET__ === 'mobile' && <UserActionRequired />}
+      <Outlet />
+      <Sprite />
+      {flag('debug') && <CozyDevtools />}
+    </LayoutUI>
+  )
+}
 
-export default translate()(Layout)
+export default Layout

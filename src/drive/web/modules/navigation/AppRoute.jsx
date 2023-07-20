@@ -1,6 +1,6 @@
 /* global __TARGET__ */
 import React from 'react'
-import { Routes, Route, Outlet, useParams, Navigate } from 'react-router-dom'
+import { Routes, Route, useParams, Navigate } from 'react-router-dom'
 
 import Settings from 'drive/mobile/modules/settings/Settings'
 import OnBoarding from 'drive/mobile/modules/onboarding/OnBoarding'
@@ -32,16 +32,10 @@ const FilesRedirect = () => {
   return <Navigate to={`/folder/${folderId}`} replace={true} />
 }
 
-const RootComponent = () => (
-  <Layout>
-    <Outlet />
-  </Layout>
-)
-
 const AppRoute = () => (
   <Routes>
     <Route path="external/:fileId" element={<ExternalRedirect />} />
-    <Route element={<RootComponent />}>
+    <Route element={<Layout />}>
       {__TARGET__ === 'mobile' && (
         <Route path="uploadfrommobile" element={<UploadFromMobile />} />
       )}
