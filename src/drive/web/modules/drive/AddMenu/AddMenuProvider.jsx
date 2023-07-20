@@ -5,12 +5,11 @@ import React, {
   useMemo,
   createContext
 } from 'react'
-import { useSelector } from 'react-redux'
+
 import { logException } from 'drive/lib/reporter'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
-import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 import {
   closeMenu,
   toggleMenu
@@ -30,10 +29,10 @@ const AddMenuProvider = ({
   isPublic,
   navigate,
   params,
-  displayedFolder
+  displayedFolder,
+  isSelectionBarVisible
 }) => {
   const [menuIsVisible, setMenuVisible] = useState(false)
-  const selectionModeActive = useSelector(isSelectionBarVisible)
   const isOffline = useBrowserOffline()
   const anchorRef = useRef()
 
@@ -48,8 +47,8 @@ const AddMenuProvider = ({
   )
 
   const isDisabled = useMemo(
-    () => disabled || selectionModeActive,
-    [disabled, selectionModeActive]
+    () => disabled || isSelectionBarVisible,
+    [disabled, isSelectionBarVisible]
   )
 
   const isEncryptedDir = useMemo(

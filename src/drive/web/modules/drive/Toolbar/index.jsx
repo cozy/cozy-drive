@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { compose } from 'redux'
 import cx from 'classnames'
 import { useNavigate, useLocation, useParams } from 'react-router-dom'
 
 import SharingProvider, { SharedDocument } from 'cozy-sharing'
-import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
-import { isSelectionBarVisible } from 'drive/web/modules/selection/duck'
 import { useCurrentFolderId } from 'drive/hooks'
 import AddButton from 'drive/web/modules/drive/Toolbar/components/AddButton'
 import InsideRegularFolder from 'drive/web/modules/drive/Toolbar/components/InsideRegularFolder'
@@ -18,10 +15,10 @@ import SharedRecipients from 'drive/web/modules/drive/Toolbar/share/SharedRecipi
 import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
 import SearchButton from 'drive/web/modules/drive/Toolbar/components/SearchButton'
 import { useDisplayedFolder } from 'drive/hooks'
+import { useSelectionContext } from 'drive/web/modules/selection/SelectionProvider'
+import { BarRightWithProvider } from 'components/Bar'
 
 import styles from 'drive/styles/toolbar.styl'
-
-import { BarRightWithProvider } from 'components/Bar'
 
 class Toolbar extends Component {
   static contextTypes = {
@@ -37,7 +34,7 @@ class Toolbar extends Component {
   shouldComponentUpdate(nextProps) {
     if (
       nextProps.disabled !== this.props.disabled ||
-      nextProps.selectionModeActive !== this.props.selectionModeActive ||
+      nextProps.isSelectionBarVisible !== this.props.isSelectionBarVisible ||
       nextProps.canUpload !== this.props.canUpload ||
       nextProps.canCreateFolder !== this.props.canCreateFolder ||
       nextProps.hasWriteAccess !== this.props.hasWriteAccess ||
@@ -52,7 +49,6 @@ class Toolbar extends Component {
   render() {
     const {
       disabled,
-      selectionModeActive,
       canUpload,
       canCreateFolder,
       hasWriteAccess,
@@ -61,10 +57,12 @@ class Toolbar extends Component {
       pathname,
       params,
       folderId,
-      displayedFolder
+      displayedFolder,
+      showSelectionBar,
+      isSelectionBarVisible
     } = this.props
 
-    const isDisabled = disabled || selectionModeActive
+    const isDisabled = disabled || isSelectionBarVisible
     if (disabled) {
       return null
     }
@@ -96,6 +94,7 @@ class Toolbar extends Component {
             navigate={navigate}
             params={params}
             displayedFolder={displayedFolder}
+            isSelectionBarVisible={isSelectionBarVisible}
           >
             <AddButton />
           </AddMenuProvider>
@@ -113,6 +112,8 @@ class Toolbar extends Component {
               params={params}
               folderId={folderId}
               displayedFolder={displayedFolder}
+              showSelectionBar={showSelectionBar}
+              isSelectionBarVisible={isSelectionBarVisible}
             />
           </SharingProvider>
         </BarRightWithProvider>
@@ -120,10 +121,6 @@ class Toolbar extends Component {
     )
   }
 }
-
-const mapStateToProps = state => ({
-  selectionModeActive: isSelectionBarVisible(state)
-})
 
 /**
  * Provides the Toolbar with sharing properties of the current folder.
@@ -137,31 +134,28 @@ const ToolbarWithSharingContext = props => {
   const { pathname } = useLocation()
   const params = useParams()
   const displayedFolder = useDisplayedFolder()
+  const breakpoints = useBreakpoints()
+  const { showSelectionBar, isSelectionBarVisible } = useSelectionContext()
+
+  const toolbarProps = {
+    ...props,
+    navigate,
+    pathname,
+    params,
+    displayedFolder,
+    folderId,
+    breakpoints,
+    showSelectionBar,
+    isSelectionBarVisible
+  }
 
   return !folderId ? (
-    <Toolbar
-      {...props}
-      navigate={navigate}
-      pathname={pathname}
-      params={params}
-      displayedFolder={displayedFolder}
-      folderId={folderId}
-    />
+    <Toolbar {...toolbarProps} />
   ) : (
     <SharedDocument docId={folderId}>
       {sharingProps => {
         const { hasWriteAccess } = sharingProps
-        return (
-          <Toolbar
-            {...props}
-            hasWriteAccess={hasWriteAccess}
-            navigate={navigate}
-            pathname={pathname}
-            params={params}
-            displayedFolder={displayedFolder}
-            folderId={folderId}
-          />
-        )
+        return <Toolbar {...toolbarProps} hasWriteAccess={hasWriteAccess} />
       }}
     </SharedDocument>
   )
@@ -169,7 +163,4 @@ const ToolbarWithSharingContext = props => {
 
 ToolbarWithSharingContext.displayName = 'ToolbarWithSharingContext'
 
-export default compose(
-  connect(mapStateToProps, null),
-  withBreakpoints()
-)(ToolbarWithSharingContext)
+export default ToolbarWithSharingContext

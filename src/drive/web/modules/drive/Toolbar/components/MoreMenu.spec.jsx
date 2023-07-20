@@ -29,6 +29,7 @@ describe('MoreMenu', () => {
           hasWriteAccess
           displayedFolder={{ id: 'id2' }}
           folderId={'id1'}
+          showSelectionBar={jest.fn()}
         />
       </AppLike>
     )

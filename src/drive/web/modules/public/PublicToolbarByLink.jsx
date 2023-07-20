@@ -17,6 +17,7 @@ import {
   openExternalLink
 } from 'drive/web/modules/public/helpers'
 import { useDisplayedFolder } from 'drive/hooks'
+import { useSelectionContext } from 'drive/web/modules/selection/SelectionProvider'
 
 const PublicToolbarByLink = ({
   files,
@@ -29,6 +30,7 @@ const PublicToolbarByLink = ({
   const navigate = useNavigate()
   const params = useParams()
   const displayedFolder = useDisplayedFolder()
+  const { showSelectionBar, isSelectionBarVisible } = useSelectionContext()
 
   const shouldDisplayMoreMenu = isMobile || (!isFile && files.length > 0)
 
@@ -42,6 +44,7 @@ const PublicToolbarByLink = ({
         navigate={navigate}
         params={params}
         displayedFolder={displayedFolder}
+        isSelectionBarVisible={isSelectionBarVisible}
       >
         {!isMobile && (
           <>
@@ -50,7 +53,11 @@ const PublicToolbarByLink = ({
           </>
         )}
         {shouldDisplayMoreMenu && (
-          <PublicToolbarMoreMenu files={files} hasWriteAccess={hasWriteAccess}>
+          <PublicToolbarMoreMenu
+            files={files}
+            hasWriteAccess={hasWriteAccess}
+            showSelectionBar={showSelectionBar}
+          >
             {isMobile && (
               <ActionMenuItem
                 onClick={() => openExternalLink(HOME_LINK_HREF)}

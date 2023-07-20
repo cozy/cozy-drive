@@ -50,6 +50,7 @@ import { useTrashRedirect } from 'drive/web/modules/views/Drive/useTrashRedirect
 import FabWithMenuContext from 'drive/web/modules/drive/FabWithMenuContext'
 import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
 import useHead from 'components/useHead'
+import { useSelectionContext } from 'drive/web/modules/selection/SelectionProvider'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
@@ -60,6 +61,7 @@ const DriveView = () => {
   const params = useParams()
   const currentFolderId = useCurrentFolderId() || ROOT_DIR_ID
   useHead()
+  const { isSelectionBarVisible } = useSelectionContext()
 
   const { isMobile } = useBreakpoints()
   const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)
@@ -226,6 +228,7 @@ const DriveView = () => {
             navigate={navigate}
             params={params}
             displayedFolder={displayedFolder}
+            isSelectionBarVisible={isSelectionBarVisible}
           >
             <FabWithMenuContext />
           </AddMenuProvider>

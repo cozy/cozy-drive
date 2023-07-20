@@ -12,6 +12,7 @@ import {
   openExternalLink
 } from 'drive/web/modules/public/helpers'
 import PublicToolbarMoreMenu from 'drive/web/modules/public/PublicToolbarMoreMenu'
+import { useSelectionContext } from 'drive/web/modules/selection/SelectionProvider'
 
 const PublicToolbarCozyToCozy = ({
   isSharingShortcutCreated,
@@ -21,6 +22,7 @@ const PublicToolbarCozyToCozy = ({
   const isFile = isFilesIsFile(files)
   const { isMobile } = useBreakpoints()
   const { t } = useI18n()
+  const { showSelectionBar } = useSelectionContext()
 
   const shouldDisplayMoreMenu = isMobile || (!isFile && files.length > 0)
 
@@ -28,7 +30,10 @@ const PublicToolbarCozyToCozy = ({
     <BarRightWithProvider>
       {!isMobile && files.length > 0 && <DownloadFilesButton files={files} />}
       {shouldDisplayMoreMenu && (
-        <PublicToolbarMoreMenu files={files}>
+        <PublicToolbarMoreMenu
+          files={files}
+          showSelectionBar={showSelectionBar}
+        >
           <ActionMenuItem
             onClick={() => openExternalLink(discoveryLink)}
             left={
