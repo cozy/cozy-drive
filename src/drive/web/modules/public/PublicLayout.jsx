@@ -6,6 +6,7 @@ import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import FlagSwitcher from 'cozy-flags/dist/FlagSwitcher'
 import UploadQueue from 'drive/web/modules/upload/UploadQueue'
+import { SelectionProvider } from 'drive/web/modules/selection/SelectionProvider'
 
 const PublicLayout = () => {
   const { t } = useI18n()
@@ -14,7 +15,9 @@ const PublicLayout = () => {
       <FlagSwitcher />
       <Alerter t={t} />
       <UploadQueue />
-      <Outlet />
+      <SelectionProvider>
+        <Outlet />
+      </SelectionProvider>
       <Sprite />
     </Layout>
   )

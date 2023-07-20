@@ -1,32 +1,6 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import SelectionBar from 'cozy-ui/transpiled/react/SelectionBar'
-import {
-  getSelectedFiles,
-  hideSelectionBar,
-  isSelectionBarVisible
-} from './duck'
-const mapStateToProps = state => ({
-  selected: getSelectedFiles(state),
-  selectionModeActive: isSelectionBarVisible(state)
-})
-
-const mapDispatchToProps = dispatch => ({
-  hideSelectionBar: () => dispatch(hideSelectionBar())
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(({ selectionModeActive, actions, ...rest }) => {
-  const convertedActions = driveActionsToSelectionBarActions(actions)
-  const style = selectionModeActive ? {} : { display: 'none' }
-  return (
-    <div style={style}>
-      <SelectionBar actions={convertedActions} {...rest} />
-    </div>
-  )
-})
+import SelectionBarUI from 'cozy-ui/transpiled/react/SelectionBar'
+import { useSelectionContext } from 'drive/web/modules/selection/SelectionProvider'
 
 const driveActionsToSelectionBarActions = driveActions => {
   let actions = {}
@@ -41,3 +15,23 @@ const driveActionsToSelectionBarActions = driveActions => {
   })
   return actions
 }
+
+const SelectionBar = ({ actions }) => {
+  const { isSelectionBarVisible, hideSelectionBar, selectedItems } =
+    useSelectionContext()
+  const convertedActions = driveActionsToSelectionBarActions(actions)
+
+  if (isSelectionBarVisible) {
+    return (
+      <SelectionBarUI
+        actions={convertedActions}
+        selected={selectedItems}
+        hideSelectionBar={hideSelectionBar}
+      />
+    )
+  }
+
+  return null
+}
+
+export default SelectionBar

@@ -6,6 +6,14 @@ import { ModalContextProvider, ModalStack } from 'drive/lib/ModalContext'
 
 import AppLike from 'test/components/AppLike'
 import { Toolbar } from './Toolbar'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+
+jest.mock('cozy-ui/transpiled/react/hooks/useBreakpoints', () => ({
+  ...jest.requireActual('cozy-ui/transpiled/react/hooks/useBreakpoints'),
+  __esModule: true,
+  default: jest.fn(),
+  useBreakpoints: jest.fn()
+}))
 
 describe('Toolbar', () => {
   const client = createMockClient({})
@@ -17,23 +25,18 @@ describe('Toolbar', () => {
     //  interleaving multiple act calls and mixing their scopes. You should - await act(async () => ...);
     // However the above resolution makes test failing
     jest.spyOn(console, 'error').mockImplementation()
+    useBreakpoints.mockReturnValue({ isMobile: false })
 
     const { getByText } = render(
       <AppLike client={client}>
         <ModalContextProvider>
           <ModalStack />
-          <Toolbar
-            t={jest.fn(x => x)}
-            disabled={false}
-            selectionModeActive={false}
-            emptyTrash={jest.fn()}
-            breakpoints={{ isMobile: false }}
-          />
+          <Toolbar disabled={false} emptyTrash={jest.fn()} />
         </ModalContextProvider>
       </AppLike>
     )
 
-    const emptyTrashButton = getByText('toolbar.empty_trash')
+    const emptyTrashButton = getByText('Empty trash')
     act(() => {
       fireEvent.click(emptyTrashButton)
     })

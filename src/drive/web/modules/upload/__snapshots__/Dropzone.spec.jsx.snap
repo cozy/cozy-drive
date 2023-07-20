@@ -92,38 +92,19 @@ exports[`Dropzone should match snapshot 1`] = `
                     }
                   }
                 >
-                  <ThumbnailSizeContextProvider>
-                    <BreakpointsProvider>
-                      <PushBannerProvider>
-                        <FabProvider>
-                          <WithSharingState(withClient(withVaultClient(Connect(Dropzone))))
-                            displayedFolder={
-                              Object {
-                                "id": "directory-foobar0",
-                              }
-                            }
-                          >
-                            <withClient(withVaultClient(Connect(Dropzone)))
+                  <SelectionProvider>
+                    <ThumbnailSizeContextProvider>
+                      <BreakpointsProvider>
+                        <PushBannerProvider>
+                          <FabProvider>
+                            <WithSharingState(withClient(withVaultClient(Connect(Dropzone))))
                               displayedFolder={
                                 Object {
                                   "id": "directory-foobar0",
                                 }
                               }
-                              sharingState={
-                                Object {
-                                  "getRecipients": [MockFunction],
-                                  "getSharingLink": [MockFunction],
-                                  "hasWriteAccess": [MockFunction],
-                                  "refresh": [MockFunction],
-                                }
-                              }
                             >
-                              <withVaultClient(Connect(Dropzone))
-                                client={
-                                  CozyClient {
-                                    "uri": undefined,
-                                  }
-                                }
+                              <withClient(withVaultClient(Connect(Dropzone)))
                                 displayedFolder={
                                   Object {
                                     "id": "directory-foobar0",
@@ -137,13 +118,34 @@ exports[`Dropzone should match snapshot 1`] = `
                                     "refresh": [MockFunction],
                                   }
                                 }
-                              />
-                            </withClient(withVaultClient(Connect(Dropzone)))>
-                          </WithSharingState(withClient(withVaultClient(Connect(Dropzone))))>
-                        </FabProvider>
-                      </PushBannerProvider>
-                    </BreakpointsProvider>
-                  </ThumbnailSizeContextProvider>
+                              >
+                                <withVaultClient(Connect(Dropzone))
+                                  client={
+                                    CozyClient {
+                                      "uri": undefined,
+                                    }
+                                  }
+                                  displayedFolder={
+                                    Object {
+                                      "id": "directory-foobar0",
+                                    }
+                                  }
+                                  sharingState={
+                                    Object {
+                                      "getRecipients": [MockFunction],
+                                      "getSharingLink": [MockFunction],
+                                      "hasWriteAccess": [MockFunction],
+                                      "refresh": [MockFunction],
+                                    }
+                                  }
+                                />
+                              </withClient(withVaultClient(Connect(Dropzone)))>
+                            </WithSharingState(withClient(withVaultClient(Connect(Dropzone))))>
+                          </FabProvider>
+                        </PushBannerProvider>
+                      </BreakpointsProvider>
+                    </ThumbnailSizeContextProvider>
+                  </SelectionProvider>
                 </Router>
               </HashRouter>
             </AcceptingSharingProvider>

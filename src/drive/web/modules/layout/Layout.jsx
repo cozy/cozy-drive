@@ -17,6 +17,7 @@ import ButtonClient from 'components/pushClient/Button'
 import SupportUs from 'components/pushClient/SupportUs'
 import { UploadQueue } from 'drive/web/modules/upload'
 import UserActionRequired from 'drive/mobile/modules/authorization/UserActionRequired'
+import { SelectionProvider } from 'drive/web/modules/selection/SelectionProvider'
 
 initFlags()
 
@@ -35,7 +36,9 @@ const Layout = () => {
       <Alerter t={t} />
       <UploadQueue />
       {__TARGET__ === 'mobile' && <UserActionRequired />}
-      <Outlet />
+      <SelectionProvider>
+        <Outlet />
+      </SelectionProvider>
       <Sprite />
       {flag('debug') && <CozyDevtools />}
     </LayoutUI>
