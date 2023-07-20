@@ -6070,10 +6070,10 @@ cozy-release@1.10.0:
   dependencies:
     exec-sh "0.3.2"
 
-cozy-scanner@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/cozy-scanner/-/cozy-scanner-5.0.0.tgz#1794a1deab52c3cd57b68453be3927668f309aaf"
-  integrity sha512-l0VDL7491bQ747MhlxgD0Ruflf7Kl4BMbV6yJ9zJvFX0guzzphGJmUln1/+YacdB9doYNF0quCwkD4GCsfuX0g==
+cozy-scanner@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/cozy-scanner/-/cozy-scanner-5.1.0.tgz#67ab3d5a8f54915aa7a46bce42722db57b9217b9"
+  integrity sha512-rZuVSvfCiAzt2St/528A4YgBB8GNqh7CYjx39A6PmrxqThegSx7rNXZ5lXdHlxNaDLKXSdJ5PlUIyGdP9XI+fQ==
   dependencies:
     cozy-device-helper "^2.7.0"
 
@@ -6137,10 +6137,10 @@ cozy-scripts@^8.1.0:
     webpack-dev-server "3.10.3"
     webpack-merge "4.2.2"
 
-cozy-sharing@8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-8.0.0.tgz#14b7abb486eb0286ada174e5fb0632b24bfbce7d"
-  integrity sha512-fCjnxAj/2cZQUGk3gwp4bEmtQM23esO2yg4D9qocTjAuj1kLJHc1P9s581uUyAycxwQw7TE+9KrDV9VOIEs5XA==
+cozy-sharing@8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-8.0.1.tgz#075ba7faaf5c52482b10960fb51006cde722f9f2"
+  integrity sha512-RBSCAWYIS+YlKptPJIdMPcqezIm8BNQQvJnmTuMpkChPGVo4P44W5VeLWBzYyxQSpgVR3LIhMlABmdnlOotVqg==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     classnames "^2.2.6"
