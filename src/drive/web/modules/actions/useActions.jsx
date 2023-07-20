@@ -1,13 +1,11 @@
-import { useDispatch } from 'react-redux'
-import { hideSelectionBar } from 'drive/web/modules/selection/duck'
-
-const withHideSelectionBarDispatch = (action, dispatch) => {
+import { useSelectionContext } from 'drive/web/modules/selection/SelectionProvider'
+const withHideSelectionBar = (action, hideSelectionBar) => {
   if (!action.action) return action
 
   const actionFn = action.action
   const actionFnWithSelectionDispatch = (...args) => {
     actionFn(...args)
-    dispatch(hideSelectionBar())
+    hideSelectionBar()
   }
 
   return {
@@ -17,12 +15,13 @@ const withHideSelectionBarDispatch = (action, dispatch) => {
 }
 
 const useActions = (actionCreators, actionOptions = {}) => {
-  const dispatch = useDispatch()
+  const { hideSelectionBar } = useSelectionContext()
+
   let actions = []
   actionCreators.map(createAction => {
-    const enhancedAction = withHideSelectionBarDispatch(
+    const enhancedAction = withHideSelectionBar(
       createAction(actionOptions),
-      dispatch
+      hideSelectionBar
     )
     actions.push({ [enhancedAction.name]: enhancedAction })
   })
