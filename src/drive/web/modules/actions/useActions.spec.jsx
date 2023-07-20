@@ -17,7 +17,7 @@ import {
   restoreFiles
 } from './utils'
 import * as renameModule from 'drive/web/modules/drive/rename'
-import * as selectionModule from 'drive/web/modules/selection/duck'
+import { useSelectionContext } from 'drive/web/modules/selection/SelectionProvider'
 
 import useActions from './useActions'
 import {
@@ -47,6 +47,11 @@ jest.mock('cozy-device-helper', () => ({
   isMobileApp: jest.fn()
 }))
 
+jest.mock('drive/web/modules/selection/SelectionProvider', () => ({
+  ...jest.requireActual('drive/web/modules/selection/SelectionProvider'),
+  useSelectionContext: jest.fn()
+}))
+
 describe('useActions', () => {
   const mockStore = createStore(() => ({
     mobile: {
@@ -71,7 +76,13 @@ describe('useActions', () => {
     global.__TARGET__ = 'browser'
   })
 
-  const renderActionsHook = hookArgs => {
+  const renderActionsHook = (
+    hookArgs,
+    options = { hideSelectionBar: jest.fn() }
+  ) => {
+    useSelectionContext.mockReturnValue({
+      hideSelectionBar: options.hideSelectionBar
+    })
     const wrapper = ({ children }) => (
       <AppLike
         client={mockClient}
@@ -151,14 +162,13 @@ describe('useActions', () => {
   })
 
   it('always hides the selection bar after an action is activated', () => {
-    const { result } = renderActionsHook(defaultHookArgs)
+    const hideSelectionBar = jest.fn()
+    const { result } = renderActionsHook(defaultHookArgs, { hideSelectionBar })
 
     Object.values(result.current).forEach(action => {
       if (action.action) {
-        const hideSelectionBar = jest.spyOn(selectionModule, 'hideSelectionBar')
         action.action([{ id: 'abc', name: 'my-file.md' }])
         expect(hideSelectionBar).toHaveBeenCalled()
-        hideSelectionBar.mockRestore()
       }
     })
   })
