@@ -13,7 +13,7 @@ import { HashRouter } from 'react-router-dom'
 import { AcceptingSharingProvider } from 'drive/lib/AcceptingSharingContext'
 import FabProvider from 'drive/lib/FabProvider'
 import PushBannerProvider from 'components/PushBanner/PushBannerProvider'
-
+import { SelectionProvider } from 'drive/web/modules/selection/SelectionProvider'
 import driveEnLocale from 'drive/locales/en.json'
 import photoEnLocale from 'photos/locales/en.json'
 
@@ -59,17 +59,19 @@ const AppLike = ({
         >
           <AcceptingSharingProvider>
             <HashRouter>
-              <ThumbnailSizeContextProvider>
-                <BreakpointsProvider>
-                  <PushBannerProvider>
-                    <ModalContext.Provider
-                      value={modalContextValue || mockModalContextValue}
-                    >
-                      <FabProvider>{children}</FabProvider>
-                    </ModalContext.Provider>
-                  </PushBannerProvider>
-                </BreakpointsProvider>
-              </ThumbnailSizeContextProvider>
+              <SelectionProvider>
+                <ThumbnailSizeContextProvider>
+                  <BreakpointsProvider>
+                    <PushBannerProvider>
+                      <ModalContext.Provider
+                        value={modalContextValue || mockModalContextValue}
+                      >
+                        <FabProvider>{children}</FabProvider>
+                      </ModalContext.Provider>
+                    </PushBannerProvider>
+                  </BreakpointsProvider>
+                </ThumbnailSizeContextProvider>
+              </SelectionProvider>
             </HashRouter>
           </AcceptingSharingProvider>
         </SharingContext.Provider>

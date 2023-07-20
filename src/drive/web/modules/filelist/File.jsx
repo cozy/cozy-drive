@@ -13,11 +13,6 @@ import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'
 
 import { ActionMenuWithHeader } from 'drive/web/modules/actionmenu/ActionMenuWithHeader'
 import FileThumbnail from 'drive/web/modules/filelist/FileThumbnail'
-import {
-  toggleItemSelection,
-  isSelected,
-  isSelectionBarVisible
-} from 'drive/web/modules/selection/duck'
 import { isRenaming, getRenamingFile } from 'drive/web/modules/drive/rename'
 import { isAvailableOffline } from 'drive/mobile/modules/offline/duck'
 import FileOpener from 'drive/web/modules/filelist/FileOpener'
@@ -32,10 +27,13 @@ import {
 import { extraColumnsPropTypes } from 'drive/web/modules/certifications'
 
 import styles from 'drive/styles/filelist.styl'
+import { useSelectionContext } from 'drive/web/modules/selection/SelectionProvider'
 
 const File = props => {
   const [actionMenuVisible, setActionMenuVisible] = useState(false)
   const filerowMenuToggleRef = useRef()
+  const { toggleSelectedItem, isItemSelected, isSelectionBarVisible } =
+    useSelectionContext()
 
   const toggleActionMenu = () => {
     if (actionMenuVisible) return hideActionMenu()
@@ -57,8 +55,7 @@ const File = props => {
 
   const toggle = e => {
     e.stopPropagation()
-    const { attributes, onCheckboxToggle, selected } = props
-    onCheckboxToggle(attributes, selected)
+    toggleSelectedItem(props.attributes)
   }
 
   const open = (event, attributes) => {
@@ -79,7 +76,6 @@ const File = props => {
     t,
     f,
     attributes,
-    selected,
     actions,
     isRenaming,
     withSelectionCheckbox,
@@ -88,7 +84,6 @@ const File = props => {
     disabled,
     styleDisabled,
     thumbnailSizeBig,
-    selectionModeActive,
     refreshFolderContent,
     isInSyncFromSharing,
     extraColumns,
@@ -116,6 +111,9 @@ const File = props => {
       ? t('table.row_update_format_full')
       : t('table.row_update_format')
   )
+
+  const selected = isItemSelected(attributes.id)
+
   return (
     <TableRow className={filContentRowSelected}>
       <SelectBox
@@ -128,7 +126,7 @@ const File = props => {
         file={attributes}
         disabled={isRowDisabledOrInSyncFromSharing}
         actionMenuVisible={actionMenuVisible}
-        selectionModeActive={selectionModeActive}
+        selectionModeActive={isSelectionBarVisible}
         open={open}
         toggle={toggle}
         isRenaming={isRenaming}
@@ -202,7 +200,6 @@ File.propTypes = {
   t: PropTypes.func,
   f: PropTypes.func,
   attributes: PropTypes.object.isRequired,
-  selected: PropTypes.bool.isRequired,
   actions: PropTypes.array.isRequired,
   isRenaming: PropTypes.bool,
   withSelectionCheckbox: PropTypes.bool.isRequired,
@@ -213,34 +210,22 @@ File.propTypes = {
   /** Apply disabled style on row */
   styleDisabled: PropTypes.bool,
   breakpoints: PropTypes.object.isRequired,
-  selectionModeActive: PropTypes.bool.isRequired,
   /** When a user click on a Folder */
   onFolderOpen: PropTypes.func.isRequired,
   /** onFileOpen : When a user click on a File */
   onFileOpen: PropTypes.func.isRequired,
-  onCheckboxToggle: PropTypes.func.isRequired,
   refreshFolderContent: PropTypes.func,
   isInSyncFromSharing: PropTypes.bool,
   extraColumns: extraColumnsPropTypes
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  selected: isSelected(state, ownProps.attributes),
   isAvailableOffline: isAvailableOffline(state, ownProps.attributes.id),
-  selectionModeActive: isSelectionBarVisible(state),
   isRenaming:
     isRenaming(state) &&
     get(getRenamingFile(state), 'id') === ownProps.attributes.id
 })
 
-const mapDispatchToProps = dispatch => ({
-  onCheckboxToggle: (file, selected) =>
-    dispatch(toggleItemSelection(file, selected))
-})
-
 export const DumbFile = withBreakpoints()(translate()(File))
 
-export const FileWithSelection = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DumbFile)
+export const FileWithSelection = connect(mapStateToProps)(DumbFile)
