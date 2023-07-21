@@ -1,18 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { compose } from 'redux'
+
 import { withStyles } from 'cozy-ui/transpiled/react/styles'
-
-import { Query, cancelable, withClient, Q } from 'cozy-client'
-import { CozyFile } from 'models'
-import logger from 'lib/logger'
-
-import { RefreshableSharings } from 'cozy-sharing'
-import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
+import { Query, cancelable, Q, useClient } from 'cozy-client'
+import { useSharingContext } from 'cozy-sharing'
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
-import { withBreakpoints } from 'cozy-ui/transpiled/react'
+import { useBreakpoints } from 'cozy-ui/transpiled/react'
 
 import { ROOT_DIR_ID } from 'drive/constants/config'
 import Header from 'drive/web/modules/move/Header'
@@ -22,7 +17,8 @@ import Loader from 'drive/web/modules/move/Loader'
 import LoadMore from 'drive/web/modules/move/LoadMore'
 import Footer from 'drive/web/modules/move/Footer'
 import Topbar from 'drive/web/modules/move/Topbar'
-
+import { CozyFile } from 'models'
+import logger from 'lib/logger'
 import { useDisplayedFolder } from 'drive/hooks'
 import {
   buildMoveOrImportQuery,
@@ -49,51 +45,54 @@ const styles = theme => ({
   }
 })
 
-export class MoveModal extends React.Component {
-  constructor(props) {
-    super(props)
-    this.promises = []
-    const { displayedFolder } = props
-    this.state = {
-      folderId: displayedFolder ? displayedFolder._id : ROOT_DIR_ID,
-      isMoveInProgress: false
+/**
+ * Modal to move a folder to an other
+ */
+const MoveModal = ({ onClose, entries, classes }) => {
+  const { t } = useI18n()
+  const client = useClient()
+  const { isMobile } = useBreakpoints()
+  const displayedFolder = useDisplayedFolder()
+  const { sharedPaths, refresh: refreshSharing } = useSharingContext()
+
+  const [folderId, setFolderId] = useState(
+    displayedFolder ? displayedFolder._id : ROOT_DIR_ID
+  )
+
+  const [isMoveInProgress, setMoveInProgress] = useState(false)
+  const [promises, setPromises] = useState([])
+
+  useEffect(() => {
+    // unregister cancelables when component will unmount
+    return () => {
+      promises.forEach(p => p.cancel())
+      setPromises([])
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const navigateTo = folder => {
+    setFolderId(folder._id)
   }
 
-  componentWillUnmount() {
-    this.unregisterCancelables()
-  }
-
-  navigateTo = folder => {
-    this.setState({ folderId: folder._id })
-  }
-
-  registerCancelable = promise => {
-    if (!this.promises) this.promises = []
+  const registerCancelable = promise => {
+    if (!promises) setPromises([])
     const cancelableP = cancelable(promise)
-    this.promises.push(cancelableP)
+    setPromises([...promises, cancelableP])
     return cancelableP
   }
 
-  unregisterCancelables = () => {
-    this.promises.forEach(p => p.cancel())
-    this.promises = []
-  }
-
-  moveEntries = async callback => {
-    const { client, entries, onClose, sharingState, t } = this.props
-    const { sharedPaths } = sharingState
-    const { folderId } = this.state
+  const moveEntries = async () => {
     try {
-      this.setState({ isMoveInProgress: true })
+      setMoveInProgress(true)
       const trashedFiles = []
       await Promise.all(
         entries.map(async entry => {
-          const targetPath = await this.registerCancelable(
+          const targetPath = await registerCancelable(
             CozyFile.getFullpath(folderId, entry.name)
           )
           const force = !sharedPaths.includes(targetPath)
-          const moveResponse = await this.registerCancelable(
+          const moveResponse = await registerCancelable(
             CozyFile.move(entry._id, { folderId }, force)
           )
           if (moveResponse.deleted) {
@@ -102,35 +101,34 @@ export class MoveModal extends React.Component {
         })
       )
 
-      const response = await this.registerCancelable(
+      const response = await registerCancelable(
         client.query(Q('io.cozy.files').getById(folderId))
       )
-      const targetName = response.data.name || t('breadcrumb.title_drive')
+      const targetName = response.data?.name || t('breadcrumb.title_drive')
       Alerter.info('Move.success', {
         subject: entries.length === 1 ? entries[0].name : '',
         target: targetName,
         smart_count: entries.length,
         buttonText: t('Move.cancel'),
-        buttonAction: () => this.cancelMove(entries, trashedFiles, callback)
+        buttonAction: () => cancelMove(entries, trashedFiles)
       })
-      if (callback) callback()
+      if (refreshSharing) refreshSharing()
     } catch (e) {
       logger.warn(e)
       Alerter.error('Move.error', { smart_count: entries.length })
     } finally {
-      this.setState({ isMoveInProgress: false })
+      setMoveInProgress(false)
       onClose({
         cancelSelection: true
       })
     }
   }
 
-  cancelMove = async (entries, trashedFiles, callback) => {
-    const { client } = this.props
+  const cancelMove = async (entries, trashedFiles) => {
     try {
       await Promise.all(
         entries.map(entry =>
-          this.registerCancelable(
+          registerCancelable(
             CozyFile.move(entry._id, { folderId: entry.dir_id })
           )
         )
@@ -140,7 +138,7 @@ export class MoveModal extends React.Component {
       await Promise.all(
         trashedFiles.map(id => {
           try {
-            this.registerCancelable(fileCollection.restore(id))
+            registerCancelable(fileCollection.restore(id))
           } catch {
             restoreErrorsCount++
           }
@@ -162,112 +160,81 @@ export class MoveModal extends React.Component {
       logger.warn(e)
       Alerter.error('Move.cancelled_error', { smart_count: entries.length })
     } finally {
-      if (callback) callback()
+      if (refreshSharing) refreshSharing()
     }
   }
 
-  render() {
-    const {
-      onClose,
-      entries,
-      classes,
-      breakpoints: { isMobile }
-    } = this.props
-    const { folderId, isMoveInProgress } = this.state
+  const contentQuery = buildMoveOrImportQuery(folderId)
+  const folderQuery = buildOnlyFolderQuery(folderId)
 
-    const contentQuery = buildMoveOrImportQuery(folderId)
-    const folderQuery = buildOnlyFolderQuery(folderId)
-
-    return (
-      <FixedDialog
-        open
-        onClose={isMobile ? undefined : onClose}
-        size="large"
-        classes={{
-          paper: classes.paper
-        }}
-        title={
-          <>
-            <Header entries={entries} />
-            <Query
-              query={folderQuery.definition()}
-              fetchPolicy={folderQuery.options.fetchPolicy}
-              as={folderQuery.options.as}
-              key={`breadcrumb-${folderId}`}
-            >
-              {({ data, fetchStatus }) => (
-                <Topbar
-                  navigateTo={this.navigateTo}
-                  currentDir={data}
-                  fetchStatus={fetchStatus}
-                />
-              )}
-            </Query>
-          </>
-        }
-        content={
+  return (
+    <FixedDialog
+      open
+      onClose={isMobile ? undefined : onClose}
+      size="large"
+      classes={{
+        paper: classes.paper
+      }}
+      title={
+        <>
+          <Header entries={entries} />
           <Query
-            query={contentQuery.definition()}
-            fetchPolicy={contentQuery.options.fetchPolicy}
-            as={contentQuery.options.as}
-            key={`content-${folderId}`}
+            query={folderQuery.definition()}
+            fetchPolicy={folderQuery.options.fetchPolicy}
+            as={folderQuery.options.as}
+            key={`breadcrumb-${folderId}`}
           >
-            {({ data, fetchStatus, hasMore, fetchMore }) => {
-              return (
-                <Explorer>
-                  <Loader
-                    fetchStatus={fetchStatus}
-                    hasNoData={data.length === 0}
-                  >
-                    <FileList
-                      files={data}
-                      targets={entries}
-                      navigateTo={this.navigateTo}
-                    />
-                    <LoadMore hasMore={hasMore} fetchMore={fetchMore} />
-                  </Loader>
-                </Explorer>
-              )
-            }}
-          </Query>
-        }
-        actions={
-          <RefreshableSharings>
-            {({ refresh }) => (
-              <Footer
-                onConfirm={() => this.moveEntries(refresh)}
-                onClose={onClose}
-                targets={entries}
-                currentDirId={folderId}
-                isMoving={isMoveInProgress}
+            {({ data, fetchStatus }) => (
+              <Topbar
+                navigateTo={navigateTo}
+                currentDir={data}
+                fetchStatus={fetchStatus}
               />
             )}
-          </RefreshableSharings>
-        }
-      />
-    )
-  }
+          </Query>
+        </>
+      }
+      content={
+        <Query
+          query={contentQuery.definition()}
+          fetchPolicy={contentQuery.options.fetchPolicy}
+          as={contentQuery.options.as}
+          key={`content-${folderId}`}
+        >
+          {({ data, fetchStatus, hasMore, fetchMore }) => {
+            return (
+              <Explorer>
+                <Loader fetchStatus={fetchStatus} hasNoData={data.length === 0}>
+                  <FileList
+                    files={data}
+                    targets={entries}
+                    navigateTo={navigateTo}
+                  />
+                  <LoadMore hasMore={hasMore} fetchMore={fetchMore} />
+                </Loader>
+              </Explorer>
+            )
+          }}
+        </Query>
+      }
+      actions={
+        <Footer
+          onConfirm={moveEntries}
+          onClose={onClose}
+          targets={entries}
+          currentDirId={folderId}
+          isMoving={isMoveInProgress}
+        />
+      }
+    />
+  )
 }
 
 MoveModal.propTypes = {
-  client: PropTypes.object.isRequired,
-  displayedFolder: PropTypes.object.isRequired,
-  entries: PropTypes.array,
-  t: PropTypes.func.isRequired,
-  // in case of move conflicts, shared files are not overridden
-  sharingState: PropTypes.object
+  /** List of files or folder to move */
+  entries: PropTypes.array
 }
 
-const MoveModalWrapper = props => {
-  const displayedFolder = useDisplayedFolder()
+export { MoveModal }
 
-  return <MoveModal displayedFolder={displayedFolder} {...props} />
-}
-
-export default compose(
-  translate(),
-  withClient,
-  withSharingState,
-  withStyles(styles),
-  withBreakpoints()
-)(MoveModalWrapper)
+export default withStyles(styles)(MoveModal)
