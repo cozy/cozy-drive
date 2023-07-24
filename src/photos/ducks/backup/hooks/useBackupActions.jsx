@@ -12,6 +12,20 @@ import { useBackupData } from 'photos/ducks/backup/hooks/useBackupData'
 
 const BackupActionsContext = createContext(null)
 
+const parseBackupError = ({ message }) => {
+  try {
+    const parsed = JSON.parse(message)
+    return {
+      message: parsed.message,
+      statusCode: parsed.statusCode
+    }
+  } catch {
+    return {
+      message
+    }
+  }
+}
+
 export const BackupActionsProvider = ({ children }) => {
   const { setBackupInfo } = useBackupData()
 
@@ -27,7 +41,7 @@ export const BackupActionsProvider = ({ children }) => {
 
       setBackupInfo(newBackupInfo)
     } catch (e) {
-      setBackupError({ message: e.message })
+      setBackupError(parseBackupError(e))
     }
   }, [webviewIntent, setBackupInfo])
 
@@ -37,7 +51,7 @@ export const BackupActionsProvider = ({ children }) => {
 
       setBackupInfo(newBackupInfo)
     } catch (e) {
-      setBackupError({ message: e.message })
+      setBackupError(parseBackupError(e))
     }
   }, [webviewIntent, setBackupInfo])
 
@@ -47,7 +61,7 @@ export const BackupActionsProvider = ({ children }) => {
 
       setBackupInfo(newBackupInfo)
     } catch (e) {
-      setBackupError({ message: e.message })
+      setBackupError(parseBackupError(e))
     }
   }, [webviewIntent, setBackupInfo])
 
@@ -61,7 +75,7 @@ export const BackupActionsProvider = ({ children }) => {
 
       return newBackupPermissions
     } catch (e) {
-      setBackupError({ message: e.message })
+      setBackupError(parseBackupError(e))
     }
   }, [webviewIntent])
 
@@ -86,7 +100,7 @@ export const BackupActionsProvider = ({ children }) => {
 
       return newBackupPermissions
     } catch (e) {
-      setBackupError({ message: e.message })
+      setBackupError(parseBackupError(e))
     }
   }, [
     webviewIntent,
