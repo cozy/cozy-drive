@@ -299,8 +299,8 @@
       "pressStartBackup": "Press \"Start backup\" to keep them safe in your Cozy."
     },
     "InstallAppAlert": {
-      "description": "To save all your mobile photos and videos on your Cozy, please install our Personal Cloud - Cozy application",
-      "install": "Install"
+      "description": "Backup automatically all your photos and videos from your mobile devices",
+      "install": "Install our app"
     },
     "AllowPermissionsModal": {
       "title": "Allow access to your photos and videos",
