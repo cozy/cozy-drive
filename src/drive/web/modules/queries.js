@@ -341,3 +341,17 @@ export {
   buildSharingsQuery,
   buildTrashQuery
 }
+
+export const buildFolderByPathQuery = path => ({
+  definition: () =>
+    Q('io.cozy.files')
+      .where({
+        type: 'directory',
+        path
+      })
+      .indexFields(['type', ' path']),
+  options: {
+    as: `io.cozy.files/path${path}`,
+    fetchPolicy: defaultFetchPolicy
+  }
+})

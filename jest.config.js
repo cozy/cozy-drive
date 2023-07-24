@@ -2,7 +2,7 @@ module.exports = {
   roots: ['<rootDir>/src'],
   setupFiles: ['<rootDir>/jestHelpers/setup.js'],
   setupFilesAfterEnv: ['<rootDir>/jestHelpers/setupFilesAfterEnv.js'],
-  moduleFileExtensions: ['js', 'jsx', 'json', 'styl'],
+  moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json', 'styl'],
   moduleNameMapper: {
     '.(png|gif|jpe?g)$': '<rootDir>/jestHelpers/mocks/fileMock.js',
     '.svg$': '<rootDir>/jestHelpers/mocks/iconMock.js',
@@ -25,7 +25,8 @@ module.exports = {
     'react-pdf/dist/esm/pdf.worker.entry':
       '<rootDir>/jestHelpers/mocks/pdfjsWorkerMock.js',
     '^cozy-client$': 'cozy-client/dist/index.js',
-    '^react-redux': '<rootDir>/node_modules/react-redux'
+    '^react-redux': '<rootDir>/node_modules/react-redux',
+    '^cozy-ui/react(.*)$': '<rootDir>/node_modules/cozy-ui/transpiled/react$1'
   },
   clearMocks: true,
   snapshotSerializers: ['enzyme-to-json/serializer'],

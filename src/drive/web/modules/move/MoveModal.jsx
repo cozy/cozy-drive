@@ -25,6 +25,7 @@ import {
   buildOnlyFolderQuery
 } from 'drive/web/modules/queries'
 import { cancelMove } from 'drive/web/modules/move/helpers'
+import { MoveOutsideSharedFolderModal } from 'drive/web/modules/move/MoveOutsideSharedFolderModal'
 
 const styles = theme => ({
   paper: {
@@ -54,14 +55,19 @@ const MoveModal = ({ onClose, entries, classes }) => {
   const client = useClient()
   const { isMobile } = useBreakpoints()
   const displayedFolder = useDisplayedFolder()
-  const { sharedPaths, refresh: refreshSharing } = useSharingContext()
+  const {
+    sharedPaths,
+    refresh: refreshSharing,
+    getSharedParentPath
+  } = useSharingContext()
 
   const [folderId, setFolderId] = useState(
     displayedFolder ? displayedFolder._id : ROOT_DIR_ID
   )
-
   const [isMoveInProgress, setMoveInProgress] = useState(false)
   const [promises, setPromises] = useState([])
+  const [isMovingOutsideSharedFolder, setMovingOutsideSharedFolder] =
+    useState(false)
 
   useEffect(() => {
     // unregister cancelables when component will unmount
@@ -81,6 +87,20 @@ const MoveModal = ({ onClose, entries, classes }) => {
     const cancelableP = cancelable(promise)
     setPromises([...promises, cancelableP])
     return cancelableP
+  }
+
+  const handleConfirmation = async () => {
+    const sharedParentPath = getSharedParentPath(entries[0].path)
+    if (sharedParentPath !== null) {
+      const targetPath = await CozyFile.getFullpath(folderId, entries[0].name)
+      if (targetPath.startsWith(sharedParentPath)) {
+        moveEntries()
+      } else {
+        setMovingOutsideSharedFolder(true)
+      }
+    } else {
+      moveEntries()
+    }
   }
 
   const moveEntries = async () => {
@@ -135,66 +155,87 @@ const MoveModal = ({ onClose, entries, classes }) => {
   const contentQuery = buildMoveOrImportQuery(folderId)
   const folderQuery = buildOnlyFolderQuery(folderId)
 
+  const handleCancelMovingOutside = () => {
+    setMovingOutsideSharedFolder(false)
+  }
+
+  const handleConfirmMovingOutside = () => {
+    setMovingOutsideSharedFolder(false)
+    moveEntries(refreshSharing)
+  }
+
   return (
-    <FixedDialog
-      open
-      onClose={isMobile ? undefined : onClose}
-      size="large"
-      classes={{
-        paper: classes.paper
-      }}
-      title={
-        <>
-          <Header entries={entries} />
+    <>
+      <FixedDialog
+        open
+        onClose={isMobile ? undefined : onClose}
+        size="large"
+        classes={{
+          paper: classes.paper
+        }}
+        title={
+          <>
+            <Header entries={entries} />
+            <Query
+              query={folderQuery.definition()}
+              fetchPolicy={folderQuery.options.fetchPolicy}
+              as={folderQuery.options.as}
+              key={`breadcrumb-${folderId}`}
+            >
+              {({ data, fetchStatus }) => (
+                <Topbar
+                  navigateTo={navigateTo}
+                  currentDir={data}
+                  fetchStatus={fetchStatus}
+                />
+              )}
+            </Query>
+          </>
+        }
+        content={
           <Query
-            query={folderQuery.definition()}
-            fetchPolicy={folderQuery.options.fetchPolicy}
-            as={folderQuery.options.as}
-            key={`breadcrumb-${folderId}`}
+            query={contentQuery.definition()}
+            fetchPolicy={contentQuery.options.fetchPolicy}
+            as={contentQuery.options.as}
+            key={`content-${folderId}`}
           >
-            {({ data, fetchStatus }) => (
-              <Topbar
-                navigateTo={navigateTo}
-                currentDir={data}
-                fetchStatus={fetchStatus}
-              />
-            )}
+            {({ data, fetchStatus, hasMore, fetchMore }) => {
+              return (
+                <Explorer>
+                  <Loader
+                    fetchStatus={fetchStatus}
+                    hasNoData={data.length === 0}
+                  >
+                    <FileList
+                      files={data}
+                      targets={entries}
+                      navigateTo={navigateTo}
+                    />
+                    <LoadMore hasMore={hasMore} fetchMore={fetchMore} />
+                  </Loader>
+                </Explorer>
+              )
+            }}
           </Query>
-        </>
-      }
-      content={
-        <Query
-          query={contentQuery.definition()}
-          fetchPolicy={contentQuery.options.fetchPolicy}
-          as={contentQuery.options.as}
-          key={`content-${folderId}`}
-        >
-          {({ data, fetchStatus, hasMore, fetchMore }) => {
-            return (
-              <Explorer>
-                <Loader fetchStatus={fetchStatus} hasNoData={data.length === 0}>
-                  <FileList
-                    files={data}
-                    targets={entries}
-                    navigateTo={navigateTo}
-                  />
-                  <LoadMore hasMore={hasMore} fetchMore={fetchMore} />
-                </Loader>
-              </Explorer>
-            )
-          }}
-        </Query>
-      }
-      actions={
-        <Footer
-          onConfirm={moveEntries}
-          onClose={onClose}
-          targets={entries}
-          currentDirId={folderId}
-          isMoving={isMoveInProgress}
+        }
+        actions={
+          <Footer
+            onConfirm={handleConfirmation}
+            onClose={onClose}
+            targets={entries}
+            currentDirId={folderId}
+            isMoving={isMoveInProgress}
+          />
+        }
+      />
+      {isMovingOutsideSharedFolder ? (
+        <MoveOutsideSharedFolderModal
+          entries={entries}
+          onCancel={handleCancelMovingOutside}
+          onConfirm={handleConfirmMovingOutside}
         />
-      }
-    />
+      ) : null}
+    </>
   )
 }
 
