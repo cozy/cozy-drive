@@ -29,7 +29,26 @@ import { extraColumnsPropTypes } from 'drive/web/modules/certifications'
 import styles from 'drive/styles/filelist.styl'
 import { useSelectionContext } from 'drive/web/modules/selection/SelectionProvider'
 
-const File = props => {
+const File = ({
+  t,
+  f,
+  attributes,
+  actions,
+  isRenaming,
+  withSelectionCheckbox,
+  withFilePath,
+  isAvailableOffline,
+  disabled,
+  styleDisabled,
+  thumbnailSizeBig,
+  refreshFolderContent,
+  isInSyncFromSharing,
+  extraColumns,
+  breakpoints: { isExtraLarge, isMobile },
+  onFolderOpen,
+  onFileOpen,
+  disableSelection = false
+}) => {
   const [actionMenuVisible, setActionMenuVisible] = useState(false)
   const filerowMenuToggleRef = useRef()
   const { toggleSelectedItem, isItemSelected, isSelectionBarVisible } =
@@ -55,11 +74,10 @@ const File = props => {
 
   const toggle = e => {
     e.stopPropagation()
-    toggleSelectedItem(props.attributes)
+    toggleSelectedItem(attributes)
   }
 
   const open = (event, attributes) => {
-    const { onFolderOpen, onFileOpen, isAvailableOffline } = props
     event.stopPropagation()
     if (isDirectory(attributes)) {
       onFolderOpen(attributes.id)
@@ -71,24 +89,6 @@ const File = props => {
       })
     }
   }
-
-  const {
-    t,
-    f,
-    attributes,
-    actions,
-    isRenaming,
-    withSelectionCheckbox,
-    withFilePath,
-    isAvailableOffline,
-    disabled,
-    styleDisabled,
-    thumbnailSizeBig,
-    refreshFolderContent,
-    isInSyncFromSharing,
-    extraColumns,
-    breakpoints: { isExtraLarge, isMobile }
-  } = props
 
   const isImage = attributes.class === 'image'
   const isLargeRow = isImage && thumbnailSizeBig
@@ -120,7 +120,7 @@ const File = props => {
         withSelectionCheckbox={withSelectionCheckbox}
         selected={selected}
         onClick={e => toggle(e)}
-        disabled={isRowDisabledOrInSyncFromSharing}
+        disabled={isRowDisabledOrInSyncFromSharing || disableSelection}
       />
       <FileOpener
         file={attributes}
@@ -216,7 +216,9 @@ File.propTypes = {
   onFileOpen: PropTypes.func.isRequired,
   refreshFolderContent: PropTypes.func,
   isInSyncFromSharing: PropTypes.bool,
-  extraColumns: extraColumnsPropTypes
+  extraColumns: extraColumnsPropTypes,
+  /** Disables the ability to select a file */
+  disableSelection: PropTypes.bool
 }
 
 const mapStateToProps = (state, ownProps) => ({

@@ -21,7 +21,8 @@ const setup = ({
   onFolderOpen = jest.fn(),
   onFileOpen = jest.fn(),
   onCheckboxToggle = jest.fn(),
-  isInSyncFromSharing = false
+  isInSyncFromSharing = false,
+  disableSelection = false
 } = {}) => {
   const root = render(
     <AppLike client={client}>
@@ -36,6 +37,7 @@ const setup = ({
         onFileOpen={onFileOpen}
         onCheckboxToggle={onCheckboxToggle}
         isInSyncFromSharing={isInSyncFromSharing}
+        disableSelection={disableSelection}
       />
     </AppLike>
   )
@@ -85,8 +87,15 @@ describe('File', () => {
       expect(queryByText('ActionsMenuItem')).toBeNull()
     })
 
-    it('should not show a select box', () => {
+    it('should not show a select box when syncing', () => {
       const { root } = setup({ isInSyncFromSharing: true })
+      const { queryByRole } = root
+
+      expect(queryByRole('checkbox')).toBeNull()
+    })
+
+    it('should not show a select box when selection disabled', () => {
+      const { root } = setup({ disableSelection: true })
       const { queryByRole } = root
 
       expect(queryByRole('checkbox')).toBeNull()

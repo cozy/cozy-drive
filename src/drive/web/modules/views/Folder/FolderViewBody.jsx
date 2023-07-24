@@ -236,6 +236,7 @@ const FolderViewBody = ({
                       actions={[]}
                       isInSyncFromSharing={true}
                       extraColumns={extraColumns}
+                      disableSelection={true}
                     />
                   )}
                   {queryResults.map((query, queryIndex) => (
