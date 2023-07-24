@@ -4,11 +4,8 @@ import { QuotaPaywall } from 'cozy-ui/transpiled/react/Paywall'
 import Snackbar from 'cozy-ui/transpiled/react/Snackbar'
 import Alert from 'cozy-ui/transpiled/react/Alert'
 
+import { shouldDisplayQuotaPaywall } from 'photos/ducks/backup/helpers/error'
 import { useBackupActions } from '../hooks/useBackupActions'
-
-const shouldDisplayQuotaPaywall = backupError => {
-  return backupError.statusCode === 413
-}
 
 export const BackupError = () => {
   const { backupError, setBackupError } = useBackupActions()

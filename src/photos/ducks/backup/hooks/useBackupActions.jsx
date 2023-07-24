@@ -8,23 +8,10 @@ import React, {
 
 import { useWebviewIntent } from 'cozy-intent'
 
+import { parseBackupError } from 'photos/ducks/backup/helpers/error'
 import { useBackupData } from 'photos/ducks/backup/hooks/useBackupData'
 
 const BackupActionsContext = createContext(null)
-
-const parseBackupError = ({ message }) => {
-  try {
-    const parsed = JSON.parse(message)
-    return {
-      message: parsed.message,
-      statusCode: parsed.statusCode
-    }
-  } catch {
-    return {
-      message
-    }
-  }
-}
 
 export const BackupActionsProvider = ({ children }) => {
   const { setBackupInfo } = useBackupData()
