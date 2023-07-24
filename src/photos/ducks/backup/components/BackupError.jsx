@@ -1,9 +1,14 @@
 import React from 'react'
 
+import { QuotaPaywall } from 'cozy-ui/transpiled/react/Paywall'
 import Snackbar from 'cozy-ui/transpiled/react/Snackbar'
 import Alert from 'cozy-ui/transpiled/react/Alert'
 
 import { useBackupActions } from '../hooks/useBackupActions'
+
+const shouldDisplayQuotaPaywall = backupError => {
+  return backupError.statusCode === 413
+}
 
 export const BackupError = () => {
   const { backupError, setBackupError } = useBackupActions()
@@ -14,7 +19,9 @@ export const BackupError = () => {
     setBackupError(null)
   }
 
-  return (
+  return shouldDisplayQuotaPaywall(backupError) ? (
+    <QuotaPaywall onClose={onClose} />
+  ) : (
     <Snackbar
       open={backupError}
       onClose={onClose}
