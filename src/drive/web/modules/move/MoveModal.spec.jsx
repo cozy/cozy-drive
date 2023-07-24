@@ -50,16 +50,24 @@ describe('MoveModal component', () => {
     }
   ]
 
-  const setup = (entries = defaultEntries) => {
+  const setup = ({
+    entries = defaultEntries,
+    displayedFolderId = 'destinationFolder',
+    sharedPaths = ['/sharedFolder', '/bills/bill_201903.pdf'],
+    getSharedParentPath = () => null
+  } = {}) => {
     const props = {
       entries,
       onClose: onCloseSpy,
       classes: { paper: {} }
     }
 
+    useDisplayedFolder.mockReturnValue({ _id: displayedFolderId })
+
     useSharingContext.mockReturnValue({
-      sharedPaths: ['/sharedFolder', '/bills/bill_201903.pdf'],
-      refresh: refreshSpy
+      sharedPaths,
+      refresh: refreshSpy,
+      getSharedParentPath
     })
 
     const mockClient = createMockClient({
@@ -78,6 +86,17 @@ describe('MoveModal component', () => {
               type: 'directory'
             }
           ]
+        },
+        'io.cozy.files/path/bills': {
+          doctype: 'io.cozy.files',
+          data: [
+            {
+              _id: 'bills',
+              dir_id: ROOT_DIR_ID,
+              name: 'Bills',
+              type: 'directory'
+            }
+          ]
         }
       }
     })
@@ -91,8 +110,6 @@ describe('MoveModal component', () => {
 
   describe('moveEntries', () => {
     it('should move entries to destination', async () => {
-      useDisplayedFolder.mockReturnValue({ _id: 'destinationFolder' })
-
       CozyFile.getFullpath.mockImplementation((destinationFolder, name) =>
         Promise.resolve(
           name === 'bill_201903.pdf' ? '/bills/bill_201903.pdf' : '/whatever'
@@ -147,6 +164,45 @@ describe('MoveModal component', () => {
         expect(onCloseSpy).toHaveBeenCalled()
         expect(refreshSpy).toHaveBeenCalled()
         // TODO: check that trashedFiles are passed to cancel button
+      })
+    })
+  })
+
+  describe('move outside shared folder', () => {
+    it('should display an alert when moving files outside a shared folder', async () => {
+      setup({
+        sharedPaths: ['/bills'],
+        getSharedParentPath: () => '/bills'
+      })
+
+      const moveButton = await screen.findByText('Move')
+      fireEvent.click(moveButton)
+
+      await waitFor(() => {
+        expect(
+          screen.getByText('Moving outside the folder Bills')
+        ).toBeInTheDocument()
+      })
+    })
+
+    it('should move files when user confirms', async () => {
+      setup({
+        sharedPaths: ['/bills'],
+        getSharedParentPath: () => '/bills'
+      })
+
+      const moveButton = await screen.findByText('Move')
+      fireEvent.click(moveButton)
+
+      await waitFor(() => {
+        const confirmButton = screen.getByText('I understand')
+        fireEvent.click(confirmButton)
+      })
+
+      await waitFor(() => {
+        expect(CozyFile.move).toHaveBeenCalled()
+        expect(onCloseSpy).toHaveBeenCalled()
+        expect(refreshSpy).toHaveBeenCalled()
       })
     })
   })
