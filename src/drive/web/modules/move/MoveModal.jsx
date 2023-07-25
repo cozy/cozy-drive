@@ -24,6 +24,7 @@ import {
   buildMoveOrImportQuery,
   buildOnlyFolderQuery
 } from 'drive/web/modules/queries'
+import { cancelMove } from 'drive/web/modules/move/helpers'
 
 const styles = theme => ({
   paper: {
@@ -110,7 +111,14 @@ const MoveModal = ({ onClose, entries, classes }) => {
         target: targetName,
         smart_count: entries.length,
         buttonText: t('Move.cancel'),
-        buttonAction: () => cancelMove(entries, trashedFiles)
+        buttonAction: () =>
+          cancelMove({
+            entries,
+            trashedFiles,
+            client,
+            registerCancelable,
+            refreshSharing
+          })
       })
       if (refreshSharing) refreshSharing()
     } catch (e) {
@@ -121,46 +129,6 @@ const MoveModal = ({ onClose, entries, classes }) => {
       onClose({
         cancelSelection: true
       })
-    }
-  }
-
-  const cancelMove = async (entries, trashedFiles) => {
-    try {
-      await Promise.all(
-        entries.map(entry =>
-          registerCancelable(
-            CozyFile.move(entry._id, { folderId: entry.dir_id })
-          )
-        )
-      )
-      const fileCollection = client.collection(CozyFile.doctype)
-      let restoreErrorsCount = 0
-      await Promise.all(
-        trashedFiles.map(id => {
-          try {
-            registerCancelable(fileCollection.restore(id))
-          } catch {
-            restoreErrorsCount++
-          }
-        })
-      )
-      if (restoreErrorsCount) {
-        Alerter.info('Move.cancelledWithRestoreErrors', {
-          subject: entries.length === 1 ? entries[0].name : '',
-          smart_count: entries.length,
-          restoreErrorsCount
-        })
-      } else {
-        Alerter.info('Move.cancelled', {
-          subject: entries.length === 1 ? entries[0].name : '',
-          smart_count: entries.length
-        })
-      }
-    } catch (e) {
-      logger.warn(e)
-      Alerter.error('Move.cancelled_error', { smart_count: entries.length })
-    } finally {
-      if (refreshSharing) refreshSharing()
     }
   }
 
