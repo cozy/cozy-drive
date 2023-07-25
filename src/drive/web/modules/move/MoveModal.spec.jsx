@@ -150,32 +150,4 @@ describe('MoveModal component', () => {
       })
     })
   })
-
-  /* describe('cancelMove', () => {
-    it('should move items back to their previous location', async () => {
-      const component = setupComponent()
-      const callback = jest.fn()
-      await component.instance().cancelMove(defaultEntries, [], callback)
-      expect(CozyFile.move).toHaveBeenCalledWith('bill_201901', {
-        folderId: 'bills'
-      })
-      expect(CozyFile.move).toHaveBeenCalledWith('bill_201902', {
-        folderId: 'bills'
-      })
-      expect(restoreSpy).not.toHaveBeenCalled()
-      expect(callback).toHaveBeenCalled()
-    })
-
-    it('should restore files that have been trashed due to conflicts', async () => {
-      const callback = jest.fn()
-      const component = setupComponent()
-      await component
-        .instance()
-        .cancelMove([], ['trashed-1', 'trashed-2'], callback)
-      expect(collectionSpy).toHaveBeenCalledWith('io.cozy.files')
-      expect(restoreSpy).toHaveBeenCalledWith('trashed-1')
-      expect(restoreSpy).toHaveBeenCalledWith('trashed-2')
-      expect(callback).toHaveBeenCalled()
-    })
-  }) */
 })
