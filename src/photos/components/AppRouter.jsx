@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { createHashRouter, Navigate, RouterProvider } from 'react-router-dom'
 import { isFlagshipApp } from 'cozy-device-helper'
 import flag from 'cozy-flags'
+import { useClient } from 'cozy-client'
 
 import { Spinner } from 'cozy-ui/transpiled/react'
 
@@ -16,67 +17,84 @@ function ErrorBoundary() {
   return <Navigate to="photos" replace />
 }
 
-const DEFAULT_ROUTE =
-  flag('flagship.backup.enabled') && isFlagshipApp() ? 'backup' : 'photos'
+const getRouter = () => {
+  const DEFAULT_ROUTE =
+    flag('flagship.backup.enabled') && isFlagshipApp() ? 'backup' : 'photos'
 
-const router = createHashRouter([
-  {
-    element: <Layout />,
-    children: [
-      {
-        path: '/*',
-        element: <Navigate to={DEFAULT_ROUTE} replace />
-      },
-      {
-        path: 'backup',
-        element: <Backup />
-      },
-      {
-        path: 'photos',
-        element: <Timeline />,
-        children: [
-          {
-            path: ':photoId',
-            element: <TimelinePhotosViewer />,
-            errorElement: <ErrorBoundary />
-          }
-        ]
-      },
-      {
-        path: 'albums',
-        children: [
-          {
-            path: '',
-            element: <AlbumsView />
-          },
-          {
-            path: 'new',
-            element: <PhotosPicker />
-          },
-          {
-            path: ':albumId',
-            element: <AlbumPhotos />,
-            errorElement: <ErrorBoundary />,
-            children: [
-              {
-                path: 'edit',
-                element: <PhotosPicker />
-              },
-              {
-                path: ':photoId',
-                element: <AlbumPhotosViewer />,
-                errorElement: <ErrorBoundary />
-              }
-            ]
-          }
-        ]
-      }
-    ]
+  return createHashRouter([
+    {
+      element: <Layout />,
+      children: [
+        {
+          path: '/*',
+          element: <Navigate to={DEFAULT_ROUTE} replace />
+        },
+        {
+          path: 'backup',
+          element: <Backup />
+        },
+        {
+          path: 'photos',
+          element: <Timeline />,
+          children: [
+            {
+              path: ':photoId',
+              element: <TimelinePhotosViewer />,
+              errorElement: <ErrorBoundary />
+            }
+          ]
+        },
+        {
+          path: 'albums',
+          children: [
+            {
+              path: '',
+              element: <AlbumsView />
+            },
+            {
+              path: 'new',
+              element: <PhotosPicker />
+            },
+            {
+              path: ':albumId',
+              element: <AlbumPhotos />,
+              errorElement: <ErrorBoundary />,
+              children: [
+                {
+                  path: 'edit',
+                  element: <PhotosPicker />
+                },
+                {
+                  path: ':photoId',
+                  element: <AlbumPhotosViewer />,
+                  errorElement: <ErrorBoundary />
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ])
+}
+
+const AppRouter = () => {
+  const client = useClient()
+  const [isFlagPluginInitialized, setIsFlagPluginInitialized] = useState(false)
+
+  useEffect(() => {
+    const waitFlagPlugin = async () => {
+      await client.plugins.flags.initializing
+      setIsFlagPluginInitialized(true)
+    }
+
+    waitFlagPlugin()
+  }, [client])
+
+  if (!isFlagPluginInitialized) {
+    return null
   }
-])
 
-const AppRouter = () => (
-  <RouterProvider router={router} fallbackElement={<Spinner />} />
-)
-
+  return <RouterProvider router={getRouter()} fallbackElement={<Spinner />} />
+}
 export default AppRouter
