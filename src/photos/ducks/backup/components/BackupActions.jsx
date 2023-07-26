@@ -9,6 +9,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 
 import { useBackupActions } from '../hooks/useBackupActions'
 import { useBackupData } from '../hooks/useBackupData'
+import OpenBackupButton from 'photos/ducks/backup/components/OpenBackupButton'
 
 const BackupActions = () => {
   const { t } = useI18n()
@@ -72,7 +73,7 @@ const BackupActions = () => {
 
     if (mediasToBackupCount === 0) {
       return (
-        <div className="u-mt-1-half u-flex u-flex-justify-center">
+        <div className="u-mt-1-half u-flex u-flex-column u-flex-justify-center">
           <Button
             label={t('Backup.actions.saved')}
             variant="primary"
@@ -80,6 +81,7 @@ const BackupActions = () => {
             onClick={prepareBackup}
             startIcon={<Icon icon={CheckIcon} />}
           />
+          <OpenBackupButton />
         </div>
       )
     } else {
