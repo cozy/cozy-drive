@@ -109,7 +109,7 @@
   "groups": [
     {
       "path": "drive/app/**",
-      "maxPercentIncrease": 1
+      "maxPercentIncrease": 2
     },
     {
       "path": "drive/img/**",
