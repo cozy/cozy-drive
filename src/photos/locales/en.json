@@ -287,6 +287,8 @@
       "verification": "Verification",
       "startBackup": "Start backup",
       "backupInProgress": "Backup in progress %{alreadyBackupedCount} / %{totalCount}",
+      "openInDrive": "Open in Drive",
+      "seeMyAlbums": "See my albums",
       "saved": "Saved",
       "cancel": "Cancel"
     },
