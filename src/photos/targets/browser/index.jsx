@@ -35,6 +35,7 @@ import {
   BackupDataProvider,
   useBackupData
 } from 'photos/ducks/backup/hooks/useBackupData'
+import WaitFlags from 'photos/components/WaitFlags'
 
 const loggerMiddleware = createLogger()
 
@@ -104,13 +105,18 @@ const App = props => {
           dictRequire={lang => require(`photos/locales/${lang}`)}
         >
           <CozyProvider client={props.client}>
-            <BreakpointsProvider>
-              <StyledApp>
-                <SharingProvider doctype={DOCTYPE_ALBUMS} documentType="Albums">
-                  <PushBannerProvider>{props.children}</PushBannerProvider>
-                </SharingProvider>
-              </StyledApp>
-            </BreakpointsProvider>
+            <WaitFlags>
+              <BreakpointsProvider>
+                <StyledApp>
+                  <SharingProvider
+                    doctype={DOCTYPE_ALBUMS}
+                    documentType="Albums"
+                  >
+                    <PushBannerProvider>{props.children}</PushBannerProvider>
+                  </SharingProvider>
+                </StyledApp>
+              </BreakpointsProvider>
+            </WaitFlags>
           </CozyProvider>
         </I18n>
       </Provider>

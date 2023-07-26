@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { createHashRouter, Navigate, RouterProvider } from 'react-router-dom'
 import { isFlagshipApp } from 'cozy-device-helper'
 import flag from 'cozy-flags'
-import { useClient } from 'cozy-client'
 
 import { Spinner } from 'cozy-ui/transpiled/react'
 
@@ -79,22 +78,6 @@ const getRouter = () => {
 }
 
 const AppRouter = () => {
-  const client = useClient()
-  const [isFlagPluginInitialized, setIsFlagPluginInitialized] = useState(false)
-
-  useEffect(() => {
-    const waitFlagPlugin = async () => {
-      await client.plugins.flags.initializing
-      setIsFlagPluginInitialized(true)
-    }
-
-    waitFlagPlugin()
-  }, [client])
-
-  if (!isFlagPluginInitialized) {
-    return null
-  }
-
   return <RouterProvider router={getRouter()} fallbackElement={<Spinner />} />
 }
 export default AppRouter
