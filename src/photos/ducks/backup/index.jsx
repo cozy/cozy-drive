@@ -1,6 +1,5 @@
 import React from 'react'
 import Topbar from '../../components/Topbar'
-import cx from 'classnames'
 import { useBreakpoints } from 'cozy-ui/transpiled/react'
 
 import styles from '../../styles/layout.styl'
@@ -28,12 +27,14 @@ const BackupPage = () => {
       <Topbar viewName="backup"></Topbar>
       <Content>
         <BackupActionsProvider>
-          <div className={cx('u-m-1', backupStyles['pho-backup-wrapper'])}>
-            {isMobile ? <BackupHeader /> : null}
-            <BackupInfo />
-            {!isFlagshipApp() ? <InstallAppAlert /> : null}
-            <BackupActions />
-            {isMobile ? <BackupDescription /> : null}
+          <div className={backupStyles['pho-backup-container']}>
+            <div className={backupStyles['pho-backup-wrapper']}>
+              {isMobile ? <BackupHeader /> : null}
+              <BackupInfo />
+              {!isFlagshipApp() ? <InstallAppAlert /> : null}
+              <BackupActions />
+              {isMobile ? <BackupDescription /> : null}
+            </div>
           </div>
           <AllowPermissionsModal />
           <BackupError />
