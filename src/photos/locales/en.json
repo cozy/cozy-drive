@@ -293,8 +293,8 @@
       "cancel": "Cancel"
     },
     "description": {
-      "first": "Backing up can take some time and be particularly data-intensive. Choose to connect to a Wi-Fi network, or make sure you have unlimited Internet access with good bandwidth to get started.",
-      "second": "You can leave the application in the background when saving, but the phone must remain switched on."
+      "first": "Back up all your photos and videos directly in your Cozy, and keep them in safe place in case you lose of break your smartphone!",
+      "second": "Note: To speed up the process, make sure to connect to an unlimited internet access and have enough battery"
     },
     "info": {
       "notBackedUpElements": "%{smart_count} element not backed up |||| %{smart_count} elements not backed up",

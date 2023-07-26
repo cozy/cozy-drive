@@ -11,7 +11,7 @@ const BackupDescription = () => {
       <Typography className="u-mt-1-half" align={'center'}>
         {t('Backup.description.first')}
       </Typography>
-      <Typography className="u-mt-1" align={'center'}>
+      <Typography variant="caption" className="u-mt-1" align={'center'}>
         {t('Backup.description.second')}
       </Typography>
     </>
