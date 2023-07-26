@@ -1,18 +1,34 @@
 @require 'settings/breakpoints.styl'
 
+.pho-backup-container
+    display flex
+    height calc(100vh - 3rem - 3rem - 1rem - 1rem) // top bar (cozy-bar), bottom bar, padding-top, padding-bottom
+    padding-top 1rem
+    padding-bottom 1rem
+
+    +small-screen('min')
+        height auto
+        padding-top 0
+        padding-bottom 0
+
 .pho-backup-wrapper
     position relative
     display flex
     flex-direction column
-    flex 1 1 auto
     align-items center
     box-sizing border-box
-    height auto
     overflow-x hidden
     overflow-y auto
+    margin-top auto
+    margin-bottom auto
+    margin-left 1rem
+    margin-right 1rem
 
     +small-screen('min')
+        height auto
         align-items flex-start
+        margin-top 0
+        margin-bottom 0
 
 .pho-backup-info-wrapper
     width 100%
