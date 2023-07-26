@@ -255,7 +255,8 @@
     "duplicate": "Duplicate",
     "phone-download": "Make available offline",
     "qualify": "Categorize",
-    "history": "History"
+    "history": "History",
+    "more": "More"
   },
   "deleteconfirmation": {
     "title": "Delete this element? |||| Delete these elements?",
