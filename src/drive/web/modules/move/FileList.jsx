@@ -36,14 +36,15 @@ const FileList = ({ targets, files, folder, navigateTo }) => {
             styleDisabled={isInvalidMoveTarget(targets, file)}
             attributes={file}
             displayedFolder={null}
-            actions={null}
+            actions={[]}
             isRenaming={false}
             onFolderOpen={id => navigateTo(files.find(f => f.id === id))}
-            onFileOpen={null}
+            onFileOpen={() => {}}
             withSelectionCheckbox={false}
             withFilePath={false}
             withSharedBadge
             disableSelection={true}
+            isAvailableOffline={false}
           />
         ))}
       </>
