@@ -570,12 +570,18 @@
     "cancelled": "%{subject} has been moved back to it's original location. |||| %{smart_count} elements have been moved back to their original location.",
     "cancelledWithRestoreErrors": "%{subject} has been moved back to it's original location but there was an error while restoring the file from trash. |||| %{smart_count} elements have been moved back to their original location but there was %{restoreErrorsCount} error(s) while restoring the file(s) from trash.",
     "cancelled_error": "Sorry, there was an error while moving the element back. |||| Sorry, there was an error while moving these elements back.",
+    "multipleEntries": "%{smart_count} element |||| %{smart_count} elements",
     "outsideSharedFolder": {
       "title": "Moving outside the folder %{sharedFolder}",
       "content": "Warning, you want to move %{entriesName} outside the shared folder %{sharedFolder}. This move will remove access to the file/folder from all members of the share. They will find the file/folder in their recycle bin.",
-      "multipleEntries": "%{smart_count} element |||| %{smart_count} elements",
       "cancel": "Cancel",
       "confirm": "I understand"
+    },
+    "sharedFolderInsideAnother": {
+      "title": "Cannot be moved",
+      "content": "You want to move a shared item to a shared folder. This type of move is not authorised. If you still wish to move %{source} to %{destination}, please stop sharing %{source}.",
+      "cancel": "Cancel move",
+      "confirm": "Stop sharing"
     }
   },
   "ImportToDrive": {

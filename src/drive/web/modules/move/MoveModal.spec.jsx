@@ -35,26 +35,30 @@ describe('MoveModal component', () => {
     {
       _id: 'bill_201901',
       dir_id: 'bills',
-      name: 'bill_201901.pdf'
+      name: 'bill_201901.pdf',
+      path: '/bills/bill_201901.pdf'
     },
     {
       _id: 'bill_201902',
       dir_id: 'bills',
-      name: 'bill_201902.pdf'
+      name: 'bill_201902.pdf',
+      path: '/bills/bill_201902.pdf'
     },
     // shared file:
     {
       _id: 'bill_201903',
       dir_id: 'bills',
-      name: 'bill_201903.pdf'
+      name: 'bill_201903.pdf',
+      path: '/bills/bill_201903.pdf'
     }
   ]
 
   const setup = ({
     entries = defaultEntries,
     displayedFolderId = 'destinationFolder',
-    sharedPaths = ['/sharedFolder', '/bills/bill_201903.pdf'],
-    getSharedParentPath = () => null
+    sharedPaths = ['/sharedFolder'],
+    getSharedParentPath = () => null,
+    sharingContext = {}
   } = {}) => {
     const props = {
       entries,
@@ -67,7 +71,10 @@ describe('MoveModal component', () => {
     useSharingContext.mockReturnValue({
       sharedPaths,
       refresh: refreshSpy,
-      getSharedParentPath
+      getSharedParentPath,
+      hasSharedParent: path =>
+        sharedPaths.filter(sharedPath => path.includes(sharedPath)).length > 0,
+      ...sharingContext
     })
 
     const mockClient = createMockClient({
@@ -159,7 +166,7 @@ describe('MoveModal component', () => {
           {
             folderId: 'destinationFolder'
           },
-          false
+          true
         )
         expect(onCloseSpy).toHaveBeenCalled()
         expect(refreshSpy).toHaveBeenCalled()
@@ -201,6 +208,94 @@ describe('MoveModal component', () => {
 
       await waitFor(() => {
         expect(CozyFile.move).toHaveBeenCalled()
+        expect(onCloseSpy).toHaveBeenCalled()
+        expect(refreshSpy).toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe('move shared folder inside another', () => {
+    it('should display an alert when move shared folder inside another', async () => {
+      CozyFile.getFullpath.mockImplementation((destinationFolder, name) =>
+        Promise.resolve(`/${destinationFolder}/${name}`)
+      )
+
+      setup({
+        sharedPaths: ['/bills/bill_201903.pdf', '/destinationFolder'],
+        getSharedParentPath: () => null
+      })
+
+      const moveButton = await screen.findByText('Move')
+      fireEvent.click(moveButton)
+
+      await waitFor(() => {
+        expect(screen.getByText('Cannot be moved')).toBeInTheDocument()
+      })
+    })
+
+    it('should move files after revoke all recipients when folder owner confirms', async () => {
+      CozyFile.getFullpath.mockImplementation((destinationFolder, name) =>
+        Promise.resolve(`/${destinationFolder}/${name}`)
+      )
+      const revokeAllSpy = jest.fn()
+      const revokeSelfSpy = jest.fn()
+
+      setup({
+        sharedPaths: ['/bills/bill_201903.pdf', '/destinationFolder'],
+        getSharedParentPath: () => null,
+        sharingContext: {
+          isOwner: () => true,
+          revokeAllRecipients: revokeAllSpy,
+          revokeSelf: revokeSelfSpy
+        }
+      })
+
+      const moveButton = await screen.findByText('Move')
+      fireEvent.click(moveButton)
+
+      await waitFor(() => {
+        const confirmButton = screen.getByText('Stop sharing')
+        fireEvent.click(confirmButton)
+      })
+
+      await waitFor(() => {
+        expect(CozyFile.move).toHaveBeenCalled()
+        expect(revokeAllSpy).toHaveBeenCalled()
+        expect(revokeSelfSpy).not.toHaveBeenCalled()
+        expect(onCloseSpy).toHaveBeenCalled()
+        expect(refreshSpy).toHaveBeenCalled()
+      })
+    })
+
+    it('should move files after revoke self when user confirms', async () => {
+      CozyFile.getFullpath.mockImplementation((destinationFolder, name) =>
+        Promise.resolve(`/${destinationFolder}/${name}`)
+      )
+      const revokeAllSpy = jest.fn()
+      const revokeSelfSpy = jest.fn()
+
+      setup({
+        sharedPaths: ['/bills/bill_201903.pdf', '/destinationFolder'],
+        getSharedParentPath: () => null,
+        sharingContext: {
+          isOwner: () => false,
+          revokeAllRecipients: revokeAllSpy,
+          revokeSelf: revokeSelfSpy
+        }
+      })
+
+      const moveButton = await screen.findByText('Move')
+      fireEvent.click(moveButton)
+
+      await waitFor(() => {
+        const confirmButton = screen.getByText('Stop sharing')
+        fireEvent.click(confirmButton)
+      })
+
+      await waitFor(() => {
+        expect(CozyFile.move).toHaveBeenCalled()
+        expect(revokeSelfSpy).toHaveBeenCalled()
+        expect(revokeAllSpy).not.toHaveBeenCalled()
         expect(onCloseSpy).toHaveBeenCalled()
         expect(refreshSpy).toHaveBeenCalled()
       })
