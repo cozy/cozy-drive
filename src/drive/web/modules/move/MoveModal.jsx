@@ -26,6 +26,7 @@ import {
 } from 'drive/web/modules/queries'
 import { cancelMove } from 'drive/web/modules/move/helpers'
 import { MoveOutsideSharedFolderModal } from 'drive/web/modules/move/MoveOutsideSharedFolderModal'
+import { MoveSharedFolderInsideAnotherModal } from 'drive/web/modules/move/MoveSharedFolderInsideAnotherModal'
 
 const styles = theme => ({
   paper: {
@@ -58,7 +59,11 @@ const MoveModal = ({ onClose, entries, classes }) => {
   const {
     sharedPaths,
     refresh: refreshSharing,
-    getSharedParentPath
+    getSharedParentPath,
+    hasSharedParent,
+    isOwner,
+    revokeSelf,
+    revokeAllRecipients
   } = useSharingContext()
 
   const [folderId, setFolderId] = useState(
@@ -68,6 +73,10 @@ const MoveModal = ({ onClose, entries, classes }) => {
   const [promises, setPromises] = useState([])
   const [isMovingOutsideSharedFolder, setMovingOutsideSharedFolder] =
     useState(false)
+  const [
+    isMovingSharedFolderInsideAnother,
+    setMovingSharedFolderInsideAnother
+  ] = useState(false)
 
   useEffect(() => {
     // unregister cancelables when component will unmount
@@ -91,15 +100,21 @@ const MoveModal = ({ onClose, entries, classes }) => {
 
   const handleConfirmation = async () => {
     const sharedParentPath = getSharedParentPath(entries[0].path)
+    const targetPath = await CozyFile.getFullpath(folderId, entries[0].name)
     if (sharedParentPath !== null) {
-      const targetPath = await CozyFile.getFullpath(folderId, entries[0].name)
       if (targetPath.startsWith(sharedParentPath)) {
         moveEntries()
       } else {
         setMovingOutsideSharedFolder(true)
       }
     } else {
-      moveEntries()
+      const hasOneOrMoreEntriesShared =
+        entries.filter(({ path }) => sharedPaths.includes(path)).length > 0
+      if (hasOneOrMoreEntriesShared && hasSharedParent(targetPath)) {
+        setMovingSharedFolderInsideAnother(true)
+      } else {
+        moveEntries()
+      }
     }
   }
 
@@ -161,7 +176,23 @@ const MoveModal = ({ onClose, entries, classes }) => {
 
   const handleConfirmMovingOutside = () => {
     setMovingOutsideSharedFolder(false)
-    moveEntries(refreshSharing)
+    moveEntries()
+  }
+
+  const handleMovingSharedFolderInsideAnother = async () => {
+    setMoveInProgress(true)
+    entries.forEach(async entry => {
+      if (sharedPaths.includes(entry.path)) {
+        if (isOwner(entry.id)) {
+          await revokeAllRecipients(entry)
+        } else {
+          await revokeSelf(entry)
+        }
+      }
+    })
+    refreshSharing()
+    moveEntries()
+    setMovingSharedFolderInsideAnother(false)
   }
 
   return (
@@ -233,6 +264,14 @@ const MoveModal = ({ onClose, entries, classes }) => {
           entries={entries}
           onCancel={handleCancelMovingOutside}
           onConfirm={handleConfirmMovingOutside}
+        />
+      ) : null}
+      {isMovingSharedFolderInsideAnother ? (
+        <MoveSharedFolderInsideAnotherModal
+          entries={entries}
+          folderId={folderId}
+          onCancel={() => setMovingSharedFolderInsideAnother(false)}
+          onConfirm={handleMovingSharedFolderInsideAnother}
         />
       ) : null}
     </>
