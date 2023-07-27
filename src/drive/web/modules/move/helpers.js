@@ -67,3 +67,17 @@ export const cancelMove = async ({
     if (refreshSharing) refreshSharing()
   }
 }
+
+/**
+ * Gets a name for the entry if there is only one, or a sentence with the number of elements if there are several
+ * @param {object[]} entries - List of files moved
+ * @param {Function} t translation function
+ * @returns {string} name for entries
+ */
+export const getEntriesName = (entries, t) => {
+  return entries.length !== 1
+    ? t('Move.multipleEntries', {
+        smart_count: entries.length
+      })
+    : entries[0].name
+}

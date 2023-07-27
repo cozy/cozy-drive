@@ -6,9 +6,10 @@ import Buttons from 'cozy-ui/transpiled/react/Buttons'
 import { useI18n } from 'cozy-ui/transpiled/react'
 import { useQuery } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
-import Spinner from 'cozy-ui/transpiled/react/Spinner'
 
 import { buildFolderByPathQuery } from 'drive/web/modules/queries'
+import { LoaderModal } from 'drive/web/modules/move/LoaderModal'
+import { getEntriesName } from 'drive/web/modules/move/helpers'
 
 /**
  * Alert the user when is trying to move a folder/file outside of a shared folder
@@ -25,24 +26,15 @@ const MoveOutsideSharedFolderModal = ({ entries, onCancel, onConfirm }) => {
   )
 
   if (fetchStatus === 'loaded') {
-    const entriesName =
-      entries.length !== 1
-        ? t('Move.outsideSharedFolder.multipleEntries', {
-            smart_count: entries.length
-          })
-        : entries[0].name
-
-    const sharedFolderName = data[0].name
-
     return (
       <ConfirmDialog
         open
         title={t('Move.outsideSharedFolder.title', {
-          sharedFolder: sharedFolderName
+          sharedFolder: data[0].name
         })}
         content={t('Move.outsideSharedFolder.content', {
-          entriesName,
-          sharedFolder: sharedFolderName
+          entriesName: getEntriesName(entries, t),
+          sharedFolder: data[0].name
         })}
         actions={
           <>
@@ -61,16 +53,7 @@ const MoveOutsideSharedFolderModal = ({ entries, onCancel, onConfirm }) => {
     )
   }
 
-  return (
-    <ConfirmDialog
-      open
-      content={
-        <div className="u-h-3">
-          <Spinner size="large" noMargin middle />
-        </div>
-      }
-    />
-  )
+  return <LoaderModal />
 }
 
 MoveOutsideSharedFolderModal.propTypes = {
