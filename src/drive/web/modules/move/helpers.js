@@ -81,3 +81,22 @@ export const getEntriesName = (entries, t) => {
       })
     : entries[0].name
 }
+
+/**
+ * Get type from the entries
+ * @param {object[]} entries
+ * @returns {string} type from the entries
+ */
+export const getEntriesType = entries => {
+  return entries.reduce((previous, current) => {
+    const type =
+      current.type === 'file' || current.type === 'folder'
+        ? current.type
+        : 'element'
+
+    if (previous !== null) {
+      return previous === type ? previous : 'element'
+    }
+    return current.type
+  }, null)
+}

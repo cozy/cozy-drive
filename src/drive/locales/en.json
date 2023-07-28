@@ -571,9 +571,15 @@
     "cancelledWithRestoreErrors": "%{subject} has been moved back to it's original location but there was an error while restoring the file from trash. |||| %{smart_count} elements have been moved back to their original location but there was %{restoreErrorsCount} error(s) while restoring the file(s) from trash.",
     "cancelled_error": "Sorry, there was an error while moving the element back. |||| Sorry, there was an error while moving these elements back.",
     "multipleEntries": "%{smart_count} element |||| %{smart_count} elements",
+    "entriesType": {
+      "file": "file",
+      "directory": "folder",
+      "element": "element"
+    },
     "outsideSharedFolder": {
-      "title": "Moving outside the folder %{sharedFolder}",
-      "content": "Warning, you want to move %{entriesName} outside the shared folder %{sharedFolder}. This move will remove access to the file/folder from all members of the share. They will find the file/folder in their recycle bin.",
+      "title": "Moving outside the %{sharedFolder} folder",
+      "content_1": "Warning, you want to move %{name} out of the shared %{sharedFolder} folder. |||| Warning, you want to move %{smart_count} %{type}s out of the shared %{sharedFolder} folder.",
+      "content_2": "This move, will remove the %{type} %{name} from the share. This %{type} will therefore be trashed for all members of the share. |||| This move, will remove %{smart_count} %{type}s from the share. These %{type}s will therefore be trashed for all members of the share.",
       "cancel": "Cancel",
       "confirm": "I understand"
     },
