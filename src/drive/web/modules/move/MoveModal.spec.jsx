@@ -187,7 +187,7 @@ describe('MoveModal component', () => {
 
       await waitFor(() => {
         expect(
-          screen.getByText('Moving outside the folder Bills')
+          screen.getByText('Moving outside the Bills folder')
         ).toBeInTheDocument()
       })
     })

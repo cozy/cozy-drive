@@ -6,10 +6,11 @@ import Buttons from 'cozy-ui/transpiled/react/Buttons'
 import { useI18n } from 'cozy-ui/transpiled/react'
 import { useQuery } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
+import Typography from 'cozy-ui/transpiled/react/Typography'
 
 import { buildFolderByPathQuery } from 'drive/web/modules/queries'
 import { LoaderModal } from 'drive/web/modules/move/LoaderModal'
-import { getEntriesName } from 'drive/web/modules/move/helpers'
+import { getEntriesType } from 'drive/web/modules/move/helpers'
 
 /**
  * Alert the user when is trying to move a folder/file outside of a shared folder
@@ -26,16 +27,33 @@ const MoveOutsideSharedFolderModal = ({ entries, onCancel, onConfirm }) => {
   )
 
   if (fetchStatus === 'loaded') {
+    const type = t(`Move.entriesType.${getEntriesType(entries)}`)
+
     return (
       <ConfirmDialog
         open
         title={t('Move.outsideSharedFolder.title', {
           sharedFolder: data[0].name
         })}
-        content={t('Move.outsideSharedFolder.content', {
-          entriesName: getEntriesName(entries, t),
-          sharedFolder: data[0].name
-        })}
+        content={
+          <>
+            <Typography variant="body1" className="u-mb-half">
+              {t('Move.outsideSharedFolder.content_1', {
+                sharedFolder: data[0].name,
+                name: entries[0].name,
+                type,
+                smart_count: entries.length
+              })}
+            </Typography>
+            <Typography variant="body1">
+              {t('Move.outsideSharedFolder.content_2', {
+                name: entries[0].name,
+                type,
+                smart_count: entries.length
+              })}
+            </Typography>
+          </>
+        }
         actions={
           <>
             <Buttons

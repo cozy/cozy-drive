@@ -1,6 +1,6 @@
 import CozyClient from 'cozy-client'
 
-import { cancelMove } from 'drive/web/modules/move/helpers'
+import { cancelMove, getEntriesType } from 'drive/web/modules/move/helpers'
 import { CozyFile } from 'models'
 
 jest.mock('cozy-doctypes')
@@ -79,5 +79,43 @@ describe('cancelMove', () => {
     expect(restoreSpy).toHaveBeenCalledWith('trashed-1')
     expect(restoreSpy).toHaveBeenCalledWith('trashed-2')
     expect(refreshSpy).toHaveBeenCalled()
+  })
+})
+
+describe('getEntriesType', () => {
+  it('should return file for entries only file', () => {
+    const res = getEntriesType([
+      { type: 'file' },
+      { type: 'file' },
+      { type: 'file' }
+    ])
+    expect(res).toBe('file')
+  })
+
+  it('should return folder for entries only folder', () => {
+    const res = getEntriesType([
+      { type: 'folder' },
+      { type: 'folder' },
+      { type: 'folder' }
+    ])
+    expect(res).toBe('folder')
+  })
+
+  it('should return element for entries with multiples types', () => {
+    const res = getEntriesType([
+      { type: 'file' },
+      { type: 'folder' },
+      { type: 'file' }
+    ])
+    expect(res).toBe('element')
+  })
+
+  it('should return element if something else from file or directory', () => {
+    const res = getEntriesType([
+      { type: 'something' },
+      { type: 'something' },
+      { type: 'something' }
+    ])
+    expect(res).toBe('element')
   })
 })
