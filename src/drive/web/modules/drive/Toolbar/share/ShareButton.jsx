@@ -1,14 +1,20 @@
 import React from 'react'
 import cx from 'classnames'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import { ShareButton } from 'cozy-sharing'
 
 import { useDisplayedFolder } from 'drive/hooks'
-import shareContainer from './share'
 import styles from './styles.styl'
 
-const ShareButtonWithProps = ({ share, isDisabled }) => {
+const ShareButtonWithProps = ({ isDisabled }) => {
   const displayedFolder = useDisplayedFolder()
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
+
+  const share = () => {
+    navigate(`${pathname}/share`)
+  }
 
   return (
     <ShareButton
@@ -20,4 +26,4 @@ const ShareButtonWithProps = ({ share, isDisabled }) => {
   )
 }
 
-export default shareContainer(ShareButtonWithProps)
+export default ShareButtonWithProps

@@ -42,7 +42,8 @@ const MoreMenu = ({
   displayedFolder,
   folderId,
   showSelectionBar,
-  isSelectionBarVisible
+  isSelectionBarVisible,
+  pathname
 }) => {
   const [menuIsVisible, setMenuVisible] = useState(false)
   const anchorRef = React.createRef()
@@ -85,7 +86,11 @@ const MoreMenu = ({
                 displayedFolder={displayedFolder}
                 folderId={folderId}
               >
-                <ShareItem displayedFolder={displayedFolder} />
+                <ShareItem
+                  displayedFolder={displayedFolder}
+                  navigate={navigate}
+                  pathname={pathname}
+                />
               </InsideRegularFolder>
             )}
             {!isMobileApp() && (

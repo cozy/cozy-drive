@@ -114,6 +114,7 @@ class Toolbar extends Component {
               displayedFolder={displayedFolder}
               showSelectionBar={showSelectionBar}
               isSelectionBarVisible={isSelectionBarVisible}
+              pathname={pathname}
             />
           </SharingProvider>
         </BarRightWithProvider>
