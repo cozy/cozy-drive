@@ -7,26 +7,25 @@
  */
 
 import React, { Component } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import get from 'lodash/get'
 import { RemoveScroll } from 'react-remove-scroll'
 
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate, useI18n } from 'cozy-ui/transpiled/react/I18n'
 import Viewer from 'cozy-ui/transpiled/react/Viewer'
 import Overlay from 'cozy-ui/transpiled/react/deprecated/Overlay'
 import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
 import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
 import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
-import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 
 import Fallback from 'drive/web/modules/viewer/Fallback'
 import {
   isOfficeEnabled,
   makeOnlyOfficeFileRoute
 } from 'drive/web/modules/views/OnlyOffice/helpers'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 const FileNotFoundError = translate()(({ t }) => (
   <pre className="u-error">{t('FileOpenerExternal.fileNotFoundError')}</pre>
@@ -38,22 +37,14 @@ export class FileOpener extends Component {
     file: null
   }
   UNSAFE_componentWillMount() {
-    const routerFileId = get(this.props, 'routeParams.fileId')
     if (this.props.fileId) {
       this.loadFileInfo(this.props.fileId)
-    } else if (routerFileId) {
-      this.loadFileInfo(routerFileId)
     }
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.fileId !== this.props.fileId) {
       return this.loadFileInfo(this.props.fileId)
-    }
-    const previousRouterFileId = get(prevProps, 'routeParams.fileId')
-    const routerFileId = get(this.props, 'routeParams.fileId')
-    if (previousRouterFileId !== routerFileId) {
-      return this.loadFileInfo(routerFileId)
     }
   }
   async loadFileInfo(id) {
@@ -88,7 +79,7 @@ export class FileOpener extends Component {
                 files={[file]}
                 currentIndex={0}
                 onChangeRequest={() => {}}
-                onCloseRequest={() => service.terminate()}
+                onCloseRequest={service ? () => service.terminate() : null}
                 renderFallbackExtraContent={file => (
                   <Fallback file={file} t={t} />
                 )}
@@ -114,22 +105,25 @@ export class FileOpener extends Component {
 }
 
 FileOpener.propTypes = {
-  router: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-    params: PropTypes.shape({
-      fileId: PropTypes.string.isRequired
-    }).isRequired
-  }),
-  routeParams: PropTypes.shape({
-    fileId: PropTypes.string
-  }),
-  fileId: PropTypes.string
+  fileId: PropTypes.string.isRequired,
+  service: PropTypes.object
 }
 
-const FileOpenerWrapper = ({ props }) => {
+const FileOpenerWrapper = props => {
   const navigate = useNavigate()
+  const breakpoints = useBreakpoints()
+  const { t } = useI18n()
+  const { fileId } = useParams()
 
-  return <FileOpener {...props} navigate={navigate} />
+  return (
+    <FileOpener
+      breakpoints={breakpoints}
+      t={t}
+      fileId={fileId}
+      navigate={navigate}
+      {...props}
+    />
+  )
 }
 
-export default withBreakpoints()(translate()(FileOpenerWrapper))
+export default FileOpenerWrapper
