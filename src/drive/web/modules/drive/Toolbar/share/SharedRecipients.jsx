@@ -1,18 +1,24 @@
 import React from 'react'
 import { SharedRecipients } from 'cozy-sharing'
-import shareContainer from './share'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import { useDisplayedFolder } from 'drive/hooks'
 
-const SharedRecipientsComponent = ({ share }) => {
+const SharedRecipientsComponent = () => {
   const displayedFolder = useDisplayedFolder()
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
+
+  const share = () => {
+    navigate(`${pathname}/share`)
+  }
 
   return (
     <SharedRecipients
       docId={displayedFolder && displayedFolder.id}
-      onClick={() => share(displayedFolder)}
+      onClick={share}
     />
   )
 }
 
-export default shareContainer(SharedRecipientsComponent)
+export default SharedRecipientsComponent

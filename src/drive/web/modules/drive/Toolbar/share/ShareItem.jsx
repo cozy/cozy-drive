@@ -2,20 +2,25 @@ import React from 'react'
 
 import { SharedDocument } from 'cozy-sharing'
 import RecipientsAvatars from 'cozy-sharing/dist/components/Recipient/RecipientsAvatars'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'
 
 import styles from 'drive/styles/toolbar.styl'
-import shareContainer from './share'
 
-const ShareItem = translate()(({ t, share, displayedFolder }) => {
+const ShareItem = ({ displayedFolder, navigate, pathname }) => {
+  const { t } = useI18n()
+
+  const share = () => {
+    navigate(`${pathname}/share`)
+  }
+
   return (
     <SharedDocument docId={displayedFolder.id}>
       {({ isSharedWithMe, recipients, link }) => (
         <ActionMenuItem
-          onClick={() => share(displayedFolder)}
+          onClick={share}
           left={<Icon icon={ShareIcon} />}
           right={
             <div className={styles['menu-recipients-wrapper']}>
@@ -37,6 +42,6 @@ const ShareItem = translate()(({ t, share, displayedFolder }) => {
       )}
     </SharedDocument>
   )
-})
+}
 
-export default shareContainer(ShareItem)
+export default ShareItem
