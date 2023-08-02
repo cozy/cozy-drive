@@ -63,7 +63,8 @@ const MoveModal = ({ onClose, entries, classes }) => {
     hasSharedParent,
     isOwner,
     revokeSelf,
-    revokeAllRecipients
+    revokeAllRecipients,
+    byDocId
   } = useSharingContext()
 
   const [folderId, setFolderId] = useState(
@@ -109,7 +110,7 @@ const MoveModal = ({ onClose, entries, classes }) => {
       }
     } else {
       const hasOneOrMoreEntriesShared =
-        entries.filter(({ path }) => sharedPaths.includes(path)).length > 0
+        entries.filter(({ _id }) => byDocId[_id] !== undefined).length > 0
       if (hasOneOrMoreEntriesShared && hasSharedParent(targetPath)) {
         setMovingSharedFolderInsideAnother(true)
       } else {
@@ -182,8 +183,8 @@ const MoveModal = ({ onClose, entries, classes }) => {
   const handleMovingSharedFolderInsideAnother = async () => {
     setMoveInProgress(true)
     entries.forEach(async entry => {
-      if (sharedPaths.includes(entry.path)) {
-        if (isOwner(entry.id)) {
+      if (byDocId[entry._id] !== undefined) {
+        if (isOwner(entry._id)) {
           await revokeAllRecipients(entry)
         } else {
           await revokeSelf(entry)

@@ -57,6 +57,7 @@ describe('MoveModal component', () => {
     entries = defaultEntries,
     displayedFolderId = 'destinationFolder',
     sharedPaths = ['/sharedFolder'],
+    byDocId = {},
     getSharedParentPath = () => null,
     sharingContext = {}
   } = {}) => {
@@ -74,6 +75,7 @@ describe('MoveModal component', () => {
       getSharedParentPath,
       hasSharedParent: path =>
         sharedPaths.filter(sharedPath => path.includes(sharedPath)).length > 0,
+      byDocId,
       ...sharingContext
     })
 
@@ -222,6 +224,9 @@ describe('MoveModal component', () => {
 
       setup({
         sharedPaths: ['/bills/bill_201903.pdf', '/destinationFolder'],
+        byDocId: {
+          bill_201903: {}
+        },
         getSharedParentPath: () => null
       })
 
@@ -242,6 +247,9 @@ describe('MoveModal component', () => {
 
       setup({
         sharedPaths: ['/bills/bill_201903.pdf', '/destinationFolder'],
+        byDocId: {
+          bill_201903: {}
+        },
         getSharedParentPath: () => null,
         sharingContext: {
           isOwner: () => true,
@@ -276,6 +284,9 @@ describe('MoveModal component', () => {
 
       setup({
         sharedPaths: ['/bills/bill_201903.pdf', '/destinationFolder'],
+        byDocId: {
+          bill_201903: {}
+        },
         getSharedParentPath: () => null,
         sharingContext: {
           isOwner: () => false,
