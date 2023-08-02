@@ -96,6 +96,9 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
   const { pushModal, popModal } = useContext(ModalContext)
   const { refresh } = useContext(SharingContext)
   const dispatch = useDispatch()
+
+  const hasWrite = hasWriteAccess(currentFolderId)
+
   const actionsOptions = {
     client,
     pushModal,
@@ -104,7 +107,7 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
     dispatch,
     navigate,
     pathname,
-    hasWriteAccess: hasWriteAccess(currentFolderId),
+    hasWriteAccess: hasWrite,
     canMove: true
   }
   const actions = useActions(
@@ -132,7 +135,7 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
             navigateToFolder={navigateToFolder}
           />
         )}
-        <Toolbar canUpload={hasWriteAccess} canCreateFolder={hasWriteAccess} />
+        <Toolbar canUpload={hasWrite} canCreateFolder={hasWrite} />
       </FolderViewHeader>
       <FolderViewBody
         navigateToFolder={navigateToFolder}
