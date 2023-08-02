@@ -585,7 +585,8 @@
     },
     "sharedFolderInsideAnother": {
       "title": "Cannot be moved",
-      "content": "You want to move a shared item to a shared folder. This type of move is not authorised. If you still wish to move %{source} to %{destination}, please stop sharing %{source}.",
+      "content_1": "You want to move a shared element into a shared folder. This type of move is not allowed.",
+      "content_2": "If you still wish to move %{source} to %{destination}, please stop sharing it. |||| If you still wish to move %{source} to %{destination}, please stop sharing :",
       "cancel": "Cancel move",
       "confirm": "Stop sharing"
     }
