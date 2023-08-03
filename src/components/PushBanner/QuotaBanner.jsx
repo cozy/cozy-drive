@@ -26,7 +26,7 @@ const QuotaBanner = () => {
 
   const onAction = () => {
     const link = buildPremiumLink(instanceInfo)
-    window.open(link, 'self')
+    window.open(link, '_self')
   }
 
   const onDismiss = () => {
