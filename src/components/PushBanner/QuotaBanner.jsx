@@ -5,11 +5,12 @@ import Banner from 'cozy-ui/transpiled/react/Banner'
 import Button from 'cozy-ui/transpiled/react/Buttons'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
-import { isMobileApp, isFlagshipApp } from 'cozy-device-helper'
+import { isFlagshipApp } from 'cozy-device-helper'
 import {
   arePremiumLinksEnabled,
   buildPremiumLink
 } from 'cozy-client/dist/models/instance'
+import flag from 'cozy-flags'
 
 import styles from '../pushClient/pushClient.styl'
 import useInstanceInfo from 'hooks/useInstanceInfo'
@@ -22,7 +23,6 @@ const QuotaBanner = () => {
   const { t } = useI18n()
   const { dismissPushBanner } = usePushBannerContext()
   const instanceInfo = useInstanceInfo()
-  const isMobileAppVersion = isMobileApp() || isFlagshipApp()
 
   const onAction = () => {
     const link = buildPremiumLink(instanceInfo)
@@ -32,6 +32,10 @@ const QuotaBanner = () => {
   const onDismiss = () => {
     dismissPushBanner('quota')
   }
+
+  const canOpenPremiumLink =
+    arePremiumLinksEnabled(instanceInfo) &&
+    (!isFlagshipApp() || (isFlagshipApp() && !!flag('flagship.iap.enabled')))
 
   return (
     <div className={styles['coz-banner-client']}>
@@ -48,14 +52,13 @@ const QuotaBanner = () => {
           />
         }
         buttonTwo={
-          !isMobileAppVersion &&
-          arePremiumLinksEnabled(instanceInfo) && (
+          canOpenPremiumLink ? (
             <Button
               label={t('PushBanner.quota.actions.second')}
               variant="text"
               onClick={onAction}
             />
-          )
+          ) : null
         }
       />
     </div>

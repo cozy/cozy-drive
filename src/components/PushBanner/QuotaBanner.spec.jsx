@@ -3,6 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 
 import { isFlagshipApp } from 'cozy-device-helper'
 import I18n from 'cozy-ui/transpiled/react/I18n'
+import flag from 'cozy-flags'
 
 import useInstanceInfo from 'hooks/useInstanceInfo'
 import QuotaBanner from './QuotaBanner'
@@ -17,6 +18,7 @@ jest.mock('cozy-device-helper', () => ({
   ...jest.requireActual('cozy-device-helper'),
   isFlagshipApp: jest.fn()
 }))
+jest.mock('cozy-flags')
 
 describe('QuotaBanner', () => {
   const dismissSpy = jest.fn()
@@ -29,7 +31,8 @@ describe('QuotaBanner', () => {
   const setup = ({
     enablePremiumLinks = false,
     hasUuid = false,
-    isFlagshipApp: isFlagshipAppReturnValue = false
+    isFlagshipApp: isFlagshipAppReturnValue = false,
+    isIapEnabled = null
   } = {}) => {
     usePushBannerContext.mockReturnValue({
       dismissPushBanner: dismissSpy
@@ -52,6 +55,7 @@ describe('QuotaBanner', () => {
     })
 
     isFlagshipApp.mockReturnValue(isFlagshipAppReturnValue)
+    flag.mockReturnValue(isIapEnabled)
 
     render(
       <I18n lang="en" dictRequire={() => en}>
@@ -101,5 +105,32 @@ describe('QuotaBanner', () => {
 
     const premiumButton = screen.queryByText('Check our plans')
     expect(premiumButton).toBeNull()
+  })
+
+  it('should hide premium link when is on flagship application and flag flagship.iap.enabled is false', () => {
+    setup({
+      hasUuid: true,
+      enablePremiumLinks: true,
+      isFlagshipApp: true,
+      isIapEnabled: false
+    })
+
+    const premiumButton = screen.queryByText('Check our plans')
+    expect(premiumButton).toBeNull()
+  })
+
+  it('should display premium link  when is on flagship application and flag flagship.iap.enabled is true', () => {
+    setup({
+      hasUuid: true,
+      enablePremiumLinks: true,
+      isFlagshipApp: true,
+      isIapEnabled: true
+    })
+
+    fireEvent.click(screen.getByText('Check our plans'))
+    expect(openSpy).toBeCalledWith(
+      'http://mycozy.cloud/cozy/instances/123/premium',
+      '_self'
+    )
   })
 })
