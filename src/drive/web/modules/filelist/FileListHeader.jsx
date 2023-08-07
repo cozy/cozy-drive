@@ -80,6 +80,12 @@ const FileListHeader = ({
         <TableHeader
           className={cx(
             styles['fil-content-header'],
+            styles['fil-content-header-sharing-shortcut']
+          )}
+        />
+        <TableHeader
+          className={cx(
+            styles['fil-content-header'],
             styles['fil-content-header-action']
           )}
         >
