@@ -11,7 +11,7 @@ import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import LinkIcon from 'cozy-ui/transpiled/react/Icons/Link'
 
 import FileIcon from 'drive/web/modules/filelist/FileIcon'
-import SharingShortcutBadge from 'drive/web/modules/filelist/SharingShortcutBadge'
+import { SharingShortcutIcon } from 'drive/web/modules/filelist/SharingShortcutIcon'
 
 import styles from 'drive/styles/filelist.styl'
 
@@ -36,7 +36,7 @@ const FileThumbnail = ({ file, size, isInSyncFromSharing, isEncrypted }) => {
       )}
       {isSharingShortcut && (
         <GhostFileBadge
-          badgeContent={<SharingShortcutBadge file={file} size={16} />}
+          badgeContent={<SharingShortcutIcon file={file} size={16} />}
         >
           <SharingOwnerAvatar docId={file.id} size={'small'} />
         </GhostFileBadge>
