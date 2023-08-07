@@ -22,7 +22,8 @@ import {
   LastUpdate,
   Size,
   Status,
-  FileAction
+  FileAction,
+  SharingShortcutBadge
 } from './cells'
 import { extraColumnsPropTypes } from 'drive/web/modules/certifications'
 
@@ -172,6 +173,7 @@ const File = ({
           disabled={isRowDisabledOrInSyncFromSharing}
           isInSyncFromSharing={isInSyncFromSharing}
         />
+        <SharingShortcutBadge file={attributes} />
       </FileOpener>
       {actions && (
         <FileAction
