@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import UINav from 'cozy-ui/transpiled/react/Nav'
 
 import { NavItem } from 'drive/web/modules/navigation/NavItem'
+import { SharingsNavItem } from 'drive/web/modules/navigation/SharingsNavItem'
 
 export const Nav = () => {
   const clickState = useState(null)
@@ -24,13 +25,7 @@ export const Nav = () => {
         rx={/\/recent(\/.*)?/}
         clickState={clickState}
       />
-      <NavItem
-        to="/sharings"
-        icon="share"
-        label="sharings"
-        rx={/\/sharings(\/.*)?/}
-        clickState={clickState}
-      />
+      <SharingsNavItem clickState={clickState} />
       <NavItem
         to="/trash"
         icon="trash"
