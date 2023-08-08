@@ -355,3 +355,17 @@ export const buildFolderByPathQuery = path => ({
     fetchPolicy: defaultFetchPolicy
   }
 })
+
+export const buildNewSharingShortcutQuery = () => ({
+  definition: () =>
+    Q('io.cozy.files')
+      .where({
+        'metadata.sharing.status': 'new',
+        class: 'shortcut'
+      })
+      .indexFields(['metadata.sharing.status', 'class']),
+  options: {
+    as: 'io.cozy.files/metadata.sharing.status/new/class/shortcut',
+    fetchPolicy: defaultFetchPolicy
+  }
+})
