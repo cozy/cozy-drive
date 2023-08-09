@@ -85,7 +85,10 @@ async function init() {
                 <HashRouter>
                   <Routes>
                     <Route path="shared/:albumId" element={<App />}>
-                      <Route path=":photoId" element={<AlbumPhotosViewer />} />
+                      <Route
+                        path=":photoId"
+                        element={<AlbumPhotosViewer isPublic={true} />}
+                      />
                     </Route>
                     <Route
                       path="*"

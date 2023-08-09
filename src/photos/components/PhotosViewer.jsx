@@ -19,7 +19,7 @@ export const TimelinePhotosViewer = () => {
   return <PhotosViewer photos={results.data} />
 }
 
-export const AlbumPhotosViewer = () => {
+export const AlbumPhotosViewer = ({ isPublic }) => {
   const { albumId } = useParams()
   const albumsQuery = buildAlbumsQuery(albumId)
 
@@ -27,10 +27,10 @@ export const AlbumPhotosViewer = () => {
 
   if (results.fetchStatus != 'loaded') return null
 
-  return <PhotosViewer photos={results.data.photos.data} />
+  return <PhotosViewer photos={results.data.photos.data} isPublic={isPublic} />
 }
 
-const PhotosViewer = ({ photos }) => {
+const PhotosViewer = ({ photos, isPublic = false }) => {
   const navigate = useNavigate()
   let { photoId } = useParams()
 
@@ -46,6 +46,11 @@ const PhotosViewer = ({ photos }) => {
         currentIndex={currentIndex}
         onChangeRequest={nextPhoto => navigate(`../${nextPhoto.id}`)}
         onCloseRequest={() => navigate('..')}
+        componentsProps={{
+          toolbarProps: {
+            showFilePath: !isPublic
+          }
+        }}
       >
         <FooterActionButtons>
           <SharingButton />
