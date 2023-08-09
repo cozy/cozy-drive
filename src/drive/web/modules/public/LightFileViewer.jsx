@@ -46,9 +46,9 @@ const LightFileViewer = ({ files }) => {
             OnlyOfficeViewer: {
               isEnabled: isOfficeEnabled(isDesktop),
               opener: onlyOfficeOpener
-            }
+            },
+            toolbarProps: { showToolbar: isDesktop }
           }}
-          toolbarProps={{ showToolbar: isDesktop }}
         >
           <FooterActionButtons>
             <ForwardOrDownloadButton />
