@@ -206,6 +206,9 @@ const FilesViewer = ({ filesQuery, files, onClose, onChange }) => {
             OnlyOfficeViewer: {
               isEnabled: isOfficeEnabled(isDesktop),
               opener: file => navigate(makeOnlyOfficeFileRoute(file, true))
+            },
+            toolbarProps: {
+              showFilePath: true
             }
           }}
         >
