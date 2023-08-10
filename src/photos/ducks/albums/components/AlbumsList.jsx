@@ -3,9 +3,10 @@ import styles from 'photos/styles/albumsList.styl'
 import React from 'react'
 import { Content } from 'cozy-ui/transpiled/react/Layout'
 import { translate } from 'cozy-ui/transpiled/react/I18n'
+
 import { EmptyPhotos } from 'components/Error/Empty'
-import LoadMoreButton from 'photos/components/LoadMoreButton'
 import AlbumItem from './AlbumItem'
+import { LoadMore } from 'photos/components/LoadMore'
 
 const FALLBACK_CREATION_DATE = null
 const sortByCreationDate = (a, b) => {
@@ -26,7 +27,7 @@ const AlbumsList = ({ data, hasMore, fetchMore, t }) =>
           <AlbumItem album={a} key={a.id} />
         ))}
         {hasMore && (
-          <LoadMoreButton label={t('Albums.load_more')} onClick={fetchMore} />
+          <LoadMore label={t('Albums.load_more')} fetchMore={fetchMore} />
         )}
       </div>
     </Content>
