@@ -8,7 +8,7 @@ import PhotoList from './PhotoList'
 import { EmptyPhotos } from 'components/Error/Empty'
 import Loading from './Loading'
 import ErrorComponent from 'components/Error/ErrorComponent'
-import LoadMoreButton from './LoadMoreButton'
+import { LoadMore } from 'photos/components/LoadMore'
 
 const PhotoBoard = ({
   lists,
@@ -65,11 +65,7 @@ const PhotoBoard = ({
         />
       ))}
       {hasMore && (
-        <LoadMoreButton
-          label={t('Board.load_more')}
-          width={width}
-          onClick={fetchMore}
-        />
+        <LoadMore label={t('Board.load_more')} fetchMore={fetchMore} />
       )}
     </div>
   )
