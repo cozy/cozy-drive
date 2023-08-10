@@ -35,7 +35,7 @@ exports[`Public view should render children when they are present 1`] = `
           />
         </div>
       </div>
-      <withI18n(WithContentRect)
+      <WithContentRect
         fetchMore={[MockFunction]}
         hasMore={false}
         lists={
@@ -97,7 +97,7 @@ exports[`Public view should render the album 1`] = `
           />
         </div>
       </div>
-      <withI18n(WithContentRect)
+      <WithContentRect
         fetchMore={[MockFunction]}
         hasMore={false}
         lists={
