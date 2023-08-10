@@ -5,6 +5,7 @@ import cx from 'classnames'
 import { isSharingShortcutNew } from 'cozy-client/dist/models/file'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import { TableCell } from 'cozy-ui/transpiled/react/Table'
+import Circle from 'cozy-ui/transpiled/react/Circle'
 
 import styles from 'drive/styles/filelist.styl'
 
@@ -19,17 +20,14 @@ const SharingShortcutBadge = ({ file }) => {
       )}
     >
       {isSharingShortcutNew(file) ? (
-        <div
-          className="u-w-1 u-h-1 u-bdrs-circle u-flex"
-          style={{ backgroundColor: 'var(--errorColor)' }}
-        >
+        <Circle size="xsmall" backgroundColor="var(--errorColor)">
           <span
-            className="u-fw-bold u-fz-tiny u-white u-lh-tiny u-m-auto"
+            style={{ fontSize: '11px', lineHeight: '1rem' }}
             aria-label={t('table.row_sharing_shortcut_aria_label')}
           >
             1
           </span>
-        </div>
+        </Circle>
       ) : null}
     </TableCell>
   )
