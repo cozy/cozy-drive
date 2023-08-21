@@ -33,7 +33,7 @@ const BackupPage = () => {
               <BackupInfo />
               {!isFlagshipApp() ? <InstallAppAlert /> : null}
               <BackupActions />
-              {isMobile ? <BackupDescription /> : null}
+              {isFlagshipApp() ? <BackupDescription /> : null}
             </div>
           </div>
           <AllowPermissionsModal />
