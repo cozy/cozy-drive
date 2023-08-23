@@ -29,6 +29,7 @@ import { ShareDisplayedFolderView } from 'drive/web/modules/views/Modal/ShareDis
 import { ShareFileView } from 'drive/web/modules/views/Modal/ShareFileView'
 import { QualifyFileView } from 'drive/web/modules/views/Modal/QualifyFileView'
 import { MoveFilesView } from 'drive/web/modules/views/Modal/MoveFilesView'
+import { UploadFromFlagship } from 'drive/web/modules/views/Upload/UploadFromFlagship'
 
 const FilesRedirect = () => {
   const { folderId } = useParams()
@@ -42,6 +43,7 @@ const AppRoute = () => (
       {__TARGET__ === 'mobile' && (
         <Route path="uploadfrommobile" element={<UploadFromMobile />} />
       )}
+      <Route path="create" element={<UploadFromFlagship />} />
       <Route path="/files/:folderId" element={<FilesRedirect />} />
       <Route path="/" element={<Index />} />
 
