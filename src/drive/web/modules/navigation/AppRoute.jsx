@@ -26,6 +26,7 @@ import SearchView from '../views/Search/SearchView'
 import OnlyOfficePaywallView from '../views/OnlyOffice/OnlyOfficePaywallView'
 import FilesViewerRecent from '../views/Recent/FilesViewerRecent'
 import { ShareDisplayedFolderView } from 'drive/web/modules/views/Modal/ShareDisplayedFolderView'
+import { UploadFromFlagship } from '../views/Upload/UploadFromFlagship'
 
 const FilesRedirect = () => {
   const { folderId } = useParams()
@@ -39,6 +40,7 @@ const AppRoute = () => (
       {__TARGET__ === 'mobile' && (
         <Route path="uploadfrommobile" element={<UploadFromMobile />} />
       )}
+      <Route path="create" element={<UploadFromFlagship />} />
       <Route path="/files/:folderId" element={<FilesRedirect />} />
       <Route path="/" element={<Index />} />
 
