@@ -10,6 +10,7 @@ import BackupInfo from './components/BackupInfo'
 import BackupActions from './components/BackupActions'
 import BackupDescription from './components/BackupDescription'
 import InstallAppAlert from './components/InstallAppAlert'
+import LastBackupStatus from './components/LastBackupStatus'
 import AllowPermissionsModal from './components/AllowPermissionsModal'
 import { BackupError } from './components/BackupError'
 
@@ -33,6 +34,7 @@ const BackupPage = () => {
               <BackupInfo />
               {!isFlagshipApp() ? <InstallAppAlert /> : null}
               <BackupActions />
+              {isFlagshipApp() ? <LastBackupStatus /> : null}
               {isFlagshipApp() ? <BackupDescription /> : null}
             </div>
           </div>
