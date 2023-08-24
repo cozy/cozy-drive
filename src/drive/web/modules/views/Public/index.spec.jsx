@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent, act } from '@testing-library/react'
+import { render, fireEvent, screen } from '@testing-library/react'
 import { setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
 import usePublicFilesQuery from './usePublicFilesQuery'
@@ -53,7 +53,7 @@ jest.mock('cozy-keys-lib', () => ({
 jest.mock('components/pushClient')
 
 describe('Public View', () => {
-  const setup = async () => {
+  const setup = () => {
     const { store, client } = setupStoreAndClient()
     client.plugins.realtime = {
       subscribe: jest.fn(),
@@ -61,12 +61,11 @@ describe('Public View', () => {
     }
     client.query = jest.fn().mockReturnValue([])
 
-    const rendered = render(
+    return render(
       <AppLike client={client} store={store}>
         <PublicFolderView />
       </AppLike>
     )
-    return { ...rendered, client }
   }
 
   const updated_at = '2020-05-14T10:33:31.365224+02:00'
@@ -91,17 +90,12 @@ describe('Public View', () => {
   it('renders the public view', async () => {
     // TODO : Fix https://github.com/cozy/cozy-drive/issues/2913
     jest.spyOn(console, 'warn').mockImplementation()
-    const { getByText } = await setup()
-    await act(async () => {
-      const sleep = duration =>
-        new Promise(resolve => setTimeout(resolve, duration))
-      await sleep(100)
-    })
+    setup()
 
     // Get the HTMLElement containing the filename if exist. If not throw
-    const el0 = getByText(`foobar0`)
+    const el0 = await screen.findByText(`foobar0`)
     // Check if the filename is displayed with the extension. If not throw
-    getByTextWithMarkup(getByText, `foobar0.pdf`)
+    getByTextWithMarkup(screen.getByText, `foobar0.pdf`)
     // get the FileRow element
     const fileRow0 = el0.closest('.fil-content-row')
     // check if the date is right
@@ -112,29 +106,23 @@ describe('Public View', () => {
     // check if the ActionMenu is displayed
     fireEvent.click(fileRow0.getElementsByTagName('button')[0])
     // navigates  to the history view
-    const historyItem = getByText('History')
+    const historyItem = screen.getByText('History')
     fireEvent.click(historyItem)
 
     expect(mockNavigate).toHaveBeenCalledWith('/file/file-foobar0/revision')
   })
 
   it('should use FolderViewBreadcrumb with correct rootBreadcrumbPath', async () => {
-    // Given
-    let render
-
     // When
-    await act(async () => {
-      render = await setup()
-    })
+    setup()
 
     // Then
-    const { getByTestId } = render
-    expect(getByTestId('FolderViewBreadcrumb')).toBeTruthy()
+    expect(screen.getByTestId('FolderViewBreadcrumb')).toBeTruthy()
     expect(
-      getByTestId('FolderViewBreadcrumb').hasAttribute('data-path')
+      screen.getByTestId('FolderViewBreadcrumb').hasAttribute('data-path')
     ).toEqual(true)
     expect(
-      getByTestId('FolderViewBreadcrumb').getAttribute('data-folder-id')
+      screen.getByTestId('FolderViewBreadcrumb').getAttribute('data-folder-id')
     ).toEqual('1234')
   })
 })
