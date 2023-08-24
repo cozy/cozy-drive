@@ -375,7 +375,13 @@ export const overwriteFile = async (client, file, path, options = {}) => {
 }
 
 export const uploadFilesFromNative =
-  (files, folderId, uploadFilesSuccessCallback, { client, vaultClient }) =>
+  (
+    files,
+    folderId,
+    uploadFilesSuccessCallback,
+    { client, vaultClient },
+    alternateUploader
+  ) =>
   async dispatch => {
     dispatch({
       type: ADD_TO_UPLOAD_QUEUE,
@@ -401,10 +407,17 @@ export const uploadFilesFromNative =
             contentType: file.file.type
           })
         } else {
-          await doMobileUpload(client, file.file.fileUrl, {
-            ...fileOpts,
-            contentType: file.file.type
-          })
+          if (alternateUploader) {
+            await alternateUploader(client, file.file.fileUrl, {
+              ...fileOpts,
+              contentType: file.file.type
+            })
+          } else {
+            await doMobileUpload(client, file.file.fileUrl, {
+              ...fileOpts,
+              contentType: file.file.type
+            })
+          }
         }
         dispatch(removeFileToUploadQueue(file.file))
       } catch (error) {

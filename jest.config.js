@@ -31,7 +31,7 @@ module.exports = {
   clearMocks: true,
   snapshotSerializers: ['enzyme-to-json/serializer'],
   transform: {
-    '^.+\\.jsx?$': 'babel-jest',
+    '^.+\\.(ts|tsx|js|jsx)?$': 'babel-jest',
     '^.+\\.webapp$': '<rootDir>/test/jestLib/json-transformer.js'
   },
   transformIgnorePatterns: ['node_modules/(?!cozy-ui)/'],
