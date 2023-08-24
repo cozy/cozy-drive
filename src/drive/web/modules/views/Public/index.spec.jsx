@@ -47,6 +47,7 @@ jest.mock('drive/hooks', () => ({
 jest.mock('./usePublicFilesQuery', () => {
   return jest.fn()
 })
+jest.mock('./usePublicWritePermissions', () => jest.fn().mockReturnValue(false))
 jest.mock('cozy-keys-lib', () => ({
   useVaultClient: jest.fn()
 }))
