@@ -20,5 +20,8 @@
         "react/display-name": "off"
       }
     }
-  ]
+  ],
+  "parserOptions": {
+    "project": "tsconfig.json"
+  }
 }

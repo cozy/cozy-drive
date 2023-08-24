@@ -181,6 +181,6 @@
     "accepted_mime_types": ["*/*"],
     "max_number_of_files": 1,
     "max_size_per_file_in_MB": 10,
-    "route_to_upload": "/#/create?fromFlagshipUpload=true"
+    "route_to_upload": "/#/upload?fromFlagshipUpload=true"
   }
 }
