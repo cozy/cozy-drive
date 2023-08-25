@@ -46,17 +46,14 @@ const MoveSharedFolderInsideAnotherModal = ({
             <Typography variant="body1" className="u-mb-half">
               {t('Move.sharedFolderInsideAnother.content_2', {
                 source: getEntriesName(entries, t),
-                destination: data.name,
-                smart_count: entries.length
+                destination: data.name
               })}
             </Typography>
-            {entries.length > 1 ? (
-              <ul>
-                {sharedEntries.map(({ _id, name }) => (
-                  <li key={_id}>{name} </li>
-                ))}
-              </ul>
-            ) : null}
+            <ul>
+              {sharedEntries.map(({ _id, name }) => (
+                <li key={_id}>{name} </li>
+              ))}
+            </ul>
           </>
         }
         actions={
