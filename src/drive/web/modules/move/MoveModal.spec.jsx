@@ -59,6 +59,7 @@ describe('MoveModal component', () => {
     sharedPaths = ['/sharedFolder'],
     byDocId = {},
     getSharedParentPath = () => null,
+    allLoaded = true,
     sharingContext = {}
   } = {}) => {
     const props = {
@@ -76,6 +77,7 @@ describe('MoveModal component', () => {
       hasSharedParent: path =>
         sharedPaths.filter(sharedPath => path.includes(sharedPath)).length > 0,
       byDocId,
+      allLoaded,
       ...sharingContext
     })
 
@@ -117,7 +119,17 @@ describe('MoveModal component', () => {
     )
   }
 
-  describe('moveEntries', () => {
+  describe('MoveModal', () => {
+    it('should wait for shares to load before authorising moves', async () => {
+      setup({ allLoaded: false })
+
+      const moveButton = await screen.findByRole('button', {
+        name: 'Move',
+        busy: true
+      })
+      expect(moveButton).toBeDisabled()
+    })
+
     it('should move entries to destination', async () => {
       CozyFile.getFullpath.mockImplementation((destinationFolder, name) =>
         Promise.resolve(

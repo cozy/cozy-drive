@@ -64,7 +64,8 @@ const MoveModal = ({ onClose, entries, classes }) => {
     isOwner,
     revokeSelf,
     revokeAllRecipients,
-    byDocId
+    byDocId,
+    allLoaded
   } = useSharingContext()
 
   const [folderId, setFolderId] = useState(
@@ -257,6 +258,7 @@ const MoveModal = ({ onClose, entries, classes }) => {
             targets={entries}
             currentDirId={folderId}
             isMoving={isMoveInProgress}
+            isLoading={!allLoaded}
           />
         }
       />
