@@ -1,40 +1,4 @@
 @require 'settings/palette.styl'
-@require 'settings/z-index.styl'
-@require 'components/popover.styl'
-
-.fil-actionmenu-inner
-    @extend    $popover
-    z-index    $file-action-menu
-    position   absolute
-    margin     0
-    margin-top rem(1)
-    min-width  rem(220)
-    overflow   hidden
-    border     0
-    color      var(--charcoalGrey)
-
-    .fil-actionmenu-recipients
-        display none
-
-    .fil-action
-        &:hover
-            background-color var(--paleGrey)
-        &:active
-            background-color var(--silver)
-
-.fil-actionmenu-overlay
-    opacity 0
-    -webkit-tap-highlight-color rgba(0, 0, 0, 0)
-
-.fil-mobileactionmenu
-    color      var(--charcoalGrey)
-    hr
-        margin-top 0
-
-.fil-mobileactionmenu-header
-    font-weight bold
-    max-width 100%
-    display flex
 
 .fil-mobileactionmenu-file-name
     overflow hidden
