@@ -1,11 +1,11 @@
 import React from 'react'
-import classNames from 'classnames'
 
 import { isDirectory } from 'cozy-client/dist/models/file'
 import { getBoundT } from 'cozy-scanner'
-import ActionMenu, {
-  ActionMenuHeader
-} from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import ActionsMenu from 'cozy-ui/transpiled/react/ActionsMenu'
+import ActionsMenuMobileHeader from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuMobileHeader'
+import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
+import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import { useI18n } from 'cozy-ui/transpiled/react/I18n'
@@ -13,7 +13,6 @@ import QualifyIcon from 'cozy-ui/transpiled/react/Icons/Qualify'
 
 import { CozyFile } from 'models'
 import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
-import { ActionsItems } from './ActionsItems'
 
 import styles from 'drive/styles/actionmenu.styl'
 
@@ -25,19 +24,22 @@ export const ActionMenuWithHeader = ({
 }) => {
   const { lang } = useI18n()
   return (
-    <ActionMenu
+    <ActionsMenu
+      open
+      ref={anchorElRef}
       onClose={onClose}
-      anchorElRef={anchorElRef}
-      autoclose={true}
-      popperOptions={{
-        strategy: 'fixed'
+      actions={actions}
+      doc={file}
+      anchorOrigin={{
+        strategy: 'fixed',
+        vertical: 'bottom',
+        horizontal: 'right'
       }}
     >
-      <ActionMenuHeader>
+      <ActionsMenuMobileHeader>
         <MenuHeaderFile file={file} lang={lang} />
-      </ActionMenuHeader>
-      <ActionsItems actions={actions} file={file} onClose={onClose} />
-    </ActionMenu>
+      </ActionsMenuMobileHeader>
+    </ActionsMenu>
   )
 }
 
@@ -46,35 +48,39 @@ const MenuHeaderFile = ({ file, lang }) => {
 
   const scannerT = getBoundT(lang)
   return (
-    <div>
-      <div className={'u-flex u-flex-items-center'}>
+    <>
+      <ListItemIcon>
         <Icon
           icon={getMimeTypeIcon(isDirectory(file), file.name, file.mime)}
           size={32}
-          className="u-flex-shrink-0 u-mr-1"
         />
-        <div className="u-w-100">
-          <div className={classNames(styles['fil-mobileactionmenu-header'])}>
+      </ListItemIcon>
+      <ListItemText
+        primary={
+          <>
             <span className={styles['fil-mobileactionmenu-file-name']}>
               {filename}
             </span>
             <span className={styles['fil-mobileactionmenu-file-ext']}>
               {extension}
             </span>
-          </div>
-          {file.metadata?.qualification?.label && (
+          </>
+        }
+        secondary={
+          file.metadata?.qualification?.label ? (
             <div className="u-coolGrey u-fz-tiny u-fs-normal u-flex u-flex-items-center">
               <Icon icon={QualifyIcon} size="10" />
               <Typography
                 variant="caption"
-                className={classNames(styles['fil-mobileactionmenu-category'])}
+                className={styles['fil-mobileactionmenu-category']}
               >
                 {scannerT(`Scan.items.${file.metadata.qualification.label}`)}
               </Typography>
             </div>
-          )}
-        </div>
-      </div>
-    </div>
+          ) : null
+        }
+        primaryTypographyProps={{ variant: 'h6' }}
+      />
+    </>
   )
 }
