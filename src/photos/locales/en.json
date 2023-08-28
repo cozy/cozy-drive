@@ -305,9 +305,9 @@
       "install": "Install our app"
     },
     "LastBackupStatus": {
-      "lastBackup": "Last backup:",
-      "success": "%{smart_count} element backed up |||| %{smart_count} elements backed up",
-      "partialSuccess": "%{backedUpMediaCount}/%{smart_count} element backed up |||| %{backedUpMediaCount}/%{smart_count} elements backed up"
+      "lastBackup": "Last backup: ",
+      "success": "Success - ",
+      "backedUpElements": "%{backedUpMediaCount}/%{smart_count} element backed up |||| %{backedUpMediaCount}/%{smart_count} elements backed up"
     },
     "AllowPermissionsModal": {
       "title": "Allow access to your photos and videos",
