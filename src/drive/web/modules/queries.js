@@ -361,9 +361,10 @@ export const buildNewSharingShortcutQuery = () => ({
     Q('io.cozy.files')
       .where({
         'metadata.sharing.status': 'new',
-        class: 'shortcut'
+        class: 'shortcut',
+        trashed: false
       })
-      .indexFields(['metadata.sharing.status', 'class']),
+      .indexFields(['metadata.sharing.status', 'class', 'trashed']),
   options: {
     as: 'io.cozy.files/metadata.sharing.status/new/class/shortcut',
     fetchPolicy: defaultFetchPolicy
