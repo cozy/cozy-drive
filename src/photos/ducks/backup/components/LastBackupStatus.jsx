@@ -15,34 +15,21 @@ const LastBackupStatus = () => {
   const {
     lastBackup: {
       status,
-      errorMessage,
+      message,
       backedUpMediaCount,
       totalMediasToBackupCount
     }
   } = backupInfo
 
-  let lastBackupDescription
-
-  if (status === 'success' && totalMediasToBackupCount > 0) {
-    if (backedUpMediaCount === totalMediasToBackupCount) {
-      lastBackupDescription = t('Backup.LastBackupStatus.success', {
-        smart_count: totalMediasToBackupCount
-      })
-    } else {
-      lastBackupDescription = t('Backup.LastBackupStatus.partialSuccess', {
-        smart_count: totalMediasToBackupCount,
-        backedUpMediaCount
-      })
-    }
-  } else if (status === 'error') {
-    lastBackupDescription = errorMessage
-  } else {
-    return null
-  }
-
   return (
     <Typography className="u-mt-1-half" align="center">
-      {t('Backup.LastBackupStatus.lastBackup')} {lastBackupDescription}
+      {t('Backup.LastBackupStatus.lastBackup')}
+      {status === 'success' ? t('Backup.LastBackupStatus.success') : null}
+      {t('Backup.LastBackupStatus.backedUpElements', {
+        smart_count: totalMediasToBackupCount,
+        backedUpMediaCount
+      })}
+      {message ? ` (${message})` : null}
     </Typography>
   )
 }
