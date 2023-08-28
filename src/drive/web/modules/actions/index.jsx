@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { isFile } from 'cozy-client/dist/models/file'
-import { ShareModal } from 'cozy-sharing'
 import { isIOSApp, isMobileApp } from 'cozy-device-helper'
 import { EditDocumentQualification } from 'cozy-scanner'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
@@ -19,14 +18,9 @@ import ShareIosIcon from 'cozy-ui/transpiled/react/Icons/ShareIos'
 import LinkOutIcon from 'cozy-ui/transpiled/react/Icons/LinkOut'
 import EyeIcon from 'cozy-ui/transpiled/react/Icons/Eye'
 
-import {
-  isEncryptedFolder,
-  isEncryptedFile,
-  isEncryptedFileOrFolder
-} from 'drive/lib/encryption'
+import { isEncryptedFolder, isEncryptedFile } from 'drive/lib/encryption'
 import DeleteConfirm from 'drive/web/modules/drive/DeleteConfirm'
 import MoveModal from 'drive/web/modules/move/MoveModal'
-import ShareMenuItem from 'drive/web/modules/drive/ShareMenuItem'
 import MakeAvailableOfflineMenuItem from 'drive/web/modules/drive/MakeAvailableOfflineMenuItem'
 import DestroyConfirm from 'drive/web/modules/trash/components/DestroyConfirm'
 import { startRenamingAsync } from 'drive/web/modules/drive/rename'
@@ -39,28 +33,7 @@ import {
 } from './utils'
 import { useI18n } from 'cozy-ui/transpiled/react'
 
-export const share = ({ hasWriteAccess, pushModal, popModal }) => {
-  return {
-    name: 'share',
-    icon: 'share',
-    displayCondition: selection =>
-      hasWriteAccess &&
-      selection.length === 1 &&
-      !isEncryptedFileOrFolder(selection[0]),
-    action: selected =>
-      pushModal(
-        <ShareModal
-          document={selected[0]}
-          documentType="Files"
-          sharingDesc={selected[0].name}
-          onClose={popModal}
-        />
-      ),
-    Component: function ShareMenuItemInMenu({ files, ...rest }) {
-      return <ShareMenuItem docId={files[0].id} {...rest} />
-    }
-  }
-}
+export { share } from './share'
 
 export const download = ({ client, vaultClient }) => {
   return isMobileApp()
