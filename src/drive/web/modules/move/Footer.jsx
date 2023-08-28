@@ -16,7 +16,8 @@ const Footer = ({
   currentDirId,
   isMoving,
   primaryTextAction,
-  secondaryTextAction
+  secondaryTextAction,
+  isLoading
 }) => {
   const { t } = useI18n()
   const primaryText = primaryTextAction ? primaryTextAction : t('Move.action')
@@ -30,8 +31,10 @@ const Footer = ({
       <Buttons
         label={primaryText}
         onClick={onConfirm}
-        disabled={areTargetsInCurrentDir(targets, currentDirId) || isMoving}
-        busy={isMoving}
+        disabled={
+          areTargetsInCurrentDir(targets, currentDirId) || isMoving || isLoading
+        }
+        busy={isMoving || isLoading}
       />
     </>
   )
@@ -44,11 +47,13 @@ Footer.propTypes = {
   currentDirId: PropTypes.string.isRequired,
   isMoving: PropTypes.bool,
   primaryTextAction: PropTypes.string,
-  secondaryTextAction: PropTypes.string
+  secondaryTextAction: PropTypes.string,
+  isLoading: PropTypes.bool
 }
 
 Footer.defaultProps = {
-  isMoving: false
+  isMoving: false,
+  isLoading: false
 }
 
 export default Footer
