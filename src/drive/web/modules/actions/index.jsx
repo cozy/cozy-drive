@@ -1,9 +1,8 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 
 import { isFile } from 'cozy-client/dist/models/file'
 import { isIOSApp, isMobileApp } from 'cozy-device-helper'
 import { EditDocumentQualification } from 'cozy-scanner'
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
@@ -17,6 +16,10 @@ import ReplyIcon from 'cozy-ui/transpiled/react/Icons/Reply'
 import ShareIosIcon from 'cozy-ui/transpiled/react/Icons/ShareIos'
 import LinkOutIcon from 'cozy-ui/transpiled/react/Icons/LinkOut'
 import EyeIcon from 'cozy-ui/transpiled/react/Icons/Eye'
+import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
+import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
+import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
+import Divider from 'cozy-ui/transpiled/react/Divider'
 
 import { isEncryptedFolder, isEncryptedFile } from 'drive/lib/encryption'
 import DeleteConfirm from 'drive/web/modules/drive/DeleteConfirm'
@@ -47,20 +50,21 @@ export const download = ({ client, vaultClient }) => {
             true
           )
         },
-        action: files => exportFilesNative(client, files, { vaultClient }),
-        Component: function Download(props) {
+        action: files =>
+          exportFilesNative(client, Array.isArray(files) ? files : [files], {
+            vaultClient
+          }),
+        Component: forwardRef(function Download(props, ref) {
           const { t } = useI18n()
           return (
-            <ActionMenuItem
-              onClick={() => {
-                return exportFilesNative(client, props.files, { vaultClient })
-              }}
-              left={<Icon icon={isIOSApp() ? ShareIosIcon : ReplyIcon} />}
-            >
-              {t('SelectionBar.forwardTo')}
-            </ActionMenuItem>
+            <ActionsMenuItem {...props} ref={ref}>
+              <ListItemIcon>
+                <Icon icon={isIOSApp() ? ShareIosIcon : ReplyIcon} />
+              </ListItemIcon>
+              <ListItemText primary={t('SelectionBar.forwardTo')} />
+            </ActionsMenuItem>
           )
-        }
+        })
       }
     : {
         name: 'download',
@@ -74,20 +78,21 @@ export const download = ({ client, vaultClient }) => {
             !(files.length > 1 && files.some(file => isEncryptedFile(file)))
           )
         },
-        action: files => downloadFiles(client, files, { vaultClient }),
-        Component: function Download(props) {
+        action: files =>
+          downloadFiles(client, Array.isArray(files) ? files : [files], {
+            vaultClient
+          }),
+        Component: forwardRef(function Download(props, ref) {
           const { t } = useI18n()
           return (
-            <ActionMenuItem
-              onClick={() => {
-                return downloadFiles(client, props.files, { vaultClient })
-              }}
-              left={<Icon icon={DownloadIcon} />}
-            >
-              {t('SelectionBar.download')}
-            </ActionMenuItem>
+            <ActionsMenuItem {...props} ref={ref}>
+              <ListItemIcon>
+                <Icon icon={DownloadIcon} />
+              </ListItemIcon>
+              <ListItemText primary={t('SelectionBar.download')} />
+            </ActionsMenuItem>
           )
-        }
+        })
       }
 }
 
@@ -96,9 +101,9 @@ export const hr = () => {
     name: 'hr',
     icon: 'hr',
     displayInSelectionBar: false,
-    Component: function hr() {
-      return <hr />
-    }
+    Component: forwardRef(function hr(props, ref) {
+      return <Divider ref={ref} />
+    })
   }
 }
 
@@ -110,34 +115,24 @@ export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
     action: files =>
       pushModal(
         <DeleteConfirm
-          files={files}
+          files={Array.isArray(files) ? files : [files]}
           afterConfirmation={() => {
             refresh()
           }}
           onClose={popModal}
         />
       ),
-    Component: function Trash(props) {
+    Component: forwardRef(function Trash(props, ref) {
       const { t } = useI18n()
       return (
-        <ActionMenuItem
-          onClick={() =>
-            pushModal(
-              <DeleteConfirm
-                files={props.files}
-                afterConfirmation={() => {
-                  refresh()
-                }}
-                onClose={popModal}
-              />
-            )
-          }
-          left={<Icon icon={TrashIcon} color="var(--errorColor)" />}
-        >
-          <span className="u-error">{t('SelectionBar.trash')}</span>
-        </ActionMenuItem>
+        <ActionsMenuItem {...props} ref={ref}>
+          <ListItemIcon>
+            <Icon icon={TrashIcon} color="var(--errorColor)" />
+          </ListItemIcon>
+          <ListItemText className="u-error" primary={t('SelectionBar.trash')} />
+        </ActionsMenuItem>
       )
-    }
+    })
   }
 }
 export const open = ({ client, vaultClient }) => {
@@ -146,20 +141,27 @@ export const open = ({ client, vaultClient }) => {
     icon: 'openWith',
     displayCondition: selection =>
       isMobileApp() && selection.length === 1 && isFile(selection[0]),
-    action: files => openFileWith(client, files[0], { vaultClient }),
-    Component: function Open(props) {
+    action: files =>
+      openFileWith(client, Array.isArray(files) ? files[0] : files, {
+        vaultClient
+      }),
+    Component: forwardRef(function Open(props, ref) {
       const { t } = useI18n()
       return (
-        <ActionMenuItem
-          onClick={() => openFileWith(client, props.files[0], { vaultClient })}
-          left={<Icon icon={isIOSApp() ? EyeIcon : LinkOutIcon} />}
-        >
-          {isIOSApp()
-            ? t('SelectionBar.applePreview')
-            : t('SelectionBar.openWith')}
-        </ActionMenuItem>
+        <ActionsMenuItem {...props} ref={ref}>
+          <ListItemIcon>
+            <Icon icon={isIOSApp() ? EyeIcon : LinkOutIcon} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              isIOSApp()
+                ? t('SelectionBar.applePreview')
+                : t('SelectionBar.openWith')
+            }
+          />
+        </ActionsMenuItem>
       )
-    }
+    })
   }
 }
 
@@ -168,18 +170,19 @@ export const rename = ({ hasWriteAccess, dispatch }) => {
     name: 'rename',
     icon: 'rename',
     displayCondition: selection => hasWriteAccess && selection.length === 1,
-    action: files => dispatch(startRenamingAsync(files[0])),
-    Component: function Rename(props) {
+    action: files =>
+      dispatch(startRenamingAsync(Array.isArray(files) ? files[0] : files)),
+    Component: forwardRef(function Rename(props, ref) {
       const { t } = useI18n()
       return (
-        <ActionMenuItem
-          onClick={() => dispatch(startRenamingAsync(props.files[0]))}
-          left={<Icon icon={RenameIcon} />}
-        >
-          {t('SelectionBar.rename')}
-        </ActionMenuItem>
+        <ActionsMenuItem {...props} ref={ref}>
+          <ListItemIcon>
+            <Icon icon={RenameIcon} />
+          </ListItemIcon>
+          <ListItemText primary={t('SelectionBar.rename')} />
+        </ActionsMenuItem>
       )
-    }
+    })
   }
 }
 
@@ -189,20 +192,23 @@ export const move = ({ canMove, pushModal, popModal }) => {
     icon: 'moveto',
     displayCondition: () => canMove,
     action: files =>
-      pushModal(<MoveModal entries={files} onClose={popModal} />),
-    Component: function MoveTo(props) {
+      pushModal(
+        <MoveModal
+          entries={Array.isArray(files) ? files : [files]}
+          onClose={popModal}
+        />
+      ),
+    Component: forwardRef(function MoveTo(props, ref) {
       const { t } = useI18n()
       return (
-        <ActionMenuItem
-          onClick={() =>
-            pushModal(<MoveModal entries={props.files} onClose={popModal} />)
-          }
-          left={<Icon icon={MovetoIcon} />}
-        >
-          {t('SelectionBar.moveto')}
-        </ActionMenuItem>
+        <ActionsMenuItem {...props} ref={ref}>
+          <ListItemIcon>
+            <Icon icon={MovetoIcon} />
+          </ListItemIcon>
+          <ListItemText primary={t('SelectionBar.moveto')} />
+        </ActionsMenuItem>
       )
-    }
+    })
   }
 }
 
@@ -213,23 +219,21 @@ export const duplicate = ({ client, hasWriteAccess, refresh, isPublic }) => {
     displayCondition: selection =>
       selection.length === 1 && isFile(selection[0]) && hasWriteAccess,
     action: async files => {
-      await client.collection('io.cozy.files').copy(files[0].id)
+      const file = Array.isArray(files) ? files[0] : files
+      await client.collection('io.cozy.files').copy(file.id)
       if (isPublic) refresh()
     },
-    Component: function Duplicate(props) {
+    Component: forwardRef(function Duplicate(props, ref) {
       const { t } = useI18n()
       return (
-        <ActionMenuItem
-          onClick={async () => {
-            await client.collection('io.cozy.files').copy(props.files[0].id)
-            if (isPublic) refresh()
-          }}
-          left={<Icon icon={MultiFilesIcon} />}
-        >
-          {t('SelectionBar.duplicate')}
-        </ActionMenuItem>
+        <ActionsMenuItem {...props} ref={ref}>
+          <ListItemIcon>
+            <Icon icon={MultiFilesIcon} />
+          </ListItemIcon>
+          <ListItemText primary={t('SelectionBar.duplicate')} />
+        </ActionsMenuItem>
       )
-    }
+    })
   }
 }
 
@@ -242,7 +246,7 @@ export const qualify = ({ pushModal, popModal }) => {
     action: files =>
       pushModal(
         <EditDocumentQualification
-          document={files[0]}
+          document={Array.isArray(files) ? files[0] : files}
           onQualified={() => {
             popModal()
             // changes should be retrieved through cozy-client
@@ -250,28 +254,17 @@ export const qualify = ({ pushModal, popModal }) => {
           onClose={popModal}
         />
       ),
-    Component: function Qualify(props) {
+    Component: forwardRef(function Qualify(props, ref) {
       const { t } = useI18n()
       return (
-        <ActionMenuItem
-          onClick={() =>
-            pushModal(
-              <EditDocumentQualification
-                document={props.files[0]}
-                onQualified={() => {
-                  popModal()
-                  // changes should be retrieved through cozy-client
-                }}
-                onClose={popModal}
-              />
-            )
-          }
-          left={<Icon icon={QualifyIcon} />}
-        >
-          {t('SelectionBar.qualify')}
-        </ActionMenuItem>
+        <ActionsMenuItem {...props} ref={ref}>
+          <ListItemIcon>
+            <Icon icon={QualifyIcon} />
+          </ListItemIcon>
+          <ListItemText primary={t('SelectionBar.qualify')} />
+        </ActionsMenuItem>
       )
-    }
+    })
   }
 }
 
@@ -282,29 +275,24 @@ export const versions = ({ navigate, pathname }) => {
     displayCondition: selection =>
       selection.length === 1 && isFile(selection[0]),
     action: files => {
+      const file = Array.isArray(files) ? files[0] : files
       return navigate(
         `${pathname}${pathname.endsWith('/') ? '' : '/'}file/${
-          files[0].id
+          file.id
         }/revision`
       )
     },
-    Component: function History(props) {
+    Component: forwardRef(function History(props, ref) {
       const { t } = useI18n()
       return (
-        <ActionMenuItem
-          onClick={() => {
-            return navigate(
-              `${pathname}${pathname.endsWith('/') ? '' : '/'}file/${
-                props.files[0].id
-              }/revision`
-            )
-          }}
-          left={<Icon icon={HistoryIcon} />}
-        >
-          {t('SelectionBar.history')}
-        </ActionMenuItem>
+        <ActionsMenuItem {...props} ref={ref}>
+          <ListItemIcon>
+            <Icon icon={HistoryIcon} />
+          </ListItemIcon>
+          <ListItemText primary={t('SelectionBar.history')} />
+        </ActionsMenuItem>
       )
-    }
+    })
   }
 }
 
@@ -325,23 +313,20 @@ export const restore = ({ refresh, client }) => {
     name: 'restore',
     icon: 'restore',
     action: async files => {
-      await restoreFiles(client, files)
+      await restoreFiles(client, Array.isArray(files) ? files : [files])
       refresh()
     },
-    Component: function Restore(props) {
+    Component: forwardRef(function Restore(props, ref) {
       const { t } = useI18n()
       return (
-        <ActionMenuItem
-          onClick={async () => {
-            await restoreFiles(client, props.files)
-            refresh()
-          }}
-          left={<Icon icon={RestoreIcon} />}
-        >
-          {t('SelectionBar.restore')}
-        </ActionMenuItem>
+        <ActionsMenuItem {...props} ref={ref}>
+          <ListItemIcon>
+            <Icon icon={RestoreIcon} />
+          </ListItemIcon>
+          <ListItemText primary={t('SelectionBar.restore')} />
+        </ActionsMenuItem>
       )
-    }
+    })
   }
 }
 
@@ -350,19 +335,25 @@ export const destroy = ({ pushModal, popModal }) => {
     name: 'destroy',
     icon: 'trash',
     action: files =>
-      pushModal(<DestroyConfirm files={files} onClose={popModal} />),
-    Component: function Destroy(props) {
+      pushModal(
+        <DestroyConfirm
+          files={Array.isArray(files) ? files : [files]}
+          onClose={popModal}
+        />
+      ),
+    Component: forwardRef(function Destroy(props, ref) {
       const { t } = useI18n()
       return (
-        <ActionMenuItem
-          onClick={() =>
-            pushModal(<DestroyConfirm files={props.files} onClose={popModal} />)
-          }
-          left={<Icon icon={TrashIcon} color="var(--errorColor)" />}
-        >
-          <span className="u-error">{t('SelectionBar.destroy')}</span>
-        </ActionMenuItem>
+        <ActionsMenuItem {...props} ref={ref}>
+          <ListItemIcon>
+            <Icon icon={TrashIcon} color="var(--errorColor)" />
+          </ListItemIcon>
+          <ListItemText
+            className="u-error"
+            primary={t('SelectionBar.destroy')}
+          />
+        </ActionsMenuItem>
       )
-    }
+    })
   }
 }
