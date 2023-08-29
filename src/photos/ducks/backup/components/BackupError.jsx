@@ -6,17 +6,23 @@ import Alert from 'cozy-ui/transpiled/react/Alert'
 
 import { shouldDisplayQuotaPaywall } from 'photos/ducks/backup/helpers/error'
 import { useBackupActions } from '../hooks/useBackupActions'
+import { useBackupData } from '../hooks/useBackupData'
 
 export const BackupError = () => {
-  const { backupError, setBackupError } = useBackupActions()
-
-  if (backupError === null) return null
+  const { backupError } = useBackupActions()
+  const { backupInfo, setBackupInfo } = useBackupData()
 
   const onClose = () => {
-    setBackupError(null)
+    setBackupInfo({
+      ...backupInfo,
+      lastBackup: {
+        ...backupInfo.lastBackup,
+        alreadyDisplayed: true
+      }
+    })
   }
 
-  return shouldDisplayQuotaPaywall(backupError) ? (
+  return shouldDisplayQuotaPaywall(backupInfo) ? (
     <QuotaPaywall onClose={onClose} />
   ) : (
     <Snackbar
@@ -27,7 +33,7 @@ export const BackupError = () => {
       style={{ bottom: 'var(--sidebarHeight)' }}
     >
       <Alert variant="filled" elevation={6} severity="error" onClose={onClose}>
-        {backupError.message}
+        {backupError?.message}
       </Alert>
     </Snackbar>
   )

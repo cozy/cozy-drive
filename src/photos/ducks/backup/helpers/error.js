@@ -12,6 +12,10 @@ export const parseBackupError = ({ message }) => {
   }
 }
 
-export const shouldDisplayQuotaPaywall = backupError => {
-  return backupError.statusCode === 413
+export const shouldDisplayQuotaPaywall = backupInfo => {
+  return (
+    backupInfo?.currentBackup?.status === 'done' &&
+    backupInfo?.lastBackup?.code === 413 &&
+    !backupInfo.lastBackup?.alreadyDisplayed
+  )
 }
