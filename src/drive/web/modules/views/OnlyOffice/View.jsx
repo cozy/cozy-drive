@@ -64,10 +64,9 @@ const View = ({ id, apiUrl, docEditorConfig }) => {
   return (
     <>
       {!isEditorReady && (
-        <Spinner
-          className="u-flex u-flex-items-center u-flex-justify-center u-flex-grow-1"
-          size="xxlarge"
-        />
+        <div className="u-flex u-flex-items-center u-flex-justify-center u-flex-grow-1">
+          <Spinner size="xxlarge" />
+        </div>
       )}
       <div id="onlyOfficeEditor" />
       {showReadOnlyFab && <ReadOnlyFab />}
