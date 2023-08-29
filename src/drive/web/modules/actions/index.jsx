@@ -2,7 +2,6 @@ import React, { forwardRef } from 'react'
 
 import { isFile } from 'cozy-client/dist/models/file'
 import { isIOSApp, isMobileApp } from 'cozy-device-helper'
-import { EditDocumentQualification } from 'cozy-scanner'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
@@ -35,6 +34,7 @@ import {
   restoreFiles
 } from './utils'
 import { useI18n } from 'cozy-ui/transpiled/react'
+import { navigateToModal } from 'drive/web/modules/actions/helpers'
 
 export { share } from './share'
 
@@ -237,23 +237,14 @@ export const duplicate = ({ client, hasWriteAccess, refresh, isPublic }) => {
   }
 }
 
-export const qualify = ({ pushModal, popModal }) => {
+export const qualify = ({ navigate, pathname }) => {
   return {
     name: 'qualify',
     icon: 'qualify',
     displayCondition: selection =>
       selection.length === 1 && isFile(selection[0]),
     action: files =>
-      pushModal(
-        <EditDocumentQualification
-          document={Array.isArray(files) ? files[0] : files}
-          onQualified={() => {
-            popModal()
-            // changes should be retrieved through cozy-client
-          }}
-          onClose={popModal}
-        />
-      ),
+      navigateToModal({ navigate, pathname, files, path: 'qualify' }),
     Component: forwardRef(function Qualify(props, ref) {
       const { t } = useI18n()
       return (
@@ -274,14 +265,8 @@ export const versions = ({ navigate, pathname }) => {
     icon: 'history',
     displayCondition: selection =>
       selection.length === 1 && isFile(selection[0]),
-    action: files => {
-      const file = Array.isArray(files) ? files[0] : files
-      return navigate(
-        `${pathname}${pathname.endsWith('/') ? '' : '/'}file/${
-          file.id
-        }/revision`
-      )
-    },
+    action: files =>
+      navigateToModal({ navigate, pathname, files, path: 'revision' }),
     Component: forwardRef(function History(props, ref) {
       const { t } = useI18n()
       return (

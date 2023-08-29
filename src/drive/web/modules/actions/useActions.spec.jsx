@@ -6,7 +6,6 @@ import { isMobileApp } from 'cozy-device-helper'
 import AppLike from 'test/components/AppLike'
 import DeleteConfirm from 'drive/web/modules/drive/DeleteConfirm'
 import MoveModal from 'drive/web/modules/move/MoveModal'
-import { EditDocumentQualification } from 'cozy-scanner'
 import DestroyConfirm from 'drive/web/modules/trash/components/DestroyConfirm'
 import { createStore } from 'redux'
 import {
@@ -421,19 +420,14 @@ describe('useActions', () => {
     })
 
     it('shows the qualification modal when activated', () => {
-      const qualifyAction = getAction('qualify')
+      const navigate = jest.fn()
+      const qualifyAction = getAction('qualify', {
+        navigate,
+        pathname: 'folder/:folderId'
+      })
       const mockDocument = { id: 'abc' }
       qualifyAction.action([mockDocument])
-      const actuallyCalledModal =
-        mockModalContextValue.pushModal.mock.calls[0][0]
-
-      expect(mockModalContextValue.pushModal).toHaveBeenCalledWith(
-        <EditDocumentQualification
-          document={mockDocument}
-          onQualified={actuallyCalledModal.props.onQualified}
-          onClose={actuallyCalledModal.props.onClose}
-        />
-      )
+      expect(navigate).toHaveBeenCalledWith('folder/:folderId/file/abc/qualify')
     })
   })
 
