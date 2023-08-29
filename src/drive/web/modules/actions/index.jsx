@@ -22,7 +22,6 @@ import Divider from 'cozy-ui/transpiled/react/Divider'
 
 import { isEncryptedFolder, isEncryptedFile } from 'drive/lib/encryption'
 import DeleteConfirm from 'drive/web/modules/drive/DeleteConfirm'
-import MoveModal from 'drive/web/modules/move/MoveModal'
 import MakeAvailableOfflineMenuItem from 'drive/web/modules/drive/MakeAvailableOfflineMenuItem'
 import DestroyConfirm from 'drive/web/modules/trash/components/DestroyConfirm'
 import { startRenamingAsync } from 'drive/web/modules/drive/rename'
@@ -34,7 +33,10 @@ import {
   restoreFiles
 } from './utils'
 import { useI18n } from 'cozy-ui/transpiled/react'
-import { navigateToModal } from 'drive/web/modules/actions/helpers'
+import {
+  navigateToModal,
+  navigateToModalWithMultipleFile
+} from 'drive/web/modules/actions/helpers'
 
 export { share } from './share'
 
@@ -186,18 +188,19 @@ export const rename = ({ hasWriteAccess, dispatch }) => {
   }
 }
 
-export const move = ({ canMove, pushModal, popModal }) => {
+export const move = ({ canMove, pathname, navigate }) => {
   return {
     name: 'moveto',
     icon: 'moveto',
     displayCondition: () => canMove,
-    action: files =>
-      pushModal(
-        <MoveModal
-          entries={Array.isArray(files) ? files : [files]}
-          onClose={popModal}
-        />
-      ),
+    action: files => {
+      navigateToModalWithMultipleFile({
+        files,
+        pathname,
+        navigate,
+        path: 'move'
+      })
+    },
     Component: forwardRef(function MoveTo(props, ref) {
       const { t } = useI18n()
       return (
