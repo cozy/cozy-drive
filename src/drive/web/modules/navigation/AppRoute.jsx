@@ -28,6 +28,7 @@ import FilesViewerRecent from '../views/Recent/FilesViewerRecent'
 import { ShareDisplayedFolderView } from 'drive/web/modules/views/Modal/ShareDisplayedFolderView'
 import { ShareFileView } from 'drive/web/modules/views/Modal/ShareFileView'
 import { QualifyFileView } from 'drive/web/modules/views/Modal/QualifyFileView'
+import { MoveFilesView } from 'drive/web/modules/views/Modal/MoveFilesView'
 
 const FilesRedirect = () => {
   const { folderId } = useParams()
@@ -46,6 +47,7 @@ const AppRoute = () => (
 
       <Route path="folder" element={<DriveView />}>
         {/* For FilesViewer and FileHistory, we want 2 routes to match: `/folder/:folderId/file/:fileId` and `/folder/file/:fileId`. The `:folderId` is not present when opening a file from the root folder. */}
+        <Route path="move" element={<MoveFilesView />} />
         <Route path=":folderId">
           <Route path="file/:fileId" element={<FilesViewerDrive />} />
           <Route path="file/:fileId/revision" element={<FileHistory />} />
@@ -53,6 +55,7 @@ const AppRoute = () => (
           <Route path="file/:fileId/qualify" element={<QualifyFileView />} />
           <Route path="paywall" element={<OnlyOfficePaywallView />} />
           <Route path="share" element={<ShareDisplayedFolderView />} />
+          <Route path="move" element={<MoveFilesView />} />
         </Route>
         <Route path="file/:fileId" element={<FilesViewerDrive />} />
         <Route path="file/:fileId/revision" element={<FileHistory />} />
@@ -66,6 +69,7 @@ const AppRoute = () => (
         <Route path="file/:fileId/share" element={<ShareFileView />} />
         <Route path="file/:fileId/qualify" element={<QualifyFileView />} />
         <Route path="share" element={<ShareDisplayedFolderView />} />
+        <Route path="move" element={<MoveFilesView />} />
       </Route>
 
       <Route path="trash">
@@ -84,6 +88,7 @@ const AppRoute = () => (
           <Route path="file/:fileId/revision" element={<FileHistory />} />
           <Route path="file/:fileId/share" element={<ShareFileView />} />
           <Route path="file/:fileId/qualify" element={<QualifyFileView />} />
+          <Route path="move" element={<MoveFilesView />} />
         </Route>
         {/* This route must be inside the /sharing path for the nav to have an activate state */}
         <Route path=":folderId" element={<SharingsFolderView />}>
@@ -93,6 +98,7 @@ const AppRoute = () => (
           <Route path="file/:fileId/share" element={<ShareFileView />} />
           <Route path="file/:fileId/qualify" element={<QualifyFileView />} />
           <Route path="share" element={<ShareDisplayedFolderView />} />
+          <Route path="move" element={<MoveFilesView />} />
         </Route>
       </Route>
       <Route path="onlyoffice/:fileId" element={<OnlyOfficeView />}>

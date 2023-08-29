@@ -4,3 +4,15 @@ export const navigateToModal = ({ navigate, pathname, files, path }) => {
     `${pathname}${pathname.endsWith('/') ? '' : '/'}file/${file.id}/${path}`
   )
 }
+
+export const navigateToModalWithMultipleFile = ({
+  navigate,
+  pathname,
+  files,
+  path
+}) => {
+  const documents = Array.isArray(files) ? files : [files]
+  navigate(`${pathname}${pathname.endsWith('/') ? '' : '/'}${path}`, {
+    state: { fileIds: documents.map(file => file.id) }
+  })
+}

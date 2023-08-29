@@ -5,7 +5,6 @@ import { isMobileApp } from 'cozy-device-helper'
 
 import AppLike from 'test/components/AppLike'
 import DeleteConfirm from 'drive/web/modules/drive/DeleteConfirm'
-import MoveModal from 'drive/web/modules/move/MoveModal'
 import DestroyConfirm from 'drive/web/modules/trash/components/DestroyConfirm'
 import { createStore } from 'redux'
 import {
@@ -386,17 +385,16 @@ describe('useActions', () => {
     })
 
     it('shows the move modal when activated', () => {
-      const moveAction = getAction('moveto')
-      const mockDocuments = [{ id: 'abc' }]
-      moveAction.action(mockDocuments)
-      const actuallyCalledModal =
-        mockModalContextValue.pushModal.mock.calls[0][0]
-      expect(mockModalContextValue.pushModal).toHaveBeenCalledWith(
-        <MoveModal
-          entries={mockDocuments}
-          onClose={actuallyCalledModal.props.onClose} // needs exact comparison
-        />
-      )
+      const navigate = jest.fn()
+      const moveAction = getAction('moveto', {
+        navigate,
+        pathname: 'folder/:folderId'
+      })
+      const mockDocument = { id: 'abc' }
+      moveAction.action([mockDocument])
+      expect(navigate).toHaveBeenCalledWith('folder/:folderId/move', {
+        state: { fileIds: ['abc'] }
+      })
     })
   })
 
