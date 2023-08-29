@@ -1,83 +1,104 @@
 /* eslint-disable no-console */
-import { useSearchParams } from 'react-router-dom'
-import { useEffect, useRef, useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useCallback, useEffect, useState } from 'react'
+import { useWebviewIntent } from 'cozy-intent'
 
-import { FileForQueue, FileFromNative } from './UploadTypes'
+import logger from 'lib/logger'
+import { FileFromNative } from './UploadTypes'
+import CozyClient from 'cozy-client'
 
-// eslint-disable-next-line no-console
-const webviewIntent = {
-  call: (
-    methodName: string,
-    files?: FileFromNative[] | FileForQueue[]
-  ): Promise<FileFromNative[] | void> => {
-    if (methodName === 'getFilesToUpload') {
-      return Promise.resolve([
-        {
-          fileName: 'test.pdf',
-          type: 'application/pdf',
-          size: 1000,
-          lastModified: 123456789
-        }
-      ])
-    }
-    if (methodName === 'uploadFiles') {
-      console.log('uploadFiles', files)
-      return Promise.resolve()
-    }
-    if (methodName === 'resetFilesToHandle') {
-      console.log('resetFilesToHandle')
-      return Promise.resolve()
-    }
-    return Promise.resolve()
-  }
+const typedLogger = logger as unknown & {
+  info: (message: string, ...rest: unknown[]) => void
 }
 
 interface UploadFromFlagship {
   items?: FileFromNative[]
-  uploadFilesFromFlagship: (files: FileForQueue[]) => Promise<void>
+  uploadFilesFromFlagship: (
+    client: CozyClient,
+    fileUrl: string,
+    fileOptions: {
+      name: string
+      dirId: string
+      conflictStrategy: string
+    }
+  ) => Promise<void>
   resetFilesToHandle: () => Promise<void>
 }
 
 export const useUploadFromFlagship = (): UploadFromFlagship => {
+  const webviewIntent = useWebviewIntent()
   const [searchParams] = useSearchParams()
-  const [filesToUpload, setFilesToUpload] = useState<FileFromNative[]>()
+  const [items, setItems] = useState<FileFromNative[]>()
   const fromFlagshipUpload = searchParams.get('fromFlagshipUpload')
-  const didFetch = useRef(false)
+  const navigate = useNavigate()
+  const getFilesToUpload = useCallback(async () => {
+    typedLogger.info('getFilesToUpload called')
+
+    try {
+      const files = (await webviewIntent?.call(
+        'getFilesToUpload'
+      )) as unknown as FileFromNative[]
+
+      if (files) {
+        typedLogger.info('getFilesToUpload success', { files })
+
+        return setItems(files.map(file => ({ ...file, name: file.fileName })))
+      } else {
+        typedLogger.info('getFilesToUpload no files to upload')
+        throw new Error('No files to upload')
+      }
+    } catch (error) {
+      typedLogger.info('getFilesToUpload error', { error })
+      // handle error, maybe show a toast and redirect to the home?
+    }
+  }, [webviewIntent])
 
   useEffect(() => {
-    if (fromFlagshipUpload && webviewIntent && !didFetch.current) {
-      webviewIntent
-        .call('getFilesToUpload')
-        .then(files => {
-          didFetch.current = true
-
-          if (files) {
-            return setFilesToUpload(
-              files.map(file => ({ ...file, name: file.fileName }))
-            )
-          } else {
-            throw new Error('No files to upload')
-          }
+    if (fromFlagshipUpload && webviewIntent) {
+      getFilesToUpload()
+        .then(() => {
+          return typedLogger.info(
+            'getFilesToUpload success, setting didFetch = true'
+          )
         })
-        .catch(() => {
+        .catch((error: unknown) => {
+          typedLogger.info('getFilesToUpload error, setting didFetch = true', {
+            error
+          })
           // handle error, maybe show a toast and redirect to the home?
         })
     }
-  }, [fromFlagshipUpload])
+  }, [fromFlagshipUpload, getFilesToUpload, webviewIntent, navigate])
 
   return {
-    items: filesToUpload,
-    uploadFilesFromFlagship: async (files: FileForQueue[]): Promise<void> => {
+    items,
+    uploadFilesFromFlagship: async (
+      _client,
+      fileUrl,
+      fileOptions
+    ): Promise<void> => {
       try {
-        await webviewIntent.call('uploadFiles', files)
+        typedLogger.info('uploadFilesFromFlagship called', {
+          fileUrl,
+          fileOptions
+        })
+        const response = await webviewIntent?.call(
+          'uploadFiles',
+          JSON.stringify({ fileUrl, fileOptions })
+        )
+        typedLogger.info('uploadFilesFromFlagship success', { response })
       } catch (error) {
+        typedLogger.info('uploadFilesFromFlagship error', { error })
         // handle error, maybe show a toast and redirect to the home?
       }
     },
     resetFilesToHandle: async (): Promise<void> => {
       try {
-        await webviewIntent.call('resetFilesToHandle')
+        typedLogger.info('resetFilesToHandle called')
+        const response = await webviewIntent?.call('resetFilesToHandle')
+        typedLogger.info('resetFilesToHandle success', { response })
       } catch (error) {
+        typedLogger.info('resetFilesToHandle error', { error })
         // handle error, maybe show a toast and redirect to the home?
       }
     }

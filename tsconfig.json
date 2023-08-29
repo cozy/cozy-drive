@@ -8,6 +8,7 @@
     "jsx": "react",
     "paths": {
       "drive/*": ["./src/drive/*"],
+      "lib/*": ["./src/lib/*"]
     }
   }
 }

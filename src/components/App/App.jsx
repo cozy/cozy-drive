@@ -13,7 +13,15 @@ import cozyBar from 'lib/cozyBar'
 
 const App = ({ store, client, lang, polyglot, children }) => {
   return (
-    <WebviewIntentProvider setBarContext={cozyBar.setWebviewContext}>
+    <WebviewIntentProvider
+      setBarContext={cozyBar.setWebviewContext}
+      methods={{
+        onFileUploaded: (file, isLast) => {
+          window.postMessage({ file, isLast })
+          return Promise.resolve(true)
+        }
+      }}
+    >
       <Provider store={store}>
         <DriveProvider client={client} lang={lang} polyglot={polyglot}>
           <PushBannerProvider>
