@@ -9,7 +9,7 @@ import { useSharingContext } from 'cozy-sharing'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 
 import { buildFolderByPathQuery } from 'drive/web/modules/queries'
-import { LoaderModal } from 'drive/web/modules/move/LoaderModal'
+import { LoaderModal } from 'drive/components/LoaderModal'
 import { getEntriesType } from 'drive/web/modules/move/helpers'
 
 /**

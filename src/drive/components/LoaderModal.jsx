@@ -12,7 +12,7 @@ const LoaderModal = () => {
       open
       content={
         <div className="u-h-3">
-          <Spinner size="large" noMargin middle />
+          <Spinner size="xlarge" noMargin middle />
         </div>
       }
     />
