@@ -3,7 +3,6 @@ import { renderHook } from '@testing-library/react-hooks'
 import { createMockClient } from 'cozy-client'
 import { isMobileApp } from 'cozy-device-helper'
 
-import { ShareModal } from 'cozy-sharing'
 import AppLike from 'test/components/AppLike'
 import DeleteConfirm from 'drive/web/modules/drive/DeleteConfirm'
 import MoveModal from 'drive/web/modules/move/MoveModal'
@@ -62,12 +61,6 @@ describe('useActions', () => {
     pushModal: jest.fn()
   }
   const mockRefresh = jest.fn()
-  const mockRouterContextValue = {
-    router: {
-      push: jest.fn()
-    },
-    location: { pathname: '/folder' }
-  }
   const mockClient = createMockClient({})
   const mockVaultClient = {}
 
@@ -88,7 +81,6 @@ describe('useActions', () => {
         client={mockClient}
         vaultClient={mockVaultClient}
         store={mockStore}
-        routerContextValue={mockRouterContextValue}
         modalContextValue={mockModalContextValue}
       >
         {children}
@@ -127,7 +119,8 @@ describe('useActions', () => {
     popModal: mockModalContextValue.popModal,
     refresh: mockRefresh,
     dispatch: jest.fn(),
-    navigate: jest.fn()
+    navigate: jest.fn(),
+    pathname: '/folder'
   }
 
   const getAction = (actionKey, hookArgs) => {
@@ -192,16 +185,14 @@ describe('useActions', () => {
     })
 
     it('shows the share modal when activated', () => {
-      const shareAction = getAction('share')
-      const mockDocument = { id: 'abc', name: 'my-file.md' }
+      const navigate = jest.fn()
+      const shareAction = getAction('share', {
+        navigate,
+        pathname: 'folder/:folderId'
+      })
+      const mockDocument = { id: 'abc' }
       shareAction.action([mockDocument])
-      expect(mockModalContextValue.pushModal).toHaveBeenCalledWith(
-        <ShareModal
-          document={mockDocument}
-          documentType="Files"
-          sharingDesc="my-file.md"
-        />
-      )
+      expect(navigate).toHaveBeenCalledWith('folder/:folderId/file/abc/share')
     })
   })
 

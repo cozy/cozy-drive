@@ -7,12 +7,12 @@ import { useI18n } from 'cozy-ui/transpiled/react/I18n'
 import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'
-import { ShareModal, SharedRecipients } from 'cozy-sharing'
+import { SharedRecipients } from 'cozy-sharing'
 
 import { isEncryptedFileOrFolder } from 'drive/lib/encryption'
-import styles from 'drive/styles/actionmenu.styl'
+import { navigateToModal } from 'drive/web/modules/actions/helpers'
 
-const share = ({ hasWriteAccess, pushModal, popModal }) => {
+const share = ({ hasWriteAccess, navigate, pathname }) => {
   return {
     name: 'share',
     icon: 'share',
@@ -20,17 +20,8 @@ const share = ({ hasWriteAccess, pushModal, popModal }) => {
       hasWriteAccess &&
       files.length === 1 &&
       !isEncryptedFileOrFolder(files[0]),
-    action: files => {
-      const document = Array.isArray(files) ? files[0] : files
-      pushModal(
-        <ShareModal
-          document={document}
-          documentType="Files"
-          sharingDesc={document.name}
-          onClose={popModal}
-        />
-      )
-    },
+    action: files =>
+      navigateToModal({ navigate, pathname, files, path: 'share' }),
     Component: forwardRef(function ShareMenuItemInMenu(props, ref) {
       const { t } = useI18n()
       const { isMobile } = useBreakpoints()
@@ -42,12 +33,8 @@ const share = ({ hasWriteAccess, pushModal, popModal }) => {
           </ListItemIcon>
           <ListItemText primary={t('Files.share.cta')} />
           {isMobile && props.doc ? (
-            <ListItemIcon>
-              <SharedRecipients
-                className={styles['fil-actionmenu-recipients']}
-                docId={props.doc.id}
-                size="small"
-              />
+            <ListItemIcon classes={{ root: 'u-w-auto' }}>
+              <SharedRecipients docId={props.doc.id} size="small" />
             </ListItemIcon>
           ) : null}
         </ActionsMenuItem>
