@@ -26,6 +26,7 @@ import SearchView from '../views/Search/SearchView'
 import OnlyOfficePaywallView from '../views/OnlyOffice/OnlyOfficePaywallView'
 import FilesViewerRecent from '../views/Recent/FilesViewerRecent'
 import { ShareDisplayedFolderView } from 'drive/web/modules/views/Modal/ShareDisplayedFolderView'
+import { ShareFileView } from 'drive/web/modules/views/Modal/ShareFileView'
 
 const FilesRedirect = () => {
   const { folderId } = useParams()
@@ -47,16 +48,19 @@ const AppRoute = () => (
         <Route path=":folderId">
           <Route path="file/:fileId" element={<FilesViewerDrive />} />
           <Route path="file/:fileId/revision" element={<FileHistory />} />
+          <Route path="file/:fileId/share" element={<ShareFileView />} />
           <Route path="paywall" element={<OnlyOfficePaywallView />} />
           <Route path="share" element={<ShareDisplayedFolderView />} />
         </Route>
         <Route path="file/:fileId" element={<FilesViewerDrive />} />
         <Route path="file/:fileId/revision" element={<FileHistory />} />
+        <Route path="file/:fileId/share" element={<ShareFileView />} />
       </Route>
 
       <Route path="recent" element={<RecentView />}>
         <Route path="file/:fileId" element={<FilesViewerRecent />} />
         <Route path="file/:fileId/revision" element={<FileHistory />} />
+        <Route path="file/:fileId/share" element={<ShareFileView />} />
         <Route path="share" element={<ShareDisplayedFolderView />} />
       </Route>
 
@@ -74,12 +78,14 @@ const AppRoute = () => (
           <Route path="file/:fileId" element={<SharingsFilesViewer />} />
           {/* This route must be a child of SharingsView so the modal opens on top of the sharing view */}
           <Route path="file/:fileId/revision" element={<FileHistory />} />
+          <Route path="file/:fileId/share" element={<ShareFileView />} />
         </Route>
         {/* This route must be inside the /sharing path for the nav to have an activate state */}
         <Route path=":folderId" element={<SharingsFolderView />}>
           <Route path="file/:fileId" element={<SharingsFilesViewer />} />
           {/* This route must be a child of SharingsFolderView so the modal opens on top of the folder view */}
           <Route path="file/:fileId/revision" element={<FileHistory />} />
+          <Route path="file/:fileId/share" element={<ShareFileView />} />
           <Route path="share" element={<ShareDisplayedFolderView />} />
         </Route>
       </Route>
