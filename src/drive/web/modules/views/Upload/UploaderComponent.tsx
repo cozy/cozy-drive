@@ -1,13 +1,15 @@
 /* eslint-disable no-console */
-import React, { useCallback, useState } from 'react'
-import localforage from 'localforage'
+import React, { useCallback, useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Query, useClient } from 'cozy-client'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import { useI18n } from 'cozy-ui/transpiled/react'
-import { uploadFilesFromNative } from 'drive/web/modules/upload'
+import {
+  removeFileToUploadQueue,
+  uploadFilesFromNative
+} from 'drive/web/modules/upload'
 import { ROOT_DIR_ID } from 'drive/constants/config'
 import Header from 'drive/web/modules/move/Header'
 import Explorer from 'drive/web/modules/move/Explorer'
@@ -16,10 +18,9 @@ import Loader from 'drive/web/modules/move/Loader'
 import LoadMore from 'drive/web/modules/move/LoadMore'
 import Footer from 'drive/web/modules/move/Footer'
 import Topbar from 'drive/web/modules/move/Topbar'
-import { startMediaBackup } from 'drive/mobile/modules/mediaBackup/duck'
 import { buildMoveOrImportQuery, buildOnlyFolderQuery } from '../../queries'
 import { generateForQueue } from './UploadUtils'
-import { DumbUploadProps, Folder } from './UploadTypes'
+import { DumbUploadProps, FileFromNative, Folder } from './UploadTypes'
 import { ThunkDispatch } from 'redux-thunk'
 import { useUploadFromFlagship } from './useUploadFromFlagship'
 
@@ -33,32 +34,43 @@ const TypedLoadMore = LoadMore as React.FC<{
 }>
 
 const DumbUpload = ({
-  uploadFilesFromNative
+  uploadFilesFromNative,
+  removeFileToUploadQueue
 }: DumbUploadProps): JSX.Element | null => {
   const [folder, setFolder] = useState<Folder>({ _id: ROOT_DIR_ID })
   const [uploadInProgress] = useState<boolean>(false)
   const { t } = TypedUseI18n()
   const navigate = useNavigate()
   const client = useClient()
-  const { items, resetFilesToHandle, uploadFilesFromFlagship } =
-    useUploadFromFlagship()
+  const { items, uploadFilesFromFlagship } = useUploadFromFlagship()
 
-  const callbackSuccess = useCallback(() => {
-    TypedAlerter.success(
-      t('ImportToDrive.success', { smart_count: items?.length })
-    )
+  useEffect(() => {
+    const onFileUpload = (event: {
+      data?: { file: FileFromNative; isLast?: number }
+    }): void => {
+      const file = event.data?.file
+      const isLast = event.data?.isLast
 
-    resetFilesToHandle()
-      .then(() => {
-        return console.log('resetFilesToHandle done')
-      })
-      .catch(e => {
-        console.log('resetFilesToHandle error', e)
-      })
-  }, [items?.length, resetFilesToHandle, t])
+      if (!file) return
+
+      removeFileToUploadQueue({ name: file.fileName })
+        .then(() => {
+          if (isLast) {
+            return TypedAlerter.success(
+              t('ImportToDrive.success', { smart_count: isLast })
+            )
+          }
+          return
+        })
+        .catch(e => {
+          console.log('removeFileToUploadQueue error', e)
+        })
+    }
+
+    window.addEventListener('message', onFileUpload)
+  }, [removeFileToUploadQueue, t])
 
   const onClose = useCallback(() => {
-    void localforage.removeItem('importedFiles')
     navigate('/')
   }, [navigate])
 
@@ -69,7 +81,7 @@ const DumbUpload = ({
     uploadFilesFromNative(
       filesForQueue,
       folder._id,
-      callbackSuccess,
+      undefined,
       { client },
       uploadFilesFromFlagship
     )
@@ -86,7 +98,6 @@ const DumbUpload = ({
     client,
     uploadFilesFromNative,
     folder._id,
-    callbackSuccess,
     uploadFilesFromFlagship,
     navigate
   ])
@@ -188,6 +199,8 @@ const DumbUpload = ({
 export default connect<any, any, any, any>(
   null,
   (dispatch: ThunkDispatch<any, any, any>) => ({
+    removeFileToUploadQueue: (fileName: string) =>
+      dispatch(removeFileToUploadQueue(fileName)),
     uploadFilesFromNative: (
       files: any,
       folderId: any,
@@ -203,6 +216,5 @@ export default connect<any, any, any, any>(
           { client, vaultClient },
           alternateUploader
         )
-      )
-  })
+      )})
 )(DumbUpload)

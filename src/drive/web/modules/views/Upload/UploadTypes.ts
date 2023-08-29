@@ -5,8 +5,9 @@ export interface Folder {
 }
 
 export interface FileForQueue {
-  file: FileFromNative
-  isDirectory: false
+  name: string
+  file?: { name: string }
+  isDirectory?: false
 }
 
 export interface DumbUploadProps {
@@ -14,6 +15,7 @@ export interface DumbUploadProps {
   stopMediaBackup: () => void
   navigate: (path: string) => void
   uploadFilesFromNative: DispatchProps['uploadFilesFromNative']
+  removeFileToUploadQueue: DispatchProps['removeFileToUploadQueue']
   client: CozyClient
   vaultClient: CozyClient
   startMediaBackup: () => void
@@ -21,14 +23,20 @@ export interface DumbUploadProps {
 }
 
 export interface DispatchProps {
+  removeFileToUploadQueue: (file: FileForQueue) => Promise<void>
   uploadFilesFromNative: (
     files: FileForQueue[],
     folderId: string,
-    successCallback: () => void,
-    options: { client: CozyClient; vaultClient?: CozyClient },
+    successCallback?: () => void,
+    options?: { client: CozyClient; vaultClient?: CozyClient },
     alternateUploader?: (
-      files: FileForQueue[],
-      folderId: string
+      client: CozyClient,
+      fileUrl: string,
+      fileOptions: {
+        name: string
+        dirId: string
+        conflictStrategy: string
+      }
     ) => Promise<void>
   ) => Promise<void>
   stopMediaBackup: () => void
