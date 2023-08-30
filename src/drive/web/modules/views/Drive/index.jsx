@@ -9,7 +9,12 @@ import { useQuery, useClient } from 'cozy-client'
 import { useVaultClient } from 'cozy-keys-lib'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-
+import { useWebviewIntent } from 'cozy-intent'
+import {
+  removeFileToUploadQueue,
+  uploadFilesFromNative,
+  purgeUploadQueue
+} from 'drive/web/modules/upload'
 import Dropzone from 'drive/web/modules/upload/Dropzone'
 import { ModalContext } from 'drive/lib/ModalContext'
 import useActions from 'drive/web/modules/actions/useActions'
@@ -62,6 +67,7 @@ const DriveView = () => {
   const currentFolderId = useCurrentFolderId() || ROOT_DIR_ID
   useHead()
   const { isSelectionBarVisible } = useSelectionContext()
+  const webviewIntent = useWebviewIntent()
 
   const { isMobile } = useBreakpoints()
   const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)
@@ -172,6 +178,39 @@ const DriveView = () => {
     }),
     [t]
   )
+
+  useEffect(() => {
+    if (!webviewIntent) return
+
+    webviewIntent
+      .call('hasFilesToHandle')
+      .then(({ filesToHandle, uploadedFiles, uploading }) => {
+        if (!uploading) return false
+
+        actions.dispatch(
+          uploadFilesFromNative(
+            filesToHandle,
+            displayedFolder.id,
+            undefined,
+            { client },
+            () => Promise.resolve()
+          )
+        )
+
+        return uploadedFiles
+      })
+      .then(uploadedFiles => {
+        if (!uploadedFiles) return false
+
+        return uploadedFiles.forEach(file => {
+          return actions.dispatch(removeFileToUploadQueue(file))
+        })
+      })
+      .catch(() => {
+        return actions.dispatch(purgeUploadQueue())
+      })
+  }, [actions, client, displayedFolder.id, webviewIntent])
+
   useEffect(() => {
     if (canWriteToCurrentFolder) {
       setIsFabDisplayed(isMobile)
