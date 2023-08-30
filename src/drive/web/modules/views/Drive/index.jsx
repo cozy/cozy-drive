@@ -190,7 +190,7 @@ const DriveView = () => {
         actions.dispatch(
           uploadFilesFromNative(
             filesToHandle,
-            displayedFolder.id,
+            displayedFolder?.id,
             undefined,
             { client },
             () => Promise.resolve()
@@ -209,7 +209,7 @@ const DriveView = () => {
       .catch(() => {
         return actions.dispatch(purgeUploadQueue())
       })
-  }, [actions, client, displayedFolder.id, webviewIntent])
+  }, [actions, client, displayedFolder?.id, webviewIntent])
 
   useEffect(() => {
     if (canWriteToCurrentFolder) {
