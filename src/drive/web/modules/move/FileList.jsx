@@ -8,8 +8,7 @@ import { isEncryptedFolder } from 'drive/lib/encryption'
 const isInvalidMoveTarget = (subjects, target) => {
   const isASubject = subjects.find(subject => subject._id === target._id)
   const isAFile = target.type === 'file'
-
-  return isAFile || isASubject
+  return isAFile || isASubject !== undefined
 }
 
 const FileList = ({ targets, files, folder, navigateTo }) => {
@@ -36,7 +35,7 @@ const FileList = ({ targets, files, folder, navigateTo }) => {
             styleDisabled={isInvalidMoveTarget(targets, file)}
             attributes={file}
             displayedFolder={null}
-            actions={[]}
+            actions={null}
             isRenaming={false}
             onFolderOpen={id => navigateTo(files.find(f => f.id === id))}
             onFileOpen={() => {}}
