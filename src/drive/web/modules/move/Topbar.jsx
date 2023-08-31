@@ -55,7 +55,7 @@ const MoveTopbar = (
 
 MoveTopbar.propTypes = {
   navigateTo: PropTypes.func.isRequired,
-  currentDir: PropTypes.object.isRequired,
+  currentDir: PropTypes.object,
   fetchStatus: PropTypes.string.isRequired,
   breakpoints: PropTypes.shape({
     isMobile: PropTypes.bool

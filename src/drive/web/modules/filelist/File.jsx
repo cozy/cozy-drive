@@ -202,7 +202,7 @@ File.propTypes = {
   t: PropTypes.func,
   f: PropTypes.func,
   attributes: PropTypes.object.isRequired,
-  actions: PropTypes.array.isRequired,
+  actions: PropTypes.array,
   isRenaming: PropTypes.bool,
   withSelectionCheckbox: PropTypes.bool.isRequired,
   withFilePath: PropTypes.bool,
