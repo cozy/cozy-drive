@@ -20,6 +20,7 @@ export interface DumbUploadProps {
   vaultClient: CozyClient
   startMediaBackup: () => void
   items: FileFromNative[]
+  onCancel: () => void
 }
 
 export interface DispatchProps {
@@ -45,4 +46,5 @@ export interface DispatchProps {
 
 export interface FileFromNative {
   fileName: string
+  dirId: string
 }
