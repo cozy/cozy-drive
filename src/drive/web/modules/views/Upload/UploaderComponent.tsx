@@ -1,12 +1,14 @@
 /* eslint-disable no-console */
 import React, { useCallback, useEffect, useState } from 'react'
-import { connect } from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Query, useClient } from 'cozy-client'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import { useI18n } from 'cozy-ui/transpiled/react'
 import {
+  purgeUploadQueue,
+  RECEIVE_UPLOAD_ERROR,
   removeFileToUploadQueue,
   uploadFilesFromNative
 } from 'drive/web/modules/upload'
@@ -23,6 +25,7 @@ import { generateForQueue } from './UploadUtils'
 import { DumbUploadProps, FileFromNative, Folder } from './UploadTypes'
 import { ThunkDispatch } from 'redux-thunk'
 import { useUploadFromFlagship } from './useUploadFromFlagship'
+import { useWebviewIntent } from 'cozy-intent'
 
 const TypedUseI18n = useI18n as () => {
   t: (str: string, arg?: Record<string, unknown>) => string
@@ -34,6 +37,7 @@ const TypedLoadMore = LoadMore as React.FC<{
 }>
 
 const DumbUpload = ({
+  onCancel,
   uploadFilesFromNative,
   removeFileToUploadQueue
 }: DumbUploadProps): JSX.Element | null => {
@@ -43,22 +47,30 @@ const DumbUpload = ({
   const navigate = useNavigate()
   const client = useClient()
   const { items, uploadFilesFromFlagship } = useUploadFromFlagship()
+  const webviewIntent = useWebviewIntent()
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    const onFileUpload = (event: {
-      data?: { file: FileFromNative; isLast?: number }
+    const onFileUpload = ({
+      data: { file, isSuccess, isLast }
+    }: {
+      data: {
+        file: FileFromNative
+        isSuccess: boolean
+        isLast?: boolean
+      }
     }): void => {
-      const file = event.data?.file
-      const isLast = event.data?.isLast
-
       if (!file) return
+
+      if (!isSuccess) {
+        dispatch({ type: RECEIVE_UPLOAD_ERROR, file })
+        return
+      }
 
       removeFileToUploadQueue({ name: file.fileName })
         .then(() => {
           if (isLast) {
-            return TypedAlerter.success(
-              t('ImportToDrive.success', { smart_count: isLast })
-            )
+            return TypedAlerter.success(t('ImportToDrive.success'))
           }
           return
         })
@@ -68,11 +80,14 @@ const DumbUpload = ({
     }
 
     window.addEventListener('message', onFileUpload)
-  }, [removeFileToUploadQueue, t])
+  }, [dispatch, removeFileToUploadQueue, t])
 
-  const onClose = useCallback(() => {
-    navigate('/')
-  }, [navigate])
+  const onClose = useCallback(async () => {
+    await webviewIntent?.call('resetFilesToHandle').then(() => {
+      onCancel()
+      return navigate('/')
+    })
+  }, [navigate, onCancel, webviewIntent])
 
   const uploadFiles = useCallback(() => {
     if (!items || items.length === 0 || !client) return
@@ -199,6 +214,7 @@ const DumbUpload = ({
 export default connect<any, any, any, any>(
   null,
   (dispatch: ThunkDispatch<any, any, any>) => ({
+    onCancel: () => dispatch(purgeUploadQueue()),
     removeFileToUploadQueue: (fileName: string) =>
       dispatch(removeFileToUploadQueue(fileName)),
     uploadFilesFromNative: (

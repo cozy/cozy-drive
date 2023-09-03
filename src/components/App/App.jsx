@@ -16,8 +16,8 @@ const App = ({ store, client, lang, polyglot, children }) => {
     <WebviewIntentProvider
       setBarContext={cozyBar.setWebviewContext}
       methods={{
-        onFileUploaded: (file, isLast) => {
-          window.postMessage({ file, isLast })
+        onFileUploaded: (file, isSuccess, isLast) => {
+          window.postMessage({ file, isSuccess, isLast })
           return Promise.resolve(true)
         }
       }}
