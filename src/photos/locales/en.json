@@ -294,7 +294,7 @@
     },
     "description": {
       "first": "Back up all your photos and videos directly in your Cozy, and keep them in safe place in case you lose of break your smartphone!",
-      "second": "Note: To speed up the process, make sure to connect to an unlimited internet access and have enough battery"
+      "second": "Note: To speed up the process, make sure to connect to an unlimited internet access, have enough battery and keep your app open"
     },
     "info": {
       "notBackedUpElements": "%{smart_count} element not backed up |||| %{smart_count} elements not backed up",
