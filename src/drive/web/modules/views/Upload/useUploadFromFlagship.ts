@@ -127,6 +127,7 @@ export const useResumeUploadFromFlagship = (): void => {
   const uploadQueue = useSelector(getUploadQueue) as FileFromNative[]
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const doResumeCheck = async (): Promise<void> => {
       if (!webviewIntent) return
 
@@ -158,6 +159,7 @@ export const useResumeUploadFromFlagship = (): void => {
       }
     }
 
-    void doResumeCheck()
+    // Deactivating the feature for now because it receives an older state from the Flagship app which creates issues
+    // void doResumeCheck()
   }, [client, dispatch, uploadQueue.length, webviewIntent])
 }
