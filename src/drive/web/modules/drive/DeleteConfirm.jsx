@@ -121,19 +121,35 @@ const DeleteConfirmWithSharingContext = ({ files, ...rest }) =>
     <DeleteConfirm files={files} {...rest} />
   ) : (
     <SharedDocument docId={files[0].id}>
-      {({ isSharedByMe, link, recipients }) => (
-        <DeleteConfirm files={files} {...rest}>
-          {isSharedByMe && link && (
-            <Message type="link" fileCount={files.length} />
-          )}
-          {isSharedByMe && recipients.length > 0 && (
-            <Message type="shared" fileCount={files.length} />
-          )}
-          {isSharedByMe && recipients.length > 0 && (
-            <SharedRecipientsList className={'u-ml-1'} docId={files[0].id} />
-          )}
-        </DeleteConfirm>
-      )}
+      {({ isSharedByMe, link, recipients }) => {
+        const statuses = recipients
+          .map(recipient => recipient.status)
+          .filter(status => status !== 'owner')
+
+        const isStatusesEqual = statuses.reduce((acc, current) => {
+          return acc && current === statuses[0]
+        }, true)
+
+        let shareMessageType = !isStatusesEqual
+          ? 'share_both'
+          : statuses[0] === 'ready'
+          ? 'share_accepted'
+          : 'share_waiting'
+
+        return (
+          <DeleteConfirm files={files} {...rest}>
+            {isSharedByMe && link ? (
+              <Message type="link" fileCount={files.length} />
+            ) : null}
+            {isSharedByMe && statuses.length > 0 ? (
+              <Message type={shareMessageType} fileCount={files.length} />
+            ) : null}
+            {isSharedByMe && recipients.length > 0 ? (
+              <SharedRecipientsList className={'u-ml-1'} docId={files[0].id} />
+            ) : null}
+          </DeleteConfirm>
+        )
+      }}
     </SharedDocument>
   )
 
