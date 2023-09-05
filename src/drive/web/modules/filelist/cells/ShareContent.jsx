@@ -16,7 +16,7 @@ const ShareContent = ({ file, disabled, isInSyncFromSharing }) => {
     if (!disabled) {
       // should be only disabled
       navigate(
-        `${pathname.endsWith('/') ? pathname : pathname + '/'}${file._id}/share`
+        `${pathname}${pathname.endsWith('/') ? '' : '/'}file/${file._id}/share`
       )
     }
   }
