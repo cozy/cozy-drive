@@ -3,11 +3,19 @@
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
 
+import { useSharingContext } from 'cozy-sharing'
 import { createMockClient } from 'cozy-client'
 
 import AppLike from 'test/components/AppLike'
 import { DumbFile } from './File'
 import { folder, actionsMenu } from 'test/data'
+
+jest.mock('cozy-sharing', () => ({
+  ...jest.requireActual('cozy-sharing'),
+  useSharingContext: jest.fn()
+}))
+
+useSharingContext.mockReturnValue({ byDocId: [] })
 
 const client = createMockClient({})
 

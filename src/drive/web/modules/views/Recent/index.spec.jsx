@@ -1,9 +1,10 @@
 import React from 'react'
 import { render, fireEvent, act } from '@testing-library/react'
 
+import { useSharingContext } from 'cozy-sharing'
+
 import { setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
-
 import RecentViewWithProvider from './index'
 import { useFilesQueryWithPath } from 'drive/web/modules/views/hooks'
 import {
@@ -35,6 +36,13 @@ jest.mock('drive/web/modules/views/hooks', () => ({
 }))
 
 jest.mock('components/useHead', () => jest.fn())
+jest.mock('cozy-sharing', () => ({
+  __esModule: true,
+  ...jest.requireActual('cozy-sharing'),
+  useSharingContext: jest.fn()
+}))
+
+useSharingContext.mockReturnValue({ byDocId: [] })
 
 const setup = () => {
   const { store, client } = setupStoreAndClient()

@@ -1,19 +1,25 @@
 import React from 'react'
-import { useQuery } from 'cozy-client'
 import { render, act } from '@testing-library/react'
-import { TRASH_DIR_ID } from 'drive/constants/config'
 
+import { useQuery } from 'cozy-client'
+import { useSharingContext } from 'cozy-sharing'
+
+import { TRASH_DIR_ID } from 'drive/constants/config'
 import { setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
-
 import { generateFileFixtures } from '../testUtils'
 import { TrashFolderView } from './TrashFolderView'
-
 import FolderViewBody from '../Folder/FolderViewBody'
 
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 jest.mock('components/pushClient')
 jest.mock('components/useHead', () => jest.fn())
+jest.mock('cozy-sharing', () => ({
+  ...jest.requireActual('cozy-sharing'),
+  useSharingContext: jest.fn()
+}))
+
+useSharingContext.mockReturnValue({ byDocId: [] })
 
 describe('TrashFolderView', () => {
   const mockClient = () => {
