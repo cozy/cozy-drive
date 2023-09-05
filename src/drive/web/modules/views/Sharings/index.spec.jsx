@@ -1,9 +1,10 @@
 import React from 'react'
 import { render, fireEvent, waitFor } from '@testing-library/react'
 
+import { useSharingContext } from 'cozy-sharing'
+
 import { setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
-
 import { SharingsView } from './index'
 import {
   generateFileFixtures,
@@ -18,7 +19,11 @@ jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: () => mockNavigate
 }))
-
+jest.mock('cozy-sharing', () => ({
+  __esModule: true,
+  ...jest.requireActual('cozy-sharing'),
+  useSharingContext: jest.fn()
+}))
 jest.mock('components/pushClient')
 jest.mock('cozy-client/dist/hooks/useQuery', () =>
   jest.fn(() => ({
@@ -38,6 +43,8 @@ jest.mock('cozy-client/dist/utils', () => ({
   hasQueryBeenLoaded: jest.fn().mockReturnValue(true)
 }))
 jest.mock('components/useHead', () => jest.fn())
+
+useSharingContext.mockReturnValue({ byDocId: [] })
 
 const setup = (allLoaded = true) => {
   const { store, client } = setupStoreAndClient()

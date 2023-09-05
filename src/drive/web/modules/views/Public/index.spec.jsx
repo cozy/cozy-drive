@@ -5,6 +5,7 @@ import AppLike from 'test/components/AppLike'
 import usePublicFilesQuery from './usePublicFilesQuery'
 import { generateFileFixtures, getByTextWithMarkup } from '../testUtils'
 import PublicFolderView from './index'
+import { useSharingContext } from 'cozy-sharing'
 
 jest.mock('cozy-client/dist/hooks/useCapabilities', () =>
   jest.fn().mockReturnValue({ capabilities: {} })
@@ -33,7 +34,10 @@ jest.mock('../Folder/FolderViewBreadcrumb', () =>
     />
   )
 )
-
+jest.mock('cozy-sharing', () => ({
+  ...jest.requireActual('cozy-sharing'),
+  useSharingContext: jest.fn()
+}))
 jest.mock('drive/hooks', () => ({
   useCurrentFolderId: jest.fn().mockReturnValue('1234'),
   useDisplayedFolder: jest.fn().mockReturnValue({
@@ -52,6 +56,8 @@ jest.mock('cozy-keys-lib', () => ({
   useVaultClient: jest.fn()
 }))
 jest.mock('components/pushClient')
+
+useSharingContext.mockReturnValue({ byDocId: [] })
 
 describe('Public View', () => {
   const setup = () => {
