@@ -70,7 +70,7 @@ const Toolbar = () => {
         {!isMobile && fileWithPath.class && (
           <FileIcon fileClass={fileWithPath.class} />
         )}
-        <FileName fileWithPath={fileWithPath} />
+        <FileName fileWithPath={fileWithPath} isPublic={isPublic} />
       </div>
       {isReadOnly && <ReadOnly />}
       {!isPublic && isEditorReady && <Sharing fileWithPath={fileWithPath} />}

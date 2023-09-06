@@ -37,6 +37,12 @@ jest.mock('cozy-ui/transpiled/react/hooks/useBreakpoints', () => ({
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 
 jest.mock('cozy-flags')
+jest.mock(
+  'drive/web/modules/views/OnlyOffice/Toolbar/HomeLinker',
+  () =>
+    ({ children }) =>
+      <div>{children}</div>
+)
 
 const client = createMockClient({})
 client.plugins = {
@@ -49,7 +55,8 @@ client.plugins = {
 const setup = ({
   isMobile = false,
   isEditorModeView = true,
-  isReadOnly = false
+  isReadOnly = false,
+  isPublic = false
 } = {}) => {
   useBreakpoints.mockReturnValue({ isMobile })
   const root = render(
@@ -66,7 +73,7 @@ const setup = ({
       <OnlyOfficeContext.Provider
         value={{
           fileId: '123',
-          isPublic: 'false',
+          isPublic,
           isReadOnly,
           isEditorReady: true,
           isEditorModeView
