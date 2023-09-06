@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const FileName = ({ fileWithPath }) => {
+const FileName = ({ fileWithPath, isPublic }) => {
   const muiStyles = useStyles()
   const { isMobile } = useBreakpoints()
   const { isReadOnly } = useContext(OnlyOfficeContext)
@@ -66,7 +66,7 @@ const FileName = ({ fileWithPath }) => {
           {fileWithPath.name}
         </Typography>
       )}
-      {fileWithPath.displayedPath && !isMobile && (
+      {fileWithPath.displayedPath && !isMobile && !isPublic && (
         <Link
           data-testid="onlyoffice-filename-path"
           to={`/folder/${fileWithPath.dir_id}`}
@@ -82,7 +82,8 @@ const FileName = ({ fileWithPath }) => {
 }
 
 FileName.propTypes = {
-  fileWithPath: PropTypes.object.isRequired
+  fileWithPath: PropTypes.object.isRequired,
+  isPublic: PropTypes.bool
 }
 
 export default React.memo(FileName)
