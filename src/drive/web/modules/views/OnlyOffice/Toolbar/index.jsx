@@ -46,7 +46,7 @@ const Toolbar = () => {
   )
 
   const handleOnClick = useCallback(
-    () => (hasOnyMoreHistoryEntry ? navigate('../../') : navigate('../')),
+    () => (hasOnyMoreHistoryEntry ? navigate(-2) : navigate(-1)),
     [hasOnyMoreHistoryEntry, navigate]
   )
 
