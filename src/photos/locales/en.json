@@ -18,13 +18,17 @@
   },
   "empty": {
     "timeline_photos_title": "You don't have any photos yet.",
-    "timeline_photos_text": "Click the \"Upload\" button to add photos.",
+    "timeline_photos_text": "Click on \"Upload\" button to add photos.",
+    "timeline_photos_mobile_text": "Click on \"...\" in the top right-hand corner and then on \"Upload photos\" to add photos.",
     "albums_title": "You don't have any album yet.",
-    "albums_text": "Start by clicking \"New album\" to create your first album.",
-    "album_photos_title": "There is no photo in this album yet.",
-    "album_photos_text": "Start by clicking \"Add photos to album\" to add some.",
+    "albums_text": "Click on \"New album\" to create your first album.",
+    "albums_mobile_text": "Click on \"...\" in the top right-hand corner and then on \"New album\" to create your first album.",
+    "album_with_photos_title": "There is no photo in this album yet.",
+    "album_with_photos_text": "Click on \"...\" in the top right-hand corner and then on \"Add photos to album\" to add some.",
+    "album_with_photos_mobile_text": "Click on \"...\" in the top right-hand corner and then on \"Add photos to album\" to add some.",
     "shared_album_photos_title": "There is no photo in this album yet.",
-    "shared_album_photos_text": "Come back later"
+    "shared_album_photos_text": "Come back later",
+    "shared_album_photos_mobile_text": "Come back later"
   },
   "Error": {
     "albums_title": "An error occurred while retrieving the albums list. Please try again later.",

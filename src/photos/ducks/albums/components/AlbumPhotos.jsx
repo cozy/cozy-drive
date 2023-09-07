@@ -184,7 +184,7 @@ class AlbumPhotos extends Component {
               <PhotoBoard
                 lists={[{ photos }]}
                 selected={selected}
-                photosContext="timeline"
+                photosContext="album_with"
                 showSelection={active}
                 onPhotoToggle={selection.toggle}
                 onPhotosSelect={selection.select}
