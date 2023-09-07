@@ -4,6 +4,7 @@ import UIDropzone from 'react-dropzone'
 import { compose } from 'redux'
 import { withVaultClient } from 'cozy-keys-lib'
 import { withClient } from 'cozy-client'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
 
 import { uploadFiles } from 'drive/web/modules/navigation/duck'
 
@@ -25,11 +26,11 @@ export class Dropzone extends Component {
     this.setState(state => ({ ...state, dropzoneActive: false }))
 
   onDrop = async (files, _, evt) => {
-    const { uploadFiles, client, vaultClient } = this.props
+    const { uploadFiles, client, vaultClient, t } = this.props
     this.setState(state => ({ ...state, dropzoneActive: false }))
     if (!canDrop(evt)) return
     const filesToUpload = canHandleFolders(evt) ? evt.dataTransfer.items : files
-    uploadFiles(filesToUpload, { client, vaultClient })
+    uploadFiles(filesToUpload, { client, vaultClient, t })
   }
 
   render() {
@@ -69,16 +70,18 @@ const canDrop = evt => {
 }
 
 const mapDispatchToProps = (dispatch, { displayedFolder, sharingState }) => ({
-  uploadFiles: (files, { client, vaultClient }) =>
+  uploadFiles: (files, { client, vaultClient, t }) =>
     dispatch(
       uploadFiles(files, displayedFolder.id, sharingState, () => null, {
         client,
-        vaultClient
+        vaultClient,
+        t
       })
     )
 })
 
 export default compose(
+  translate(),
   withSharingState,
   withClient,
   withVaultClient,

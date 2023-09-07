@@ -7,6 +7,7 @@ import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import FileInput from 'cozy-ui/transpiled/react/FileInput'
 import UploadIcon from 'cozy-ui/transpiled/react/Icons/Upload'
+import { translate } from 'cozy-ui/transpiled/react/I18n'
 
 import { uploadFiles } from 'drive/web/modules/navigation/duck'
 
@@ -43,14 +44,17 @@ UploadButton.defaultProps = {
 
 const mapDispatchToProps = (
   dispatch,
-  { displayedFolder, sharingState, onUploaded }
+  { displayedFolder, sharingState, onUploaded, t }
 ) => ({
   onUpload: files => {
-    dispatch(uploadFiles(files, displayedFolder.id, sharingState, onUploaded))
+    dispatch(
+      uploadFiles(files, displayedFolder.id, sharingState, onUploaded, { t })
+    )
   }
 })
 
 export default compose(
+  translate(),
   withSharingState,
   connect(null, mapDispatchToProps)
 )(UploadButton)

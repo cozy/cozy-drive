@@ -38,12 +38,13 @@ const UploadItem = ({ t, isDisabled, onUpload, displayedFolder }) => {
   )
 }
 
-const mapDispatchToProps = (dispatch, { sharingState, onUploaded }) => ({
+const mapDispatchToProps = (dispatch, { sharingState, onUploaded, t }) => ({
   onUpload: (client, vaultClient, files, displayedFolder) => {
     dispatch(
       uploadFiles(files, displayedFolder.id, sharingState, onUploaded, {
         client,
-        vaultClient
+        vaultClient,
+        t
       })
     )
   }

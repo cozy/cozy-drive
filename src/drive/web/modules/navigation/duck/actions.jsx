@@ -38,7 +38,7 @@ export const uploadFiles =
     dirId,
     sharingState,
     fileUploadedCallback = () => null,
-    { client, vaultClient }
+    { client, vaultClient, t }
   ) =>
   dispatch => {
     dispatch(
@@ -55,7 +55,8 @@ export const uploadFiles =
               conflicts,
               networkErrors,
               errors,
-              updated
+              updated,
+              t
             )
           ),
         { client, vaultClient }
@@ -63,11 +64,36 @@ export const uploadFiles =
     )
   }
 
+const getEntriesType = entries => {
+  const types = entries.reduce((acc, entry) => {
+    if (entry.isDirectory) {
+      acc.add('directory')
+    } else {
+      acc.add('file')
+    }
+    return acc
+  }, new Set())
+
+  if (types.size > 1) {
+    return 'element'
+  } else {
+    return types.has('directory') ? 'directory' : 'file'
+  }
+}
+
 const uploadQueueProcessed =
-  (created, quotas, conflicts, networkErrors, errors, updated) => dispatch => {
+  (created, quotas, conflicts, networkErrors, errors, updated, t) =>
+  dispatch => {
     const conflictCount = conflicts.length
     const createdCount = created.length
     const updatedCount = updated.length
+    const type = t(
+      `upload.documentType.${getEntriesType([
+        ...created,
+        ...updated,
+        ...conflicts
+      ])}`
+    )
     if (quotas.length > 0) {
       logger.warn(`Upload module triggers a quota alert: ${quotas}`)
       // quota errors have their own modal instead of a notification
@@ -82,30 +108,36 @@ const uploadQueueProcessed =
       Alerter.success('upload.alert.success_updated_conflicts', {
         smart_count: createdCount,
         updatedCount,
-        conflictCount
+        conflictCount,
+        type
       })
     } else if (updatedCount > 0 && createdCount > 0) {
       Alerter.success('upload.alert.success_updated', {
         smart_count: createdCount,
-        updatedCount
+        updatedCount,
+        type
       })
     } else if (updatedCount > 0 && conflictCount > 0) {
       Alerter.success('upload.alert.updated_conflicts', {
         smart_count: updatedCount,
-        conflictCount
+        conflictCount,
+        type
       })
     } else if (conflictCount > 0) {
       Alerter.info('upload.alert.success_conflicts', {
         smart_count: createdCount,
-        conflictNumber: conflictCount
+        conflictNumber: conflictCount,
+        type
       })
     } else if (updatedCount > 0 && createdCount === 0) {
       Alerter.success('upload.alert.updated', {
-        smart_count: updatedCount
+        smart_count: updatedCount,
+        type
       })
     } else {
       Alerter.success('upload.alert.success', {
-        smart_count: createdCount
+        smart_count: createdCount,
+        type
       })
     }
   }

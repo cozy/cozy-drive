@@ -502,14 +502,19 @@
     }
   },
   "upload": {
+    "documentType": {
+      "file": "file",
+      "directory": "folder",
+      "element": "element"
+    },
     "alert": {
-      "success": "%{smart_count} file uploaded with success. |||| %{smart_count} files uploaded with success.",
-      "success_conflicts": "%{smart_count} file uploaded with %{conflictNumber} conflict(s). |||| %{smart_count} files uploaded with %{conflictNumber} conflict(s).",
-      "success_updated": "%{smart_count} file uploaded and %{updatedCount} updated. |||| %{smart_count} files uploaded and %{updatedCount} updated.",
-      "success_updated_conflicts": "%{smart_count} file uploaded, %{updatedCount} updated and %{conflictCount} conflict(s). |||| %{smart_count} files uploaded, %{updatedCount} updated and %{conflictCount} conflict(s).",
-      "updated": "%{smart_count} file updated. |||| %{smart_count} files updated.",
-      "updated_conflicts": "%{smart_count} file updated with %{conflictCount} conflict(s). |||| %{smart_count} files updated with %{conflictCount} conflict(s).",
-      "errors": "Errors occurred during the file upload.",
+      "success": "%{smart_count} %{type} uploaded with success. |||| %{smart_count} %{type}s uploaded with success.",
+      "success_conflicts": "%{smart_count} %{type} uploaded with %{conflictNumber} conflict(s). |||| %{smart_count} %{type}s uploaded with %{conflictNumber} conflict(s).",
+      "success_updated": "%{smart_count} %{type} uploaded and %{updatedCount} updated. |||| %{smart_count} %{type}s uploaded and %{updatedCount} updated.",
+      "success_updated_conflicts": "%{smart_count} %{type} uploaded, %{updatedCount} updated and %{conflictCount} conflict(s). |||| %{smart_count} %{type}s uploaded, %{updatedCount} updated and %{conflictCount} conflict(s).",
+      "updated": "%{smart_count} %{type} updated. |||| %{smart_count} %{type} updated.",
+      "updated_conflicts": "%{smart_count} %{type} updated with %{conflictCount} conflict(s). |||| %{smart_count} %{type}s updated with %{conflictCount} conflict(s).",
+      "errors": "Errors occurred during the %{type} upload.",
       "network": "You are currenly offline. Please try again once you're connected."
     }
   },
