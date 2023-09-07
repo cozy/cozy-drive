@@ -52,7 +52,7 @@ exports[`Public view should render children when they are present 1`] = `
         onPhotoToggle={[Function]}
         onPhotosSelect={[Function]}
         onPhotosUnselect={[Function]}
-        photosContext="timeline"
+        photosContext="shared_album"
         selected={Array []}
         showSelection={false}
       />
@@ -110,7 +110,7 @@ exports[`Public view should render the album 1`] = `
         onPhotoToggle={[Function]}
         onPhotosSelect={[Function]}
         onPhotosUnselect={[Function]}
-        photosContext="timeline"
+        photosContext="shared_album"
         selected={Array []}
         showSelection={false}
       />

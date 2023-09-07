@@ -40,7 +40,9 @@ const PhotoBoard = ({
     return <Loading loadingType="photos_fetching" />
   }
   if (!isFetching && (lists.length === 0 || lists[0].photos.length === 0)) {
-    return <EmptyPhotos localeKey={`${photosContext}_photos`} />
+    return (
+      <EmptyPhotos localeKey={`${photosContext}_photos`} hasTextMobileVersion />
+    )
   }
 
   return (

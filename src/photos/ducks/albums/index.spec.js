@@ -60,7 +60,9 @@ describe('Album view', () => {
     setup()
 
     // Then
-    const label = await screen.findByText("You don't have any photos yet.")
+    const label = await screen.findByText(
+      'There is no photo in this album yet.'
+    )
     expect(label).toBeInTheDocument()
   })
 

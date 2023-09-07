@@ -107,7 +107,7 @@ export class App extends Component {
                 <PhotoBoard
                   lists={[{ photos }]}
                   selected={selected}
-                  photosContext="timeline"
+                  photosContext="shared_album"
                   showSelection={active}
                   onPhotoToggle={selection.toggle}
                   onPhotosSelect={selection.select}

@@ -19,7 +19,7 @@ const sortByCreationDate = (a, b) => {
 
 const AlbumsList = ({ data, hasMore, fetchMore, t }) =>
   data.length === 0 ? (
-    <EmptyPhotos localeKey="albums" />
+    <EmptyPhotos localeKey="albums" hasTextMobileVersion />
   ) : (
     <Content>
       <div className={styles['pho-album-list']}>

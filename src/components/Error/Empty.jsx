@@ -7,6 +7,7 @@ import DriveIcon from 'cozy-ui/transpiled/react/Icons/FileTypeFolder'
 import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
 import PhotosIcon from 'cozy-ui/transpiled/react/Icons/FileTypeImage'
 import EncryptedFolderIcon from 'drive/web/modules/views/Folder/EncryptedFolderIcon'
+import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
 
 import styles from './empty.styl'
 
@@ -17,14 +18,18 @@ const EmptyIcon = {
   trash: TrashIcon
 }
 
-const EmptyCanvas = ({ type, canUpload, localeKey }) => {
+const EmptyCanvas = ({ type, canUpload, localeKey, hasTextMobileVersion }) => {
   const { t } = useI18n()
+  const { isMobile } = useBreakpoints()
   return (
     <Empty
       data-testid="empty-folder"
       icon={EmptyIcon[type]}
       title={localeKey ? t(`empty.${localeKey}_title`) : t('empty.title')}
       text={
+        (hasTextMobileVersion &&
+          isMobile &&
+          t(`empty.${localeKey}_mobile_text`)) ||
         (localeKey && t(`empty.${localeKey}_text`)) ||
         (canUpload && t('empty.text'))
       }
