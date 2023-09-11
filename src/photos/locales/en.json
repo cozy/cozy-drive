@@ -285,12 +285,12 @@
     },
     "actions": {
       "verification": "Verification",
-      "startBackup": "Start backup",
+      "startBackup": "Backup",
       "backupInProgress": "Backup in progress %{alreadyBackupedCount} / %{totalCount}",
       "openInDrive": "Open in Drive",
       "seeMyAlbums": "See my albums",
       "saved": "Saved",
-      "cancel": "Cancel"
+      "cancel": "Stop"
     },
     "description": {
       "first": "Back up all your photos and videos directly in your Cozy, and keep them in safe place in case you lose of break your smartphone!",
