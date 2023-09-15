@@ -103,7 +103,9 @@ const uploadQueueProcessed =
       Alerter.info('upload.alert.network')
     } else if (errors.length > 0) {
       logException(`Upload module triggers an error: ${errors}`)
-      Alerter.info('upload.alert.errors')
+      Alerter.info('upload.alert.errors', {
+        type
+      })
     } else if (updatedCount > 0 && createdCount > 0 && conflictCount > 0) {
       Alerter.success('upload.alert.success_updated_conflicts', {
         smart_count: createdCount,
