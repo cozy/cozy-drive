@@ -2,7 +2,7 @@ import React from 'react'
 
 import { SharedDocument } from 'cozy-sharing'
 import RecipientsAvatars from 'cozy-sharing/dist/components/Recipient/RecipientsAvatars'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'

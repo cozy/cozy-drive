@@ -2,7 +2,7 @@ import React from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
 
 import { isFlagshipApp } from 'cozy-device-helper'
-import I18n from 'cozy-ui/transpiled/react/I18n'
+import I18n from 'cozy-ui/transpiled/react/providers/I18n'
 import flag from 'cozy-flags'
 
 import useInstanceInfo from 'hooks/useInstanceInfo'

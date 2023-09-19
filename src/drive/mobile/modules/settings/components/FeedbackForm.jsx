@@ -5,7 +5,7 @@ import compose from 'lodash/flowRight'
 import { withClient } from 'cozy-client'
 import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import { Button } from 'cozy-ui/transpiled/react/deprecated/Button'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { logInfo } from 'drive/lib/reporter'
 import appMetadata from 'drive/appMetadata'

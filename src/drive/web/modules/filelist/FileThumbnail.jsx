@@ -6,7 +6,7 @@ import { SharedBadge, SharingOwnerAvatar } from 'cozy-sharing'
 import InfosBadge from 'cozy-ui/transpiled/react/InfosBadge'
 import GhostFileBadge from 'cozy-ui/transpiled/react/GhostFileBadge'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import LinkIcon from 'cozy-ui/transpiled/react/Icons/Link'
 

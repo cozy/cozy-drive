@@ -6,7 +6,7 @@ import localforage from 'localforage'
 import flow from 'lodash/flow'
 
 import { withClient } from 'cozy-client'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import Banner from 'cozy-ui/transpiled/react/Banner'
 import Button, { ButtonLink } from 'cozy-ui/transpiled/react/deprecated/Button'
 import Icon from 'cozy-ui/transpiled/react/Icon'

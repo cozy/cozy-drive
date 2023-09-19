@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { isIOSApp } from 'cozy-device-helper'
 
 import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 

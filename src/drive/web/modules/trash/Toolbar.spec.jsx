@@ -6,7 +6,7 @@ import { ModalContextProvider, ModalStack } from 'drive/lib/ModalContext'
 
 import AppLike from 'test/components/AppLike'
 import { Toolbar } from './Toolbar'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 jest.mock('cozy-ui/transpiled/react/hooks/useBreakpoints', () => ({
   ...jest.requireActual('cozy-ui/transpiled/react/hooks/useBreakpoints'),

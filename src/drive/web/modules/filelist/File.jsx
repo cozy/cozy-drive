@@ -7,7 +7,7 @@ import get from 'lodash/get'
 
 import { isDirectory } from 'cozy-client/dist/models/file'
 import { isIOSApp } from 'cozy-device-helper'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'
 

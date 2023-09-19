@@ -2,7 +2,7 @@ import React from 'react'
 
 import { IllustrationDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Button from 'cozy-ui/transpiled/react/Buttons'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 
 import PhotoSync from '../../../assets/illustrations/cozy-photo-sync.svg'

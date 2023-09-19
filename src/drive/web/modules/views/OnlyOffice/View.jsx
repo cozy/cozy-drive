@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useState, useContext } from 'react'
 import PropTypes from 'prop-types'
 
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 
 import Error from 'drive/web/modules/views/OnlyOffice/Error'

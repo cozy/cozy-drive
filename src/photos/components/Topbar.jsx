@@ -1,7 +1,7 @@
 import styles from '../styles/topbar.styl'
 
 import React, { Component } from 'react'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import { withBreakpoints, BarContextProvider } from 'cozy-ui/transpiled/react'
 import { withClient } from 'cozy-client'
 import PropTypes from 'prop-types'

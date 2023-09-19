@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { useClient, useCapabilities } from 'cozy-client'
 import { useVaultClient, VaultUnlocker } from 'cozy-keys-lib'
 import { isSharingShortcut } from 'cozy-client/dist/models/file'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { ThumbnailSizeContext } from 'drive/lib/ThumbnailSizeContext'
 import AcceptingSharingContext from 'drive/lib/AcceptingSharingContext'

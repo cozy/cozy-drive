@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { useClient } from 'cozy-client'
 import { connect } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import SettingCategory, { ELEMENT_BUTTON } from './SettingCategory'
 import {
   unlink,

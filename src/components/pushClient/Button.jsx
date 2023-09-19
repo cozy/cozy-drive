@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { withClient } from 'cozy-client'
 import localforage from 'localforage'
 
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import { default as UIButtonClient } from 'cozy-ui/transpiled/react/deprecated/PushClientButton'
 import { isFlagshipApp } from 'cozy-device-helper'
 

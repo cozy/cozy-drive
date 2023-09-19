@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 
 import { CozyProvider } from 'cozy-client'
 import SharingProvider from 'cozy-sharing'
-import { I18n } from 'cozy-ui/transpiled/react/I18n'
-import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import { I18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import {
   VaultUnlockProvider,
   VaultProvider,

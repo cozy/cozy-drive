@@ -1,5 +1,5 @@
 import React from 'react'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import MobileBreadcrumb from './components/MobileBreadcrumb/MobileBreadcrumb'
 import DesktopBreadcrumb from './components/DesktopBreadcrumb/DesktopBreadcrumb'
 

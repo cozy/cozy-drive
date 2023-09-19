@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet, NavLink as RouterLink } from 'react-router-dom'
 
-import { useI18n, translate } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n, translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { Layout as LayoutUI, Main } from 'cozy-ui/transpiled/react/Layout'
 import Sidebar from 'cozy-ui/transpiled/react/Sidebar'

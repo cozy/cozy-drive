@@ -1,7 +1,7 @@
 /* globals __DEVELOPMENT__ */
 
 import React, { Component } from 'react'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import { RealTimeQueries } from 'cozy-client'
 

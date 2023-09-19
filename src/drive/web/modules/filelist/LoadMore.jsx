@@ -3,7 +3,7 @@ import cx from 'classnames'
 import PropTypes from 'prop-types'
 
 import { Button, Spinner } from 'cozy-ui/transpiled/react'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import { TableRow } from 'cozy-ui/transpiled/react/Table'
 
 import styles from 'drive/styles/filelist.styl'

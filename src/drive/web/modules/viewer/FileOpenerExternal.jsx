@@ -13,7 +13,7 @@ import { RemoveScroll } from 'react-remove-scroll'
 
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
-import { translate, useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { translate, useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Viewer from 'cozy-ui/transpiled/react/Viewer'
 import Overlay from 'cozy-ui/transpiled/react/deprecated/Overlay'
 import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
@@ -25,7 +25,7 @@ import {
   isOfficeEnabled,
   makeOnlyOfficeFileRoute
 } from 'drive/web/modules/views/OnlyOffice/helpers'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 const FileNotFoundError = translate()(({ t }) => (
   <pre className="u-error">{t('FileOpenerExternal.fileNotFoundError')}</pre>

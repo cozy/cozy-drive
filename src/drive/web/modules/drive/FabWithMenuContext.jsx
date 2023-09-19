@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 
 import PlusIcon from 'cozy-ui/transpiled/react/Icons/Plus'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { ExtendableFab } from 'cozy-ui/transpiled/react/Fab'
 
 import { AddMenuContext } from 'drive/web/modules/drive/AddMenu/AddMenuProvider'

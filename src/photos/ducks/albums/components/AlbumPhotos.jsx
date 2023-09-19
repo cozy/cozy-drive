@@ -5,7 +5,7 @@ import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 
 import { withClient } from 'cozy-client'
 import { showModal } from 'react-cozy-helpers'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import { ShareModal } from 'cozy-sharing'
 import flow from 'lodash/flow'

@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react'
 
 import { isMobileApp, isIOSApp } from 'cozy-device-helper'
 import ActionMenu from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { MoreButton } from 'components/Button'
 import InsideRegularFolder from 'drive/web/modules/drive/Toolbar/components/InsideRegularFolder'

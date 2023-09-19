@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Button } from 'cozy-ui/transpiled/react'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { TimelineBoard } from '../../timeline'
 import Selection from '../../selection'

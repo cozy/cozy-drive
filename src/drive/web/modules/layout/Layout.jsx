@@ -2,7 +2,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { Layout as LayoutUI } from 'cozy-ui/transpiled/react/Layout'
 import Sidebar from 'cozy-ui/transpiled/react/Sidebar'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'

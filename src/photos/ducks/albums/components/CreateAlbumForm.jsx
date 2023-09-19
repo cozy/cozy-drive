@@ -1,7 +1,7 @@
 import styles from '../../../styles/createAlbumForm.styl'
 
 import React, { Component } from 'react'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import { Button } from 'cozy-ui/transpiled/react'
 
 import classNames from 'classnames'
