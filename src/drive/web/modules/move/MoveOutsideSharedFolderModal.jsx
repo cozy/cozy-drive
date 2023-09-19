@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { ConfirmDialog } from 'cozy-ui/react/CozyDialogs'
 import Buttons from 'cozy-ui/transpiled/react/Buttons'
-import { useI18n } from 'cozy-ui/transpiled/react'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { useQuery } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
 import Typography from 'cozy-ui/transpiled/react/Typography'

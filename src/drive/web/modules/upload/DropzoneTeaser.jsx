@@ -1,5 +1,6 @@
 import React from 'react'
-import { translate, Icon } from 'cozy-ui/transpiled/react'
+import { Icon } from 'cozy-ui/transpiled/react'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import styles from 'drive/styles/dropzone.styl'
 import palette from 'cozy-ui/transpiled/react/palette'

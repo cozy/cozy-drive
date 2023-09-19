@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
-import { translate } from 'cozy-ui/transpiled/react'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 

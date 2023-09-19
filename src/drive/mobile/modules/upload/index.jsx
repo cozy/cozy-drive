@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { Query, withClient } from 'cozy-client'
 import { withVaultClient } from 'cozy-keys-lib'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
-import { translate } from 'cozy-ui/transpiled/react'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 
 import { uploadFilesFromNative } from 'drive/web/modules/upload'

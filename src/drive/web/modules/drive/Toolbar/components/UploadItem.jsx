@@ -6,7 +6,7 @@ import { useClient } from 'cozy-client'
 import { useVaultClient } from 'cozy-keys-lib'
 
 import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
-import { translate } from 'cozy-ui/transpiled/react'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import FileInput from 'cozy-ui/transpiled/react/FileInput'

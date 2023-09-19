@@ -3,7 +3,7 @@ import { CozyProvider } from 'cozy-client'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 
-import { I18n } from 'cozy-ui/transpiled/react'
+import { I18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { SharingContext } from 'cozy-sharing'
 
 import { ThumbnailSizeContextProvider } from 'drive/lib/ThumbnailSizeContext'

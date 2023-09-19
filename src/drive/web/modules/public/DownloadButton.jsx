@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { useClient } from 'cozy-client'
-import { Button, useI18n } from 'cozy-ui/transpiled/react'
+import { Button } from 'cozy-ui/transpiled/react'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 
 import { downloadFiles } from 'drive/web/modules/actions/utils'
