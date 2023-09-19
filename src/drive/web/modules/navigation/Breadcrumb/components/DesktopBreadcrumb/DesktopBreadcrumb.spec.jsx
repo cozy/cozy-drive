@@ -16,7 +16,7 @@ jest.mock('cozy-ui/transpiled/react/deprecated/ActionMenu', () => ({
   )
 }))
 
-jest.mock('cozy-ui/transpiled/react/I18n')
+jest.mock('cozy-ui/transpiled/react/providers/I18n')
 describe('DesktopBreadcrumb', () => {
   beforeEach(() => {
     useI18n.mockReturnValue({ t: () => 'Show path' })

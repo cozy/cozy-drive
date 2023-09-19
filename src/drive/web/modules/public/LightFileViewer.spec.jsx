@@ -11,7 +11,7 @@ jest.mock('cozy-intent', () => ({
   WebviewIntentProvider: ({ children }) => children,
   useWebviewIntent: () => ({ call: () => {} })
 }))
-jest.mock('cozy-ui/transpiled/react/hooks/useBreakpoints', () => ({
+jest.mock('cozy-ui/transpiled/react/providers/Breakpoints', () => ({
   __esModule: true,
   default: jest.fn(),
   BreakpointsProvider: ({ children }) => children

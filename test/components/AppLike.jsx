@@ -7,7 +7,7 @@ import { I18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { SharingContext } from 'cozy-sharing'
 
 import { ThumbnailSizeContextProvider } from 'drive/lib/ThumbnailSizeContext'
-import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { ModalContext } from 'drive/lib/ModalContext'
 import { HashRouter } from 'react-router-dom'
 import { AcceptingSharingProvider } from 'drive/lib/AcceptingSharingContext'

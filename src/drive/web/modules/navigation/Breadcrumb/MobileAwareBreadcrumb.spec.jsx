@@ -3,7 +3,7 @@ import { render } from '@testing-library/react'
 import MobileAwareBreadcrumb from './MobileAwareBreadcrumb'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-jest.mock('cozy-ui/transpiled/react/hooks/useBreakpoints')
+jest.mock('cozy-ui/transpiled/react/providers/Breakpoints')
 // eslint-disable-next-line react/display-name
 jest.mock('./components/DesktopBreadcrumb/DesktopBreadcrumb', () => () => (
   <div data-testid="desktop-breadcrumb" />
