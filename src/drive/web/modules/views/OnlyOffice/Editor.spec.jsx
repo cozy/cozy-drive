@@ -27,8 +27,8 @@ jest.mock('drive/web/modules/views/OnlyOffice/helpers', () => ({
   isOfficeEditingEnabled: jest.fn()
 }))
 
-jest.mock('cozy-ui/transpiled/react/hooks/useBreakpoints', () => ({
-  ...jest.requireActual('cozy-ui/transpiled/react/hooks/useBreakpoints'),
+jest.mock('cozy-ui/transpiled/react/providers/Breakpoints', () => ({
+  ...jest.requireActual('cozy-ui/transpiled/react/providers/Breakpoints'),
   __esModule: true,
   default: jest.fn(),
   useBreakpoints: jest.fn()

@@ -8,8 +8,8 @@ import AppLike from 'test/components/AppLike'
 import { Toolbar } from './Toolbar'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-jest.mock('cozy-ui/transpiled/react/hooks/useBreakpoints', () => ({
-  ...jest.requireActual('cozy-ui/transpiled/react/hooks/useBreakpoints'),
+jest.mock('cozy-ui/transpiled/react/providers/Breakpoints', () => ({
+  ...jest.requireActual('cozy-ui/transpiled/react/providers/Breakpoints'),
   __esModule: true,
   default: jest.fn(),
   useBreakpoints: jest.fn()
