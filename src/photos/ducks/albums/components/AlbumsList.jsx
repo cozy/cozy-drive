@@ -2,7 +2,7 @@ import styles from 'photos/styles/albumsList.styl'
 
 import React from 'react'
 import { Content } from 'cozy-ui/transpiled/react/Layout'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { EmptyPhotos } from 'components/Error/Empty'
 import AlbumItem from './AlbumItem'

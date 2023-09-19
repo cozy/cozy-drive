@@ -4,7 +4,7 @@ import get from 'lodash/get'
 import { useNavigate } from 'react-router-dom'
 
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 
 import { withClient, useCapabilities } from 'cozy-client'

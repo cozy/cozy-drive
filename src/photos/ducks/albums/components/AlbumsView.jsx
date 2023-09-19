@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import AlbumsToolbar from './AlbumsToolbar'
 import AlbumsList from './AlbumsList'

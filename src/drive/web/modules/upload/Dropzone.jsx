@@ -4,7 +4,7 @@ import UIDropzone from 'react-dropzone'
 import { compose } from 'redux'
 import { withVaultClient } from 'cozy-keys-lib'
 import { withClient } from 'cozy-client'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { uploadFiles } from 'drive/web/modules/navigation/duck'
 

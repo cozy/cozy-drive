@@ -2,7 +2,7 @@ import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
 
 import { createMockClient, useQuery } from 'cozy-client'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import AppLike from 'test/components/AppLike'
 import { officeDocParam } from 'test/data'

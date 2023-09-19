@@ -4,7 +4,7 @@ import cx from 'classnames'
 import { useNavigate, useLocation, useParams } from 'react-router-dom'
 
 import SharingProvider, { SharedDocument } from 'cozy-sharing'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { useCurrentFolderId } from 'drive/hooks'
 import AddButton from 'drive/web/modules/drive/Toolbar/components/AddButton'

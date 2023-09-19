@@ -9,7 +9,7 @@ import localforage from 'localforage'
 
 import { isIOSApp } from 'cozy-device-helper'
 import { Document } from 'cozy-doctypes'
-import { initTranslation } from 'cozy-ui/transpiled/react/I18n'
+import { initTranslation } from 'cozy-ui/transpiled/react/providers/I18n'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
 import { saveState, loadState } from 'drive/store/persistedState'

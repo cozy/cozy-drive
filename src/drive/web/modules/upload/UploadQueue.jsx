@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import UIUploadQueue from 'cozy-ui/transpiled/react/UploadQueue'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
 
 import {

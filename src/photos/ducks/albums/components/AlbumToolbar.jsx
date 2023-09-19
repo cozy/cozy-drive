@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { ShareButton, SharedRecipients } from 'cozy-sharing'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { divider } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 
 import {

@@ -4,7 +4,7 @@ import { useClient, models } from 'cozy-client'
 
 import { useFileWithPath } from 'drive/web/modules/views/hooks'
 import { TRASH_DIR_PATH } from 'drive/constants/config'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 export const makeTitle = (fileWithPath, appFullName, t) => {
   const fileName =

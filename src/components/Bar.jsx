@@ -1,13 +1,13 @@
 import React from 'react'
-import CozyTheme from 'cozy-ui/transpiled/react/CozyTheme'
+import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
 import cx from 'classnames'
 import cozyBar from 'lib/cozyBar'
 import { VaultUnlockProvider, VaultProvider } from 'cozy-keys-lib'
 import BarContextProvider from 'cozy-ui/transpiled/react/BarContextProvider'
 import { useClient } from 'cozy-client'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { useWebviewIntent } from 'cozy-intent'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 const wrap = (Component, className) => {
   const WrappedBarComponent = ({ children }) => {

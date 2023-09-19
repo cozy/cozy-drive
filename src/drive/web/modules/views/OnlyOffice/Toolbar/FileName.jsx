@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 import cx from 'classnames'
 
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
 

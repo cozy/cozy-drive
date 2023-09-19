@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useClient } from 'cozy-client'
 import { isIOS } from 'cozy-device-helper'
 
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import TextField from 'cozy-ui/transpiled/react/TextField'

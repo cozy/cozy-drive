@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 
 import { createMockClient, useQuery } from 'cozy-client'
 import useFetchJSON from 'cozy-client/dist/hooks/useFetchJSON'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import AppLike from 'test/components/AppLike'
 import { officeDocParam } from 'test/data'

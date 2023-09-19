@@ -13,7 +13,7 @@ import {
   isEqualOrOlder,
   isEqualOrNewer
 } from './dates'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 // constants
 const TIMELINE = 'timeline'
 const FILES_DOCTYPE = 'io.cozy.files'

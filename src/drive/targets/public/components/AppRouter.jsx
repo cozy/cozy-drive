@@ -12,7 +12,7 @@ import OnlyOfficeView from 'drive/web/modules/views/OnlyOffice'
 import OnlyOfficeCreateView from 'drive/web/modules/views/OnlyOffice/Create'
 import { isOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
 import ExternalRedirect from 'drive/web/modules/navigation/ExternalRedirect'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 const AppRouter = ({
   isReadOnly,

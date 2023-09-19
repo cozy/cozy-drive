@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 
 import { isSharingShortcutNew } from 'cozy-client/dist/models/file'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { TableCell } from 'cozy-ui/transpiled/react/Table'
 import Circle from 'cozy-ui/transpiled/react/Circle'
 

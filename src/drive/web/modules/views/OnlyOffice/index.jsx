@@ -2,7 +2,7 @@ import React, { createContext, useState, useMemo, useEffect } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 
 import Dialog from 'cozy-ui/transpiled/react/Dialog'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import Editor from 'drive/web/modules/views/OnlyOffice/Editor'
 import useHead from 'components/useHead'

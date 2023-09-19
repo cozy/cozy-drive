@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import justifiedLayout from 'justified-layout'
 import classNames from 'classnames'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import styles from '../styles/photoList.styl'
 import Photo from './Photo'

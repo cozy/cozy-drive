@@ -5,7 +5,7 @@ import { withStyles } from 'cozy-ui/transpiled/react/styles'
 import { Query, cancelable, Q, useClient } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import { useBreakpoints } from 'cozy-ui/transpiled/react'
 

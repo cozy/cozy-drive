@@ -6,7 +6,7 @@ import { isAndroid } from 'cozy-device-helper'
 
 import AppLinker from 'cozy-ui/transpiled/react/AppLinker'
 import Button from 'cozy-ui/transpiled/react/Buttons'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { useBackupData } from 'photos/ducks/backup/hooks/useBackupData'
 

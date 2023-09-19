@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { BarSearch } from 'components/Bar'
 import BarSearchAutosuggest from 'drive/web/modules/search/components/BarSearchAutosuggest'

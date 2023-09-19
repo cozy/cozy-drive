@@ -4,7 +4,7 @@ import cx from 'classnames'
 import compose from 'lodash/flowRight'
 
 import { withClient } from 'cozy-client'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'

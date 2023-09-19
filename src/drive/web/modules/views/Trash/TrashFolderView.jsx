@@ -3,8 +3,8 @@ import { useNavigate, Outlet } from 'react-router-dom'
 
 import { useQuery, useClient } from 'cozy-client'
 import { SharingContext } from 'cozy-sharing'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import useActions from 'drive/web/modules/actions/useActions'

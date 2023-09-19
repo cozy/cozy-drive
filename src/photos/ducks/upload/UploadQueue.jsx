@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import { Icon, Spinner } from 'cozy-ui/transpiled/react'
 import palette from 'cozy-ui/stylus/settings/palette.json'
 import CrossIcon from 'cozy-ui/transpiled/react/Icons/Cross'

@@ -4,7 +4,7 @@ import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 import { SharingBannerPlugin } from 'cozy-sharing'
 import { DialogTitle } from 'cozy-ui/transpiled/react/Dialog'
 import Divider from 'cozy-ui/transpiled/react/Divider'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
 import { showSharingBanner } from 'drive/web/modules/views/OnlyOffice/helpers'

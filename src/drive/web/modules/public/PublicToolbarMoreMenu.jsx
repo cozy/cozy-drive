@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useRef } from 'react'
 
 import { useClient } from 'cozy-client'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import ActionMenu, {
   ActionMenuItem

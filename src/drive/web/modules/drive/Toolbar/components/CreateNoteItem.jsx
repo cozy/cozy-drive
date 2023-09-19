@@ -11,7 +11,7 @@ import {
   useAppLinkWithStoreFallback,
   useCapabilities
 } from 'cozy-client'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import { generateUniversalLink } from 'cozy-ui/transpiled/react/AppLinker/native'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'

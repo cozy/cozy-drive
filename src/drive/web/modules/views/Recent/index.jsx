@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux'
 
 import { useClient } from 'cozy-client'
 import { SharingContext } from 'cozy-sharing'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import FolderView from '../Folder/FolderView'
 import FolderViewHeader from '../Folder/FolderViewHeader'

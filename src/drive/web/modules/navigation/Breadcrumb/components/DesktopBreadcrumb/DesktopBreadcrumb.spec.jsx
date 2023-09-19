@@ -3,8 +3,8 @@ import { render, fireEvent, act } from '@testing-library/react'
 
 import DesktopBreadcrumb from './DesktopBreadcrumb'
 import { dummyBreadcrumbPath } from 'test/dummies/dummyBreadcrumbPath'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
-import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 jest.mock('cozy-ui/transpiled/react/deprecated/ActionMenu', () => ({
   __esModule: true,

@@ -4,7 +4,7 @@ import { Scanner, SCANNER_DONE } from 'cozy-scanner'
 import { isMobileApp } from 'cozy-device-helper'
 import PortaledQueue from './PortaledQueue'
 import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
-import { BreakpointsProvider } from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import {
   startMediaBackup,

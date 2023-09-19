@@ -4,7 +4,7 @@ import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 
 import { useClient } from 'cozy-client'
 import { useVaultClient } from 'cozy-keys-lib'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import Switch from 'cozy-ui/transpiled/react/Switch'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'

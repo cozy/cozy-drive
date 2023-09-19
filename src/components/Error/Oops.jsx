@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Empty from 'cozy-ui/transpiled/react/Empty'
 import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 

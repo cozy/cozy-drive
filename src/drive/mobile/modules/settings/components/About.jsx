@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Hammer from '@egjs/hammerjs'
-import { translate } from 'cozy-ui/transpiled/react/I18n'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import SettingCategory, { ELEMENT_TEXT } from './SettingCategory'
 import { getServerUrl } from '../duck'
 

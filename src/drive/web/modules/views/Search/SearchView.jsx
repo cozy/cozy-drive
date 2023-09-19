@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react'
 import cx from 'classnames'
 
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import Input from 'cozy-ui/transpiled/react/Input'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import List from 'cozy-ui/transpiled/react/List'
 import { isFlagshipApp } from 'cozy-device-helper'
 import { useWebviewIntent } from 'cozy-intent'

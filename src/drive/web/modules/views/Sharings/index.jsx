@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux'
 
 import { useClient, hasQueryBeenLoaded } from 'cozy-client'
 import { SharingContext } from 'cozy-sharing'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { ModalContext } from 'drive/lib/ModalContext'
 import Toolbar from 'drive/web/modules/drive/Toolbar'

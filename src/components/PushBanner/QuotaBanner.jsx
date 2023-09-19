@@ -4,7 +4,7 @@ import CloudSyncIcon from 'cozy-ui/transpiled/react/Icons/CloudSync'
 import Banner from 'cozy-ui/transpiled/react/Banner'
 import Button from 'cozy-ui/transpiled/react/Buttons'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { isFlagshipApp } from 'cozy-device-helper'
 import {
   arePremiumLinksEnabled,

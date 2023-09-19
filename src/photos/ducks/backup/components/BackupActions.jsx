@@ -5,7 +5,7 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import SyncIcon from 'cozy-ui/transpiled/react/Icons/Sync'
 import CheckIcon from 'cozy-ui/transpiled/react/Icons/Check'
 import SpinnerIcon from 'cozy-ui/transpiled/react/Icons/Spinner'
-import { useI18n } from 'cozy-ui/transpiled/react/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { useBackupActions } from '../hooks/useBackupActions'
 import { useBackupData } from '../hooks/useBackupData'

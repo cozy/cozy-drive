@@ -1,7 +1,7 @@
 /* global cozy */
 
 import memoize from 'lodash/memoize'
-import { initTranslation } from 'cozy-ui/transpiled/react/I18n'
+import { initTranslation } from 'cozy-ui/transpiled/react/providers/I18n'
 import CozyClient from 'cozy-client'
 import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 import registerClientPlugins from 'drive/lib/registerClientPlugins'

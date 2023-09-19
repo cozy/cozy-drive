@@ -2,7 +2,7 @@ import React, { useContext, useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { RealTimeQueries } from 'cozy-client'
-import useBreakpoints from 'cozy-ui/transpiled/react/hooks/useBreakpoints'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
