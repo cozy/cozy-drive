@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react'
 
 import { CozyFile } from 'cozy-doctypes'
-import { useI18n } from 'cozy-ui/transpiled/react'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import logger from 'lib/logger'
 import {

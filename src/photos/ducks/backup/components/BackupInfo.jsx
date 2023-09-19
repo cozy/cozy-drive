@@ -3,7 +3,7 @@ import cx from 'classnames'
 
 import Alert from 'cozy-ui/transpiled/react/Alert'
 import AlertTitle from 'cozy-ui/transpiled/react/AlertTitle'
-import { useI18n } from 'cozy-ui/transpiled/react'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import styles from '../../../styles/backup.styl'
 import { useBackupData } from '../hooks/useBackupData'

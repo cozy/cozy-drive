@@ -32,7 +32,7 @@ import {
   openFileWith,
   restoreFiles
 } from './utils'
-import { useI18n } from 'cozy-ui/transpiled/react'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import {
   navigateToModal,
   navigateToModalWithMultipleFile

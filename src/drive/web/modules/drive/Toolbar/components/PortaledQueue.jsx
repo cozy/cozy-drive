@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { DumbUploadQueue as UploadQueue } from 'drive/web/modules/upload/UploadQueue'
-import { translate } from 'cozy-ui/transpiled/react'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
+
 class PortaledQueue extends Component {
   render() {
     const { file, doneCount, successCount, t, onClear } = this.props
