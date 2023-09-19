@@ -6,6 +6,70 @@ Object {
   "baseElement": <body>
     <div>
       <div
+        class="CozyTheme--normal"
+      >
+        <div
+          class="u-flex u-flex-items-center u-flex-grow CozyTheme--normal"
+        >
+          <div
+            class="bar-search-container"
+            role="search"
+          >
+            <div
+              aria-expanded="false"
+              aria-haspopup="listbox"
+              aria-owns="react-autowhatever-1"
+              class="u-w-100"
+              role="combobox"
+            >
+              <div
+                class="styles__c-inputgroup___12OVJ styles__c-inputgroup--fullwidth___3nuay bar-search-input-group"
+              >
+                <div
+                  class="styles__c-inputgroup-side___60v0v"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="bar-search-input-group-append styles__icon___23x3R"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    width="16"
+                  >
+                    <path
+                      d="M10.472 10H11.5l3.294 3.294a.996.996 0 010 1.412l-.088.088a1 1 0 01-1.412 0L10 11.5v-1.028a6 6 0 11.472-.472zM6 10a4 4 0 100-8 4 4 0 000 8z"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="styles__c-inputgroup-main___1LP4B"
+                >
+                  <input
+                    aria-autocomplete="list"
+                    aria-controls="react-autowhatever-1"
+                    autocomplete="off"
+                    placeholder="Search anything"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+              <ul
+                class="MuiList-root-1 bar-search-autosuggest-suggestions-container MuiList-padding-2"
+                id="react-autowhatever-1"
+                role="listbox"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="CozyTheme--normal"
+    >
+      <div
         class="u-flex u-flex-items-center u-flex-grow CozyTheme--normal"
       >
         <div
@@ -52,67 +116,11 @@ Object {
               </div>
             </div>
             <ul
-              class="MuiList-root bar-search-autosuggest-suggestions-container MuiList-padding"
+              class="MuiList-root-1 bar-search-autosuggest-suggestions-container MuiList-padding-2"
               id="react-autowhatever-1"
               role="listbox"
             />
           </div>
-        </div>
-      </div>
-    </div>
-  </body>,
-  "container": <div>
-    <div
-      class="u-flex u-flex-items-center u-flex-grow CozyTheme--normal"
-    >
-      <div
-        class="bar-search-container"
-        role="search"
-      >
-        <div
-          aria-expanded="false"
-          aria-haspopup="listbox"
-          aria-owns="react-autowhatever-1"
-          class="u-w-100"
-          role="combobox"
-        >
-          <div
-            class="styles__c-inputgroup___12OVJ styles__c-inputgroup--fullwidth___3nuay bar-search-input-group"
-          >
-            <div
-              class="styles__c-inputgroup-side___60v0v"
-            >
-              <svg
-                aria-hidden="true"
-                class="bar-search-input-group-append styles__icon___23x3R"
-                height="16"
-                viewBox="0 0 16 16"
-                width="16"
-              >
-                <path
-                  d="M10.472 10H11.5l3.294 3.294a.996.996 0 010 1.412l-.088.088a1 1 0 01-1.412 0L10 11.5v-1.028a6 6 0 11.472-.472zM6 10a4 4 0 100-8 4 4 0 000 8z"
-                  fill-rule="evenodd"
-                />
-              </svg>
-            </div>
-            <div
-              class="styles__c-inputgroup-main___1LP4B"
-            >
-              <input
-                aria-autocomplete="list"
-                aria-controls="react-autowhatever-1"
-                autocomplete="off"
-                placeholder="Search anything"
-                type="text"
-                value=""
-              />
-            </div>
-          </div>
-          <ul
-            class="MuiList-root bar-search-autosuggest-suggestions-container MuiList-padding"
-            id="react-autowhatever-1"
-            role="listbox"
-          />
         </div>
       </div>
     </div>

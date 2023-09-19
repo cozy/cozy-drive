@@ -4,7 +4,6 @@ import { fireEvent, render, waitFor } from '@testing-library/react'
 import mediaQuery from 'css-mediaquery'
 
 import { createMockClient } from 'cozy-client'
-import MuiCozyTheme from 'cozy-ui/transpiled/react/MuiCozyTheme'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
 import ShortcutCreationModal from './ShortcutCreationModal'
@@ -54,9 +53,7 @@ describe('ShortcutCreationModal', () => {
   const setup = props => {
     const { getByLabelText, getByText } = render(
       <AppLike client={client}>
-        <MuiCozyTheme>
-          <ShortcutCreationModal {...props} />
-        </MuiCozyTheme>
+        <ShortcutCreationModal {...props} />
       </AppLike>
     )
 

@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 
 import { I18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
 import { SharingContext } from 'cozy-sharing'
 
 import { ThumbnailSizeContextProvider } from 'drive/lib/ThumbnailSizeContext'
@@ -51,33 +52,35 @@ const AppLike = ({
   modalContextValue,
   enLocale
 }) => (
-  <Provider store={(client && client.store) || store || mockStore}>
-    <CozyProvider client={client}>
-      <TestI18n enLocale={enLocale}>
-        <SharingContext.Provider
-          value={sharingContextValue || mockSharingContextValue}
-        >
-          <AcceptingSharingProvider>
-            <HashRouter>
-              <SelectionProvider>
-                <ThumbnailSizeContextProvider>
-                  <BreakpointsProvider>
-                    <PushBannerProvider>
-                      <ModalContext.Provider
-                        value={modalContextValue || mockModalContextValue}
-                      >
-                        <FabProvider>{children}</FabProvider>
-                      </ModalContext.Provider>
-                    </PushBannerProvider>
-                  </BreakpointsProvider>
-                </ThumbnailSizeContextProvider>
-              </SelectionProvider>
-            </HashRouter>
-          </AcceptingSharingProvider>
-        </SharingContext.Provider>
-      </TestI18n>
-    </CozyProvider>
-  </Provider>
+  <CozyTheme>
+    <Provider store={(client && client.store) || store || mockStore}>
+      <CozyProvider client={client}>
+        <TestI18n enLocale={enLocale}>
+          <SharingContext.Provider
+            value={sharingContextValue || mockSharingContextValue}
+          >
+            <AcceptingSharingProvider>
+              <HashRouter>
+                <SelectionProvider>
+                  <ThumbnailSizeContextProvider>
+                    <BreakpointsProvider>
+                      <PushBannerProvider>
+                        <ModalContext.Provider
+                          value={modalContextValue || mockModalContextValue}
+                        >
+                          <FabProvider>{children}</FabProvider>
+                        </ModalContext.Provider>
+                      </PushBannerProvider>
+                    </BreakpointsProvider>
+                  </ThumbnailSizeContextProvider>
+                </SelectionProvider>
+              </HashRouter>
+            </AcceptingSharingProvider>
+          </SharingContext.Provider>
+        </TestI18n>
+      </CozyProvider>
+    </Provider>
+  </CozyTheme>
 )
 
 const DriveAppLike = props => (

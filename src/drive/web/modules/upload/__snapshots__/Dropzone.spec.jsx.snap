@@ -34,143 +34,1736 @@ exports[`Dropzone should match snapshot 1`] = `
       }
     }
   >
-    <Provider
-      store={
-        Object {
-          "dispatch": [MockFunction],
-          "getState": [Function],
-          "replaceReducer": [Function],
-          "subscribe": [Function],
-          Symbol(observable): [Function],
-        }
-      }
+    <CozyTheme
+      variant="normal"
     >
-      <CozyProvider
-        client={
-          CozyClient {
-            "uri": undefined,
-          }
-        }
+      <MuiCozyTheme
+        variant="normal"
       >
-        <TestI18n
-          enLocale={[Function]}
-        >
-          <I18n
-            defaultLang="en"
-            dictRequire={[Function]}
-            lang="en"
-          >
-            <AcceptingSharingProvider>
-              <HashRouter>
-                <Router
-                  location={
-                    Object {
-                      "hash": "",
-                      "key": "default",
-                      "pathname": "/",
-                      "search": "",
-                      "state": null,
-                    }
-                  }
-                  navigationType="POP"
-                  navigator={
-                    Object {
-                      "action": "POP",
-                      "createHref": [Function],
-                      "createURL": [Function],
-                      "encodeLocation": [Function],
-                      "go": [Function],
-                      "listen": [Function],
-                      "location": Object {
-                        "hash": "",
-                        "key": "default",
-                        "pathname": "/",
-                        "search": "",
-                        "state": null,
+        <ThemeProvider
+          theme={
+            Object {
+              "breakpoints": Object {
+                "between": [Function],
+                "down": [Function],
+                "keys": Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ],
+                "only": [Function],
+                "up": [Function],
+                "values": Object {
+                  "lg": 1023,
+                  "md": 768,
+                  "sm": 480,
+                  "xl": 1200,
+                  "xs": 0,
+                },
+                "width": [Function],
+              },
+              "direction": "ltr",
+              "mixins": Object {
+                "gutters": [Function],
+                "toolbar": Object {
+                  "@media (min-width:0px) and (orientation: landscape)": Object {
+                    "minHeight": 48,
+                  },
+                  "@media (min-width:480px)": Object {
+                    "minHeight": 64,
+                  },
+                  "minHeight": 56,
+                },
+              },
+              "overrides": Object {
+                "MuiAccordion": Object {
+                  "root": Object {
+                    "borderColor": "#fff",
+                    "borderStyle": "solid",
+                    "borderWidth": "0.0625rem",
+                    "boxShadow": "0 4px 12px 0 rgba(0, 0, 0, 0.08)",
+                    "marginBottom": "1rem",
+                    "overflow": "hidden",
+                  },
+                  "rounded": Object {
+                    "borderRadius": 6,
+                  },
+                },
+                "MuiAccordionDetails": Object {
+                  "root": Object {
+                    "borderTop": "0.0625rem solid #fff",
+                    "padding": 0,
+                  },
+                },
+                "MuiAccordionSummary": Object {
+                  "content": Object {
+                    "& > :last-child": Object {
+                      "paddingRight": 0,
+                    },
+                    "&$expanded": Object {
+                      "margin": "0.75rem 0",
+                    },
+                    "margin": "0.75rem 0",
+                    "order": 1,
+                    "paddingLeft": "0.5rem",
+                    "paddingRight": "0.25rem",
+                  },
+                  "expandIcon": Object {
+                    "&$expanded": Object {
+                      "marginLeft": "0.3125rem",
+                      "transform": "rotate(0)",
+                    },
+                    "&&": Object {
+                      "marginLeft": "0.3125rem",
+                    },
+                    "order": 0,
+                    "transform": "rotate(-90deg)",
+                  },
+                  "expanded": Object {},
+                  "root": Object {
+                    "&$expanded": Object {
+                      "minHeight": "3.5rem",
+                    },
+                    "backgroundColor": "#fff",
+                    "color": "#fff",
+                    "fontSize": "0.875rem",
+                    "fontWeight": "bold",
+                    "minHeight": "3.5rem",
+                    "padding": 0,
+                    "textTransform": "uppercase",
+                  },
+                },
+                "MuiAlert": Object {
+                  "action": Object {
+                    "marginRight": "-6px",
+                  },
+                  "message": Object {
+                    "alignItems": "center",
+                    "display": "flex",
+                    "flex": "auto",
+                    "flexWrap": "wrap",
+                  },
+                  "root": Object {
+                    "& $icon": Object {
+                      "paddingTop": "9px",
+                    },
+                    "&.block": Object {
+                      "& $action": Object {
+                        "display": "block",
+                        "paddingLeft": 0,
+                        "textAlign": "right",
+                        "width": "100%",
                       },
-                      "push": [Function],
-                      "replace": [Function],
-                    }
+                      "flexWrap": "wrap",
+                    },
+                    "&.cozyAlert": Object {
+                      "&-primary": Object {
+                        "&-filled": Object {
+                          "backgroundColor": "#fff",
+                        },
+                        "&-outlined": Object {
+                          "& $icon": Object {
+                            "color": "#fff",
+                          },
+                          "border": "1px solid #fff",
+                          "color": "rgb(102, 102, 102)",
+                        },
+                        "&-standard": Object {
+                          "& $action": Object {
+                            "& button[title=\\"Close\\"]": Object {
+                              "color": "#fff",
+                            },
+                          },
+                          "& $icon": Object {
+                            "color": "#fff",
+                          },
+                          "backgroundColor": "rgb(255, 255, 255)",
+                          "color": "rgb(102, 102, 102)",
+                        },
+                      },
+                      "&-secondary": Object {
+                        "&-filled": Object {
+                          "backgroundColor": "#fff",
+                        },
+                        "&-outlined": Object {
+                          "& $icon": Object {
+                            "color": "#fff",
+                          },
+                          "border": "1px solid #fff",
+                          "color": "rgb(102, 102, 102)",
+                        },
+                        "&-standard": Object {
+                          "& $action": Object {
+                            "& button[title=\\"Close\\"]": Object {
+                              "color": "#fff",
+                            },
+                          },
+                          "& $icon": Object {
+                            "color": "#fff",
+                          },
+                          "backgroundColor": "rgb(255, 255, 255)",
+                          "color": "rgb(102, 102, 102)",
+                        },
+                      },
+                    },
+                    "padding": "8px 16px",
+                  },
+                },
+                "MuiAlertTitle": Object {
+                  "root": Object {
+                    "fontWeight": "bold",
+                    "width": "100%",
+                  },
+                },
+                "MuiBadge": Object {
+                  "anchorOriginBottomLeftRectangular": Object {
+                    "transform": "scale(1) translate(-37%, 37%)",
+                  },
+                  "anchorOriginBottomRightRectangular": Object {
+                    "transform": "scale(1) translate(37%, 37%)",
+                  },
+                  "anchorOriginTopLeftRectangular": Object {
+                    "transform": "scale(1) translate(-37%, -37%)",
+                  },
+                  "anchorOriginTopRightRectangular": Object {
+                    "transform": "scale(1) translate(37%, -37%)",
+                  },
+                  "badge": Object {
+                    "&.badgeBorder": Object {
+                      "border": "2px solid #fff",
+                    },
+                    "&.badgeSizeLarge": Object {
+                      "fontSize": ".6875rem",
+                      "height": "1rem",
+                      "minWidth": "1rem",
+                    },
+                    "&.badgeSizeMedium": Object {
+                      "fontSize": ".625rem",
+                      "height": ".875rem",
+                      "minWidth": ".875rem",
+                    },
+                    "&.badgeSizeSmall": Object {
+                      "fontSize": ".5rem",
+                      "height": ".75rem",
+                      "minWidth": ".75rem",
+                    },
+                    "boxSizing": "content-box",
+                    "padding": 0,
+                  },
+                  "dot": Object {
+                    "&.badgeSizeLarge": Object {
+                      "height": ".625rem",
+                      "minWidth": ".625rem",
+                    },
+                    "&.badgeSizeMedium": Object {
+                      "height": ".5rem",
+                      "minWidth": ".5rem",
+                    },
+                    "&.badgeSizeSmall": Object {
+                      "height": ".375rem",
+                      "minWidth": ".375rem",
+                    },
+                    "borderRadius": "100%",
+                    "padding": 0,
+                  },
+                },
+                "MuiButton": Object {
+                  "contained": Object {
+                    "&:not($disabled)": Object {
+                      "&.customColor": Object {
+                        "&-error": Object {
+                          "&:hover": Object {
+                            "@media (hover: none)": Object {
+                              "backgroundColor": "#fff",
+                            },
+                            "backgroundColor": "#fff",
+                          },
+                          "backgroundColor": "#fff",
+                          "color": "#fff",
+                        },
+                        "&-info": Object {
+                          "&:hover": Object {
+                            "@media (hover: none)": Object {
+                              "backgroundColor": "#fff",
+                            },
+                            "backgroundColor": "#fff",
+                          },
+                          "backgroundColor": "#fff",
+                          "color": "#fff",
+                        },
+                        "&-success": Object {
+                          "&:hover": Object {
+                            "@media (hover: none)": Object {
+                              "backgroundColor": "#fff",
+                            },
+                            "backgroundColor": "#fff",
+                          },
+                          "backgroundColor": "#fff",
+                          "color": "#fff",
+                        },
+                        "&-warning": Object {
+                          "&:hover": Object {
+                            "@media (hover: none)": Object {
+                              "backgroundColor": "#fff",
+                            },
+                            "backgroundColor": "#fff",
+                          },
+                          "backgroundColor": "#fff",
+                          "color": "#fff",
+                        },
+                      },
+                    },
+                    "boxShadow": 0,
+                  },
+                  "outlined": Object {
+                    "&:not($disabled)": Object {
+                      "&.customColor": Object {
+                        "&-error": Object {
+                          "&.ghost": Object {
+                            "&:hover": Object {
+                              "@media (hover: none)": Object {
+                                "backgroundColor": "rgba(255, 255, 255, 0.08)",
+                              },
+                              "backgroundColor": "rgba(255, 255, 255, 0.16)",
+                            },
+                            "backgroundColor": "rgba(255, 255, 255, 0.08)",
+                          },
+                          "&:hover": Object {
+                            "@media (hover: none)": Object {
+                              "backgroundColor": "transparent",
+                            },
+                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                          },
+                          "borderColor": "#fff",
+                          "color": "#fff",
+                        },
+                        "&-info": Object {
+                          "&.ghost": Object {
+                            "&:hover": Object {
+                              "@media (hover: none)": Object {
+                                "backgroundColor": "rgba(255, 255, 255, 0.08)",
+                              },
+                              "backgroundColor": "rgba(255, 255, 255, 0.16)",
+                            },
+                            "backgroundColor": "rgba(255, 255, 255, 0.08)",
+                          },
+                          "&:hover": Object {
+                            "@media (hover: none)": Object {
+                              "backgroundColor": "transparent",
+                            },
+                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                          },
+                          "borderColor": "#fff",
+                          "color": "#fff",
+                        },
+                        "&-primary": Object {
+                          "&.ghost": Object {
+                            "borderColor": "rgba(255, 255, 255, 0.48)",
+                            "color": "#fff",
+                          },
+                          "&:hover": Object {
+                            "@media (hover: none)": Object {
+                              "backgroundColor": "transparent",
+                            },
+                            "backgroundColor": "#fff",
+                          },
+                          "borderColor": "#fff",
+                          "color": "#fff",
+                        },
+                        "&-success": Object {
+                          "&.ghost": Object {
+                            "&:hover": Object {
+                              "@media (hover: none)": Object {
+                                "backgroundColor": "rgba(255, 255, 255, 0.08)",
+                              },
+                              "backgroundColor": "rgba(255, 255, 255, 0.16)",
+                            },
+                            "backgroundColor": "rgba(255, 255, 255, 0.08)",
+                          },
+                          "&:hover": Object {
+                            "@media (hover: none)": Object {
+                              "backgroundColor": "transparent",
+                            },
+                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                          },
+                          "borderColor": "#fff",
+                          "color": "#fff",
+                        },
+                        "&-warning": Object {
+                          "&.ghost": Object {
+                            "&:hover": Object {
+                              "@media (hover: none)": Object {
+                                "backgroundColor": "rgba(255, 255, 255, 0.08)",
+                              },
+                              "backgroundColor": "rgba(255, 255, 255, 0.16)",
+                            },
+                            "backgroundColor": "rgba(255, 255, 255, 0.08)",
+                          },
+                          "&:hover": Object {
+                            "@media (hover: none)": Object {
+                              "backgroundColor": "transparent",
+                            },
+                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                          },
+                          "borderColor": "#fff",
+                          "color": "#fff",
+                        },
+                      },
+                      "&.ghost": Object {
+                        "&:hover": Object {
+                          "@media (hover: none)": Object {
+                            "backgroundColor": "rgba(255, 255, 255, 0.08)",
+                          },
+                          "backgroundColor": "rgba(255, 255, 255, 0.16)",
+                        },
+                        "backgroundColor": "rgba(255, 255, 255, 0.08)",
+                      },
+                    },
+                  },
+                  "root": Object {
+                    "&.ghost": Object {
+                      "&:hover": Object {
+                        "borderStyle": "dashed !important",
+                      },
+                      "borderStyle": "dashed !important",
+                    },
+                    "borderRadius": 2,
+                    "height": "2.5rem",
+                    "lineHeight": "normal",
+                    "padding": "0 1rem",
+                  },
+                  "sizeLarge": Object {
+                    "&$text": Object {
+                      "padding": "14px 10px",
+                    },
+                    "height": "3rem",
+                    "padding": "0 1.25rem",
+                  },
+                  "sizeSmall": Object {
+                    "&$text": Object {
+                      "padding": "8px 6px",
+                    },
+                    "height": "2rem",
+                    "padding": "0 0.75rem",
+                  },
+                  "startIcon": Object {
+                    "marginLeft": "0 !important",
+                  },
+                  "text": Object {
+                    "&:not($disabled)": Object {
+                      "&.customColor": Object {
+                        "&-error": Object {
+                          "&:hover": Object {
+                            "@media (hover: none)": Object {
+                              "backgroundColor": "transparent",
+                            },
+                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                          },
+                          "color": "#fff",
+                        },
+                        "&-info": Object {
+                          "&:hover": Object {
+                            "@media (hover: none)": Object {
+                              "backgroundColor": "transparent",
+                            },
+                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                          },
+                          "color": "#fff",
+                        },
+                        "&-success": Object {
+                          "&:hover": Object {
+                            "@media (hover: none)": Object {
+                              "backgroundColor": "transparent",
+                            },
+                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                          },
+                          "color": "#fff",
+                        },
+                        "&-warning": Object {
+                          "&:hover": Object {
+                            "@media (hover: none)": Object {
+                              "backgroundColor": "transparent",
+                            },
+                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                          },
+                          "color": "#fff",
+                        },
+                      },
+                    },
+                    "minWidth": "auto",
+                    "padding": "11px 8px",
+                  },
+                },
+                "MuiChip": Object {
+                  "root": Object {
+                    "&.customColor": Object {
+                      "&-error": Object {
+                        "& $deleteIcon": Object {
+                          "color": "#fff",
+                          "fill": "#fff",
+                        },
+                        "& $icon": Object {
+                          "color": "#fff",
+                          "fill": "#fff",
+                        },
+                        "&$clickable, &$deletable": Object {
+                          "&:hover, &:focus": Object {
+                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                            "borderColor": "rgba(255, 255, 255, 0.16)",
+                          },
+                        },
+                        "&$colorPrimary": Object {
+                          "& $icon, & $deleteIcon": Object {
+                            "color": "#fff",
+                            "fill": "#fff",
+                          },
+                          "&$clickable, &$deletable": Object {
+                            "&:hover, &:focus": Object {
+                              "backgroundColor": "#fff",
+                            },
+                          },
+                          "&$disabled": Object {
+                            "& $icon, & $deleteIcon": Object {
+                              "color": "#fff",
+                              "fill": "#fff",
+                            },
+                            "backgroundColor": "#fff",
+                            "color": "#fff",
+                            "opacity": 1,
+                          },
+                          "backgroundColor": "#fff",
+                          "color": "#fff",
+                          "padding": "0 1px",
+                        },
+                        "&.ghost": Object {
+                          "&$clickable, &$deletable": Object {
+                            "&:hover, &:focus": Object {
+                              "backgroundColor": "rgba(255, 255, 255, 0.16)",
+                              "borderColor": "rgba(255, 255, 255, 0.48)",
+                            },
+                          },
+                          "&:not($disabled)": Object {
+                            "& $icon, & $deleteIcon": Object {
+                              "color": "#fff",
+                              "fill": "#fff",
+                            },
+                            "backgroundColor": "rgba(255, 255, 255, 0.08)",
+                            "borderColor": "rgba(255, 255, 255, 0.48)",
+                            "color": "#fff",
+                          },
+                          "borderStyle": "dashed",
+                          "borderWidth": "1px",
+                        },
+                        "borderColor": "rgba(255, 255, 255, 0.16)",
+                        "color": "#fff",
+                      },
+                      "&-info": Object {
+                        "& $deleteIcon": Object {
+                          "color": "#fff",
+                          "fill": "#fff",
+                        },
+                        "& $icon": Object {
+                          "color": "#fff",
+                          "fill": "#fff",
+                        },
+                        "&$clickable, &$deletable": Object {
+                          "&:hover, &:focus": Object {
+                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                            "borderColor": "rgba(255, 255, 255, 0.16)",
+                          },
+                        },
+                        "&$colorPrimary": Object {
+                          "& $icon, & $deleteIcon": Object {
+                            "color": "#fff",
+                            "fill": "#fff",
+                          },
+                          "&$clickable, &$deletable": Object {
+                            "&:hover, &:focus": Object {
+                              "backgroundColor": "#fff",
+                            },
+                          },
+                          "&$disabled": Object {
+                            "& $icon, & $deleteIcon": Object {
+                              "color": "#fff",
+                              "fill": "#fff",
+                            },
+                            "backgroundColor": "#fff",
+                            "color": "#fff",
+                            "opacity": 1,
+                          },
+                          "backgroundColor": "#fff",
+                          "color": "#fff",
+                          "padding": "0 1px",
+                        },
+                        "&.ghost": Object {
+                          "&$clickable, &$deletable": Object {
+                            "&:hover, &:focus": Object {
+                              "backgroundColor": "rgba(255, 255, 255, 0.16)",
+                              "borderColor": "rgba(255, 255, 255, 0.48)",
+                            },
+                          },
+                          "&:not($disabled)": Object {
+                            "& $icon, & $deleteIcon": Object {
+                              "color": "#fff",
+                              "fill": "#fff",
+                            },
+                            "backgroundColor": "rgba(255, 255, 255, 0.08)",
+                            "borderColor": "rgba(255, 255, 255, 0.48)",
+                            "color": "#fff",
+                          },
+                          "borderStyle": "dashed",
+                          "borderWidth": "1px",
+                        },
+                        "borderColor": "rgba(255, 255, 255, 0.16)",
+                        "color": "#fff",
+                      },
+                      "&-primary": Object {
+                        "& $deleteIcon": Object {
+                          "color": "#fff",
+                          "fill": "#fff",
+                        },
+                        "& $icon": Object {
+                          "color": "#fff",
+                          "fill": "#fff",
+                        },
+                        "&$clickable, &$deletable": Object {
+                          "&:hover, &:focus": Object {
+                            "backgroundColor": "#fff",
+                            "borderColor": "#fff",
+                          },
+                        },
+                        "&$colorPrimary": Object {
+                          "& $icon, & $deleteIcon": Object {
+                            "color": "#fff",
+                            "fill": "#fff",
+                          },
+                          "&$clickable, &$deletable": Object {
+                            "&:hover, &:focus": Object {
+                              "backgroundColor": "#fff",
+                            },
+                          },
+                          "&$disabled": Object {
+                            "& $icon, & $deleteIcon": Object {
+                              "color": "#fff",
+                              "fill": "#fff",
+                            },
+                            "backgroundColor": "#fff",
+                            "color": "#fff",
+                            "opacity": 1,
+                          },
+                          "backgroundColor": "#fff",
+                          "color": "#fff",
+                          "padding": "0 1px",
+                        },
+                        "&.ghost": Object {
+                          "&$clickable, &$deletable": Object {
+                            "&:hover, &:focus": Object {
+                              "backgroundColor": "rgba(255, 255, 255, 0.16)",
+                              "borderColor": "rgba(255, 255, 255, 0.48)",
+                            },
+                          },
+                          "&:not($disabled)": Object {
+                            "& $icon, & $deleteIcon": Object {
+                              "color": "#fff",
+                              "fill": "#fff",
+                            },
+                            "backgroundColor": "rgba(255, 255, 255, 0.08)",
+                            "borderColor": "rgba(255, 255, 255, 0.48)",
+                            "color": "#fff",
+                          },
+                          "borderStyle": "dashed",
+                          "borderWidth": "1px",
+                        },
+                        "borderColor": "#fff",
+                        "color": "#fff",
+                      },
+                      "&-success": Object {
+                        "& $deleteIcon": Object {
+                          "color": "#fff",
+                          "fill": "#fff",
+                        },
+                        "& $icon": Object {
+                          "color": "#fff",
+                          "fill": "#fff",
+                        },
+                        "&$clickable, &$deletable": Object {
+                          "&:hover, &:focus": Object {
+                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                            "borderColor": "rgba(255, 255, 255, 0.16)",
+                          },
+                        },
+                        "&$colorPrimary": Object {
+                          "& $icon, & $deleteIcon": Object {
+                            "color": "#fff",
+                            "fill": "#fff",
+                          },
+                          "&$clickable, &$deletable": Object {
+                            "&:hover, &:focus": Object {
+                              "backgroundColor": "#fff",
+                            },
+                          },
+                          "&$disabled": Object {
+                            "& $icon, & $deleteIcon": Object {
+                              "color": "#fff",
+                              "fill": "#fff",
+                            },
+                            "backgroundColor": "#fff",
+                            "color": "#fff",
+                            "opacity": 1,
+                          },
+                          "backgroundColor": "#fff",
+                          "color": "#fff",
+                          "padding": "0 1px",
+                        },
+                        "&.ghost": Object {
+                          "&$clickable, &$deletable": Object {
+                            "&:hover, &:focus": Object {
+                              "backgroundColor": "rgba(255, 255, 255, 0.16)",
+                              "borderColor": "rgba(255, 255, 255, 0.48)",
+                            },
+                          },
+                          "&:not($disabled)": Object {
+                            "& $icon, & $deleteIcon": Object {
+                              "color": "#fff",
+                              "fill": "#fff",
+                            },
+                            "backgroundColor": "rgba(255, 255, 255, 0.08)",
+                            "borderColor": "rgba(255, 255, 255, 0.48)",
+                            "color": "#fff",
+                          },
+                          "borderStyle": "dashed",
+                          "borderWidth": "1px",
+                        },
+                        "borderColor": "rgba(255, 255, 255, 0.16)",
+                        "color": "#fff",
+                      },
+                      "&-warning": Object {
+                        "& $deleteIcon": Object {
+                          "color": "#fff",
+                          "fill": "#fff",
+                        },
+                        "& $icon": Object {
+                          "color": "#fff",
+                          "fill": "#fff",
+                        },
+                        "&$clickable, &$deletable": Object {
+                          "&:hover, &:focus": Object {
+                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                            "borderColor": "rgba(255, 255, 255, 0.16)",
+                          },
+                        },
+                        "&$colorPrimary": Object {
+                          "& $icon, & $deleteIcon": Object {
+                            "color": "#fff",
+                            "fill": "#fff",
+                          },
+                          "&$clickable, &$deletable": Object {
+                            "&:hover, &:focus": Object {
+                              "backgroundColor": "#fff",
+                            },
+                          },
+                          "&$disabled": Object {
+                            "& $icon, & $deleteIcon": Object {
+                              "color": "#fff",
+                              "fill": "#fff",
+                            },
+                            "backgroundColor": "#fff",
+                            "color": "#fff",
+                            "opacity": 1,
+                          },
+                          "backgroundColor": "#fff",
+                          "color": "#fff",
+                          "padding": "0 1px",
+                        },
+                        "&.ghost": Object {
+                          "&$clickable, &$deletable": Object {
+                            "&:hover, &:focus": Object {
+                              "backgroundColor": "rgba(255, 255, 255, 0.16)",
+                              "borderColor": "rgba(255, 255, 255, 0.48)",
+                            },
+                          },
+                          "&:not($disabled)": Object {
+                            "& $icon, & $deleteIcon": Object {
+                              "color": "#fff",
+                              "fill": "#fff",
+                            },
+                            "backgroundColor": "rgba(255, 255, 255, 0.08)",
+                            "borderColor": "rgba(255, 255, 255, 0.48)",
+                            "color": "#fff",
+                          },
+                          "borderStyle": "dashed",
+                          "borderWidth": "1px",
+                        },
+                        "borderColor": "rgba(255, 255, 255, 0.16)",
+                        "color": "#fff",
+                      },
+                    },
+                    "&.noLabel": Object {
+                      "& $icon": Object {
+                        "margin": 0,
+                      },
+                      "& $label": Object {
+                        "display": "none",
+                      },
+                      "width": "32px",
+                    },
+                  },
+                },
+                "MuiDialog": Object {
+                  "paper": Object {
+                    "&.large": Object {
+                      "@media (min-width:768px)": Object {
+                        "maxWidth": "800px",
+                        "width": "800px",
+                      },
+                    },
+                    "&.medium": Object {
+                      "@media (min-width:768px)": Object {
+                        "maxWidth": "544px",
+                        "width": "544px",
+                      },
+                    },
+                    "&.overflow": Object {
+                      "overflowY": "visible !important",
+                    },
+                    "&.small": Object {
+                      "@media (max-width:1022.95px)": Object {
+                        "borderRadius": "6px",
+                        "height": "auto",
+                        "margin": "16px",
+                        "maxHeight": "calc(100% - 32px)",
+                        "padding": "0 8px 8px",
+                      },
+                      "maxWidth": "480px",
+                      "width": "480px",
+                    },
+                  },
+                  "paperFullScreen": Object {
+                    "& .cozyDialogActions": Object {
+                      "paddingBottom": "calc(env(safe-area-inset-bottom) + var(--flagship-bottom-height))",
+                    },
+                    "& [class*=\\"DialogBackButton\\"]": Object {
+                      "transform": "translateY(var(--flagship-top-height))",
+                    },
+                    "& [class*=\\"DialogCloseButton\\"]": Object {
+                      "transform": "translateY(var(--flagship-top-height))",
+                    },
+                    ".flagship-app & .cozyDialogContent": Object {
+                      "marginBottom": "var(--flagship-bottom-height) !important",
+                    },
+                    ".flagship-app & .cozyDialogTitle": Object {
+                      "paddingTop": "calc(var(--flagship-top-height) + 0.75rem) !important",
+                    },
+                  },
+                  "scrollPaper": Object {
+                    "&.alignTop": Object {
+                      "alignItems": "start",
+                    },
+                  },
+                },
+                "MuiDialogActions": Object {
+                  "root": Object {
+                    "&.columnLayout": Object {
+                      "& button": Object {
+                        "&:not(:first-child)": Object {
+                          "marginBottom": "8px",
+                        },
+                        "margin": 0,
+                        "width": "100%",
+                      },
+                      "display": "flex",
+                      "flexDirection": "column-reverse",
+                    },
+                    "&.dialogActionsFluid": Object {
+                      "margin": "24px 0 0",
+                    },
+                    "&:not(.columnLayout) > :not(:first-child):not(:first-child)": Object {
+                      "marginLeft": 4,
+                    },
+                    "@media (max-width:767.95px)": Object {
+                      "& button": Object {
+                        "flexGrow": 1,
+                      },
+                      "margin": "8px 16px",
+                    },
+                    "margin": "16px 32px",
+                    "padding": 0,
+                  },
+                },
+                "MuiDialogContent": Object {
+                  "root": Object {
+                    "& .dialogContentInner": Object {
+                      "& .dialogTitleFluidContainer": Object {
+                        "@media (max-width:767.95px)": Object {
+                          "marginLeft": "-1rem",
+                          "marginRight": "-1rem",
+                          "marginTop": "-0.75rem",
+                        },
+                        "marginLeft": "-2rem",
+                        "marginRight": "-2rem",
+                      },
+                      "&.withFluidActions": Object {
+                        "@media (max-width:767.95px)": Object {
+                          "& .cozyDialogActions": Object {
+                            "paddingBottom": "16px",
+                          },
+                          "& .dialogContentWrapper": Object {
+                            "&:not(.withActions)": Object {
+                              "paddingBottom": "16px",
+                            },
+                            "flexGrow": 1,
+                          },
+                          "display": "flex",
+                          "flexDirection": "column",
+                          "height": "100%",
+                          "marginBottom": 0,
+                        },
+                      },
+                      "marginBottom": "24px",
+                    },
+                    "&.disableGutters": Object {
+                      "& .dialogContentInner": Object {
+                        "marginBottom": 0,
+                      },
+                      "& .dialogTitleFluidContainer": Object {
+                        "marginLeft": 0,
+                        "marginRight": 0,
+                        "marginTop": 0,
+                      },
+                      "padding": 0,
+                    },
+                    "@media (max-width:767.95px)": Object {
+                      "padding": "24px 16px 0",
+                    },
+                    "padding": "24px 32px 0",
+                  },
+                },
+                "MuiDialogTitle": Object {
+                  "root": Object {
+                    "&.dialogTitleFluid": Object {
+                      "paddingTop": 0,
+                    },
+                    "&.dialogTitleWithBack": Object {
+                      "@media (max-width:767.95px)": Object {
+                        "paddingLeft": "3rem",
+                      },
+                      "paddingLeft": "4rem",
+                    },
+                    "&.dialogTitleWithClose": Object {
+                      "@media (max-width:767.95px)": Object {
+                        "paddingRight": "3rem",
+                      },
+                      "paddingRight": "4rem",
+                    },
+                    "@media (max-width:767.95px)": Object {
+                      "fontFamily": "#fff",
+                      "fontSize": 20,
+                      "fontWeight": "bold",
+                      "lineHeight": 1.167,
+                      "padding": "0.75rem 1rem",
+                    },
+                    "boxSizing": "border-box",
+                    "fontFamily": "#fff",
+                    "fontSize": 24,
+                    "fontWeight": "bold",
+                    "lineHeight": 1.167,
+                    "padding": "1.5rem 2rem",
+                    "width": "100%",
+                  },
+                },
+                "MuiDivider": Object {
+                  "inset": Object {
+                    "&.divider--dialog": Object {
+                      "marginLeft": 80,
+                    },
+                    "marginLeft": 64,
+                  },
+                },
+                "MuiFab": Object {
+                  "extended": Object {
+                    "&$sizeMedium": Object {
+                      "borderRadius": 24,
+                      "height": 48,
+                      "minWidth": 48,
+                      "padding": "0 16px",
+                    },
+                    "&$sizeSmall": Object {
+                      "borderRadius": 20,
+                      "height": 40,
+                      "minWidth": 40,
+                      "padding": "0 12px",
+                    },
+                    "borderRadius": 28,
+                    "height": 56,
+                    "minWidth": 56,
+                    "padding": "0 20px",
+                  },
+                  "root": Object {
+                    "&:hover": Object {
+                      "backgroundColor": "rgb(242, 242, 242)",
+                    },
+                    "@media (hover: none)": Object {
+                      "backgroundColor": "#fff",
+                    },
+                    "backgroundColor": "#fff",
+                    "color": "#fff",
+                  },
+                },
+                "MuiFormHelperText": Object {
+                  "root": Object {
+                    "&$disabled&$error": Object {
+                      "color": "#fff",
+                    },
+                    "fontSize": "0.875rem",
+                    "fontStyle": "italic",
+                    "marginTop": 4,
+                  },
+                },
+                "MuiFormLabel": Object {
+                  "root": Object {
+                    "&$disabled&$error": Object {
+                      "color": "#fff",
+                    },
+                    "color": "#fff",
+                  },
+                },
+                "MuiIconButton": Object {
+                  "root": Object {
+                    "&.dialogIconButton": Object {
+                      "&:hover": Object {
+                        "backgroundColor": "#fff",
+                      },
+                      "backgroundColor": "#fff",
+                    },
+                    "&.large": Object {
+                      "padding": 16,
+                    },
+                    "&.medium": Object {
+                      "padding": 12,
+                    },
+                    "&.small": Object {
+                      "padding": 3,
+                    },
+                    "color": "#fff",
+                  },
+                },
+                "MuiInputLabel": Object {
+                  "outlined": Object {
+                    "&$marginDense": Object {
+                      "transform": "translate(14px, 14px) scale(1)",
+                    },
+                    "&:not($shrink)": Object {
+                      "&$error": Object {
+                        "color": "#fff",
+                      },
+                    },
+                  },
+                },
+                "MuiListItem": Object {
+                  "dense": Object {
+                    "&.large": Object {
+                      "paddingBottom": 12,
+                      "paddingTop": 12,
+                    },
+                    "&.small": Object {
+                      "paddingBottom": 4,
+                      "paddingTop": 4,
+                    },
+                    "paddingBottom": 8,
+                    "paddingTop": 8,
+                  },
+                  "root": Object {
+                    "&.large": Object {
+                      "paddingBottom": 16,
+                      "paddingTop": 16,
+                    },
+                    "&.small": Object {
+                      "paddingBottom": 8,
+                      "paddingTop": 8,
+                    },
+                    "gap": 16,
+                    "paddingBottom": 12,
+                    "paddingTop": 12,
+                  },
+                },
+                "MuiListItemIcon": Object {
+                  "root": Object {
+                    "alignItems": "center",
+                    "color": "#fff",
+                    "height": 32,
+                    "justifyContent": "center",
+                    "minWidth": "auto",
+                    "width": 32,
+                  },
+                },
+                "MuiListItemSecondaryAction": Object {
+                  "root": Object {
+                    "right": 0,
+                  },
+                },
+                "MuiListItemText": Object {
+                  "multiline": Object {
+                    "marginBottom": 1,
+                    "marginTop": 1,
+                  },
+                  "root": Object {
+                    "marginBottom": 1,
+                    "marginTop": 1,
+                  },
+                  "secondary": Object {
+                    "marginTop": 1,
+                  },
+                },
+                "MuiListSubheader": Object {
+                  "root": Object {
+                    "backgroundColor": "#fff",
+                    "fontFamily": "#fff",
+                    "fontSize": 12,
+                    "fontWeight": "bold",
+                    "lineHeight": 1.334,
+                    "marginBottom": "0.5rem",
+                    "paddingBottom": 8,
+                    "paddingTop": 8,
+                    "textTransform": "uppercase",
+                  },
+                  "sticky": Object {
+                    "backgroundColor": "#fff",
+                  },
+                },
+                "MuiMenuItem": Object {
+                  "gutters": Object {
+                    "paddingLeft": 8,
+                    "paddingRight": 8,
+                  },
+                  "root": Object {
+                    "gap": 8,
+                    "maxWidth": 320,
+                    "overflow": "auto",
+                    "paddingBottom": 4,
+                    "paddingTop": 4,
+                    "whiteSpace": "normal",
+                  },
+                },
+                "MuiOutlinedInput": Object {
+                  "input": Object {
+                    "padding": "18.5px 16px",
+                  },
+                  "inputMarginDense": Object {
+                    "paddingBottom": 15,
+                    "paddingTop": 14,
+                  },
+                  "notchedOutline": Object {
+                    "borderColor": "#fff",
+                  },
+                  "root": Object {
+                    "&$disabled": Object {
+                      "background": "#fff",
+                    },
+                    "&$focused $notchedOutline": Object {
+                      "borderWidth": "0.0625rem",
+                    },
+                    "&:hover $notchedOutline": Object {
+                      "borderColor": "#fff",
+                    },
+                    "borderRadius": 4,
+                  },
+                },
+                "MuiRadio": Object {
+                  "colorPrimary": Object {
+                    "&$checked svg": Object {
+                      "fill": "#fff",
+                    },
+                    "&$disabled&$checked svg": Object {
+                      "fill": "#fff",
+                    },
+                  },
+                  "colorSecondary": Object {
+                    "&$checked svg": Object {
+                      "fill": "#fff",
+                    },
+                    "&$disabled&$checked svg": Object {
+                      "fill": "#fff",
+                    },
+                  },
+                  "root": Object {
+                    "&$disabled svg": Object {
+                      "backgroundColor": "#fff",
+                      "borderRadius": "50%",
+                      "fill": "#fff",
+                    },
+                    "&:not($checked) svg": Object {
+                      "fill": "#fff",
+                    },
+                    "padding": "12px",
+                  },
+                },
+                "MuiSnackbarContent": Object {
+                  "root": Object {
+                    "backgroundColor": "#fff",
+                    "padding": "4px 12px",
+                  },
+                },
+                "MuiStepConnector": Object {
+                  "line": Object {
+                    "borderColor": "#fff",
+                  },
+                },
+                "MuiStepContent": Object {
+                  "root": Object {
+                    "borderColor": "#fff",
+                  },
+                },
+                "MuiStepLabel": Object {
+                  "label": Object {
+                    "&$active": Object {
+                      "fontFamily": "#fff",
+                      "fontSize": 16,
+                      "fontWeight": "bold",
+                      "lineHeight": 1.313,
+                    },
+                    "&$completed": Object {
+                      "fontFamily": "#fff",
+                      "fontSize": 16,
+                      "fontWeight": "bold",
+                      "lineHeight": 1.313,
+                    },
+                    "fontFamily": "#fff",
+                    "fontSize": 16,
+                    "fontWeight": 400,
+                    "lineHeight": 1.313,
+                  },
+                },
+                "MuiSwitch": Object {
+                  "checked": Object {
+                    "& + $track$track": Object {
+                      "opacity": 1,
+                    },
+                  },
+                  "colorSecondary": Object {
+                    "&$checked": Object {
+                      "& + $track": Object {
+                        "backgroundColor": "#fff",
+                      },
+                    },
+                  },
+                  "disabled": Object {
+                    "& $thumb": Object {
+                      "backgroundColor": "white",
+                    },
+                    "&$checked + $track": Object {
+                      "backgroundColor": "#fff !important",
+                    },
+                  },
+                  "switchBase": Object {
+                    "&$checked": Object {
+                      "transform": "translateX(15px)",
+                    },
+                    "top": 1,
+                  },
+                  "thumb": Object {
+                    "backgroundColor": "#fff",
+                    "height": 16,
+                    "width": 16,
+                  },
+                  "track": Object {
+                    "backgroundColor": "#fff",
+                    "height": 12,
+                    "opacity": 1,
+                    "width": 25,
+                  },
+                },
+                "MuiTab": Object {
+                  "root": Object {
+                    "&.narrowed": Object {
+                      "@media (min-width:480px)": Object {
+                        "minWidth": "auto",
+                      },
+                      "minWidth": "auto",
+                    },
+                    "&.segmented": Object {
+                      "&$selected": Object {
+                        "color": "#fff",
+                      },
+                      "borderRadius": "99px",
+                      "fontFamily": "#fff",
+                      "fontSize": 14,
+                      "fontWeight": 400,
+                      "lineHeight": 1.313,
+                      "minHeight": "2.5rem",
+                      "textTransform": "initial",
+                      "zIndex": 1,
+                    },
+                    "&:focus": Object {
+                      "color": "#fff",
+                    },
+                    "&:hover": Object {
+                      "color": "#fff",
+                      "opacity": 1,
+                    },
+                    "fontFamily": "#fff",
+                    "fontSize": 12,
+                    "fontWeight": "bold",
+                    "lineHeight": 1.334,
+                    "textTransform": "uppercase",
+                  },
+                },
+                "MuiTabs": Object {
+                  "root": Object {
+                    "&.segmented": Object {
+                      "& $fixed": Object {
+                        "overflow": "visible !important",
+                      },
+                      "& $indicator": Object {
+                        "backgroundColor": "#fff",
+                        "borderRadius": "99px",
+                        "boxShadow": "#fff",
+                        "height": "calc(100% - 2px)",
+                        "top": "1px",
+                        "transform": "scale(0.99)",
+                        "zIndex": 0,
+                      },
+                      "& $scrollButtons": Object {
+                        "borderRadius": "99px",
+                      },
+                      "backgroundColor": "#fff",
+                      "borderRadius": "99px",
+                      "minHeight": "2.5rem",
+                      "overflow": "visible",
+                    },
+                  },
+                },
+                "MuiTooltip": Object {
+                  "arrow": Object {
+                    "color": "#fff",
+                  },
+                  "popper": Object {
+                    "opacity": 0.9,
+                  },
+                  "tooltip": Object {
+                    "backgroundColor": "#fff",
+                    "borderRadius": "8px",
+                    "color": "white",
+                    "fontSize": "1rem",
+                    "lineHeight": "1.3",
+                    "padding": "16px",
+                  },
+                },
+              },
+              "palette": Object {
+                "action": Object {
+                  "activatedOpacity": 0.12,
+                  "active": "#fff",
+                  "disabled": "#fff",
+                  "disabledBackground": "#fff",
+                  "disabledOpacity": 0.32,
+                  "focus": "#fff",
+                  "focusOpacity": 0.12,
+                  "ghost": "#fff",
+                  "ghostOpacity": 0.08,
+                  "hover": "#fff",
+                  "hoverGhost": "#fff",
+                  "hoverGhostOpacity": 0.16,
+                  "hoverOpacity": 0.04,
+                  "selected": "#fff",
+                  "selectedOpacity": 0.08,
+                },
+                "augmentColor": [Function],
+                "background": Object {
+                  "contrast": "#fff",
+                  "default": "#fff",
+                  "paper": "#fff",
+                  "selected": "#F5FAFF",
+                },
+                "border": Object {
+                  "disabled": "#fff",
+                  "ghost": "#fff",
+                  "ghostDisabled": "#fff",
+                  "ghostOpacity": 0.48,
+                  "main": "#fff",
+                  "opacity": 0.16,
+                },
+                "common": Object {
+                  "black": "#000",
+                  "white": "#fff",
+                },
+                "contrastThreshold": 3,
+                "divider": "#fff",
+                "error": Object {
+                  "contrastText": "#fff",
+                  "dark": "#fff",
+                  "light": "#fff",
+                  "main": "#fff",
+                },
+                "getContrastText": [Function],
+                "grey": Object {
+                  "0": "#fff",
+                  "100": "#fff",
+                  "200": "#fff",
+                  "300": "#fff",
+                  "400": "#fff",
+                  "50": "#fff",
+                  "500": "#fff",
+                  "600": "#fff",
+                  "700": "#fff",
+                  "800": "#fff",
+                  "900": "#fff",
+                  "A100": "#fff",
+                  "A200": "#fff",
+                  "A400": "#fff",
+                  "A700": "#fff",
+                },
+                "info": Object {
+                  "contrastText": "#fff",
+                  "dark": "#fff",
+                  "light": "#fff",
+                  "main": "#fff",
+                },
+                "primary": Object {
+                  "contrastText": "#fff",
+                  "dark": "#fff",
+                  "light": "#fff",
+                  "main": "#fff",
+                },
+                "secondary": Object {
+                  "contrastText": "#fff",
+                  "dark": "#fff",
+                  "light": "#fff",
+                  "main": "#fff",
+                },
+                "success": Object {
+                  "contrastText": "#fff",
+                  "dark": "#fff",
+                  "light": "#fff",
+                  "main": "#fff",
+                },
+                "text": Object {
+                  "disabled": "#fff",
+                  "hint": "#fff",
+                  "icon": "#fff",
+                  "primary": "#fff",
+                  "secondary": "#fff",
+                },
+                "tonalOffset": 0.2,
+                "type": "light",
+                "warning": Object {
+                  "contrastText": "#fff",
+                  "dark": "#fff",
+                  "light": "#fff",
+                  "main": "#fff",
+                },
+              },
+              "props": Object {},
+              "shadows": Array [
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+              ],
+              "shape": Object {
+                "borderRadius": 6,
+              },
+              "spacing": [Function],
+              "textShadows": Array [
+                "none",
+                "0px 2px 8px rgba(29, 33, 42, 0.16), 0px 0px 1px rgba(29, 33, 42, 0.48)",
+              ],
+              "transitions": Object {
+                "create": [Function],
+                "duration": Object {
+                  "complex": 375,
+                  "enteringScreen": 225,
+                  "leavingScreen": 195,
+                  "short": 250,
+                  "shorter": 200,
+                  "shortest": 150,
+                  "standard": 300,
+                },
+                "easing": Object {
+                  "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+                  "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+                  "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+                  "sharp": "cubic-bezier(0.4, 0, 0.6, 1)",
+                },
+                "getAutoHeightDuration": [Function],
+              },
+              "typography": Object {
+                "body1": Object {
+                  "fontFamily": "#fff",
+                  "fontSize": 16,
+                  "fontWeight": 400,
+                  "lineHeight": 1.313,
+                },
+                "body2": Object {
+                  "fontFamily": "#fff",
+                  "fontSize": 14,
+                  "fontWeight": 400,
+                  "lineHeight": 1.313,
+                },
+                "button": Object {
+                  "fontFamily": "#fff",
+                  "fontSize": 14,
+                  "fontWeight": "bold",
+                  "lineHeight": 1.313,
+                  "textTransform": "uppercase",
+                },
+                "caption": Object {
+                  "color": "#fff",
+                  "display": "block",
+                  "fontFamily": "#fff",
+                  "fontSize": 12,
+                  "fontWeight": 400,
+                  "lineHeight": 1.313,
+                },
+                "fontFamily": "#fff",
+                "fontSize": 14,
+                "fontWeightBold": 700,
+                "fontWeightLight": 300,
+                "fontWeightMedium": 500,
+                "fontWeightRegular": 400,
+                "h1": Object {
+                  "fontFamily": "#fff",
+                  "fontSize": 48,
+                  "fontWeight": "bold",
+                  "letterSpacing": -0.8,
+                  "lineHeight": 1.087,
+                },
+                "h2": Object {
+                  "fontFamily": "#fff",
+                  "fontSize": 32,
+                  "fontWeight": "bold",
+                  "letterSpacing": -0.4,
+                  "lineHeight": 1.313,
+                },
+                "h3": Object {
+                  "fontFamily": "#fff",
+                  "fontSize": 24,
+                  "fontWeight": "bold",
+                  "lineHeight": 1.167,
+                },
+                "h4": Object {
+                  "fontFamily": "#fff",
+                  "fontSize": 20,
+                  "fontWeight": "bold",
+                  "lineHeight": 1.167,
+                },
+                "h5": Object {
+                  "fontFamily": "#fff",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "lineHeight": 1.313,
+                },
+                "h6": Object {
+                  "fontFamily": "#fff",
+                  "fontSize": 16,
+                  "fontWeight": "bold",
+                  "lineHeight": 1.313,
+                },
+                "htmlFontSize": 16,
+                "overline": Object {
+                  "fontFamily": "#fff",
+                  "fontSize": "0.75rem",
+                  "fontWeight": 400,
+                  "lineHeight": 2.66,
+                  "textTransform": "uppercase",
+                },
+                "pxToRem": [Function],
+                "round": [Function],
+                "subtitle1": Object {
+                  "fontFamily": "#fff",
+                  "fontSize": 14,
+                  "fontWeight": "bold",
+                  "lineHeight": 1.358,
+                  "textTransform": "uppercase",
+                },
+                "subtitle2": Object {
+                  "fontFamily": "#fff",
+                  "fontSize": 12,
+                  "fontWeight": "bold",
+                  "lineHeight": 1.334,
+                  "textTransform": "uppercase",
+                },
+              },
+              "zIndex": Object {
+                "appBar": 1100,
+                "drawer": 1200,
+                "mobileStepper": 1000,
+                "modal": "#fff",
+                "snackbar": 1400,
+                "speedDial": 1050,
+                "tooltip": 1500,
+              },
+              Symbol(mui.nested): false,
+            }
+          }
+        >
+          <div
+            className="CozyTheme--normal"
+          >
+            <Provider
+              store={
+                Object {
+                  "dispatch": [MockFunction],
+                  "getState": [Function],
+                  "replaceReducer": [Function],
+                  "subscribe": [Function],
+                  Symbol(observable): [Function],
+                }
+              }
+            >
+              <CozyProvider
+                client={
+                  CozyClient {
+                    "uri": undefined,
                   }
+                }
+              >
+                <TestI18n
+                  enLocale={[Function]}
                 >
-                  <SelectionProvider>
-                    <ThumbnailSizeContextProvider>
-                      <BreakpointsProvider>
-                        <PushBannerProvider>
-                          <FabProvider>
-                            <withI18n(WithSharingState(withClient(withVaultClient(Connect(Dropzone)))))
-                              displayedFolder={
-                                Object {
-                                  "id": "directory-foobar0",
-                                }
-                              }
-                            >
-                              <WithSharingState(withClient(withVaultClient(Connect(Dropzone))))
-                                displayedFolder={
-                                  Object {
-                                    "id": "directory-foobar0",
-                                  }
-                                }
-                                f={[Function]}
-                                lang="en"
-                                t={[Function]}
-                              >
-                                <withClient(withVaultClient(Connect(Dropzone)))
-                                  displayedFolder={
-                                    Object {
-                                      "id": "directory-foobar0",
-                                    }
-                                  }
-                                  f={[Function]}
-                                  lang="en"
-                                  sharingState={
-                                    Object {
-                                      "getRecipients": [MockFunction],
-                                      "getSharingLink": [MockFunction],
-                                      "hasWriteAccess": [MockFunction],
-                                      "refresh": [MockFunction],
-                                    }
-                                  }
-                                  t={[Function]}
-                                >
-                                  <withVaultClient(Connect(Dropzone))
-                                    client={
-                                      CozyClient {
-                                        "uri": undefined,
+                  <I18n
+                    defaultLang="en"
+                    dictRequire={[Function]}
+                    lang="en"
+                  >
+                    <AcceptingSharingProvider>
+                      <HashRouter>
+                        <Router
+                          location={
+                            Object {
+                              "hash": "",
+                              "key": "default",
+                              "pathname": "/",
+                              "search": "",
+                              "state": null,
+                            }
+                          }
+                          navigationType="POP"
+                          navigator={
+                            Object {
+                              "action": "POP",
+                              "createHref": [Function],
+                              "createURL": [Function],
+                              "encodeLocation": [Function],
+                              "go": [Function],
+                              "listen": [Function],
+                              "location": Object {
+                                "hash": "",
+                                "key": "default",
+                                "pathname": "/",
+                                "search": "",
+                                "state": null,
+                              },
+                              "push": [Function],
+                              "replace": [Function],
+                            }
+                          }
+                        >
+                          <SelectionProvider>
+                            <ThumbnailSizeContextProvider>
+                              <BreakpointsProvider>
+                                <PushBannerProvider>
+                                  <FabProvider>
+                                    <withI18n(WithSharingState(withClient(withVaultClient(Connect(Dropzone)))))
+                                      displayedFolder={
+                                        Object {
+                                          "id": "directory-foobar0",
+                                        }
                                       }
-                                    }
-                                    displayedFolder={
-                                      Object {
-                                        "id": "directory-foobar0",
-                                      }
-                                    }
-                                    f={[Function]}
-                                    lang="en"
-                                    sharingState={
-                                      Object {
-                                        "getRecipients": [MockFunction],
-                                        "getSharingLink": [MockFunction],
-                                        "hasWriteAccess": [MockFunction],
-                                        "refresh": [MockFunction],
-                                      }
-                                    }
-                                    t={[Function]}
-                                  />
-                                </withClient(withVaultClient(Connect(Dropzone)))>
-                              </WithSharingState(withClient(withVaultClient(Connect(Dropzone))))>
-                            </withI18n(WithSharingState(withClient(withVaultClient(Connect(Dropzone)))))>
-                          </FabProvider>
-                        </PushBannerProvider>
-                      </BreakpointsProvider>
-                    </ThumbnailSizeContextProvider>
-                  </SelectionProvider>
-                </Router>
-              </HashRouter>
-            </AcceptingSharingProvider>
-          </I18n>
-        </TestI18n>
-      </CozyProvider>
-    </Provider>
+                                    >
+                                      <WithSharingState(withClient(withVaultClient(Connect(Dropzone))))
+                                        displayedFolder={
+                                          Object {
+                                            "id": "directory-foobar0",
+                                          }
+                                        }
+                                        f={[Function]}
+                                        lang="en"
+                                        t={[Function]}
+                                      >
+                                        <withClient(withVaultClient(Connect(Dropzone)))
+                                          displayedFolder={
+                                            Object {
+                                              "id": "directory-foobar0",
+                                            }
+                                          }
+                                          f={[Function]}
+                                          lang="en"
+                                          sharingState={
+                                            Object {
+                                              "getRecipients": [MockFunction],
+                                              "getSharingLink": [MockFunction],
+                                              "hasWriteAccess": [MockFunction],
+                                              "refresh": [MockFunction],
+                                            }
+                                          }
+                                          t={[Function]}
+                                        >
+                                          <withVaultClient(Connect(Dropzone))
+                                            client={
+                                              CozyClient {
+                                                "uri": undefined,
+                                              }
+                                            }
+                                            displayedFolder={
+                                              Object {
+                                                "id": "directory-foobar0",
+                                              }
+                                            }
+                                            f={[Function]}
+                                            lang="en"
+                                            sharingState={
+                                              Object {
+                                                "getRecipients": [MockFunction],
+                                                "getSharingLink": [MockFunction],
+                                                "hasWriteAccess": [MockFunction],
+                                                "refresh": [MockFunction],
+                                              }
+                                            }
+                                            t={[Function]}
+                                          />
+                                        </withClient(withVaultClient(Connect(Dropzone)))>
+                                      </WithSharingState(withClient(withVaultClient(Connect(Dropzone))))>
+                                    </withI18n(WithSharingState(withClient(withVaultClient(Connect(Dropzone)))))>
+                                  </FabProvider>
+                                </PushBannerProvider>
+                              </BreakpointsProvider>
+                            </ThumbnailSizeContextProvider>
+                          </SelectionProvider>
+                        </Router>
+                      </HashRouter>
+                    </AcceptingSharingProvider>
+                  </I18n>
+                </TestI18n>
+              </CozyProvider>
+            </Provider>
+          </div>
+        </ThemeProvider>
+      </MuiCozyTheme>
+    </CozyTheme>
   </AppLike>
 </DriveAppLike>
 `;

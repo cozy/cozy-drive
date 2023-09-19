@@ -2,32 +2,36 @@
 
 exports[`Topbar renders the topbar for mobile and the child have the expected router 1`] = `
 <div
-  class="pho-content-header"
+  class="CozyTheme--normal"
 >
   <div
-    class="u-flex u-flex-items-center CozyTheme--normal"
+    class="pho-content-header"
   >
     <div
-      class="pho-content-album-previous"
-      data-testid="pho-content-album-previous"
-      role="button"
-    />
-  </div>
-  <div
-    class="u-flex u-flex-items-center u-ellipsis CozyTheme--normal"
-  >
-    <h2
-      class="pho-content-title"
-      data-testid="pho-content-title"
-    />
-  </div>
-  <div
-    class="u-flex u-flex-items-center CozyTheme--normal"
-  >
-    <div
-      router="[object Object]"
+      class="u-flex u-flex-items-center CozyTheme--normal"
     >
-       Child 
+      <div
+        class="pho-content-album-previous"
+        data-testid="pho-content-album-previous"
+        role="button"
+      />
+    </div>
+    <div
+      class="u-flex u-flex-items-center u-ellipsis CozyTheme--normal"
+    >
+      <h2
+        class="pho-content-title"
+        data-testid="pho-content-title"
+      />
+    </div>
+    <div
+      class="u-flex u-flex-items-center CozyTheme--normal"
+    >
+      <div
+        router="[object Object]"
+      >
+         Child 
+      </div>
     </div>
   </div>
 </div>
@@ -35,21 +39,25 @@ exports[`Topbar renders the topbar for mobile and the child have the expected ro
 
 exports[`Topbar should render the topbar for desktop 1`] = `
 <div
-  class="pho-content-header"
+  class="CozyTheme--normal"
 >
   <div
-    class="pho-content-album-previous"
-    data-testid="pho-content-album-previous"
-    role="button"
-  />
-  <h2
-    class="pho-content-title"
-    data-testid="pho-content-title"
-  />
-  <div
-    router="[object Object]"
+    class="pho-content-header"
   >
-     Child 
+    <div
+      class="pho-content-album-previous"
+      data-testid="pho-content-album-previous"
+      role="button"
+    />
+    <h2
+      class="pho-content-title"
+      data-testid="pho-content-title"
+    />
+    <div
+      router="[object Object]"
+    >
+       Child 
+    </div>
   </div>
 </div>
 `;
