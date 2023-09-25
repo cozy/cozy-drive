@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { ShareButton } from 'cozy-sharing'
 
 import { useDisplayedFolder } from 'drive/hooks'
+import { getPathToShareDisplayedFolder } from 'drive/web/modules/drive/Toolbar/share/helpers'
 import styles from './styles.styl'
 
 const ShareButtonWithProps = ({ isDisabled }) => {
@@ -13,7 +14,7 @@ const ShareButtonWithProps = ({ isDisabled }) => {
   const { pathname } = useLocation()
 
   const share = () => {
-    navigate(`${pathname}/share`)
+    navigate(getPathToShareDisplayedFolder(pathname))
   }
 
   return (
