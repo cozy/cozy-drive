@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 
 import { SharingBannerPlugin } from 'cozy-sharing'
@@ -6,7 +6,7 @@ import { DialogTitle } from 'cozy-ui/transpiled/react/Dialog'
 import Divider from 'cozy-ui/transpiled/react/Divider'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
+import { useOnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice/OnlyOfficeProvider'
 import { showSharingBanner } from 'drive/web/modules/views/OnlyOffice/helpers'
 import Toolbar from 'drive/web/modules/views/OnlyOffice/Toolbar'
 
@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 const Title = () => {
   const { isMobile } = useBreakpoints()
   const { isPublic, isFromSharing, isInSharedFolder, isEditorModeView } =
-    useContext(OnlyOfficeContext)
+    useOnlyOfficeContext()
   const styles = useStyles()
 
   const showBanner = useMemo(

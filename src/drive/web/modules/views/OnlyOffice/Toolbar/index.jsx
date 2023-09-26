@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import {
@@ -10,7 +10,7 @@ import {
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { DOCTYPE_FILES } from 'drive/lib/doctypes'
-import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
+import { useOnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice/OnlyOfficeProvider'
 import { useFileWithPath } from 'drive/web/modules/views/hooks'
 import HomeIcon from 'drive/web/modules/views/OnlyOffice/Toolbar/HomeIcon'
 import HomeLinker from 'drive/web/modules/views/OnlyOffice/Toolbar/HomeLinker'
@@ -23,8 +23,7 @@ import Sharing from 'drive/web/modules/views/OnlyOffice/Toolbar/Sharing'
 
 const Toolbar = () => {
   const { isMobile } = useBreakpoints()
-  const { fileId, isPublic, isReadOnly, isEditorReady } =
-    useContext(OnlyOfficeContext)
+  const { fileId, isPublic, isReadOnly, isEditorReady } = useOnlyOfficeContext()
   const client = useClient()
   const [fetchStatus, setFetchStatus] = useState('pending')
   const [instance, setInstance] = useState(client.getStackClient().uri)

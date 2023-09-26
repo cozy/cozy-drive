@@ -7,7 +7,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import AppLike from 'test/components/AppLike'
 import { officeDocParam } from 'test/data'
 
-import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
+import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice/OnlyOfficeProvider'
 import Toolbar from 'drive/web/modules/views/OnlyOffice/Toolbar'
 
 jest.mock('cozy-ui/transpiled/react/providers/Breakpoints', () => ({

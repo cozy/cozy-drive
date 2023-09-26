@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { makeStyles } from 'cozy-ui/transpiled/react/styles'
@@ -8,7 +8,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
 
-import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
+import { useOnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice/OnlyOfficeProvider'
 import { RenameInput } from 'drive/web/modules/drive/RenameInput'
 
 import filelistStyles from 'drive/styles/filelist.styl'
@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
 const FileName = ({ fileWithPath, isPublic }) => {
   const muiStyles = useStyles()
   const { isMobile } = useBreakpoints()
-  const { isReadOnly } = useContext(OnlyOfficeContext)
+  const { isReadOnly } = useOnlyOfficeContext()
   const [isRenaming, setIsRenaming] = useState(false)
 
   const onRename = useCallback(() => setIsRenaming(true), [setIsRenaming])

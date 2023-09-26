@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useCallback } from 'react'
+import React, { useMemo, useCallback } from 'react'
 import { RemoveScroll } from 'react-remove-scroll'
 
 import { isQueryLoading, useQuery } from 'cozy-client'
@@ -11,12 +11,12 @@ import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/Forw
 import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
 
 import Oops from 'components/Error/Oops'
-import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
+import { useOnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice/OnlyOfficeProvider'
 import { buildFileByIdQuery } from 'drive/web/modules/queries'
 
 const Error = () => {
   const { t } = useI18n()
-  const { fileId } = useContext(OnlyOfficeContext)
+  const { fileId } = useOnlyOfficeContext()
   const handleOnClose = useCallback(() => window.history.back(), [])
 
   const fileQuery = useMemo(() => buildFileByIdQuery(fileId), [fileId])

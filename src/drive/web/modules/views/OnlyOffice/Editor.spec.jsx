@@ -12,7 +12,7 @@ import {
   isOfficeEnabled,
   isOfficeEditingEnabled
 } from 'drive/web/modules/views/OnlyOffice/helpers'
-import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
+import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice/OnlyOfficeProvider'
 import Editor from 'drive/web/modules/views/OnlyOffice/Editor'
 
 jest.mock('cozy-client/dist/hooks/useFetchJSON', () => ({
