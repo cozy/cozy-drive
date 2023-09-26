@@ -1,4 +1,5 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useClient, isQueryLoading, generateWebLink } from 'cozy-client'
@@ -9,8 +10,7 @@ import {
   isOfficeEnabled,
   makeName
 } from 'drive/web/modules/views/OnlyOffice/helpers'
-import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
-import { useSearchParams } from 'react-router-dom'
+import { useOnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice/OnlyOfficeProvider'
 
 const useConfig = () => {
   const {
@@ -21,7 +21,7 @@ const useConfig = () => {
     isFromSharing,
     editorMode,
     isEditorModeView
-  } = useContext(OnlyOfficeContext)
+  } = useOnlyOfficeContext()
   const client = useClient()
   const instanceUri = client.getStackClient().uri
   const [currentSearchParams] = useSearchParams()

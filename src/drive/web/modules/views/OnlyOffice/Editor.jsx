@@ -1,9 +1,10 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
 import flag from 'cozy-flags'
 import { DialogContent } from 'cozy-ui/transpiled/react/Dialog'
+import { isIOS } from 'cozy-device-helper'
 
-import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
+import { useOnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice/OnlyOfficeProvider'
 import useConfig from 'drive/web/modules/views/OnlyOffice/useConfig'
 import View from 'drive/web/modules/views/OnlyOffice/View'
 import Error from 'drive/web/modules/views/OnlyOffice/Error'
@@ -13,7 +14,6 @@ import {
   DEFAULT_EDITOR_TOOLBAR_HEIGHT_IOS,
   DEFAULT_EDITOR_TOOLBAR_HEIGHT
 } from 'drive/web/modules/views/OnlyOffice/config'
-import { isIOS } from 'cozy-device-helper'
 
 const getEditorToolbarHeight = editorToolbarHeightFlag => {
   if (Number.isInteger(editorToolbarHeightFlag)) {
@@ -27,7 +27,7 @@ const getEditorToolbarHeight = editorToolbarHeightFlag => {
 
 export const Editor = () => {
   const { config, status } = useConfig()
-  const { isEditorModeView } = useContext(OnlyOfficeContext)
+  const { isEditorModeView } = useOnlyOfficeContext()
 
   if (status === 'error') return <Error />
   if (status !== 'loaded' || !config) return <Loading />

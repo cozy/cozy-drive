@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from 'react'
+import React, { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import Icon from 'cozy-ui/transpiled/react/Icon'
@@ -8,7 +8,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Fab from 'cozy-ui/transpiled/react/Fab'
 
-import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
+import { useOnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice/OnlyOfficeProvider'
 import { canWriteOfficeDocument } from 'drive/web/modules/views/OnlyOffice/helpers'
 import { useFabStyles } from 'drive/web/modules/drive/helpers'
 
@@ -17,8 +17,7 @@ const ReadOnlyFab = () => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
 
-  const { isEditorModeView, editorMode, setEditorMode } =
-    useContext(OnlyOfficeContext)
+  const { isEditorModeView, editorMode, setEditorMode } = useOnlyOfficeContext()
 
   const handleClick = useCallback(() => {
     if (canWriteOfficeDocument()) {

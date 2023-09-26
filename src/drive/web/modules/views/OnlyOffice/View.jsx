@@ -1,11 +1,11 @@
-import React, { useEffect, useCallback, useState, useContext } from 'react'
+import React, { useEffect, useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 
 import Error from 'drive/web/modules/views/OnlyOffice/Error'
-import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
+import { useOnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice/OnlyOfficeProvider'
 import ReadOnlyFab from 'drive/web/modules/views/OnlyOffice/ReadOnlyFab'
 import { isOfficeEditingEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
 import { FRAME_EDITOR_NAME } from 'drive/web/modules/views/OnlyOffice/config'
@@ -18,8 +18,7 @@ const forceIframeHeight = value => {
 const View = ({ id, apiUrl, docEditorConfig }) => {
   const [isError, setIsError] = useState(false)
 
-  const { isEditorReady, isReadOnly, isEditorModeView } =
-    useContext(OnlyOfficeContext)
+  const { isEditorReady, isReadOnly, isEditorModeView } = useOnlyOfficeContext()
   const { isMobile, isDesktop } = useBreakpoints()
 
   const initEditor = useCallback(() => {
