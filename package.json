@@ -122,7 +122,7 @@
     "cozy-flags": "3.0.1",
     "cozy-harvest-lib": "5.10.5",
     "cozy-intent": "^2.9.0",
-    "cozy-keys-lib": "5.0.0",
+    "cozy-keys-lib": "6.0.0",
     "cozy-logger": "1.9.1",
     "cozy-pouch-link": "^41.2.0",
     "cozy-realtime": "4.4.1",
