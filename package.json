@@ -113,7 +113,7 @@
     "classnames": "2.3.1",
     "copy-text-to-clipboard": "1.0.4",
     "cozy-authentication": "2.10.10",
-    "cozy-bar": "9.1.0",
+    "cozy-bar": "10.0.0",
     "cozy-ci": "0.5.2",
     "cozy-client": "^41.2.0",
     "cozy-client-js": "0.20.0",
