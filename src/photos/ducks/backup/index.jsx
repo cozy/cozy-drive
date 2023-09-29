@@ -17,9 +17,30 @@ import { BackupError } from './components/BackupError'
 import { BackupActionsProvider } from 'photos/ducks/backup/hooks/useBackupActions'
 import { isFlagshipApp } from 'cozy-device-helper'
 
-const BackupPage = () => {
+const BackupPageContent = () => {
   const { isMobile } = useBreakpoints()
 
+  if (isFlagshipApp()) {
+    return (
+      <>
+        <BackupHeader />
+        <BackupInfo />
+        <BackupActions />
+        <LastBackupStatus />
+        <BackupDescription />
+      </>
+    )
+  } else {
+    return (
+      <>
+        {isMobile ? <BackupHeader /> : null}
+        <InstallAppAlert />
+      </>
+    )
+  }
+}
+
+const BackupPage = () => {
   return (
     <div
       data-testid="backup-pho-content-wrapper"
@@ -30,12 +51,7 @@ const BackupPage = () => {
         <BackupActionsProvider>
           <div className={backupStyles['pho-backup-container']}>
             <div className={backupStyles['pho-backup-wrapper']}>
-              {isMobile ? <BackupHeader /> : null}
-              <BackupInfo />
-              {!isFlagshipApp() ? <InstallAppAlert /> : null}
-              <BackupActions />
-              {isFlagshipApp() ? <LastBackupStatus /> : null}
-              {isFlagshipApp() ? <BackupDescription /> : null}
+              <BackupPageContent />
             </div>
           </div>
           <AllowPermissionsModal />
