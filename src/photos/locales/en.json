@@ -308,6 +308,9 @@
       "description": "Backup automatically all your photos and videos from your mobile devices",
       "install": "Install our app"
     },
+    "UpdateAppAlert": {
+      "description": "Update your app to backup automatically all your photos and videos"
+    },
     "LastBackupStatus": {
       "lastBackup": "Last backup: ",
       "success": "Success - ",

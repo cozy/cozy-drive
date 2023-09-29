@@ -10,6 +10,7 @@ import BackupInfo from './components/BackupInfo'
 import BackupActions from './components/BackupActions'
 import BackupDescription from './components/BackupDescription'
 import InstallAppAlert from './components/InstallAppAlert'
+import UpdateAppAlert from './components/UpdateAppAlert'
 import LastBackupStatus from './components/LastBackupStatus'
 import AllowPermissionsModal from './components/AllowPermissionsModal'
 import { BackupError } from './components/BackupError'
@@ -20,13 +21,23 @@ import { isFlagshipApp } from 'cozy-device-helper'
 const BackupPageContent = () => {
   const { isMobile } = useBreakpoints()
 
-  if (isFlagshipApp()) {
+  const isFlagshipAppBackupReady = window?.cozy?.flagship?.backup_available
+
+  if (isFlagshipApp() && isFlagshipAppBackupReady) {
     return (
       <>
         <BackupHeader />
         <BackupInfo />
         <BackupActions />
         <LastBackupStatus />
+        <BackupDescription />
+      </>
+    )
+  } else if (isFlagshipApp() && !isFlagshipAppBackupReady) {
+    return (
+      <>
+        <BackupHeader />
+        <UpdateAppAlert />
         <BackupDescription />
       </>
     )
