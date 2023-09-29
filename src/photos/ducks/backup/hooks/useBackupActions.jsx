@@ -111,7 +111,7 @@ export const BackupActionsProvider = ({ children }) => {
       }
     }
 
-    if (webviewIntent) {
+    if (webviewIntent && window?.cozy?.flagship?.backup_available) {
       check()
     }
   }, [webviewIntent, checkBackupPermissions, prepareBackup])
