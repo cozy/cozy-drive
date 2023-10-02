@@ -105,7 +105,8 @@
     "testcafe": "2.0.2",
     "unzipper": "0.10.11",
     "visualreview-client": "git+https://github.com/cozy/VisualReview-node-client.git#v0.0.4",
-    "worker-loader": "2.0.0"
+    "worker-loader": "2.0.0",
+    "terser-webpack-plugin": "1.4.5"
   },
   "dependencies": {
     "@cozy/minilog": "1.0.0",
