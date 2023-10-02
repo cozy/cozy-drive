@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { useClient } from 'cozy-client'
 import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
@@ -11,6 +11,7 @@ import { deleteFilesPermanently } from 'drive/web/modules/actions/utils'
 import { Message } from 'drive/web/modules/confirm/Message'
 const DestroyConfirm = ({ t, files, onClose }) => {
   const client = useClient()
+  const [isLoading, setIsLoading] = useState(false)
   return (
     <ConfirmDialog
       open={true}
@@ -38,12 +39,15 @@ const DestroyConfirm = ({ t, files, onClose }) => {
           <Button
             theme="danger"
             label={t('destroyconfirmation.delete')}
+            busy={isLoading}
             onClick={async () => {
               try {
+                setIsLoading(true)
                 await deleteFilesPermanently(client, files)
               } catch {
                 // eslint-disable-next-line
             } finally {
+                setIsLoading(false)
                 onClose()
               }
             }}
