@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Button from 'cozy-ui/transpiled/react/deprecated/Button'
@@ -7,6 +7,7 @@ import Stack from 'cozy-ui/transpiled/react/Stack'
 
 import { Message } from 'drive/web/modules/confirm/Message'
 const EmptyTrashConfirm = ({ t, onConfirm, onClose }) => {
+  const [isLoading, setIsLoading] = useState(false)
   return (
     <ConfirmDialog
       open={true}
@@ -31,9 +32,17 @@ const EmptyTrashConfirm = ({ t, onConfirm, onClose }) => {
           <Button
             theme="danger"
             label={t('emptytrashconfirmation.delete')}
+            busy={isLoading}
             onClick={async () => {
-              await onConfirm()
-              onClose()
+              try {
+                setIsLoading(true)
+                await onConfirm()
+              } catch {
+                // eslint-disable-next-line
+              } finally {
+                setIsLoading(false)
+                onClose()
+              }
             }}
           />
         </>
