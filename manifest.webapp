@@ -1,7 +1,7 @@
 {
   "name": "Drive",
   "name_prefix": "Cozy",
-  "slug": "app",
+  "slug": "drive",
   "version": "1.60.0",
   "type": "webapp",
   "licence": "AGPL-3.0",
