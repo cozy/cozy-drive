@@ -73,7 +73,9 @@ const setup = ({
           isPublic,
           isReadOnly,
           isEditorReady: true,
-          isEditorModeView
+          isEditorModeView,
+          officeKey: '321',
+          setOfficeKey: jest.fn()
         }}
       >
         <Editor />

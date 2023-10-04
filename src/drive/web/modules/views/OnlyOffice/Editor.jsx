@@ -14,6 +14,7 @@ import {
   DEFAULT_EDITOR_TOOLBAR_HEIGHT_IOS,
   DEFAULT_EDITOR_TOOLBAR_HEIGHT
 } from 'drive/web/modules/views/OnlyOffice/config'
+import { FileDivergedModal } from 'drive/web/modules/views/OnlyOffice/components/FileDivergedModal'
 
 const getEditorToolbarHeight = editorToolbarHeightFlag => {
   if (Number.isInteger(editorToolbarHeightFlag)) {
@@ -27,7 +28,7 @@ const getEditorToolbarHeight = editorToolbarHeightFlag => {
 
 export const Editor = () => {
   const { config, status } = useConfig()
-  const { isEditorModeView } = useOnlyOfficeContext()
+  const { isEditorModeView, hasFileDiverged } = useOnlyOfficeContext()
 
   if (status === 'error') return <Error />
   if (status !== 'loaded' || !config) return <Loading />
@@ -55,6 +56,7 @@ export const Editor = () => {
           apiUrl={apiUrl}
           docEditorConfig={docEditorConfig}
         />
+        {hasFileDiverged ? <FileDivergedModal /> : null}
       </DialogContent>
     </>
   )
