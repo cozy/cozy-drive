@@ -29,12 +29,12 @@ const OnlyOfficeProvider = ({
   const { isDesktop, isMobile } = useBreakpoints()
   const [searchParam] = useSearchParams()
   const [isEditorReady, setIsEditorReady] = useState(false)
-
   const [editorMode, setEditorMode] = useState(
     officeDefaultMode(isDesktop, isMobile)
   )
 
   const [hasFileDiverged, setFileDiverged] = useState(false)
+  const [hasFileDeleted, setFileDeleted] = useState(false)
   const [officeKey, setOfficeKey] = useState(null)
 
   const isEditorModeView = useMemo(() => editorMode === 'view', [editorMode])
@@ -54,6 +54,9 @@ const OnlyOfficeProvider = ({
         data.cozyMetadata.uploadedBy.slug !== 'onlyoffice-server'
       ) {
         setFileDiverged(true)
+      }
+      if (data.trashed) {
+        setFileDeleted(true)
       }
     },
     [fileResult?.data?.md5sum]
@@ -87,6 +90,8 @@ const OnlyOfficeProvider = ({
         fileId,
         hasFileDiverged,
         setFileDiverged,
+        hasFileDeleted,
+        setFileDeleted,
         isPublic,
         isReadOnly,
         isFromSharing,
