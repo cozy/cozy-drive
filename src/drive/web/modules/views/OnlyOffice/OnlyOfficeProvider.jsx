@@ -3,12 +3,15 @@ import React, {
   useState,
   useMemo,
   useEffect,
-  useContext
+  useContext,
+  useCallback
 } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useClient, useQuery } from 'cozy-client'
 
+import { buildFileByIdQuery } from 'drive/web/modules/queries'
 import { officeDefaultMode } from 'drive/web/modules/views/OnlyOffice/helpers'
 
 const OnlyOfficeContext = createContext()
@@ -22,6 +25,7 @@ const OnlyOfficeProvider = ({
   isInSharedFolder,
   children
 }) => {
+  const client = useClient()
   const { isDesktop, isMobile } = useBreakpoints()
   const [searchParam] = useSearchParams()
   const [isEditorReady, setIsEditorReady] = useState(false)
@@ -29,10 +33,50 @@ const OnlyOfficeProvider = ({
   const [editorMode, setEditorMode] = useState(
     officeDefaultMode(isDesktop, isMobile)
   )
+
+  const [hasFileDiverged, setFileDiverged] = useState(false)
+  const [officeKey, setOfficeKey] = useState(null)
+
   const isEditorModeView = useMemo(() => editorMode === 'view', [editorMode])
 
+  const fileQuery = buildFileByIdQuery(fileId)
+  const fileResult = useQuery(fileQuery.definition, fileQuery.options)
+
+  const handleFileUpdated = useCallback(
+    data => {
+      /**
+       * To determine whether a file has diverged between its version on the cozy-stack and its version on the onlyoffice server, we use 2 criteria:
+       * - That its content has changed with md5sum
+       * - That this modification was not made by the onlyoffice server
+       */
+      if (
+        fileResult?.data?.md5sum !== data.md5sum &&
+        data.cozyMetadata.uploadedBy.slug !== 'onlyoffice-server'
+      ) {
+        setFileDiverged(true)
+      }
+    },
+    [fileResult?.data?.md5sum]
+  )
+
   useEffect(() => {
-    if (searchParam.get('fromCreate') === 'true') {
+    const realtime = client.plugins.realtime
+    realtime.subscribe('updated', 'io.cozy.files', fileId, handleFileUpdated)
+    return () => {
+      realtime.unsubscribe(
+        'updated',
+        'io.cozy.files',
+        fileId,
+        handleFileUpdated
+      )
+    }
+  }, [client, fileId, handleFileUpdated])
+
+  useEffect(() => {
+    if (
+      searchParam.get('fromCreate') === 'true' ||
+      searchParam.get('fromEdit') === 'true'
+    ) {
       setEditorMode('edit')
     }
   }, [searchParam])
@@ -41,6 +85,8 @@ const OnlyOfficeProvider = ({
     <OnlyOfficeContext.Provider
       value={{
         fileId,
+        hasFileDiverged,
+        setFileDiverged,
         isPublic,
         isReadOnly,
         isFromSharing,
@@ -50,7 +96,9 @@ const OnlyOfficeProvider = ({
         setIsEditorReady,
         editorMode,
         setEditorMode,
-        isEditorModeView
+        isEditorModeView,
+        setOfficeKey,
+        officeKey
       }}
     >
       {children}

@@ -733,5 +733,18 @@
         "second": "Check our plans"
       }
     }
+  },
+  "FileDivergedModal": {
+    "title": "Someone has modified this filen",
+    "content": "Someone has modified the file outside Cozy while you were editing it, you can retrieve their modifications instead of yours or continue your editing in a new file.",
+    "confirm": "Continue editing",
+    "cancel": "See its changes",
+    "error": "An error occurred, please try again.",
+    "confirmReload": {
+      "title": "See the changes",
+      "content": "When you access the new file, your changes will be cancelled.",
+      "cancel": "Cancel",
+      "confirm": "Ok, I get it"
+    }
   }
 }

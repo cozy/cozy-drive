@@ -20,7 +20,8 @@ const useConfig = () => {
     username,
     isFromSharing,
     editorMode,
-    isEditorModeView
+    isEditorModeView,
+    setOfficeKey
   } = useOnlyOfficeContext()
   const client = useClient()
   const instanceUri = client.getStackClient().uri
@@ -83,6 +84,8 @@ const useConfig = () => {
           public_name
         })
 
+        setOfficeKey(onlyoffice.document.key)
+
         const serverUrl = onlyoffice.url
         const apiUrl = `${serverUrl}/web-apps/apps/api/documents/api.js`
         const docEditorConfig = {
@@ -121,7 +124,8 @@ const useConfig = () => {
     isFromSharing,
     instanceUri,
     isDesktop,
-    currentSearchParams
+    currentSearchParams,
+    setOfficeKey
   ])
 
   return { config, status }
