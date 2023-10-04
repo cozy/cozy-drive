@@ -45,22 +45,19 @@ export const useUploadFromFlagship = (): UploadFromFlagship => {
   const getFilesToUpload = useCallback(async () => {
     typedLogger.info('getFilesToUpload called')
 
-    try {
-      const files = (await webviewIntent?.call(
-        'getFilesToUpload'
-      )) as unknown as FileFromNative[]
+    const files = (await webviewIntent?.call(
+      'getFilesToUpload'
+    )) as unknown as FileFromNative[]
 
-      if (files) {
-        typedLogger.info('getFilesToUpload success', { files })
+    if (files?.length === 0) throw new Error('No files to upload')
 
-        return setItems(files.map(file => ({ ...file, name: file.fileName })))
-      } else {
-        typedLogger.info('getFilesToUpload no files to upload')
-        throw new Error('No files to upload')
-      }
-    } catch (error) {
-      typedLogger.info('getFilesToUpload error', { error })
-      // handle error, maybe show a toast and redirect to the home?
+    if (files.length > 0) {
+      typedLogger.info('getFilesToUpload success', { files })
+
+      return setItems(files.map(file => ({ ...file, name: file.fileName })))
+    } else {
+      typedLogger.info('getFilesToUpload no files to upload')
+      throw new Error('No files to upload')
     }
   }, [webviewIntent])
 
