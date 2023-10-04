@@ -746,5 +746,12 @@
       "cancel": "Cancel",
       "confirm": "Ok, I get it"
     }
+  },
+  "FileDeletedModal": {
+    "title": "Someone has deleted this file",
+    "content": "Someone has deleted this file while you were editing it. You can stop editing or restore the file to continue editing.",
+    "confirm": "Restore file",
+    "cancel": "Undo changes",
+    "error": "An error occurred, please try again."
   }
 }
