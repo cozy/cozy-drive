@@ -1,15 +1,12 @@
 /* eslint-disable no-console */
-import React, { useCallback, useEffect, useState } from 'react'
-import { connect, useDispatch } from 'react-redux'
+import React, { useCallback, useState } from 'react'
+import { connect } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Query, useClient } from 'cozy-client'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import { useI18n } from 'cozy-ui/transpiled/react'
 import {
   purgeUploadQueue,
-  RECEIVE_UPLOAD_ERROR,
-  removeFileToUploadQueue,
   uploadFilesFromNative
 } from 'drive/web/modules/upload'
 import { ROOT_DIR_ID } from 'drive/constants/config'
@@ -20,9 +17,12 @@ import Loader from 'drive/web/modules/move/Loader'
 import LoadMore from 'drive/web/modules/move/LoadMore'
 import Footer from 'drive/web/modules/move/Footer'
 import Topbar from 'drive/web/modules/move/Topbar'
-import { buildMoveOrImportQuery, buildOnlyFolderQuery } from '../../queries'
+import {
+  buildMoveOrImportQuery,
+  buildOnlyFolderQuery
+} from 'drive/web/modules/queries'
 import { generateForQueue } from './UploadUtils'
-import { DumbUploadProps, FileFromNative, Folder } from './UploadTypes'
+import { DumbUploadProps, Folder } from './UploadTypes'
 import { ThunkDispatch } from 'redux-thunk'
 import { useUploadFromFlagship } from './useUploadFromFlagship'
 import { useWebviewIntent } from 'cozy-intent'
@@ -30,7 +30,6 @@ import { useWebviewIntent } from 'cozy-intent'
 const TypedUseI18n = useI18n as () => {
   t: (str: string, arg?: Record<string, unknown>) => string
 }
-const TypedAlerter = Alerter as { success: (str: string) => void }
 const TypedLoadMore = LoadMore as React.FC<{
   hasMore: boolean
   fetchMore: () => void
@@ -38,8 +37,7 @@ const TypedLoadMore = LoadMore as React.FC<{
 
 const DumbUpload = ({
   onCancel,
-  uploadFilesFromNative,
-  removeFileToUploadQueue
+  uploadFilesFromNative
 }: DumbUploadProps): JSX.Element | null => {
   const [folder, setFolder] = useState<Folder>({ _id: ROOT_DIR_ID })
   const [uploadInProgress] = useState<boolean>(false)
@@ -48,39 +46,6 @@ const DumbUpload = ({
   const client = useClient()
   const { items, uploadFilesFromFlagship } = useUploadFromFlagship()
   const webviewIntent = useWebviewIntent()
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    const onFileUpload = ({
-      data: { file, isSuccess, isLast }
-    }: {
-      data: {
-        file: FileFromNative
-        isSuccess: boolean
-        isLast?: boolean
-      }
-    }): void => {
-      if (!file) return
-
-      if (!isSuccess) {
-        dispatch({ type: RECEIVE_UPLOAD_ERROR, file })
-        return
-      }
-
-      removeFileToUploadQueue({ name: file.fileName })
-        .then(() => {
-          if (isLast) {
-            return TypedAlerter.success(t('ImportToDrive.success'))
-          }
-          return
-        })
-        .catch(e => {
-          console.log('removeFileToUploadQueue error', e)
-        })
-    }
-
-    window.addEventListener('message', onFileUpload)
-  }, [dispatch, removeFileToUploadQueue, t])
 
   const onClose = useCallback(async () => {
     await webviewIntent?.call('resetFilesToHandle').then(() => {
@@ -107,7 +72,7 @@ const DumbUpload = ({
         console.log('uploadFilesFromNative error', e)
       })
 
-    setTimeout(() => navigate(`/folder/${folder._id}`), 50)
+    navigate(`/folder/${folder._id}`)
   }, [
     items,
     client,
@@ -215,8 +180,6 @@ export default connect<any, any, any, any>(
   null,
   (dispatch: ThunkDispatch<any, any, any>) => ({
     onCancel: () => dispatch(purgeUploadQueue()),
-    removeFileToUploadQueue: (fileName: string) =>
-      dispatch(removeFileToUploadQueue(fileName)),
     uploadFilesFromNative: (
       files: any,
       folderId: any,

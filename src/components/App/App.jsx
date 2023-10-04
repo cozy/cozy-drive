@@ -10,16 +10,15 @@ import { ModalContextProvider } from 'drive/lib/ModalContext'
 import { AcceptingSharingProvider } from 'drive/lib/AcceptingSharingContext'
 import PushBannerProvider from 'components/PushBanner/PushBannerProvider'
 import cozyBar from 'lib/cozyBar'
+import { onFileUploaded } from 'drive/web/modules/views/Upload/UploadUtils'
 
 const App = ({ store, client, lang, polyglot, children }) => {
   return (
     <WebviewIntentProvider
       setBarContext={cozyBar.setWebviewContext}
       methods={{
-        onFileUploaded: (file, isSuccess, isLast) => {
-          window.postMessage({ file, isSuccess, isLast })
-          return Promise.resolve(true)
-        }
+        onFileUploaded: (file, isSuccess) =>
+          onFileUploaded({ file, isSuccess }, store.dispatch)
       }}
     >
       <Provider store={store}>

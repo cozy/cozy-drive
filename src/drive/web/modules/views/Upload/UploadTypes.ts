@@ -15,7 +15,6 @@ export interface DumbUploadProps {
   stopMediaBackup: () => void
   navigate: (path: string) => void
   uploadFilesFromNative: DispatchProps['uploadFilesFromNative']
-  removeFileToUploadQueue: DispatchProps['removeFileToUploadQueue']
   client: CozyClient
   vaultClient: CozyClient
   startMediaBackup: () => void
@@ -24,7 +23,6 @@ export interface DumbUploadProps {
 }
 
 export interface DispatchProps {
-  removeFileToUploadQueue: (file: FileForQueue) => Promise<void>
   uploadFilesFromNative: (
     files: FileForQueue[],
     folderId: string,
