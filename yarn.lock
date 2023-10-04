@@ -9074,6 +9074,31 @@ cozy-client@^41.2.0:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
+cozy-client@^41.2.1:
+  version "41.2.1"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-41.2.1.tgz#b104402316a40627a3e98f459eca6c69d843ddc3"
+  integrity sha512-hjdJ4lz6rzq3ICqUsLKCQidzxsQQOgEQfF0VPkRjj0MUA7JjQD0zmjSBV5h83uq6+dOt6tgAMgZbsQCTKzIzww==
+  dependencies:
+    "@cozy/minilog" "1.0.0"
+    "@types/jest" "^26.0.20"
+    "@types/lodash" "^4.14.170"
+    btoa "^1.2.1"
+    cozy-stack-client "^41.2.0"
+    date-fns "2.29.3"
+    json-stable-stringify "^1.0.1"
+    lodash "^4.17.13"
+    microee "^0.0.6"
+    node-fetch "^2.6.1"
+    node-polyglot "2.4.2"
+    open "7.4.2"
+    prop-types "^15.6.2"
+    react-redux "^7.2.0"
+    redux "3 || 4"
+    redux-thunk "^2.3.0"
+    server-destroy "^1.0.1"
+    sift "^6.0.0"
+    url-search-params-polyfill "^8.0.0"
+
 cozy-device-helper@^2.1.0, cozy-device-helper@^2.7.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-2.7.0.tgz#573749997f18e5a1f11f720faec8c9bf2406beeb"
