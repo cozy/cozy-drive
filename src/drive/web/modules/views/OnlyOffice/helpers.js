@@ -63,8 +63,19 @@ export const isOfficeEditingEnabled = isDesktop => {
   return true
 }
 
-export const makeOnlyOfficeFileRoute = (file, isWithRouter) =>
-  isWithRouter ? `/onlyoffice/${file.id}` : `/#/onlyoffice/${file.id}`
+/**
+ * Make hash to redirect user to an OnlyOffice file
+ * @param {string} fileId Id of the OnlyOffice file
+ * @param {object} options
+ * @param {boolean} options.withoutRouter To return an path without the hash prefix
+ * @returns {string} Path to OnlyOffice
+ */
+export const makeOnlyOfficeFileRoute = (
+  fileId,
+  { withoutRouter = false } = {}
+) => {
+  return withoutRouter ? `/#/onlyoffice/${fileId}` : `/onlyoffice/${fileId}`
+}
 
 /**
  * Returns true in case of the document is shared and should be opened on another instance.

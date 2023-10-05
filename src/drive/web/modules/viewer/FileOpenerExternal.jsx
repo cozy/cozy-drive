@@ -86,8 +86,7 @@ export class FileOpener extends Component {
                 componentsProps={{
                   OnlyOfficeViewer: {
                     isEnabled: isOfficeEnabled(isDesktop),
-                    opener: file =>
-                      navigate(makeOnlyOfficeFileRoute(file, true))
+                    opener: file => navigate(makeOnlyOfficeFileRoute(file.id))
                   }
                 }}
               >

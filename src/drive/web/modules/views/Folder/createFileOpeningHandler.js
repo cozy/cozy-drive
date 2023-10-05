@@ -59,9 +59,13 @@ const createFileOpeningHandler =
       }
     } else if (isOnlyOffice && isOfficeEnabled) {
       if (event.ctrlKey || event.metaKey || event.shiftKey) {
-        openInNewTab(makeOnlyOfficeFileRoute(file))
+        openInNewTab(
+          makeOnlyOfficeFileRoute(file.id, {
+            withoutRouter: true
+          })
+        )
       } else {
-        routeTo(makeOnlyOfficeFileRoute(file, true))
+        routeTo(makeOnlyOfficeFileRoute(file.id))
       }
     } else {
       navigateToFile(file)

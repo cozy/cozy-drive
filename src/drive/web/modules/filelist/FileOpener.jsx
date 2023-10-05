@@ -100,7 +100,9 @@ const FileOpener = ({
         className={`${styles['file-opener']} ${styles['file-opener__a']}`}
         ref={rowRef}
         id={file.id}
-        href={makeOnlyOfficeFileRoute(file)}
+        href={makeOnlyOfficeFileRoute(file.id, {
+          withoutRouter: true
+        })}
         onClick={ev => {
           ev.preventDefault()
         }}
