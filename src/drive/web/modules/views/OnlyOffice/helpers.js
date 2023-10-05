@@ -68,13 +68,21 @@ export const isOfficeEditingEnabled = isDesktop => {
  * @param {string} fileId Id of the OnlyOffice file
  * @param {object} options
  * @param {boolean} options.withoutRouter To return an path without the hash prefix
+ * @param {boolean} options.fromCreate The document will be opened in edit mode
  * @returns {string} Path to OnlyOffice
  */
 export const makeOnlyOfficeFileRoute = (
   fileId,
-  { withoutRouter = false } = {}
+  { withoutRouter = false, fromCreate = false } = {}
 ) => {
-  return withoutRouter ? `/#/onlyoffice/${fileId}` : `/onlyoffice/${fileId}`
+  const params = new URLSearchParams()
+  if (fromCreate) {
+    params.append('fromCreate', true)
+  }
+  const searchParam = params.size > 0 ? `?${params.toString()}` : ''
+  return withoutRouter
+    ? `/#/onlyoffice/${fileId}${searchParam}`
+    : `/onlyoffice/${fileId}${searchParam}`
 }
 
 /**

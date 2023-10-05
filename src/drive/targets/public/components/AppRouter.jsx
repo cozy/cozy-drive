@@ -47,16 +47,6 @@ const AppRouter = ({
               />
             </Route>
             <Route
-              path="onlyoffice/:fileId/fromCreate"
-              element={
-                <OnlyOfficeView
-                  isPublic={true}
-                  isReadOnly={isReadOnly}
-                  isInSharedFolder={!isFile}
-                />
-              }
-            />
-            <Route
               path="onlyoffice/create/:folderId/:fileClass"
               element={<OnlyOfficeCreateView />}
             />

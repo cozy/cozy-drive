@@ -7,15 +7,19 @@ import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import Oops from 'components/Error/Oops'
 
 import useCreateFile from 'drive/web/modules/views/OnlyOffice/useCreateFile'
-import { canWriteOfficeDocument } from 'drive/web/modules/views/OnlyOffice/helpers'
+import {
+  canWriteOfficeDocument,
+  makeOnlyOfficeFileRoute
+} from 'drive/web/modules/views/OnlyOffice/helpers'
 
 const Create = () => {
   const navigate = useNavigate()
   const { folderId, fileClass } = useParams()
   const { status, fileId } = useCreateFile(folderId, fileClass)
+  const folderPath = `/folder/${folderId}`
 
   if (!canWriteOfficeDocument()) {
-    return <Navigate to={`/folder/${folderId}/paywall`} />
+    return <Navigate to={`${folderPath}/paywall`} />
   }
 
   if (status === 'error') {
@@ -23,7 +27,12 @@ const Create = () => {
   }
 
   if (status === 'loaded' && fileId) {
-    return navigate(`/onlyoffice/${fileId}/fromCreate`)
+    const url = makeOnlyOfficeFileRoute(fileId, {
+      fromCreate: true
+    })
+    return navigate(url, {
+      replace: true
+    })
   }
 
   return (

@@ -105,10 +105,6 @@ const AppRoute = () => (
         <Route path="paywall" element={<OnlyOfficePaywallView />} />
       </Route>
       <Route
-        path="onlyoffice/:fileId/fromCreate"
-        element={<OnlyOfficeView />}
-      />
-      <Route
         path="onlyoffice/create/:folderId/:fileClass"
         element={<OnlyOfficeCreateView />}
       />
