@@ -24,7 +24,7 @@ const LightFileViewer = ({ files }) => {
   const navigate = useNavigate()
 
   const onlyOfficeOpener = useCallback(
-    file => navigate(makeOnlyOfficeFileRoute(file, true)),
+    file => navigate(makeOnlyOfficeFileRoute(file.id)),
     [navigate]
   )
 
