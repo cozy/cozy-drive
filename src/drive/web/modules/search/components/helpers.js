@@ -47,7 +47,7 @@ export const makeNormalizedFile = (client, folders, file) => {
       url = `/n/${file.id}`
       openOn = 'notes'
     } else if (models.file.shouldBeOpenedByOnlyOffice(file)) {
-      url = makeOnlyOfficeFileRoute(file.id)
+      url = makeOnlyOfficeFileRoute(file.id, { fromPathname: urlToFolder })
     } else {
       url = `${urlToFolder}/file/${file._id}`
     }

@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import get from 'lodash/get'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import { useClient, useCapabilities } from 'cozy-client'
 import { useVaultClient, VaultUnlocker } from 'cozy-keys-lib'
@@ -50,6 +50,7 @@ const FolderViewBody = ({
   const { isDesktop } = useBreakpoints()
   const navigate = useNavigate()
   const client = useClient()
+  const { pathname } = useLocation()
   /**
    *  Since we are not able to restore the scroll correctly,
    * and force the scroll to top every time we change the
@@ -102,7 +103,8 @@ const FolderViewBody = ({
         openInNewTab: url => window.open(url, '_blank'),
         routeTo: url => navigate(url),
         isOfficeEnabled: isOfficeEnabled(isDesktop),
-        webviewIntent
+        webviewIntent,
+        pathname
       })({
         event,
         file,
@@ -116,7 +118,8 @@ const FolderViewBody = ({
       isFlatDomain,
       navigate,
       webviewIntent,
-      isDesktop
+      isDesktop,
+      pathname
     ]
   )
 

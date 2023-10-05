@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent, screen } from '@testing-library/react'
 
 import { createMockClient, useQuery } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -42,10 +42,6 @@ const setup = ({
   const root = render(
     <AppLike
       client={client}
-      routerContextValue={{
-        router: { location: { pathname: `/onlyoffice/${officeDocParam.id}` } },
-        history: jest.fn()
-      }}
       sharingContextValue={{
         byDocId: { 123: {} },
         documentType: 'Files'
@@ -210,79 +206,60 @@ describe('Toolbar', () => {
     })
   })
 
+  const savedLocation = window.location
+  const makeNewLocation = (path = '') => {
+    window.location = new URL(`http://cozy-test.tools/${path}`)
+  }
+
   describe('Back Button', () => {
-    describe('with default history', () => {
-      it('should not show the back button', () => {
-        useQuery.mockReturnValue(officeDocParam)
-
-        const { root } = setup()
-        const { queryByTestId } = root
-
-        expect(window.history.length).toBe(1)
-        expect(queryByTestId('onlyoffice-backButton')).toBeFalsy()
-      })
-
-      it('should not show the back button in sharing from cozy to cozy', () => {
-        useQuery.mockReturnValue(officeDocParam)
-
-        const { root } = setup({ isFromSharing: true })
-        const { queryByTestId } = root
-
-        expect(window.history.length).toBe(1)
-        expect(queryByTestId('onlyoffice-backButton')).toBeFalsy()
-      })
+    beforeEach(() => {
+      delete window.location
     })
 
-    describe('with 1 more entry in history', () => {
-      beforeAll(() => {
-        window.history.pushState('data', 'title', 'url')
-      })
-
-      it('should show the back button', () => {
-        useQuery.mockReturnValue(officeDocParam)
-
-        const { root } = setup()
-        const { queryByTestId } = root
-
-        expect(window.history.length).toBe(2)
-        expect(queryByTestId('onlyoffice-backButton')).toBeTruthy()
-      })
-
-      it('should not show the back button in sharing from cozy to cozy', () => {
-        useQuery.mockReturnValue(officeDocParam)
-
-        const { root } = setup({ isFromSharing: true })
-        const { queryByTestId } = root
-
-        expect(window.history.length).toBe(2)
-        expect(queryByTestId('onlyoffice-backButton')).toBeFalsy()
-      })
+    afterEach(() => {
+      window.location = savedLocation
     })
 
-    describe('with 2 more entries in history', () => {
-      beforeAll(() => {
-        window.history.pushState('data', 'title', 'url')
+    it('should hide without redirect link into searchParam', () => {
+      makeNewLocation('#/onlyoffice/123')
+      useQuery.mockReturnValue(officeDocParam)
+
+      setup()
+
+      const backButton = screen.queryByRole('button', {
+        name: 'Back'
+      })
+      expect(backButton).toBeNull()
+    })
+
+    it('should redirect to previous folder with #/hash?searchParam ', () => {
+      makeNewLocation('#/onlyoffice/123?redirectLink=drive%23%2Ffolder%2F321')
+      useQuery.mockReturnValue(officeDocParam)
+
+      setup()
+
+      const button = screen.getByRole('button', {
+        name: 'Back'
       })
 
-      it('should show the back button', () => {
-        useQuery.mockReturnValue(officeDocParam)
+      fireEvent.click(button)
 
-        const { root } = setup()
-        const { queryByTestId } = root
+      expect(window.location).toBe('http://cozy-drive.tools/#/folder/321')
+    })
 
-        expect(window.history.length).toBe(3)
-        expect(queryByTestId('onlyoffice-backButton')).toBeTruthy()
+    it('should redirect to previous folder with ?searchParam#/hash', () => {
+      makeNewLocation('?redirectLink=drive%23%2Ffolder%2F321#/onlyoffice/123')
+      useQuery.mockReturnValue(officeDocParam)
+
+      setup()
+
+      const button = screen.getByRole('button', {
+        name: 'Back'
       })
 
-      it('should show the back button in sharing from cozy to cozy', () => {
-        useQuery.mockReturnValue(officeDocParam)
+      fireEvent.click(button)
 
-        const { root } = setup({ isFromSharing: true })
-        const { queryByTestId } = root
-
-        expect(window.history.length).toBe(3)
-        expect(queryByTestId('onlyoffice-backButton')).toBeTruthy()
-      })
+      expect(window.location).toBe('http://cozy-drive.tools/#/folder/321')
     })
   })
 })
