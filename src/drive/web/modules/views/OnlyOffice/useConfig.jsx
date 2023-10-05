@@ -10,6 +10,7 @@ import {
   makeName
 } from 'drive/web/modules/views/OnlyOffice/helpers'
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice'
+import { useSearchParams } from 'react-router-dom'
 
 const useConfig = () => {
   const {
@@ -23,6 +24,7 @@ const useConfig = () => {
   } = useContext(OnlyOfficeContext)
   const client = useClient()
   const instanceUri = client.getStackClient().uri
+  const [currentSearchParams] = useSearchParams()
 
   const [config, setConfig] = useState()
   const [status, setStatus] = useState('loading')
@@ -54,6 +56,12 @@ const useConfig = () => {
         const searchParams = [['sharecode', sharecode]]
         searchParams.push(['isOnlyOfficeDocShared', true])
         searchParams.push(['onlyOfficeDocId', document_id])
+        if (currentSearchParams.get('redirectLink')) {
+          searchParams.push([
+            'redirectLink',
+            currentSearchParams.get('redirectLink')
+          ])
+        }
         if (public_name) searchParams.push(['username', public_name])
 
         const link = generateWebLink({
@@ -112,7 +120,8 @@ const useConfig = () => {
     username,
     isFromSharing,
     instanceUri,
-    isDesktop
+    isDesktop,
+    currentSearchParams
   ])
 
   return { config, status }

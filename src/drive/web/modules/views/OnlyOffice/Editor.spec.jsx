@@ -37,12 +37,9 @@ jest.mock('cozy-ui/transpiled/react/providers/Breakpoints', () => ({
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 
 jest.mock('cozy-flags')
-jest.mock(
-  'drive/web/modules/views/OnlyOffice/Toolbar/HomeLinker',
-  () =>
-    ({ children }) =>
-      <div>{children}</div>
-)
+jest.mock('drive/web/modules/views/OnlyOffice/Toolbar', () => () => (
+  <div>Toolbar</div>
+))
 
 const client = createMockClient({})
 client.plugins = {
