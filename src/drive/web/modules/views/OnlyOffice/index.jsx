@@ -1,5 +1,5 @@
 import React, { createContext, useState, useMemo, useEffect } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation, useParams, useSearchParams } from 'react-router-dom'
 
 import Dialog from 'cozy-ui/transpiled/react/Dialog'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -20,8 +20,7 @@ const OnlyOfficeProvider = ({
   children
 }) => {
   const { isDesktop, isMobile } = useBreakpoints()
-  const { pathname } = useLocation()
-
+  const [searchParam] = useSearchParams()
   const [isEditorReady, setIsEditorReady] = useState(false)
 
   const [editorMode, setEditorMode] = useState(
@@ -29,16 +28,11 @@ const OnlyOfficeProvider = ({
   )
   const isEditorModeView = useMemo(() => editorMode === 'view', [editorMode])
 
-  const isFromCreate = useMemo(
-    () => pathname.endsWith('/fromCreate'),
-    [pathname]
-  )
-
   useEffect(() => {
-    if (isFromCreate) {
+    if (searchParam.get('fromCreate') === 'true') {
       setEditorMode('edit')
     }
-  }, [isFromCreate])
+  }, [searchParam])
 
   return (
     <OnlyOfficeContext.Provider
@@ -53,8 +47,7 @@ const OnlyOfficeProvider = ({
         setIsEditorReady,
         editorMode,
         setEditorMode,
-        isEditorModeView,
-        isFromCreate
+        isEditorModeView
       }}
     >
       {children}
