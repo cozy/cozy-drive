@@ -30,6 +30,12 @@ client.plugins = {
     unsubscribe: () => {}
   }
 }
+client.collection = () => ({
+  fetchOwnPermissions: () =>
+    Promise.resolve({
+      included: []
+    })
+})
 
 const setup = ({
   isReadOnly = false,
@@ -232,13 +238,13 @@ describe('Toolbar', () => {
       expect(backButton).toBeNull()
     })
 
-    it('should redirect to previous folder with #/hash?searchParam ', () => {
+    it('should redirect to previous folder with #/hash?searchParam ', async () => {
       makeNewLocation('#/onlyoffice/123?redirectLink=drive%23%2Ffolder%2F321')
       useQuery.mockReturnValue(officeDocParam)
 
       setup()
 
-      const button = screen.getByRole('button', {
+      const button = await screen.findByRole('button', {
         name: 'Back'
       })
 
@@ -247,19 +253,46 @@ describe('Toolbar', () => {
       expect(window.location).toBe('http://cozy-drive.tools/#/folder/321')
     })
 
-    it('should redirect to previous folder with ?searchParam#/hash', () => {
+    it('should redirect to previous folder with ?searchParam#/hash', async () => {
       makeNewLocation('?redirectLink=drive%23%2Ffolder%2F321#/onlyoffice/123')
       useQuery.mockReturnValue(officeDocParam)
 
       setup()
 
-      const button = screen.getByRole('button', {
+      const button = await screen.findByRole('button', {
         name: 'Back'
       })
 
       fireEvent.click(button)
 
       expect(window.location).toBe('http://cozy-drive.tools/#/folder/321')
+    })
+
+    it('should redirect to previous folder from current cozy user', async () => {
+      client.collection = () => ({
+        fetchOwnPermissions: () =>
+          Promise.resolve({
+            included: [
+              {
+                attributes: {
+                  instance: 'http://other.tools/'
+                }
+              }
+            ]
+          })
+      })
+      makeNewLocation('?redirectLink=drive%23%2Ffolder%2F321#/onlyoffice/123')
+      useQuery.mockReturnValue(officeDocParam)
+
+      setup()
+
+      const button = await screen.findByRole('button', {
+        name: 'Back'
+      })
+
+      fireEvent.click(button)
+
+      expect(window.location).toBe('http://other-drive.tools/#/folder/321')
     })
   })
 })

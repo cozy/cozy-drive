@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import {
@@ -26,6 +26,26 @@ const Toolbar = () => {
   const { fileId, isPublic, isReadOnly, isEditorReady } =
     useContext(OnlyOfficeContext)
   const client = useClient()
+  const [fetchStatus, setFetchStatus] = useState('pending')
+  const [instance, setInstance] = useState(client.getStackClient().uri)
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        setFetchStatus('loading')
+        const permissions = await client
+          .collection('io.cozy.permissions')
+          .fetchOwnPermissions()
+        if (permissions.included.length > 0) {
+          setInstance(permissions.included[0].attributes.instance)
+        }
+        setFetchStatus('loaded')
+      } catch {
+        setFetchStatus('error')
+      }
+    }
+    fetch()
+  }, [client])
 
   const [searchParams] = useSearchParams()
   const params = new URLSearchParams(location.search)
@@ -47,7 +67,7 @@ const Toolbar = () => {
     const { subdomain: subDomainType } = client.getInstanceOptions()
 
     link = generateWebLink({
-      cozyUrl: client.getStackClient().uri,
+      cozyUrl: instance,
       subDomainType,
       slug,
       pathname,
@@ -56,7 +76,7 @@ const Toolbar = () => {
     })
   }
 
-  const showBackButton = link !== undefined
+  const showBackButton = redirectLink !== null && fetchStatus === 'loaded'
 
   const handleOnClick = () => {
     window.location = link
