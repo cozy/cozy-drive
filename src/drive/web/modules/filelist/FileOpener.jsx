@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import Hammer from '@egjs/hammerjs'
 import propagating from 'propagating-hammerjs'
+import { useLocation } from 'react-router-dom'
 
 import { models } from 'cozy-client'
 
@@ -59,6 +60,7 @@ const FileOpener = ({
   children
 }) => {
   const rowRef = useRef()
+  const { pathname } = useLocation()
 
   useEffect(() => {
     if (!rowRef || !rowRef.current) return
@@ -101,7 +103,8 @@ const FileOpener = ({
         ref={rowRef}
         id={file.id}
         href={makeOnlyOfficeFileRoute(file.id, {
-          withoutRouter: true
+          withoutRouter: true,
+          fromPathname: pathname
         })}
         onClick={ev => {
           ev.preventDefault()

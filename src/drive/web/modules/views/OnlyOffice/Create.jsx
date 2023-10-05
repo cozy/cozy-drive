@@ -28,7 +28,8 @@ const Create = () => {
 
   if (status === 'loaded' && fileId) {
     const url = makeOnlyOfficeFileRoute(fileId, {
-      fromCreate: true
+      fromCreate: true,
+      fromPathname: folderPath
     })
     return navigate(url, {
       replace: true

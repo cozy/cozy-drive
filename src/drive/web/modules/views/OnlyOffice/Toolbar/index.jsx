@@ -1,7 +1,12 @@
-import React, { useContext, useCallback, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useContext } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
-import { RealTimeQueries } from 'cozy-client'
+import {
+  RealTimeQueries,
+  useClient,
+  generateWebLink,
+  deconstructRedirectLink
+} from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { DOCTYPE_FILES } from 'drive/lib/doctypes'
@@ -18,37 +23,44 @@ import Sharing from 'drive/web/modules/views/OnlyOffice/Toolbar/Sharing'
 
 const Toolbar = () => {
   const { isMobile } = useBreakpoints()
-  const {
-    fileId,
-    isPublic,
-    isFromSharing,
-    isReadOnly,
-    isEditorReady,
-    isFromCreate
-  } = useContext(OnlyOfficeContext)
+  const { fileId, isPublic, isReadOnly, isEditorReady } =
+    useContext(OnlyOfficeContext)
+  const client = useClient()
+
+  const [searchParams] = useSearchParams()
+  const params = new URLSearchParams(location.search)
+
+  /**
+   * We search for redirectLink using two methods because
+   * the searchParam differs depending on the position in the url :
+   * - for /#hash?searchParam, you need useSearchParams
+   * - for /?searchParam#hash, you need location.search
+   */
+  const redirectLink =
+    searchParams.get('redirectLink') || params.get('redirectLink')
 
   const { data: fileWithPath } = useFileWithPath(fileId)
-  const navigate = useNavigate()
 
-  const hasOnyMoreHistoryEntry = useMemo(
-    () => isFromSharing || isFromCreate,
-    [isFromSharing, isFromCreate]
-  )
-  // The condition is different in the case of a only office file that has been shared with us.
-  // In this case there is a double redirection (one to know that the file is a share, the other
-  // to open it on the host instance), so there is an additional entry in the history.
-  const showBackButton = useMemo(
-    () =>
-      hasOnyMoreHistoryEntry
-        ? window.history.length > 2
-        : window.history.length > 1,
-    [hasOnyMoreHistoryEntry]
-  )
+  let link
+  if (redirectLink) {
+    const { slug, pathname, hash } = deconstructRedirectLink(redirectLink)
+    const { subdomain: subDomainType } = client.getInstanceOptions()
 
-  const handleOnClick = useCallback(
-    () => (hasOnyMoreHistoryEntry ? navigate(-2) : navigate(-1)),
-    [hasOnyMoreHistoryEntry, navigate]
-  )
+    link = generateWebLink({
+      cozyUrl: client.getStackClient().uri,
+      subDomainType,
+      slug,
+      pathname,
+      hash,
+      searchParams: []
+    })
+  }
+
+  const showBackButton = link !== undefined
+
+  const handleOnClick = () => {
+    window.location = link
+  }
 
   return (
     <>

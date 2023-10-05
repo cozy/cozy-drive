@@ -69,15 +69,19 @@ export const isOfficeEditingEnabled = isDesktop => {
  * @param {object} options
  * @param {boolean} options.withoutRouter To return an path without the hash prefix
  * @param {boolean} options.fromCreate The document will be opened in edit mode
+ * @param {boolean} options.fromPathname Hash to redirect the user when he back
  * @returns {string} Path to OnlyOffice
  */
 export const makeOnlyOfficeFileRoute = (
   fileId,
-  { withoutRouter = false, fromCreate = false } = {}
+  { withoutRouter = false, fromCreate = false, fromPathname } = {}
 ) => {
   const params = new URLSearchParams()
   if (fromCreate) {
     params.append('fromCreate', true)
+  }
+  if (fromPathname) {
+    params.append('redirectLink', `drive#${fromPathname}`)
   }
   const searchParam = params.size > 0 ? `?${params.toString()}` : ''
   return withoutRouter

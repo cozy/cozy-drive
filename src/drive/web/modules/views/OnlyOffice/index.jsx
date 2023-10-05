@@ -1,5 +1,5 @@
 import React, { createContext, useState, useMemo, useEffect } from 'react'
-import { useLocation, useParams, useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 
 import Dialog from 'cozy-ui/transpiled/react/Dialog'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
