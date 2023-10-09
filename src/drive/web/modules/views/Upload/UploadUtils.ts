@@ -7,7 +7,9 @@ import type {
   FileForQueue
 } from 'drive/web/modules/views/Upload/UploadTypes'
 
-export const generateForQueue = (files: FileFromNative[]): FileForQueue[] => {
+export const generateForQueue = (
+  files: FileFromNative['file'][]
+): FileForQueue[] => {
   // @ts-expect-error fix types
   return files.map(file => ({ file: file, isDirectory: false }))
 }
@@ -21,7 +23,7 @@ export const onFileUploaded = (
 ): void => {
   if (!data.file) return
 
-  if (!data.isSuccess) {
+  if (!(data.file.status === 2)) {
     dispatch({ type: RECEIVE_UPLOAD_ERROR, file: data.file })
   } else {
     dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file: data.file })

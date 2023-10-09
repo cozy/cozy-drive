@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useCallback, useEffect, useState } from 'react'
 import { useWebviewIntent } from 'cozy-intent'
@@ -19,7 +18,7 @@ const typedLogger = logger as unknown & {
 }
 
 interface UploadFromFlagship {
-  items?: FileFromNative[]
+  items?: FileFromNative['file'][]
   uploadFilesFromFlagship: (
     client: CozyClient,
     fileUrl: string,
@@ -35,7 +34,7 @@ interface UploadFromFlagship {
 export const useUploadFromFlagship = (): UploadFromFlagship => {
   const webviewIntent = useWebviewIntent()
   const [searchParams] = useSearchParams()
-  const [items, setItems] = useState<FileFromNative[]>()
+  const [items, setItems] = useState<FileFromNative['file'][]>()
   const fromFlagshipUpload = searchParams.get('fromFlagshipUpload')
   const navigate = useNavigate()
 
@@ -54,7 +53,12 @@ export const useUploadFromFlagship = (): UploadFromFlagship => {
     if (files.length > 0) {
       typedLogger.info('getFilesToUpload success', { files })
 
-      return setItems(files.map(file => ({ ...file, name: file.fileName })))
+      return setItems(
+        files.map(fileFromNative => ({
+          ...fileFromNative.file,
+          name: fileFromNative.file.fileName
+        }))
+      )
     } else {
       typedLogger.info('getFilesToUpload no files to upload')
       throw new Error('No files to upload')
@@ -124,27 +128,27 @@ export const useResumeUploadFromFlagship = (): void => {
   const uploadQueue = useSelector(getUploadQueue) as FileFromNative[]
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const doResumeCheck = async (): Promise<void> => {
       if (!webviewIntent) return
-
-      // Do nothing if there is already at least one file in the upload queue
-      if (uploadQueue.length > 0) return
+      // If we are on the upload page, we don't want to resume
+      if (uploadQueue?.length > 0) return
 
       try {
         const { filesToHandle } = (await webviewIntent.call(
           'hasFilesToHandle'
-        )) as unknown as { filesToHandle: FileFromNative[] }
+        )) as unknown as {
+          filesToHandle: FileFromNative[]
+        }
 
         if (!filesToHandle || filesToHandle.length === 0) return
 
         dispatch(
           uploadFilesFromNative(
-            filesToHandle.map(file => ({
-              file: { ...file, name: file.fileName },
+            filesToHandle.map(fileFromNative => ({
+              file: { ...fileFromNative, name: fileFromNative.file.fileName },
               isDirectory: false
             })),
-            filesToHandle[0].dirId,
+            filesToHandle[0].file.dirId,
             undefined,
             { client, vaultClient: undefined },
             () => Promise.resolve()
@@ -156,7 +160,6 @@ export const useResumeUploadFromFlagship = (): void => {
       }
     }
 
-    // Deactivating the feature for now because it receives an older state from the Flagship app which creates issues
-    // void doResumeCheck()
-  }, [client, dispatch, uploadQueue.length, webviewIntent])
+    void doResumeCheck()
+  }, [client, dispatch, webviewIntent, uploadQueue])
 }

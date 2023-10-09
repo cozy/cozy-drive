@@ -43,6 +43,18 @@ export interface DispatchProps {
 }
 
 export interface FileFromNative {
-  fileName: string
-  dirId: string
+  name: string
+  file: {
+    weblink: null
+    text: null
+    filePath: string
+    contentUri: string
+    subject: null
+    extension: string
+    fileName: string
+    mimeType: string
+    dirId?: string
+    conflictStrategy?: string
+  }
+  status: number
 }
