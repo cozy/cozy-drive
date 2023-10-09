@@ -1,6 +1,6 @@
 {
   "name": "cozy-drive",
-  "version": "1.61.0",
+  "version": "1.62.0",
   "main": "src/main.jsx",
   "scripts": {
     "build": "yarn build:drive && yarn build:photos",
@@ -102,11 +102,11 @@
     "splashicon-generator": "0.2.12",
     "stylint": "1.5.9",
     "tar": "6.1.12",
+    "terser-webpack-plugin": "1.4.5",
     "testcafe": "2.0.2",
     "unzipper": "0.10.11",
     "visualreview-client": "git+https://github.com/cozy/VisualReview-node-client.git#v0.0.4",
-    "worker-loader": "2.0.0",
-    "terser-webpack-plugin": "1.4.5"
+    "worker-loader": "2.0.0"
   },
   "dependencies": {
     "@cozy/minilog": "1.0.0",
