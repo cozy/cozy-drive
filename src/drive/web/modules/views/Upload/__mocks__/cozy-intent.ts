@@ -5,7 +5,7 @@ export const webviewIntent = {
     methodName: string,
     files?: FileFromNative[] | FileForQueue[]
   ): Promise<FileFromNative[] | void> => {
-    if (methodName === 'getFilesToUpload') {
+    if (methodName === 'getFilesToHandle') {
       return Promise.resolve([
         {
           fileName: 'test.pdf',

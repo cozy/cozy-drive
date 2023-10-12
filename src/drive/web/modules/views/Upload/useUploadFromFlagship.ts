@@ -41,17 +41,17 @@ export const useUploadFromFlagship = (): UploadFromFlagship => {
   /**
    * 1. Establish the callback to get the files to upload
    */
-  const getFilesToUpload = useCallback(async () => {
-    typedLogger.info('getFilesToUpload called')
+  const getFilesToHandle = useCallback(async () => {
+    typedLogger.info('getFilesToHandle called')
 
     const files = (await webviewIntent?.call(
-      'getFilesToUpload'
+      'getFilesToHandle'
     )) as unknown as FileFromNative[]
 
     if (files?.length === 0) throw new Error('No files to upload')
 
     if (files.length > 0) {
-      typedLogger.info('getFilesToUpload success', { files })
+      typedLogger.info('getFilesToHandle success', { files })
 
       return setItems(
         files.map(fileFromNative => ({
@@ -60,7 +60,7 @@ export const useUploadFromFlagship = (): UploadFromFlagship => {
         }))
       )
     } else {
-      typedLogger.info('getFilesToUpload no files to upload')
+      typedLogger.info('getFilesToHandle no files to upload')
       throw new Error('No files to upload')
     }
   }, [webviewIntent])
@@ -70,21 +70,21 @@ export const useUploadFromFlagship = (): UploadFromFlagship => {
    **/
   useEffect(() => {
     if (fromFlagshipUpload && webviewIntent) {
-      getFilesToUpload()
+      getFilesToHandle()
         .then(() => {
           return typedLogger.info(
-            'getFilesToUpload success, setting didFetch = true'
+            'getFilesToHandle success, setting didFetch = true'
           )
         })
         .catch((error: unknown) => {
-          typedLogger.info('getFilesToUpload error, setting didFetch = true', {
+          typedLogger.info('getFilesToHandle error, setting didFetch = true', {
             error
           })
           // No files received, something went wrong, redirect to drive root
           navigate('/')
         })
     }
-  }, [fromFlagshipUpload, getFilesToUpload, webviewIntent, navigate])
+  }, [fromFlagshipUpload, getFilesToHandle, webviewIntent, navigate])
 
   return {
     items,
