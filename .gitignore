@@ -59,3 +59,7 @@ src/drive/targets/mobilePreview.html
 
 # testcafe data
 testcafe/data/FILES TO TEST
+
+# cozy-jobs-cli
+.token.json
+konnector-dev-config.json
