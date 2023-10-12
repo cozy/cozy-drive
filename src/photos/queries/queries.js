@@ -1,14 +1,11 @@
 import { Q, fetchPolicies } from 'cozy-client'
 
-import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
+import { DOCTYPE_ALBUMS, DOCTYPE_FILES } from 'drive/lib/doctypes'
 
 const older30s = 30 * 1000
 
-// Export to doctypes
-const FILES_DOCTYPE = 'io.cozy.files'
-
 export const buildTimelineQuery = () => ({
-  definition: Q(FILES_DOCTYPE)
+  definition: Q(DOCTYPE_FILES)
     .where({
       class: 'image',
       'metadata.datetime': {
@@ -40,6 +37,20 @@ export const buildTimelineQuery = () => ({
     .include(['albums']),
   options: {
     as: 'timeline',
+    fetchPolicy: fetchPolicies.olderThan(older30s)
+  }
+})
+
+export const buildPhotosTrashedWithReferencedBy = () => ({
+  definition: Q(DOCTYPE_FILES).partialIndex({
+    class: 'image',
+    trashed: true,
+    referenced_by: {
+      $exists: true
+    }
+  }),
+  options: {
+    as: `${DOCTYPE_FILES}/class/image/trashed/referenced_by`,
     fetchPolicy: fetchPolicies.olderThan(older30s)
   }
 })

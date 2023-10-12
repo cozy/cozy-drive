@@ -45,18 +45,19 @@
       "file": "services/onPhotoUpload/photos.js",
       "trigger": "@event io.cozy.files:CREATED:image:class",
       "debounce": "5m"
+    },
+    "onPhotoTrashed": {
+      "type": "node",
+      "file": "services/onPhotoTrashed/photos.js",
+      "trigger": "@event io.cozy.files:UPDATED:image:class",
+      "debounce": "5m"
     }
   },
   "permissions": {
     "files": {
       "description": "Required for photo access",
       "type": "io.cozy.files",
-      "verbs": [
-        "GET",
-        "POST",
-        "PUT",
-        "PATCH"
-      ]
+      "verbs": ["ALL"]
     },
     "apps": {
       "description": "Required by the cozy-bar to display the icons of the apps",
