@@ -50,7 +50,9 @@
     "version:drive:androidbuild": "perl -pi -e 's,android-versionCode=\"[0-9]+\",android-versionCode=\"'`echo ${npm_package_version} | tr -d .`'0000\",g' ./src/drive/targets/mobile/config.xml",
     "version:drive:useragent": "replace 'value=\"(.+)\\d+\\.\\d+\\.\\d+\"' 'value=\"$1'$npm_package_version'\"' ./src/drive/targets/mobile/config.xml",
     "version:drive": "npm-run-all --parallel 'version:drive:*'",
-    "version:photos": "replace '\\d+\\.\\d+\\.\\d+' $npm_package_version ./src/photos/targets/manifest.webapp"
+    "version:photos": "replace '\\d+\\.\\d+\\.\\d+' $npm_package_version ./src/photos/targets/manifest.webapp",
+    "service:drive": "yarn cozy-konnector-dev -m src/photos/targets/manifest.webapp",
+    "service:photos": "yarn cozy-konnector-dev -m src/photos/targets/manifest.webapp"
   },
   "repository": {
     "type": "git",
@@ -87,6 +89,7 @@
     "chrome-remote-interface": "0.31.2",
     "cordova": "8.1.2",
     "cordova-android": "9.1.0",
+    "cozy-jobs-cli": "^2.1.0",
     "css-mediaquery": "^0.1.2",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.6",
