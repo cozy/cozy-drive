@@ -43,7 +43,9 @@ const useRedirectLink = () => {
     searchParams.get('redirectLink') || params.get('redirectLink')
 
   const redirectWebLink = useMemo(() => {
-    if (redirectLink === null && fetchStatus !== 'loaded') return null
+    if (redirectLink === null || fetchStatus !== 'loaded') {
+      return null
+    }
 
     const { slug, pathname, hash } = deconstructRedirectLink(redirectLink)
     const { subdomain: subDomainType } = client.getInstanceOptions()
