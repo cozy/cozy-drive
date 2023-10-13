@@ -9074,10 +9074,10 @@ cozy-client@^41.2.0:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
-cozy-client@^41.2.1:
-  version "41.2.1"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-41.2.1.tgz#b104402316a40627a3e98f459eca6c69d843ddc3"
-  integrity sha512-hjdJ4lz6rzq3ICqUsLKCQidzxsQQOgEQfF0VPkRjj0MUA7JjQD0zmjSBV5h83uq6+dOt6tgAMgZbsQCTKzIzww==
+cozy-client@^41.7.0:
+  version "41.7.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-41.7.0.tgz#b2c2e2999c9099f15950c985a48fc600c87aeee0"
+  integrity sha512-9tzdV87b4OPfu5f410Mu8VNPPXQj2Wfl75harBT76MkLcdqPqTzPfMfiYlDYcVTqFKfdM1eV4+GohkjOPpV3RQ==
   dependencies:
     "@cozy/minilog" "1.0.0"
     "@types/jest" "^26.0.20"
@@ -9236,12 +9236,12 @@ cozy-logger@^1.3.0:
     chalk "^2.4.2"
     json-stringify-safe "5.0.1"
 
-cozy-pouch-link@^41.2.0:
-  version "41.2.0"
-  resolved "https://registry.yarnpkg.com/cozy-pouch-link/-/cozy-pouch-link-41.2.0.tgz#783cd12fffe4a7df1a7936acd61775e3e49d15e6"
-  integrity sha512-zxNhgbWIGQ/saSm+J8aysNrW+SvQsDcopz7wLoiOyHaaz6uPs1sMEvulvV4CuEITJGHHzImxL7Z0RUhxW6ylcg==
+cozy-pouch-link@^41.7.0:
+  version "41.7.0"
+  resolved "https://registry.yarnpkg.com/cozy-pouch-link/-/cozy-pouch-link-41.7.0.tgz#0cc610a1a8cffcf36312613ddf9549d437c17362"
+  integrity sha512-f9nCc/LNk32reAxmuTszLM4RThXwKLnEM1BSd0/JTfUCg65qJYI9ZHkIeiCNnggK9j61bNSShxDCG3Nil5Kcww==
   dependencies:
-    cozy-client "^41.2.0"
+    cozy-client "^41.7.0"
     pouchdb-browser "^7.2.2"
     pouchdb-find "^7.2.2"
 
