@@ -1,35 +1,30 @@
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { useCallback, useEffect, useState } from 'react'
-import { useWebviewIntent } from 'cozy-intent'
 
-import logger from 'lib/logger'
-import { FileFromNative } from './UploadTypes'
-import CozyClient, { useClient } from 'cozy-client'
-import { useDispatch, useSelector } from 'react-redux'
+import { useQuery } from 'cozy-client'
+import { useWebviewIntent } from 'cozy-intent'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import logger from 'cozy-logger'
+import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
 import {
-  uploadFilesFromNative,
-  purgeUploadQueue,
-  getUploadQueue
-} from '../../upload'
-
-const typedLogger = logger as unknown & {
-  info: (message: string, ...rest: unknown[]) => void
-}
-
-interface UploadFromFlagship {
-  items?: FileFromNative['file'][]
-  uploadFilesFromFlagship: (
-    client: CozyClient,
-    fileUrl: string,
-    fileOptions: {
-      name: string
-      dirId: string
-      conflictStrategy: string
-    }
-  ) => Promise<void>
-  resetFilesToHandle: () => Promise<void>
-}
+  FileFromNative,
+  Folder,
+  UploadFromFlagship
+} from 'drive/web/modules/views/Upload/UploadTypes'
+import { ROOT_DIR_ID } from 'drive/constants/config'
+import { ADD_TO_UPLOAD_QUEUE, purgeUploadQueue } from 'drive/web/modules/upload'
+import {
+  buildMoveOrImportQuery,
+  buildOnlyFolderQuery
+} from 'drive/web/modules/queries'
+import {
+  generateForQueue,
+  getErrorMessage,
+  getFilesToHandle,
+  sendFilesToHandle
+} from 'drive/web/modules/views/Upload/UploadUtils'
 
 export const useUploadFromFlagship = (): UploadFromFlagship => {
   const webviewIntent = useWebviewIntent()
@@ -37,129 +32,88 @@ export const useUploadFromFlagship = (): UploadFromFlagship => {
   const [items, setItems] = useState<FileFromNative['file'][]>()
   const fromFlagshipUpload = searchParams.get('fromFlagshipUpload')
   const navigate = useNavigate()
+  const [folder, setFolder] = useState<Folder>({ _id: ROOT_DIR_ID })
+  const [uploadInProgress] = useState<boolean>(false)
+  const dispatch = useDispatch()
+  const { t } = useI18n()
+  const _contentQuery = buildMoveOrImportQuery(folder._id)
+  const _folderQuery = buildOnlyFolderQuery(folder._id)
+  const contentQuery = useQuery(
+    _contentQuery.definition(),
+    _contentQuery.options
+  )
+  const folderQuery = useQuery(_folderQuery.definition(), _folderQuery.options)
 
-  /**
-   * 1. Establish the callback to get the files to upload
-   */
-  const getFilesToHandle = useCallback(async () => {
-    typedLogger.info('getFilesToHandle called')
-
-    const files = (await webviewIntent?.call(
-      'getFilesToHandle'
-    )) as unknown as FileFromNative[]
-
-    if (files?.length === 0) throw new Error('No files to upload')
-
-    if (files.length > 0) {
-      typedLogger.info('getFilesToHandle success', { files })
-
-      return setItems(
-        files.map(fileFromNative => ({
-          ...fileFromNative.file,
-          name: fileFromNative.file.fileName
-        }))
-      )
-    } else {
-      typedLogger.info('getFilesToHandle no files to upload')
-      throw new Error('No files to upload')
-    }
-  }, [webviewIntent])
-
-  /**
-   * 2. Use the above callback to get the files to upload when the component mounts
-   **/
   useEffect(() => {
-    if (fromFlagshipUpload && webviewIntent) {
-      getFilesToHandle()
-        .then(() => {
-          return typedLogger.info(
-            'getFilesToHandle success, setting didFetch = true'
+    const asyncGetFilesToHandle = async (): Promise<void> => {
+      if (fromFlagshipUpload && webviewIntent) {
+        try {
+          const files = await getFilesToHandle(webviewIntent)
+          setItems(files)
+          logger('info', 'getFilesToHandle success, setting didFetch = true')
+        } catch (error) {
+          logger(
+            'info',
+            `getFilesToHandle error, setting didFetch = true, ${getErrorMessage(
+              error
+            )}`
           )
-        })
-        .catch((error: unknown) => {
-          typedLogger.info('getFilesToHandle error, setting didFetch = true', {
-            error
-          })
-          // No files received, something went wrong, redirect to drive root
+          Alerter.error('ImportToDrive.error')
           navigate('/')
-        })
+        }
+      }
     }
-  }, [fromFlagshipUpload, getFilesToHandle, webviewIntent, navigate])
+
+    void asyncGetFilesToHandle()
+  }, [fromFlagshipUpload, webviewIntent, navigate])
+
+  const uploadFilesFromFlagship = useCallback(async () => {
+    if (!items || items.length === 0 || !webviewIntent) return
+
+    const filesForQueue = generateForQueue(items)
+
+    dispatch({
+      type: ADD_TO_UPLOAD_QUEUE,
+      files: filesForQueue
+    })
+
+    try {
+      await sendFilesToHandle(filesForQueue, webviewIntent, folder)
+      navigate(`/folder/${folder._id}`)
+    } catch (error) {
+      Alerter.error(t('ImportToDrive.error'))
+      logger('info', `uploadFilesFromNative error, ${getErrorMessage(error)}`)
+      navigate('/')
+    }
+  }, [dispatch, folder, items, navigate, t, webviewIntent])
+
+  const onClose = useCallback(async () => {
+    await webviewIntent?.call('resetFilesToHandle')
+    dispatch(purgeUploadQueue())
+    navigate('/')
+  }, [dispatch, navigate, webviewIntent])
+
+  const resetFilesToHandle = useCallback(async () => {
+    try {
+      logger('info', 'resetFilesToHandle called')
+      await webviewIntent?.call('resetFilesToHandle')
+      logger('info', 'resetFilesToHandle success')
+    } catch (error) {
+      logger('info', `resetFilesToHandle error, ${getErrorMessage(error)}`)
+      // Don't need to show a notification to the user here, just redirect to the home
+      navigate('/')
+    }
+  }, [navigate, webviewIntent])
 
   return {
+    setFolder,
+    folder,
+    onClose,
+    uploadInProgress,
+    contentQuery,
+    folderQuery,
     items,
-    uploadFilesFromFlagship: async (
-      _client,
-      fileUrl,
-      fileOptions
-    ): Promise<void> => {
-      try {
-        typedLogger.info('uploadFilesFromFlagship called', {
-          fileUrl,
-          fileOptions
-        })
-        const response = await webviewIntent?.call(
-          'uploadFiles',
-          JSON.stringify({ fileUrl, fileOptions })
-        )
-        typedLogger.info('uploadFilesFromFlagship success', { response })
-      } catch (error) {
-        typedLogger.info('uploadFilesFromFlagship error', { error })
-        // handle error, maybe show a toast and redirect to the home?
-      }
-    },
-    resetFilesToHandle: async (): Promise<void> => {
-      try {
-        typedLogger.info('resetFilesToHandle called')
-        const response = await webviewIntent?.call('resetFilesToHandle')
-        typedLogger.info('resetFilesToHandle success', { response })
-      } catch (error) {
-        typedLogger.info('resetFilesToHandle error', { error })
-        // handle error, maybe show a toast and redirect to the home?
-      }
-    }
+    uploadFilesFromFlagship,
+    resetFilesToHandle
   }
-}
-
-export const useResumeUploadFromFlagship = (): void => {
-  const client = useClient()
-  const dispatch = useDispatch()
-  const webviewIntent = useWebviewIntent()
-  const uploadQueue = useSelector(getUploadQueue) as FileFromNative[]
-
-  useEffect(() => {
-    const doResumeCheck = async (): Promise<void> => {
-      if (!webviewIntent) return
-      // If we are on the upload page, we don't want to resume
-      if (uploadQueue?.length > 0) return
-
-      try {
-        const { filesToHandle } = (await webviewIntent.call(
-          'hasFilesToHandle'
-        )) as unknown as {
-          filesToHandle: FileFromNative[]
-        }
-
-        if (!filesToHandle || filesToHandle.length === 0) return
-
-        dispatch(
-          uploadFilesFromNative(
-            filesToHandle.map(fileFromNative => ({
-              file: { ...fileFromNative, name: fileFromNative.file.fileName },
-              isDirectory: false
-            })),
-            filesToHandle[0].file.dirId,
-            undefined,
-            { client, vaultClient: undefined },
-            () => Promise.resolve()
-          )
-        )
-      } catch (error) {
-        typedLogger.info('hasFilesToHandle error', { error })
-        dispatch(purgeUploadQueue())
-      }
-    }
-
-    void doResumeCheck()
-  }, [client, dispatch, webviewIntent, uploadQueue])
 }

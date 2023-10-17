@@ -29,7 +29,7 @@ import { ShareDisplayedFolderView } from 'drive/web/modules/views/Modal/ShareDis
 import { ShareFileView } from 'drive/web/modules/views/Modal/ShareFileView'
 import { QualifyFileView } from 'drive/web/modules/views/Modal/QualifyFileView'
 import { MoveFilesView } from 'drive/web/modules/views/Modal/MoveFilesView'
-import UploaderComponent from 'drive/web/modules//views/Upload/UploaderComponent'
+import { UploaderComponent } from 'drive/web/modules//views/Upload/UploaderComponent'
 
 const FilesRedirect = () => {
   const { folderId } = useParams()

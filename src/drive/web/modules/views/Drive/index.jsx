@@ -50,7 +50,7 @@ import FabWithMenuContext from 'drive/web/modules/drive/FabWithMenuContext'
 import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
 import useHead from 'components/useHead'
 import { useSelectionContext } from 'drive/web/modules/selection/SelectionProvider'
-import { useResumeUploadFromFlagship } from 'drive/web/modules/views/Upload/useUploadFromFlagship'
+import { useResumeUploadFromFlagship } from 'drive/web/modules/views/Upload/useResumeFromFlagship'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
