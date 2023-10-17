@@ -375,13 +375,7 @@ export const overwriteFile = async (client, file, path, options = {}) => {
 }
 
 export const uploadFilesFromNative =
-  (
-    files,
-    folderId,
-    uploadFilesSuccessCallback,
-    { client, vaultClient },
-    alternateUploader
-  ) =>
+  (files, folderId, uploadFilesSuccessCallback, { client, vaultClient }) =>
   async dispatch => {
     dispatch({
       type: ADD_TO_UPLOAD_QUEUE,
@@ -407,21 +401,12 @@ export const uploadFilesFromNative =
             contentType: file.file.type
           })
         } else {
-          if (alternateUploader) {
-            // We don't want to wait for the upload to finish, we just want to
-            // send the file to upload to the alternate uploader, it will update by itself
-            alternateUploader(client, file.filePath, {
-              ...fileOpts,
-              contentType: file.mimeType
-            })
-          } else {
-            await doMobileUpload(client, file.file.fileUrl, {
-              ...fileOpts,
-              contentType: file.file.type
-            })
-          }
+          await doMobileUpload(client, file.file.fileUrl, {
+            ...fileOpts,
+            contentType: file.file.type
+          })
         }
-        if (!alternateUploader) dispatch(removeFileToUploadQueue(file.file))
+        dispatch(removeFileToUploadQueue(file.file))
       } catch (error) {
         logger.error(
           `Uploading files from native failed with file ${file.file}: ${error}`

@@ -1,4 +1,4 @@
-import CozyClient from 'cozy-client'
+import { UseQueryReturnValue } from 'cozy-client/types/types'
 
 export interface Folder {
   _id: string
@@ -8,38 +8,6 @@ export interface FileForQueue {
   name: string
   file?: { name: string }
   isDirectory?: false
-}
-
-export interface DumbUploadProps {
-  t: (key: string, options?: { smart_count: number }) => string
-  stopMediaBackup: () => void
-  navigate: (path: string) => void
-  uploadFilesFromNative: DispatchProps['uploadFilesFromNative']
-  client: CozyClient
-  vaultClient: CozyClient
-  startMediaBackup: () => void
-  items: FileFromNative[]
-  onCancel: () => void
-}
-
-export interface DispatchProps {
-  uploadFilesFromNative: (
-    files: FileForQueue[],
-    folderId: string,
-    successCallback?: () => void,
-    options?: { client: CozyClient; vaultClient?: CozyClient },
-    alternateUploader?: (
-      client: CozyClient,
-      fileUrl: string,
-      fileOptions: {
-        name: string
-        dirId: string
-        conflictStrategy: string
-      }
-    ) => Promise<void>
-  ) => Promise<void>
-  stopMediaBackup: () => void
-  startMediaBackup: () => void
 }
 
 export interface FileFromNative {
@@ -57,4 +25,20 @@ export interface FileFromNative {
     conflictStrategy?: string
   }
   status: number
+}
+
+export interface UploadFromFlagship {
+  items?: FileFromNative['file'][]
+  uploadFilesFromFlagship: (fileOptions: {
+    name: string
+    dirId: string
+    conflictStrategy: string
+  }) => Promise<void>
+  resetFilesToHandle: () => Promise<void>
+  onClose: () => Promise<void>
+  uploadInProgress: boolean
+  contentQuery: UseQueryReturnValue
+  folderQuery: UseQueryReturnValue
+  setFolder: React.Dispatch<React.SetStateAction<Folder>>
+  folder: Folder
 }
