@@ -21,10 +21,10 @@ import {
 } from 'drive/web/modules/queries'
 import {
   generateForQueue,
-  getErrorMessage,
   getFilesToHandle,
   sendFilesToHandle
 } from 'drive/web/modules/views/Upload/UploadUtils'
+import { getErrorMessage } from 'drive/web/modules/drive/helpers'
 
 export const useUploadFromFlagship = (): UploadFromFlagship => {
   const webviewIntent = useWebviewIntent()

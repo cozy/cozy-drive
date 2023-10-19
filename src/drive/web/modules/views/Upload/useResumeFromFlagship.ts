@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { useClient } from 'cozy-client'
-import { useWebviewIntent, getErrorMessage } from 'cozy-intent'
+import { useWebviewIntent } from 'cozy-intent'
 import logger from 'cozy-logger'
 
 import {
@@ -11,6 +11,7 @@ import {
   purgeUploadQueue
 } from 'drive/web/modules/upload'
 import { FileFromNative } from 'drive/web/modules/views/Upload/UploadTypes'
+import { getErrorMessage } from 'drive/web/modules/drive/helpers'
 
 export const useResumeUploadFromFlagship = (): void => {
   const client = useClient()
