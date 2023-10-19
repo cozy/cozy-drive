@@ -1,8 +1,9 @@
 import React from 'react'
 import { render, RenderResult, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
+
 import { DumbUpload } from 'drive/mobile/modules/upload'
-import { generateForQueue } from './UploadUtils'
+import { generateForQueue } from 'drive/web/modules/views/Upload/UploadUtils'
 
 jest.mock('cozy-keys-lib', () => ({
   withVaultClient: jest.fn().mockReturnValue({})
@@ -12,12 +13,22 @@ const tSpy = jest.fn()
 const uploadFilesFromNativeSpy = jest.fn()
 
 describe('DumbUpload component', () => {
-  const defaultItems = [{ fileName: 'File1.pdf' }]
+  const defaultItems = [
+    {
+      fileName: 'File1.pdf',
+      mimeType: 'application/pdf',
+      extension: 'pdf',
+      contentUri: 'file:///path/to/file.pdf',
+      filePath: '/path/to/file.pdf',
+      weblink: null,
+      text: null,
+      subject: null,
+      dirId: '123',
+      conflictStrategy: 'replace'
+    }
+  ]
 
-  const setupComponent = (): RenderResult<
-    typeof import('/home/anc/cozy/cozy-drive/node_modules/@testing-library/dom/types/queries'),
-    HTMLElement
-  > => {
+  const setupComponent = (): RenderResult => {
     const props = {
       client: {},
       vaultClient: {},

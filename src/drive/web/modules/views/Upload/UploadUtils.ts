@@ -26,45 +26,19 @@ export const onFileUploaded = (
 ): void => {
   if (!data.file) return
 
-  if (!(data.file.status === 2)) {
-    dispatch({ type: RECEIVE_UPLOAD_ERROR, file: data.file })
-  } else {
+  // Status 2 means file status is "uploaded", any other status should be considered as an error,
+  // though it is not intended to receive something else than "uploaded" (2) or "error" (3)
+  // See OsReceiveFileStatus enum in cozy-flagship
+  if (data.file.status === 2) {
     dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file: data.file })
+  } else {
+    dispatch({ type: RECEIVE_UPLOAD_ERROR, file: data.file })
   }
 }
 
 export const shouldRender = (
   items?: FileFromNative['file'][]
 ): items is FileFromNative['file'][] => !!items && items.length > 0
-
-interface ErrorWithMessage {
-  message: string
-}
-
-const isErrorWithMessage = (error: unknown): error is ErrorWithMessage => {
-  return (
-    typeof error === 'object' &&
-    error !== null &&
-    'message' in error &&
-    typeof (error as Record<string, unknown>).message === 'string'
-  )
-}
-
-const toErrorWithMessage = (maybeError: unknown): ErrorWithMessage => {
-  if (isErrorWithMessage(maybeError)) return maybeError
-
-  try {
-    return new Error(JSON.stringify(maybeError))
-  } catch {
-    // fallback in case there's an error stringifying the maybeError
-    // like with circular references for example.
-    return new Error(String(maybeError))
-  }
-}
-
-export const getErrorMessage = (error: unknown): string => {
-  return toErrorWithMessage(error).message
-}
 
 export const getFilesToHandle = async (
   webviewIntent: WebviewService
