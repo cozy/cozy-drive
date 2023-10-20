@@ -88,7 +88,7 @@ export const useUploadFromFlagship = (): UploadFromFlagship => {
   }, [dispatch, folder, items, navigate, t, webviewIntent])
 
   const onClose = useCallback(async () => {
-    await webviewIntent?.call('resetFilesToHandle')
+    await webviewIntent?.call('cancelUploadByCozyApp')
     dispatch(purgeUploadQueue())
     navigate('/')
   }, [dispatch, navigate, webviewIntent])
