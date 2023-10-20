@@ -74,13 +74,12 @@ export const sendFilesToHandle = async (
 
     const fileOptions = {
       name: file.file.name,
-      dirId: folder._id,
-      conflictStrategy: 'rename'
+      dirId: folder._id
     }
 
     logger('info', 'uploadFilesFromFlagship called')
 
-    await webviewIntent?.call('uploadFiles', JSON.stringify({ fileOptions }))
+    await webviewIntent?.call('uploadFile', JSON.stringify({ fileOptions }))
 
     logger('info', 'uploadFilesFromFlagship success')
   }
