@@ -37,7 +37,10 @@ module.exports = {
   transformIgnorePatterns: [
     'node_modules/(?!cozy-ui|cozy-harvest-lib|cozy-keys-lib|cozy-sharing|)'
   ],
-  testEnvironment: 'jest-environment-jsdom-sixteen',
+  testEnvironment: 'jsdom',
+  testEnvironmentOptions: {
+    url: 'http://cozy.localhost:8080/'
+  },
   testMatch: ['**/(*.)(spec|test).js?(x)'],
   globals: {
     __APP_SLUG__: 'drive',
