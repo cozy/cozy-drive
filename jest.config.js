@@ -31,10 +31,12 @@ module.exports = {
   clearMocks: true,
   snapshotSerializers: ['enzyme-to-json/serializer'],
   transform: {
-    '^.+\\.(ts|tsx|js|jsx)?$': 'babel-jest',
+    '\\.[jt]sx?$': 'babel-jest',
     '^.+\\.webapp$': '<rootDir>/test/jestLib/json-transformer.js'
   },
-  transformIgnorePatterns: ['node_modules/(?!cozy-ui)/'],
+  transformIgnorePatterns: [
+    'node_modules/(?!cozy-ui|cozy-harvest-lib|cozy-keys-lib|cozy-sharing|)'
+  ],
   testEnvironment: 'jest-environment-jsdom-sixteen',
   testMatch: ['**/(*.)(spec|test).js?(x)'],
   globals: {
