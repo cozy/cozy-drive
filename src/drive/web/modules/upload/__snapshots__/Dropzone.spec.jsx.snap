@@ -8,7 +8,7 @@ exports[`Dropzone should match snapshot 1`] = `
     }
   }
   store={
-    Object {
+    {
       "dispatch": [MockFunction],
       "getState": [Function],
       "replaceReducer": [Function],
@@ -25,7 +25,7 @@ exports[`Dropzone should match snapshot 1`] = `
     }
     enLocale={[Function]}
     store={
-      Object {
+      {
         "dispatch": [MockFunction],
         "getState": [Function],
         "replaceReducer": [Function],
@@ -42,11 +42,11 @@ exports[`Dropzone should match snapshot 1`] = `
       >
         <ThemeProvider
           theme={
-            Object {
-              "breakpoints": Object {
+            {
+              "breakpoints": {
                 "between": [Function],
                 "down": [Function],
-                "keys": Array [
+                "keys": [
                   "xs",
                   "sm",
                   "md",
@@ -55,7 +55,7 @@ exports[`Dropzone should match snapshot 1`] = `
                 ],
                 "only": [Function],
                 "up": [Function],
-                "values": Object {
+                "values": {
                   "lg": 1023,
                   "md": 768,
                   "sm": 480,
@@ -65,21 +65,21 @@ exports[`Dropzone should match snapshot 1`] = `
                 "width": [Function],
               },
               "direction": "ltr",
-              "mixins": Object {
+              "mixins": {
                 "gutters": [Function],
-                "toolbar": Object {
-                  "@media (min-width:0px) and (orientation: landscape)": Object {
+                "toolbar": {
+                  "@media (min-width:0px) and (orientation: landscape)": {
                     "minHeight": 48,
                   },
-                  "@media (min-width:480px)": Object {
+                  "@media (min-width:480px)": {
                     "minHeight": 64,
                   },
                   "minHeight": 56,
                 },
               },
-              "overrides": Object {
-                "MuiAccordion": Object {
-                  "root": Object {
+              "overrides": {
+                "MuiAccordion": {
+                  "root": {
                     "borderColor": "#fff",
                     "borderStyle": "solid",
                     "borderWidth": "0.0625rem",
@@ -87,22 +87,22 @@ exports[`Dropzone should match snapshot 1`] = `
                     "marginBottom": "1rem",
                     "overflow": "hidden",
                   },
-                  "rounded": Object {
+                  "rounded": {
                     "borderRadius": 6,
                   },
                 },
-                "MuiAccordionDetails": Object {
-                  "root": Object {
+                "MuiAccordionDetails": {
+                  "root": {
                     "borderTop": "0.0625rem solid #fff",
                     "padding": 0,
                   },
                 },
-                "MuiAccordionSummary": Object {
-                  "content": Object {
-                    "& > :last-child": Object {
+                "MuiAccordionSummary": {
+                  "content": {
+                    "& > :last-child": {
                       "paddingRight": 0,
                     },
-                    "&$expanded": Object {
+                    "&$expanded": {
                       "margin": "0.75rem 0",
                     },
                     "margin": "0.75rem 0",
@@ -110,20 +110,20 @@ exports[`Dropzone should match snapshot 1`] = `
                     "paddingLeft": "0.5rem",
                     "paddingRight": "0.25rem",
                   },
-                  "expandIcon": Object {
-                    "&$expanded": Object {
+                  "expandIcon": {
+                    "&$expanded": {
                       "marginLeft": "0.3125rem",
                       "transform": "rotate(0)",
                     },
-                    "&&": Object {
+                    "&&": {
                       "marginLeft": "0.3125rem",
                     },
                     "order": 0,
                     "transform": "rotate(-90deg)",
                   },
-                  "expanded": Object {},
-                  "root": Object {
-                    "&$expanded": Object {
+                  "expanded": {},
+                  "root": {
+                    "&$expanded": {
                       "minHeight": "3.5rem",
                     },
                     "backgroundColor": "#fff",
@@ -135,22 +135,22 @@ exports[`Dropzone should match snapshot 1`] = `
                     "textTransform": "uppercase",
                   },
                 },
-                "MuiAlert": Object {
-                  "action": Object {
+                "MuiAlert": {
+                  "action": {
                     "marginRight": "-6px",
                   },
-                  "message": Object {
+                  "message": {
                     "alignItems": "center",
                     "display": "flex",
                     "flex": "auto",
                     "flexWrap": "wrap",
                   },
-                  "root": Object {
-                    "& $icon": Object {
+                  "root": {
+                    "& $icon": {
                       "paddingTop": "9px",
                     },
-                    "&.block": Object {
-                      "& $action": Object {
+                    "&.block": {
+                      "& $action": {
                         "display": "block",
                         "paddingLeft": 0,
                         "textAlign": "right",
@@ -158,49 +158,49 @@ exports[`Dropzone should match snapshot 1`] = `
                       },
                       "flexWrap": "wrap",
                     },
-                    "&.cozyAlert": Object {
-                      "&-primary": Object {
-                        "&-filled": Object {
+                    "&.cozyAlert": {
+                      "&-primary": {
+                        "&-filled": {
                           "backgroundColor": "#fff",
                         },
-                        "&-outlined": Object {
-                          "& $icon": Object {
+                        "&-outlined": {
+                          "& $icon": {
                             "color": "#fff",
                           },
                           "border": "1px solid #fff",
                           "color": "rgb(102, 102, 102)",
                         },
-                        "&-standard": Object {
-                          "& $action": Object {
-                            "& button[title=\\"Close\\"]": Object {
+                        "&-standard": {
+                          "& $action": {
+                            "& button[title="Close"]": {
                               "color": "#fff",
                             },
                           },
-                          "& $icon": Object {
+                          "& $icon": {
                             "color": "#fff",
                           },
                           "backgroundColor": "rgb(255, 255, 255)",
                           "color": "rgb(102, 102, 102)",
                         },
                       },
-                      "&-secondary": Object {
-                        "&-filled": Object {
+                      "&-secondary": {
+                        "&-filled": {
                           "backgroundColor": "#fff",
                         },
-                        "&-outlined": Object {
-                          "& $icon": Object {
+                        "&-outlined": {
+                          "& $icon": {
                             "color": "#fff",
                           },
                           "border": "1px solid #fff",
                           "color": "rgb(102, 102, 102)",
                         },
-                        "&-standard": Object {
-                          "& $action": Object {
-                            "& button[title=\\"Close\\"]": Object {
+                        "&-standard": {
+                          "& $action": {
+                            "& button[title="Close"]": {
                               "color": "#fff",
                             },
                           },
-                          "& $icon": Object {
+                          "& $icon": {
                             "color": "#fff",
                           },
                           "backgroundColor": "rgb(255, 255, 255)",
@@ -211,40 +211,40 @@ exports[`Dropzone should match snapshot 1`] = `
                     "padding": "8px 16px",
                   },
                 },
-                "MuiAlertTitle": Object {
-                  "root": Object {
+                "MuiAlertTitle": {
+                  "root": {
                     "fontWeight": "bold",
                     "width": "100%",
                   },
                 },
-                "MuiBadge": Object {
-                  "anchorOriginBottomLeftRectangular": Object {
+                "MuiBadge": {
+                  "anchorOriginBottomLeftRectangular": {
                     "transform": "scale(1) translate(-37%, 37%)",
                   },
-                  "anchorOriginBottomRightRectangular": Object {
+                  "anchorOriginBottomRightRectangular": {
                     "transform": "scale(1) translate(37%, 37%)",
                   },
-                  "anchorOriginTopLeftRectangular": Object {
+                  "anchorOriginTopLeftRectangular": {
                     "transform": "scale(1) translate(-37%, -37%)",
                   },
-                  "anchorOriginTopRightRectangular": Object {
+                  "anchorOriginTopRightRectangular": {
                     "transform": "scale(1) translate(37%, -37%)",
                   },
-                  "badge": Object {
-                    "&.badgeBorder": Object {
+                  "badge": {
+                    "&.badgeBorder": {
                       "border": "2px solid #fff",
                     },
-                    "&.badgeSizeLarge": Object {
+                    "&.badgeSizeLarge": {
                       "fontSize": ".6875rem",
                       "height": "1rem",
                       "minWidth": "1rem",
                     },
-                    "&.badgeSizeMedium": Object {
+                    "&.badgeSizeMedium": {
                       "fontSize": ".625rem",
                       "height": ".875rem",
                       "minWidth": ".875rem",
                     },
-                    "&.badgeSizeSmall": Object {
+                    "&.badgeSizeSmall": {
                       "fontSize": ".5rem",
                       "height": ".75rem",
                       "minWidth": ".75rem",
@@ -252,16 +252,16 @@ exports[`Dropzone should match snapshot 1`] = `
                     "boxSizing": "content-box",
                     "padding": 0,
                   },
-                  "dot": Object {
-                    "&.badgeSizeLarge": Object {
+                  "dot": {
+                    "&.badgeSizeLarge": {
                       "height": ".625rem",
                       "minWidth": ".625rem",
                     },
-                    "&.badgeSizeMedium": Object {
+                    "&.badgeSizeMedium": {
                       "height": ".5rem",
                       "minWidth": ".5rem",
                     },
-                    "&.badgeSizeSmall": Object {
+                    "&.badgeSizeSmall": {
                       "height": ".375rem",
                       "minWidth": ".375rem",
                     },
@@ -269,13 +269,13 @@ exports[`Dropzone should match snapshot 1`] = `
                     "padding": 0,
                   },
                 },
-                "MuiButton": Object {
-                  "contained": Object {
-                    "&:not($disabled)": Object {
-                      "&.customColor": Object {
-                        "&-error": Object {
-                          "&:hover": Object {
-                            "@media (hover: none)": Object {
+                "MuiButton": {
+                  "contained": {
+                    "&:not($disabled)": {
+                      "&.customColor": {
+                        "&-error": {
+                          "&:hover": {
+                            "@media (hover: none)": {
                               "backgroundColor": "#fff",
                             },
                             "backgroundColor": "#fff",
@@ -283,9 +283,9 @@ exports[`Dropzone should match snapshot 1`] = `
                           "backgroundColor": "#fff",
                           "color": "#fff",
                         },
-                        "&-info": Object {
-                          "&:hover": Object {
-                            "@media (hover: none)": Object {
+                        "&-info": {
+                          "&:hover": {
+                            "@media (hover: none)": {
                               "backgroundColor": "#fff",
                             },
                             "backgroundColor": "#fff",
@@ -293,9 +293,9 @@ exports[`Dropzone should match snapshot 1`] = `
                           "backgroundColor": "#fff",
                           "color": "#fff",
                         },
-                        "&-success": Object {
-                          "&:hover": Object {
-                            "@media (hover: none)": Object {
+                        "&-success": {
+                          "&:hover": {
+                            "@media (hover: none)": {
                               "backgroundColor": "#fff",
                             },
                             "backgroundColor": "#fff",
@@ -303,9 +303,9 @@ exports[`Dropzone should match snapshot 1`] = `
                           "backgroundColor": "#fff",
                           "color": "#fff",
                         },
-                        "&-warning": Object {
-                          "&:hover": Object {
-                            "@media (hover: none)": Object {
+                        "&-warning": {
+                          "&:hover": {
+                            "@media (hover: none)": {
                               "backgroundColor": "#fff",
                             },
                             "backgroundColor": "#fff",
@@ -317,21 +317,21 @@ exports[`Dropzone should match snapshot 1`] = `
                     },
                     "boxShadow": 0,
                   },
-                  "outlined": Object {
-                    "&:not($disabled)": Object {
-                      "&.customColor": Object {
-                        "&-error": Object {
-                          "&.ghost": Object {
-                            "&:hover": Object {
-                              "@media (hover: none)": Object {
+                  "outlined": {
+                    "&:not($disabled)": {
+                      "&.customColor": {
+                        "&-error": {
+                          "&.ghost": {
+                            "&:hover": {
+                              "@media (hover: none)": {
                                 "backgroundColor": "rgba(255, 255, 255, 0.08)",
                               },
                               "backgroundColor": "rgba(255, 255, 255, 0.16)",
                             },
                             "backgroundColor": "rgba(255, 255, 255, 0.08)",
                           },
-                          "&:hover": Object {
-                            "@media (hover: none)": Object {
+                          "&:hover": {
+                            "@media (hover: none)": {
                               "backgroundColor": "transparent",
                             },
                             "backgroundColor": "rgba(255, 255, 255, 0.04)",
@@ -339,18 +339,18 @@ exports[`Dropzone should match snapshot 1`] = `
                           "borderColor": "#fff",
                           "color": "#fff",
                         },
-                        "&-info": Object {
-                          "&.ghost": Object {
-                            "&:hover": Object {
-                              "@media (hover: none)": Object {
+                        "&-info": {
+                          "&.ghost": {
+                            "&:hover": {
+                              "@media (hover: none)": {
                                 "backgroundColor": "rgba(255, 255, 255, 0.08)",
                               },
                               "backgroundColor": "rgba(255, 255, 255, 0.16)",
                             },
                             "backgroundColor": "rgba(255, 255, 255, 0.08)",
                           },
-                          "&:hover": Object {
-                            "@media (hover: none)": Object {
+                          "&:hover": {
+                            "@media (hover: none)": {
                               "backgroundColor": "transparent",
                             },
                             "backgroundColor": "rgba(255, 255, 255, 0.04)",
@@ -358,13 +358,13 @@ exports[`Dropzone should match snapshot 1`] = `
                           "borderColor": "#fff",
                           "color": "#fff",
                         },
-                        "&-primary": Object {
-                          "&.ghost": Object {
+                        "&-primary": {
+                          "&.ghost": {
                             "borderColor": "rgba(255, 255, 255, 0.48)",
                             "color": "#fff",
                           },
-                          "&:hover": Object {
-                            "@media (hover: none)": Object {
+                          "&:hover": {
+                            "@media (hover: none)": {
                               "backgroundColor": "transparent",
                             },
                             "backgroundColor": "#fff",
@@ -372,18 +372,18 @@ exports[`Dropzone should match snapshot 1`] = `
                           "borderColor": "#fff",
                           "color": "#fff",
                         },
-                        "&-success": Object {
-                          "&.ghost": Object {
-                            "&:hover": Object {
-                              "@media (hover: none)": Object {
+                        "&-success": {
+                          "&.ghost": {
+                            "&:hover": {
+                              "@media (hover: none)": {
                                 "backgroundColor": "rgba(255, 255, 255, 0.08)",
                               },
                               "backgroundColor": "rgba(255, 255, 255, 0.16)",
                             },
                             "backgroundColor": "rgba(255, 255, 255, 0.08)",
                           },
-                          "&:hover": Object {
-                            "@media (hover: none)": Object {
+                          "&:hover": {
+                            "@media (hover: none)": {
                               "backgroundColor": "transparent",
                             },
                             "backgroundColor": "rgba(255, 255, 255, 0.04)",
@@ -391,18 +391,18 @@ exports[`Dropzone should match snapshot 1`] = `
                           "borderColor": "#fff",
                           "color": "#fff",
                         },
-                        "&-warning": Object {
-                          "&.ghost": Object {
-                            "&:hover": Object {
-                              "@media (hover: none)": Object {
+                        "&-warning": {
+                          "&.ghost": {
+                            "&:hover": {
+                              "@media (hover: none)": {
                                 "backgroundColor": "rgba(255, 255, 255, 0.08)",
                               },
                               "backgroundColor": "rgba(255, 255, 255, 0.16)",
                             },
                             "backgroundColor": "rgba(255, 255, 255, 0.08)",
                           },
-                          "&:hover": Object {
-                            "@media (hover: none)": Object {
+                          "&:hover": {
+                            "@media (hover: none)": {
                               "backgroundColor": "transparent",
                             },
                             "backgroundColor": "rgba(255, 255, 255, 0.04)",
@@ -411,9 +411,9 @@ exports[`Dropzone should match snapshot 1`] = `
                           "color": "#fff",
                         },
                       },
-                      "&.ghost": Object {
-                        "&:hover": Object {
-                          "@media (hover: none)": Object {
+                      "&.ghost": {
+                        "&:hover": {
+                          "@media (hover: none)": {
                             "backgroundColor": "rgba(255, 255, 255, 0.08)",
                           },
                           "backgroundColor": "rgba(255, 255, 255, 0.16)",
@@ -422,9 +422,9 @@ exports[`Dropzone should match snapshot 1`] = `
                       },
                     },
                   },
-                  "root": Object {
-                    "&.ghost": Object {
-                      "&:hover": Object {
+                  "root": {
+                    "&.ghost": {
+                      "&:hover": {
                         "borderStyle": "dashed !important",
                       },
                       "borderStyle": "dashed !important",
@@ -434,56 +434,56 @@ exports[`Dropzone should match snapshot 1`] = `
                     "lineHeight": "normal",
                     "padding": "0 1rem",
                   },
-                  "sizeLarge": Object {
-                    "&$text": Object {
+                  "sizeLarge": {
+                    "&$text": {
                       "padding": "14px 10px",
                     },
                     "height": "3rem",
                     "padding": "0 1.25rem",
                   },
-                  "sizeSmall": Object {
-                    "&$text": Object {
+                  "sizeSmall": {
+                    "&$text": {
                       "padding": "8px 6px",
                     },
                     "height": "2rem",
                     "padding": "0 0.75rem",
                   },
-                  "startIcon": Object {
+                  "startIcon": {
                     "marginLeft": "0 !important",
                   },
-                  "text": Object {
-                    "&:not($disabled)": Object {
-                      "&.customColor": Object {
-                        "&-error": Object {
-                          "&:hover": Object {
-                            "@media (hover: none)": Object {
+                  "text": {
+                    "&:not($disabled)": {
+                      "&.customColor": {
+                        "&-error": {
+                          "&:hover": {
+                            "@media (hover: none)": {
                               "backgroundColor": "transparent",
                             },
                             "backgroundColor": "rgba(255, 255, 255, 0.04)",
                           },
                           "color": "#fff",
                         },
-                        "&-info": Object {
-                          "&:hover": Object {
-                            "@media (hover: none)": Object {
+                        "&-info": {
+                          "&:hover": {
+                            "@media (hover: none)": {
                               "backgroundColor": "transparent",
                             },
                             "backgroundColor": "rgba(255, 255, 255, 0.04)",
                           },
                           "color": "#fff",
                         },
-                        "&-success": Object {
-                          "&:hover": Object {
-                            "@media (hover: none)": Object {
+                        "&-success": {
+                          "&:hover": {
+                            "@media (hover: none)": {
                               "backgroundColor": "transparent",
                             },
                             "backgroundColor": "rgba(255, 255, 255, 0.04)",
                           },
                           "color": "#fff",
                         },
-                        "&-warning": Object {
-                          "&:hover": Object {
-                            "@media (hover: none)": Object {
+                        "&-warning": {
+                          "&:hover": {
+                            "@media (hover: none)": {
                               "backgroundColor": "transparent",
                             },
                             "backgroundColor": "rgba(255, 255, 255, 0.04)",
@@ -496,36 +496,36 @@ exports[`Dropzone should match snapshot 1`] = `
                     "padding": "11px 8px",
                   },
                 },
-                "MuiChip": Object {
-                  "root": Object {
-                    "&.customColor": Object {
-                      "&-error": Object {
-                        "& $deleteIcon": Object {
+                "MuiChip": {
+                  "root": {
+                    "&.customColor": {
+                      "&-error": {
+                        "& $deleteIcon": {
                           "color": "#fff",
                           "fill": "#fff",
                         },
-                        "& $icon": Object {
+                        "& $icon": {
                           "color": "#fff",
                           "fill": "#fff",
                         },
-                        "&$clickable, &$deletable": Object {
-                          "&:hover, &:focus": Object {
+                        "&$clickable, &$deletable": {
+                          "&:hover, &:focus": {
                             "backgroundColor": "rgba(255, 255, 255, 0.04)",
                             "borderColor": "rgba(255, 255, 255, 0.16)",
                           },
                         },
-                        "&$colorPrimary": Object {
-                          "& $icon, & $deleteIcon": Object {
+                        "&$colorPrimary": {
+                          "& $icon, & $deleteIcon": {
                             "color": "#fff",
                             "fill": "#fff",
                           },
-                          "&$clickable, &$deletable": Object {
-                            "&:hover, &:focus": Object {
+                          "&$clickable, &$deletable": {
+                            "&:hover, &:focus": {
                               "backgroundColor": "#fff",
                             },
                           },
-                          "&$disabled": Object {
-                            "& $icon, & $deleteIcon": Object {
+                          "&$disabled": {
+                            "& $icon, & $deleteIcon": {
                               "color": "#fff",
                               "fill": "#fff",
                             },
@@ -537,15 +537,15 @@ exports[`Dropzone should match snapshot 1`] = `
                           "color": "#fff",
                           "padding": "0 1px",
                         },
-                        "&.ghost": Object {
-                          "&$clickable, &$deletable": Object {
-                            "&:hover, &:focus": Object {
+                        "&.ghost": {
+                          "&$clickable, &$deletable": {
+                            "&:hover, &:focus": {
                               "backgroundColor": "rgba(255, 255, 255, 0.16)",
                               "borderColor": "rgba(255, 255, 255, 0.48)",
                             },
                           },
-                          "&:not($disabled)": Object {
-                            "& $icon, & $deleteIcon": Object {
+                          "&:not($disabled)": {
+                            "& $icon, & $deleteIcon": {
                               "color": "#fff",
                               "fill": "#fff",
                             },
@@ -559,33 +559,33 @@ exports[`Dropzone should match snapshot 1`] = `
                         "borderColor": "rgba(255, 255, 255, 0.16)",
                         "color": "#fff",
                       },
-                      "&-info": Object {
-                        "& $deleteIcon": Object {
+                      "&-info": {
+                        "& $deleteIcon": {
                           "color": "#fff",
                           "fill": "#fff",
                         },
-                        "& $icon": Object {
+                        "& $icon": {
                           "color": "#fff",
                           "fill": "#fff",
                         },
-                        "&$clickable, &$deletable": Object {
-                          "&:hover, &:focus": Object {
+                        "&$clickable, &$deletable": {
+                          "&:hover, &:focus": {
                             "backgroundColor": "rgba(255, 255, 255, 0.04)",
                             "borderColor": "rgba(255, 255, 255, 0.16)",
                           },
                         },
-                        "&$colorPrimary": Object {
-                          "& $icon, & $deleteIcon": Object {
+                        "&$colorPrimary": {
+                          "& $icon, & $deleteIcon": {
                             "color": "#fff",
                             "fill": "#fff",
                           },
-                          "&$clickable, &$deletable": Object {
-                            "&:hover, &:focus": Object {
+                          "&$clickable, &$deletable": {
+                            "&:hover, &:focus": {
                               "backgroundColor": "#fff",
                             },
                           },
-                          "&$disabled": Object {
-                            "& $icon, & $deleteIcon": Object {
+                          "&$disabled": {
+                            "& $icon, & $deleteIcon": {
                               "color": "#fff",
                               "fill": "#fff",
                             },
@@ -597,15 +597,15 @@ exports[`Dropzone should match snapshot 1`] = `
                           "color": "#fff",
                           "padding": "0 1px",
                         },
-                        "&.ghost": Object {
-                          "&$clickable, &$deletable": Object {
-                            "&:hover, &:focus": Object {
+                        "&.ghost": {
+                          "&$clickable, &$deletable": {
+                            "&:hover, &:focus": {
                               "backgroundColor": "rgba(255, 255, 255, 0.16)",
                               "borderColor": "rgba(255, 255, 255, 0.48)",
                             },
                           },
-                          "&:not($disabled)": Object {
-                            "& $icon, & $deleteIcon": Object {
+                          "&:not($disabled)": {
+                            "& $icon, & $deleteIcon": {
                               "color": "#fff",
                               "fill": "#fff",
                             },
@@ -619,33 +619,33 @@ exports[`Dropzone should match snapshot 1`] = `
                         "borderColor": "rgba(255, 255, 255, 0.16)",
                         "color": "#fff",
                       },
-                      "&-primary": Object {
-                        "& $deleteIcon": Object {
+                      "&-primary": {
+                        "& $deleteIcon": {
                           "color": "#fff",
                           "fill": "#fff",
                         },
-                        "& $icon": Object {
+                        "& $icon": {
                           "color": "#fff",
                           "fill": "#fff",
                         },
-                        "&$clickable, &$deletable": Object {
-                          "&:hover, &:focus": Object {
+                        "&$clickable, &$deletable": {
+                          "&:hover, &:focus": {
                             "backgroundColor": "#fff",
                             "borderColor": "#fff",
                           },
                         },
-                        "&$colorPrimary": Object {
-                          "& $icon, & $deleteIcon": Object {
+                        "&$colorPrimary": {
+                          "& $icon, & $deleteIcon": {
                             "color": "#fff",
                             "fill": "#fff",
                           },
-                          "&$clickable, &$deletable": Object {
-                            "&:hover, &:focus": Object {
+                          "&$clickable, &$deletable": {
+                            "&:hover, &:focus": {
                               "backgroundColor": "#fff",
                             },
                           },
-                          "&$disabled": Object {
-                            "& $icon, & $deleteIcon": Object {
+                          "&$disabled": {
+                            "& $icon, & $deleteIcon": {
                               "color": "#fff",
                               "fill": "#fff",
                             },
@@ -657,15 +657,15 @@ exports[`Dropzone should match snapshot 1`] = `
                           "color": "#fff",
                           "padding": "0 1px",
                         },
-                        "&.ghost": Object {
-                          "&$clickable, &$deletable": Object {
-                            "&:hover, &:focus": Object {
+                        "&.ghost": {
+                          "&$clickable, &$deletable": {
+                            "&:hover, &:focus": {
                               "backgroundColor": "rgba(255, 255, 255, 0.16)",
                               "borderColor": "rgba(255, 255, 255, 0.48)",
                             },
                           },
-                          "&:not($disabled)": Object {
-                            "& $icon, & $deleteIcon": Object {
+                          "&:not($disabled)": {
+                            "& $icon, & $deleteIcon": {
                               "color": "#fff",
                               "fill": "#fff",
                             },
@@ -679,33 +679,33 @@ exports[`Dropzone should match snapshot 1`] = `
                         "borderColor": "#fff",
                         "color": "#fff",
                       },
-                      "&-success": Object {
-                        "& $deleteIcon": Object {
+                      "&-success": {
+                        "& $deleteIcon": {
                           "color": "#fff",
                           "fill": "#fff",
                         },
-                        "& $icon": Object {
+                        "& $icon": {
                           "color": "#fff",
                           "fill": "#fff",
                         },
-                        "&$clickable, &$deletable": Object {
-                          "&:hover, &:focus": Object {
+                        "&$clickable, &$deletable": {
+                          "&:hover, &:focus": {
                             "backgroundColor": "rgba(255, 255, 255, 0.04)",
                             "borderColor": "rgba(255, 255, 255, 0.16)",
                           },
                         },
-                        "&$colorPrimary": Object {
-                          "& $icon, & $deleteIcon": Object {
+                        "&$colorPrimary": {
+                          "& $icon, & $deleteIcon": {
                             "color": "#fff",
                             "fill": "#fff",
                           },
-                          "&$clickable, &$deletable": Object {
-                            "&:hover, &:focus": Object {
+                          "&$clickable, &$deletable": {
+                            "&:hover, &:focus": {
                               "backgroundColor": "#fff",
                             },
                           },
-                          "&$disabled": Object {
-                            "& $icon, & $deleteIcon": Object {
+                          "&$disabled": {
+                            "& $icon, & $deleteIcon": {
                               "color": "#fff",
                               "fill": "#fff",
                             },
@@ -717,15 +717,15 @@ exports[`Dropzone should match snapshot 1`] = `
                           "color": "#fff",
                           "padding": "0 1px",
                         },
-                        "&.ghost": Object {
-                          "&$clickable, &$deletable": Object {
-                            "&:hover, &:focus": Object {
+                        "&.ghost": {
+                          "&$clickable, &$deletable": {
+                            "&:hover, &:focus": {
                               "backgroundColor": "rgba(255, 255, 255, 0.16)",
                               "borderColor": "rgba(255, 255, 255, 0.48)",
                             },
                           },
-                          "&:not($disabled)": Object {
-                            "& $icon, & $deleteIcon": Object {
+                          "&:not($disabled)": {
+                            "& $icon, & $deleteIcon": {
                               "color": "#fff",
                               "fill": "#fff",
                             },
@@ -739,33 +739,33 @@ exports[`Dropzone should match snapshot 1`] = `
                         "borderColor": "rgba(255, 255, 255, 0.16)",
                         "color": "#fff",
                       },
-                      "&-warning": Object {
-                        "& $deleteIcon": Object {
+                      "&-warning": {
+                        "& $deleteIcon": {
                           "color": "#fff",
                           "fill": "#fff",
                         },
-                        "& $icon": Object {
+                        "& $icon": {
                           "color": "#fff",
                           "fill": "#fff",
                         },
-                        "&$clickable, &$deletable": Object {
-                          "&:hover, &:focus": Object {
+                        "&$clickable, &$deletable": {
+                          "&:hover, &:focus": {
                             "backgroundColor": "rgba(255, 255, 255, 0.04)",
                             "borderColor": "rgba(255, 255, 255, 0.16)",
                           },
                         },
-                        "&$colorPrimary": Object {
-                          "& $icon, & $deleteIcon": Object {
+                        "&$colorPrimary": {
+                          "& $icon, & $deleteIcon": {
                             "color": "#fff",
                             "fill": "#fff",
                           },
-                          "&$clickable, &$deletable": Object {
-                            "&:hover, &:focus": Object {
+                          "&$clickable, &$deletable": {
+                            "&:hover, &:focus": {
                               "backgroundColor": "#fff",
                             },
                           },
-                          "&$disabled": Object {
-                            "& $icon, & $deleteIcon": Object {
+                          "&$disabled": {
+                            "& $icon, & $deleteIcon": {
                               "color": "#fff",
                               "fill": "#fff",
                             },
@@ -777,15 +777,15 @@ exports[`Dropzone should match snapshot 1`] = `
                           "color": "#fff",
                           "padding": "0 1px",
                         },
-                        "&.ghost": Object {
-                          "&$clickable, &$deletable": Object {
-                            "&:hover, &:focus": Object {
+                        "&.ghost": {
+                          "&$clickable, &$deletable": {
+                            "&:hover, &:focus": {
                               "backgroundColor": "rgba(255, 255, 255, 0.16)",
                               "borderColor": "rgba(255, 255, 255, 0.48)",
                             },
                           },
-                          "&:not($disabled)": Object {
-                            "& $icon, & $deleteIcon": Object {
+                          "&:not($disabled)": {
+                            "& $icon, & $deleteIcon": {
                               "color": "#fff",
                               "fill": "#fff",
                             },
@@ -800,36 +800,36 @@ exports[`Dropzone should match snapshot 1`] = `
                         "color": "#fff",
                       },
                     },
-                    "&.noLabel": Object {
-                      "& $icon": Object {
+                    "&.noLabel": {
+                      "& $icon": {
                         "margin": 0,
                       },
-                      "& $label": Object {
+                      "& $label": {
                         "display": "none",
                       },
                       "width": "32px",
                     },
                   },
                 },
-                "MuiDialog": Object {
-                  "paper": Object {
-                    "&.large": Object {
-                      "@media (min-width:768px)": Object {
+                "MuiDialog": {
+                  "paper": {
+                    "&.large": {
+                      "@media (min-width:768px)": {
                         "maxWidth": "800px",
                         "width": "800px",
                       },
                     },
-                    "&.medium": Object {
-                      "@media (min-width:768px)": Object {
+                    "&.medium": {
+                      "@media (min-width:768px)": {
                         "maxWidth": "544px",
                         "width": "544px",
                       },
                     },
-                    "&.overflow": Object {
+                    "&.overflow": {
                       "overflowY": "visible !important",
                     },
-                    "&.small": Object {
-                      "@media (max-width:1022.95px)": Object {
+                    "&.small": {
+                      "@media (max-width:1022.95px)": {
                         "borderRadius": "6px",
                         "height": "auto",
                         "margin": "16px",
@@ -840,34 +840,34 @@ exports[`Dropzone should match snapshot 1`] = `
                       "width": "480px",
                     },
                   },
-                  "paperFullScreen": Object {
-                    "& .cozyDialogActions": Object {
+                  "paperFullScreen": {
+                    "& .cozyDialogActions": {
                       "paddingBottom": "calc(env(safe-area-inset-bottom) + var(--flagship-bottom-height))",
                     },
-                    "& [class*=\\"DialogBackButton\\"]": Object {
+                    "& [class*="DialogBackButton"]": {
                       "transform": "translateY(var(--flagship-top-height))",
                     },
-                    "& [class*=\\"DialogCloseButton\\"]": Object {
+                    "& [class*="DialogCloseButton"]": {
                       "transform": "translateY(var(--flagship-top-height))",
                     },
-                    ".flagship-app & .cozyDialogContent": Object {
+                    ".flagship-app & .cozyDialogContent": {
                       "marginBottom": "var(--flagship-bottom-height) !important",
                     },
-                    ".flagship-app & .cozyDialogTitle": Object {
+                    ".flagship-app & .cozyDialogTitle": {
                       "paddingTop": "calc(var(--flagship-top-height) + 0.75rem) !important",
                     },
                   },
-                  "scrollPaper": Object {
-                    "&.alignTop": Object {
+                  "scrollPaper": {
+                    "&.alignTop": {
                       "alignItems": "start",
                     },
                   },
                 },
-                "MuiDialogActions": Object {
-                  "root": Object {
-                    "&.columnLayout": Object {
-                      "& button": Object {
-                        "&:not(:first-child)": Object {
+                "MuiDialogActions": {
+                  "root": {
+                    "&.columnLayout": {
+                      "& button": {
+                        "&:not(:first-child)": {
                           "marginBottom": "8px",
                         },
                         "margin": 0,
@@ -876,14 +876,14 @@ exports[`Dropzone should match snapshot 1`] = `
                       "display": "flex",
                       "flexDirection": "column-reverse",
                     },
-                    "&.dialogActionsFluid": Object {
+                    "&.dialogActionsFluid": {
                       "margin": "24px 0 0",
                     },
-                    "&:not(.columnLayout) > :not(:first-child):not(:first-child)": Object {
+                    "&:not(.columnLayout) > :not(:first-child):not(:first-child)": {
                       "marginLeft": 4,
                     },
-                    "@media (max-width:767.95px)": Object {
-                      "& button": Object {
+                    "@media (max-width:767.95px)": {
+                      "& button": {
                         "flexGrow": 1,
                       },
                       "margin": "8px 16px",
@@ -892,11 +892,11 @@ exports[`Dropzone should match snapshot 1`] = `
                     "padding": 0,
                   },
                 },
-                "MuiDialogContent": Object {
-                  "root": Object {
-                    "& .dialogContentInner": Object {
-                      "& .dialogTitleFluidContainer": Object {
-                        "@media (max-width:767.95px)": Object {
+                "MuiDialogContent": {
+                  "root": {
+                    "& .dialogContentInner": {
+                      "& .dialogTitleFluidContainer": {
+                        "@media (max-width:767.95px)": {
                           "marginLeft": "-1rem",
                           "marginRight": "-1rem",
                           "marginTop": "-0.75rem",
@@ -904,13 +904,13 @@ exports[`Dropzone should match snapshot 1`] = `
                         "marginLeft": "-2rem",
                         "marginRight": "-2rem",
                       },
-                      "&.withFluidActions": Object {
-                        "@media (max-width:767.95px)": Object {
-                          "& .cozyDialogActions": Object {
+                      "&.withFluidActions": {
+                        "@media (max-width:767.95px)": {
+                          "& .cozyDialogActions": {
                             "paddingBottom": "16px",
                           },
-                          "& .dialogContentWrapper": Object {
-                            "&:not(.withActions)": Object {
+                          "& .dialogContentWrapper": {
+                            "&:not(.withActions)": {
                               "paddingBottom": "16px",
                             },
                             "flexGrow": 1,
@@ -923,41 +923,41 @@ exports[`Dropzone should match snapshot 1`] = `
                       },
                       "marginBottom": "24px",
                     },
-                    "&.disableGutters": Object {
-                      "& .dialogContentInner": Object {
+                    "&.disableGutters": {
+                      "& .dialogContentInner": {
                         "marginBottom": 0,
                       },
-                      "& .dialogTitleFluidContainer": Object {
+                      "& .dialogTitleFluidContainer": {
                         "marginLeft": 0,
                         "marginRight": 0,
                         "marginTop": 0,
                       },
                       "padding": 0,
                     },
-                    "@media (max-width:767.95px)": Object {
+                    "@media (max-width:767.95px)": {
                       "padding": "24px 16px 0",
                     },
                     "padding": "24px 32px 0",
                   },
                 },
-                "MuiDialogTitle": Object {
-                  "root": Object {
-                    "&.dialogTitleFluid": Object {
+                "MuiDialogTitle": {
+                  "root": {
+                    "&.dialogTitleFluid": {
                       "paddingTop": 0,
                     },
-                    "&.dialogTitleWithBack": Object {
-                      "@media (max-width:767.95px)": Object {
+                    "&.dialogTitleWithBack": {
+                      "@media (max-width:767.95px)": {
                         "paddingLeft": "3rem",
                       },
                       "paddingLeft": "4rem",
                     },
-                    "&.dialogTitleWithClose": Object {
-                      "@media (max-width:767.95px)": Object {
+                    "&.dialogTitleWithClose": {
+                      "@media (max-width:767.95px)": {
                         "paddingRight": "3rem",
                       },
                       "paddingRight": "4rem",
                     },
-                    "@media (max-width:767.95px)": Object {
+                    "@media (max-width:767.95px)": {
                       "fontFamily": "#fff",
                       "fontSize": 20,
                       "fontWeight": "bold",
@@ -973,23 +973,23 @@ exports[`Dropzone should match snapshot 1`] = `
                     "width": "100%",
                   },
                 },
-                "MuiDivider": Object {
-                  "inset": Object {
-                    "&.divider--dialog": Object {
+                "MuiDivider": {
+                  "inset": {
+                    "&.divider--dialog": {
                       "marginLeft": 80,
                     },
                     "marginLeft": 64,
                   },
                 },
-                "MuiFab": Object {
-                  "extended": Object {
-                    "&$sizeMedium": Object {
+                "MuiFab": {
+                  "extended": {
+                    "&$sizeMedium": {
                       "borderRadius": 24,
                       "height": 48,
                       "minWidth": 48,
                       "padding": "0 16px",
                     },
-                    "&$sizeSmall": Object {
+                    "&$sizeSmall": {
                       "borderRadius": 20,
                       "height": 40,
                       "minWidth": 40,
@@ -1000,20 +1000,20 @@ exports[`Dropzone should match snapshot 1`] = `
                     "minWidth": 56,
                     "padding": "0 20px",
                   },
-                  "root": Object {
-                    "&:hover": Object {
+                  "root": {
+                    "&:hover": {
                       "backgroundColor": "rgb(242, 242, 242)",
                     },
-                    "@media (hover: none)": Object {
+                    "@media (hover: none)": {
                       "backgroundColor": "#fff",
                     },
                     "backgroundColor": "#fff",
                     "color": "#fff",
                   },
                 },
-                "MuiFormHelperText": Object {
-                  "root": Object {
-                    "&$disabled&$error": Object {
+                "MuiFormHelperText": {
+                  "root": {
+                    "&$disabled&$error": {
                       "color": "#fff",
                     },
                     "fontSize": "0.875rem",
@@ -1021,65 +1021,65 @@ exports[`Dropzone should match snapshot 1`] = `
                     "marginTop": 4,
                   },
                 },
-                "MuiFormLabel": Object {
-                  "root": Object {
-                    "&$disabled&$error": Object {
+                "MuiFormLabel": {
+                  "root": {
+                    "&$disabled&$error": {
                       "color": "#fff",
                     },
                     "color": "#fff",
                   },
                 },
-                "MuiIconButton": Object {
-                  "root": Object {
-                    "&.dialogIconButton": Object {
-                      "&:hover": Object {
+                "MuiIconButton": {
+                  "root": {
+                    "&.dialogIconButton": {
+                      "&:hover": {
                         "backgroundColor": "#fff",
                       },
                       "backgroundColor": "#fff",
                     },
-                    "&.large": Object {
+                    "&.large": {
                       "padding": 16,
                     },
-                    "&.medium": Object {
+                    "&.medium": {
                       "padding": 12,
                     },
-                    "&.small": Object {
+                    "&.small": {
                       "padding": 3,
                     },
                     "color": "#fff",
                   },
                 },
-                "MuiInputLabel": Object {
-                  "outlined": Object {
-                    "&$marginDense": Object {
+                "MuiInputLabel": {
+                  "outlined": {
+                    "&$marginDense": {
                       "transform": "translate(14px, 14px) scale(1)",
                     },
-                    "&:not($shrink)": Object {
-                      "&$error": Object {
+                    "&:not($shrink)": {
+                      "&$error": {
                         "color": "#fff",
                       },
                     },
                   },
                 },
-                "MuiListItem": Object {
-                  "dense": Object {
-                    "&.large": Object {
+                "MuiListItem": {
+                  "dense": {
+                    "&.large": {
                       "paddingBottom": 12,
                       "paddingTop": 12,
                     },
-                    "&.small": Object {
+                    "&.small": {
                       "paddingBottom": 4,
                       "paddingTop": 4,
                     },
                     "paddingBottom": 8,
                     "paddingTop": 8,
                   },
-                  "root": Object {
-                    "&.large": Object {
+                  "root": {
+                    "&.large": {
                       "paddingBottom": 16,
                       "paddingTop": 16,
                     },
-                    "&.small": Object {
+                    "&.small": {
                       "paddingBottom": 8,
                       "paddingTop": 8,
                     },
@@ -1088,8 +1088,8 @@ exports[`Dropzone should match snapshot 1`] = `
                     "paddingTop": 12,
                   },
                 },
-                "MuiListItemIcon": Object {
-                  "root": Object {
+                "MuiListItemIcon": {
+                  "root": {
                     "alignItems": "center",
                     "color": "#fff",
                     "height": 32,
@@ -1098,26 +1098,26 @@ exports[`Dropzone should match snapshot 1`] = `
                     "width": 32,
                   },
                 },
-                "MuiListItemSecondaryAction": Object {
-                  "root": Object {
+                "MuiListItemSecondaryAction": {
+                  "root": {
                     "right": 0,
                   },
                 },
-                "MuiListItemText": Object {
-                  "multiline": Object {
+                "MuiListItemText": {
+                  "multiline": {
                     "marginBottom": 1,
                     "marginTop": 1,
                   },
-                  "root": Object {
+                  "root": {
                     "marginBottom": 1,
                     "marginTop": 1,
                   },
-                  "secondary": Object {
+                  "secondary": {
                     "marginTop": 1,
                   },
                 },
-                "MuiListSubheader": Object {
-                  "root": Object {
+                "MuiListSubheader": {
+                  "root": {
                     "backgroundColor": "#fff",
                     "fontFamily": "#fff",
                     "fontSize": 12,
@@ -1128,16 +1128,16 @@ exports[`Dropzone should match snapshot 1`] = `
                     "paddingTop": 8,
                     "textTransform": "uppercase",
                   },
-                  "sticky": Object {
+                  "sticky": {
                     "backgroundColor": "#fff",
                   },
                 },
-                "MuiMenuItem": Object {
-                  "gutters": Object {
+                "MuiMenuItem": {
+                  "gutters": {
                     "paddingLeft": 8,
                     "paddingRight": 8,
                   },
-                  "root": Object {
+                  "root": {
                     "gap": 8,
                     "maxWidth": 320,
                     "overflow": "auto",
@@ -1146,84 +1146,84 @@ exports[`Dropzone should match snapshot 1`] = `
                     "whiteSpace": "normal",
                   },
                 },
-                "MuiOutlinedInput": Object {
-                  "input": Object {
+                "MuiOutlinedInput": {
+                  "input": {
                     "padding": "18.5px 16px",
                   },
-                  "inputMarginDense": Object {
+                  "inputMarginDense": {
                     "paddingBottom": 15,
                     "paddingTop": 14,
                   },
-                  "notchedOutline": Object {
+                  "notchedOutline": {
                     "borderColor": "#fff",
                   },
-                  "root": Object {
-                    "&$disabled": Object {
+                  "root": {
+                    "&$disabled": {
                       "background": "#fff",
                     },
-                    "&$focused $notchedOutline": Object {
+                    "&$focused $notchedOutline": {
                       "borderWidth": "0.0625rem",
                     },
-                    "&:hover $notchedOutline": Object {
+                    "&:hover $notchedOutline": {
                       "borderColor": "#fff",
                     },
                     "borderRadius": 4,
                   },
                 },
-                "MuiRadio": Object {
-                  "colorPrimary": Object {
-                    "&$checked svg": Object {
+                "MuiRadio": {
+                  "colorPrimary": {
+                    "&$checked svg": {
                       "fill": "#fff",
                     },
-                    "&$disabled&$checked svg": Object {
-                      "fill": "#fff",
-                    },
-                  },
-                  "colorSecondary": Object {
-                    "&$checked svg": Object {
-                      "fill": "#fff",
-                    },
-                    "&$disabled&$checked svg": Object {
+                    "&$disabled&$checked svg": {
                       "fill": "#fff",
                     },
                   },
-                  "root": Object {
-                    "&$disabled svg": Object {
+                  "colorSecondary": {
+                    "&$checked svg": {
+                      "fill": "#fff",
+                    },
+                    "&$disabled&$checked svg": {
+                      "fill": "#fff",
+                    },
+                  },
+                  "root": {
+                    "&$disabled svg": {
                       "backgroundColor": "#fff",
                       "borderRadius": "50%",
                       "fill": "#fff",
                     },
-                    "&:not($checked) svg": Object {
+                    "&:not($checked) svg": {
                       "fill": "#fff",
                     },
                     "padding": "12px",
                   },
                 },
-                "MuiSnackbarContent": Object {
-                  "root": Object {
+                "MuiSnackbarContent": {
+                  "root": {
                     "backgroundColor": "#fff",
                     "padding": "4px 12px",
                   },
                 },
-                "MuiStepConnector": Object {
-                  "line": Object {
+                "MuiStepConnector": {
+                  "line": {
                     "borderColor": "#fff",
                   },
                 },
-                "MuiStepContent": Object {
-                  "root": Object {
+                "MuiStepContent": {
+                  "root": {
                     "borderColor": "#fff",
                   },
                 },
-                "MuiStepLabel": Object {
-                  "label": Object {
-                    "&$active": Object {
+                "MuiStepLabel": {
+                  "label": {
+                    "&$active": {
                       "fontFamily": "#fff",
                       "fontSize": 16,
                       "fontWeight": "bold",
                       "lineHeight": 1.313,
                     },
-                    "&$completed": Object {
+                    "&$completed": {
                       "fontFamily": "#fff",
                       "fontSize": 16,
                       "fontWeight": "bold",
@@ -1235,55 +1235,55 @@ exports[`Dropzone should match snapshot 1`] = `
                     "lineHeight": 1.313,
                   },
                 },
-                "MuiSwitch": Object {
-                  "checked": Object {
-                    "& + $track$track": Object {
+                "MuiSwitch": {
+                  "checked": {
+                    "& + $track$track": {
                       "opacity": 1,
                     },
                   },
-                  "colorSecondary": Object {
-                    "&$checked": Object {
-                      "& + $track": Object {
+                  "colorSecondary": {
+                    "&$checked": {
+                      "& + $track": {
                         "backgroundColor": "#fff",
                       },
                     },
                   },
-                  "disabled": Object {
-                    "& $thumb": Object {
+                  "disabled": {
+                    "& $thumb": {
                       "backgroundColor": "white",
                     },
-                    "&$checked + $track": Object {
+                    "&$checked + $track": {
                       "backgroundColor": "#fff !important",
                     },
                   },
-                  "switchBase": Object {
-                    "&$checked": Object {
+                  "switchBase": {
+                    "&$checked": {
                       "transform": "translateX(15px)",
                     },
                     "top": 1,
                   },
-                  "thumb": Object {
+                  "thumb": {
                     "backgroundColor": "#fff",
                     "height": 16,
                     "width": 16,
                   },
-                  "track": Object {
+                  "track": {
                     "backgroundColor": "#fff",
                     "height": 12,
                     "opacity": 1,
                     "width": 25,
                   },
                 },
-                "MuiTab": Object {
-                  "root": Object {
-                    "&.narrowed": Object {
-                      "@media (min-width:480px)": Object {
+                "MuiTab": {
+                  "root": {
+                    "&.narrowed": {
+                      "@media (min-width:480px)": {
                         "minWidth": "auto",
                       },
                       "minWidth": "auto",
                     },
-                    "&.segmented": Object {
-                      "&$selected": Object {
+                    "&.segmented": {
+                      "&$selected": {
                         "color": "#fff",
                       },
                       "borderRadius": "99px",
@@ -1295,10 +1295,10 @@ exports[`Dropzone should match snapshot 1`] = `
                       "textTransform": "initial",
                       "zIndex": 1,
                     },
-                    "&:focus": Object {
+                    "&:focus": {
                       "color": "#fff",
                     },
-                    "&:hover": Object {
+                    "&:hover": {
                       "color": "#fff",
                       "opacity": 1,
                     },
@@ -1309,13 +1309,13 @@ exports[`Dropzone should match snapshot 1`] = `
                     "textTransform": "uppercase",
                   },
                 },
-                "MuiTabs": Object {
-                  "root": Object {
-                    "&.segmented": Object {
-                      "& $fixed": Object {
+                "MuiTabs": {
+                  "root": {
+                    "&.segmented": {
+                      "& $fixed": {
                         "overflow": "visible !important",
                       },
-                      "& $indicator": Object {
+                      "& $indicator": {
                         "backgroundColor": "#fff",
                         "borderRadius": "99px",
                         "boxShadow": "#fff",
@@ -1324,7 +1324,7 @@ exports[`Dropzone should match snapshot 1`] = `
                         "transform": "scale(0.99)",
                         "zIndex": 0,
                       },
-                      "& $scrollButtons": Object {
+                      "& $scrollButtons": {
                         "borderRadius": "99px",
                       },
                       "backgroundColor": "#fff",
@@ -1334,14 +1334,14 @@ exports[`Dropzone should match snapshot 1`] = `
                     },
                   },
                 },
-                "MuiTooltip": Object {
-                  "arrow": Object {
+                "MuiTooltip": {
+                  "arrow": {
                     "color": "#fff",
                   },
-                  "popper": Object {
+                  "popper": {
                     "opacity": 0.9,
                   },
-                  "tooltip": Object {
+                  "tooltip": {
                     "backgroundColor": "#fff",
                     "borderRadius": "8px",
                     "color": "white",
@@ -1351,8 +1351,8 @@ exports[`Dropzone should match snapshot 1`] = `
                   },
                 },
               },
-              "palette": Object {
-                "action": Object {
+              "palette": {
+                "action": {
                   "activatedOpacity": 0.12,
                   "active": "#fff",
                   "disabled": "#fff",
@@ -1370,13 +1370,13 @@ exports[`Dropzone should match snapshot 1`] = `
                   "selectedOpacity": 0.08,
                 },
                 "augmentColor": [Function],
-                "background": Object {
+                "background": {
                   "contrast": "#fff",
                   "default": "#fff",
                   "paper": "#fff",
                   "selected": "#F5FAFF",
                 },
-                "border": Object {
+                "border": {
                   "disabled": "#fff",
                   "ghost": "#fff",
                   "ghostDisabled": "#fff",
@@ -1384,20 +1384,20 @@ exports[`Dropzone should match snapshot 1`] = `
                   "main": "#fff",
                   "opacity": 0.16,
                 },
-                "common": Object {
+                "common": {
                   "black": "#000",
                   "white": "#fff",
                 },
                 "contrastThreshold": 3,
                 "divider": "#fff",
-                "error": Object {
+                "error": {
                   "contrastText": "#fff",
                   "dark": "#fff",
                   "light": "#fff",
                   "main": "#fff",
                 },
                 "getContrastText": [Function],
-                "grey": Object {
+                "grey": {
                   "0": "#fff",
                   "100": "#fff",
                   "200": "#fff",
@@ -1414,31 +1414,31 @@ exports[`Dropzone should match snapshot 1`] = `
                   "A400": "#fff",
                   "A700": "#fff",
                 },
-                "info": Object {
+                "info": {
                   "contrastText": "#fff",
                   "dark": "#fff",
                   "light": "#fff",
                   "main": "#fff",
                 },
-                "primary": Object {
+                "primary": {
                   "contrastText": "#fff",
                   "dark": "#fff",
                   "light": "#fff",
                   "main": "#fff",
                 },
-                "secondary": Object {
+                "secondary": {
                   "contrastText": "#fff",
                   "dark": "#fff",
                   "light": "#fff",
                   "main": "#fff",
                 },
-                "success": Object {
+                "success": {
                   "contrastText": "#fff",
                   "dark": "#fff",
                   "light": "#fff",
                   "main": "#fff",
                 },
-                "text": Object {
+                "text": {
                   "disabled": "#fff",
                   "hint": "#fff",
                   "icon": "#fff",
@@ -1447,15 +1447,15 @@ exports[`Dropzone should match snapshot 1`] = `
                 },
                 "tonalOffset": 0.2,
                 "type": "light",
-                "warning": Object {
+                "warning": {
                   "contrastText": "#fff",
                   "dark": "#fff",
                   "light": "#fff",
                   "main": "#fff",
                 },
               },
-              "props": Object {},
-              "shadows": Array [
+              "props": {},
+              "shadows": [
                 "#fff",
                 "#fff",
                 "#fff",
@@ -1483,17 +1483,17 @@ exports[`Dropzone should match snapshot 1`] = `
                 "#fff",
                 "#fff",
               ],
-              "shape": Object {
+              "shape": {
                 "borderRadius": 6,
               },
               "spacing": [Function],
-              "textShadows": Array [
+              "textShadows": [
                 "none",
                 "0px 2px 8px rgba(29, 33, 42, 0.16), 0px 0px 1px rgba(29, 33, 42, 0.48)",
               ],
-              "transitions": Object {
+              "transitions": {
                 "create": [Function],
-                "duration": Object {
+                "duration": {
                   "complex": 375,
                   "enteringScreen": 225,
                   "leavingScreen": 195,
@@ -1502,7 +1502,7 @@ exports[`Dropzone should match snapshot 1`] = `
                   "shortest": 150,
                   "standard": 300,
                 },
-                "easing": Object {
+                "easing": {
                   "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
                   "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
                   "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
@@ -1510,27 +1510,27 @@ exports[`Dropzone should match snapshot 1`] = `
                 },
                 "getAutoHeightDuration": [Function],
               },
-              "typography": Object {
-                "body1": Object {
+              "typography": {
+                "body1": {
                   "fontFamily": "#fff",
                   "fontSize": 16,
                   "fontWeight": 400,
                   "lineHeight": 1.313,
                 },
-                "body2": Object {
+                "body2": {
                   "fontFamily": "#fff",
                   "fontSize": 14,
                   "fontWeight": 400,
                   "lineHeight": 1.313,
                 },
-                "button": Object {
+                "button": {
                   "fontFamily": "#fff",
                   "fontSize": 14,
                   "fontWeight": "bold",
                   "lineHeight": 1.313,
                   "textTransform": "uppercase",
                 },
-                "caption": Object {
+                "caption": {
                   "color": "#fff",
                   "display": "block",
                   "fontFamily": "#fff",
@@ -1544,46 +1544,46 @@ exports[`Dropzone should match snapshot 1`] = `
                 "fontWeightLight": 300,
                 "fontWeightMedium": 500,
                 "fontWeightRegular": 400,
-                "h1": Object {
+                "h1": {
                   "fontFamily": "#fff",
                   "fontSize": 48,
                   "fontWeight": "bold",
                   "letterSpacing": -0.8,
                   "lineHeight": 1.087,
                 },
-                "h2": Object {
+                "h2": {
                   "fontFamily": "#fff",
                   "fontSize": 32,
                   "fontWeight": "bold",
                   "letterSpacing": -0.4,
                   "lineHeight": 1.313,
                 },
-                "h3": Object {
+                "h3": {
                   "fontFamily": "#fff",
                   "fontSize": 24,
                   "fontWeight": "bold",
                   "lineHeight": 1.167,
                 },
-                "h4": Object {
+                "h4": {
                   "fontFamily": "#fff",
                   "fontSize": 20,
                   "fontWeight": "bold",
                   "lineHeight": 1.167,
                 },
-                "h5": Object {
+                "h5": {
                   "fontFamily": "#fff",
                   "fontSize": 18,
                   "fontWeight": "bold",
                   "lineHeight": 1.313,
                 },
-                "h6": Object {
+                "h6": {
                   "fontFamily": "#fff",
                   "fontSize": 16,
                   "fontWeight": "bold",
                   "lineHeight": 1.313,
                 },
                 "htmlFontSize": 16,
-                "overline": Object {
+                "overline": {
                   "fontFamily": "#fff",
                   "fontSize": "0.75rem",
                   "fontWeight": 400,
@@ -1592,14 +1592,14 @@ exports[`Dropzone should match snapshot 1`] = `
                 },
                 "pxToRem": [Function],
                 "round": [Function],
-                "subtitle1": Object {
+                "subtitle1": {
                   "fontFamily": "#fff",
                   "fontSize": 14,
                   "fontWeight": "bold",
                   "lineHeight": 1.358,
                   "textTransform": "uppercase",
                 },
-                "subtitle2": Object {
+                "subtitle2": {
                   "fontFamily": "#fff",
                   "fontSize": 12,
                   "fontWeight": "bold",
@@ -1607,7 +1607,7 @@ exports[`Dropzone should match snapshot 1`] = `
                   "textTransform": "uppercase",
                 },
               },
-              "zIndex": Object {
+              "zIndex": {
                 "appBar": 1100,
                 "drawer": 1200,
                 "mobileStepper": 1000,
@@ -1625,7 +1625,7 @@ exports[`Dropzone should match snapshot 1`] = `
           >
             <Provider
               store={
-                Object {
+                {
                   "dispatch": [MockFunction],
                   "getState": [Function],
                   "replaceReducer": [Function],
@@ -1653,7 +1653,7 @@ exports[`Dropzone should match snapshot 1`] = `
                       <HashRouter>
                         <Router
                           location={
-                            Object {
+                            {
                               "hash": "",
                               "key": "default",
                               "pathname": "/",
@@ -1663,14 +1663,14 @@ exports[`Dropzone should match snapshot 1`] = `
                           }
                           navigationType="POP"
                           navigator={
-                            Object {
+                            {
                               "action": "POP",
                               "createHref": [Function],
                               "createURL": [Function],
                               "encodeLocation": [Function],
                               "go": [Function],
                               "listen": [Function],
-                              "location": Object {
+                              "location": {
                                 "hash": "",
                                 "key": "default",
                                 "pathname": "/",
@@ -1689,14 +1689,14 @@ exports[`Dropzone should match snapshot 1`] = `
                                   <FabProvider>
                                     <withI18n(WithSharingState(withClient(withVaultClient(Connect(Dropzone)))))
                                       displayedFolder={
-                                        Object {
+                                        {
                                           "id": "directory-foobar0",
                                         }
                                       }
                                     >
                                       <WithSharingState(withClient(withVaultClient(Connect(Dropzone))))
                                         displayedFolder={
-                                          Object {
+                                          {
                                             "id": "directory-foobar0",
                                           }
                                         }
@@ -1706,14 +1706,14 @@ exports[`Dropzone should match snapshot 1`] = `
                                       >
                                         <withClient(withVaultClient(Connect(Dropzone)))
                                           displayedFolder={
-                                            Object {
+                                            {
                                               "id": "directory-foobar0",
                                             }
                                           }
                                           f={[Function]}
                                           lang="en"
                                           sharingState={
-                                            Object {
+                                            {
                                               "getRecipients": [MockFunction],
                                               "getSharingLink": [MockFunction],
                                               "hasWriteAccess": [MockFunction],
@@ -1729,14 +1729,14 @@ exports[`Dropzone should match snapshot 1`] = `
                                               }
                                             }
                                             displayedFolder={
-                                              Object {
+                                              {
                                                 "id": "directory-foobar0",
                                               }
                                             }
                                             f={[Function]}
                                             lang="en"
                                             sharingState={
-                                              Object {
+                                              {
                                                 "getRecipients": [MockFunction],
                                                 "getSharingLink": [MockFunction],
                                                 "hasWriteAccess": [MockFunction],

@@ -2,7 +2,7 @@
 
 exports[`Public view should render children when they are present 1`] = `
 <ContextProvider
-  value={Array []}
+  value={[]}
 >
   <div>
     <div>
@@ -39,9 +39,9 @@ exports[`Public view should render children when they are present 1`] = `
         fetchMore={[MockFunction]}
         hasMore={false}
         lists={
-          Array [
-            Object {
-              "photos": Array [
+          [
+            {
+              "photos": [
                 1,
                 2,
                 3,
@@ -53,7 +53,7 @@ exports[`Public view should render children when they are present 1`] = `
         onPhotosSelect={[Function]}
         onPhotosUnselect={[Function]}
         photosContext="shared_album"
-        selected={Array []}
+        selected={[]}
         showSelection={false}
       />
       <Outlet />
@@ -64,7 +64,7 @@ exports[`Public view should render children when they are present 1`] = `
 
 exports[`Public view should render the album 1`] = `
 <ContextProvider
-  value={Array []}
+  value={[]}
 >
   <div>
     <div>
@@ -101,9 +101,9 @@ exports[`Public view should render the album 1`] = `
         fetchMore={[MockFunction]}
         hasMore={false}
         lists={
-          Array [
-            Object {
-              "photos": Array [],
+          [
+            {
+              "photos": [],
             },
           ]
         }
@@ -111,7 +111,7 @@ exports[`Public view should render the album 1`] = `
         onPhotosSelect={[Function]}
         onPhotosUnselect={[Function]}
         photosContext="shared_album"
-        selected={Array []}
+        selected={[]}
         showSelection={false}
       />
       <Outlet />
