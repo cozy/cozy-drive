@@ -1089,7 +1089,7 @@
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.22.7.tgz#df8cf085ce92ddbdbf668a7f186ce848c9036cae"
   integrity sha512-7NF8pOkHP5o2vpmGgNGcfAeCvOYhGLyA3Z4eBQkT1RJlWu47n63bCs93QfJ2hIAFCil7L5P2IWhs1oToVgrL0Q==
 
-"@babel/parser@^7.13.16", "@babel/parser@^7.21.5", "@babel/parser@^7.21.8", "@babel/parser@^7.22.15", "@babel/parser@^7.23.0":
+"@babel/parser@^7.13.16", "@babel/parser@^7.20.7", "@babel/parser@^7.21.5", "@babel/parser@^7.21.8", "@babel/parser@^7.22.15", "@babel/parser@^7.23.0":
   version "7.23.0"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.23.0.tgz#da950e622420bf96ca0d0f2909cdddac3acd8719"
   integrity sha512-vvPKKdMemU85V9WE/l5wZEmImpCtLqbnTvqDS2U1fJ96KrxoW7KrXhNsNCblQlg8Ck4b85yxdTyelsMUgFUXiw==
@@ -3583,7 +3583,7 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
-"@babel/types@^7.2.0", "@babel/types@^7.21.5", "@babel/types@^7.22.15", "@babel/types@^7.22.19", "@babel/types@^7.23.0":
+"@babel/types@^7.2.0", "@babel/types@^7.20.7", "@babel/types@^7.21.5", "@babel/types@^7.22.15", "@babel/types@^7.22.19", "@babel/types@^7.23.0":
   version "7.23.0"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.23.0.tgz#8c1f020c9df0e737e4e247c0619f58c68458aaeb"
   integrity sha512-0oIyUfKoI3mSqMvsxBdclDwxXKXAUA8v/apZbc+iSyARYou1o8ZGDxbUYyLFoW2arqS2jDGqJuZvv1d/io1axg==
@@ -4223,7 +4223,7 @@
     source-map "^0.6.1"
     write-file-atomic "^3.0.0"
 
-"@jest/transform@^29.3.1":
+"@jest/transform@^29.3.1", "@jest/transform@^29.7.0":
   version "29.7.0"
   resolved "https://registry.yarnpkg.com/@jest/transform/-/transform-29.7.0.tgz#df2dd9c346c7d7768b8a06639994640c642e284c"
   integrity sha512-ok/BTPFzFKVMwO5eOHRrvnBVHdRy9IrsrW1GpMaQ9MCnilNLXQKmAX8s1YXDFaai9xJpac2ySzV0YeRRECr2Vw==
@@ -5760,6 +5760,17 @@
   dependencies:
     "@babel/parser" "^7.1.0"
     "@babel/types" "^7.0.0"
+    "@types/babel__generator" "*"
+    "@types/babel__template" "*"
+    "@types/babel__traverse" "*"
+
+"@types/babel__core@^7.1.14":
+  version "7.20.3"
+  resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.20.3.tgz#d5625a50b6f18244425a1359a858c73d70340778"
+  integrity sha512-54fjTSeSHwfan8AyHWrKbfBWiEUrNTZsUwPTDSNaaP1QDQIZbeNUg3a59E9D+375MzUw/x1vx2/0F5LBz+AeYA==
+  dependencies:
+    "@babel/parser" "^7.20.7"
+    "@babel/types" "^7.20.7"
     "@types/babel__generator" "*"
     "@types/babel__template" "*"
     "@types/babel__traverse" "*"
@@ -7490,6 +7501,19 @@ babel-jest@26.6.3, babel-jest@^26.6.3:
     graceful-fs "^4.2.4"
     slash "^3.0.0"
 
+babel-jest@29.7.0:
+  version "29.7.0"
+  resolved "https://registry.yarnpkg.com/babel-jest/-/babel-jest-29.7.0.tgz#f4369919225b684c56085998ac63dbd05be020d5"
+  integrity sha512-BrvGY3xZSwEcCzKvKsCi2GgHqDqsYkOP4/by5xCgIwGXQxIEh+8ew3gmrE1y7XRR6LHZIj6yLYnUi/mm2KXKBg==
+  dependencies:
+    "@jest/transform" "^29.7.0"
+    "@types/babel__core" "^7.1.14"
+    babel-plugin-istanbul "^6.1.1"
+    babel-preset-jest "^29.6.3"
+    chalk "^4.0.0"
+    graceful-fs "^4.2.9"
+    slash "^3.0.0"
+
 babel-jest@^24.9.0:
   version "24.9.0"
   resolved "https://registry.yarnpkg.com/babel-jest/-/babel-jest-24.9.0.tgz#3fc327cb8467b89d14d7bc70e315104a783ccd54"
@@ -7570,6 +7594,16 @@ babel-plugin-jest-hoist@^26.6.2:
     "@babel/template" "^7.3.3"
     "@babel/types" "^7.3.3"
     "@types/babel__core" "^7.0.0"
+    "@types/babel__traverse" "^7.0.6"
+
+babel-plugin-jest-hoist@^29.6.3:
+  version "29.6.3"
+  resolved "https://registry.yarnpkg.com/babel-plugin-jest-hoist/-/babel-plugin-jest-hoist-29.6.3.tgz#aadbe943464182a8922c3c927c3067ff40d24626"
+  integrity sha512-ESAc/RJvGTFEzRwOTT4+lNDk/GNHMkKbNzsvT0qKRfDyyYTskxB5rnU2njIDYVxXCBHHEI1c0YwHob3WaYujOg==
+  dependencies:
+    "@babel/template" "^7.3.3"
+    "@babel/types" "^7.3.3"
+    "@types/babel__core" "^7.1.14"
     "@types/babel__traverse" "^7.0.6"
 
 babel-plugin-module-resolver@^4.0.0:
@@ -7741,6 +7775,14 @@ babel-preset-jest@^26.6.2:
   integrity sha512-YvdtlVm9t3k777c5NPQIv6cxFFFapys25HiUmuSgHwIZhfifweR5c5Sf5nwE3MAbfu327CYSvps8Yx6ANLyleQ==
   dependencies:
     babel-plugin-jest-hoist "^26.6.2"
+    babel-preset-current-node-syntax "^1.0.0"
+
+babel-preset-jest@^29.6.3:
+  version "29.6.3"
+  resolved "https://registry.yarnpkg.com/babel-preset-jest/-/babel-preset-jest-29.6.3.tgz#fa05fa510e7d493896d7b0dd2033601c840f171c"
+  integrity sha512-0B3bhxR6snWXJZtR/RliHTDPRgn1sNHOR0yVtq/IiQFyuOVjFS+wuio/R4gSNkyYmKmJB4wGZv2NZanmKmTnNA==
+  dependencies:
+    babel-plugin-jest-hoist "^29.6.3"
     babel-preset-current-node-syntax "^1.0.0"
 
 babel-runtime@6.26.0, babel-runtime@^6.26.0:
@@ -9871,10 +9913,10 @@ cozy-client@41.2.0, cozy-client@^41.2.0:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
-cozy-client@^41.7.0:
-  version "41.7.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-41.7.0.tgz#b2c2e2999c9099f15950c985a48fc600c87aeee0"
-  integrity sha512-9tzdV87b4OPfu5f410Mu8VNPPXQj2Wfl75harBT76MkLcdqPqTzPfMfiYlDYcVTqFKfdM1eV4+GohkjOPpV3RQ==
+cozy-client@^41.7.0, cozy-client@^41.8.1:
+  version "41.8.1"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-41.8.1.tgz#3ac52546ea87a0a4bfa03b8c43acc4bd54e5e6ed"
+  integrity sha512-gUxUgRIxiBwRnSmOiLUjL2mqiaeHg2vfzXIQ47d1RdWQ64g4nNwgSXEY0rvCk2MaVVqACEcKVNKvK+CyxUp+Gw==
   dependencies:
     "@cozy/minilog" "1.0.0"
     "@types/jest" "^26.0.20"
@@ -9995,9 +10037,9 @@ cozy-interapp@^0.5.4:
   integrity sha512-laIL/ATYV9oZnmqS+LMoO9qzk8XjJ1v2/YrA1Po2rI8ia/MDgjYO07424x2RuvHhNOBPGjD+JmqwQ0rNDlLW+Q==
 
 cozy-jobs-cli@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-jobs-cli/-/cozy-jobs-cli-2.1.0.tgz#49a455606254ffb8aa164af59bbdc1420d3d021b"
-  integrity sha512-x8Z7mCSGRaTVSbcn9BZMVoYQF5WeHpkspqBSERyOqqzp8uvQBjnckiFn39wEps65OPDfntBhGwFZqCjY0HhLFA==
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/cozy-jobs-cli/-/cozy-jobs-cli-2.2.1.tgz#54e78a437125fe23f627c843ede2dab4d7e09164"
+  integrity sha512-GgMQ1d0XHGavYNV3+F15sd50cuoYzjuZy+tqtM0cvqaUhnXboS8WP85tGwrdzNp5rt0e7ZHkcr3PzpUh/GpsMg==
   dependencies:
     "@pollyjs/adapter-node-http" "5.1.1"
     "@pollyjs/core" "5.1.1"
@@ -10011,7 +10053,7 @@ cozy-jobs-cli@^2.1.0:
     cozy-client "41.2.0"
     cozy-device-helper "^2.1.0"
     cozy-flags "^2.8.7"
-    cozy-konnector-libs "^5.3.0"
+    cozy-konnector-libs "^5.3.1"
     cozy-logger "1.9.0"
     open "8.4.0"
     pretty "2.0.0"
@@ -10039,10 +10081,10 @@ cozy-keys-lib@6.0.0:
     tldjs "^2.3.1"
     zxcvbn "^4.4.2"
 
-cozy-konnector-libs@^5.3.0:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/cozy-konnector-libs/-/cozy-konnector-libs-5.3.0.tgz#bd65bab6f4188f3383422a5a9d70c04c214044eb"
-  integrity sha512-KhQD34CBU6EskdVLQZl0m6uXC6SeLLJgC9IC4yp9DQ3EXKvoUSTwkUMfDtni2thbHepu9hZL2zxIaRnBs/yhZQ==
+cozy-konnector-libs@^5.3.1:
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/cozy-konnector-libs/-/cozy-konnector-libs-5.3.1.tgz#276a8d2fdddf38bd41f4261d860e86201553d272"
+  integrity sha512-wLxEs7sqWlmki85qD7GBCozOPjiCPdJ18oI4gM3YsNmKJdMp8UyrSy9xYARX43F0fiAXq5Zm0j8In+IhJwyiqw==
   dependencies:
     babel-runtime "^6.26.0"
     bluebird "^3.7.2"
@@ -10103,11 +10145,11 @@ cozy-logger@^1.3.0:
     json-stringify-safe "5.0.1"
 
 cozy-pouch-link@^41.7.0:
-  version "41.7.0"
-  resolved "https://registry.yarnpkg.com/cozy-pouch-link/-/cozy-pouch-link-41.7.0.tgz#0cc610a1a8cffcf36312613ddf9549d437c17362"
-  integrity sha512-f9nCc/LNk32reAxmuTszLM4RThXwKLnEM1BSd0/JTfUCg65qJYI9ZHkIeiCNnggK9j61bNSShxDCG3Nil5Kcww==
+  version "41.8.1"
+  resolved "https://registry.yarnpkg.com/cozy-pouch-link/-/cozy-pouch-link-41.8.1.tgz#27e40db2f18f781934a6b8a97ac84df003977857"
+  integrity sha512-YeVusykb95uDFQtYvTjWsGFZeBQ/yky2HWCmTZFZ/QkaWLmI8McJjRAnPsTNL+fVzc1ODOrhojKyaQzgNoL3hg==
   dependencies:
-    cozy-client "^41.7.0"
+    cozy-client "^41.8.1"
     pouchdb-browser "^7.2.2"
     pouchdb-find "^7.2.2"
 
@@ -18160,9 +18202,9 @@ msgpack5@^4.0.2:
     readable-stream "^2.3.6"
     safe-buffer "^5.1.2"
 
-"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.6":
-  version "1.0.6"
-  resolved "https://github.com/cozy/mui-bottom-sheet.git#494c40416ecde95732c864f9b921e7e545075aa5"
+"mui-bottom-sheet@git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
+  version "1.0.8"
+  resolved "git+https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
     jest-environment-jsdom-sixteen "^1.0.3"
@@ -18170,9 +18212,9 @@ msgpack5@^4.0.2:
     react-use-gesture "^7.0.8"
     react-use-measure "^2.0.0"
 
-"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
-  version "1.0.8"
-  resolved "https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
+"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.6":
+  version "1.0.6"
+  resolved "https://github.com/cozy/mui-bottom-sheet.git#494c40416ecde95732c864f9b921e7e545075aa5"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
     jest-environment-jsdom-sixteen "^1.0.3"

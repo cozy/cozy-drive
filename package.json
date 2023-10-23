@@ -115,6 +115,7 @@
   "dependencies": {
     "@cozy/minilog": "1.0.0",
     "@egjs/hammerjs": "^2.0.17",
+    "babel-jest": "29.7.0",
     "classnames": "2.3.1",
     "copy-text-to-clipboard": "1.0.4",
     "cozy-authentication": "2.10.10",
