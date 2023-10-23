@@ -67,7 +67,7 @@ export const useUploadFromFlagship = (): UploadFromFlagship => {
     void asyncGetFilesToHandle()
   }, [fromFlagshipUpload, webviewIntent, navigate])
 
-  const uploadFilesFromFlagship = useCallback(async () => {
+  const uploadFilesFromFlagship = useCallback(() => {
     if (!items || items.length === 0 || !webviewIntent) return
 
     const filesForQueue = generateForQueue(items)
@@ -78,7 +78,7 @@ export const useUploadFromFlagship = (): UploadFromFlagship => {
     })
 
     try {
-      await sendFilesToHandle(filesForQueue, webviewIntent, folder)
+      sendFilesToHandle(filesForQueue, webviewIntent, folder)
       navigate(`/folder/${folder._id}`)
     } catch (error) {
       Alerter.error(t('ImportToDrive.error'))

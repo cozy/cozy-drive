@@ -64,23 +64,25 @@ export const getFilesToHandle = async (
   }
 }
 
-export const sendFilesToHandle = async (
+export const sendFilesToHandle = (
   filesForQueue: FileForQueue[],
   webviewIntent: WebviewService,
   folder: { _id: string }
-): Promise<void> => {
-  for (const file of filesForQueue) {
+): void => {
+  const filesToUpload = filesForQueue.map(file => {
     if (!file.file) throw new Error('No file to upload')
 
-    const fileOptions = {
-      name: file.file.name,
-      dirId: folder._id
+    return {
+      fileOptions: {
+        name: file.file.name,
+        dirId: folder._id
+      }
     }
+  })
 
-    logger('info', 'uploadFilesFromFlagship called')
+  logger('info', 'uploadFilesFromFlagship called')
 
-    await webviewIntent?.call('uploadFile', JSON.stringify({ fileOptions }))
+  void webviewIntent?.call('uploadFiles', JSON.stringify(filesToUpload))
 
-    logger('info', 'uploadFilesFromFlagship success')
-  }
+  logger('info', 'uploadFilesFromFlagship success')
 }
