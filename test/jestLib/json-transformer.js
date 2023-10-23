@@ -1,3 +1,5 @@
 module.exports = {
-  process: src => `module.exports = ${src};`
+  process: src => ({
+    code: `module.exports = ${src};`
+  })
 }
