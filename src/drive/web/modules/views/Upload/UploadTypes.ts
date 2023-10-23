@@ -33,7 +33,7 @@ export interface UploadFromFlagship {
     name: string
     dirId: string
     conflictStrategy: string
-  }) => Promise<void>
+  }) => void
   resetFilesToHandle: () => Promise<void>
   onClose: () => Promise<void>
   uploadInProgress: boolean
