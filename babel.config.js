@@ -1,3 +1,3 @@
 module.exports = {
-  presets: ['cozy-app']
+  presets: ['cozy-app', '@babel/env']
 }

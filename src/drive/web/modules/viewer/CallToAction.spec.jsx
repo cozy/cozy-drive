@@ -26,12 +26,12 @@ describe('CallToAction', () => {
     expect(localforage.getItem).toHaveBeenCalledWith(NOVIEWER_DESKTOP_CTA)
   })
 
-  it('should use rel="noreferrer" (which implies rel="noopener", because it is a security risk', async done => {
+  it('should use rel="noreferrer" (which implies rel="noopener", because it is a security risk', done => {
     // Given
     localforage.getItem = jest.fn().mockResolvedValueOnce(false)
 
     // When
-    const { container } = await render(<CallToAction t={jest.fn()} />)
+    const { container } = render(<CallToAction t={jest.fn()} />)
 
     // Then
     setTimeout(() => {
