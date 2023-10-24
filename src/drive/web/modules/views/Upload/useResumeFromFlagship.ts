@@ -5,11 +5,7 @@ import { useClient } from 'cozy-client'
 import { useWebviewIntent } from 'cozy-intent'
 import logger from 'cozy-logger'
 
-import {
-  getUploadQueue,
-  ADD_TO_UPLOAD_QUEUE,
-  purgeUploadQueue
-} from 'drive/web/modules/upload'
+import { getUploadQueue, ADD_TO_UPLOAD_QUEUE } from 'drive/web/modules/upload'
 import { FileFromNative } from 'drive/web/modules/views/Upload/UploadTypes'
 import { getErrorMessage } from 'drive/web/modules/drive/helpers'
 
@@ -39,8 +35,12 @@ export const useResumeUploadFromFlagship = (): void => {
           files: filesToHandle
         })
       } catch (error) {
-        logger('info', `hasFilesToHandle error, ${getErrorMessage(error)}`)
-        dispatch(purgeUploadQueue())
+        const errorMessage = getErrorMessage(error)
+        logger('info', `hasFilesToHandle error, ${errorMessage}`)
+
+        // It means we're on a cozy-flagship version that doesn't handle file sharing
+        // In that case we don't want to do anything and just let the upload queue empty
+        if (errorMessage.includes('has not been implemented')) return
       }
     }
 
