@@ -533,6 +533,7 @@
     "header": "Uploading %{smart_count} photo to Cozy Drive |||| Uploading %{smart_count} photos to Cozy Drive",
     "header_mobile": "Uploading %{done} of %{total}",
     "header_done": "Uploaded %{done} out of %{total} successfully",
+    "success_flagship": "%{smart_count} file uploaded with success. |||| %{smart_count} files uploaded with success.",
     "close": "close",
     "item": {
       "pending": "Pending"
