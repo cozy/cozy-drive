@@ -10,12 +10,26 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import DriveIcon from 'cozy-ui/transpiled/react/Icons/FileTypeFolder'
 import FileThumbnail from '../filelist/FileThumbnail'
+import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
 const HeaderIlustration = ({ entries }) => {
   if (entries.length === 1) {
+    const firstItem = entries[0]
+
     // this is a cozy files
-    if (entries[0].class) {
-      return <FileThumbnail file={entries[0]} />
+    if (firstItem.class) {
+      return <FileThumbnail file={firstItem} />
     }
+
+    // this is a cozy-flagship file, doesn't have a class yet
+    if (firstItem.fromFlagship) {
+      return (
+        <Icon
+          icon={getMimeTypeIcon(false, firstItem.fileName, firstItem.mimeType)}
+          size={32}
+        />
+      )
+    }
+
     return <Icon icon={DriveIcon} size={32} />
   }
   if (entries.length > 1) {
