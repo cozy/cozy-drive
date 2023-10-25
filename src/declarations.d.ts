@@ -18,7 +18,8 @@ declare module 'cozy-ui/transpiled/react/providers/I18n' {
 
 declare module 'cozy-ui/transpiled/react/deprecated/Alerter' {
   const Alerter: {
-    error: (message: string) => void
+    error: (message: string, options?: Record<string, unknown>) => void
+    success: (message: string, options?: Record<string, unknown>) => void
   }
 
   export default Alerter
