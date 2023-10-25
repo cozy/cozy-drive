@@ -23,6 +23,7 @@ export interface FileFromNative {
     mimeType: string
     dirId?: string
     conflictStrategy?: string
+    fromFlagship?: boolean
   }
   status: number
 }
