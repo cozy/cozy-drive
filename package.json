@@ -128,7 +128,7 @@
     "cozy-doctypes": "1.85.4",
     "cozy-flags": "3.0.1",
     "cozy-harvest-lib": "18.0.0",
-    "cozy-intent": "^2.9.0",
+    "cozy-intent": "^2.18.0",
     "cozy-keys-lib": "6.0.0",
     "cozy-logger": "1.9.1",
     "cozy-pouch-link": "^44.0.0",
