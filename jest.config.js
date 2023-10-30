@@ -42,7 +42,7 @@ module.exports = {
   testEnvironmentOptions: {
     url: 'http://cozy.localhost:8080/'
   },
-  testMatch: ['**/(*.)(spec|test).js?(x)'],
+  testMatch: ['**/(*.)(spec|test).[jt]s?(x)'],
   globals: {
     __APP_SLUG__: 'drive',
     __TARGET__: 'browser',

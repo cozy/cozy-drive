@@ -62,6 +62,9 @@ export const useResumeUploadFromFlagship = (): void => {
     const processed = (getProcessed(state) as () => unknown[]).length
     const queued = uploadQueue.length
 
+    // If there are no files processed, we are not in the upload flow
+    if (processed === 0) return
+
     // Assuming that the upload is finished if all files have been processed (success or error)
     if (processed === queued) {
       const successful = (getSuccessful(state) as () => unknown[]).length
