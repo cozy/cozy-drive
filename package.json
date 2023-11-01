@@ -79,7 +79,7 @@
   "homepage": "https://github.com/cozy/cozy-drive#readme",
   "devDependencies": {
     "@sentry/cli": "1.72.1",
-    "@testing-library/jest-dom": "5.16.4",
+    "@testing-library/jest-dom": "5.17.0",
     "@testing-library/react": "11.2.7",
     "@testing-library/react-hooks": "8.0.1",
     "@types/react-redux": "7.1.26",
