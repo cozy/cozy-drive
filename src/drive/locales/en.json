@@ -736,7 +736,7 @@
     }
   },
   "FileDivergedModal": {
-    "title": "Someone has modified this filen",
+    "title": "Someone has modified this file",
     "content": "Someone has modified the file outside Cozy while you were editing it, you can retrieve their modifications instead of yours or continue your editing in a new file.",
     "confirm": "Continue editing",
     "cancel": "See its changes",
