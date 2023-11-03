@@ -55,6 +55,22 @@ const FileDivergedModal = () => {
     setShouldConfirmReload(!shouldConfirmReload)
   }
 
+  if (editorMode === 'view') {
+    return (
+      <ConfirmDialog
+        open
+        title={t('FileDivergedModal.viewMode.title')}
+        content={t('FileDivergedModal.viewMode.content')}
+        actions={
+          <Buttons
+            label={t('FileDivergedModal.viewMode.confirm')}
+            onClick={goToNewVersion}
+          />
+        }
+      />
+    )
+  }
+
   return (
     <>
       <ConfirmDialog
