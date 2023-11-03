@@ -746,6 +746,11 @@
       "content": "When you access the new file, your changes will be cancelled.",
       "cancel": "Cancel",
       "confirm": "Ok, I get it"
+    },
+    "viewMode": {
+      "title": "Someone has modified this file",
+      "content": "Someone has changed the contents of this file. You can retrieve these changes.",
+      "confirm": "See the changes"
     }
   },
   "FileDeletedModal": {
