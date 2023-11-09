@@ -14,8 +14,8 @@ node-preset: &node # Used internally to share configuration, ignored by travis.
 branches:
   only:
     - master
-    # tags
-    - /^v\d+\.\d+\.\d+(\-beta.\d+)?$/
+    # detect also branch like release/x.y.z or release/x.y.z-beta.n
+    - /^release\/\d+\.\d+\.\d+(\-beta.\d+)?$/
 stages:
   - prebuild
   - build
