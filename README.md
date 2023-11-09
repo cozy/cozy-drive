@@ -151,7 +151,7 @@ Consider using [rlink] instead of `yarn link`
 
 ### Tests
 
-Tests are run by [mocha] under the hood, and written using [chai] and [sinon]. You can easily run the tests suite with:
+Tests are run by [jest] under the hood, and written using [chai] and [sinon]. You can easily run the tests suite with:
 
 ```sh
 $ cd cozy-drive
@@ -235,7 +235,7 @@ Cozy Drive is developed by Cozy Cloud and distributed under the [AGPL v3 license
 [twitter]: https://twitter.com/cozycloud
 [nvm]: https://github.com/creationix/nvm
 [cozy-dev]: https://github.com/cozy/cozy-dev/
-[mocha]: https://mochajs.org/
+[jest]: https://jestjs.io/fr/
 [chai]: http://chaijs.com/
 [sinon]: http://sinonjs.org/
 [checkbox]: https://help.github.com/articles/basic-writing-and-formatting-syntax/#task-lists
