@@ -17,7 +17,7 @@ import { buildAlbumsQuery } from '../../queries/queries'
 const ALBUMS_QUERY = client =>
   client
     .find(DOCTYPE_ALBUMS, { created_at: { $gt: null } })
-    .where({
+    .partialIndex({
       auto: { $exists: false }
     })
     .indexFields(['created_at'])
