@@ -48,7 +48,7 @@ const AppRouter = ({
             </Route>
             <Route
               path="onlyoffice/create/:folderId/:fileClass"
-              element={<OnlyOfficeCreateView />}
+              element={<OnlyOfficeCreateView isPublic={true} />}
             />
             {models.file.shouldBeOpenedByOnlyOffice(data) && (
               <Route

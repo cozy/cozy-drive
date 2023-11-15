@@ -12,6 +12,9 @@ const useRedirectLink = () => {
   const params = new URLSearchParams(location.search)
   const client = useClient()
 
+  const isFromPublicFolder = searchParams.get('fromPublicFolder') === 'true'
+  const sharecode = params.get('sharecode')
+
   const [fetchStatus, setFetchStatus] = useState('pending')
   const [instance, setInstance] = useState(client.getStackClient().uri)
 
@@ -30,8 +33,11 @@ const useRedirectLink = () => {
         setFetchStatus('error')
       }
     }
-    fetch()
-  }, [client])
+
+    if (!isFromPublicFolder) {
+      fetch()
+    }
+  }, [client, isFromPublicFolder])
 
   /**
    * We search for redirectLink using two methods because
@@ -43,22 +49,46 @@ const useRedirectLink = () => {
     searchParams.get('redirectLink') || params.get('redirectLink')
 
   const redirectWebLink = useMemo(() => {
-    if (redirectLink === null || fetchStatus !== 'loaded') {
+    if (
+      redirectLink === null ||
+      (fetchStatus !== 'loaded' && !isFromPublicFolder)
+    ) {
       return null
     }
 
     const { slug, pathname, hash } = deconstructRedirectLink(redirectLink)
     const { subdomain: subDomainType } = client.getInstanceOptions()
 
+    const newSearchParams = []
+    let newPathname = pathname
+
+    /**
+     * If the redirectLink is from a public folder, we want to redirect onto the same instance
+     * We need to share the sharecode and pathname (eg. /preview or /public) so that the public folder can be opened
+     */
+    if (isFromPublicFolder) {
+      if (sharecode) {
+        newSearchParams.push(['sharecode', sharecode])
+      }
+      newPathname = location.pathname
+    }
+
     return generateWebLink({
       cozyUrl: instance,
       subDomainType,
       slug,
-      pathname,
+      pathname: newPathname,
       hash,
-      searchParams: []
+      searchParams: newSearchParams
     })
-  }, [client, instance, redirectLink, fetchStatus])
+  }, [
+    redirectLink,
+    fetchStatus,
+    isFromPublicFolder,
+    client,
+    instance,
+    sharecode
+  ])
 
   return {
     redirectWebLink,

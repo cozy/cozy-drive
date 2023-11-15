@@ -45,7 +45,8 @@ const FolderViewBody = ({
   navigateToFolder,
   navigateToFile,
   refreshFolderContent = null,
-  extraColumns
+  extraColumns,
+  isPublic = false
 }) => {
   const { isDesktop } = useBreakpoints()
   const navigate = useNavigate()
@@ -104,7 +105,8 @@ const FolderViewBody = ({
         routeTo: url => navigate(url),
         isOfficeEnabled: isOfficeEnabled(isDesktop),
         webviewIntent,
-        pathname
+        pathname,
+        fromPublicFolder: isPublic
       })({
         event,
         file,
@@ -119,6 +121,7 @@ const FolderViewBody = ({
       navigate,
       webviewIntent,
       isDesktop,
+      isPublic,
       pathname
     ]
   )
