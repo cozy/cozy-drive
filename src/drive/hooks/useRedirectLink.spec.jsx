@@ -11,6 +11,8 @@ jest.mock('react-router-dom', () => ({
   useSearchParams: jest.fn()
 }))
 
+const realLocation = window.location
+
 describe('useRedirectLink', () => {
   const mockClient = {
     collection: jest.fn().mockReturnValue({
@@ -31,6 +33,7 @@ describe('useRedirectLink', () => {
     useSearchParams.mockReturnValue([
       new URLSearchParams('?redirectLink=drive%23%2Ffolder%2Fid123')
     ])
+    window.location = realLocation
   })
 
   afterEach(() => {
@@ -93,6 +96,35 @@ describe('useRedirectLink', () => {
 
     expect(render.result.current.redirectWebLink).toBe(
       'https://other-drive.cozy.cloud/#/folder/id123'
+    )
+    expect(render.result.current.redirectLink).toBe('drive#/folder/id123')
+  })
+
+  it('should return a redirectWebLink to current instance if the file was opened from an public folder', async () => {
+    delete window.location
+    window.location = new URL('https://my.cozy.cloud/public?sharecode=share123')
+    useSearchParams.mockReturnValue([
+      new URLSearchParams(
+        '?redirectLink=drive%23%2Ffolder%2Fid123&fromPublicFolder=true'
+      )
+    ])
+    mockClient.collection().fetchOwnPermissions.mockResolvedValueOnce({
+      included: [
+        {
+          attributes: {
+            instance: 'https://other.cozy.cloud'
+          }
+        }
+      ]
+    })
+
+    let render
+    await act(async () => {
+      render = renderHook(() => useRedirectLink())
+    })
+
+    expect(render.result.current.redirectWebLink).toBe(
+      'https://my-drive.cozy.cloud/public?sharecode=share123#/folder/id123'
     )
     expect(render.result.current.redirectLink).toBe('drive#/folder/id123')
   })

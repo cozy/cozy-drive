@@ -18,7 +18,8 @@ const createFileOpeningHandler =
     routeTo,
     isOfficeEnabled,
     webviewIntent,
-    pathname
+    pathname,
+    fromPublicFolder = false
   }) =>
   async ({ event, file, isAvailableOffline }) => {
     if (isAvailableOffline) {
@@ -63,13 +64,15 @@ const createFileOpeningHandler =
         openInNewTab(
           makeOnlyOfficeFileRoute(file.id, {
             withoutRouter: true,
-            fromPathname: pathname
+            fromPathname: pathname,
+            fromPublicFolder
           })
         )
       } else {
         routeTo(
           makeOnlyOfficeFileRoute(file.id, {
-            fromPathname: pathname
+            fromPathname: pathname,
+            fromPublicFolder
           })
         )
       }
