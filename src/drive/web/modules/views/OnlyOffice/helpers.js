@@ -72,6 +72,7 @@ export const isOfficeEditingEnabled = isDesktop => {
  * @param {boolean} options.fromPathname Hash to redirect the user when he back
  * @param {boolean} options.fromRedirect To forward existing redirectLink
  * @param {boolean} options.fromEdit The document will be opened in edit mode
+ * @param {boolean} options.fromPublicFolder The document is opened from a public folder
  * @returns {string} Path to OnlyOffice
  */
 export const makeOnlyOfficeFileRoute = (
@@ -81,7 +82,8 @@ export const makeOnlyOfficeFileRoute = (
     fromCreate = false,
     fromPathname,
     fromRedirect,
-    fromEdit = false
+    fromEdit = false,
+    fromPublicFolder = false
   } = {}
 ) => {
   const params = new URLSearchParams()
@@ -96,6 +98,9 @@ export const makeOnlyOfficeFileRoute = (
   }
   if (fromEdit) {
     params.append('fromEdit', fromEdit)
+  }
+  if (fromPublicFolder) {
+    params.append('fromPublicFolder', fromPublicFolder)
   }
   const searchParam = params.size > 0 ? `?${params.toString()}` : ''
   return withoutRouter

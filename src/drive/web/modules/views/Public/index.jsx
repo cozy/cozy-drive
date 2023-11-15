@@ -255,6 +255,7 @@ const PublicFolderView = () => {
           refreshFolderContent={refreshFolderContent}
           canUpload={hasWritePermissions}
           extraColumns={extraColumns}
+          isPublic={true}
         />
         {isFabDisplayed && (
           <AddMenuProvider
