@@ -12,7 +12,7 @@ import {
   makeOnlyOfficeFileRoute
 } from 'drive/web/modules/views/OnlyOffice/helpers'
 
-const Create = () => {
+const Create = ({ isPublic = false }) => {
   const navigate = useNavigate()
   const { folderId, fileClass } = useParams()
   const { status, fileId } = useCreateFile(folderId, fileClass)
@@ -29,7 +29,8 @@ const Create = () => {
   if (status === 'loaded' && fileId) {
     const url = makeOnlyOfficeFileRoute(fileId, {
       fromCreate: true,
-      fromPathname: folderPath
+      fromPathname: folderPath,
+      fromPublicFolder: isPublic
     })
     return navigate(url, {
       replace: true
