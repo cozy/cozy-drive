@@ -11,9 +11,9 @@ import {
   buildPremiumLink
 } from 'cozy-client/dist/models/instance'
 import flag from 'cozy-flags'
+import { useInstanceInfo } from 'cozy-client'
 
 import styles from '../pushClient/pushClient.styl'
-import useInstanceInfo from 'hooks/useInstanceInfo'
 import { usePushBannerContext } from './PushBannerProvider'
 
 /**

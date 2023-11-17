@@ -2,12 +2,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { useInstanceInfo } from 'cozy-client'
 import { isFlagshipApp } from 'cozy-device-helper'
 import { makeDiskInfos } from 'cozy-client/dist/models/instance'
 
 import BannerClient from '../../components/pushClient/Banner'
 import QuotaBanner from './QuotaBanner'
-import useInstanceInfo from 'hooks/useInstanceInfo'
 import { usePushBannerContext } from './PushBannerProvider'
 
 /**

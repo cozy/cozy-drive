@@ -9,9 +9,9 @@ import {
   buildPremiumLink
 } from 'cozy-client/dist/models/instance'
 import { isMobileApp, isFlagshipApp } from 'cozy-device-helper'
+import { useInstanceInfo } from 'cozy-client'
 
 import styles from './supportUs.styl'
-import useInstanceInfo from 'hooks/useInstanceInfo'
 
 const SupportUs = () => {
   const { t } = useI18n()
