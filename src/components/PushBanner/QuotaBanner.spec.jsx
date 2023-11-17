@@ -4,8 +4,8 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { isFlagshipApp } from 'cozy-device-helper'
 import I18n from 'cozy-ui/transpiled/react/providers/I18n'
 import flag from 'cozy-flags'
+import { useInstanceInfo } from 'cozy-client'
 
-import useInstanceInfo from 'hooks/useInstanceInfo'
 import QuotaBanner from './QuotaBanner'
 import { usePushBannerContext } from './PushBannerProvider'
 import en from 'drive/locales/en.json'
@@ -13,12 +13,17 @@ import en from 'drive/locales/en.json'
 jest.mock('./PushBannerProvider', () => ({
   usePushBannerContext: jest.fn()
 }))
-jest.mock('hooks/useInstanceInfo')
 jest.mock('cozy-device-helper', () => ({
   ...jest.requireActual('cozy-device-helper'),
   isFlagshipApp: jest.fn()
 }))
 jest.mock('cozy-flags')
+jest.mock('cozy-client', () => ({
+  ...jest.requireActual('cozy-client'),
+  useInstanceInfo: jest.fn(() => ({
+    isLoaded: true
+  }))
+}))
 
 describe('QuotaBanner', () => {
   const dismissSpy = jest.fn()
