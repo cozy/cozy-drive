@@ -107,7 +107,11 @@ const init = async () => {
 
     if (isNote) {
       try {
-        window.location.href = await models.note.fetchURL(client, data)
+        window.location.href = await models.note.fetchURL(client, data, {
+          pathname: `${location.pathname}${
+            location.pathname.endsWith('/') ? '' : '/'
+          }`
+        })
       } catch (e) {
         Alerter.error('alert.offline')
       }
