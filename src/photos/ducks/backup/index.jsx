@@ -11,7 +11,6 @@ import BackupActions from './components/BackupActions'
 import BackupDescription from './components/BackupDescription'
 import InstallAppAlert from './components/InstallAppAlert'
 import UpdateAppAlert from './components/UpdateAppAlert'
-import LastBackupStatus from './components/LastBackupStatus'
 import AllowPermissionsModal from './components/AllowPermissionsModal'
 import { BackupError } from './components/BackupError'
 
@@ -29,7 +28,6 @@ const BackupPageContent = () => {
         <BackupHeader />
         <BackupInfo />
         <BackupActions />
-        <LastBackupStatus />
         <BackupDescription />
       </>
     )
