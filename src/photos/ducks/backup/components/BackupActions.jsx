@@ -29,12 +29,7 @@ const BackupActions = () => {
     if (!backupInfo) return null
 
     const {
-      currentBackup: {
-        status,
-        mediasToBackupCount,
-        totalMediasToBackupCount,
-        mediasLoadedCount
-      }
+      currentBackup: { status, mediasToBackupCount, totalMediasToBackupCount }
     } = backupInfo
 
     if (status === 'running') {
@@ -62,22 +57,13 @@ const BackupActions = () => {
         </div>
       )
     } else if (status === 'initializing') {
-      const verificationCount = mediasLoadedCount
-        ? ` (${mediasLoadedCount})`
-        : ''
-      const verificationLabel = `${t(
-        'Backup.actions.verification'
-      )}${verificationCount}`
-
       return (
         <div className="u-mt-1-half u-flex u-flex-column u-flex-justify-center">
           <Button
-            label={verificationLabel}
+            label={t('Backup.actions.startBackup')}
             variant="primary"
             disabled
-            startIcon={
-              <Icon icon={SpinnerIcon} spin aria-hidden focusable="false" />
-            }
+            startIcon={<Icon icon={SyncIcon} />}
           />
         </div>
       )

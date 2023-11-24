@@ -288,7 +288,6 @@
       "title": "Backup my photos & videos"
     },
     "actions": {
-      "verification": "Verification",
       "startBackup": "Backup",
       "backupInProgress": "Backup in progress %{alreadyBackupedCount} / %{totalCount}",
       "openInDrive": "Open in Drive",
@@ -301,8 +300,13 @@
       "second": "Note: To speed up the process, make sure to connect to an unlimited internet access, have enough battery and keep your app open"
     },
     "info": {
+      "analysisInProgress": "Analysis in progress",
       "notBackedUpElements": "%{smart_count} element not backed up |||| %{smart_count} elements not backed up",
-      "pressStartBackup": "Press \"Start backup\" to keep them safe in your Cozy."
+      "pressStartBackup": "Press \"Start backup\" to keep them safe in your Cozy.",
+      "successTitle": "Backup successful",
+      "successDescription": "The photos and videos on your mobile have been successfully backed up.",
+      "errorTitle": "Backup interrupted",
+      "errorDescription": "%{message}. %{backedUpMediaCount}/%{smart_count} element backed up. |||| %{message}. %{backedUpMediaCount}/%{smart_count} elements backed up."
     },
     "InstallAppAlert": {
       "description": "Backup automatically all your photos and videos from your mobile devices",
@@ -310,11 +314,6 @@
     },
     "UpdateAppAlert": {
       "description": "Update your app to backup automatically all your photos and videos"
-    },
-    "LastBackupStatus": {
-      "lastBackup": "Last backup: ",
-      "success": "Success - ",
-      "backedUpElements": "%{backedUpMediaCount}/%{smart_count} element backed up |||| %{backedUpMediaCount}/%{smart_count} elements backed up"
     },
     "AllowPermissionsModal": {
       "title": "Allow access to your photos and videos",
