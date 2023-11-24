@@ -302,7 +302,7 @@
     "info": {
       "analysisInProgress": "Analysis in progress",
       "notBackedUpElements": "%{smart_count} element not backed up |||| %{smart_count} elements not backed up",
-      "pressStartBackup": "Press \"Start backup\" to keep them safe in your Cozy.",
+      "pressStartBackup": "Press \"Backup\" to keep them safe in your Cozy.",
       "successTitle": "Backup successful",
       "successDescription": "The photos and videos on your mobile have been successfully backed up.",
       "errorTitle": "Backup interrupted",
