@@ -10144,10 +10144,10 @@ cozy-pouch-link@^44.0.0:
     pouchdb-browser "^7.2.2"
     pouchdb-find "^7.2.2"
 
-cozy-realtime@4.4.1:
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-4.4.1.tgz#dc39f0f55232b12c3d8bb44326f586ee39917a17"
-  integrity sha512-6ONVkZ9DWcm0q/GyeL78Y16qqdCoXxqC3wbAZ70Gk1TLux/ImILTRBbyVSPEmjrrU3AeGCmBjG92XBslHd5pHw==
+cozy-realtime@4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/cozy-realtime/-/cozy-realtime-4.6.0.tgz#2600d091bef95c197ec5ebe0308df34507c81516"
+  integrity sha512-LE+zpgFFS3NgbR0aF1e2vyZXiVLHDB9dqT+tA41JO6RLHTZu6GSpZrn0oM2GcNS13/0vGXBJY6tKKFBmyK82ag==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     cozy-device-helper "^2.7.0"
