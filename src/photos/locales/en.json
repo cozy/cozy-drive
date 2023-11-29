@@ -306,7 +306,7 @@
       "successTitle": "Backup successful",
       "successDescription": "The photos and videos on your mobile have been successfully backed up.",
       "errorTitle": "Backup interrupted",
-      "errorDescription": "%{message}. %{backedUpMediaCount}/%{smart_count} element backed up. |||| %{message}. %{backedUpMediaCount}/%{smart_count} elements backed up."
+      "errorDescription": "%{backedUpMediaCount}/%{smart_count} element backed up. |||| %{backedUpMediaCount}/%{smart_count} elements backed up."
     },
     "InstallAppAlert": {
       "description": "Backup automatically all your photos and videos from your mobile devices",
