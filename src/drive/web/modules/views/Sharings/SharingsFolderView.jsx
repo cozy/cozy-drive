@@ -144,6 +144,7 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
         queryResults={[foldersResult, filesResult]}
         canSort
         extraColumns={extraColumns}
+        currentFolderId={currentFolderId}
       />
       <Outlet />
     </FolderView>
