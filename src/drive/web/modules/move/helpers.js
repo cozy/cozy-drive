@@ -100,3 +100,24 @@ export const getEntriesType = entries => {
     return current.type
   }, null)
 }
+
+/**
+ * Returns whether one of the entries that is shared not only by link
+ * @param {object[]} entries
+ * @param {object} byDocId
+ * @returns
+ */
+export const hasOneOfEntriesShared = (entries, byDocId) => {
+  const sharedEntries = entries.filter(({ _id }) => {
+    const doc = byDocId[_id]
+    if (doc === undefined) return false
+
+    const onlySharedByLink =
+      doc.permissions.length > 0 && doc.sharings.length === 0
+
+    if (onlySharedByLink) return false
+
+    return true
+  })
+  return sharedEntries.length > 0
+}

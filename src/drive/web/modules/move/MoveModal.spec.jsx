@@ -229,6 +229,32 @@ describe('MoveModal component', () => {
   })
 
   describe('move shared folder inside another', () => {
+    it('should move the shared folder inside another if its by link', async () => {
+      CozyFile.getFullpath.mockImplementation((destinationFolder, name) =>
+        Promise.resolve(`/${destinationFolder}/${name}`)
+      )
+
+      setup({
+        sharedPaths: ['/bills/bill_201903.pdf', '/destinationFolder'],
+        byDocId: {
+          bill_201903: {
+            permissions: ['perm1'],
+            sharings: []
+          }
+        },
+        getSharedParentPath: () => null
+      })
+
+      const moveButton = await screen.findByText('Move')
+      fireEvent.click(moveButton)
+
+      await waitFor(() => {
+        expect(CozyFile.move).toHaveBeenCalled()
+        expect(onCloseSpy).toHaveBeenCalled()
+        expect(refreshSpy).toHaveBeenCalled()
+      })
+    })
+
     it('should display an alert when move shared folder inside another', async () => {
       CozyFile.getFullpath.mockImplementation((destinationFolder, name) =>
         Promise.resolve(`/${destinationFolder}/${name}`)
@@ -237,7 +263,10 @@ describe('MoveModal component', () => {
       setup({
         sharedPaths: ['/bills/bill_201903.pdf', '/destinationFolder'],
         byDocId: {
-          bill_201903: {}
+          bill_201903: {
+            permissions: [],
+            sharings: []
+          }
         },
         getSharedParentPath: () => null
       })
@@ -260,7 +289,10 @@ describe('MoveModal component', () => {
       setup({
         sharedPaths: ['/bills/bill_201903.pdf', '/destinationFolder'],
         byDocId: {
-          bill_201903: {}
+          bill_201903: {
+            permissions: [],
+            sharings: []
+          }
         },
         getSharedParentPath: () => null,
         sharingContext: {
@@ -297,7 +329,10 @@ describe('MoveModal component', () => {
       setup({
         sharedPaths: ['/bills/bill_201903.pdf', '/destinationFolder'],
         byDocId: {
-          bill_201903: {}
+          bill_201903: {
+            permissions: [],
+            sharings: []
+          }
         },
         getSharedParentPath: () => null,
         sharingContext: {

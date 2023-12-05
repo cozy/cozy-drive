@@ -24,7 +24,10 @@ import {
   buildMoveOrImportQuery,
   buildOnlyFolderQuery
 } from 'drive/web/modules/queries'
-import { cancelMove } from 'drive/web/modules/move/helpers'
+import {
+  cancelMove,
+  hasOneOfEntriesShared
+} from 'drive/web/modules/move/helpers'
 import { MoveOutsideSharedFolderModal } from 'drive/web/modules/move/MoveOutsideSharedFolderModal'
 import { MoveSharedFolderInsideAnotherModal } from 'drive/web/modules/move/MoveSharedFolderInsideAnotherModal'
 
@@ -110,9 +113,10 @@ const MoveModal = ({ onClose, entries, classes }) => {
         setMovingOutsideSharedFolder(true)
       }
     } else {
-      const hasOneOrMoreEntriesShared =
-        entries.filter(({ _id }) => byDocId[_id] !== undefined).length > 0
-      if (hasOneOrMoreEntriesShared && hasSharedParent(targetPath)) {
+      if (
+        hasOneOfEntriesShared(entries, byDocId) &&
+        hasSharedParent(targetPath)
+      ) {
         setMovingSharedFolderInsideAnother(true)
       } else {
         moveEntries()
