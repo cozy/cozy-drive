@@ -1,6 +1,10 @@
 import CozyClient from 'cozy-client'
 
-import { cancelMove, getEntriesType } from 'drive/web/modules/move/helpers'
+import {
+  cancelMove,
+  getEntriesType,
+  hasOneOfEntriesShared
+} from 'drive/web/modules/move/helpers'
 import { CozyFile } from 'models'
 
 jest.mock('cozy-doctypes')
@@ -117,5 +121,30 @@ describe('getEntriesType', () => {
       { type: 'something' }
     ])
     expect(res).toBe('element')
+  })
+})
+
+describe('hasOneOfEntriesShared', () => {
+  it('should return false if entries are not shared', () => {
+    const entries = [{ _id: '1' }, { _id: '2' }, { _id: '3' }]
+    const byDocId = {}
+    expect(hasOneOfEntriesShared(entries, byDocId)).toBe(false)
+  })
+
+  it('should return false if all entries are only shared by link', () => {
+    const entries = [{ _id: '1' }, { _id: '2' }, { _id: '3' }]
+    const byDocId = {
+      1: { permissions: ['permission1'], sharings: [] },
+      2: { permissions: ['permission2'], sharings: [] }
+    }
+    expect(hasOneOfEntriesShared(entries, byDocId)).toBe(false)
+  })
+
+  it('should return true if at least one entry is shared', () => {
+    const entries = [{ _id: '1' }, { _id: '2' }, { _id: '3' }]
+    const byDocId = {
+      2: { permissions: [], sharings: ['sharingId'] }
+    }
+    expect(hasOneOfEntriesShared(entries, byDocId)).toBe(true)
   })
 })
