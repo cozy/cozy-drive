@@ -291,7 +291,7 @@
       "startBackup": "Backup",
       "backupInProgress": "Backup in progress %{alreadyBackupedCount} / %{totalCount}",
       "openInDrive": "Open in Drive",
-      "seeMyAlbums": "See my albums",
+      "viewMyPhotos": "View my saved photos",
       "saved": "Saved",
       "cancel": "Stop"
     },
