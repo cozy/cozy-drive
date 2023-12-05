@@ -52,9 +52,9 @@ const OpenBackupButton = () => {
   return (
     <Button
       component={Link}
-      to="/albums"
+      to="/"
       className="u-mt-half"
-      label={t('Backup.actions.seeMyAlbums')}
+      label={t('Backup.actions.viewMyPhotos')}
       variant="secondary"
     />
   )
