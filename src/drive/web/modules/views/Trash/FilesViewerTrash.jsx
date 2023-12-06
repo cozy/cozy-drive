@@ -30,9 +30,9 @@ const FilesViewerWithQuery = props => {
         {...props}
         files={viewableFiles}
         filesQuery={filesResult}
-        onClose={() => navigate(`/trash/${props.currentFolderId}`)}
+        onClose={() => navigate(`/trash/${currentFolderId}`)}
         onChange={fileId =>
-          navigate(`/trash/${props.currentFolderId}/file/${fileId}`)
+          navigate(`/trash/${currentFolderId}/file/${fileId}`)
         }
       />
     )
