@@ -1,17 +1,22 @@
 import { renderHook, act } from '@testing-library/react-hooks'
+import { useSearchParams, useNavigate } from 'react-router-dom'
+
 import { useClient } from 'cozy-client'
-import { useSearchParams } from 'react-router-dom'
+
 import { useRedirectLink } from './useRedirectLink'
+import * as helpers from './helpers'
 
 jest.mock('cozy-client', () => ({
   ...jest.requireActual('cozy-client'),
   useClient: jest.fn()
 }))
+
 jest.mock('react-router-dom', () => ({
-  useSearchParams: jest.fn()
+  useSearchParams: jest.fn(),
+  useNavigate: jest.fn()
 }))
 
-const realLocation = window.location
+const originalHistory = window.history
 
 describe('useRedirectLink', () => {
   const mockClient = {
@@ -27,87 +32,56 @@ describe('useRedirectLink', () => {
       subdomain: 'flat'
     })
   }
+  const mockNavigate = jest.fn()
 
   beforeEach(() => {
     useClient.mockReturnValue(mockClient)
     useSearchParams.mockReturnValue([
       new URLSearchParams('?redirectLink=drive%23%2Ffolder%2Fid123')
     ])
-    window.location = realLocation
+    useNavigate.mockReturnValue(mockNavigate)
   })
 
   afterEach(() => {
+    window.history = originalHistory
     jest.clearAllMocks()
   })
 
-  it('should return null if redirectLink is null', async () => {
-    useSearchParams.mockReturnValue([new URLSearchParams()])
-
+  it('should redirect with navigate when is not public', async () => {
     let render
     await act(async () => {
       render = renderHook(() => useRedirectLink())
     })
 
-    expect(render.result.current.redirectWebLink).toBeNull()
-    expect(render.result.current.redirectLink).toBeNull()
-  })
+    render.result.current.redirectBack()
 
-  it('should return a redirectWebLink if fetchStatus is loaded', async () => {
-    let render
-    await act(async () => {
-      render = renderHook(() => useRedirectLink())
-    })
-
-    expect(render.result.current.redirectWebLink).toBe(
-      'https://my-drive.cozy.cloud/#/folder/id123'
-    )
+    expect(mockNavigate).toHaveBeenCalledWith('/folder/id123')
     expect(render.result.current.redirectLink).toBe('drive#/folder/id123')
+    expect(render.result.current.canRedirect).toBe(true)
   })
 
-  it('should return a redirectWebLink as null if fetchStatus is failed', async () => {
-    mockClient
-      .collection()
-      .fetchOwnPermissions.mockImplementation(() => Promise.reject())
-
-    let render
-    await act(async () => {
-      render = renderHook(() => useRedirectLink())
-    })
-
-    expect(render.result.current.redirectWebLink).toBeNull()
-    expect(render.result.current.redirectLink).toBe('drive#/folder/id123')
-  })
-
-  it('should return a redirectWebLink to the instance that opened the shared file', async () => {
-    mockClient.collection().fetchOwnPermissions.mockResolvedValueOnce({
-      included: [
-        {
-          attributes: {
-            instance: 'https://other.cozy.cloud'
-          }
-        }
-      ]
-    })
-
-    let render
-    await act(async () => {
-      render = renderHook(() => useRedirectLink())
-    })
-
-    expect(render.result.current.redirectWebLink).toBe(
-      'https://other-drive.cozy.cloud/#/folder/id123'
-    )
-    expect(render.result.current.redirectLink).toBe('drive#/folder/id123')
-  })
-
-  it('should return a redirectWebLink to current instance if the file was opened from an public folder', async () => {
-    delete window.location
-    window.location = new URL('https://my.cozy.cloud/public?sharecode=share123')
+  it('should redirect with navigate when is from a public folder', async () => {
     useSearchParams.mockReturnValue([
       new URLSearchParams(
         '?redirectLink=drive%23%2Ffolder%2Fid123&fromPublicFolder=true'
       )
     ])
+    let render
+    await act(async () => {
+      render = renderHook(() => useRedirectLink({ isPublic: true }))
+    })
+
+    render.result.current.redirectBack()
+
+    expect(mockNavigate).toHaveBeenCalledWith('/folder/id123')
+    expect(render.result.current.redirectLink).toBe('drive#/folder/id123')
+    expect(render.result.current.canRedirect).toBe(true)
+  })
+
+  it('should redirect with window.location in public when instance is known', async () => {
+    const spyChangeLocation = jest
+      .spyOn(helpers, 'changeLocation')
+      .mockImplementationOnce(() => {})
     mockClient.collection().fetchOwnPermissions.mockResolvedValueOnce({
       included: [
         {
@@ -117,15 +91,78 @@ describe('useRedirectLink', () => {
         }
       ]
     })
-
+    useSearchParams.mockReturnValue([
+      new URLSearchParams('?redirectLink=drive%23%2Ffolder%2Fid123')
+    ])
     let render
     await act(async () => {
-      render = renderHook(() => useRedirectLink())
+      render = renderHook(() => useRedirectLink({ isPublic: true }))
     })
 
-    expect(render.result.current.redirectWebLink).toBe(
-      'https://my-drive.cozy.cloud/public?sharecode=share123#/folder/id123'
+    render.result.current.redirectBack()
+
+    expect(mockNavigate).toHaveBeenCalledTimes(0)
+    expect(spyChangeLocation).toHaveBeenCalledWith(
+      'https://other-drive.cozy.cloud/#/folder/id123'
     )
     expect(render.result.current.redirectLink).toBe('drive#/folder/id123')
+    expect(render.result.current.canRedirect).toBe(true)
+  })
+
+  it('should redirect with navigate(-2) in public when the instance is unknown', async () => {
+    delete window.history
+    window.history = Object.defineProperties(
+      {},
+      {
+        ...Object.getOwnPropertyDescriptors(originalHistory),
+        length: {
+          configurable: true,
+          value: 3
+        }
+      }
+    )
+    mockClient.collection().fetchOwnPermissions.mockResolvedValueOnce({
+      included: [
+        {
+          attributes: {}
+        }
+      ]
+    })
+    useSearchParams.mockReturnValue([
+      new URLSearchParams('?redirectLink=drive%23%2Ffolder%2Fid123')
+    ])
+    let render
+    await act(async () => {
+      render = renderHook(() => useRedirectLink({ isPublic: true }))
+    })
+
+    render.result.current.redirectBack()
+
+    expect(mockNavigate).toHaveBeenCalledWith(-2)
+    expect(render.result.current.redirectLink).toBe('drive#/folder/id123')
+    expect(render.result.current.canRedirect).toBe(true)
+  })
+
+  it('should do nothing when the instance is unknown and the page is opened in new tab', async () => {
+    mockClient.collection().fetchOwnPermissions.mockResolvedValueOnce({
+      included: [
+        {
+          attributes: {}
+        }
+      ]
+    })
+    useSearchParams.mockReturnValue([
+      new URLSearchParams('?redirectLink=drive%23%2Ffolder%2Fid123')
+    ])
+    let render
+    await act(async () => {
+      render = renderHook(() => useRedirectLink({ isPublic: true }))
+    })
+
+    render.result.current.redirectBack()
+
+    expect(mockNavigate).toHaveBeenCalledTimes(0)
+    expect(render.result.current.redirectLink).toBe('drive#/folder/id123')
+    expect(render.result.current.canRedirect).toBe(false)
   })
 })

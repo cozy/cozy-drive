@@ -21,12 +21,12 @@ const Toolbar = () => {
   const { fileId, isPublic, isReadOnly, isEditorReady } = useOnlyOfficeContext()
 
   const { data: fileWithPath } = useFileWithPath(fileId)
-  const { redirectWebLink } = useRedirectLink()
+  const { redirectBack, canRedirect } = useRedirectLink({ isPublic })
 
-  const showBackButton = redirectWebLink !== null
+  const showBackButton = canRedirect
 
   const handleOnClick = () => {
-    window.location = redirectWebLink
+    redirectBack()
   }
 
   return (

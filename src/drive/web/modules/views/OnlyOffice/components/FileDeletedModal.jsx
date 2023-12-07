@@ -14,7 +14,8 @@ import { makeOnlyOfficeFileRoute } from 'drive/web/modules/views/OnlyOffice/help
 import { useRedirectLink } from 'drive/hooks/useRedirectLink'
 
 const FileDeletedModal = () => {
-  const { fileId, setFileDeleted, editorMode } = useOnlyOfficeContext()
+  const { fileId, setFileDeleted, editorMode, isPublic } =
+    useOnlyOfficeContext()
   const navigate = useNavigate()
   const client = useClient()
   const { t } = useI18n()
@@ -22,7 +23,7 @@ const FileDeletedModal = () => {
   const [isErrorAlertDisplayed, setErrorAlertDisplayed] = useState(false)
   const [isBusy, setBusy] = useState(false)
 
-  const { redirectLink, redirectWebLink } = useRedirectLink()
+  const { redirectLink, redirectBack } = useRedirectLink({ isPublic })
 
   const restore = async () => {
     setErrorAlertDisplayed(false)
@@ -43,7 +44,7 @@ const FileDeletedModal = () => {
   }
 
   const goBack = () => {
-    window.location = redirectWebLink
+    redirectBack()
   }
 
   return (
