@@ -9,6 +9,7 @@ import { officeDocParam } from 'test/data'
 
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice/OnlyOfficeProvider'
 import Toolbar from 'drive/web/modules/views/OnlyOffice/Toolbar'
+import * as hookHelpers from 'drive/hooks/helpers'
 
 jest.mock('cozy-ui/transpiled/react/providers/Breakpoints', () => ({
   ...jest.requireActual('cozy-ui/transpiled/react/providers/Breakpoints'),
@@ -20,6 +21,12 @@ jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 jest.mock('drive/web/modules/views/OnlyOffice/Toolbar/helpers', () => ({
   ...jest.requireActual('drive/web/modules/views/OnlyOffice/Toolbar/helpers'),
   computeHomeApp: jest.fn(() => ({ slug: 'slug' }))
+}))
+
+const mockNavigate = jest.fn()
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockNavigate
 }))
 
 const client = createMockClient({})
@@ -250,25 +257,11 @@ describe('Toolbar', () => {
 
       fireEvent.click(button)
 
-      expect(window.location).toBe('http://cozy-drive.tools/#/folder/321')
-    })
-
-    it('should redirect to previous folder with ?searchParam#/hash', async () => {
-      makeNewLocation('?redirectLink=drive%23%2Ffolder%2F321#/onlyoffice/123')
-      useQuery.mockReturnValue(officeDocParam)
-
-      setup()
-
-      const button = await screen.findByRole('button', {
-        name: 'Back'
-      })
-
-      fireEvent.click(button)
-
-      expect(window.location).toBe('http://cozy-drive.tools/#/folder/321')
+      expect(mockNavigate).toHaveBeenCalledWith('/folder/321')
     })
 
     it('should redirect to previous folder from current cozy user', async () => {
+      const spyOnChangeLocation = jest.spyOn(hookHelpers, 'changeLocation')
       client.collection = () => ({
         fetchOwnPermissions: () =>
           Promise.resolve({
@@ -284,7 +277,9 @@ describe('Toolbar', () => {
       makeNewLocation('?redirectLink=drive%23%2Ffolder%2F321#/onlyoffice/123')
       useQuery.mockReturnValue(officeDocParam)
 
-      setup()
+      setup({
+        isPublic: true
+      })
 
       const button = await screen.findByRole('button', {
         name: 'Back'
@@ -292,7 +287,9 @@ describe('Toolbar', () => {
 
       fireEvent.click(button)
 
-      expect(window.location).toBe('http://other-drive.tools/#/folder/321')
+      expect(spyOnChangeLocation).toHaveBeenCalledWith(
+        'http://other-drive.tools/#/folder/321'
+      )
     })
   })
 })

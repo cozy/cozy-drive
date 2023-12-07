@@ -53,7 +53,7 @@ const AppRouter = ({
             {models.file.shouldBeOpenedByOnlyOffice(data) && (
               <Route
                 path="/"
-                element={<Navigate to={`onlyoffice/${data.id}`} />}
+                element={<Navigate to={`onlyoffice/${data.id}`} replace />}
               />
             )}
           </>

@@ -1,5 +1,5 @@
-import { useMemo, useState, useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 
 import {
   useClient,
@@ -7,37 +7,52 @@ import {
   deconstructRedirectLink
 } from 'cozy-client'
 
-const useRedirectLink = () => {
+import logger from 'lib/logger'
+import { changeLocation } from 'drive/hooks/helpers'
+
+/**
+ * @typedef {object} ReturnRedirectLink
+ * @property {string} redirectLink - The redirect link
+ * @property {function} redirectBack - The function to redirect the user
+ * @property {boolean} canRedirect - True if the user can be redirected
+ */
+
+/**
+ * This hook is used to redirect from an OnlyOffice file
+ * @param {boolean} isPublic - true if the file is public
+ * @returns {ReturnRedirectLink} - The redirect link and the function to redirect from an OnlyOffice file
+ */
+const useRedirectLink = ({ isPublic = false } = {}) => {
   const [searchParams] = useSearchParams()
   const params = new URLSearchParams(location.search)
   const client = useClient()
+  const navigate = useNavigate()
 
   const isFromPublicFolder = searchParams.get('fromPublicFolder') === 'true'
-  const sharecode = params.get('sharecode')
 
-  const [fetchStatus, setFetchStatus] = useState('pending')
-  const [instance, setInstance] = useState(client.getStackClient().uri)
+  const [currentMemberInstance, setCurrentMemberInstance] = useState(undefined)
 
   useEffect(() => {
     const fetch = async () => {
       try {
-        setFetchStatus('loading')
         const permissions = await client
           .collection('io.cozy.permissions')
           .fetchOwnPermissions()
-        if (permissions.included.length > 0) {
-          setInstance(permissions.included[0].attributes.instance)
+
+        // We gets in included the member of the sharing, corresponding to the user who accessed the file
+        // If the file is open on the instance of the share owner, we can retrieve the link to his instance
+        if (permissions.included?.length > 0) {
+          setCurrentMemberInstance(permissions.included[0].attributes?.instance)
         }
-        setFetchStatus('loaded')
       } catch {
-        setFetchStatus('error')
+        logger.warn('Cannot fetch permissions')
       }
     }
 
-    if (!isFromPublicFolder) {
+    if (isPublic && !isFromPublicFolder) {
       fetch()
     }
-  }, [client, isFromPublicFolder])
+  }, [client, isPublic, isFromPublicFolder])
 
   /**
    * We search for redirectLink using two methods because
@@ -48,51 +63,60 @@ const useRedirectLink = () => {
   const redirectLink =
     searchParams.get('redirectLink') || params.get('redirectLink')
 
-  const redirectWebLink = useMemo(() => {
-    if (
-      redirectLink === null ||
-      (fetchStatus !== 'loaded' && !isFromPublicFolder)
-    ) {
-      return null
+  const redirectBack = () => {
+    if (!redirectLink) {
+      return logger.warn('Cannot find a redirect link')
     }
 
     const { slug, pathname, hash } = deconstructRedirectLink(redirectLink)
-    const { subdomain: subDomainType } = client.getInstanceOptions()
 
-    const newSearchParams = []
-    let newPathname = pathname
-
-    /**
-     * If the redirectLink is from a public folder, we want to redirect onto the same instance
-     * We need to share the sharecode and pathname (eg. /preview or /public) so that the public folder can be opened
-     */
-    if (isFromPublicFolder) {
-      if (sharecode) {
-        newSearchParams.push(['sharecode', sharecode])
-      }
-      newPathname = location.pathname
+    // As we navigate in the same instance, we can use the react-router-dom navigate
+    if (!isPublic || isFromPublicFolder) {
+      return navigate(hash)
     }
 
-    return generateWebLink({
-      cozyUrl: instance,
-      subDomainType,
-      slug,
-      pathname: newPathname,
-      hash,
-      searchParams: newSearchParams
-    })
-  }, [
-    redirectLink,
-    fetchStatus,
-    isFromPublicFolder,
-    client,
-    instance,
-    sharecode
-  ])
+    // If the file is open on the instance of the share owner, we can redirect the user to his instance
+    if (currentMemberInstance) {
+      try {
+        const { subdomain: subDomainType } = client.getInstanceOptions()
+        const link = generateWebLink({
+          cozyUrl: currentMemberInstance,
+          subDomainType,
+          slug,
+          pathname,
+          hash
+        })
+        return changeLocation(link)
+      } catch (e) {
+        logger.error(`Cannot generate a web link : ${e}`)
+      }
+    }
+
+    /**
+     * If file is not open in new tab, we can redirect the user to the previous page
+     * There is a double redirection for public file :
+     * 1. To know that the file is a share, the other
+     * 2. To open it on the host instance
+     * so there is an additional entry in the history to skip to access the previous page
+     */
+    if (window.history.length > 2) {
+      return navigate(-2)
+    }
+
+    // We do nothing because we don't know where to redirect the user
+  }
+
+  const canRedirect =
+    !!redirectLink &&
+    (!isPublic ||
+      isFromPublicFolder ||
+      !!currentMemberInstance ||
+      window.history.length > 2)
 
   return {
-    redirectWebLink,
-    redirectLink
+    redirectLink,
+    redirectBack,
+    canRedirect
   }
 }
 
