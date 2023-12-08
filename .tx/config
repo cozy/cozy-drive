@@ -6,9 +6,3 @@ file_filter = src/drive/locales/<lang>.json
 source_file = src/drive/locales/en.json
 source_lang = en
 type        = KEYVALUEJSON
-
-[o:cozy:p:cozy-photos-v3:r:global]
-file_filter = src/photos/locales/<lang>.json
-source_file = src/photos/locales/en.json
-source_lang = en
-type        = KEYVALUEJSON

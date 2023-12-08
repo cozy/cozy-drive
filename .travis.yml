@@ -74,10 +74,6 @@ jobs:
         - <<: *deploy
           on:
             tags: true
-    - <<: *build-web
-      name: "Photos web"
-      env:
-        - COZY_APP_SLUG=photos
 
 env:
   global:
