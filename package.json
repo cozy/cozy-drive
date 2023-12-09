@@ -90,7 +90,7 @@
     "chrome-remote-interface": "0.31.2",
     "cordova": "8.1.2",
     "cordova-android": "9.1.0",
-    "cozy-jobs-cli": "^2.1.0",
+    "cozy-jobs-cli": "^2.2.2",
     "cozy-tsconfig": "1.2.0",
     "css-mediaquery": "^0.1.2",
     "enzyme": "3.11.0",
