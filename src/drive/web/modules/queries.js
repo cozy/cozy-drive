@@ -370,3 +370,17 @@ export const buildNewSharingShortcutQuery = () => ({
     fetchPolicy: defaultFetchPolicy
   }
 })
+
+export const buildTriggersQueryByAccountId = (accountId, enabled) => ({
+  definition: () =>
+    Q('io.cozy.triggers')
+      .where({
+        'message.account': accountId
+      })
+      .indexFields(['message.account']),
+  options: {
+    as: `${'io.cozy.triggers'}/accounts/${accountId}`,
+    enabled: enabled,
+    fetchPolicy: defaultFetchPolicy
+  }
+})
