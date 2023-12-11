@@ -4,6 +4,9 @@ import { setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
 import AppRoute from 'drive/web/modules/navigation/AppRoute'
 
+jest.mock('cozy-harvest-lib', () => ({
+  LaunchTriggerCard: jest.fn()
+}))
 jest.mock('drive/web/modules/views/Drive/useTrashRedirect', () => ({
   useTrashRedirect: jest.fn()
 }))

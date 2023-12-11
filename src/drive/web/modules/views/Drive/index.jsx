@@ -9,6 +9,8 @@ import { useQuery, useClient } from 'cozy-client'
 import { useVaultClient } from 'cozy-keys-lib'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import flag from 'cozy-flags'
+
 import Dropzone from 'drive/web/modules/upload/Dropzone'
 import { ModalContext } from 'drive/lib/ModalContext'
 import useActions from 'drive/web/modules/actions/useActions'
@@ -51,6 +53,7 @@ import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
 import useHead from 'components/useHead'
 import { useSelectionContext } from 'drive/web/modules/selection/SelectionProvider'
 import { useResumeUploadFromFlagship } from 'drive/web/modules/views/Upload/useResumeFromFlagship'
+import HarvestBanner from './HarvestBanner'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
@@ -213,6 +216,9 @@ const DriveView = () => {
         disabled={__TARGET__ === 'mobile' || !canWriteToCurrentFolder}
         displayedFolder={displayedFolder}
       >
+        {flag('drive.show.harvest-banner') && (
+          <HarvestBanner folderId={currentFolderId} />
+        )}
         <FolderViewBody
           navigateToFolder={navigateToFolder}
           navigateToFile={navigateToFile}
