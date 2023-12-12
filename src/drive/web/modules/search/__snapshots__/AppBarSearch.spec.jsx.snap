@@ -6,10 +6,10 @@ exports[`should display the Searchbar 1`] = `
   "baseElement": <body>
     <div>
       <div
-        class="CozyTheme--normal"
+        class="CozyTheme--normal u-dc"
       >
         <div
-          class="u-flex u-flex-items-center u-flex-grow CozyTheme--normal"
+          class="u-flex u-flex-items-center u-flex-grow CozyTheme--normal u-dc"
         >
           <div
             class="bar-search-container"
@@ -67,10 +67,10 @@ exports[`should display the Searchbar 1`] = `
   </body>,
   "container": <div>
     <div
-      class="CozyTheme--normal"
+      class="CozyTheme--normal u-dc"
     >
       <div
-        class="u-flex u-flex-items-center u-flex-grow CozyTheme--normal"
+        class="u-flex u-flex-items-center u-flex-grow CozyTheme--normal u-dc"
       >
         <div
           class="bar-search-container"

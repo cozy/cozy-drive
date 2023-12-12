@@ -80,8 +80,6 @@ describe('FilesViewer', () => {
   it('should render a Viewer', async () => {
     setup()
 
-    const overlay = await screen.findByTestId('overlay')
-    expect(overlay).toBeInTheDocument()
     const viewer = await screen.findByText('Viewer')
     expect(viewer).toBeInTheDocument()
   })
@@ -99,8 +97,6 @@ describe('FilesViewer', () => {
       fileId: 'file-foobar51'
     })
 
-    const overlay = await screen.findByTestId('overlay')
-    expect(overlay).toBeInTheDocument()
     const viewer = await screen.findByText('Viewer')
     expect(viewer).toBeInTheDocument()
     expect(client.query).toHaveBeenCalledWith(
@@ -130,8 +126,6 @@ describe('FilesViewer', () => {
       }
     })
 
-    const overlay = await screen.findByTestId('overlay')
-    expect(overlay).toBeInTheDocument()
     const viewer = await screen.findByText('Viewer')
     expect(viewer).toBeInTheDocument()
     expect(fetchMore).toHaveBeenCalledTimes(1)
@@ -155,8 +149,6 @@ describe('FilesViewer', () => {
       isEncrypted: true
     })
 
-    const overlay = await screen.findByTestId('overlay')
-    expect(overlay).toBeInTheDocument()
     const viewer = await screen.findByText('Viewer')
     expect(viewer).toBeInTheDocument()
     expect(getEncryptionKeyFromDirId).toHaveBeenCalled()

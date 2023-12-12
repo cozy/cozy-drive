@@ -194,30 +194,28 @@ const FilesViewer = ({ filesQuery, files, onClose, onChange }) => {
 
   return (
     <RemoveScroll>
-      <Overlay data-testid="overlay">
-        <Viewer
-          files={viewerFiles}
-          currentURL={currentDecryptedFileURL}
-          currentIndex={viewerIndex}
-          onChangeRequest={handleOnChange}
-          onCloseRequest={handleOnClose}
-          renderFallbackExtraContent={file => <Fallback file={file} t={t} />}
-          componentsProps={{
-            OnlyOfficeViewer: {
-              isEnabled: isOfficeEnabled(isDesktop),
-              opener: file => navigate(makeOnlyOfficeFileRoute(file.id))
-            },
-            toolbarProps: {
-              showFilePath: true
-            }
-          }}
-        >
-          <FooterActionButtons>
-            <SharingButton />
-            <ForwardOrDownloadButton />
-          </FooterActionButtons>
-        </Viewer>
-      </Overlay>
+      <Viewer
+        files={viewerFiles}
+        currentURL={currentDecryptedFileURL}
+        currentIndex={viewerIndex}
+        onChangeRequest={handleOnChange}
+        onCloseRequest={handleOnClose}
+        renderFallbackExtraContent={file => <Fallback file={file} t={t} />}
+        componentsProps={{
+          OnlyOfficeViewer: {
+            isEnabled: isOfficeEnabled(isDesktop),
+            opener: file => navigate(makeOnlyOfficeFileRoute(file.id))
+          },
+          toolbarProps: {
+            showFilePath: true
+          }
+        }}
+      >
+        <FooterActionButtons>
+          <SharingButton />
+          <ForwardOrDownloadButton />
+        </FooterActionButtons>
+      </Viewer>
     </RemoveScroll>
   )
 }

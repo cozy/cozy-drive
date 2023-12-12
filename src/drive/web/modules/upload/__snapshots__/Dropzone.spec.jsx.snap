@@ -35,6 +35,7 @@ exports[`Dropzone should match snapshot 1`] = `
     }
   >
     <CozyTheme
+      ignoreItself={true}
       variant="normal"
     >
       <MuiCozyTheme
@@ -158,17 +159,23 @@ exports[`Dropzone should match snapshot 1`] = `
                       },
                       "flexWrap": "wrap",
                     },
-                    "&.cozyAlert": {
-                      "&-primary": {
+                    "&.cozyStyles": {
+                      "&-error": {
                         "&-filled": {
+                          "& $action": {
+                            "& button[title="Close"]": {
+                              "color": "#fff",
+                            },
+                          },
                           "backgroundColor": "#fff",
+                          "color": "#fff",
                         },
                         "&-outlined": {
                           "& $icon": {
                             "color": "#fff",
                           },
                           "border": "1px solid #fff",
-                          "color": "rgb(102, 102, 102)",
+                          "color": "#fff",
                         },
                         "&-standard": {
                           "& $action": {
@@ -179,20 +186,86 @@ exports[`Dropzone should match snapshot 1`] = `
                           "& $icon": {
                             "color": "#fff",
                           },
-                          "backgroundColor": "rgb(255, 255, 255)",
-                          "color": "rgb(102, 102, 102)",
+                          "backgroundColor": "rgba(255, 255, 255, 0.12)",
+                          "color": "#fff",
+                        },
+                      },
+                      "&-info": {
+                        "&-filled": {
+                          "& $action": {
+                            "& button[title="Close"]": {
+                              "color": "#fff",
+                            },
+                          },
+                          "backgroundColor": "#fff",
+                          "color": "#fff",
+                        },
+                        "&-outlined": {
+                          "& $icon": {
+                            "color": "#fff",
+                          },
+                          "border": "1px solid #fff",
+                          "color": "#fff",
+                        },
+                        "&-standard": {
+                          "& $action": {
+                            "& button[title="Close"]": {
+                              "color": "#fff",
+                            },
+                          },
+                          "& $icon": {
+                            "color": "#fff",
+                          },
+                          "backgroundColor": "rgba(255, 255, 255, 0.12)",
+                          "color": "#fff",
+                        },
+                      },
+                      "&-primary": {
+                        "&-filled": {
+                          "& $action": {
+                            "& button[title="Close"]": {
+                              "color": "#fff",
+                            },
+                          },
+                          "backgroundColor": "#fff",
+                          "color": "#fff",
+                        },
+                        "&-outlined": {
+                          "& $icon": {
+                            "color": "#fff",
+                          },
+                          "border": "1px solid #fff",
+                          "color": "#fff",
+                        },
+                        "&-standard": {
+                          "& $action": {
+                            "& button[title="Close"]": {
+                              "color": "#fff",
+                            },
+                          },
+                          "& $icon": {
+                            "color": "#fff",
+                          },
+                          "backgroundColor": "rgba(255, 255, 255, 0.12)",
+                          "color": "#fff",
                         },
                       },
                       "&-secondary": {
                         "&-filled": {
+                          "& $action": {
+                            "& button[title="Close"]": {
+                              "color": "#fff",
+                            },
+                          },
                           "backgroundColor": "#fff",
+                          "color": "#fff",
                         },
                         "&-outlined": {
                           "& $icon": {
                             "color": "#fff",
                           },
                           "border": "1px solid #fff",
-                          "color": "rgb(102, 102, 102)",
+                          "color": "#fff",
                         },
                         "&-standard": {
                           "& $action": {
@@ -203,8 +276,68 @@ exports[`Dropzone should match snapshot 1`] = `
                           "& $icon": {
                             "color": "#fff",
                           },
-                          "backgroundColor": "rgb(255, 255, 255)",
-                          "color": "rgb(102, 102, 102)",
+                          "backgroundColor": "rgba(255, 255, 255, 0.12)",
+                          "color": "#fff",
+                        },
+                      },
+                      "&-success": {
+                        "&-filled": {
+                          "& $action": {
+                            "& button[title="Close"]": {
+                              "color": "#fff",
+                            },
+                          },
+                          "backgroundColor": "#fff",
+                          "color": "#fff",
+                        },
+                        "&-outlined": {
+                          "& $icon": {
+                            "color": "#fff",
+                          },
+                          "border": "1px solid #fff",
+                          "color": "#fff",
+                        },
+                        "&-standard": {
+                          "& $action": {
+                            "& button[title="Close"]": {
+                              "color": "#fff",
+                            },
+                          },
+                          "& $icon": {
+                            "color": "#fff",
+                          },
+                          "backgroundColor": "rgba(255, 255, 255, 0.12)",
+                          "color": "#fff",
+                        },
+                      },
+                      "&-warning": {
+                        "&-filled": {
+                          "& $action": {
+                            "& button[title="Close"]": {
+                              "color": "#fff",
+                            },
+                          },
+                          "backgroundColor": "#fff",
+                          "color": "#fff",
+                        },
+                        "&-outlined": {
+                          "& $icon": {
+                            "color": "#fff",
+                          },
+                          "border": "1px solid #fff",
+                          "color": "#fff",
+                        },
+                        "&-standard": {
+                          "& $action": {
+                            "& button[title="Close"]": {
+                              "color": "#fff",
+                            },
+                          },
+                          "& $icon": {
+                            "color": "#fff",
+                          },
+                          "backgroundColor": "rgba(255, 255, 255, 0.12)",
+                          "color": "#fff",
                         },
                       },
                     },
@@ -494,6 +627,13 @@ exports[`Dropzone should match snapshot 1`] = `
                     },
                     "minWidth": "auto",
                     "padding": "11px 8px",
+                  },
+                },
+                "MuiCheckbox": {
+                  "colorSecondary": {
+                    "&$checked": {
+                      "color": "#fff",
+                    },
                   },
                 },
                 "MuiChip": {
@@ -842,19 +982,19 @@ exports[`Dropzone should match snapshot 1`] = `
                   },
                   "paperFullScreen": {
                     "& .cozyDialogActions": {
-                      "paddingBottom": "calc(env(safe-area-inset-bottom) + var(--flagship-bottom-height))",
+                      "paddingBottom": "calc(env(safe-area-inset-bottom) + var(--flagship-bottom-height, 0px))",
                     },
                     "& [class*="DialogBackButton"]": {
-                      "transform": "translateY(var(--flagship-top-height))",
+                      "transform": "translateY(var(--flagship-top-height, 0px))",
                     },
                     "& [class*="DialogCloseButton"]": {
-                      "transform": "translateY(var(--flagship-top-height))",
+                      "transform": "translateY(var(--flagship-top-height, 0px))",
                     },
                     ".flagship-app & .cozyDialogContent": {
-                      "marginBottom": "var(--flagship-bottom-height) !important",
+                      "marginBottom": "var(--flagship-bottom-height, 0px) !important",
                     },
                     ".flagship-app & .cozyDialogTitle": {
-                      "paddingTop": "calc(var(--flagship-top-height) + 0.75rem) !important",
+                      "paddingTop": "calc(var(--flagship-top-height, 0px) + 0.75rem) !important",
                     },
                   },
                   "scrollPaper": {
@@ -907,11 +1047,11 @@ exports[`Dropzone should match snapshot 1`] = `
                       "&.withFluidActions": {
                         "@media (max-width:767.95px)": {
                           "& .cozyDialogActions": {
-                            "paddingBottom": "16px",
+                            "paddingBottom": "calc(env(safe-area-inset-bottom) + var(--flagship-bottom-height, 0px) + 16px)",
                           },
                           "& .dialogContentWrapper": {
                             "&:not(.withActions)": {
-                              "paddingBottom": "16px",
+                              "paddingBottom": "calc(env(safe-area-inset-bottom) + var(--flagship-bottom-height, 0px) + 16px)",
                             },
                             "flexGrow": 1,
                           },
@@ -958,14 +1098,14 @@ exports[`Dropzone should match snapshot 1`] = `
                       "paddingRight": "4rem",
                     },
                     "@media (max-width:767.95px)": {
-                      "fontFamily": "#fff",
+                      "fontFamily": "var(--primaryFont)",
                       "fontSize": 20,
                       "fontWeight": "bold",
                       "lineHeight": 1.167,
                       "padding": "0.75rem 1rem",
                     },
                     "boxSizing": "border-box",
-                    "fontFamily": "#fff",
+                    "fontFamily": "var(--primaryFont)",
                     "fontSize": 24,
                     "fontWeight": "bold",
                     "lineHeight": 1.167,
@@ -1031,6 +1171,17 @@ exports[`Dropzone should match snapshot 1`] = `
                 },
                 "MuiIconButton": {
                   "root": {
+                    "&.cozyStyles": {
+                      "&-error": {
+                        "&:hover": {
+                          "@media (hover: none)": {
+                            "backgroundColor": "transparent",
+                          },
+                          "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                        },
+                        "color": "#fff",
+                      },
+                    },
                     "&.dialogIconButton": {
                       "&:hover": {
                         "backgroundColor": "#fff",
@@ -1064,26 +1215,32 @@ exports[`Dropzone should match snapshot 1`] = `
                 "MuiListItem": {
                   "dense": {
                     "&.large": {
+                      "minHeight": 56,
                       "paddingBottom": 12,
                       "paddingTop": 12,
                     },
                     "&.small": {
+                      "minHeight": 40,
                       "paddingBottom": 4,
                       "paddingTop": 4,
                     },
+                    "minHeight": 48,
                     "paddingBottom": 8,
                     "paddingTop": 8,
                   },
                   "root": {
                     "&.large": {
+                      "minHeight": 64,
                       "paddingBottom": 16,
                       "paddingTop": 16,
                     },
                     "&.small": {
+                      "minHeight": 48,
                       "paddingBottom": 8,
                       "paddingTop": 8,
                     },
                     "gap": 16,
+                    "minHeight": 56,
                     "paddingBottom": 12,
                     "paddingTop": 12,
                   },
@@ -1119,7 +1276,7 @@ exports[`Dropzone should match snapshot 1`] = `
                 "MuiListSubheader": {
                   "root": {
                     "backgroundColor": "#fff",
-                    "fontFamily": "#fff",
+                    "fontFamily": "var(--primaryFont)",
                     "fontSize": 12,
                     "fontWeight": "bold",
                     "lineHeight": 1.334,
@@ -1134,11 +1291,20 @@ exports[`Dropzone should match snapshot 1`] = `
                 },
                 "MuiMenuItem": {
                   "gutters": {
-                    "paddingLeft": 8,
-                    "paddingRight": 8,
+                    "paddingLeft": 16,
+                    "paddingRight": 16,
                   },
                   "root": {
-                    "gap": 8,
+                    "& .cozyListItemIcon": {
+                      "height": 16,
+                      "width": 16,
+                    },
+                    "&.cozyActionsMenuItem": {
+                      "minWidth": 256,
+                    },
+                    "@media (min-width:480px)": {
+                      "minHeight": 40,
+                    },
                     "maxWidth": 320,
                     "overflow": "auto",
                     "paddingBottom": 4,
@@ -1218,18 +1384,18 @@ exports[`Dropzone should match snapshot 1`] = `
                 "MuiStepLabel": {
                   "label": {
                     "&$active": {
-                      "fontFamily": "#fff",
+                      "fontFamily": "var(--primaryFont)",
                       "fontSize": 16,
                       "fontWeight": "bold",
                       "lineHeight": 1.313,
                     },
                     "&$completed": {
-                      "fontFamily": "#fff",
+                      "fontFamily": "var(--primaryFont)",
                       "fontSize": 16,
                       "fontWeight": "bold",
                       "lineHeight": 1.313,
                     },
-                    "fontFamily": "#fff",
+                    "fontFamily": "var(--primaryFont)",
                     "fontSize": 16,
                     "fontWeight": 400,
                     "lineHeight": 1.313,
@@ -1250,7 +1416,7 @@ exports[`Dropzone should match snapshot 1`] = `
                   },
                   "disabled": {
                     "& $thumb": {
-                      "backgroundColor": "white",
+                      "backgroundColor": "#fff",
                     },
                     "&$checked + $track": {
                       "backgroundColor": "#fff !important",
@@ -1287,7 +1453,7 @@ exports[`Dropzone should match snapshot 1`] = `
                         "color": "#fff",
                       },
                       "borderRadius": "99px",
-                      "fontFamily": "#fff",
+                      "fontFamily": "var(--primaryFont)",
                       "fontSize": 14,
                       "fontWeight": 400,
                       "lineHeight": 1.313,
@@ -1302,7 +1468,7 @@ exports[`Dropzone should match snapshot 1`] = `
                       "color": "#fff",
                       "opacity": 1,
                     },
-                    "fontFamily": "#fff",
+                    "fontFamily": "var(--primaryFont)",
                     "fontSize": 12,
                     "fontWeight": "bold",
                     "lineHeight": 1.334,
@@ -1318,7 +1484,7 @@ exports[`Dropzone should match snapshot 1`] = `
                       "& $indicator": {
                         "backgroundColor": "#fff",
                         "borderRadius": "99px",
-                        "boxShadow": "#fff",
+                        "boxShadow": "var(--shadow1)",
                         "height": "calc(100% - 2px)",
                         "top": "1px",
                         "transform": "scale(0.99)",
@@ -1335,16 +1501,8 @@ exports[`Dropzone should match snapshot 1`] = `
                   },
                 },
                 "MuiTooltip": {
-                  "arrow": {
-                    "color": "#fff",
-                  },
-                  "popper": {
-                    "opacity": 0.9,
-                  },
                   "tooltip": {
-                    "backgroundColor": "#fff",
                     "borderRadius": "8px",
-                    "color": "white",
                     "fontSize": "1rem",
                     "lineHeight": "1.3",
                     "padding": "16px",
@@ -1372,6 +1530,7 @@ exports[`Dropzone should match snapshot 1`] = `
                 "augmentColor": [Function],
                 "background": {
                   "contrast": "#fff",
+                  "contrastOpacity": 0.12,
                   "default": "#fff",
                   "paper": "#fff",
                   "selected": "#F5FAFF",
@@ -1398,7 +1557,6 @@ exports[`Dropzone should match snapshot 1`] = `
                 },
                 "getContrastText": [Function],
                 "grey": {
-                  "0": "#fff",
                   "100": "#fff",
                   "200": "#fff",
                   "300": "#fff",
@@ -1456,32 +1614,32 @@ exports[`Dropzone should match snapshot 1`] = `
               },
               "props": {},
               "shadows": [
-                "#fff",
-                "#fff",
-                "#fff",
-                "#fff",
-                "#fff",
-                "#fff",
-                "#fff",
-                "#fff",
-                "#fff",
-                "#fff",
-                "#fff",
-                "#fff",
-                "#fff",
-                "#fff",
-                "#fff",
-                "#fff",
-                "#fff",
-                "#fff",
-                "#fff",
-                "#fff",
-                "#fff",
-                "#fff",
-                "#fff",
-                "#fff",
-                "#fff",
-                "#fff",
+                "var(--shadow0)",
+                "var(--shadow1)",
+                "var(--shadow2)",
+                "var(--shadow3)",
+                "var(--shadow4)",
+                "var(--shadow5)",
+                "var(--shadow6)",
+                "var(--shadow7)",
+                "var(--shadow8)",
+                "var(--shadow9)",
+                "var(--shadow10)",
+                "var(--shadow11)",
+                "var(--shadow12)",
+                "var(--shadow13)",
+                "var(--shadow14)",
+                "var(--shadow15)",
+                "var(--shadow16)",
+                "var(--shadow17)",
+                "var(--shadow18)",
+                "var(--shadow19)",
+                "var(--shadow20)",
+                "var(--shadow21)",
+                "var(--shadow22)",
+                "var(--shadow23)",
+                "var(--shadow24)",
+                "var(--shadow25)",
               ],
               "shape": {
                 "borderRadius": 6,
@@ -1512,19 +1670,19 @@ exports[`Dropzone should match snapshot 1`] = `
               },
               "typography": {
                 "body1": {
-                  "fontFamily": "#fff",
+                  "fontFamily": "var(--primaryFont)",
                   "fontSize": 16,
                   "fontWeight": 400,
                   "lineHeight": 1.313,
                 },
                 "body2": {
-                  "fontFamily": "#fff",
+                  "fontFamily": "var(--primaryFont)",
                   "fontSize": 14,
                   "fontWeight": 400,
                   "lineHeight": 1.313,
                 },
                 "button": {
-                  "fontFamily": "#fff",
+                  "fontFamily": "var(--primaryFont)",
                   "fontSize": 14,
                   "fontWeight": "bold",
                   "lineHeight": 1.313,
@@ -1533,58 +1691,58 @@ exports[`Dropzone should match snapshot 1`] = `
                 "caption": {
                   "color": "#fff",
                   "display": "block",
-                  "fontFamily": "#fff",
+                  "fontFamily": "var(--primaryFont)",
                   "fontSize": 12,
                   "fontWeight": 400,
                   "lineHeight": 1.313,
                 },
-                "fontFamily": "#fff",
+                "fontFamily": "var(--primaryFont)",
                 "fontSize": 14,
                 "fontWeightBold": 700,
                 "fontWeightLight": 300,
                 "fontWeightMedium": 500,
                 "fontWeightRegular": 400,
                 "h1": {
-                  "fontFamily": "#fff",
+                  "fontFamily": "var(--primaryFont)",
                   "fontSize": 48,
                   "fontWeight": "bold",
                   "letterSpacing": -0.8,
                   "lineHeight": 1.087,
                 },
                 "h2": {
-                  "fontFamily": "#fff",
+                  "fontFamily": "var(--primaryFont)",
                   "fontSize": 32,
                   "fontWeight": "bold",
                   "letterSpacing": -0.4,
                   "lineHeight": 1.313,
                 },
                 "h3": {
-                  "fontFamily": "#fff",
+                  "fontFamily": "var(--primaryFont)",
                   "fontSize": 24,
                   "fontWeight": "bold",
                   "lineHeight": 1.167,
                 },
                 "h4": {
-                  "fontFamily": "#fff",
+                  "fontFamily": "var(--primaryFont)",
                   "fontSize": 20,
                   "fontWeight": "bold",
                   "lineHeight": 1.167,
                 },
                 "h5": {
-                  "fontFamily": "#fff",
+                  "fontFamily": "var(--primaryFont)",
                   "fontSize": 18,
                   "fontWeight": "bold",
                   "lineHeight": 1.313,
                 },
                 "h6": {
-                  "fontFamily": "#fff",
+                  "fontFamily": "var(--primaryFont)",
                   "fontSize": 16,
                   "fontWeight": "bold",
                   "lineHeight": 1.313,
                 },
                 "htmlFontSize": 16,
                 "overline": {
-                  "fontFamily": "#fff",
+                  "fontFamily": "var(--primaryFont)",
                   "fontSize": "0.75rem",
                   "fontWeight": 400,
                   "lineHeight": 2.66,
@@ -1593,14 +1751,14 @@ exports[`Dropzone should match snapshot 1`] = `
                 "pxToRem": [Function],
                 "round": [Function],
                 "subtitle1": {
-                  "fontFamily": "#fff",
+                  "fontFamily": "var(--primaryFont)",
                   "fontSize": 14,
                   "fontWeight": "bold",
                   "lineHeight": 1.358,
                   "textTransform": "uppercase",
                 },
                 "subtitle2": {
-                  "fontFamily": "#fff",
+                  "fontFamily": "var(--primaryFont)",
                   "fontSize": 12,
                   "fontWeight": "bold",
                   "lineHeight": 1.334,
@@ -1611,7 +1769,7 @@ exports[`Dropzone should match snapshot 1`] = `
                 "appBar": 1100,
                 "drawer": 1200,
                 "mobileStepper": 1000,
-                "modal": "#fff",
+                "modal": "var(--zIndex-modal)",
                 "snackbar": 1400,
                 "speedDial": 1050,
                 "tooltip": 1500,
@@ -1621,7 +1779,7 @@ exports[`Dropzone should match snapshot 1`] = `
           }
         >
           <div
-            className="CozyTheme--normal"
+            className="CozyTheme--normal u-dc"
           >
             <Provider
               store={

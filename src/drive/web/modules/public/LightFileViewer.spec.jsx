@@ -22,7 +22,7 @@ const client = new createMockClient({})
 const setup = () => {
   const root = render(
     <AppLike client={client}>
-      <LightFileViewer files={[{ id: '01' }]} />
+      <LightFileViewer files={[{ id: '01', name: 'fileName' }]} />
     </AppLike>
   )
 
