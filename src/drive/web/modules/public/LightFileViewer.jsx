@@ -47,6 +47,7 @@ const LightFileViewer = ({ files }) => {
         <PublicViewer
           files={files}
           currentIndex={0}
+          disableModal
           componentsProps={{
             OnlyOfficeViewer: {
               isEnabled: isOfficeEnabled(isDesktop),

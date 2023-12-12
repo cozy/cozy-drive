@@ -40,6 +40,9 @@ jest.mock('cozy-flags')
 jest.mock('drive/web/modules/views/OnlyOffice/Toolbar', () => () => (
   <div>Toolbar</div>
 ))
+jest.mock('cozy-ui/transpiled/react/Viewer', () => () => (
+  <div data-testid="ViewerForTest" />
+))
 
 const client = createMockClient({})
 client.plugins = {
@@ -101,19 +104,16 @@ describe('Editor', () => {
     expect(queryByTestId('onlyoffice-title')).toBeFalsy()
   })
 
-  it('should not show the title but the CozyUi Viewer instead if stack returns an error', () => {
+  it('should not show the title but the CozyUi Viewer instead if stack returns an error', async () => {
     useFetchJSON.mockReturnValue({ fetchStatus: 'error', data: undefined })
     useQuery.mockReturnValue(officeDocParam)
 
     const { root } = setup()
-    const { container, queryByTestId, getAllByText } = root
+    const { queryByTestId } = root
 
     expect(queryByTestId('onlyoffice-content-spinner')).toBeFalsy()
     expect(queryByTestId('onlyoffice-title')).toBeFalsy()
-    expect(
-      container.querySelector('[data-testid="viewer-toolbar"]')
-    ).toBeTruthy()
-    expect(getAllByText('Download')).toBeTruthy()
+    expect(queryByTestId('ViewerForTest')).toBeTruthy()
   })
 
   it('should show the title and the container view if the only office server is installed', () => {
@@ -141,14 +141,11 @@ describe('Editor', () => {
     isOfficeEnabled.mockReturnValue(false)
 
     const { root } = setup()
-    const { container, queryByTestId, getAllByText } = root
+    const { queryByTestId } = root
 
     expect(queryByTestId('onlyoffice-content-spinner')).toBeFalsy()
     expect(queryByTestId('onlyoffice-title')).toBeFalsy()
-    expect(
-      container.querySelector('[data-testid="viewer-toolbar"]')
-    ).toBeTruthy()
-    expect(getAllByText('Download')).toBeTruthy()
+    expect(queryByTestId('ViewerForTest')).toBeTruthy()
   })
 
   describe('Title', () => {

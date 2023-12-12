@@ -15,7 +15,7 @@ import {
 } from 'cozy-sharing'
 import { isMobileApp } from 'cozy-device-helper'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import { Content, Overlay } from 'cozy-ui/transpiled/react'
+import { Content } from 'cozy-ui/transpiled/react'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
@@ -272,18 +272,16 @@ const PublicFolderView = () => {
           </AddMenuProvider>
         )}
         {viewerOpened && viewableFiles.length > 0 && (
-          <Overlay>
-            <PublicViewer
-              files={viewableFiles}
-              currentIndex={currentViewerIndex}
-              onChangeRequest={showInViewer}
-              onCloseRequest={closeViewer}
-            >
-              <FooterActionButtons>
-                <ForwardOrDownloadButton />
-              </FooterActionButtons>
-            </PublicViewer>
-          </Overlay>
+          <PublicViewer
+            files={viewableFiles}
+            currentIndex={currentViewerIndex}
+            onChangeRequest={showInViewer}
+            onCloseRequest={closeViewer}
+          >
+            <FooterActionButtons>
+              <ForwardOrDownloadButton />
+            </FooterActionButtons>
+          </PublicViewer>
         )}
         <Outlet />
       </Content>

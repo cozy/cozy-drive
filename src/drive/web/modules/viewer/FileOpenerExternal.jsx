@@ -15,7 +15,6 @@ import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import { translate, useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Viewer from 'cozy-ui/transpiled/react/Viewer'
-import Overlay from 'cozy-ui/transpiled/react/deprecated/Overlay'
 import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
 import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
 import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
@@ -74,28 +73,26 @@ export class FileOpener extends Component {
         {fileNotFound && <FileNotFoundError />}
         {!loading && !fileNotFound && (
           <RemoveScroll>
-            <Overlay>
-              <Viewer
-                files={[file]}
-                currentIndex={0}
-                onChangeRequest={() => {}}
-                onCloseRequest={service ? () => service.terminate() : null}
-                renderFallbackExtraContent={file => (
-                  <Fallback file={file} t={t} />
-                )}
-                componentsProps={{
-                  OnlyOfficeViewer: {
-                    isEnabled: isOfficeEnabled(isDesktop),
-                    opener: file => navigate(makeOnlyOfficeFileRoute(file.id))
-                  }
-                }}
-              >
-                <FooterActionButtons>
-                  <SharingButton />
-                  <ForwardOrDownloadButton />
-                </FooterActionButtons>
-              </Viewer>
-            </Overlay>
+            <Viewer
+              files={[file]}
+              currentIndex={0}
+              onChangeRequest={() => {}}
+              onCloseRequest={service ? () => service.terminate() : null}
+              renderFallbackExtraContent={file => (
+                <Fallback file={file} t={t} />
+              )}
+              componentsProps={{
+                OnlyOfficeViewer: {
+                  isEnabled: isOfficeEnabled(isDesktop),
+                  opener: file => navigate(makeOnlyOfficeFileRoute(file.id))
+                }
+              }}
+            >
+              <FooterActionButtons>
+                <SharingButton />
+                <ForwardOrDownloadButton />
+              </FooterActionButtons>
+            </Viewer>
           </RemoveScroll>
         )}
       </div>

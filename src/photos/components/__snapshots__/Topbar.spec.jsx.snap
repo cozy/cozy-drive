@@ -2,13 +2,13 @@
 
 exports[`Topbar renders the topbar for mobile and the child have the expected router 1`] = `
 <div
-  class="CozyTheme--normal"
+  class="CozyTheme--normal u-dc"
 >
   <div
     class="pho-content-header"
   >
     <div
-      class="u-flex u-flex-items-center CozyTheme--normal"
+      class="u-flex u-flex-items-center CozyTheme--normal u-dc"
     >
       <div
         class="pho-content-album-previous"
@@ -17,7 +17,7 @@ exports[`Topbar renders the topbar for mobile and the child have the expected ro
       />
     </div>
     <div
-      class="u-flex u-flex-items-center u-ellipsis CozyTheme--normal"
+      class="u-flex u-flex-items-center u-ellipsis CozyTheme--normal u-dc"
     >
       <h2
         class="pho-content-title"
@@ -25,7 +25,7 @@ exports[`Topbar renders the topbar for mobile and the child have the expected ro
       />
     </div>
     <div
-      class="u-flex u-flex-items-center CozyTheme--normal"
+      class="u-flex u-flex-items-center CozyTheme--normal u-dc"
     >
       <div
         router="[object Object]"
@@ -39,7 +39,7 @@ exports[`Topbar renders the topbar for mobile and the child have the expected ro
 
 exports[`Topbar should render the topbar for desktop 1`] = `
 <div
-  class="CozyTheme--normal"
+  class="CozyTheme--normal u-dc"
 >
   <div
     class="pho-content-header"
