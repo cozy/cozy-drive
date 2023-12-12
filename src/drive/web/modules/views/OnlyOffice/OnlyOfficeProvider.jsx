@@ -36,6 +36,7 @@ const OnlyOfficeProvider = ({
   const [hasFileDiverged, setFileDiverged] = useState(false)
   const [hasFileDeleted, setFileDeleted] = useState(false)
   const [officeKey, setOfficeKey] = useState(null)
+  const [isTrashed, setTrashed] = useState(false)
 
   const isEditorModeView = useMemo(() => editorMode === 'view', [editorMode])
 
@@ -84,6 +85,15 @@ const OnlyOfficeProvider = ({
     }
   }, [searchParam])
 
+  useEffect(() => {
+    if (fileResult.data?.trashed) {
+      setTrashed(true)
+      setEditorMode('view')
+    } else {
+      setTrashed(false)
+    }
+  }, [fileResult])
+
   return (
     <OnlyOfficeContext.Provider
       value={{
@@ -103,7 +113,8 @@ const OnlyOfficeProvider = ({
         setEditorMode,
         isEditorModeView,
         setOfficeKey,
-        officeKey
+        officeKey,
+        isTrashed
       }}
     >
       {children}

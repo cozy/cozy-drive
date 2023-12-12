@@ -9,6 +9,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useOnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice/OnlyOfficeProvider'
 import { showSharingBanner } from 'drive/web/modules/views/OnlyOffice/helpers'
 import Toolbar from 'drive/web/modules/views/OnlyOffice/Toolbar'
+import { TrashedBanner } from 'drive/components/TrashedBanner'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,8 +21,14 @@ const useStyles = makeStyles(theme => ({
 
 const Title = () => {
   const { isMobile } = useBreakpoints()
-  const { isPublic, isFromSharing, isInSharedFolder, isEditorModeView } =
-    useOnlyOfficeContext()
+  const {
+    fileId,
+    isPublic,
+    isFromSharing,
+    isInSharedFolder,
+    isEditorModeView,
+    isTrashed
+  } = useOnlyOfficeContext()
   const styles = useStyles()
 
   const showBanner = useMemo(
@@ -51,7 +58,13 @@ const Title = () => {
           <Divider />
         </>
       )}
-      {showBanner && <SharingBannerPlugin />}
+      {isTrashed ? (
+        <div style={{ backgroundColor: 'var(--paperBackgroundColor)' }}>
+          <TrashedBanner fileId={fileId} isPublic={isPublic} />
+        </div>
+      ) : showBanner ? (
+        <SharingBannerPlugin />
+      ) : null}
     </div>
   )
 }

@@ -10,6 +10,7 @@ import {
   VaultProvider,
   VaultUnlockPlaceholder
 } from 'cozy-keys-lib'
+import AlertProvider from 'cozy-ui/transpiled/react/providers/Alert'
 
 import FabProvider from 'drive/lib/FabProvider'
 import StyledApp from 'drive/web/modules/drive/StyledApp'
@@ -22,10 +23,12 @@ const DriveProvider = ({ client, lang, polyglot, dictRequire, children }) => {
           <VaultUnlockProvider>
             <SharingProvider doctype="io.cozy.files" documentType="Files">
               <BreakpointsProvider>
-                <VaultUnlockPlaceholder />
-                <FabProvider>
-                  <StyledApp>{children}</StyledApp>
-                </FabProvider>
+                <AlertProvider>
+                  <VaultUnlockPlaceholder />
+                  <FabProvider>
+                    <StyledApp>{children}</StyledApp>
+                  </FabProvider>
+                </AlertProvider>
               </BreakpointsProvider>
             </SharingProvider>
           </VaultUnlockProvider>

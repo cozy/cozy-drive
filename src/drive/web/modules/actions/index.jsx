@@ -326,7 +326,8 @@ export const destroy = ({ pushModal, popModal }) => {
       pushModal(
         <DestroyConfirm
           files={Array.isArray(files) ? files : [files]}
-          onClose={popModal}
+          onConfirm={popModal}
+          onCancel={popModal}
         />
       ),
     Component: forwardRef(function Destroy(props, ref) {
