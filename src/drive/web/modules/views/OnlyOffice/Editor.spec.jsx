@@ -56,7 +56,8 @@ const setup = ({
   isMobile = false,
   isEditorModeView = true,
   isReadOnly = false,
-  isPublic = false
+  isPublic = false,
+  isTrashed = false
 } = {}) => {
   useBreakpoints.mockReturnValue({ isMobile })
   const root = render(
@@ -78,6 +79,7 @@ const setup = ({
           isEditorReady: true,
           isEditorModeView,
           officeKey: '321',
+          isTrashed,
           setOfficeKey: jest.fn()
         }}
       >
@@ -146,6 +148,20 @@ describe('Editor', () => {
     expect(queryByTestId('onlyoffice-content-spinner')).toBeFalsy()
     expect(queryByTestId('onlyoffice-title')).toBeFalsy()
     expect(queryByTestId('ViewerForTest')).toBeTruthy()
+  })
+
+  it('should show trashed banner when when the file has been deleted', () => {
+    useFetchJSON.mockReturnValue({
+      fetchStatus: 'loaded',
+      data: officeDocParam
+    })
+    useQuery.mockReturnValue(officeDocParam)
+    isOfficeEnabled.mockReturnValue(true)
+
+    setup({ isMobile: false, isTrashed: true })
+
+    expect(screen.queryByTestId('onlyoffice-title')).toBeTruthy()
+    expect(screen.queryByText('The item has been trashed')).toBeInTheDocument()
   })
 
   describe('Title', () => {
@@ -281,11 +297,24 @@ describe('Editor', () => {
         isOfficeEditingEnabled.mockReturnValue(true)
 
         setup({
-          isMobile: true,
+          isMobile: false,
           isReadOnly: true
         })
 
         expect(screen.queryByLabelText('Edit')).toBeFalsy()
+      })
+
+      it('should hide the readOnlyFab when the document is trashed', () => {
+        useFetchJSON.mockReturnValue({
+          fetchStatus: 'loaded',
+          data: officeDocParam
+        })
+        useQuery.mockReturnValue(officeDocParam)
+        isOfficeEditingEnabled.mockReturnValue(true)
+
+        setup({ isMobile: false, isTrashed: true })
+
+        expect(screen.queryByText('Edit')).toBeFalsy()
       })
     })
   })

@@ -6,6 +6,7 @@ import { createStore } from 'redux'
 import { I18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
 import { SharingContext } from 'cozy-sharing'
+import AlertProvider from 'cozy-ui/transpiled/react/providers/Alert'
 
 import { ThumbnailSizeContextProvider } from 'drive/lib/ThumbnailSizeContext'
 import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -62,13 +63,15 @@ const AppLike = ({
                 <SelectionProvider>
                   <ThumbnailSizeContextProvider>
                     <BreakpointsProvider>
-                      <PushBannerProvider>
-                        <ModalContext.Provider
-                          value={modalContextValue || mockModalContextValue}
-                        >
-                          <FabProvider>{children}</FabProvider>
-                        </ModalContext.Provider>
-                      </PushBannerProvider>
+                      <AlertProvider>
+                        <PushBannerProvider>
+                          <ModalContext.Provider
+                            value={modalContextValue || mockModalContextValue}
+                          >
+                            <FabProvider>{children}</FabProvider>
+                          </ModalContext.Provider>
+                        </PushBannerProvider>
+                      </AlertProvider>
                     </BreakpointsProvider>
                   </ThumbnailSizeContextProvider>
                 </SelectionProvider>

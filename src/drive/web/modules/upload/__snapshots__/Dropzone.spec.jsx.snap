@@ -1826,26 +1826,17 @@ exports[`Dropzone should match snapshot 1`] = `
                         <SelectionProvider>
                           <ThumbnailSizeContextProvider>
                             <BreakpointsProvider>
-                              <PushBannerProvider>
-                                <FabProvider>
-                                  <withI18n(WithSharingState(withClient(withVaultClient(Connect(Dropzone)))))
-                                    displayedFolder={
-                                      {
-                                        "id": "directory-foobar0",
-                                      }
-                                    }
-                                  >
-                                    <WithSharingState(withClient(withVaultClient(Connect(Dropzone))))
+                              <Memo(AlertProvider)>
+                                <PushBannerProvider>
+                                  <FabProvider>
+                                    <withI18n(WithSharingState(withClient(withVaultClient(Connect(Dropzone)))))
                                       displayedFolder={
                                         {
                                           "id": "directory-foobar0",
                                         }
                                       }
-                                      f={[Function]}
-                                      lang="en"
-                                      t={[Function]}
                                     >
-                                      <withClient(withVaultClient(Connect(Dropzone)))
+                                      <WithSharingState(withClient(withVaultClient(Connect(Dropzone))))
                                         displayedFolder={
                                           {
                                             "id": "directory-foobar0",
@@ -1853,22 +1844,9 @@ exports[`Dropzone should match snapshot 1`] = `
                                         }
                                         f={[Function]}
                                         lang="en"
-                                        sharingState={
-                                          {
-                                            "getRecipients": [MockFunction],
-                                            "getSharingLink": [MockFunction],
-                                            "hasWriteAccess": [MockFunction],
-                                            "refresh": [MockFunction],
-                                          }
-                                        }
                                         t={[Function]}
                                       >
-                                        <withVaultClient(Connect(Dropzone))
-                                          client={
-                                            CozyClient {
-                                              "uri": undefined,
-                                            }
-                                          }
+                                        <withClient(withVaultClient(Connect(Dropzone)))
                                           displayedFolder={
                                             {
                                               "id": "directory-foobar0",
@@ -1885,12 +1863,76 @@ exports[`Dropzone should match snapshot 1`] = `
                                             }
                                           }
                                           t={[Function]}
-                                        />
-                                      </withClient(withVaultClient(Connect(Dropzone)))>
-                                    </WithSharingState(withClient(withVaultClient(Connect(Dropzone))))>
-                                  </withI18n(WithSharingState(withClient(withVaultClient(Connect(Dropzone)))))>
-                                </FabProvider>
-                              </PushBannerProvider>
+                                        >
+                                          <withVaultClient(Connect(Dropzone))
+                                            client={
+                                              CozyClient {
+                                                "uri": undefined,
+                                              }
+                                            }
+                                            displayedFolder={
+                                              {
+                                                "id": "directory-foobar0",
+                                              }
+                                            }
+                                            f={[Function]}
+                                            lang="en"
+                                            sharingState={
+                                              {
+                                                "getRecipients": [MockFunction],
+                                                "getSharingLink": [MockFunction],
+                                                "hasWriteAccess": [MockFunction],
+                                                "refresh": [MockFunction],
+                                              }
+                                            }
+                                            t={[Function]}
+                                          />
+                                        </withClient(withVaultClient(Connect(Dropzone)))>
+                                      </WithSharingState(withClient(withVaultClient(Connect(Dropzone))))>
+                                    </withI18n(WithSharingState(withClient(withVaultClient(Connect(Dropzone)))))>
+                                  </FabProvider>
+                                </PushBannerProvider>
+                                <Snackbar
+                                  autoHideDuration={2000}
+                                  onClose={[Function]}
+                                  open={false}
+                                >
+                                  <WithStyles(ForwardRef(Snackbar))
+                                    anchorOrigin={
+                                      {
+                                        "horizontal": "center",
+                                        "vertical": "top",
+                                      }
+                                    }
+                                    autoHideDuration={2000}
+                                    onClose={[Function]}
+                                    open={false}
+                                  >
+                                    <ForwardRef(Snackbar)
+                                      anchorOrigin={
+                                        {
+                                          "horizontal": "center",
+                                          "vertical": "top",
+                                        }
+                                      }
+                                      autoHideDuration={2000}
+                                      classes={
+                                        {
+                                          "anchorOriginBottomCenter": "MuiSnackbar-anchorOriginBottomCenter",
+                                          "anchorOriginBottomLeft": "MuiSnackbar-anchorOriginBottomLeft",
+                                          "anchorOriginBottomRight": "MuiSnackbar-anchorOriginBottomRight",
+                                          "anchorOriginTopCenter": "MuiSnackbar-anchorOriginTopCenter",
+                                          "anchorOriginTopLeft": "MuiSnackbar-anchorOriginTopLeft",
+                                          "anchorOriginTopRight": "MuiSnackbar-anchorOriginTopRight",
+                                          "root": "MuiSnackbar-root",
+                                        }
+                                      }
+                                      onClose={[Function]}
+                                      open={false}
+                                    />
+                                  </WithStyles(ForwardRef(Snackbar))>
+                                </Snackbar>
+                              </Memo(AlertProvider)>
                             </BreakpointsProvider>
                           </ThumbnailSizeContextProvider>
                         </SelectionProvider>

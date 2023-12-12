@@ -759,5 +759,13 @@
     "confirm": "Restore file",
     "cancel": "Undo changes",
     "error": "An error occurred, please try again."
+  },
+  "TrashedBanner": {
+    "text": "The item has been trashed",
+    "destroy": "Delete permanently",
+    "restore": "Restore",
+    "restoreSuccess": "The item has been restored",
+    "restoreError": "An error has occurred, please try again.",
+    "destroySuccess": "The item has been deleted"
   }
 }

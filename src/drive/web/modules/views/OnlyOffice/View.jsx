@@ -18,7 +18,8 @@ const forceIframeHeight = value => {
 const View = ({ id, apiUrl, docEditorConfig }) => {
   const [isError, setIsError] = useState(false)
 
-  const { isEditorReady, isReadOnly, isEditorModeView } = useOnlyOfficeContext()
+  const { isEditorReady, isReadOnly, isTrashed, isEditorModeView } =
+    useOnlyOfficeContext()
   const { isMobile, isDesktop } = useBreakpoints()
 
   const initEditor = useCallback(() => {
@@ -55,6 +56,7 @@ const View = ({ id, apiUrl, docEditorConfig }) => {
   const showReadOnlyFab =
     isEditorReady &&
     !isReadOnly &&
+    !isTrashed &&
     isOfficeEditingEnabled(isDesktop) &&
     (isMobile || isEditorModeView)
 
