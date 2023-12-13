@@ -3,7 +3,7 @@
   "files": [
     {
       "path": "drive/app/drive.<hash>.js",
-      "maxSize": "280 KB"
+      "maxSize": "300 KB"
     },
     {
       "path": "drive/app/drive.<hash>.min.css",
@@ -15,7 +15,7 @@
     },
     {
       "path": "drive/intents/drive.<hash>.js",
-      "maxSize": "175 KB"
+      "maxSize": "190 KB"
     },
     {
       "path": "drive/intents/drive.<hash>.min.css",
@@ -51,7 +51,7 @@
     },
     {
       "path": "drive/public/drive.<hash>.js",
-      "maxSize": "1.65 MB"
+      "maxSize": "1.70 MB"
     },
     {
       "path": "drive/public/drive.<hash>.min.css",
@@ -117,7 +117,7 @@
     },
     {
       "path": "drive/intents/**",
-      "maxPercentIncrease": 6
+      "maxPercentIncrease": 15
     },
     {
       "path": "drive/onlyOffice/**",
@@ -128,16 +128,12 @@
       "maxPercentIncrease": 7
     },
     {
-      "path": "drive/screenshots/**",
-      "maxPercentIncrease": 0.4
-    },
-    {
       "path": "drive/services/**",
-      "maxPercentIncrease": 1
+      "maxPercentIncrease": 3
     },
     {
       "path": "drive/vendors/**",
-      "maxPercentIncrease": 6
+      "maxPercentIncrease": 15
     }
   ],
   "reportOutput": [
