@@ -41,8 +41,6 @@ jobs:
       name: "Drive web"
       stage: "build"
       <<: *node
-      env:
-        - COZY_APP_SLUG=drive
       before_script:
         - yarn run cozy-ci-transifex
         - scripts/decrypt.sh
@@ -51,10 +49,10 @@ jobs:
         - yarn tx
         - echo -en 'travis_fold:end:txpull\\r'
         - echo 'build' && echo -en 'travis_fold:start:build\\r'
-        - yarn build:$COZY_APP_SLUG:browser
+        - yarn build
         - echo -en 'travis_fold:end:build\\r'
         - &downcloud-cert if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then eval "$(ssh-agent -s)" && chmod 600 /tmp/id_rsa_travis_downcloud && ssh-add /tmp/id_rsa_travis_downcloud; fi # Needs to be inlined and not in a script to work.
-        - if [ "${COZY_APP_SLUG}" == "drive" ]; then yarn bundlemon; fi
+        - yarn bundlemon
         #- echo 'create and deploy' && echo -en 'travis_fold:start:createanddeploy\\r'
         #- if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then ./scripts/create-deploy-test.sh; fi
         #- echo -en 'travis_fold:end:createanddeploy\\r'
@@ -68,7 +66,7 @@ jobs:
           provider: script
           repo: cozy/cozy-drive
           skip-cleanup: true
-          script: yarn run deploy:$COZY_APP_SLUG
+          script: yarn run deploy
           on:
             branch: master
         - <<: *deploy
