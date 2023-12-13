@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Dropzone should match snapshot 1`] = `
-<DriveAppLike
+<AppLike
   client={
     CozyClient {
       "uri": undefined,
@@ -17,1161 +17,559 @@ exports[`Dropzone should match snapshot 1`] = `
     }
   }
 >
-  <AppLike
-    client={
-      CozyClient {
-        "uri": undefined,
-      }
-    }
-    enLocale={[Function]}
-    store={
-      {
-        "dispatch": [MockFunction],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
-        Symbol(observable): [Function],
-      }
-    }
+  <CozyTheme
+    ignoreItself={true}
+    variant="normal"
   >
-    <CozyTheme
-      ignoreItself={true}
+    <MuiCozyTheme
       variant="normal"
     >
-      <MuiCozyTheme
-        variant="normal"
-      >
-        <ThemeProvider
-          theme={
-            {
-              "breakpoints": {
-                "between": [Function],
-                "down": [Function],
-                "keys": [
-                  "xs",
-                  "sm",
-                  "md",
-                  "lg",
-                  "xl",
-                ],
-                "only": [Function],
-                "up": [Function],
-                "values": {
-                  "lg": 1023,
-                  "md": 768,
-                  "sm": 480,
-                  "xl": 1200,
-                  "xs": 0,
-                },
-                "width": [Function],
+      <ThemeProvider
+        theme={
+          {
+            "breakpoints": {
+              "between": [Function],
+              "down": [Function],
+              "keys": [
+                "xs",
+                "sm",
+                "md",
+                "lg",
+                "xl",
+              ],
+              "only": [Function],
+              "up": [Function],
+              "values": {
+                "lg": 1023,
+                "md": 768,
+                "sm": 480,
+                "xl": 1200,
+                "xs": 0,
               },
-              "direction": "ltr",
-              "mixins": {
-                "gutters": [Function],
-                "toolbar": {
-                  "@media (min-width:0px) and (orientation: landscape)": {
-                    "minHeight": 48,
-                  },
-                  "@media (min-width:480px)": {
-                    "minHeight": 64,
-                  },
-                  "minHeight": 56,
+              "width": [Function],
+            },
+            "direction": "ltr",
+            "mixins": {
+              "gutters": [Function],
+              "toolbar": {
+                "@media (min-width:0px) and (orientation: landscape)": {
+                  "minHeight": 48,
+                },
+                "@media (min-width:480px)": {
+                  "minHeight": 64,
+                },
+                "minHeight": 56,
+              },
+            },
+            "overrides": {
+              "MuiAccordion": {
+                "root": {
+                  "borderColor": "#fff",
+                  "borderStyle": "solid",
+                  "borderWidth": "0.0625rem",
+                  "boxShadow": "0 4px 12px 0 rgba(0, 0, 0, 0.08)",
+                  "marginBottom": "1rem",
+                  "overflow": "hidden",
+                },
+                "rounded": {
+                  "borderRadius": 6,
                 },
               },
-              "overrides": {
-                "MuiAccordion": {
-                  "root": {
-                    "borderColor": "#fff",
-                    "borderStyle": "solid",
-                    "borderWidth": "0.0625rem",
-                    "boxShadow": "0 4px 12px 0 rgba(0, 0, 0, 0.08)",
-                    "marginBottom": "1rem",
-                    "overflow": "hidden",
-                  },
-                  "rounded": {
-                    "borderRadius": 6,
-                  },
+              "MuiAccordionDetails": {
+                "root": {
+                  "borderTop": "0.0625rem solid #fff",
+                  "padding": 0,
                 },
-                "MuiAccordionDetails": {
-                  "root": {
-                    "borderTop": "0.0625rem solid #fff",
-                    "padding": 0,
+              },
+              "MuiAccordionSummary": {
+                "content": {
+                  "& > :last-child": {
+                    "paddingRight": 0,
                   },
-                },
-                "MuiAccordionSummary": {
-                  "content": {
-                    "& > :last-child": {
-                      "paddingRight": 0,
-                    },
-                    "&$expanded": {
-                      "margin": "0.75rem 0",
-                    },
+                  "&$expanded": {
                     "margin": "0.75rem 0",
-                    "order": 1,
-                    "paddingLeft": "0.5rem",
-                    "paddingRight": "0.25rem",
                   },
-                  "expandIcon": {
-                    "&$expanded": {
-                      "marginLeft": "0.3125rem",
-                      "transform": "rotate(0)",
-                    },
-                    "&&": {
-                      "marginLeft": "0.3125rem",
-                    },
-                    "order": 0,
-                    "transform": "rotate(-90deg)",
-                  },
-                  "expanded": {},
-                  "root": {
-                    "&$expanded": {
-                      "minHeight": "3.5rem",
-                    },
-                    "backgroundColor": "#fff",
-                    "color": "#fff",
-                    "fontSize": "0.875rem",
-                    "fontWeight": "bold",
-                    "minHeight": "3.5rem",
-                    "padding": 0,
-                    "textTransform": "uppercase",
-                  },
+                  "margin": "0.75rem 0",
+                  "order": 1,
+                  "paddingLeft": "0.5rem",
+                  "paddingRight": "0.25rem",
                 },
-                "MuiAlert": {
-                  "action": {
-                    "marginRight": "-6px",
+                "expandIcon": {
+                  "&$expanded": {
+                    "marginLeft": "0.3125rem",
+                    "transform": "rotate(0)",
                   },
-                  "message": {
-                    "alignItems": "center",
-                    "display": "flex",
-                    "flex": "auto",
+                  "&&": {
+                    "marginLeft": "0.3125rem",
+                  },
+                  "order": 0,
+                  "transform": "rotate(-90deg)",
+                },
+                "expanded": {},
+                "root": {
+                  "&$expanded": {
+                    "minHeight": "3.5rem",
+                  },
+                  "backgroundColor": "#fff",
+                  "color": "#fff",
+                  "fontSize": "0.875rem",
+                  "fontWeight": "bold",
+                  "minHeight": "3.5rem",
+                  "padding": 0,
+                  "textTransform": "uppercase",
+                },
+              },
+              "MuiAlert": {
+                "action": {
+                  "marginRight": "-6px",
+                },
+                "message": {
+                  "alignItems": "center",
+                  "display": "flex",
+                  "flex": "auto",
+                  "flexWrap": "wrap",
+                },
+                "root": {
+                  "& $icon": {
+                    "paddingTop": "9px",
+                  },
+                  "&.block": {
+                    "& $action": {
+                      "display": "block",
+                      "paddingLeft": 0,
+                      "textAlign": "right",
+                      "width": "100%",
+                    },
                     "flexWrap": "wrap",
                   },
-                  "root": {
-                    "& $icon": {
-                      "paddingTop": "9px",
-                    },
-                    "&.block": {
-                      "& $action": {
-                        "display": "block",
-                        "paddingLeft": 0,
-                        "textAlign": "right",
-                        "width": "100%",
+                  "&.cozyStyles": {
+                    "&-error": {
+                      "&-filled": {
+                        "& $action": {
+                          "& button[title="Close"]": {
+                            "color": "#fff",
+                          },
+                        },
+                        "backgroundColor": "#fff",
+                        "color": "#fff",
                       },
-                      "flexWrap": "wrap",
-                    },
-                    "&.cozyStyles": {
-                      "&-error": {
-                        "&-filled": {
-                          "& $action": {
-                            "& button[title="Close"]": {
-                              "color": "#fff",
-                            },
-                          },
-                          "backgroundColor": "#fff",
+                      "&-outlined": {
+                        "& $icon": {
                           "color": "#fff",
                         },
-                        "&-outlined": {
-                          "& $icon": {
-                            "color": "#fff",
-                          },
-                          "border": "1px solid #fff",
-                          "color": "#fff",
-                        },
-                        "&-standard": {
-                          "& $action": {
-                            "& button[title="Close"]": {
-                              "color": "#fff",
-                            },
-                          },
-                          "& $icon": {
-                            "color": "#fff",
-                          },
-                          "backgroundColor": "rgba(255, 255, 255, 0.12)",
-                          "color": "#fff",
-                        },
+                        "border": "1px solid #fff",
+                        "color": "#fff",
                       },
-                      "&-info": {
-                        "&-filled": {
-                          "& $action": {
-                            "& button[title="Close"]": {
-                              "color": "#fff",
-                            },
-                          },
-                          "backgroundColor": "#fff",
-                          "color": "#fff",
-                        },
-                        "&-outlined": {
-                          "& $icon": {
+                      "&-standard": {
+                        "& $action": {
+                          "& button[title="Close"]": {
                             "color": "#fff",
                           },
-                          "border": "1px solid #fff",
+                        },
+                        "& $icon": {
                           "color": "#fff",
                         },
-                        "&-standard": {
-                          "& $action": {
-                            "& button[title="Close"]": {
-                              "color": "#fff",
-                            },
-                          },
-                          "& $icon": {
-                            "color": "#fff",
-                          },
-                          "backgroundColor": "rgba(255, 255, 255, 0.12)",
-                          "color": "#fff",
-                        },
-                      },
-                      "&-primary": {
-                        "&-filled": {
-                          "& $action": {
-                            "& button[title="Close"]": {
-                              "color": "#fff",
-                            },
-                          },
-                          "backgroundColor": "#fff",
-                          "color": "#fff",
-                        },
-                        "&-outlined": {
-                          "& $icon": {
-                            "color": "#fff",
-                          },
-                          "border": "1px solid #fff",
-                          "color": "#fff",
-                        },
-                        "&-standard": {
-                          "& $action": {
-                            "& button[title="Close"]": {
-                              "color": "#fff",
-                            },
-                          },
-                          "& $icon": {
-                            "color": "#fff",
-                          },
-                          "backgroundColor": "rgba(255, 255, 255, 0.12)",
-                          "color": "#fff",
-                        },
-                      },
-                      "&-secondary": {
-                        "&-filled": {
-                          "& $action": {
-                            "& button[title="Close"]": {
-                              "color": "#fff",
-                            },
-                          },
-                          "backgroundColor": "#fff",
-                          "color": "#fff",
-                        },
-                        "&-outlined": {
-                          "& $icon": {
-                            "color": "#fff",
-                          },
-                          "border": "1px solid #fff",
-                          "color": "#fff",
-                        },
-                        "&-standard": {
-                          "& $action": {
-                            "& button[title="Close"]": {
-                              "color": "#fff",
-                            },
-                          },
-                          "& $icon": {
-                            "color": "#fff",
-                          },
-                          "backgroundColor": "rgba(255, 255, 255, 0.12)",
-                          "color": "#fff",
-                        },
-                      },
-                      "&-success": {
-                        "&-filled": {
-                          "& $action": {
-                            "& button[title="Close"]": {
-                              "color": "#fff",
-                            },
-                          },
-                          "backgroundColor": "#fff",
-                          "color": "#fff",
-                        },
-                        "&-outlined": {
-                          "& $icon": {
-                            "color": "#fff",
-                          },
-                          "border": "1px solid #fff",
-                          "color": "#fff",
-                        },
-                        "&-standard": {
-                          "& $action": {
-                            "& button[title="Close"]": {
-                              "color": "#fff",
-                            },
-                          },
-                          "& $icon": {
-                            "color": "#fff",
-                          },
-                          "backgroundColor": "rgba(255, 255, 255, 0.12)",
-                          "color": "#fff",
-                        },
-                      },
-                      "&-warning": {
-                        "&-filled": {
-                          "& $action": {
-                            "& button[title="Close"]": {
-                              "color": "#fff",
-                            },
-                          },
-                          "backgroundColor": "#fff",
-                          "color": "#fff",
-                        },
-                        "&-outlined": {
-                          "& $icon": {
-                            "color": "#fff",
-                          },
-                          "border": "1px solid #fff",
-                          "color": "#fff",
-                        },
-                        "&-standard": {
-                          "& $action": {
-                            "& button[title="Close"]": {
-                              "color": "#fff",
-                            },
-                          },
-                          "& $icon": {
-                            "color": "#fff",
-                          },
-                          "backgroundColor": "rgba(255, 255, 255, 0.12)",
-                          "color": "#fff",
-                        },
+                        "backgroundColor": "rgba(255, 255, 255, 0.12)",
+                        "color": "#fff",
                       },
                     },
-                    "padding": "8px 16px",
+                    "&-info": {
+                      "&-filled": {
+                        "& $action": {
+                          "& button[title="Close"]": {
+                            "color": "#fff",
+                          },
+                        },
+                        "backgroundColor": "#fff",
+                        "color": "#fff",
+                      },
+                      "&-outlined": {
+                        "& $icon": {
+                          "color": "#fff",
+                        },
+                        "border": "1px solid #fff",
+                        "color": "#fff",
+                      },
+                      "&-standard": {
+                        "& $action": {
+                          "& button[title="Close"]": {
+                            "color": "#fff",
+                          },
+                        },
+                        "& $icon": {
+                          "color": "#fff",
+                        },
+                        "backgroundColor": "rgba(255, 255, 255, 0.12)",
+                        "color": "#fff",
+                      },
+                    },
+                    "&-primary": {
+                      "&-filled": {
+                        "& $action": {
+                          "& button[title="Close"]": {
+                            "color": "#fff",
+                          },
+                        },
+                        "backgroundColor": "#fff",
+                        "color": "#fff",
+                      },
+                      "&-outlined": {
+                        "& $icon": {
+                          "color": "#fff",
+                        },
+                        "border": "1px solid #fff",
+                        "color": "#fff",
+                      },
+                      "&-standard": {
+                        "& $action": {
+                          "& button[title="Close"]": {
+                            "color": "#fff",
+                          },
+                        },
+                        "& $icon": {
+                          "color": "#fff",
+                        },
+                        "backgroundColor": "rgba(255, 255, 255, 0.12)",
+                        "color": "#fff",
+                      },
+                    },
+                    "&-secondary": {
+                      "&-filled": {
+                        "& $action": {
+                          "& button[title="Close"]": {
+                            "color": "#fff",
+                          },
+                        },
+                        "backgroundColor": "#fff",
+                        "color": "#fff",
+                      },
+                      "&-outlined": {
+                        "& $icon": {
+                          "color": "#fff",
+                        },
+                        "border": "1px solid #fff",
+                        "color": "#fff",
+                      },
+                      "&-standard": {
+                        "& $action": {
+                          "& button[title="Close"]": {
+                            "color": "#fff",
+                          },
+                        },
+                        "& $icon": {
+                          "color": "#fff",
+                        },
+                        "backgroundColor": "rgba(255, 255, 255, 0.12)",
+                        "color": "#fff",
+                      },
+                    },
+                    "&-success": {
+                      "&-filled": {
+                        "& $action": {
+                          "& button[title="Close"]": {
+                            "color": "#fff",
+                          },
+                        },
+                        "backgroundColor": "#fff",
+                        "color": "#fff",
+                      },
+                      "&-outlined": {
+                        "& $icon": {
+                          "color": "#fff",
+                        },
+                        "border": "1px solid #fff",
+                        "color": "#fff",
+                      },
+                      "&-standard": {
+                        "& $action": {
+                          "& button[title="Close"]": {
+                            "color": "#fff",
+                          },
+                        },
+                        "& $icon": {
+                          "color": "#fff",
+                        },
+                        "backgroundColor": "rgba(255, 255, 255, 0.12)",
+                        "color": "#fff",
+                      },
+                    },
+                    "&-warning": {
+                      "&-filled": {
+                        "& $action": {
+                          "& button[title="Close"]": {
+                            "color": "#fff",
+                          },
+                        },
+                        "backgroundColor": "#fff",
+                        "color": "#fff",
+                      },
+                      "&-outlined": {
+                        "& $icon": {
+                          "color": "#fff",
+                        },
+                        "border": "1px solid #fff",
+                        "color": "#fff",
+                      },
+                      "&-standard": {
+                        "& $action": {
+                          "& button[title="Close"]": {
+                            "color": "#fff",
+                          },
+                        },
+                        "& $icon": {
+                          "color": "#fff",
+                        },
+                        "backgroundColor": "rgba(255, 255, 255, 0.12)",
+                        "color": "#fff",
+                      },
+                    },
                   },
+                  "padding": "8px 16px",
                 },
-                "MuiAlertTitle": {
-                  "root": {
-                    "fontWeight": "bold",
-                    "width": "100%",
-                  },
+              },
+              "MuiAlertTitle": {
+                "root": {
+                  "fontWeight": "bold",
+                  "width": "100%",
                 },
-                "MuiBadge": {
-                  "anchorOriginBottomLeftRectangular": {
-                    "transform": "scale(1) translate(-37%, 37%)",
-                  },
-                  "anchorOriginBottomRightRectangular": {
-                    "transform": "scale(1) translate(37%, 37%)",
-                  },
-                  "anchorOriginTopLeftRectangular": {
-                    "transform": "scale(1) translate(-37%, -37%)",
-                  },
-                  "anchorOriginTopRightRectangular": {
-                    "transform": "scale(1) translate(37%, -37%)",
-                  },
-                  "badge": {
-                    "&.badgeBorder": {
-                      "border": "2px solid #fff",
-                    },
-                    "&.badgeSizeLarge": {
-                      "fontSize": ".6875rem",
-                      "height": "1rem",
-                      "minWidth": "1rem",
-                    },
-                    "&.badgeSizeMedium": {
-                      "fontSize": ".625rem",
-                      "height": ".875rem",
-                      "minWidth": ".875rem",
-                    },
-                    "&.badgeSizeSmall": {
-                      "fontSize": ".5rem",
-                      "height": ".75rem",
-                      "minWidth": ".75rem",
-                    },
-                    "boxSizing": "content-box",
-                    "padding": 0,
-                  },
-                  "dot": {
-                    "&.badgeSizeLarge": {
-                      "height": ".625rem",
-                      "minWidth": ".625rem",
-                    },
-                    "&.badgeSizeMedium": {
-                      "height": ".5rem",
-                      "minWidth": ".5rem",
-                    },
-                    "&.badgeSizeSmall": {
-                      "height": ".375rem",
-                      "minWidth": ".375rem",
-                    },
-                    "borderRadius": "100%",
-                    "padding": 0,
-                  },
+              },
+              "MuiBadge": {
+                "anchorOriginBottomLeftRectangular": {
+                  "transform": "scale(1) translate(-37%, 37%)",
                 },
-                "MuiButton": {
-                  "contained": {
-                    "&:not($disabled)": {
-                      "&.customColor": {
-                        "&-error": {
-                          "&:hover": {
-                            "@media (hover: none)": {
-                              "backgroundColor": "#fff",
-                            },
-                            "backgroundColor": "#fff",
-                          },
-                          "backgroundColor": "#fff",
-                          "color": "#fff",
-                        },
-                        "&-info": {
-                          "&:hover": {
-                            "@media (hover: none)": {
-                              "backgroundColor": "#fff",
-                            },
-                            "backgroundColor": "#fff",
-                          },
-                          "backgroundColor": "#fff",
-                          "color": "#fff",
-                        },
-                        "&-success": {
-                          "&:hover": {
-                            "@media (hover: none)": {
-                              "backgroundColor": "#fff",
-                            },
-                            "backgroundColor": "#fff",
-                          },
-                          "backgroundColor": "#fff",
-                          "color": "#fff",
-                        },
-                        "&-warning": {
-                          "&:hover": {
-                            "@media (hover: none)": {
-                              "backgroundColor": "#fff",
-                            },
-                            "backgroundColor": "#fff",
-                          },
-                          "backgroundColor": "#fff",
-                          "color": "#fff",
-                        },
-                      },
-                    },
-                    "boxShadow": 0,
-                  },
-                  "outlined": {
-                    "&:not($disabled)": {
-                      "&.customColor": {
-                        "&-error": {
-                          "&.ghost": {
-                            "&:hover": {
-                              "@media (hover: none)": {
-                                "backgroundColor": "rgba(255, 255, 255, 0.08)",
-                              },
-                              "backgroundColor": "rgba(255, 255, 255, 0.16)",
-                            },
-                            "backgroundColor": "rgba(255, 255, 255, 0.08)",
-                          },
-                          "&:hover": {
-                            "@media (hover: none)": {
-                              "backgroundColor": "transparent",
-                            },
-                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
-                          },
-                          "borderColor": "#fff",
-                          "color": "#fff",
-                        },
-                        "&-info": {
-                          "&.ghost": {
-                            "&:hover": {
-                              "@media (hover: none)": {
-                                "backgroundColor": "rgba(255, 255, 255, 0.08)",
-                              },
-                              "backgroundColor": "rgba(255, 255, 255, 0.16)",
-                            },
-                            "backgroundColor": "rgba(255, 255, 255, 0.08)",
-                          },
-                          "&:hover": {
-                            "@media (hover: none)": {
-                              "backgroundColor": "transparent",
-                            },
-                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
-                          },
-                          "borderColor": "#fff",
-                          "color": "#fff",
-                        },
-                        "&-primary": {
-                          "&.ghost": {
-                            "borderColor": "rgba(255, 255, 255, 0.48)",
-                            "color": "#fff",
-                          },
-                          "&:hover": {
-                            "@media (hover: none)": {
-                              "backgroundColor": "transparent",
-                            },
-                            "backgroundColor": "#fff",
-                          },
-                          "borderColor": "#fff",
-                          "color": "#fff",
-                        },
-                        "&-success": {
-                          "&.ghost": {
-                            "&:hover": {
-                              "@media (hover: none)": {
-                                "backgroundColor": "rgba(255, 255, 255, 0.08)",
-                              },
-                              "backgroundColor": "rgba(255, 255, 255, 0.16)",
-                            },
-                            "backgroundColor": "rgba(255, 255, 255, 0.08)",
-                          },
-                          "&:hover": {
-                            "@media (hover: none)": {
-                              "backgroundColor": "transparent",
-                            },
-                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
-                          },
-                          "borderColor": "#fff",
-                          "color": "#fff",
-                        },
-                        "&-warning": {
-                          "&.ghost": {
-                            "&:hover": {
-                              "@media (hover: none)": {
-                                "backgroundColor": "rgba(255, 255, 255, 0.08)",
-                              },
-                              "backgroundColor": "rgba(255, 255, 255, 0.16)",
-                            },
-                            "backgroundColor": "rgba(255, 255, 255, 0.08)",
-                          },
-                          "&:hover": {
-                            "@media (hover: none)": {
-                              "backgroundColor": "transparent",
-                            },
-                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
-                          },
-                          "borderColor": "#fff",
-                          "color": "#fff",
-                        },
-                      },
-                      "&.ghost": {
-                        "&:hover": {
-                          "@media (hover: none)": {
-                            "backgroundColor": "rgba(255, 255, 255, 0.08)",
-                          },
-                          "backgroundColor": "rgba(255, 255, 255, 0.16)",
-                        },
-                        "backgroundColor": "rgba(255, 255, 255, 0.08)",
-                      },
-                    },
-                  },
-                  "root": {
-                    "&.ghost": {
-                      "&:hover": {
-                        "borderStyle": "dashed !important",
-                      },
-                      "borderStyle": "dashed !important",
-                    },
-                    "borderRadius": 2,
-                    "height": "2.5rem",
-                    "lineHeight": "normal",
-                    "padding": "0 1rem",
-                  },
-                  "sizeLarge": {
-                    "&$text": {
-                      "padding": "14px 10px",
-                    },
-                    "height": "3rem",
-                    "padding": "0 1.25rem",
-                  },
-                  "sizeSmall": {
-                    "&$text": {
-                      "padding": "8px 6px",
-                    },
-                    "height": "2rem",
-                    "padding": "0 0.75rem",
-                  },
-                  "startIcon": {
-                    "marginLeft": "0 !important",
-                  },
-                  "text": {
-                    "&:not($disabled)": {
-                      "&.customColor": {
-                        "&-error": {
-                          "&:hover": {
-                            "@media (hover: none)": {
-                              "backgroundColor": "transparent",
-                            },
-                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
-                          },
-                          "color": "#fff",
-                        },
-                        "&-info": {
-                          "&:hover": {
-                            "@media (hover: none)": {
-                              "backgroundColor": "transparent",
-                            },
-                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
-                          },
-                          "color": "#fff",
-                        },
-                        "&-success": {
-                          "&:hover": {
-                            "@media (hover: none)": {
-                              "backgroundColor": "transparent",
-                            },
-                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
-                          },
-                          "color": "#fff",
-                        },
-                        "&-warning": {
-                          "&:hover": {
-                            "@media (hover: none)": {
-                              "backgroundColor": "transparent",
-                            },
-                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
-                          },
-                          "color": "#fff",
-                        },
-                      },
-                    },
-                    "minWidth": "auto",
-                    "padding": "11px 8px",
-                  },
+                "anchorOriginBottomRightRectangular": {
+                  "transform": "scale(1) translate(37%, 37%)",
                 },
-                "MuiCheckbox": {
-                  "colorSecondary": {
-                    "&$checked": {
-                      "color": "#fff",
-                    },
-                  },
+                "anchorOriginTopLeftRectangular": {
+                  "transform": "scale(1) translate(-37%, -37%)",
                 },
-                "MuiChip": {
-                  "root": {
+                "anchorOriginTopRightRectangular": {
+                  "transform": "scale(1) translate(37%, -37%)",
+                },
+                "badge": {
+                  "&.badgeBorder": {
+                    "border": "2px solid #fff",
+                  },
+                  "&.badgeSizeLarge": {
+                    "fontSize": ".6875rem",
+                    "height": "1rem",
+                    "minWidth": "1rem",
+                  },
+                  "&.badgeSizeMedium": {
+                    "fontSize": ".625rem",
+                    "height": ".875rem",
+                    "minWidth": ".875rem",
+                  },
+                  "&.badgeSizeSmall": {
+                    "fontSize": ".5rem",
+                    "height": ".75rem",
+                    "minWidth": ".75rem",
+                  },
+                  "boxSizing": "content-box",
+                  "padding": 0,
+                },
+                "dot": {
+                  "&.badgeSizeLarge": {
+                    "height": ".625rem",
+                    "minWidth": ".625rem",
+                  },
+                  "&.badgeSizeMedium": {
+                    "height": ".5rem",
+                    "minWidth": ".5rem",
+                  },
+                  "&.badgeSizeSmall": {
+                    "height": ".375rem",
+                    "minWidth": ".375rem",
+                  },
+                  "borderRadius": "100%",
+                  "padding": 0,
+                },
+              },
+              "MuiButton": {
+                "contained": {
+                  "&:not($disabled)": {
                     "&.customColor": {
                       "&-error": {
-                        "& $deleteIcon": {
-                          "color": "#fff",
-                          "fill": "#fff",
-                        },
-                        "& $icon": {
-                          "color": "#fff",
-                          "fill": "#fff",
-                        },
-                        "&$clickable, &$deletable": {
-                          "&:hover, &:focus": {
-                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
-                            "borderColor": "rgba(255, 255, 255, 0.16)",
-                          },
-                        },
-                        "&$colorPrimary": {
-                          "& $icon, & $deleteIcon": {
-                            "color": "#fff",
-                            "fill": "#fff",
-                          },
-                          "&$clickable, &$deletable": {
-                            "&:hover, &:focus": {
-                              "backgroundColor": "#fff",
-                            },
-                          },
-                          "&$disabled": {
-                            "& $icon, & $deleteIcon": {
-                              "color": "#fff",
-                              "fill": "#fff",
-                            },
+                        "&:hover": {
+                          "@media (hover: none)": {
                             "backgroundColor": "#fff",
-                            "color": "#fff",
-                            "opacity": 1,
                           },
                           "backgroundColor": "#fff",
-                          "color": "#fff",
-                          "padding": "0 1px",
                         },
-                        "&.ghost": {
-                          "&$clickable, &$deletable": {
-                            "&:hover, &:focus": {
-                              "backgroundColor": "rgba(255, 255, 255, 0.16)",
-                              "borderColor": "rgba(255, 255, 255, 0.48)",
-                            },
-                          },
-                          "&:not($disabled)": {
-                            "& $icon, & $deleteIcon": {
-                              "color": "#fff",
-                              "fill": "#fff",
-                            },
-                            "backgroundColor": "rgba(255, 255, 255, 0.08)",
-                            "borderColor": "rgba(255, 255, 255, 0.48)",
-                            "color": "#fff",
-                          },
-                          "borderStyle": "dashed",
-                          "borderWidth": "1px",
-                        },
-                        "borderColor": "rgba(255, 255, 255, 0.16)",
+                        "backgroundColor": "#fff",
                         "color": "#fff",
                       },
                       "&-info": {
-                        "& $deleteIcon": {
-                          "color": "#fff",
-                          "fill": "#fff",
-                        },
-                        "& $icon": {
-                          "color": "#fff",
-                          "fill": "#fff",
-                        },
-                        "&$clickable, &$deletable": {
-                          "&:hover, &:focus": {
-                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
-                            "borderColor": "rgba(255, 255, 255, 0.16)",
-                          },
-                        },
-                        "&$colorPrimary": {
-                          "& $icon, & $deleteIcon": {
-                            "color": "#fff",
-                            "fill": "#fff",
-                          },
-                          "&$clickable, &$deletable": {
-                            "&:hover, &:focus": {
-                              "backgroundColor": "#fff",
-                            },
-                          },
-                          "&$disabled": {
-                            "& $icon, & $deleteIcon": {
-                              "color": "#fff",
-                              "fill": "#fff",
-                            },
+                        "&:hover": {
+                          "@media (hover: none)": {
                             "backgroundColor": "#fff",
-                            "color": "#fff",
-                            "opacity": 1,
                           },
                           "backgroundColor": "#fff",
-                          "color": "#fff",
-                          "padding": "0 1px",
                         },
+                        "backgroundColor": "#fff",
+                        "color": "#fff",
+                      },
+                      "&-success": {
+                        "&:hover": {
+                          "@media (hover: none)": {
+                            "backgroundColor": "#fff",
+                          },
+                          "backgroundColor": "#fff",
+                        },
+                        "backgroundColor": "#fff",
+                        "color": "#fff",
+                      },
+                      "&-warning": {
+                        "&:hover": {
+                          "@media (hover: none)": {
+                            "backgroundColor": "#fff",
+                          },
+                          "backgroundColor": "#fff",
+                        },
+                        "backgroundColor": "#fff",
+                        "color": "#fff",
+                      },
+                    },
+                  },
+                  "boxShadow": 0,
+                },
+                "outlined": {
+                  "&:not($disabled)": {
+                    "&.customColor": {
+                      "&-error": {
                         "&.ghost": {
-                          "&$clickable, &$deletable": {
-                            "&:hover, &:focus": {
-                              "backgroundColor": "rgba(255, 255, 255, 0.16)",
-                              "borderColor": "rgba(255, 255, 255, 0.48)",
+                          "&:hover": {
+                            "@media (hover: none)": {
+                              "backgroundColor": "rgba(255, 255, 255, 0.08)",
                             },
+                            "backgroundColor": "rgba(255, 255, 255, 0.16)",
                           },
-                          "&:not($disabled)": {
-                            "& $icon, & $deleteIcon": {
-                              "color": "#fff",
-                              "fill": "#fff",
-                            },
-                            "backgroundColor": "rgba(255, 255, 255, 0.08)",
-                            "borderColor": "rgba(255, 255, 255, 0.48)",
-                            "color": "#fff",
-                          },
-                          "borderStyle": "dashed",
-                          "borderWidth": "1px",
+                          "backgroundColor": "rgba(255, 255, 255, 0.08)",
                         },
-                        "borderColor": "rgba(255, 255, 255, 0.16)",
+                        "&:hover": {
+                          "@media (hover: none)": {
+                            "backgroundColor": "transparent",
+                          },
+                          "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                        },
+                        "borderColor": "#fff",
+                        "color": "#fff",
+                      },
+                      "&-info": {
+                        "&.ghost": {
+                          "&:hover": {
+                            "@media (hover: none)": {
+                              "backgroundColor": "rgba(255, 255, 255, 0.08)",
+                            },
+                            "backgroundColor": "rgba(255, 255, 255, 0.16)",
+                          },
+                          "backgroundColor": "rgba(255, 255, 255, 0.08)",
+                        },
+                        "&:hover": {
+                          "@media (hover: none)": {
+                            "backgroundColor": "transparent",
+                          },
+                          "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                        },
+                        "borderColor": "#fff",
                         "color": "#fff",
                       },
                       "&-primary": {
-                        "& $deleteIcon": {
+                        "&.ghost": {
+                          "borderColor": "rgba(255, 255, 255, 0.48)",
                           "color": "#fff",
-                          "fill": "#fff",
                         },
-                        "& $icon": {
-                          "color": "#fff",
-                          "fill": "#fff",
-                        },
-                        "&$clickable, &$deletable": {
-                          "&:hover, &:focus": {
-                            "backgroundColor": "#fff",
-                            "borderColor": "#fff",
-                          },
-                        },
-                        "&$colorPrimary": {
-                          "& $icon, & $deleteIcon": {
-                            "color": "#fff",
-                            "fill": "#fff",
-                          },
-                          "&$clickable, &$deletable": {
-                            "&:hover, &:focus": {
-                              "backgroundColor": "#fff",
-                            },
-                          },
-                          "&$disabled": {
-                            "& $icon, & $deleteIcon": {
-                              "color": "#fff",
-                              "fill": "#fff",
-                            },
-                            "backgroundColor": "#fff",
-                            "color": "#fff",
-                            "opacity": 1,
+                        "&:hover": {
+                          "@media (hover: none)": {
+                            "backgroundColor": "transparent",
                           },
                           "backgroundColor": "#fff",
-                          "color": "#fff",
-                          "padding": "0 1px",
-                        },
-                        "&.ghost": {
-                          "&$clickable, &$deletable": {
-                            "&:hover, &:focus": {
-                              "backgroundColor": "rgba(255, 255, 255, 0.16)",
-                              "borderColor": "rgba(255, 255, 255, 0.48)",
-                            },
-                          },
-                          "&:not($disabled)": {
-                            "& $icon, & $deleteIcon": {
-                              "color": "#fff",
-                              "fill": "#fff",
-                            },
-                            "backgroundColor": "rgba(255, 255, 255, 0.08)",
-                            "borderColor": "rgba(255, 255, 255, 0.48)",
-                            "color": "#fff",
-                          },
-                          "borderStyle": "dashed",
-                          "borderWidth": "1px",
                         },
                         "borderColor": "#fff",
                         "color": "#fff",
                       },
                       "&-success": {
-                        "& $deleteIcon": {
-                          "color": "#fff",
-                          "fill": "#fff",
-                        },
-                        "& $icon": {
-                          "color": "#fff",
-                          "fill": "#fff",
-                        },
-                        "&$clickable, &$deletable": {
-                          "&:hover, &:focus": {
-                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
-                            "borderColor": "rgba(255, 255, 255, 0.16)",
-                          },
-                        },
-                        "&$colorPrimary": {
-                          "& $icon, & $deleteIcon": {
-                            "color": "#fff",
-                            "fill": "#fff",
-                          },
-                          "&$clickable, &$deletable": {
-                            "&:hover, &:focus": {
-                              "backgroundColor": "#fff",
-                            },
-                          },
-                          "&$disabled": {
-                            "& $icon, & $deleteIcon": {
-                              "color": "#fff",
-                              "fill": "#fff",
-                            },
-                            "backgroundColor": "#fff",
-                            "color": "#fff",
-                            "opacity": 1,
-                          },
-                          "backgroundColor": "#fff",
-                          "color": "#fff",
-                          "padding": "0 1px",
-                        },
                         "&.ghost": {
-                          "&$clickable, &$deletable": {
-                            "&:hover, &:focus": {
-                              "backgroundColor": "rgba(255, 255, 255, 0.16)",
-                              "borderColor": "rgba(255, 255, 255, 0.48)",
+                          "&:hover": {
+                            "@media (hover: none)": {
+                              "backgroundColor": "rgba(255, 255, 255, 0.08)",
                             },
+                            "backgroundColor": "rgba(255, 255, 255, 0.16)",
                           },
-                          "&:not($disabled)": {
-                            "& $icon, & $deleteIcon": {
-                              "color": "#fff",
-                              "fill": "#fff",
-                            },
-                            "backgroundColor": "rgba(255, 255, 255, 0.08)",
-                            "borderColor": "rgba(255, 255, 255, 0.48)",
-                            "color": "#fff",
-                          },
-                          "borderStyle": "dashed",
-                          "borderWidth": "1px",
+                          "backgroundColor": "rgba(255, 255, 255, 0.08)",
                         },
-                        "borderColor": "rgba(255, 255, 255, 0.16)",
+                        "&:hover": {
+                          "@media (hover: none)": {
+                            "backgroundColor": "transparent",
+                          },
+                          "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                        },
+                        "borderColor": "#fff",
                         "color": "#fff",
                       },
                       "&-warning": {
-                        "& $deleteIcon": {
-                          "color": "#fff",
-                          "fill": "#fff",
-                        },
-                        "& $icon": {
-                          "color": "#fff",
-                          "fill": "#fff",
-                        },
-                        "&$clickable, &$deletable": {
-                          "&:hover, &:focus": {
-                            "backgroundColor": "rgba(255, 255, 255, 0.04)",
-                            "borderColor": "rgba(255, 255, 255, 0.16)",
-                          },
-                        },
-                        "&$colorPrimary": {
-                          "& $icon, & $deleteIcon": {
-                            "color": "#fff",
-                            "fill": "#fff",
-                          },
-                          "&$clickable, &$deletable": {
-                            "&:hover, &:focus": {
-                              "backgroundColor": "#fff",
-                            },
-                          },
-                          "&$disabled": {
-                            "& $icon, & $deleteIcon": {
-                              "color": "#fff",
-                              "fill": "#fff",
-                            },
-                            "backgroundColor": "#fff",
-                            "color": "#fff",
-                            "opacity": 1,
-                          },
-                          "backgroundColor": "#fff",
-                          "color": "#fff",
-                          "padding": "0 1px",
-                        },
                         "&.ghost": {
-                          "&$clickable, &$deletable": {
-                            "&:hover, &:focus": {
-                              "backgroundColor": "rgba(255, 255, 255, 0.16)",
-                              "borderColor": "rgba(255, 255, 255, 0.48)",
+                          "&:hover": {
+                            "@media (hover: none)": {
+                              "backgroundColor": "rgba(255, 255, 255, 0.08)",
                             },
+                            "backgroundColor": "rgba(255, 255, 255, 0.16)",
                           },
-                          "&:not($disabled)": {
-                            "& $icon, & $deleteIcon": {
-                              "color": "#fff",
-                              "fill": "#fff",
-                            },
-                            "backgroundColor": "rgba(255, 255, 255, 0.08)",
-                            "borderColor": "rgba(255, 255, 255, 0.48)",
-                            "color": "#fff",
-                          },
-                          "borderStyle": "dashed",
-                          "borderWidth": "1px",
+                          "backgroundColor": "rgba(255, 255, 255, 0.08)",
                         },
-                        "borderColor": "rgba(255, 255, 255, 0.16)",
+                        "&:hover": {
+                          "@media (hover: none)": {
+                            "backgroundColor": "transparent",
+                          },
+                          "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                        },
+                        "borderColor": "#fff",
                         "color": "#fff",
                       },
                     },
-                    "&.noLabel": {
-                      "& $icon": {
-                        "margin": 0,
-                      },
-                      "& $label": {
-                        "display": "none",
-                      },
-                      "width": "32px",
-                    },
-                  },
-                },
-                "MuiDialog": {
-                  "paper": {
-                    "&.large": {
-                      "@media (min-width:768px)": {
-                        "maxWidth": "800px",
-                        "width": "800px",
-                      },
-                    },
-                    "&.medium": {
-                      "@media (min-width:768px)": {
-                        "maxWidth": "544px",
-                        "width": "544px",
-                      },
-                    },
-                    "&.overflow": {
-                      "overflowY": "visible !important",
-                    },
-                    "&.small": {
-                      "@media (max-width:1022.95px)": {
-                        "borderRadius": "6px",
-                        "height": "auto",
-                        "margin": "16px",
-                        "maxHeight": "calc(100% - 32px)",
-                        "padding": "0 8px 8px",
-                      },
-                      "maxWidth": "480px",
-                      "width": "480px",
-                    },
-                  },
-                  "paperFullScreen": {
-                    "& .cozyDialogActions": {
-                      "paddingBottom": "calc(env(safe-area-inset-bottom) + var(--flagship-bottom-height, 0px))",
-                    },
-                    "& [class*="DialogBackButton"]": {
-                      "transform": "translateY(var(--flagship-top-height, 0px))",
-                    },
-                    "& [class*="DialogCloseButton"]": {
-                      "transform": "translateY(var(--flagship-top-height, 0px))",
-                    },
-                    ".flagship-app & .cozyDialogContent": {
-                      "marginBottom": "var(--flagship-bottom-height, 0px) !important",
-                    },
-                    ".flagship-app & .cozyDialogTitle": {
-                      "paddingTop": "calc(var(--flagship-top-height, 0px) + 0.75rem) !important",
-                    },
-                  },
-                  "scrollPaper": {
-                    "&.alignTop": {
-                      "alignItems": "start",
-                    },
-                  },
-                },
-                "MuiDialogActions": {
-                  "root": {
-                    "&.columnLayout": {
-                      "& button": {
-                        "&:not(:first-child)": {
-                          "marginBottom": "8px",
+                    "&.ghost": {
+                      "&:hover": {
+                        "@media (hover: none)": {
+                          "backgroundColor": "rgba(255, 255, 255, 0.08)",
                         },
-                        "margin": 0,
-                        "width": "100%",
+                        "backgroundColor": "rgba(255, 255, 255, 0.16)",
                       },
-                      "display": "flex",
-                      "flexDirection": "column-reverse",
+                      "backgroundColor": "rgba(255, 255, 255, 0.08)",
                     },
-                    "&.dialogActionsFluid": {
-                      "margin": "24px 0 0",
-                    },
-                    "&:not(.columnLayout) > :not(:first-child):not(:first-child)": {
-                      "marginLeft": 4,
-                    },
-                    "@media (max-width:767.95px)": {
-                      "& button": {
-                        "flexGrow": 1,
-                      },
-                      "margin": "8px 16px",
-                    },
-                    "margin": "16px 32px",
-                    "padding": 0,
                   },
                 },
-                "MuiDialogContent": {
-                  "root": {
-                    "& .dialogContentInner": {
-                      "& .dialogTitleFluidContainer": {
-                        "@media (max-width:767.95px)": {
-                          "marginLeft": "-1rem",
-                          "marginRight": "-1rem",
-                          "marginTop": "-0.75rem",
-                        },
-                        "marginLeft": "-2rem",
-                        "marginRight": "-2rem",
-                      },
-                      "&.withFluidActions": {
-                        "@media (max-width:767.95px)": {
-                          "& .cozyDialogActions": {
-                            "paddingBottom": "calc(env(safe-area-inset-bottom) + var(--flagship-bottom-height, 0px) + 16px)",
-                          },
-                          "& .dialogContentWrapper": {
-                            "&:not(.withActions)": {
-                              "paddingBottom": "calc(env(safe-area-inset-bottom) + var(--flagship-bottom-height, 0px) + 16px)",
-                            },
-                            "flexGrow": 1,
-                          },
-                          "display": "flex",
-                          "flexDirection": "column",
-                          "height": "100%",
-                          "marginBottom": 0,
-                        },
-                      },
-                      "marginBottom": "24px",
-                    },
-                    "&.disableGutters": {
-                      "& .dialogContentInner": {
-                        "marginBottom": 0,
-                      },
-                      "& .dialogTitleFluidContainer": {
-                        "marginLeft": 0,
-                        "marginRight": 0,
-                        "marginTop": 0,
-                      },
-                      "padding": 0,
-                    },
-                    "@media (max-width:767.95px)": {
-                      "padding": "24px 16px 0",
-                    },
-                    "padding": "24px 32px 0",
-                  },
-                },
-                "MuiDialogTitle": {
-                  "root": {
-                    "&.dialogTitleFluid": {
-                      "paddingTop": 0,
-                    },
-                    "&.dialogTitleWithBack": {
-                      "@media (max-width:767.95px)": {
-                        "paddingLeft": "3rem",
-                      },
-                      "paddingLeft": "4rem",
-                    },
-                    "&.dialogTitleWithClose": {
-                      "@media (max-width:767.95px)": {
-                        "paddingRight": "3rem",
-                      },
-                      "paddingRight": "4rem",
-                    },
-                    "@media (max-width:767.95px)": {
-                      "fontFamily": "var(--primaryFont)",
-                      "fontSize": 20,
-                      "fontWeight": "bold",
-                      "lineHeight": 1.167,
-                      "padding": "0.75rem 1rem",
-                    },
-                    "boxSizing": "border-box",
-                    "fontFamily": "var(--primaryFont)",
-                    "fontSize": 24,
-                    "fontWeight": "bold",
-                    "lineHeight": 1.167,
-                    "padding": "1.5rem 2rem",
-                    "width": "100%",
-                  },
-                },
-                "MuiDivider": {
-                  "inset": {
-                    "&.divider--dialog": {
-                      "marginLeft": 80,
-                    },
-                    "marginLeft": 64,
-                  },
-                },
-                "MuiFab": {
-                  "extended": {
-                    "&$sizeMedium": {
-                      "borderRadius": 24,
-                      "height": 48,
-                      "minWidth": 48,
-                      "padding": "0 16px",
-                    },
-                    "&$sizeSmall": {
-                      "borderRadius": 20,
-                      "height": 40,
-                      "minWidth": 40,
-                      "padding": "0 12px",
-                    },
-                    "borderRadius": 28,
-                    "height": 56,
-                    "minWidth": 56,
-                    "padding": "0 20px",
-                  },
-                  "root": {
+                "root": {
+                  "&.ghost": {
                     "&:hover": {
-                      "backgroundColor": "rgb(242, 242, 242)",
+                      "borderStyle": "dashed !important",
                     },
-                    "@media (hover: none)": {
-                      "backgroundColor": "#fff",
-                    },
-                    "backgroundColor": "#fff",
-                    "color": "#fff",
+                    "borderStyle": "dashed !important",
                   },
+                  "borderRadius": 2,
+                  "height": "2.5rem",
+                  "lineHeight": "normal",
+                  "padding": "0 1rem",
                 },
-                "MuiFormHelperText": {
-                  "root": {
-                    "&$disabled&$error": {
-                      "color": "#fff",
-                    },
-                    "fontSize": "0.875rem",
-                    "fontStyle": "italic",
-                    "marginTop": 4,
+                "sizeLarge": {
+                  "&$text": {
+                    "padding": "14px 10px",
                   },
+                  "height": "3rem",
+                  "padding": "0 1.25rem",
                 },
-                "MuiFormLabel": {
-                  "root": {
-                    "&$disabled&$error": {
-                      "color": "#fff",
-                    },
-                    "color": "#fff",
+                "sizeSmall": {
+                  "&$text": {
+                    "padding": "8px 6px",
                   },
+                  "height": "2rem",
+                  "padding": "0 0.75rem",
                 },
-                "MuiIconButton": {
-                  "root": {
-                    "&.cozyStyles": {
+                "startIcon": {
+                  "marginLeft": "0 !important",
+                },
+                "text": {
+                  "&:not($disabled)": {
+                    "&.customColor": {
                       "&-error": {
                         "&:hover": {
                           "@media (hover: none)": {
@@ -1181,583 +579,878 @@ exports[`Dropzone should match snapshot 1`] = `
                         },
                         "color": "#fff",
                       },
-                    },
-                    "&.dialogIconButton": {
-                      "&:hover": {
-                        "backgroundColor": "#fff",
+                      "&-info": {
+                        "&:hover": {
+                          "@media (hover: none)": {
+                            "backgroundColor": "transparent",
+                          },
+                          "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                        },
+                        "color": "#fff",
                       },
-                      "backgroundColor": "#fff",
-                    },
-                    "&.large": {
-                      "padding": 16,
-                    },
-                    "&.medium": {
-                      "padding": 12,
-                    },
-                    "&.small": {
-                      "padding": 3,
-                    },
-                    "color": "#fff",
-                  },
-                },
-                "MuiInputLabel": {
-                  "outlined": {
-                    "&$marginDense": {
-                      "transform": "translate(14px, 14px) scale(1)",
-                    },
-                    "&:not($shrink)": {
-                      "&$error": {
+                      "&-success": {
+                        "&:hover": {
+                          "@media (hover: none)": {
+                            "backgroundColor": "transparent",
+                          },
+                          "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                        },
+                        "color": "#fff",
+                      },
+                      "&-warning": {
+                        "&:hover": {
+                          "@media (hover: none)": {
+                            "backgroundColor": "transparent",
+                          },
+                          "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                        },
                         "color": "#fff",
                       },
                     },
                   },
+                  "minWidth": "auto",
+                  "padding": "11px 8px",
                 },
-                "MuiListItem": {
-                  "dense": {
-                    "&.large": {
-                      "minHeight": 56,
-                      "paddingBottom": 12,
-                      "paddingTop": 12,
-                    },
-                    "&.small": {
-                      "minHeight": 40,
-                      "paddingBottom": 4,
-                      "paddingTop": 4,
-                    },
-                    "minHeight": 48,
-                    "paddingBottom": 8,
-                    "paddingTop": 8,
-                  },
-                  "root": {
-                    "&.large": {
-                      "minHeight": 64,
-                      "paddingBottom": 16,
-                      "paddingTop": 16,
-                    },
-                    "&.small": {
-                      "minHeight": 48,
-                      "paddingBottom": 8,
-                      "paddingTop": 8,
-                    },
-                    "gap": 16,
-                    "minHeight": 56,
-                    "paddingBottom": 12,
-                    "paddingTop": 12,
-                  },
-                },
-                "MuiListItemIcon": {
-                  "root": {
-                    "alignItems": "center",
+              },
+              "MuiCheckbox": {
+                "colorSecondary": {
+                  "&$checked": {
                     "color": "#fff",
-                    "height": 32,
-                    "justifyContent": "center",
-                    "minWidth": "auto",
-                    "width": 32,
                   },
                 },
-                "MuiListItemSecondaryAction": {
-                  "root": {
-                    "right": 0,
-                  },
-                },
-                "MuiListItemText": {
-                  "multiline": {
-                    "marginBottom": 1,
-                    "marginTop": 1,
-                  },
-                  "root": {
-                    "marginBottom": 1,
-                    "marginTop": 1,
-                  },
-                  "secondary": {
-                    "marginTop": 1,
-                  },
-                },
-                "MuiListSubheader": {
-                  "root": {
-                    "backgroundColor": "#fff",
-                    "fontFamily": "var(--primaryFont)",
-                    "fontSize": 12,
-                    "fontWeight": "bold",
-                    "lineHeight": 1.334,
-                    "marginBottom": "0.5rem",
-                    "paddingBottom": 8,
-                    "paddingTop": 8,
-                    "textTransform": "uppercase",
-                  },
-                  "sticky": {
-                    "backgroundColor": "#fff",
-                  },
-                },
-                "MuiMenuItem": {
-                  "gutters": {
-                    "paddingLeft": 16,
-                    "paddingRight": 16,
-                  },
-                  "root": {
-                    "& .cozyListItemIcon": {
-                      "height": 16,
-                      "width": 16,
+              },
+              "MuiChip": {
+                "root": {
+                  "&.customColor": {
+                    "&-error": {
+                      "& $deleteIcon": {
+                        "color": "#fff",
+                        "fill": "#fff",
+                      },
+                      "& $icon": {
+                        "color": "#fff",
+                        "fill": "#fff",
+                      },
+                      "&$clickable, &$deletable": {
+                        "&:hover, &:focus": {
+                          "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                          "borderColor": "rgba(255, 255, 255, 0.16)",
+                        },
+                      },
+                      "&$colorPrimary": {
+                        "& $icon, & $deleteIcon": {
+                          "color": "#fff",
+                          "fill": "#fff",
+                        },
+                        "&$clickable, &$deletable": {
+                          "&:hover, &:focus": {
+                            "backgroundColor": "#fff",
+                          },
+                        },
+                        "&$disabled": {
+                          "& $icon, & $deleteIcon": {
+                            "color": "#fff",
+                            "fill": "#fff",
+                          },
+                          "backgroundColor": "#fff",
+                          "color": "#fff",
+                          "opacity": 1,
+                        },
+                        "backgroundColor": "#fff",
+                        "color": "#fff",
+                        "padding": "0 1px",
+                      },
+                      "&.ghost": {
+                        "&$clickable, &$deletable": {
+                          "&:hover, &:focus": {
+                            "backgroundColor": "rgba(255, 255, 255, 0.16)",
+                            "borderColor": "rgba(255, 255, 255, 0.48)",
+                          },
+                        },
+                        "&:not($disabled)": {
+                          "& $icon, & $deleteIcon": {
+                            "color": "#fff",
+                            "fill": "#fff",
+                          },
+                          "backgroundColor": "rgba(255, 255, 255, 0.08)",
+                          "borderColor": "rgba(255, 255, 255, 0.48)",
+                          "color": "#fff",
+                        },
+                        "borderStyle": "dashed",
+                        "borderWidth": "1px",
+                      },
+                      "borderColor": "rgba(255, 255, 255, 0.16)",
+                      "color": "#fff",
                     },
-                    "&.cozyActionsMenuItem": {
-                      "minWidth": 256,
+                    "&-info": {
+                      "& $deleteIcon": {
+                        "color": "#fff",
+                        "fill": "#fff",
+                      },
+                      "& $icon": {
+                        "color": "#fff",
+                        "fill": "#fff",
+                      },
+                      "&$clickable, &$deletable": {
+                        "&:hover, &:focus": {
+                          "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                          "borderColor": "rgba(255, 255, 255, 0.16)",
+                        },
+                      },
+                      "&$colorPrimary": {
+                        "& $icon, & $deleteIcon": {
+                          "color": "#fff",
+                          "fill": "#fff",
+                        },
+                        "&$clickable, &$deletable": {
+                          "&:hover, &:focus": {
+                            "backgroundColor": "#fff",
+                          },
+                        },
+                        "&$disabled": {
+                          "& $icon, & $deleteIcon": {
+                            "color": "#fff",
+                            "fill": "#fff",
+                          },
+                          "backgroundColor": "#fff",
+                          "color": "#fff",
+                          "opacity": 1,
+                        },
+                        "backgroundColor": "#fff",
+                        "color": "#fff",
+                        "padding": "0 1px",
+                      },
+                      "&.ghost": {
+                        "&$clickable, &$deletable": {
+                          "&:hover, &:focus": {
+                            "backgroundColor": "rgba(255, 255, 255, 0.16)",
+                            "borderColor": "rgba(255, 255, 255, 0.48)",
+                          },
+                        },
+                        "&:not($disabled)": {
+                          "& $icon, & $deleteIcon": {
+                            "color": "#fff",
+                            "fill": "#fff",
+                          },
+                          "backgroundColor": "rgba(255, 255, 255, 0.08)",
+                          "borderColor": "rgba(255, 255, 255, 0.48)",
+                          "color": "#fff",
+                        },
+                        "borderStyle": "dashed",
+                        "borderWidth": "1px",
+                      },
+                      "borderColor": "rgba(255, 255, 255, 0.16)",
+                      "color": "#fff",
                     },
-                    "@media (min-width:480px)": {
-                      "minHeight": 40,
-                    },
-                    "maxWidth": 320,
-                    "overflow": "auto",
-                    "paddingBottom": 4,
-                    "paddingTop": 4,
-                    "whiteSpace": "normal",
-                  },
-                },
-                "MuiOutlinedInput": {
-                  "input": {
-                    "padding": "18.5px 16px",
-                  },
-                  "inputMarginDense": {
-                    "paddingBottom": 15,
-                    "paddingTop": 14,
-                  },
-                  "notchedOutline": {
-                    "borderColor": "#fff",
-                  },
-                  "root": {
-                    "&$disabled": {
-                      "background": "#fff",
-                    },
-                    "&$focused $notchedOutline": {
-                      "borderWidth": "0.0625rem",
-                    },
-                    "&:hover $notchedOutline": {
+                    "&-primary": {
+                      "& $deleteIcon": {
+                        "color": "#fff",
+                        "fill": "#fff",
+                      },
+                      "& $icon": {
+                        "color": "#fff",
+                        "fill": "#fff",
+                      },
+                      "&$clickable, &$deletable": {
+                        "&:hover, &:focus": {
+                          "backgroundColor": "#fff",
+                          "borderColor": "#fff",
+                        },
+                      },
+                      "&$colorPrimary": {
+                        "& $icon, & $deleteIcon": {
+                          "color": "#fff",
+                          "fill": "#fff",
+                        },
+                        "&$clickable, &$deletable": {
+                          "&:hover, &:focus": {
+                            "backgroundColor": "#fff",
+                          },
+                        },
+                        "&$disabled": {
+                          "& $icon, & $deleteIcon": {
+                            "color": "#fff",
+                            "fill": "#fff",
+                          },
+                          "backgroundColor": "#fff",
+                          "color": "#fff",
+                          "opacity": 1,
+                        },
+                        "backgroundColor": "#fff",
+                        "color": "#fff",
+                        "padding": "0 1px",
+                      },
+                      "&.ghost": {
+                        "&$clickable, &$deletable": {
+                          "&:hover, &:focus": {
+                            "backgroundColor": "rgba(255, 255, 255, 0.16)",
+                            "borderColor": "rgba(255, 255, 255, 0.48)",
+                          },
+                        },
+                        "&:not($disabled)": {
+                          "& $icon, & $deleteIcon": {
+                            "color": "#fff",
+                            "fill": "#fff",
+                          },
+                          "backgroundColor": "rgba(255, 255, 255, 0.08)",
+                          "borderColor": "rgba(255, 255, 255, 0.48)",
+                          "color": "#fff",
+                        },
+                        "borderStyle": "dashed",
+                        "borderWidth": "1px",
+                      },
                       "borderColor": "#fff",
+                      "color": "#fff",
                     },
-                    "borderRadius": 4,
-                  },
-                },
-                "MuiRadio": {
-                  "colorPrimary": {
-                    "&$checked svg": {
-                      "fill": "#fff",
-                    },
-                    "&$disabled&$checked svg": {
-                      "fill": "#fff",
-                    },
-                  },
-                  "colorSecondary": {
-                    "&$checked svg": {
-                      "fill": "#fff",
-                    },
-                    "&$disabled&$checked svg": {
-                      "fill": "#fff",
-                    },
-                  },
-                  "root": {
-                    "&$disabled svg": {
-                      "backgroundColor": "#fff",
-                      "borderRadius": "50%",
-                      "fill": "#fff",
-                    },
-                    "&:not($checked) svg": {
-                      "fill": "#fff",
-                    },
-                    "padding": "12px",
-                  },
-                },
-                "MuiSnackbarContent": {
-                  "root": {
-                    "backgroundColor": "#fff",
-                    "padding": "4px 12px",
-                  },
-                },
-                "MuiStepConnector": {
-                  "line": {
-                    "borderColor": "#fff",
-                  },
-                },
-                "MuiStepContent": {
-                  "root": {
-                    "borderColor": "#fff",
-                  },
-                },
-                "MuiStepLabel": {
-                  "label": {
-                    "&$active": {
-                      "fontFamily": "var(--primaryFont)",
-                      "fontSize": 16,
-                      "fontWeight": "bold",
-                      "lineHeight": 1.313,
-                    },
-                    "&$completed": {
-                      "fontFamily": "var(--primaryFont)",
-                      "fontSize": 16,
-                      "fontWeight": "bold",
-                      "lineHeight": 1.313,
-                    },
-                    "fontFamily": "var(--primaryFont)",
-                    "fontSize": 16,
-                    "fontWeight": 400,
-                    "lineHeight": 1.313,
-                  },
-                },
-                "MuiSwitch": {
-                  "checked": {
-                    "& + $track$track": {
-                      "opacity": 1,
-                    },
-                  },
-                  "colorSecondary": {
-                    "&$checked": {
-                      "& + $track": {
-                        "backgroundColor": "#fff",
-                      },
-                    },
-                  },
-                  "disabled": {
-                    "& $thumb": {
-                      "backgroundColor": "#fff",
-                    },
-                    "&$checked + $track": {
-                      "backgroundColor": "#fff !important",
-                    },
-                  },
-                  "switchBase": {
-                    "&$checked": {
-                      "transform": "translateX(15px)",
-                    },
-                    "top": 1,
-                  },
-                  "thumb": {
-                    "backgroundColor": "#fff",
-                    "height": 16,
-                    "width": 16,
-                  },
-                  "track": {
-                    "backgroundColor": "#fff",
-                    "height": 12,
-                    "opacity": 1,
-                    "width": 25,
-                  },
-                },
-                "MuiTab": {
-                  "root": {
-                    "&.narrowed": {
-                      "@media (min-width:480px)": {
-                        "minWidth": "auto",
-                      },
-                      "minWidth": "auto",
-                    },
-                    "&.segmented": {
-                      "&$selected": {
+                    "&-success": {
+                      "& $deleteIcon": {
                         "color": "#fff",
+                        "fill": "#fff",
                       },
-                      "borderRadius": "99px",
-                      "fontFamily": "var(--primaryFont)",
-                      "fontSize": 14,
-                      "fontWeight": 400,
-                      "lineHeight": 1.313,
-                      "minHeight": "2.5rem",
-                      "textTransform": "initial",
-                      "zIndex": 1,
-                    },
-                    "&:focus": {
-                      "color": "#fff",
-                    },
-                    "&:hover": {
-                      "color": "#fff",
-                      "opacity": 1,
-                    },
-                    "fontFamily": "var(--primaryFont)",
-                    "fontSize": 12,
-                    "fontWeight": "bold",
-                    "lineHeight": 1.334,
-                    "textTransform": "uppercase",
-                  },
-                },
-                "MuiTabs": {
-                  "root": {
-                    "&.segmented": {
-                      "& $fixed": {
-                        "overflow": "visible !important",
+                      "& $icon": {
+                        "color": "#fff",
+                        "fill": "#fff",
                       },
-                      "& $indicator": {
+                      "&$clickable, &$deletable": {
+                        "&:hover, &:focus": {
+                          "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                          "borderColor": "rgba(255, 255, 255, 0.16)",
+                        },
+                      },
+                      "&$colorPrimary": {
+                        "& $icon, & $deleteIcon": {
+                          "color": "#fff",
+                          "fill": "#fff",
+                        },
+                        "&$clickable, &$deletable": {
+                          "&:hover, &:focus": {
+                            "backgroundColor": "#fff",
+                          },
+                        },
+                        "&$disabled": {
+                          "& $icon, & $deleteIcon": {
+                            "color": "#fff",
+                            "fill": "#fff",
+                          },
+                          "backgroundColor": "#fff",
+                          "color": "#fff",
+                          "opacity": 1,
+                        },
                         "backgroundColor": "#fff",
-                        "borderRadius": "99px",
-                        "boxShadow": "var(--shadow1)",
-                        "height": "calc(100% - 2px)",
-                        "top": "1px",
-                        "transform": "scale(0.99)",
-                        "zIndex": 0,
+                        "color": "#fff",
+                        "padding": "0 1px",
                       },
-                      "& $scrollButtons": {
-                        "borderRadius": "99px",
+                      "&.ghost": {
+                        "&$clickable, &$deletable": {
+                          "&:hover, &:focus": {
+                            "backgroundColor": "rgba(255, 255, 255, 0.16)",
+                            "borderColor": "rgba(255, 255, 255, 0.48)",
+                          },
+                        },
+                        "&:not($disabled)": {
+                          "& $icon, & $deleteIcon": {
+                            "color": "#fff",
+                            "fill": "#fff",
+                          },
+                          "backgroundColor": "rgba(255, 255, 255, 0.08)",
+                          "borderColor": "rgba(255, 255, 255, 0.48)",
+                          "color": "#fff",
+                        },
+                        "borderStyle": "dashed",
+                        "borderWidth": "1px",
                       },
-                      "backgroundColor": "#fff",
-                      "borderRadius": "99px",
-                      "minHeight": "2.5rem",
-                      "overflow": "visible",
+                      "borderColor": "rgba(255, 255, 255, 0.16)",
+                      "color": "#fff",
+                    },
+                    "&-warning": {
+                      "& $deleteIcon": {
+                        "color": "#fff",
+                        "fill": "#fff",
+                      },
+                      "& $icon": {
+                        "color": "#fff",
+                        "fill": "#fff",
+                      },
+                      "&$clickable, &$deletable": {
+                        "&:hover, &:focus": {
+                          "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                          "borderColor": "rgba(255, 255, 255, 0.16)",
+                        },
+                      },
+                      "&$colorPrimary": {
+                        "& $icon, & $deleteIcon": {
+                          "color": "#fff",
+                          "fill": "#fff",
+                        },
+                        "&$clickable, &$deletable": {
+                          "&:hover, &:focus": {
+                            "backgroundColor": "#fff",
+                          },
+                        },
+                        "&$disabled": {
+                          "& $icon, & $deleteIcon": {
+                            "color": "#fff",
+                            "fill": "#fff",
+                          },
+                          "backgroundColor": "#fff",
+                          "color": "#fff",
+                          "opacity": 1,
+                        },
+                        "backgroundColor": "#fff",
+                        "color": "#fff",
+                        "padding": "0 1px",
+                      },
+                      "&.ghost": {
+                        "&$clickable, &$deletable": {
+                          "&:hover, &:focus": {
+                            "backgroundColor": "rgba(255, 255, 255, 0.16)",
+                            "borderColor": "rgba(255, 255, 255, 0.48)",
+                          },
+                        },
+                        "&:not($disabled)": {
+                          "& $icon, & $deleteIcon": {
+                            "color": "#fff",
+                            "fill": "#fff",
+                          },
+                          "backgroundColor": "rgba(255, 255, 255, 0.08)",
+                          "borderColor": "rgba(255, 255, 255, 0.48)",
+                          "color": "#fff",
+                        },
+                        "borderStyle": "dashed",
+                        "borderWidth": "1px",
+                      },
+                      "borderColor": "rgba(255, 255, 255, 0.16)",
+                      "color": "#fff",
                     },
                   },
-                },
-                "MuiTooltip": {
-                  "tooltip": {
-                    "borderRadius": "8px",
-                    "fontSize": "1rem",
-                    "lineHeight": "1.3",
-                    "padding": "16px",
+                  "&.noLabel": {
+                    "& $icon": {
+                      "margin": 0,
+                    },
+                    "& $label": {
+                      "display": "none",
+                    },
+                    "width": "32px",
                   },
                 },
               },
-              "palette": {
-                "action": {
-                  "activatedOpacity": 0.12,
-                  "active": "#fff",
-                  "disabled": "#fff",
-                  "disabledBackground": "#fff",
-                  "disabledOpacity": 0.32,
-                  "focus": "#fff",
-                  "focusOpacity": 0.12,
-                  "ghost": "#fff",
-                  "ghostOpacity": 0.08,
-                  "hover": "#fff",
-                  "hoverGhost": "#fff",
-                  "hoverGhostOpacity": 0.16,
-                  "hoverOpacity": 0.04,
-                  "selected": "#fff",
-                  "selectedOpacity": 0.08,
+              "MuiDialog": {
+                "paper": {
+                  "&.large": {
+                    "@media (min-width:768px)": {
+                      "maxWidth": "800px",
+                      "width": "800px",
+                    },
+                  },
+                  "&.medium": {
+                    "@media (min-width:768px)": {
+                      "maxWidth": "544px",
+                      "width": "544px",
+                    },
+                  },
+                  "&.overflow": {
+                    "overflowY": "visible !important",
+                  },
+                  "&.small": {
+                    "@media (max-width:1022.95px)": {
+                      "borderRadius": "6px",
+                      "height": "auto",
+                      "margin": "16px",
+                      "maxHeight": "calc(100% - 32px)",
+                      "padding": "0 8px 8px",
+                    },
+                    "maxWidth": "480px",
+                    "width": "480px",
+                  },
                 },
-                "augmentColor": [Function],
-                "background": {
-                  "contrast": "#fff",
-                  "contrastOpacity": 0.12,
-                  "default": "#fff",
-                  "paper": "#fff",
-                  "selected": "#F5FAFF",
+                "paperFullScreen": {
+                  "& .cozyDialogActions": {
+                    "paddingBottom": "calc(env(safe-area-inset-bottom) + var(--flagship-bottom-height, 0px))",
+                  },
+                  "& [class*="DialogBackButton"]": {
+                    "transform": "translateY(var(--flagship-top-height, 0px))",
+                  },
+                  "& [class*="DialogCloseButton"]": {
+                    "transform": "translateY(var(--flagship-top-height, 0px))",
+                  },
+                  ".flagship-app & .cozyDialogContent": {
+                    "marginBottom": "var(--flagship-bottom-height, 0px) !important",
+                  },
+                  ".flagship-app & .cozyDialogTitle": {
+                    "paddingTop": "calc(var(--flagship-top-height, 0px) + 0.75rem) !important",
+                  },
                 },
-                "border": {
-                  "disabled": "#fff",
-                  "ghost": "#fff",
-                  "ghostDisabled": "#fff",
-                  "ghostOpacity": 0.48,
-                  "main": "#fff",
-                  "opacity": 0.16,
-                },
-                "common": {
-                  "black": "#000",
-                  "white": "#fff",
-                },
-                "contrastThreshold": 3,
-                "divider": "#fff",
-                "error": {
-                  "contrastText": "#fff",
-                  "dark": "#fff",
-                  "light": "#fff",
-                  "main": "#fff",
-                },
-                "getContrastText": [Function],
-                "grey": {
-                  "100": "#fff",
-                  "200": "#fff",
-                  "300": "#fff",
-                  "400": "#fff",
-                  "50": "#fff",
-                  "500": "#fff",
-                  "600": "#fff",
-                  "700": "#fff",
-                  "800": "#fff",
-                  "900": "#fff",
-                  "A100": "#fff",
-                  "A200": "#fff",
-                  "A400": "#fff",
-                  "A700": "#fff",
-                },
-                "info": {
-                  "contrastText": "#fff",
-                  "dark": "#fff",
-                  "light": "#fff",
-                  "main": "#fff",
-                },
-                "primary": {
-                  "contrastText": "#fff",
-                  "dark": "#fff",
-                  "light": "#fff",
-                  "main": "#fff",
-                },
-                "secondary": {
-                  "contrastText": "#fff",
-                  "dark": "#fff",
-                  "light": "#fff",
-                  "main": "#fff",
-                },
-                "success": {
-                  "contrastText": "#fff",
-                  "dark": "#fff",
-                  "light": "#fff",
-                  "main": "#fff",
-                },
-                "text": {
-                  "disabled": "#fff",
-                  "hint": "#fff",
-                  "icon": "#fff",
-                  "primary": "#fff",
-                  "secondary": "#fff",
-                },
-                "tonalOffset": 0.2,
-                "type": "light",
-                "warning": {
-                  "contrastText": "#fff",
-                  "dark": "#fff",
-                  "light": "#fff",
-                  "main": "#fff",
+                "scrollPaper": {
+                  "&.alignTop": {
+                    "alignItems": "start",
+                  },
                 },
               },
-              "props": {},
-              "shadows": [
-                "var(--shadow0)",
-                "var(--shadow1)",
-                "var(--shadow2)",
-                "var(--shadow3)",
-                "var(--shadow4)",
-                "var(--shadow5)",
-                "var(--shadow6)",
-                "var(--shadow7)",
-                "var(--shadow8)",
-                "var(--shadow9)",
-                "var(--shadow10)",
-                "var(--shadow11)",
-                "var(--shadow12)",
-                "var(--shadow13)",
-                "var(--shadow14)",
-                "var(--shadow15)",
-                "var(--shadow16)",
-                "var(--shadow17)",
-                "var(--shadow18)",
-                "var(--shadow19)",
-                "var(--shadow20)",
-                "var(--shadow21)",
-                "var(--shadow22)",
-                "var(--shadow23)",
-                "var(--shadow24)",
-                "var(--shadow25)",
-              ],
-              "shape": {
-                "borderRadius": 6,
+              "MuiDialogActions": {
+                "root": {
+                  "&.columnLayout": {
+                    "& button": {
+                      "&:not(:first-child)": {
+                        "marginBottom": "8px",
+                      },
+                      "margin": 0,
+                      "width": "100%",
+                    },
+                    "display": "flex",
+                    "flexDirection": "column-reverse",
+                  },
+                  "&.dialogActionsFluid": {
+                    "margin": "24px 0 0",
+                  },
+                  "&:not(.columnLayout) > :not(:first-child):not(:first-child)": {
+                    "marginLeft": 4,
+                  },
+                  "@media (max-width:767.95px)": {
+                    "& button": {
+                      "flexGrow": 1,
+                    },
+                    "margin": "8px 16px",
+                  },
+                  "margin": "16px 32px",
+                  "padding": 0,
+                },
               },
-              "spacing": [Function],
-              "textShadows": [
-                "none",
-                "0px 2px 8px rgba(29, 33, 42, 0.16), 0px 0px 1px rgba(29, 33, 42, 0.48)",
-              ],
-              "transitions": {
-                "create": [Function],
-                "duration": {
-                  "complex": 375,
-                  "enteringScreen": 225,
-                  "leavingScreen": 195,
-                  "short": 250,
-                  "shorter": 200,
-                  "shortest": 150,
-                  "standard": 300,
+              "MuiDialogContent": {
+                "root": {
+                  "& .dialogContentInner": {
+                    "& .dialogTitleFluidContainer": {
+                      "@media (max-width:767.95px)": {
+                        "marginLeft": "-1rem",
+                        "marginRight": "-1rem",
+                        "marginTop": "-0.75rem",
+                      },
+                      "marginLeft": "-2rem",
+                      "marginRight": "-2rem",
+                    },
+                    "&.withFluidActions": {
+                      "@media (max-width:767.95px)": {
+                        "& .cozyDialogActions": {
+                          "paddingBottom": "calc(env(safe-area-inset-bottom) + var(--flagship-bottom-height, 0px) + 16px)",
+                        },
+                        "& .dialogContentWrapper": {
+                          "&:not(.withActions)": {
+                            "paddingBottom": "calc(env(safe-area-inset-bottom) + var(--flagship-bottom-height, 0px) + 16px)",
+                          },
+                          "flexGrow": 1,
+                        },
+                        "display": "flex",
+                        "flexDirection": "column",
+                        "height": "100%",
+                        "marginBottom": 0,
+                      },
+                    },
+                    "marginBottom": "24px",
+                  },
+                  "&.disableGutters": {
+                    "& .dialogContentInner": {
+                      "marginBottom": 0,
+                    },
+                    "& .dialogTitleFluidContainer": {
+                      "marginLeft": 0,
+                      "marginRight": 0,
+                      "marginTop": 0,
+                    },
+                    "padding": 0,
+                  },
+                  "@media (max-width:767.95px)": {
+                    "padding": "24px 16px 0",
+                  },
+                  "padding": "24px 32px 0",
                 },
-                "easing": {
-                  "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
-                  "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
-                  "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
-                  "sharp": "cubic-bezier(0.4, 0, 0.6, 1)",
-                },
-                "getAutoHeightDuration": [Function],
               },
-              "typography": {
-                "body1": {
-                  "fontFamily": "var(--primaryFont)",
-                  "fontSize": 16,
-                  "fontWeight": 400,
-                  "lineHeight": 1.313,
-                },
-                "body2": {
-                  "fontFamily": "var(--primaryFont)",
-                  "fontSize": 14,
-                  "fontWeight": 400,
-                  "lineHeight": 1.313,
-                },
-                "button": {
-                  "fontFamily": "var(--primaryFont)",
-                  "fontSize": 14,
-                  "fontWeight": "bold",
-                  "lineHeight": 1.313,
-                  "textTransform": "uppercase",
-                },
-                "caption": {
-                  "color": "#fff",
-                  "display": "block",
-                  "fontFamily": "var(--primaryFont)",
-                  "fontSize": 12,
-                  "fontWeight": 400,
-                  "lineHeight": 1.313,
-                },
-                "fontFamily": "var(--primaryFont)",
-                "fontSize": 14,
-                "fontWeightBold": 700,
-                "fontWeightLight": 300,
-                "fontWeightMedium": 500,
-                "fontWeightRegular": 400,
-                "h1": {
-                  "fontFamily": "var(--primaryFont)",
-                  "fontSize": 48,
-                  "fontWeight": "bold",
-                  "letterSpacing": -0.8,
-                  "lineHeight": 1.087,
-                },
-                "h2": {
-                  "fontFamily": "var(--primaryFont)",
-                  "fontSize": 32,
-                  "fontWeight": "bold",
-                  "letterSpacing": -0.4,
-                  "lineHeight": 1.313,
-                },
-                "h3": {
+              "MuiDialogTitle": {
+                "root": {
+                  "&.dialogTitleFluid": {
+                    "paddingTop": 0,
+                  },
+                  "&.dialogTitleWithBack": {
+                    "@media (max-width:767.95px)": {
+                      "paddingLeft": "3rem",
+                    },
+                    "paddingLeft": "4rem",
+                  },
+                  "&.dialogTitleWithClose": {
+                    "@media (max-width:767.95px)": {
+                      "paddingRight": "3rem",
+                    },
+                    "paddingRight": "4rem",
+                  },
+                  "@media (max-width:767.95px)": {
+                    "fontFamily": "var(--primaryFont)",
+                    "fontSize": 20,
+                    "fontWeight": "bold",
+                    "lineHeight": 1.167,
+                    "padding": "0.75rem 1rem",
+                  },
+                  "boxSizing": "border-box",
                   "fontFamily": "var(--primaryFont)",
                   "fontSize": 24,
                   "fontWeight": "bold",
                   "lineHeight": 1.167,
+                  "padding": "1.5rem 2rem",
+                  "width": "100%",
                 },
-                "h4": {
+              },
+              "MuiDivider": {
+                "inset": {
+                  "&.divider--dialog": {
+                    "marginLeft": 80,
+                  },
+                  "marginLeft": 64,
+                },
+              },
+              "MuiFab": {
+                "extended": {
+                  "&$sizeMedium": {
+                    "borderRadius": 24,
+                    "height": 48,
+                    "minWidth": 48,
+                    "padding": "0 16px",
+                  },
+                  "&$sizeSmall": {
+                    "borderRadius": 20,
+                    "height": 40,
+                    "minWidth": 40,
+                    "padding": "0 12px",
+                  },
+                  "borderRadius": 28,
+                  "height": 56,
+                  "minWidth": 56,
+                  "padding": "0 20px",
+                },
+                "root": {
+                  "&:hover": {
+                    "backgroundColor": "rgb(242, 242, 242)",
+                  },
+                  "@media (hover: none)": {
+                    "backgroundColor": "#fff",
+                  },
+                  "backgroundColor": "#fff",
+                  "color": "#fff",
+                },
+              },
+              "MuiFormHelperText": {
+                "root": {
+                  "&$disabled&$error": {
+                    "color": "#fff",
+                  },
+                  "fontSize": "0.875rem",
+                  "fontStyle": "italic",
+                  "marginTop": 4,
+                },
+              },
+              "MuiFormLabel": {
+                "root": {
+                  "&$disabled&$error": {
+                    "color": "#fff",
+                  },
+                  "color": "#fff",
+                },
+              },
+              "MuiIconButton": {
+                "root": {
+                  "&.cozyStyles": {
+                    "&-error": {
+                      "&:hover": {
+                        "@media (hover: none)": {
+                          "backgroundColor": "transparent",
+                        },
+                        "backgroundColor": "rgba(255, 255, 255, 0.04)",
+                      },
+                      "color": "#fff",
+                    },
+                  },
+                  "&.dialogIconButton": {
+                    "&:hover": {
+                      "backgroundColor": "#fff",
+                    },
+                    "backgroundColor": "#fff",
+                  },
+                  "&.large": {
+                    "padding": 16,
+                  },
+                  "&.medium": {
+                    "padding": 12,
+                  },
+                  "&.small": {
+                    "padding": 3,
+                  },
+                  "color": "#fff",
+                },
+              },
+              "MuiInputLabel": {
+                "outlined": {
+                  "&$marginDense": {
+                    "transform": "translate(14px, 14px) scale(1)",
+                  },
+                  "&:not($shrink)": {
+                    "&$error": {
+                      "color": "#fff",
+                    },
+                  },
+                },
+              },
+              "MuiListItem": {
+                "dense": {
+                  "&.large": {
+                    "minHeight": 56,
+                    "paddingBottom": 12,
+                    "paddingTop": 12,
+                  },
+                  "&.small": {
+                    "minHeight": 40,
+                    "paddingBottom": 4,
+                    "paddingTop": 4,
+                  },
+                  "minHeight": 48,
+                  "paddingBottom": 8,
+                  "paddingTop": 8,
+                },
+                "root": {
+                  "&.large": {
+                    "minHeight": 64,
+                    "paddingBottom": 16,
+                    "paddingTop": 16,
+                  },
+                  "&.small": {
+                    "minHeight": 48,
+                    "paddingBottom": 8,
+                    "paddingTop": 8,
+                  },
+                  "gap": 16,
+                  "minHeight": 56,
+                  "paddingBottom": 12,
+                  "paddingTop": 12,
+                },
+              },
+              "MuiListItemIcon": {
+                "root": {
+                  "alignItems": "center",
+                  "color": "#fff",
+                  "height": 32,
+                  "justifyContent": "center",
+                  "minWidth": "auto",
+                  "width": 32,
+                },
+              },
+              "MuiListItemSecondaryAction": {
+                "root": {
+                  "right": 0,
+                },
+              },
+              "MuiListItemText": {
+                "multiline": {
+                  "marginBottom": 1,
+                  "marginTop": 1,
+                },
+                "root": {
+                  "marginBottom": 1,
+                  "marginTop": 1,
+                },
+                "secondary": {
+                  "marginTop": 1,
+                },
+              },
+              "MuiListSubheader": {
+                "root": {
+                  "backgroundColor": "#fff",
                   "fontFamily": "var(--primaryFont)",
-                  "fontSize": 20,
+                  "fontSize": 12,
                   "fontWeight": "bold",
-                  "lineHeight": 1.167,
+                  "lineHeight": 1.334,
+                  "marginBottom": "0.5rem",
+                  "paddingBottom": 8,
+                  "paddingTop": 8,
+                  "textTransform": "uppercase",
                 },
-                "h5": {
-                  "fontFamily": "var(--primaryFont)",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "lineHeight": 1.313,
+                "sticky": {
+                  "backgroundColor": "#fff",
                 },
-                "h6": {
+              },
+              "MuiMenuItem": {
+                "gutters": {
+                  "paddingLeft": 16,
+                  "paddingRight": 16,
+                },
+                "root": {
+                  "& .cozyListItemIcon": {
+                    "height": 16,
+                    "width": 16,
+                  },
+                  "&.cozyActionsMenuItem": {
+                    "minWidth": 256,
+                  },
+                  "@media (min-width:480px)": {
+                    "minHeight": 40,
+                  },
+                  "maxWidth": 320,
+                  "overflow": "auto",
+                  "paddingBottom": 4,
+                  "paddingTop": 4,
+                  "whiteSpace": "normal",
+                },
+              },
+              "MuiOutlinedInput": {
+                "input": {
+                  "padding": "18.5px 16px",
+                },
+                "inputMarginDense": {
+                  "paddingBottom": 15,
+                  "paddingTop": 14,
+                },
+                "notchedOutline": {
+                  "borderColor": "#fff",
+                },
+                "root": {
+                  "&$disabled": {
+                    "background": "#fff",
+                  },
+                  "&$focused $notchedOutline": {
+                    "borderWidth": "0.0625rem",
+                  },
+                  "&:hover $notchedOutline": {
+                    "borderColor": "#fff",
+                  },
+                  "borderRadius": 4,
+                },
+              },
+              "MuiRadio": {
+                "colorPrimary": {
+                  "&$checked svg": {
+                    "fill": "#fff",
+                  },
+                  "&$disabled&$checked svg": {
+                    "fill": "#fff",
+                  },
+                },
+                "colorSecondary": {
+                  "&$checked svg": {
+                    "fill": "#fff",
+                  },
+                  "&$disabled&$checked svg": {
+                    "fill": "#fff",
+                  },
+                },
+                "root": {
+                  "&$disabled svg": {
+                    "backgroundColor": "#fff",
+                    "borderRadius": "50%",
+                    "fill": "#fff",
+                  },
+                  "&:not($checked) svg": {
+                    "fill": "#fff",
+                  },
+                  "padding": "12px",
+                },
+              },
+              "MuiSnackbarContent": {
+                "root": {
+                  "backgroundColor": "#fff",
+                  "padding": "4px 12px",
+                },
+              },
+              "MuiStepConnector": {
+                "line": {
+                  "borderColor": "#fff",
+                },
+              },
+              "MuiStepContent": {
+                "root": {
+                  "borderColor": "#fff",
+                },
+              },
+              "MuiStepLabel": {
+                "label": {
+                  "&$active": {
+                    "fontFamily": "var(--primaryFont)",
+                    "fontSize": 16,
+                    "fontWeight": "bold",
+                    "lineHeight": 1.313,
+                  },
+                  "&$completed": {
+                    "fontFamily": "var(--primaryFont)",
+                    "fontSize": 16,
+                    "fontWeight": "bold",
+                    "lineHeight": 1.313,
+                  },
                   "fontFamily": "var(--primaryFont)",
                   "fontSize": 16,
-                  "fontWeight": "bold",
+                  "fontWeight": 400,
                   "lineHeight": 1.313,
                 },
-                "htmlFontSize": 16,
-                "overline": {
-                  "fontFamily": "var(--primaryFont)",
-                  "fontSize": "0.75rem",
-                  "fontWeight": 400,
-                  "lineHeight": 2.66,
-                  "textTransform": "uppercase",
+              },
+              "MuiSwitch": {
+                "checked": {
+                  "& + $track$track": {
+                    "opacity": 1,
+                  },
                 },
-                "pxToRem": [Function],
-                "round": [Function],
-                "subtitle1": {
-                  "fontFamily": "var(--primaryFont)",
-                  "fontSize": 14,
-                  "fontWeight": "bold",
-                  "lineHeight": 1.358,
-                  "textTransform": "uppercase",
+                "colorSecondary": {
+                  "&$checked": {
+                    "& + $track": {
+                      "backgroundColor": "#fff",
+                    },
+                  },
                 },
-                "subtitle2": {
+                "disabled": {
+                  "& $thumb": {
+                    "backgroundColor": "#fff",
+                  },
+                  "&$checked + $track": {
+                    "backgroundColor": "#fff !important",
+                  },
+                },
+                "switchBase": {
+                  "&$checked": {
+                    "transform": "translateX(15px)",
+                  },
+                  "top": 1,
+                },
+                "thumb": {
+                  "backgroundColor": "#fff",
+                  "height": 16,
+                  "width": 16,
+                },
+                "track": {
+                  "backgroundColor": "#fff",
+                  "height": 12,
+                  "opacity": 1,
+                  "width": 25,
+                },
+              },
+              "MuiTab": {
+                "root": {
+                  "&.narrowed": {
+                    "@media (min-width:480px)": {
+                      "minWidth": "auto",
+                    },
+                    "minWidth": "auto",
+                  },
+                  "&.segmented": {
+                    "&$selected": {
+                      "color": "#fff",
+                    },
+                    "borderRadius": "99px",
+                    "fontFamily": "var(--primaryFont)",
+                    "fontSize": 14,
+                    "fontWeight": 400,
+                    "lineHeight": 1.313,
+                    "minHeight": "2.5rem",
+                    "textTransform": "initial",
+                    "zIndex": 1,
+                  },
+                  "&:focus": {
+                    "color": "#fff",
+                  },
+                  "&:hover": {
+                    "color": "#fff",
+                    "opacity": 1,
+                  },
                   "fontFamily": "var(--primaryFont)",
                   "fontSize": 12,
                   "fontWeight": "bold",
@@ -1765,94 +1458,394 @@ exports[`Dropzone should match snapshot 1`] = `
                   "textTransform": "uppercase",
                 },
               },
-              "zIndex": {
-                "appBar": 1100,
-                "drawer": 1200,
-                "mobileStepper": 1000,
-                "modal": "var(--zIndex-modal)",
-                "snackbar": 1400,
-                "speedDial": 1050,
-                "tooltip": 1500,
+              "MuiTabs": {
+                "root": {
+                  "&.segmented": {
+                    "& $fixed": {
+                      "overflow": "visible !important",
+                    },
+                    "& $indicator": {
+                      "backgroundColor": "#fff",
+                      "borderRadius": "99px",
+                      "boxShadow": "var(--shadow1)",
+                      "height": "calc(100% - 2px)",
+                      "top": "1px",
+                      "transform": "scale(0.99)",
+                      "zIndex": 0,
+                    },
+                    "& $scrollButtons": {
+                      "borderRadius": "99px",
+                    },
+                    "backgroundColor": "#fff",
+                    "borderRadius": "99px",
+                    "minHeight": "2.5rem",
+                    "overflow": "visible",
+                  },
+                },
               },
-              Symbol(mui.nested): false,
-            }
+              "MuiTooltip": {
+                "tooltip": {
+                  "borderRadius": "8px",
+                  "fontSize": "1rem",
+                  "lineHeight": "1.3",
+                  "padding": "16px",
+                },
+              },
+            },
+            "palette": {
+              "action": {
+                "activatedOpacity": 0.12,
+                "active": "#fff",
+                "disabled": "#fff",
+                "disabledBackground": "#fff",
+                "disabledOpacity": 0.32,
+                "focus": "#fff",
+                "focusOpacity": 0.12,
+                "ghost": "#fff",
+                "ghostOpacity": 0.08,
+                "hover": "#fff",
+                "hoverGhost": "#fff",
+                "hoverGhostOpacity": 0.16,
+                "hoverOpacity": 0.04,
+                "selected": "#fff",
+                "selectedOpacity": 0.08,
+              },
+              "augmentColor": [Function],
+              "background": {
+                "contrast": "#fff",
+                "contrastOpacity": 0.12,
+                "default": "#fff",
+                "paper": "#fff",
+                "selected": "#F5FAFF",
+              },
+              "border": {
+                "disabled": "#fff",
+                "ghost": "#fff",
+                "ghostDisabled": "#fff",
+                "ghostOpacity": 0.48,
+                "main": "#fff",
+                "opacity": 0.16,
+              },
+              "common": {
+                "black": "#000",
+                "white": "#fff",
+              },
+              "contrastThreshold": 3,
+              "divider": "#fff",
+              "error": {
+                "contrastText": "#fff",
+                "dark": "#fff",
+                "light": "#fff",
+                "main": "#fff",
+              },
+              "getContrastText": [Function],
+              "grey": {
+                "100": "#fff",
+                "200": "#fff",
+                "300": "#fff",
+                "400": "#fff",
+                "50": "#fff",
+                "500": "#fff",
+                "600": "#fff",
+                "700": "#fff",
+                "800": "#fff",
+                "900": "#fff",
+                "A100": "#fff",
+                "A200": "#fff",
+                "A400": "#fff",
+                "A700": "#fff",
+              },
+              "info": {
+                "contrastText": "#fff",
+                "dark": "#fff",
+                "light": "#fff",
+                "main": "#fff",
+              },
+              "primary": {
+                "contrastText": "#fff",
+                "dark": "#fff",
+                "light": "#fff",
+                "main": "#fff",
+              },
+              "secondary": {
+                "contrastText": "#fff",
+                "dark": "#fff",
+                "light": "#fff",
+                "main": "#fff",
+              },
+              "success": {
+                "contrastText": "#fff",
+                "dark": "#fff",
+                "light": "#fff",
+                "main": "#fff",
+              },
+              "text": {
+                "disabled": "#fff",
+                "hint": "#fff",
+                "icon": "#fff",
+                "primary": "#fff",
+                "secondary": "#fff",
+              },
+              "tonalOffset": 0.2,
+              "type": "light",
+              "warning": {
+                "contrastText": "#fff",
+                "dark": "#fff",
+                "light": "#fff",
+                "main": "#fff",
+              },
+            },
+            "props": {},
+            "shadows": [
+              "var(--shadow0)",
+              "var(--shadow1)",
+              "var(--shadow2)",
+              "var(--shadow3)",
+              "var(--shadow4)",
+              "var(--shadow5)",
+              "var(--shadow6)",
+              "var(--shadow7)",
+              "var(--shadow8)",
+              "var(--shadow9)",
+              "var(--shadow10)",
+              "var(--shadow11)",
+              "var(--shadow12)",
+              "var(--shadow13)",
+              "var(--shadow14)",
+              "var(--shadow15)",
+              "var(--shadow16)",
+              "var(--shadow17)",
+              "var(--shadow18)",
+              "var(--shadow19)",
+              "var(--shadow20)",
+              "var(--shadow21)",
+              "var(--shadow22)",
+              "var(--shadow23)",
+              "var(--shadow24)",
+              "var(--shadow25)",
+            ],
+            "shape": {
+              "borderRadius": 6,
+            },
+            "spacing": [Function],
+            "textShadows": [
+              "none",
+              "0px 2px 8px rgba(29, 33, 42, 0.16), 0px 0px 1px rgba(29, 33, 42, 0.48)",
+            ],
+            "transitions": {
+              "create": [Function],
+              "duration": {
+                "complex": 375,
+                "enteringScreen": 225,
+                "leavingScreen": 195,
+                "short": 250,
+                "shorter": 200,
+                "shortest": 150,
+                "standard": 300,
+              },
+              "easing": {
+                "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+                "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+                "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+                "sharp": "cubic-bezier(0.4, 0, 0.6, 1)",
+              },
+              "getAutoHeightDuration": [Function],
+            },
+            "typography": {
+              "body1": {
+                "fontFamily": "var(--primaryFont)",
+                "fontSize": 16,
+                "fontWeight": 400,
+                "lineHeight": 1.313,
+              },
+              "body2": {
+                "fontFamily": "var(--primaryFont)",
+                "fontSize": 14,
+                "fontWeight": 400,
+                "lineHeight": 1.313,
+              },
+              "button": {
+                "fontFamily": "var(--primaryFont)",
+                "fontSize": 14,
+                "fontWeight": "bold",
+                "lineHeight": 1.313,
+                "textTransform": "uppercase",
+              },
+              "caption": {
+                "color": "#fff",
+                "display": "block",
+                "fontFamily": "var(--primaryFont)",
+                "fontSize": 12,
+                "fontWeight": 400,
+                "lineHeight": 1.313,
+              },
+              "fontFamily": "var(--primaryFont)",
+              "fontSize": 14,
+              "fontWeightBold": 700,
+              "fontWeightLight": 300,
+              "fontWeightMedium": 500,
+              "fontWeightRegular": 400,
+              "h1": {
+                "fontFamily": "var(--primaryFont)",
+                "fontSize": 48,
+                "fontWeight": "bold",
+                "letterSpacing": -0.8,
+                "lineHeight": 1.087,
+              },
+              "h2": {
+                "fontFamily": "var(--primaryFont)",
+                "fontSize": 32,
+                "fontWeight": "bold",
+                "letterSpacing": -0.4,
+                "lineHeight": 1.313,
+              },
+              "h3": {
+                "fontFamily": "var(--primaryFont)",
+                "fontSize": 24,
+                "fontWeight": "bold",
+                "lineHeight": 1.167,
+              },
+              "h4": {
+                "fontFamily": "var(--primaryFont)",
+                "fontSize": 20,
+                "fontWeight": "bold",
+                "lineHeight": 1.167,
+              },
+              "h5": {
+                "fontFamily": "var(--primaryFont)",
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "lineHeight": 1.313,
+              },
+              "h6": {
+                "fontFamily": "var(--primaryFont)",
+                "fontSize": 16,
+                "fontWeight": "bold",
+                "lineHeight": 1.313,
+              },
+              "htmlFontSize": 16,
+              "overline": {
+                "fontFamily": "var(--primaryFont)",
+                "fontSize": "0.75rem",
+                "fontWeight": 400,
+                "lineHeight": 2.66,
+                "textTransform": "uppercase",
+              },
+              "pxToRem": [Function],
+              "round": [Function],
+              "subtitle1": {
+                "fontFamily": "var(--primaryFont)",
+                "fontSize": 14,
+                "fontWeight": "bold",
+                "lineHeight": 1.358,
+                "textTransform": "uppercase",
+              },
+              "subtitle2": {
+                "fontFamily": "var(--primaryFont)",
+                "fontSize": 12,
+                "fontWeight": "bold",
+                "lineHeight": 1.334,
+                "textTransform": "uppercase",
+              },
+            },
+            "zIndex": {
+              "appBar": 1100,
+              "drawer": 1200,
+              "mobileStepper": 1000,
+              "modal": "var(--zIndex-modal)",
+              "snackbar": 1400,
+              "speedDial": 1050,
+              "tooltip": 1500,
+            },
+            Symbol(mui.nested): false,
           }
+        }
+      >
+        <div
+          className="CozyTheme--normal u-dc"
         >
-          <div
-            className="CozyTheme--normal u-dc"
+          <Provider
+            store={
+              {
+                "dispatch": [MockFunction],
+                "getState": [Function],
+                "replaceReducer": [Function],
+                "subscribe": [Function],
+                Symbol(observable): [Function],
+              }
+            }
           >
-            <Provider
-              store={
-                {
-                  "dispatch": [MockFunction],
-                  "getState": [Function],
-                  "replaceReducer": [Function],
-                  "subscribe": [Function],
-                  Symbol(observable): [Function],
+            <CozyProvider
+              client={
+                CozyClient {
+                  "uri": undefined,
                 }
               }
             >
-              <CozyProvider
-                client={
-                  CozyClient {
-                    "uri": undefined,
-                  }
-                }
+              <TestI18n
+                enLocale={[Function]}
               >
-                <TestI18n
-                  enLocale={[Function]}
+                <I18n
+                  defaultLang="en"
+                  dictRequire={[Function]}
+                  lang="en"
                 >
-                  <I18n
-                    defaultLang="en"
-                    dictRequire={[Function]}
-                    lang="en"
-                  >
-                    <AcceptingSharingProvider>
-                      <HashRouter>
-                        <Router
-                          location={
-                            {
+                  <AcceptingSharingProvider>
+                    <HashRouter>
+                      <Router
+                        location={
+                          {
+                            "hash": "",
+                            "key": "default",
+                            "pathname": "/",
+                            "search": "",
+                            "state": null,
+                          }
+                        }
+                        navigationType="POP"
+                        navigator={
+                          {
+                            "action": "POP",
+                            "createHref": [Function],
+                            "createURL": [Function],
+                            "encodeLocation": [Function],
+                            "go": [Function],
+                            "listen": [Function],
+                            "location": {
                               "hash": "",
                               "key": "default",
                               "pathname": "/",
                               "search": "",
                               "state": null,
-                            }
+                            },
+                            "push": [Function],
+                            "replace": [Function],
                           }
-                          navigationType="POP"
-                          navigator={
-                            {
-                              "action": "POP",
-                              "createHref": [Function],
-                              "createURL": [Function],
-                              "encodeLocation": [Function],
-                              "go": [Function],
-                              "listen": [Function],
-                              "location": {
-                                "hash": "",
-                                "key": "default",
-                                "pathname": "/",
-                                "search": "",
-                                "state": null,
-                              },
-                              "push": [Function],
-                              "replace": [Function],
-                            }
-                          }
-                        >
-                          <SelectionProvider>
-                            <ThumbnailSizeContextProvider>
-                              <BreakpointsProvider>
-                                <PushBannerProvider>
-                                  <FabProvider>
-                                    <withI18n(WithSharingState(withClient(withVaultClient(Connect(Dropzone)))))
+                        }
+                      >
+                        <SelectionProvider>
+                          <ThumbnailSizeContextProvider>
+                            <BreakpointsProvider>
+                              <PushBannerProvider>
+                                <FabProvider>
+                                  <withI18n(WithSharingState(withClient(withVaultClient(Connect(Dropzone)))))
+                                    displayedFolder={
+                                      {
+                                        "id": "directory-foobar0",
+                                      }
+                                    }
+                                  >
+                                    <WithSharingState(withClient(withVaultClient(Connect(Dropzone))))
                                       displayedFolder={
                                         {
                                           "id": "directory-foobar0",
                                         }
                                       }
+                                      f={[Function]}
+                                      lang="en"
+                                      t={[Function]}
                                     >
-                                      <WithSharingState(withClient(withVaultClient(Connect(Dropzone))))
+                                      <withClient(withVaultClient(Connect(Dropzone)))
                                         displayedFolder={
                                           {
                                             "id": "directory-foobar0",
@@ -1860,9 +1853,22 @@ exports[`Dropzone should match snapshot 1`] = `
                                         }
                                         f={[Function]}
                                         lang="en"
+                                        sharingState={
+                                          {
+                                            "getRecipients": [MockFunction],
+                                            "getSharingLink": [MockFunction],
+                                            "hasWriteAccess": [MockFunction],
+                                            "refresh": [MockFunction],
+                                          }
+                                        }
                                         t={[Function]}
                                       >
-                                        <withClient(withVaultClient(Connect(Dropzone)))
+                                        <withVaultClient(Connect(Dropzone))
+                                          client={
+                                            CozyClient {
+                                              "uri": undefined,
+                                            }
+                                          }
                                           displayedFolder={
                                             {
                                               "id": "directory-foobar0",
@@ -1879,49 +1885,25 @@ exports[`Dropzone should match snapshot 1`] = `
                                             }
                                           }
                                           t={[Function]}
-                                        >
-                                          <withVaultClient(Connect(Dropzone))
-                                            client={
-                                              CozyClient {
-                                                "uri": undefined,
-                                              }
-                                            }
-                                            displayedFolder={
-                                              {
-                                                "id": "directory-foobar0",
-                                              }
-                                            }
-                                            f={[Function]}
-                                            lang="en"
-                                            sharingState={
-                                              {
-                                                "getRecipients": [MockFunction],
-                                                "getSharingLink": [MockFunction],
-                                                "hasWriteAccess": [MockFunction],
-                                                "refresh": [MockFunction],
-                                              }
-                                            }
-                                            t={[Function]}
-                                          />
-                                        </withClient(withVaultClient(Connect(Dropzone)))>
-                                      </WithSharingState(withClient(withVaultClient(Connect(Dropzone))))>
-                                    </withI18n(WithSharingState(withClient(withVaultClient(Connect(Dropzone)))))>
-                                  </FabProvider>
-                                </PushBannerProvider>
-                              </BreakpointsProvider>
-                            </ThumbnailSizeContextProvider>
-                          </SelectionProvider>
-                        </Router>
-                      </HashRouter>
-                    </AcceptingSharingProvider>
-                  </I18n>
-                </TestI18n>
-              </CozyProvider>
-            </Provider>
-          </div>
-        </ThemeProvider>
-      </MuiCozyTheme>
-    </CozyTheme>
-  </AppLike>
-</DriveAppLike>
+                                        />
+                                      </withClient(withVaultClient(Connect(Dropzone)))>
+                                    </WithSharingState(withClient(withVaultClient(Connect(Dropzone))))>
+                                  </withI18n(WithSharingState(withClient(withVaultClient(Connect(Dropzone)))))>
+                                </FabProvider>
+                              </PushBannerProvider>
+                            </BreakpointsProvider>
+                          </ThumbnailSizeContextProvider>
+                        </SelectionProvider>
+                      </Router>
+                    </HashRouter>
+                  </AcceptingSharingProvider>
+                </I18n>
+              </TestI18n>
+            </CozyProvider>
+          </Provider>
+        </div>
+      </ThemeProvider>
+    </MuiCozyTheme>
+  </CozyTheme>
+</AppLike>
 `;

@@ -15,8 +15,7 @@ import { AcceptingSharingProvider } from 'drive/lib/AcceptingSharingContext'
 import FabProvider from 'drive/lib/FabProvider'
 import PushBannerProvider from 'components/PushBanner/PushBannerProvider'
 import { SelectionProvider } from 'drive/web/modules/selection/SelectionProvider'
-import driveEnLocale from 'drive/locales/en.json'
-import photoEnLocale from 'photos/locales/en.json'
+import enLocale from 'drive/locales/en.json'
 
 const mockStore = createStore(() => ({
   mobile: {
@@ -49,13 +48,12 @@ const AppLike = ({
   store,
   client,
   sharingContextValue,
-  modalContextValue,
-  enLocale
+  modalContextValue
 }) => (
   <CozyTheme>
     <Provider store={(client && client.store) || store || mockStore}>
       <CozyProvider client={client}>
-        <TestI18n enLocale={enLocale}>
+        <TestI18n enLocale={() => enLocale}>
           <SharingContext.Provider
             value={sharingContextValue || mockSharingContextValue}
           >
@@ -83,13 +81,4 @@ const AppLike = ({
   </CozyTheme>
 )
 
-const DriveAppLike = props => (
-  <AppLike enLocale={() => driveEnLocale} {...props} />
-)
-
-export const PhotosAppLike = props => (
-  <AppLike enLocale={() => photoEnLocale} {...props} />
-)
-
-// For legacy reasons, default is Drive
-export default DriveAppLike
+export default AppLike
