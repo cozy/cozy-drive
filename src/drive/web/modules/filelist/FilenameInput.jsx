@@ -112,7 +112,10 @@ class FilenameInput extends Component {
 
   handleFocus() {
     const { name, file } = this.props
-
+    // the component is also display when creating a Folder, in which case there is no
+    // name yet at first. So we don't want to call splitFilename in that case because
+    // it would throw an error even if it works well. Let's remove sentry error noise.
+    if (!name) return
     const { filename } = CozyFile.splitFilename({ name, type: 'file' })
     // Since we're mounting the component and focusing it at the same time
     // let's add a small timeout to be sure the ref is populated
