@@ -37,6 +37,7 @@ const OnlyOfficeProvider = ({
   const [hasFileDeleted, setFileDeleted] = useState(false)
   const [officeKey, setOfficeKey] = useState(null)
   const [isTrashed, setTrashed] = useState(false)
+  const [hasBeenEdited, setHasBeenEdited] = useState(editorMode === 'edit')
 
   const isEditorModeView = useMemo(() => editorMode === 'view', [editorMode])
 
@@ -52,15 +53,16 @@ const OnlyOfficeProvider = ({
        */
       if (
         fileResult?.data?.md5sum !== data.md5sum &&
-        data.cozyMetadata.uploadedBy.slug !== 'onlyoffice-server'
+        data.cozyMetadata.uploadedBy.slug !== 'onlyoffice-server' &&
+        hasBeenEdited
       ) {
         setFileDiverged(true)
       }
-      if (data.trashed) {
+      if (data.trashed && hasBeenEdited) {
         setFileDeleted(true)
       }
     },
-    [fileResult?.data?.md5sum]
+    [fileResult?.data?.md5sum, hasBeenEdited]
   )
 
   useEffect(() => {
@@ -93,6 +95,12 @@ const OnlyOfficeProvider = ({
       setTrashed(false)
     }
   }, [fileResult])
+
+  useEffect(() => {
+    if (editorMode === 'edit') {
+      setHasBeenEdited(true)
+    }
+  }, [editorMode])
 
   return (
     <OnlyOfficeContext.Provider
