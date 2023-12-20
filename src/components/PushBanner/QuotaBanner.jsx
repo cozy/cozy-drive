@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import CloudSyncIcon from 'cozy-ui/transpiled/react/Icons/CloudSync'
 import Banner from 'cozy-ui/transpiled/react/Banner'
@@ -12,6 +12,7 @@ import {
 } from 'cozy-client/dist/models/instance'
 import flag from 'cozy-flags'
 import { useInstanceInfo } from 'cozy-client'
+import { useWebviewIntent } from 'cozy-intent'
 
 import styles from '../pushClient/pushClient.styl'
 import { usePushBannerContext } from './PushBannerProvider'
@@ -23,6 +24,21 @@ const QuotaBanner = () => {
   const { t } = useI18n()
   const { dismissPushBanner } = usePushBannerContext()
   const instanceInfo = useInstanceInfo()
+  const webviewIntent = useWebviewIntent()
+  const [hasIAP, setIAP] = useState(false)
+
+  useEffect(() => {
+    const fetchIapAvailability = async () => {
+      const isAvailable =
+        (await webviewIntent?.call('isAvailable', 'iap')) ?? false
+      const isEnabled = !!flag('flagship.iap.enabled')
+      setIAP(isAvailable && isEnabled)
+    }
+
+    if (isFlagshipApp()) {
+      fetchIapAvailability()
+    }
+  }, [webviewIntent])
 
   const onAction = () => {
     const link = buildPremiumLink(instanceInfo)
@@ -34,8 +50,7 @@ const QuotaBanner = () => {
   }
 
   const canOpenPremiumLink =
-    arePremiumLinksEnabled(instanceInfo) &&
-    (!isFlagshipApp() || (isFlagshipApp() && !!flag('flagship.iap.enabled')))
+    arePremiumLinksEnabled(instanceInfo) && (!isFlagshipApp() || hasIAP)
 
   return (
     <div className={styles['coz-banner-client']}>

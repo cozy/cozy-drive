@@ -1782,9 +1782,7 @@ exports[`Dropzone should match snapshot 1`] = `
                 }
               }
             >
-              <TestI18n
-                enLocale={[Function]}
-              >
+              <TestI18n>
                 <I18n
                   defaultLang="en"
                   dictRequire={[Function]}
