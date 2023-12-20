@@ -24,9 +24,9 @@ const mockStore = createStore(() => ({
   }
 }))
 
-export const TestI18n = ({ children, enLocale }) => {
+export const TestI18n = ({ children }) => {
   return (
-    <I18n lang={'en'} dictRequire={enLocale}>
+    <I18n lang={'en'} dictRequire={() => enLocale}>
       {children}
     </I18n>
   )
@@ -54,7 +54,7 @@ const AppLike = ({
   <CozyTheme>
     <Provider store={(client && client.store) || store || mockStore}>
       <CozyProvider client={client}>
-        <TestI18n enLocale={() => enLocale}>
+        <TestI18n>
           <SharingContext.Provider
             value={sharingContextValue || mockSharingContextValue}
           >
