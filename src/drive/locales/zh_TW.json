@@ -1,0 +1,231 @@
+{
+  "Nav": {
+    "item_drive": "硬碟",
+    "item_recent": "最近更改",
+    "item_sharings": "分享",
+    "item_shared": "由我分享",
+    "item_activity": "活動",
+    "item_trash": "垃圾桶",
+    "item_settings": "設定",
+    "item_collect": "管理",
+    "btn-client": "下載桌面版 Cozy Drive",
+    "btn-client-web": "取得 Cozy",
+    "btn-client-mobile": "在您的手機上下載 Cozy Drive",
+    "banner-txt-client": "下載桌面版 Cozy Drive 來安全地同步您的檔案並隨時存取它們",
+    "banner-btn-client": "下載"
+  },
+  "breadcrumb": {
+    "title_drive": "硬碟",
+    "title_recent": "最近更改",
+    "title_sharings": "分享",
+    "title_shared": "由我分享",
+    "title_activity": "活動",
+    "title_trash": "垃圾桶"
+  },
+  "Toolbar": {
+    "more": "更多"
+  },
+  "toolbar": {
+    "item_upload": "上傳",
+    "item_more": "更多",
+    "menu_select": "選擇項目",
+    "menu_download_folder": "下載資料夾",
+    "menu_download_file": "下載這個檔案",
+    "menu_open_cozy": "在我的 Cozy 開啟",
+    "empty_trash": "清空垃圾桶",
+    "share": "分享",
+    "trash": "移除",
+    "leave": "離開分享資料夾並刪除"
+  },
+  "Share": {
+    "status": {
+      "owner": "擁有者",
+      "pending": "等待中",
+      "ready": "已同意",
+      "refused": "已拒絕",
+      "error": "錯誤",
+      "unregistered": "錯誤",
+      "mail-not-sent": "等待中",
+      "revoked": "錯誤"
+    },
+    "type": {
+      "one-way": "可以檢視",
+      "two-way": "可以更改"
+    },
+    "recipients": {
+      "you": "您",
+      "accessCount": "%{count} 個人有存取權"
+    },
+    "create-cozy": "建立我的 Cozy",
+    "members": {
+      "others": "和另 1 位… |||| 和 %{smart_count} 個人…",
+      "otherContacts": "其他聯絡人 |||| 其他聯絡人"
+    },
+    "contacts": {
+      "permissionRequired": {
+        "title": "在您的 Cozy 儲存您的聯絡人？",
+        "desc": "允許軟體存取您 Cozy 上的聯絡人：您將可在下次選擇它們",
+        "action": "允許存取",
+        "success": "軟體有權限存取您的聯絡人"
+      }
+    }
+  },
+  "Sharings": {
+    "unavailable": {
+      "title": "切換上線！",
+      "message": "顯示您最近分享的列表需要網路連線"
+    }
+  },
+  "Files": {
+    "share": {
+      "cta": "分享",
+      "title": "分享",
+      "details": {
+        "title": "分享的詳細資料",
+        "createdAt": "在 %{date}",
+        "ro": "可以檢視",
+        "rw": "可以修改"
+      },
+      "sharedByMe": "由我分享",
+      "sharedWithMe": "與我分享",
+      "sharedBy": "由 %{name} 分享",
+      "shareByLink": {
+        "subtitle": "由公開連結",
+        "desc": "任何人擁有這個連結可以檢視和下載您的檔案。",
+        "creating": "正在建立您的連結...",
+        "copy": "複製連結",
+        "copied": "連結已經複製到剪切版",
+        "failed": "無法複製到剪切版"
+      },
+      "shareByEmail": {
+        "subtitle": "由電郵",
+        "email": "收件人：",
+        "emailPlaceholder": "輸入收件人的電郵地址或名稱",
+        "send": "傳送",
+        "genericSuccess": "您傳送了邀請函給 %{count} 個聯絡人。",
+        "success": "您傳送了邀請函至 %{email}",
+        "type": {
+          "file": "檔案",
+          "folder": "資料夾"
+        }
+      },
+      "sharingLink": {
+        "copy": "複製",
+        "copied": "已複製"
+      },
+      "protectedShare": {
+        "title": "即將推出"
+      },
+      "close": "關閉",
+      "gettingLink": "正在取得您的連結..."
+    }
+  },
+  "table": {
+    "head_name": "名稱",
+    "head_update": "最後更新",
+    "head_size": "大小",
+    "row_read_only": "分享（唯讀模式）",
+    "row_read_write": "分享（讀寫模式）",
+    "load_more": "載入更多",
+    "mobile": {
+      "head_updated_at_asc": "最舊優先",
+      "head_updated_at_desc": "最新優先",
+      "head_size_asc": "最小優先",
+      "head_size_desc": "最大優先"
+    }
+  },
+  "SelectionBar": {
+    "share": "分享",
+    "download": "下載",
+    "trash": "移除",
+    "destroy": "永久刪除",
+    "rename": "重新命名",
+    "restore": "還原",
+    "close": "關閉",
+    "moveto": "移動到...",
+    "phone-download": "使離線可用"
+  },
+  "deleteconfirmation": {
+    "cancel": "取消",
+    "delete": "移除"
+  },
+  "emptytrashconfirmation": {
+    "title": "永久刪除嗎？",
+    "cancel": "取消",
+    "delete": "全部刪除"
+  },
+  "destroyconfirmation": {
+    "title": "永久刪除嗎？",
+    "cancel": "取消",
+    "delete": "永久刪除"
+  },
+  "quotaalert": {
+    "title": "您的硬碟已滿 :(",
+    "confirm": "OK"
+  },
+  "loading": {
+    "message": "載入中"
+  },
+  "empty": {
+    "title": "您在此資料夾中沒有任何檔案。",
+    "trash_title": "您沒有任何已刪除的檔案。"
+  },
+  "error": {
+    "button": {
+      "reload": "現在重新整理"
+    },
+    "download_file": {
+      "offline": "您需要連線才能下載此檔案",
+      "missing": "此檔案已遺失"
+    }
+  },
+  "Error": {
+    "public_unshared_title": "抱歉，但此連結已不可用。"
+  },
+  "alert": {
+    "could_not_open_file": "此檔案無法開啟"
+  },
+  "mobile": {
+    "settings": {
+      "title": "設定",
+      "about": {
+        "title": "關於",
+        "app_version": "App 版本",
+        "account": "帳號"
+      },
+      "unlink": {
+        "title": "從 Cozy 登出",
+        "description": "如果您從這個裝置登出 Cozy，您不會遺失儲存在 Cozy 上的資料。這將會移除您在此裝置有關 Cozy 的離線檔案。",
+        "button": "登出"
+      },
+      "media_backup": {
+        "media_folder": "相片",
+        "backup_folder": "從我的手機備份",
+        "legacy_backup_folder": "已從我的手機備份",
+        "title": "媒體備份",
+        "images": {
+          "title": "備份圖片",
+          "label": "將您的圖片自動備份到 Cozy 上來永久保存並輕易地分享它們"
+        },
+        "launch": "啟動備份",
+        "stop": "停止備份",
+        "wifi": {
+          "title": "僅使用 WIFI 備份",
+          "label": "若這個選項開啟，您的裝置只會在連結至 WIFI 時備份相片以節省您的流量。"
+        },
+        "media_upload": "剩餘相片 %{smart_count}  |||| 剩餘相片 %{smart_count}",
+        "media_uptodate": "已更新媒體備份",
+        "preparing": "正在尋找要來備份的媒體...",
+        "no_wifi": "請連結至 WIFI",
+        "quota": "即將用滿儲存空間",
+        "quota_contact": "管理您的儲存空間"
+      },
+      "support": {
+        "title": "支援",
+        "analytics": {
+          "title": "協助我們改善 Cozy"
+        }
+      }
+    }
+  }
+}

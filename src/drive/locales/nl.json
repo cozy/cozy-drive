@@ -1,0 +1,153 @@
+{
+  "breadcrumb": {
+    "title_drive": "Schijf",
+    "title_recent": "Recent",
+    "title_shared": "Gedeeld door mij",
+    "title_activity": "Activiteit",
+    "title_trash": "Prullenbak"
+  },
+  "toolbar": {
+    "item_upload": "Upload",
+    "menu_select": "Selecteer items",
+    "empty_trash": "Leeg de prullenbak"
+  },
+  "table": {
+    "head_name": "Naam",
+    "head_update": "Laatst bijgewerkt",
+    "head_size": "Grootte",
+    "row_read_only": "Delen (alleen lezen)",
+    "row_read_write": "Delen (Lezen en schrijven)",
+    "row_size_symbols": {
+      "B": "B",
+      "KB": "KB",
+      "MB": "MB",
+      "GB": "GB",
+      "TB": "TB",
+      "PB": "PB",
+      "EB": "EB",
+      "ZB": "ZB",
+      "YB": "YB"
+    }
+  },
+  "deleteconfirmation": {
+    "title": "Verwijder dit element? |||| Verwijder deze elementen?",
+    "trash": "Het zal worden verplaatst naar de Prullenbak. ||| Ze zullen worden verplaatst naar de Prullenbak.",
+    "restore": "Je kunt het nog steeds terughalen als je wilt. |||| Je kunt ze nog steeds terughalen als je wilt.",
+    "cancel": "Annuleren",
+    "delete": "Verwijderen"
+  },
+  "emptytrashconfirmation": {
+    "title": "Permanent verwijderen?",
+    "forbidden": "Je kunt deze bestanden niet meer benaderen.",
+    "restore": "Als je geen back-up gemaakt hebt, kun je deze bestanden niet meer terugzetten.",
+    "cancel": "Annuleren",
+    "delete": "Verwijder alles"
+  },
+  "destroyconfirmation": {
+    "title": "Verwijder permanent?",
+    "forbidden": "Je kunt dit bestand net meer benaderen. |||| Je kunt deze bestanden niet meer benaderen.",
+    "restore": "Als je geen back-up gemaakt hebt, kun je dit bestand niet meer terugzetten. |||| Als je geen back-up gemaakt hebt, kun je deze bestanden niet meer terugzetten.",
+    "cancel": "Annuleren",
+    "delete": "Verwijder permanent"
+  },
+  "quotaalert": {
+    "title": "Jouw schijfruimte is vol :(",
+    "confirm": "OK"
+  },
+  "loading": {
+    "message": "Laden"
+  },
+  "empty": {
+    "title": "Er staan geen bestanden in deze map."
+  },
+  "error": {
+    "open_folder": "Er is is fout gegaan bij het openen van de map.",
+    "button": {
+      "reload": "Nu verversen"
+    },
+    "download_file": {
+      "offline": "Je moet verbonden zijn om dit  bestand te downloaden",
+      "missing": "Dit bestand bestaat niet"
+    }
+  },
+  "alert": {
+    "try_again": "Er is een fout opgetreden, probeer het later nog eens.",
+    "restore_file_success": "De selectie is succesvol herstelt.",
+    "trash_file_success": "De selectie is verplaatst naar de Prullenbak.",
+    "destroy_file_success": "De selectie is permanent verwijderd.",
+    "folder_name": "Het element %{foldername} bestaat al, kies een andere naam.",
+    "folder_generic": "Er is een fout opgetreden, probeer het opnieuw.",
+    "folder_abort": "Je moet de nieuwe map een naam geven als je het wilt opslaan. De gegevens zijn niet opgeslagen.",
+    "offline": "Deze mogelijkheid is niet beschikbaar offline."
+  },
+  "mobile": {
+    "onboarding": {
+      "server_selection": {
+        "button": "Volgende"
+      },
+      "files": {
+        "title": "Toegang tot jouw schijf",
+        "description": "Om jouw Cozy schijf op jouw apparaat te zetten, moet de toepassing toegang hebben tot jouw bestanden."
+      },
+      "photos": {
+        "title": "Maak een back-up van jouw foto's en video's",
+        "description": "Maak automatisch een back-up op jouw Cozy van de foto's die je neem met jouw telefoon, zodat je ze nooit verliest."
+      },
+      "step": {
+        "button": "Zet nu aan",
+        "skip": "Later",
+        "next": "Volgende"
+      },
+      "analytics": {
+        "title": "Help ons om Cozy te verbeteren",
+        "description": "Deze toepassing zal automatisch gegevens (meest foutmeldingen)  toevoegen aan de Cozy cloud. Dit zal ons helpen om problemen sneller op te lossen."
+      }
+    },
+    "settings": {
+      "title": "Instellingen",
+      "about": {
+        "title": "Over",
+        "app_version": "App Versie",
+        "account": "Account"
+      },
+      "media_backup": {
+        "title": "Media Back-up",
+        "images": {
+          "title": "Back-up foto's",
+          "label": "Back up jouw foto's automatisch naar jouw Cozy, zodat je ze nooit kwijt kunt raken en makkelijk kunt delen."
+        },
+        "launch": "Start Back-up",
+        "stop": "Stop back-up",
+        "wifi": {
+          "title": "Back-up alleen bij WIFI bereik",
+          "label": "Als die optie geselecteerd is, zal jouw apparaat alleen back-ups maken van foto's als het via WIFI verbonden is, om je databundel te beschermen."
+        }
+      },
+      "support": {
+        "title": "Support",
+        "analytics": {
+          "title": "Help ons om Cozy te verbeteren",
+          "label": "De toepassing zal automatisch gegevens (meestal foutmeldingen) aanbieden aan Cozy. Dit stelt on in staat om problemen snel op te lossen."
+        },
+        "logs": {
+          "title": "Help ons om het probleem te begrijpen",
+          "description": "Stuur de toepassingslogbestanden om ons te helpen om de kwaliteit en stabiliteit te verbeteren.",
+          "button": "Stuur mijn log bestanden",
+          "success": "Bedankt, we gaan jouw probleem analyseren en nemen spoedig contact met je op.",
+          "error": "Er is een probleem, logbestanden konden niet worden verstuurd, probeer het later nog eens."
+        }
+      }
+    },
+    "error": {
+      "open_with": {
+        "offline": "Je moet verbonden zijn om dit bestand te openen"
+      }
+    },
+    "revoked": {
+      "title": "Toegang geweigerd",
+      "description": "Het lijkt erop dat je dit apparaat verboden hebt om verbinding te maken met Cozy. Als je dit niet gedaan hebt, neem dan contact met ons op via contact@cozycloud.cc. All jouw gegevens gerelateerd aan Cozy zullen worden verwijderd.",
+      "loginagain": "Log opnieuw in",
+      "logout": "Log uit"
+    }
+  }
+}

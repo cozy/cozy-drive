@@ -1,0 +1,100 @@
+{
+  "Nav": {
+    "item_drive": "硬盘",
+    "item_recent": "最近更改",
+    "item_sharings": "分享",
+    "item_shared": "由我分享",
+    "item_activity": "活动",
+    "item_trash": "垃圾桶",
+    "item_collect": "管理",
+    "btn-client": "下载桌面版 Cozy Drive",
+    "btn-client-web": "获取 Cozy",
+    "banner-btn-client": "下载",
+    "link-client": "https://cozy.io/en/download/",
+    "link-client-desktop": "https://nuts.cozycloud.cc/download/channel/stable/",
+    "link-client-android": "https://play.google.com/store/apps/details?id=io.cozy.drive.mobile",
+    "link-client-ios": "https://itunes.apple.com/us/app/cozy-drive/id1224102389?mt=8",
+    "link-client-web": "https://cozy.io/try-it"
+  },
+  "breadcrumb": {
+    "title_drive": "硬盘",
+    "title_recent": "最近更改",
+    "title_sharings": "分享",
+    "title_shared": "由我分享",
+    "title_activity": "活动",
+    "title_trash": "垃圾桶"
+  },
+  "Toolbar": {
+    "more": "更多"
+  },
+  "toolbar": {
+    "item_upload": "上传",
+    "menu_upload": "上传文件",
+    "item_more": "更多",
+    "menu_new_folder": "文件夹",
+    "menu_new_encrypted_folder": "已加密的文件夹",
+    "menu_select": "选择项目",
+    "menu_share_folder": "分析文件夹",
+    "menu_download": "下载",
+    "menu_sync_cozy": "同步到我的 Cozy",
+    "add_to_mine": "添加到我的 Cozy",
+    "menu_download_folder": "下载文件夹",
+    "menu_download_file": "下载这个文件",
+    "menu_open_cozy": "在我的Cozy中打开",
+    "menu_create_note": "便签",
+    "empty_trash": "清空垃圾桶",
+    "share": "分享",
+    "trash": "移除",
+    "leave": "离开文件夹并删除",
+    "menu_add": "添加",
+    "menu_onlyOffice": {
+      "text": "文本文件",
+      "spreadsheet": "电子表格",
+      "slide": "幻灯片"
+    }
+  },
+  "Share": {
+    "status": {
+      "owner": "所有者",
+      "pending": "等待中",
+      "ready": "已同意",
+      "refused": "已拒绝",
+      "error": "错误",
+      "unregistered": "错误",
+      "mail-not-sent": "等待中",
+      "revoked": "错误"
+    },
+    "type": {
+      "one-way": "可以查看",
+      "two-way": "可以更改",
+      "desc": {
+        "one-way": "联系人可以查看、下载内容并将其添加到他们的 Cozy。 如果他们将内容添加到他们的 Cozy，他们将获得您对内容所做的更新，但他们将无法更新它。",
+        "two-way": "联系人可以更新、删除和添加内容到他们的 Cozy。 内容的更新将在其他 Cozies 上看到。"
+      }
+    },
+    "locked-type-file": "即将推出：您将能够更改对文件授予的权限。",
+    "locked-type-folder": "即将推出：您将能够更改您授予该文件夹的权限。",
+    "recipients": {
+      "you": "您",
+      "accessCount": "%{count} 人可以访问"
+    },
+    "create-cozy": "创建我的 Cozy",
+    "contacts": {
+      "permissionRequired": {
+        "title": "将您的联系人保存在您的 Cozy 中？",
+        "desc": "将您的联系人保存在您的 Cozy 中？",
+        "action": "授权访问",
+        "success": "该应用程序可以访问您的联系人"
+      }
+    }
+  },
+  "searchbar": {
+    "placeholder": "搜索任何内容",
+    "empty": "没有任何关于“%{query}”的内容"
+  },
+  "search": {
+    "empty": {
+      "subtitle": "没有任何关于“%{query}”的内容"
+    }
+  }
+}

@@ -1,0 +1,285 @@
+{
+  "Nav": {
+    "item_drive": "Drive",
+    "item_recent": "Последнее",
+    "item_sharings": "Доступное другим",
+    "item_shared": "Доступное мне",
+    "item_activity": "Активность",
+    "item_trash": "Корзина",
+    "item_settings": "Настройки",
+    "item_collect": "Административное",
+    "btn-client-web": "Скачать Cozy",
+    "btn-client-mobile": "Скачать Cozy Drive на ваш мобильный!",
+    "link-client": "https://cozy.io/en/download/",
+    "link-client-desktop": "https://nuts.cozycloud.cc/download/channel/stable/",
+    "link-client-android": "https://play.google.com/store/apps/details?id=io.cozy.drive.mobile",
+    "link-client-ios": "https://itunes.apple.com/us/app/cozy-drive/id1224102389?mt=8",
+    "link-client-web": "https://cozy.io/try-it"
+  },
+  "breadcrumb": {
+    "title_drive": "Drive",
+    "title_recent": "Последнее",
+    "title_sharings": "Доступное другим",
+    "title_shared": "Доступное мне",
+    "title_activity": "Активность",
+    "title_trash": "Корзина"
+  },
+  "Toolbar": {
+    "more": "Еще"
+  },
+  "toolbar": {
+    "item_upload": "Загрузить",
+    "item_more": "Еще",
+    "menu_select": "Выбранное",
+    "menu_download_folder": "Скачать каталог",
+    "menu_open_cozy": "Открыть в моем Cozy",
+    "empty_trash": "Очистить корзину",
+    "share": "Поделится",
+    "trash": "Удалить",
+    "leave": "Покинуть доступную папку и удалить ее."
+  },
+  "Share": {
+    "status": {
+      "owner": "Владелец",
+      "pending": "Ожидающее",
+      "ready": "Принятое",
+      "refused": "Отклоненное",
+      "error": "Ошибка",
+      "unregistered": "Ошибка",
+      "mail-not-sent": "Ожидающее",
+      "revoked": "Ошибка"
+    },
+    "type": {
+      "one-way": "Чтение",
+      "two-way": "Запись",
+      "desc": {
+        "one-way": "Контакты могут просматривать, скачивать и добавлять контент в их Cozy.  Если они добавят данные в свой Cozy, они смогут получать ваши изменения в данных, но не смогут изменять их самостоятельно.",
+        "two-way": "Контакты могут обновлять, удалять и добавлять  контент в своих Cozy. Изменения в нем отобразятся в остальных Cozy."
+      }
+    },
+    "locked-type-file": "Скоро: вы сможете изменять права доступа назначенные вами на файл.",
+    "locked-type-folder": "Скоро: вы сможете изменять права доступа назначенные вами на каталог.",
+    "recipients": {
+      "you": "Вы",
+      "accessCount": "%{count} людей имеют доступ"
+    },
+    "create-cozy": "Создать мой Cozy",
+    "members": {
+      "others": "и 1 другой… |||| и %{smart_count} других…",
+      "otherContacts": "другой контакт |||| другие контакты"
+    },
+    "contacts": {
+      "permissionRequired": {
+        "title": "Сохранять ваши контакты в Cozy?",
+        "desc": "Авторизуйте приложение для доступа к контактам вашего Cozy: вы сможете выбрать их в следующий раз.",
+        "action": "Разрешенный доступ",
+        "success": "Приложение получило доступ к вашим контактам"
+      }
+    }
+  },
+  "Sharings": {
+    "unavailable": {
+      "title": "Переключить в онлайн!",
+      "message": "Для отображения списка вашего общего доступа необходимо интернет соединение."
+    }
+  },
+  "Files": {
+    "share": {
+      "cta": "Поделится",
+      "title": "Поделится",
+      "details": {
+        "title": "Параметры доступности",
+        "createdAt": "От %{date}",
+        "ro": "Чтение",
+        "rw": "Запись",
+        "desc": {
+          "ro": "Вы можете просматривать, скачивать и добавлять контент в свой Cozy.  Вы будете получать обновления сделанные владельцем, но не сможете самостоятельно изменять контент.",
+          "rw": "Вы можете просматривать, изменять, удалять и добавлять эти данные в вашем Cozy.  Сделанные изменения отобразятся в других  Cozy."
+        }
+      },
+      "sharedByMe": "Доступное мне",
+      "sharedWithMe": "Поделится со мной.",
+      "sharedBy": "Доступно от %{name}",
+      "shareByLink": {
+        "subtitle": "По общей ссылке",
+        "desc": "Любой перешедший по ссылке сможет просматривать и загружать ваши файлы.",
+        "creating": "Создать вашу ссылку...",
+        "copy": "Копировать ссылку",
+        "copied": "Ссылка скопирована в буфер"
+      },
+      "shareByEmail": {
+        "subtitle": "По email",
+        "email": "Для:",
+        "send": "Отправить",
+        "genericSuccess": "Вы отправили приглашение %{count} контактам.",
+        "success": "Вы отправили приглашение на %{email}.",
+        "comingsoon": "Скоро! Вы сможете поделится документом или фото с ваше семьей, друзьями и коллегами в одно нажатие. Не волнуйтесь, мы сообщим вам  как функция будет готова!",
+        "onlyByLink": "Этот %{type} может быть предоставлен по ссылке, т.к.",
+        "type": {
+          "file": "файл",
+          "folder": "каталог"
+        },
+        "hasSharedParent": "имеет родителя с общим доступом",
+        "hasSharedChild": "содержит элемент с общим доступом"
+      },
+      "revoke": {
+        "title": "Убрать из общего доступа",
+        "desc": "Этот контакт сохранит копию, но изменения больше не будут синхронизированы.",
+        "success": "Вы убрали доступ к этому файлу у %{email}."
+      },
+      "revokeSelf": {
+        "title": "Убрать мой доступ",
+        "desc": "Вы сохраните данные, но они не будут обновляться между Cozy.",
+        "success": "Вам закрыли доступ к этим данным."
+      },
+      "sharingLink": {
+        "title": "Ссылка для обмена",
+        "copy": "Копировать",
+        "copied": "Скопировано"
+      },
+      "whoHasAccess": {
+        "title": "доступно 1  человеку |||| %{smart_count} человек имеет доступ"
+      },
+      "protectedShare": {
+        "title": "Скоро!",
+        "desc": "Поделитесь чем-нибудь по email с вашей семьей или друзьями! "
+      },
+      "close": "Закрыть",
+      "gettingLink": "Получение ссылки..."
+    }
+  },
+  "table": {
+    "head_name": "Имя",
+    "head_update": "Последнее обновление",
+    "head_size": "Размер",
+    "row_update_format": "MMM D, YYYY",
+    "row_update_format_full": "MMMM D, YYYY",
+    "row_read_only": "Поделится (Чтение)",
+    "row_read_write": "Поделится (Чтение и Запись)",
+    "row_size_symbols": {
+      "B": "Б",
+      "KB": "Кб",
+      "MB": "МБ",
+      "GB": "ГБ",
+      "TB": "ТБ",
+      "PB": "ПБ",
+      "EB": "ЕБ",
+      "ZB": "ЗБ",
+      "YB": "ЮБ"
+    },
+    "load_more": "Загрузить еще",
+    "mobile": {
+      "head_name_asc": "A-Z",
+      "head_name_desc": "Z-A",
+      "head_updated_at_desc": "Последние"
+    }
+  },
+  "SelectionBar": {
+    "selected_count": "выбран |||| выбрано",
+    "share": "Поделится",
+    "download": "Скачать",
+    "trash": "Удалить",
+    "destroy": "Удалить полностью",
+    "rename": "Переименовать",
+    "restore": "Сбросить",
+    "close": "Закрыть"
+  },
+  "deleteconfirmation": {
+    "title": "Удалить этот элемент? |||| Удалить эти элементы?",
+    "cancel": "Отмена",
+    "delete": "Удалить"
+  },
+  "emptytrashconfirmation": {
+    "title": "Удалить полностью?",
+    "cancel": "Отмена",
+    "delete": "Удалить все"
+  },
+  "destroyconfirmation": {
+    "title": "Удалить полностью?",
+    "cancel": "Отмена",
+    "delete": "Удалить полностью"
+  },
+  "quotaalert": {
+    "title": "Нет мета на диске ;(",
+    "confirm": "ОК"
+  },
+  "loading": {
+    "message": "Загрузка"
+  },
+  "error": {
+    "button": {
+      "reload": "Обновить"
+    },
+    "download_file": {
+      "missing": "Этот файл не найден"
+    }
+  },
+  "mobile": {
+    "onboarding": {
+      "server_selection": {
+        "button": "Далее"
+      },
+      "step": {
+        "button": "Включить",
+        "skip": "Позже",
+        "next": "Далее"
+      },
+      "analytics": {
+        "title": "Помочь улучшить Cozy"
+      }
+    },
+    "settings": {
+      "title": "Настройки",
+      "about": {
+        "title": "О программе",
+        "app_version": "Версия",
+        "account": "Пользователь"
+      },
+      "media_backup": {
+        "launch": "Запустить копирование",
+        "stop": "Остановить копирование",
+        "wifi": {
+          "title": "Делать копии только при WiFi подключении"
+        }
+      },
+      "support": {
+        "title": "Помощь"
+      },
+      "contacts": {
+        "title": "Контакты",
+        "subtitle": "Импортировать контакты"
+      }
+    },
+    "revoked": {
+      "loginagain": "Войти заного",
+      "logout": "Выйти"
+    },
+    "rating": {
+      "enjoy": {
+        "yes": "Да!",
+        "no": "Не возможно"
+      },
+      "rate": {
+        "yes": "Сделаем это!",
+        "no": "Нет, спасибо",
+        "later": "Позже"
+      },
+      "feedback": {
+        "yes": "Отправить",
+        "no": "Нет, спасибо"
+      }
+    }
+  },
+  "UploadQueue": {
+    "close": "отмена"
+  },
+  "searchbar": {
+    "placeholder": "Найти что-нибудь",
+    "empty": "По запросу “%{query}” ничего не найдено."
+  },
+  "search": {
+    "empty": {
+      "subtitle": "По запросу “%{query}” ничего не найдено."
+    }
+  }
+}

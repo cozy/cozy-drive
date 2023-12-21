@@ -1,0 +1,78 @@
+{
+  "Nav": {
+    "item_drive": "드라이브",
+    "item_recent": "최근",
+    "item_activity": "활동",
+    "item_settings": "설정",
+    "banner-btn-client": "다운로드",
+    "link-client": "https://cozy.io/en/download/",
+    "link-client-desktop": "https://nuts.cozycloud.cc/download/channel/stable/",
+    "link-client-android": "https://play.google.com/store/apps/details?id=io.cozy.drive.mobile",
+    "link-client-ios": "https://itunes.apple.com/us/app/cozy-drive/id1224102389?mt=8",
+    "link-client-web": "https://cozy.io/try-it"
+  },
+  "breadcrumb": {
+    "title_drive": "드라이브",
+    "title_recent": "최근",
+    "title_activity": "활동"
+  },
+  "Toolbar": {
+    "more": "더보기"
+  },
+  "toolbar": {
+    "item_more": "더보기",
+    "menu_new_folder": "폴더",
+    "menu_download": "다운로드"
+  },
+  "Files": {
+    "share": {
+      "shareByLink": {
+        "creating": "링크 생성",
+        "copy": "링크 복사",
+        "copied": "링크를 클립보드에 복사했습니다."
+      },
+      "sharingLink": {
+        "copy": "복사"
+      },
+      "error": {
+        "generic": "파일 공유 링크 생성 중에 오류가 발생했습니다. 나중에 다시 시도하세요.",
+        "revoke": "이런, 오류가 발생했습니다. 저희에게 알려 주시면 최대한 빨리 문제를 해결하겠습니다."
+      }
+    }
+  },
+  "table": {
+    "head_name": "이름",
+    "head_size": "크기"
+  },
+  "error": {
+    "open_folder": "폴더를 여는 동안 문제가 발생했습니다.",
+    "button": {
+      "reload": "지금 새로고침"
+    }
+  },
+  "Error": {
+    "public_unshared_title": "죄송합니다. 이 링크는 더이상 이용할 수 없습니다.",
+    "generic": "오류가 발생했습니다. 나중에 다시 시도하세요."
+  },
+  "alert": {
+    "could_not_open_file": "이 파일을 열 수 없습니다."
+  },
+  "mobile": {
+    "settings": {
+      "title": "설정"
+    }
+  },
+  "History": {
+    "loading": "불러오는 중..."
+  },
+  "Shortcut": {
+    "title_modal": "바로가기 생성"
+  },
+  "OnlyOffice": {
+    "createFileName": {
+      "text": "새 문서 만들기",
+      "spreadsheet": "새 스프레드시트 만들기",
+      "slide": "새 프레젠테이션 만들기"
+    }
+  }
+}
