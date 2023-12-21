@@ -759,5 +759,13 @@
     "confirm": "Restaurer le fichier",
     "cancel": "Annuler l'édition",
     "error": "Une erreur est survenue, merci de réessayer."
+  },
+  "TrashedBanner": {
+    "text": "L’élément a été mis à la corbeille",
+    "destroy": "Supprimer définitivement",
+    "restore": "Restaurer",
+    "restoreSuccess": "L’élément a bien été restauré",
+    "restoreError": "Une erreur est survenue, merci de réessayer.",
+    "destroySuccess": "L’élément a bien été supprimé"
   }
 }
