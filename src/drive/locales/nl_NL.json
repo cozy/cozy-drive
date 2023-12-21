@@ -1,0 +1,712 @@
+{
+  "Nav": {
+    "item_drive": "Schijf",
+    "item_recent": "Recent",
+    "item_sharings": "Gedeelde items",
+    "item_shared": "Door mij gedeeld",
+    "item_activity": "Activiteit",
+    "item_trash": "Prullenbak",
+    "item_settings": "Instellingen",
+    "item_collect": "Administratie",
+    "btn-client": "Download Cozy Schijf voor je computer",
+    "support-us": "Aanbiedingen bekijken",
+    "support-us-description": "Wil je graag meer opslagruimte of alleen een hart onder de riem steken?",
+    "btn-client-web": "Download Cozy",
+    "btn-client-mobile": "Download Cozy Schijf op je telefoon!",
+    "banner-txt-client": "Download Cozy Schijf voor je computer en synchroniseer veilig je bestanden om ze overal beschikbaar te maken.",
+    "banner-btn-client": "Downloaden",
+    "link-client": "https://cozy.io/en/download/",
+    "link-client-desktop": "https://nuts.cozycloud.cc/download/channel/stable/",
+    "link-client-android": "https://play.google.com/store/apps/details?id=io.cozy.drive.mobile",
+    "link-client-ios": "https://itunes.apple.com/us/app/cozy-drive/id1224102389?mt=8",
+    "link-client-web": "https://cozy.io/try-it"
+  },
+  "breadcrumb": {
+    "title_drive": "Schijf",
+    "title_recent": "Recent",
+    "title_sharings": "Gedeelde items",
+    "title_shared": "Door mij gedeeld",
+    "title_activity": "Activiteit",
+    "title_trash": "Prullenbak",
+    "label": "Locatie tonen"
+  },
+  "Toolbar": {
+    "more": "Meer"
+  },
+  "toolbar": {
+    "item_upload": "Uploaden",
+    "menu_upload": "Bestanden uploaden",
+    "item_more": "Meer",
+    "menu_new_folder": "Map",
+    "menu_new_encrypted_folder": "Beveiligde map",
+    "menu_select": "Items selecteren",
+    "menu_share_folder": "Map delen",
+    "menu_download": "Downloaden",
+    "menu_sync_cozy": "Synchroniseren naar mijn Cozy",
+    "add_to_mine": "Toevoegen aan mijn Cozy",
+    "menu_download_folder": "Map downloaden",
+    "menu_download_file": "Download dit bestand",
+    "menu_open_cozy": "Openen in mijn Cozy",
+    "menu_create_note": "Notitie",
+    "menu_create_shortcut": "Snelkoppeling",
+    "empty_trash": "Prullenbak legen",
+    "share": "Delen",
+    "trash": "Verwijderen",
+    "leave": "Gedeelde map verlaten en verwijderen",
+    "menu_add": "Toevoegen",
+    "menu_add_item": "Item toevoegen",
+    "menu_onlyOffice": {
+      "text": "Tekstdocumen",
+      "spreadsheet": "Werkblad",
+      "slide": "Presentatie"
+    }
+  },
+  "Share": {
+    "status": {
+      "owner": "Eigenaar",
+      "pending": "In wachtrij",
+      "ready": "Geaccepteerd",
+      "refused": "Geweigerd",
+      "error": "Fout",
+      "unregistered": "Fout",
+      "mail-not-sent": "In wachtrij",
+      "revoked": "Fout"
+    },
+    "type": {
+      "one-way": "Mag bekijken",
+      "two-way": "Mag bewerken",
+      "desc": {
+        "one-way": "Contactpersonen kunnen de inhoud bekijken, downloaden en toevoegen aan hun Cozy. Als ze dit doen, dan ontvangen ze bijgewerkte versies zodra jij iets aanpast, maar ze kunnen zelf niks aanpassen.",
+        "two-way": "Contactpersonen kunnen de inhoud bijwerken, verwijderen en toevoegen aan hun Cozy. Bijgewerkte versies worden getoond op andere Cozies."
+      }
+    },
+    "locked-type-file": "Binnenkort kun je op een bestand verleende machtigingen wijzigen.",
+    "locked-type-folder": "Binnenkort kun je op een map verleende machtigingen wijzigen.",
+    "recipients": {
+      "you": "Jij",
+      "accessCount": "%{count} personen hebben toegang"
+    },
+    "create-cozy": "Maak mijn cozy",
+    "members": {
+      "count": "1 lid |||| %{smart_count} leden",
+      "others": "en 1 andere… ||| en %{smart_count} anderen…",
+      "otherContacts": "andere contactpersoon |||| andere contactpersonen"
+    },
+    "contacts": {
+      "permissionRequired": {
+        "title": "Wil je je contactpersonen opslaan in je Cozy?",
+        "desc": "Machtig de app om toegang te krijgen tot je Cozy-contactpersonen; volgende keer kun je ze kiezen.",
+        "action": "Machtigen",
+        "success": "De app heeft toegang tot je contactpersonen"
+      }
+    },
+    "banner": {
+      "shared_from": "Gedeeld vanaf ![avatar](%{image}) %{name}'s cozy.",
+      "synchronise": "Synchroniseer deze inhoud naar je cozy om aanpassingen te kunnen maken of het te behouden als de ander stopt met het delen ervan.",
+      "whats_cozy": "Cozy is een veilige digitale omgeving voor al je gegevens en wordt gehost in Frankrijk -",
+      "know_more": "Meer informatie",
+      "sync_to_mine": "Synchroniseren naar mijn Cozy",
+      "add_to_mine": "Toevoegen aan mijn Cozy",
+      "close": "Sluiten"
+    }
+  },
+  "Sharings": {
+    "unavailable": {
+      "title": "Maak verbinding met internet!",
+      "message": "Je moet verbonden zijn met het internet om de lijst met recent gedeelde items te bekijken."
+    }
+  },
+  "Files": {
+    "share": {
+      "cta": "Delen",
+      "title": "Delen",
+      "details": {
+        "title": "Deelinformatie",
+        "createdAt": "Op %{date}",
+        "ro": "Mag bekijken",
+        "rw": "Mag wijzigen",
+        "desc": {
+          "ro": "Je kunt deze inhoud bekijken, downloaden op en toevoegen aan je Cozy. Je ontvangt bijgewerkte versies van de eigenaar, maar je kunt zelfs niks aanpassen.",
+          "rw": "Je kunt deze inhoud bekijken, downloaden op en toevoegen aan je Cozy. Bijgewerkte versies zijn beschikbaar op andere Cozies."
+        }
+      },
+      "sharedByMe": "Door mij gedeeld",
+      "sharedWithMe": "Met mij gedeeld",
+      "sharedBy": "Gedeeld door %{name}",
+      "shareByLink": {
+        "subtitle": "Via openbare link",
+        "desc": "Iedereen die de link heeft kan je bestanden bekijken en downloaden.",
+        "creating": "Bezig met maken van je link…",
+        "copy": "Link kopiëren",
+        "copied": "Link is gekopieerd naar het klembord",
+        "failed": "Kan niet kopiëren naar klembord"
+      },
+      "shareByEmail": {
+        "subtitle": "Via e-mail",
+        "email": "Aan:",
+        "emailPlaceholder": "Voer het e-mailadres of de naam in van de ontvanger",
+        "send": "Versturen",
+        "genericSuccess": "Je hebt een uitnodiging verstuurd aan %{count} contactpersonen.",
+        "success": "Je hebt een uitnodiging verstuurd aan %{email}.",
+        "comingsoon": "Binnenkort kun je documenten en foto's met één klik delen met je familie, vrienden en zelfs met je collega's! Geen zorgen, we laten je weten wanneer dit beschikbaar is.",
+        "onlyByLink": "Dit %{type} kan niet worden gedeeld via een link omdat het",
+        "type": {
+          "file": "bestand",
+          "folder": "map"
+        },
+        "hasSharedParent": "een gedeelde bovenliggende map bevat",
+        "hasSharedChild": "een gedeeld itembevat"
+      },
+      "revoke": {
+        "title": "Verwijderen uit gedeelde items",
+        "desc": "De contactpersoon behoudt de kopie, maar aanpassingen worden niet langer gesynchroniseerd.",
+        "success": "Je hebt dit gedeelde bestand verwijderd uit %{email}."
+      },
+      "revokeSelf": {
+        "title": "Verwijder mij uit gedeelde items",
+        "desc": "De inhoud blijft bewaard, maar wordt niet langer bijgewerkt tussen je Cozy-apparaten.",
+        "success": "Je bent verwijderd uit deze gedeelde items."
+      },
+      "sharingLink": {
+        "title": "Link om te delen",
+        "copy": "Kopiëren",
+        "copied": "Gekopieerd"
+      },
+      "whoHasAccess": {
+        "title": "1 persoon heeft toegang |||| %{smart_count} personen hebben toegang"
+      },
+      "protectedShare": {
+        "title": "Binnenkort!",
+        "desc": "Deel van alles via e-mail met je familie en vrienden!"
+      },
+      "close": "Sluiten",
+      "gettingLink": "Bezig met ophalen van je link…",
+      "error": {
+        "generic": "Er is een fout opgetreden tijdens het creëren van de link. Probeer het opnieuw.",
+        "revoke": "Oeps, er is een fout opgetreden. Neem contact met ons op zodat we het probleem z.s.m. kunnen verhelpen."
+      },
+      "specialCase": {
+        "base": "Dit %{type} kan niet worden gedeeld met een link omdat het",
+        "isInSharedFolder": "zich bevindt in een gedeelde map",
+        "hasSharedFolder": "een gedeelde map bevat"
+      }
+    },
+    "viewer-fallback": "Je kunt dit sluiten zodra het downloaden is gestart.",
+    "dropzone": {
+      "teaser": "Versleep bestanden om ze te uploaden naar:",
+      "noFolderSupport": "Je browser heeft geen ondersteuning voor slepen-en-neerzetten. Upload de bestanden handmatig."
+    }
+  },
+  "table": {
+    "head_name": "Naam",
+    "head_update": "Laatst bijgewerkt",
+    "head_size": "Grootte",
+    "head_status": "Delen",
+    "head_thumbnail_size": "Miniatuurgrootte aanpassen",
+    "row_update_format": "MMM D, YYYY",
+    "row_update_format_full": "MMMM D, YYYY",
+    "row_read_only": "Delen (alleen-lezen)",
+    "row_read_write": "Delen (lezen en bewerken)",
+    "row_size_symbols": {
+      "B": "B",
+      "KB": "KB",
+      "MB": "MB",
+      "GB": "GB",
+      "TB": "TB",
+      "PB": "PB",
+      "EB": "EB",
+      "ZB": "ZB",
+      "YB": "YB"
+    },
+    "load_more": "Meer laden",
+    "mobile": {
+      "head_name_asc": "A-Z",
+      "head_name_desc": "Z-A",
+      "head_updated_at_asc": "Oudste eerst",
+      "head_updated_at_desc": "Recentste eerst",
+      "head_size_asc": "Kleinste eerst",
+      "head_size_desc": "Grootste eerst"
+    },
+    "tooltip": {
+      "carbonCopy": {
+        "title": "Carbon Copy",
+        "caption": "Toont aan of het document ‘authentiek en origineel’ is verklaard door Cozy Cloud, de hoster van je Cozy. Het kan namelijk zo zijn dat de claim is gedaan door een externe partij zonder enige aanpassing."
+      },
+      "electronicSafe": {
+        "title": "Elektronische kluis",
+        "caption": "Toont aan of het oorspronkelijke document veilig is opgeslagen in je persoonlijke digitale kluis, voorzien van alle bijbehorende certificeringen en 50 jaar garantie."
+      }
+    }
+  },
+  "SelectionBar": {
+    "selected_count": "item geselecteerd |||| items geselecteerd",
+    "share": "Delen",
+    "download": "Downloaden",
+    "trash": "Verwijderen",
+    "destroy": "Permanent verwijderen",
+    "rename": "Naam wijzigen",
+    "restore": "Herstellen",
+    "close": "Sluiten",
+    "openWith": "Openen met…",
+    "applePreview": "Apple-voorbeeld",
+    "forward": "Vooruit",
+    "forwardTo": "Doorsturen naar…",
+    "moveto": "Verplaatsen naar…",
+    "duplicate": "Klonen",
+    "phone-download": "Offline beschikbaar maken",
+    "qualify": "Categoriseren",
+    "history": "Geschiedenis",
+    "more": "Meer"
+  },
+  "deleteconfirmation": {
+    "title": "Dit item verwijderen? |||| Deze items verwijderen?",
+    "trash": "Het wordt verplaatst naar de prullenbak. |||| Ze worden verplaatst naar de prullenbak.",
+    "restore": "Je kunt het ten allen tijde herstellen. |||| Je kunt ze ten allen tijde herstellen.",
+    "link": "De gedeelde link komt te vervallen",
+    "referenced": "Sommige geselecteerde bestanden horen bij een foto-album. Als je doorgaat, dan worden ze verwijderd.",
+    "cancel": "Annuleren",
+    "delete": "Verwijderen"
+  },
+  "emptytrashconfirmation": {
+    "title": "Permanent verwijderen?",
+    "forbidden": "Je hebt dan  geen toegang meer tot deze bestanden.",
+    "restore": "Je kunt deze bestanden niet herstellen als je geen back-up hebt gemaakt.",
+    "cancel": "Annuleren",
+    "delete": "Alles verwijderen"
+  },
+  "destroyconfirmation": {
+    "title": "Permanent verwijderen?",
+    "forbidden": "Je hebt dan geen toegang meer tot dit bestand. |||| Je hebt dat geen toegang meer tot deze bestanden.",
+    "restore": "Je kunt dit bestand niet herstellen als je geen back-up hebt gemaakt. |||| Je kunt deze bestanden niet herstellen als je geen back-up hebt gemaakt.",
+    "cancel": "Annuleren",
+    "delete": "Permanent verwijderen"
+  },
+  "quotaalert": {
+    "title": "Je hebt geen vrije schijfruimte meer :(",
+    "desc": "Verwijder bestanden en leeg de prullenbak voordat je wéér probeert om bestanden te uploaden.",
+    "confirm": "Oké",
+    "increase": "Vergroot je schijfruimte"
+  },
+  "loading": {
+    "message": "Bezig met laden…",
+    "onlyOfficeCreateInProgress": "Bezig met aanmaken van huidig bestand…"
+  },
+  "empty": {
+    "title": "Deze map bevat geen bestanden.",
+    "text": "Klik op de knop ‘Toevoegen’ om bestanden toe te voegen.",
+    "trash_title": "Je hebt geen verwijderde bestanden.",
+    "trash_text": "Verplaats bestanden die je niet langer nodig hebt naar de prullenbak en verwijder items permanent om ruimte vrij te maken."
+  },
+  "error": {
+    "open_folder": "Er is iets misgegaan tijdens het openen van de map.",
+    "open_file": "Er is iets misgegaan tijdens het openen van het bestand.",
+    "button": {
+      "reload": "Nu herladen"
+    },
+    "download_file": {
+      "offline": "Je moet verbonden zijn om dit bestand te kunnen downloaden",
+      "missing": "Dit bestand ontbreekt",
+      "encryption_many": "Je kunt niet meerdere beveiligde bestanden tegelijkertijd downloaden"
+    }
+  },
+  "Error": {
+    "public_unshared_title": "Sorry, deze link niet langer beschikbaar.",
+    "public_unshared_text": "Deze link is verlopen of verwijderd door de eigenaar. Stel hem of haar hiervan op de hoogte!",
+    "generic": "Er is iets misgegaan. Wacht een paar minuten en probeer het opnieuw."
+  },
+  "alert": {
+    "could_not_open_file": "Het bestand kan niet worden geopend",
+    "try_again": "Er is een fout opgetreden; probeer het later opnieuw.",
+    "restore_file_success": "De selectie is hersteld.",
+    "trash_file_success": "De selectie is verplaatst naar de prullenbak.",
+    "destroy_file_success": "De selectie is permanent verwijderd.",
+    "empty_trash_progress": "De prullenbak wordt geleegd; dit kan even duren.",
+    "empty_trash_success": "De prullenbak is geleegd.",
+    "folder_name": "‘%{folderName}’ bestaat al. Kies een andere naam.",
+    "file_name": "‘%{fileName}’ bestaat al. Kies een andere naam.",
+    "file_name_missing": "De bestandsnaam ontbreekt - geef een naam op.",
+    "file_name_illegal_name": "‘%{fileName}’ is ongeldig. Kies een andere naam.",
+    "file_name_illegal_characters": "%{fileName} bevat ongeldige tekens: %{characters}",
+    "folder_generic": "Er is een fout opgetreden; probeer het opnieuw.",
+    "folder_abort": "Als je je nieuwe map wilt opslaan, dan moet je deze een naam geven. Je informatie is niet opgeslagen.",
+    "offline": "Deze functie is niet offline beschikbaar.",
+    "preparing": "Bezig met voorbereiden van je bestanden…"
+  },
+  "mobile": {
+    "onboarding": {
+      "welcome": {
+        "title": "Cozy Drive",
+        "desc": "Maak een Cozy of log in op je Cozy Drive",
+        "button": "Inloggen",
+        "no_account_link": "Ik heb geen Cozy",
+        "create_my_cozy": "Maak mijn cozy"
+      },
+      "server_selection": {
+        "title": "Inloggen",
+        "lostpwd": "[Ik ben het adres van mijn Cozy vergeten](https://manager.cozycloud.cc/cozy/reminder)",
+        "label": "Mijn Cozy-adres",
+        "cozy_address_placeholder": "jan",
+        "cozy_custom_address_placeholder": "jan.mijndomein.com",
+        "domain_cozy": ".mycozy.cloud",
+        "domain_custom": "overig",
+        "button": "Volgende",
+        "wrong_address_with_email": "Je hebt een e-mailadres ingevoerd. Om te verbinden met je Cozy, moet je de url invoeren. Voorbeeld: https://janjansen.mycozy.cloud",
+        "wrong_address_v2": "Je hebt een adres ingevoerd van een oude Cozy-versie. Deze app  is alleen compatibel met de nieuwste versie. [Bekijk onze site voor meer informatie.] (https://blog.cozycloud.cc/post/2016/11/21/On-the-road-to-Cozy-version-3?lang=en)",
+        "wrong_address": "Dit adres lijkt geen Cozy te bevatten. Controleer het opgegeven adres.",
+        "wrong_address_cosy": "Oeps, dit adres is onjuist. Probeer “cozy” met een “z” te schrijven! ;-)"
+      },
+      "files": {
+        "title": "Toegang tot je schijf",
+        "description": "Als je je Cozy Drive wilt opslaan op je apparaat, dan heeft deze app toegang tot je bestanden nodig."
+      },
+      "photos": {
+        "title": "Foto's en video's back-uppen",
+        "description": "Maak automatisch een back-up van je foto's en video's naar je Cozy, zodat je ze nooit kwijtraakt."
+      },
+      "contacts": {
+        "title": "Contactpersonen synchroniseren",
+        "description": "Sla je telefooncontactpersonen op op je Cozy - dit vergemakkelijkt het delen van bestanden."
+      },
+      "step": {
+        "button": "Nu inschakelen",
+        "skip": "Later",
+        "next": "Volgende"
+      },
+      "analytics": {
+        "title": "Help ons Cozy te verbeteren",
+        "description": "De app deelt automatisch gegevens (voornamelijk fouten) met Cozy Cloud. Dit helpt ons problemen sneller op te lossen."
+      }
+    },
+    "settings": {
+      "title": "Instellingen",
+      "about": {
+        "title": "Over",
+        "app_version": "App-versie",
+        "account": "Account"
+      },
+      "unlink": {
+        "title": "Uitloggen",
+        "description": "Als je uitlogt op dit apparaat, dan verlies je geen gegevens van je Cozy. Dit verwijdert offline bestanden die gerelateerd zijn aan je Cozy.",
+        "button": "Uitloggen"
+      },
+      "media_backup": {
+        "media_folder": "Foto's",
+        "backup_folder": "Geback-upt via mijn mobiel",
+        "legacy_backup_folder": "Geback-upt via mijn mobiel",
+        "title": "Mediaback-up",
+        "images": {
+          "title": "Afbeeldingen back-uppen",
+          "label": "Automatisch je afbeeldingen back-uppen naar je Cozy zodat je ze nooit kwijtraakt en eenvoudig kunt delen."
+        },
+        "launch": "Back-up starten",
+        "stop": "Back-up stoppen",
+        "wifi": {
+          "title": "Alleen back-uppen via wifi",
+          "label": "Als deze optie is ingeschakeld, dan back-upt je apparaat alleen foto's als er verbinding is met wifi zodat je mobiele internet wordt ontzien."
+        },
+        "media_upload": "%{smart_count} resterende afbeelding |||| %{smart_count} resterende afbeeldingen",
+        "media_uptodate": "Mediaback-up is actueel",
+        "preparing": "Bezig met zoeken naar te back-uppen media…",
+        "no_wifi": "Maak verbinding met een wifi-netwerk",
+        "quota": "Opslagruimte bijna vol",
+        "quota_contact": "Opslagruimte beheren"
+      },
+      "support": {
+        "title": "Ondersteuning",
+        "analytics": {
+          "title": "Help ons Cozy te verbeteren",
+          "label": "De app deelt automatisch gegevens (voornamelijk fouten) met Cozy Cloud. Dit helpt ons problemen sneller op te lossen."
+        },
+        "feedback": {
+          "title": "Help ons Cozy Drive te verbeteren",
+          "description": "Verstuur je feedback zodat we Cozy Drive kunnen verbeteren. Klik op onderstaande knop, leg het probleem uit of deel een idee en verstuur het. Klaar is Kees!",
+          "button": "Feedback achterlaten"
+        },
+        "logs": {
+          "title": "Help ons je probleem te begrijpen",
+          "description": "Verstuur het logbestand om de kwaliteit en stabiliteit te verbeteren.",
+          "button": "Mijn logbestanden versturen",
+          "success": "Bedankt! We gaan je probleem bekijken en nemen spoedig contact met je op.",
+          "error": "Er is een fout opgetreden: de logbestanden zijn niet verstuurd. Probeer het opnieuw."
+        }
+      },
+      "contacts": {
+        "title": "Contactpersonen",
+        "subtitle": "Contactpersonen importeren",
+        "text": "Importeer de contactpersonen van je apparaat zodat je gemakkelijk dingen met ze kunt delen."
+      }
+    },
+    "error": {
+      "open_with": {
+        "offline": "Je moet verbonden zijn om dit bestand te kunnen openen",
+        "noapp": "Er is geen app die het bestand kan openen met het mimetype ‘%{fileMime}’",
+        "missing": "Dit bestand ontbreekt"
+      },
+      "make_available_offline": {
+        "offline": "Je moet verbonden zijn om dit bestand te kunnen openen",
+        "noapp": "Er is geen app die het bestand kan openen met het mimetype ‘%{fileMime}’"
+      }
+    },
+    "revoked": {
+      "title": "Toegang ingetrokken",
+      "description": "Het lijkt erop dat je dit apparaat hebt verwijderd uit je Cozy. Als dat niet zo is, neem dan contact met ons op via contact@cozycloud.cc Al je lokale Cozy-gegevens worden verwijderd.",
+      "loginagain": "Opnieuw inloggen",
+      "logout": "Uitloggen"
+    },
+    "rating": {
+      "enjoy": {
+        "title": "Gebruik je Cozy Drive graag?",
+        "yes": "Ja!",
+        "no": "Niet echt"
+      },
+      "rate": {
+        "title": "Wil je een beoordeling achterlaten?",
+        "yes": "Ja, graag!",
+        "no": "Nee, bedankt",
+        "later": "Misschien later"
+      },
+      "feedback": {
+        "title": "Wil je feedback achterlaten?",
+        "yes": "Versturen",
+        "no": "Nee, bedankt"
+      },
+      "email": {
+        "subject": "Feedback over Cozy Drive",
+        "placeholder": "Hallo, ik vind dat Cozy Drive het volgende kan verbeteren:"
+      },
+      "alert": {
+        "rated": "Bedankt! Je bent een ⭐️ !",
+        "declined": "Top! Je gaat de nieuwe mogelijkheden geweldig vinden. Blijf Cozy!",
+        "later": "Geen probleem; we vragen het later nog eens.",
+        "feedback": "Bedankt voor de feedback. We gaan er zeker mee aan de slag!"
+      }
+    },
+    "first_sync": {
+      "title": "Je staat op het punt om je eerste foto's te back-uppen 🎉",
+      "tips": "Tips",
+      "tip_bed": "Open Cozy Drive voordat je naar bed gaat of als je je telefoon niet gebruikt.",
+      "tip_wifi": "Schakel wifi in om je mobiele internet te sparen.",
+      "tip_lock": "Schakel je vergrendelingsscherm uit.",
+      "result": "'s Ochtends worden al je foto's opgeslagen op een veilige locatie.",
+      "button": "Ik begrijp het!"
+    },
+    "notifications": {
+      "backup_paused": "De fotoback-up is gepauzeerd. Houdt de app open en zorg ervoor dat het scherm niet uit gaat om de back-up te kunnen voltooien."
+    },
+    "download": {
+      "success": "Je bestand is gedeeld"
+    }
+  },
+  "upload": {
+    "alert": {
+      "network": "Je bent momenteel offline. Maak verbinding en probeer het opnieuw."
+    }
+  },
+  "intents": {
+    "alert": {
+      "error": "Het bestand kan niet automatisch worden geüpload. Doe het handmatig via het uploadmenu."
+    },
+    "picker": {
+      "select": "Selecteren",
+      "cancel": "Annuleren",
+      "new_folder": "Nieuwe map",
+      "instructions": "Kies een doel"
+    }
+  },
+  "UploadQueue": {
+    "header": "Bezig met uploaden van %{smart_count} foto naar Cozy Drive |||| Bezig met uploaden van %{smart_count} foto's naar Cozy Drive",
+    "header_mobile": "Bezig met uploaden - %{done} van %{total}…",
+    "header_done": "%{done} van de %{total} geüpload",
+    "close": "sluiten",
+    "item": {
+      "pending": "In wachtrij"
+    }
+  },
+  "Viewer": {
+    "close": "Sluiten",
+    "noviewer": {
+      "download": "Download dit bestand",
+      "openWith": "Openen met…",
+      "openInOnlyOffice": "Openen met OnlyOffice",
+      "cta": {
+        "saveTime": "Bespaar wat tijd!",
+        "installDesktop": "Installeer de synchronisatie-app op je computer",
+        "accessFiles": "Direct toegang tot je bestanden vanaf je computer"
+      }
+    },
+    "actions": {
+      "download": "Downloaden",
+      "forward": "Vooruit"
+    },
+    "loading": {
+      "error": "Dit bestand kan niet worden geladen. Ben je verbonden met het internet?",
+      "retry": "Opnieuw proberen"
+    },
+    "error": {
+      "noapp": "Er is geen app die dit bestand in behandeling kan nemen.",
+      "generic": "Er is een fout opgetreden tijdens het openen van dit bestand. Probeer het opnieuw.",
+      "noNetwork": "Je bent momenteel offline."
+    },
+    "panel": {
+      "title": "Nuttige informatie"
+    }
+  },
+  "Move": {
+    "to": "Verplaatsen naar:",
+    "action": "Verplaatsen",
+    "cancel": "Annuleren",
+    "modalTitle": "Verplaatsen",
+    "title": "%{smart_count} item |||| %{smart_count} items",
+    "success": "%{subject} is verplaatst naar %{target}. ||| %{smart_count} items zijn verplaatst naar %{target}.",
+    "error": "Er is iets misgegaan tijdens het verplaatsen van dit item; probeer het later opnieuw. |||| Er is iets misgegaan tijdens het verplaatsen van deze items; probeer het later opnieuw.",
+    "cancelled": "%{subject} is teruggeplaatst op de oorspronkelijke locatie. ||| %{smart_count} items zijn teruggeplaatst op hun oorspronkelijke locatie.",
+    "cancelledWithRestoreErrors": "%{subject} is teruggeplaatst op de oorspronkelijke locatie, maar er is een fout opgetreden. ||| %{smart_count} items zijn teruggeplaatst op hun oorspronkelijke locatie, maar er zijn %{restoreErrorsCount} fouten opgetreden.",
+    "cancelled_error": "Sorry, er is iets misgegaan tijdens het terughalen van dit item. |||| Sorry, er is iets misgegaan tijdens terughalen van deze items.",
+    "multipleEntries": "%{smart_count} item |||| %{smart_count} items",
+    "entriesType": {
+      "file": "bestand",
+      "directory": "map",
+      "element": "item"
+    },
+    "outsideSharedFolder": {
+      "title": "Verplaatsen buiten de map ‘%{sharedFolder}’",
+      "cancel": "Annuleren",
+      "confirm": "Ik begrĳp het"
+    }
+  },
+  "ImportToDrive": {
+    "title": "%{smart_count} item |||| %{smart_count} items",
+    "to": "Opslaan in:",
+    "action": "Opslaan",
+    "cancel": "Annuleren",
+    "success": "%{smart_count} opgeslagen bestand |||| %{smart_count} opgeslagen bestanden",
+    "error": "Er is iets misgegaan; probeer het opnieuw."
+  },
+  "FileOpenerExternal": {
+    "fileNotFoundError": "Fout: bestand niet gevonden"
+  },
+  "TOS": {
+    "updated": {
+      "title": "De GDPR is werkelijkheid geworden!",
+      "detail": "In verband met de General Data Protection Regulation, ook wel AVG, [zijn onze algemene voorwaarden bijgewerkt](%{link}) en van toepassing op alle Cozy-gebruikers vanaf 25 mei 2018.",
+      "cta": "Voorwaarden accepteren en doorgaan",
+      "disconnect": "Weigeren en verbinding verbreken",
+      "error": "Er is iets misgegaan; probeer het later opnieuw."
+    }
+  },
+  "manifest": {
+    "permissions": {
+      "contacts": {
+        "description": "Vereist om bestanden te kunnen delen met je contactpersonen"
+      },
+      "groups": {
+        "description": "Vereist om bestanden te kunnen delen in je groepen"
+      }
+    }
+  },
+  "models": {
+    "contact": {
+      "defaultDisplayName": "Anoniem"
+    }
+  },
+  "Scan": {
+    "scan_a_doc": "Document scannen",
+    "save_doc": "Document opslaan",
+    "filename": "Bestandsnaam",
+    "save": "Opslaan",
+    "cancel": "Annuleren",
+    "qualify": "Categoriseren",
+    "apply": "Toepassen",
+    "error": {
+      "offline": "Je kunt deze functie momenteel niet gebruiken omdat je offline bent. Probeer het later opnieuw.",
+      "uploading": "Je bent al een bestand aan het uploaden. Wacht tot dat is afgerond en probeer het dan opnieuw.",
+      "generic": "Er is iets misgegaan; probeer het opnieuw."
+    },
+    "successful": {
+      "qualified_ok": "Je hebt je eerste bestand gecategoriseerd!"
+    }
+  },
+  "History": {
+    "description": "De laatste 20 versies van je bestanden worden automatisch bewaard. Selecteer een versie om deze te downloaden.",
+    "current_version": "Huidige versie",
+    "loading": "Bezig met laden…",
+    "noFileVersionEnabled": "Je Cozy kan binnenkort de recenste bestandsaanpassingen archiveren zodat je nooit meer een bestand kwijtraakt"
+  },
+  "External": {
+    "redirection": {
+      "title": "Doorverwijzing",
+      "text": "Je wordt doorverwezen…",
+      "error": "Doorverwijzing mislukt. Normaliter betekent dit dat de bestandsinhoud niet goed is opgemaakt."
+    }
+  },
+  "RenameModal": {
+    "title": "Naam wijzigen",
+    "description": "Je staat op het punt om de bestandsextensie te wijzigen. Wil je doorgaan?",
+    "continue": "Doorgaan",
+    "cancel": "Annuleren"
+  },
+  "Shortcut": {
+    "title_modal": "Snelkoppeling maken",
+    "filename": "Bestandsnaam",
+    "url": "URL",
+    "cancel": "Annuleren",
+    "create": "Maken",
+    "created": "De snelkoppeling is gemaakt",
+    "errored": "Er is een fout opgetreden",
+    "filename_error_ends": "De naam moet eindigen op .url",
+    "needs_info": "De snelkoppeling moet op zijn minst voorzien zijn van een url en bestandsnaam",
+    "url_badformat": "De url is onjuist opgemaakt"
+  },
+  "OnlyOffice": {
+    "Error": {
+      "title": "Er is iets misgegaan",
+      "text": "Herlaad de pagina"
+    },
+    "readOnly": {
+      "title": "Alleen-lezen",
+      "tooltip": "Je bent alleen bevoegd om dit document te lezen - neem contact op met de eigenaar als je het ook wilt kunnen bewerken."
+    },
+    "createFileName": {
+      "text": "Nieuw tekstdocument",
+      "spreadsheet": "Nieuw werkblad",
+      "slide": "Nieuwe presentatie"
+    },
+    "toolbar": {
+      "goToHome": "Ga naar overzicht"
+    },
+    "actions": {
+      "edit": "Bewerken",
+      "validate": "Verifiëren"
+    }
+  },
+  "Migration": {
+    "title": "Cozy Schijf bijwerken",
+    "content": "Cozy Schijf moet worden bijgewerkt om de prestaties ervan te verbeteren - dit kan enkele minuten duren. Gedurende deze periode kun je de app niet gebruiken. Wil je Cozy Schijf nu bijwerken? Als je dat niet wilt, dan vragen we het volgende keer opnieuw.",
+    "confirm": "Ja, doe maar!",
+    "cancel": "Nee, niet nu"
+  },
+  "searchbar": {
+    "placeholder": "Zoeken naar iets",
+    "empty": "Geen resultaten gevonden voor de zoekopdracht \"%{query}\""
+  },
+  "button": {
+    "back": "Terug",
+    "add": "Toevoegen"
+  },
+  "search": {
+    "action": "Zoeken",
+    "empty": {
+      "title": "Geen zoekresultaten",
+      "subtitle": "Geen resultaten gevonden voor de zoekopdracht \"%{query}\""
+    }
+  },
+  "PushBanner": {
+    "quota": {
+      "text": "Je hebt nog weinig opslagruimte. Als je het limiet bereikt, dan kun je geen bestanden meer toevoegen. Je kunt bestanden verwĳderen, de prullenbak legen of een ander abonnement kiezen om ruimte vrĳ te maken.",
+      "actions": {
+        "first": "Ik begrĳp het",
+        "second": "Abonnementen bekĳken"
+      }
+    }
+  }
+}

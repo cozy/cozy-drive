@@ -1,0 +1,430 @@
+{
+  "Nav": {
+    "item_drive": "Drive",
+    "item_recent": "Recenti",
+    "item_sharings": "Condivisioni",
+    "item_shared": "Condiviso da me",
+    "item_activity": "Attività",
+    "item_trash": "Cestino",
+    "item_settings": "Impostazioni",
+    "item_collect": "Amministrativo",
+    "btn-client": "Ottieni Cozy Drive per desktop",
+    "support-us": "Visualizza offerte",
+    "support-us-description": "Desideri beneficiare di più spazio o semplicemente sostenere Cozy?",
+    "btn-client-web": "Ottieni Cozy",
+    "btn-client-mobile": "Ottieni Cozy sul tuo telefono!",
+    "banner-txt-client": "Ottieni Cozy Drive per Desktop e sincronizza i tuoi file in modo sicuro per renderli accessibili in qualsiasi momento.",
+    "banner-btn-client": "Scarica",
+    "link-client": "https://cozy.io/en/download/",
+    "link-client-desktop": "https://nuts.cozycloud.cc/download/channel/stable/",
+    "link-client-android": "https://play.google.com/store/apps/details?id=io.cozy.drive.mobile",
+    "link-client-ios": "https://itunes.apple.com/us/app/cozy-drive/id1224102389?mt=8",
+    "link-client-web": "https://cozy.io/try-it"
+  },
+  "breadcrumb": {
+    "title_drive": "Drive",
+    "title_recent": "Recenti",
+    "title_sharings": "Condivisioni",
+    "title_shared": "Condiviso da me",
+    "title_activity": "Attività",
+    "title_trash": "Cestino",
+    "label": "Mostra percorso"
+  },
+  "Toolbar": {
+    "more": "Altro"
+  },
+  "toolbar": {
+    "item_upload": "Carica",
+    "menu_upload": "Carica files",
+    "item_more": "Altro",
+    "menu_new_folder": "Cartella",
+    "menu_new_encrypted_folder": "Cartella criptata",
+    "menu_select": "Seleziona oggetti",
+    "menu_share_folder": "Condividi cartella",
+    "menu_download": "Scarica",
+    "menu_sync_cozy": "Sincronizza con il mio Cozy",
+    "add_to_mine": "Aggiungi al mio Cozy",
+    "menu_download_folder": "Cartella download",
+    "menu_download_file": "Scarica questo file",
+    "menu_open_cozy": "Apri nel mio Cozy",
+    "menu_create_note": "Nota",
+    "menu_create_shortcut": "Collegamento",
+    "empty_trash": "Svuota cestino",
+    "share": "Condividi",
+    "trash": "Rimuovi",
+    "leave": "Lascia la cartella condivisa ed eliminala",
+    "menu_add": "Aggiungi",
+    "menu_onlyOffice": {
+      "text": "Documento di testo",
+      "spreadsheet": "Foglio di calcolo",
+      "slide": "Presentazione"
+    }
+  },
+  "Share": {
+    "status": {
+      "owner": "Proprietario",
+      "pending": "In attesa",
+      "ready": "Accettato",
+      "refused": "Rifiutato",
+      "error": "Errore ",
+      "unregistered": "Errore",
+      "mail-not-sent": "In attesa",
+      "revoked": "Errore"
+    },
+    "type": {
+      "one-way": "Può visualizzare",
+      "two-way": "Può modificare",
+      "desc": {
+        "one-way": "I contatti possono visualizzare, scaricare e aggiungere il contenuto al loro Cozy. Se aggiungono il contenuto al loro Cozy, riceveranno gli aggiornamenti apportati al contenuto, ma non potranno aggiornarlo.",
+        "two-way": "I contatti possono aggiornare, cancellare e aggiungere il contenuto al loro Cozy. Gli aggiornamenti dei contenuti saranno visibili anche negli altri Cozy."
+      }
+    },
+    "locked-type-file": "In arrivo: sarà possibile modificare le autorizzazioni concesse al file.",
+    "locked-type-folder": "In arrivo: sarà possibile modificare le autorizzazioni concesse alla cartella.",
+    "recipients": {
+      "you": "Tu",
+      "accessCount": "%{count} persone hanno accesso"
+    },
+    "create-cozy": "Crea il mio cozy",
+    "members": {
+      "count": "1 membro |||| %{smart_count} membri",
+      "others": "e 1 altro... |||| e %{smart_count} altri...",
+      "otherContacts": "altri contatti |||| altri contatti"
+    },
+    "contacts": {
+      "permissionRequired": {
+        "title": "Salvare i contatti nel tuo Cozy?",
+        "desc": "Autorizza l'applicazione ad accedere ai contatti del tuo Cozy: sarai in grado di selezionarli la prossima volta.",
+        "action": "Autorizza l'accesso",
+        "success": "L'applicazione ha accesso ai tuoi contatti"
+      }
+    },
+    "banner": {
+      "shared_from": "Condiviso da ![avatar](%{image}) %{name}'s cozy.",
+      "synchronise": "Sincronizza questi contenuti nel tuo Cozy per poterli modificare o conservarli in caso di cancellamento della condivisione.",
+      "whats_cozy": "Cozy è una casa digitale sicura per tutti i tuoi dati, ospitata in Francia.",
+      "know_more": "Più informazioni",
+      "sync_to_mine": "Sincronizza nel mio Cozy",
+      "add_to_mine": "Aggiungi al mio Cozy",
+      "close": "Chiudi"
+    }
+  },
+  "Sharings": {
+    "unavailable": {
+      "title": "Passa online!",
+      "message": "Per visualizzare l'elenco delle ultime condivisioni è necessaria una connessione a Internet."
+    }
+  },
+  "Files": {
+    "share": {
+      "cta": "Condividi",
+      "title": "Condividi",
+      "details": {
+        "title": "Dettagli condivisione",
+        "createdAt": "Il %{date}",
+        "ro": "Può visualizzare",
+        "rw": "Può modificare",
+        "desc": {
+          "ro": "È possibile visualizzare, scaricare e aggiungere questo contenuto al proprio Cozy. Riceverao gli aggiornamenti da parte del proprietario, ma non potrai aggiornarli tu stesso.",
+          "rw": "Puoi visualizzare, aggiornare, cancellare e aggiungere questo contenuto al tuo Cozy. Gli aggiornamenti apportati saranno visibili anche agli altri Cozy."
+        }
+      },
+      "sharedByMe": "Condiviso da me",
+      "sharedWithMe": "Condiviso con me",
+      "sharedBy": "Condiviso da %{name}",
+      "shareByLink": {
+        "subtitle": "Tramite link pubblico",
+        "desc": "Chiunque abbia il link fornito può vedere e scaricare i tuoi file.",
+        "creating": "Creazione del link...",
+        "copy": "Copia link",
+        "copied": "Il link è stato copiato negli appunti",
+        "failed": "Impossibile copiare negli appunti"
+      },
+      "shareByEmail": {
+        "subtitle": "Tramite email",
+        "email": "A:",
+        "emailPlaceholder": "Inserire l'indirizzo e-mail o il nome del destinatario",
+        "send": "Invia",
+        "genericSuccess": "Hai inviato un invito a %{count} contatti.",
+        "success": "Hai inviato un invito a %{email}.",
+        "comingsoon": "Prossimamente! Potrai condividere documenti e foto con un solo clic con la tua famiglia, i tuoi amici e persino i tuoi colleghi. Non preoccuparti, ti faremo sapere quando sarà disponibile!",
+        "onlyByLink": "Questo %{tipo} può essere condiviso solo tramite link, perché",
+        "type": {
+          "file": "file",
+          "folder": "cartella"
+        },
+        "hasSharedParent": "ha un genitore condiviso",
+        "hasSharedChild": "contiene un elemento condiviso"
+      },
+      "revoke": {
+        "title": "Rimuovi dalla condivisione",
+        "desc": "Questo contatto manterrà una copia, ma le modifiche non saranno più sincronizzate.",
+        "success": "Hai rimosso questo file condiviso da %{email}."
+      },
+      "revokeSelf": {
+        "title": "Rimuovimi dalla condivisione",
+        "desc": "Il contenuto viene mantenuto, ma non verrà più aggiornato sul tuo Cozy.",
+        "success": "Sei stato rimosso da questa condivisione."
+      },
+      "sharingLink": {
+        "title": "Link per la condivisione",
+        "copy": "Copia",
+        "copied": "Copiato"
+      },
+      "whoHasAccess": {
+        "title": "1 persona ha accesso |||| %{smart_count} persone hanno accesso"
+      },
+      "protectedShare": {
+        "title": "In arrivo!",
+        "desc": "Condividi qualsiasi cosa via e-mail con la tua famiglia e i tuoi amici!"
+      },
+      "close": "Chiudi",
+      "gettingLink": "Ottenendo il tuo link",
+      "specialCase": {
+        "isInSharedFolder": "è in una cartella condivisa",
+        "hasSharedFolder": "contiene una cartella condivisa"
+      }
+    }
+  },
+  "table": {
+    "head_name": "Nome",
+    "head_update": "Ultimo aggiornamento",
+    "head_size": "Dimensione",
+    "row_update_format": "MMM D, YYYY",
+    "row_update_format_full": "MMMM D, YYYY",
+    "row_read_only": "Condividi (Solo Lettura)",
+    "row_read_write": "Condividi (Lettura e Scrittura)",
+    "row_size_symbols": {
+      "B": "B",
+      "KB": "KB",
+      "MB": "MB",
+      "GB": "GB",
+      "TB": "TB",
+      "PB": "PB",
+      "EB": "EB",
+      "ZB": "ZB",
+      "YB": "YB"
+    },
+    "load_more": "Carica altro",
+    "mobile": {
+      "head_name_asc": "A-Z",
+      "head_name_desc": "Z-A"
+    }
+  },
+  "SelectionBar": {
+    "share": "Condividi",
+    "download": "Scarica",
+    "trash": "Rimuovi",
+    "destroy": "Elimina permanentemente",
+    "rename": "Rinomina",
+    "restore": "Ripristina",
+    "close": "Chiudi",
+    "openWith": "Apri con...",
+    "duplicate": "Duplica"
+  },
+  "deleteconfirmation": {
+    "cancel": "Annulla",
+    "delete": "Rimuovi"
+  },
+  "emptytrashconfirmation": {
+    "title": "Eliminare permanentemente?",
+    "forbidden": "Non sarai più in grado di accedere a questi file.",
+    "cancel": "Annulla",
+    "delete": "Elimina tutto"
+  },
+  "destroyconfirmation": {
+    "title": "Eliminare permanentemente?",
+    "cancel": "Annulla",
+    "delete": "Elimina permanentemente"
+  },
+  "quotaalert": {
+    "confirm": "OK"
+  },
+  "loading": {
+    "message": "Caricamento"
+  },
+  "empty": {
+    "title": "Non hai nessun file in questa cartella."
+  },
+  "error": {
+    "button": {
+      "reload": "Aggiorna adesso"
+    },
+    "download_file": {
+      "offline": "Devi essere connesso per scaricare questo file"
+    }
+  },
+  "alert": {
+    "could_not_open_file": "Il file non può essere aperto",
+    "empty_trash_success": "Il cestino è stato svuotato",
+    "folder_generic": "Si è verificato un errore, per favore riprova.",
+    "offline": "Questa caratteristica non è disponibile offline."
+  },
+  "mobile": {
+    "onboarding": {
+      "server_selection": {
+        "title": "Accedi",
+        "cozy_address_placeholder": "claude",
+        "cozy_custom_address_placeholder": "claude.mydomain.com",
+        "domain_cozy": ".mycozy.cloud",
+        "button": "Successivo"
+      },
+      "files": {
+        "title": "Accedi al tuo drive"
+      },
+      "contacts": {
+        "title": "Sincronizza i tuoi contatti"
+      },
+      "step": {
+        "button": "Abilitalo adesso",
+        "skip": "Dopo",
+        "next": "Successivo"
+      },
+      "analytics": {
+        "title": "Aiutaci a migliorare Cozy"
+      }
+    },
+    "settings": {
+      "title": "Impostazioni",
+      "about": {
+        "app_version": "Versione App",
+        "account": "Account"
+      },
+      "media_backup": {
+        "media_folder": "Foto",
+        "launch": "Avvia Backup",
+        "stop": "Ferma Backup",
+        "wifi": {
+          "title": "Backup solo su WIFI"
+        },
+        "no_wifi": "Connetti al WIFI",
+        "quota": "Limite spazio di archiviazione quasi raggiunto",
+        "quota_contact": "Gestisci il tuo spazio di archiviazione"
+      },
+      "support": {
+        "title": "Supporto",
+        "analytics": {
+          "title": "Aiutaci a migliorare Cozy"
+        },
+        "feedback": {
+          "title": "Aiuta a migliorare Cozy Drive",
+          "button": "lascia un feedback"
+        },
+        "logs": {
+          "title": "Aiutaci a capire il tuo problema"
+        }
+      },
+      "contacts": {
+        "title": "Contatti",
+        "subtitle": "Importa contatti"
+      }
+    },
+    "error": {
+      "open_with": {
+        "offline": "Devi essere connesso per aprire questo file"
+      }
+    },
+    "revoked": {
+      "title": "Accesso revocato",
+      "loginagain": "Entra di nuovo",
+      "logout": "Esci"
+    },
+    "rating": {
+      "enjoy": {
+        "title": "Ti piace Cozy Drive?",
+        "yes": "SI!",
+        "no": "Non tanto"
+      },
+      "rate": {
+        "title": "Hai pensato di votarla?",
+        "yes": "Facciamolo!",
+        "no": "No, grazie",
+        "later": "Magari dopo"
+      },
+      "feedback": {
+        "yes": "Invia",
+        "no": "No, grazie"
+      },
+      "alert": {
+        "rated": "Grazie! Siete ⭐️⭐️⭐️⭐️⭐️"
+      }
+    },
+    "first_sync": {
+      "tips": "Trucchi",
+      "tip_bed": "Apri Cozy Drive prima di andare a letto o quando non stai usando il tuo telefono.",
+      "tip_wifi": "Abilita il Wi-Fi per preservare i tuoi dati mobili.",
+      "tip_lock": "Disabilita il tuo blocco schermo.",
+      "result": "Al mattino, tutte le tue foto saranno salvate in un luogo sicuro.",
+      "button": "Capito!"
+    }
+  },
+  "UploadQueue": {
+    "close": "chiudi",
+    "item": {
+      "pending": "In attesa"
+    }
+  },
+  "Viewer": {
+    "close": "Chiudi",
+    "noviewer": {
+      "download": "Scarica questo file",
+      "openWith": "Apri con..."
+    },
+    "actions": {
+      "download": "Scarica"
+    },
+    "loading": {
+      "retry": "Riprova"
+    }
+  },
+  "ImportToDrive": {
+    "action": "Salva"
+  },
+  "FileOpenerExternal": {
+    "fileNotFoundError": "Errore: file non trovato"
+  },
+  "models": {
+    "contact": {
+      "defaultDisplayName": "Anonimo"
+    }
+  },
+  "Scan": {
+    "save_doc": "Salva il documento",
+    "save": "Salva"
+  },
+  "History": {
+    "current_version": "Versione corrente",
+    "loading": "Caricamento..."
+  },
+  "External": {
+    "redirection": {
+      "text": "Stai per essere reindirizzato..."
+    }
+  },
+  "RenameModal": {
+    "title": "Rinomina"
+  },
+  "Shortcut": {
+    "url": "URL",
+    "errored": "Si è verificato un errore"
+  },
+  "OnlyOffice": {
+    "readOnly": {
+      "title": "Sola lettura"
+    },
+    "createFileName": {
+      "text": "Nuovo documento di testo",
+      "spreadsheet": "Nuovo foglio di calcolo",
+      "slide": "Nuova presentazione"
+    }
+  },
+  "searchbar": {
+    "placeholder": "Cerca",
+    "empty": "Nessun risultato trovato per la richiesta “%{query}”"
+  },
+  "search": {
+    "empty": {
+      "subtitle": "Nessun risultato trovato per la richiesta “%{query}”"
+    }
+  }
+}

@@ -1,0 +1,213 @@
+{
+  "Nav": {
+    "item_drive": "القرص",
+    "item_recent": "الحديثة",
+    "item_activity": "النشاط",
+    "item_settings": "الإعدادات",
+    "btn-client-web": "تحصّل على كوزي",
+    "btn-client-mobile": "تحصّل على كوزي لجهازك المحمول !",
+    "link-client": "https://cozy.io/en/download/",
+    "link-client-desktop": "https://nuts.cozycloud.cc/download/channel/stable/",
+    "link-client-android": "https://play.google.com/store/apps/details?id=io.cozy.drive.mobile",
+    "link-client-ios": "https://itunes.apple.com/us/app/cozy-drive/id1224102389?mt=8"
+  },
+  "breadcrumb": {
+    "title_drive": "القرص",
+    "title_recent": "الحديثة",
+    "title_shared": "التي شاركتها",
+    "title_activity": "النشاط"
+  },
+  "Toolbar": {
+    "more": "المزيد"
+  },
+  "toolbar": {
+    "item_upload": "تحميل",
+    "item_more": "المزيد",
+    "menu_select": "تحديد العناصر",
+    "menu_download_folder": "مُجلّد التنزيل",
+    "share": "شارك"
+  },
+  "Share": {
+    "status": {
+      "pending": "معلق",
+      "error": "خطأ",
+      "unregistered": "خطأ",
+      "revoked": "خطأ"
+    }
+  },
+  "Files": {
+    "share": {
+      "cta": "شارك",
+      "details": {
+        "title": "تفاصيل المشاركة"
+      },
+      "sharedWithMe": "مُشارَك معي",
+      "shareByEmail": {
+        "subtitle": "عبر البريد الإلكتروني",
+        "email": "إلى :",
+        "send": "إرسل"
+      },
+      "sharingLink": {
+        "title": "رابط المشاركة",
+        "copy": "نسخ",
+        "copied": "تم نسخه"
+      },
+      "protectedShare": {
+        "title": "قريبًا !"
+      },
+      "close": "غلق",
+      "gettingLink": "جارٍ جلب رابطك …"
+    }
+  },
+  "table": {
+    "head_name": "الإسم",
+    "head_update": "آخر تحديث",
+    "head_size": "الحجم",
+    "row_size_symbols": {
+      "B": "ب",
+      "KB": "كب",
+      "MB": "مب",
+      "GB": "جب",
+      "TB": "تب"
+    },
+    "load_more": "عرض المزيد"
+  },
+  "SelectionBar": {
+    "share": "مشاركة",
+    "download": "تنزيل",
+    "trash": "حذف",
+    "rename": "تعديل التسمية",
+    "restore": "إسترجاع",
+    "close": "غلق"
+  },
+  "deleteconfirmation": {
+    "cancel": "إلغاء",
+    "delete": "حذف"
+  },
+  "emptytrashconfirmation": {
+    "cancel": "إلغاء",
+    "delete": "حذف الكل"
+  },
+  "destroyconfirmation": {
+    "cancel": "إلغاء"
+  },
+  "quotaalert": {
+    "confirm": "نعم"
+  },
+  "loading": {
+    "message": "تحميل"
+  },
+  "error": {
+    "button": {},
+    "download_file": {
+      "offline": "يتوجب أن تكون متصلا لتنزيل هذا الملف",
+      "missing": "إنّ الملف مفقود"
+    }
+  },
+  "alert": {
+    "could_not_open_file": "لقد تعذّر فتح هذا الملف"
+  },
+  "mobile": {
+    "onboarding": {
+      "server_selection": {
+        "button": "التالي",
+        "wrong_address": "يبدو و كأن هذا العنوان لا يشير إلى كوزي. رجاءا تحقق من صحته."
+      },
+      "photos": {
+        "title": "أنسخ إحتياطيا صورك و فيديوهاتك"
+      },
+      "contacts": {
+        "title": "مزامنة جهات الإتصال الخاصة بك"
+      },
+      "step": {
+        "button": "فَعِّل الآن",
+        "skip": "لاحقًا",
+        "next": "التالي"
+      },
+      "analytics": {
+        "title": "ساعدنا في تحسين كوزي"
+      }
+    },
+    "settings": {
+      "title": "الإعدادات",
+      "about": {
+        "title": "عن كوزي",
+        "app_version": "إصدار التطبيق",
+        "account": "الحساب"
+      },
+      "unlink": {},
+      "media_backup": {
+        "title": "النسخ الإحتياطي للوسائط",
+        "images": {
+          "title": "النسخ الإحتياطي للصور"
+        },
+        "launch": "إبدأ النسخ الإحتياطي",
+        "stop": "إيقاف النسخ الإحتياطي",
+        "wifi": {
+          "title": "النسخ الإحتياطي على الواي فاي فقط"
+        },
+        "no_wifi": "يرجى الإتصال عبر الواي فاي"
+      },
+      "support": {
+        "title": "المساعدة",
+        "analytics": {
+          "title": "ساعدنا في تحسين كوزي"
+        },
+        "feedback": {
+          "title": "ساهم في تحسين Cozy Drive"
+        },
+        "logs": {}
+      },
+      "contacts": {
+        "title": "جهات الإتصال",
+        "subtitle": "إستيراد جهات إتصال"
+      }
+    },
+    "revoked": {
+      "logout": "خروج"
+    },
+    "rating": {
+      "enjoy": {
+        "title": "هل أنتم مُعجَبون بكوزي درايف ؟",
+        "yes": "نعم !"
+      },
+      "rate": {
+        "yes": "هيا بنا !",
+        "no": "لا شكرا",
+        "later": "ربما لاحقا"
+      },
+      "feedback": {
+        "yes": "إرسل",
+        "no": "لا شكرا"
+      },
+      "email": {
+        "subject": "عبِّر عن رأيك بخصوص كوزي درايف"
+      },
+      "alert": {
+        "rated": "شكرا ! تستحقون ⭐️⭐️⭐️⭐️⭐️"
+      }
+    },
+    "first_sync": {
+      "tips": "نصائح",
+      "button": "فهمت !"
+    }
+  },
+  "UploadQueue": {
+    "close": "غلق",
+    "item": {
+      "pending": "معلق"
+    }
+  },
+  "Viewer": {
+    "close": "إغلاق",
+    "noviewer": {
+      "download": "نزِّل هذا الملف"
+    },
+    "actions": {
+      "download": "تنزيل"
+    },
+    "loading": {
+      "retry": "إعادة المحاولة"
+    }
+  }
+}

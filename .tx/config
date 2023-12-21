@@ -1,7 +1,7 @@
 [main]
 host = https://www.transifex.com
 
-[o:cozy:p:cozy-drive:r:global]
+[o:cozy:p:cozy-drive:r:e8e90edbf54aede8b7b026659d6fe40a]
 file_filter = src/drive/locales/<lang>.json
 source_file = src/drive/locales/en.json
 source_lang = en

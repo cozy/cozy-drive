@@ -1,0 +1,669 @@
+{
+  "Nav": {
+    "item_drive": "Laufwerk",
+    "item_recent": "Zuletzt",
+    "item_sharings": "Freigaben",
+    "item_shared": "Von mir geteilt",
+    "item_activity": "Aktivität",
+    "item_trash": "Papierkorb",
+    "item_settings": "Einstellungen",
+    "item_collect": "Verwaltung",
+    "btn-client": "Hol' dir Cozy für den Desktop!",
+    "support-us": "Angebote anzeigen",
+    "support-us-description": "Brauchst du mehr Speicherplatz oder möchtest du Cozy einfach nur unterstützen?",
+    "btn-client-web": "Hol' dir Cozy!",
+    "btn-client-mobile": "Hol' dir Cozy Drive auf dein Handy!",
+    "banner-txt-client": "Hol' dir Cozy Drive für den Desktop und synchronisiere deine Dateien sicher, um jederzeit auf sie zuzugreifen.",
+    "banner-btn-client": "Herunterladen",
+    "link-client": "https://cozy.io/en/download/",
+    "link-client-desktop": "https://nuts.cozycloud.cc/download/channel/stable/",
+    "link-client-android": "https://play.google.com/store/apps/details?id=io.cozy.drive.mobile",
+    "link-client-ios": "https://itunes.apple.com/us/app/cozy-drive/id1224102389?mt=8",
+    "link-client-web": "https://cozy.io/try-it"
+  },
+  "breadcrumb": {
+    "title_drive": "Laufwerk",
+    "title_recent": "Neueste",
+    "title_sharings": "Freigaben",
+    "title_shared": "Von mir geteilt",
+    "title_activity": "Aktivität",
+    "title_trash": "Papierkorb"
+  },
+  "Toolbar": {
+    "more": "Mehr"
+  },
+  "toolbar": {
+    "item_upload": "Hochladen",
+    "menu_upload": "Dateien hochladen",
+    "item_more": "Mehr",
+    "menu_new_folder": "Ordner",
+    "menu_new_encrypted_folder": "Verschlüsselter Ordner",
+    "menu_select": "Elemente auswählen",
+    "menu_share_folder": "Ordner freigeben",
+    "menu_download": "Herunterladen",
+    "menu_sync_cozy": "In mein Cozy synchronisieren",
+    "add_to_mine": "Meinem Cozy hinzufügen",
+    "menu_download_folder": "Ordner herunterladen",
+    "menu_download_file": "Diese Datei herunterladen",
+    "menu_open_cozy": "In meinem Cozy öffnen",
+    "menu_create_note": "Notizen",
+    "menu_create_shortcut": "Abkürzung",
+    "empty_trash": "Papierkorb leeren",
+    "share": "Freigeben",
+    "trash": "Entfernen",
+    "leave": "Geteilten Ordner verlassen & löschen",
+    "menu_add": "Hinzufügen",
+    "menu_onlyOffice": {
+      "text": "Textdokument",
+      "spreadsheet": "Tabellenkalkulation",
+      "slide": "Präsentation"
+    }
+  },
+  "Share": {
+    "status": {
+      "owner": "Eigentümer",
+      "pending": "Ausstehend",
+      "ready": "Akzeptiert",
+      "refused": "Verweigert",
+      "error": "Fehler",
+      "unregistered": "Fehler",
+      "mail-not-sent": "Ausstehend",
+      "revoked": "Fehler"
+    },
+    "type": {
+      "one-way": "Darf sehen",
+      "two-way": "Darf ändern",
+      "desc": {
+        "one-way": "Kontakte können Inhalte sehen, herunterladen und ihrem eigenen Cozy hinzufügen. Wenn sie die Inhalte ihrem Cozy hinzufügen, erhalten sie deine Aktualisierungen, können selbst jedoch keine Änderungen vornehmen.",
+        "two-way": "Kontakte können den Inhalt aktualisieren, löschen und ihrem eigenen Cozy hinzufügen. Aktualisierungen des Inhalts können auf anderen Cozies betrachtet werden."
+      }
+    },
+    "locked-type-file": "Bald verfügbar: du wirst die Berechtigungen auf den Zugriff der Datei ändern können.",
+    "locked-type-folder": "Bald verfügbar: du wirst die Berechtigungen auf den Zugriff des Ordners ändern können.",
+    "recipients": {
+      "you": "Du",
+      "accessCount": "%{count} Personen haben Zugriff"
+    },
+    "create-cozy": "Meinen Cozy erstellen",
+    "members": {
+      "count": "1 Teilnehmer |||| %{smart_count} Teilnehmende",
+      "others": "und 1 Anderer... |||| und %{smart_count} Andere...",
+      "otherContacts": "anderer Kontakt |||| andere Kontakte"
+    },
+    "contacts": {
+      "permissionRequired": {
+        "title": "Deine Kontakte in deinem Cozy speichern?",
+        "desc": "Erlaube der Anwendung auf deine Kontakte auf Cozy zuzugreifen: du wirst sie beim nächsten Mal auswählen können.",
+        "action": "Zugriff gewähren",
+        "success": "Die Anwendung hat Zugriff auf deine Kontakte"
+      }
+    },
+    "banner": {
+      "shared_from": "Geteilt von ![avatar](%{image}) %{name}'s Cozy.",
+      "synchronise": "Synchronisiere diesen Inhalt in dein Cozy, um ihn abändern zu können oder ihn im Falle des Zugriffsverlustes zu behalten.",
+      "whats_cozy": "Cozy ist eine sicheres digitales Zuhause für all deine Daten, gehostet in Frankreich -",
+      "know_more": "Mehr Informationen",
+      "sync_to_mine": "In mein Cozy synchronisieren",
+      "add_to_mine": "Meinem Cozy hinzufügen",
+      "close": "Schließen"
+    }
+  },
+  "Sharings": {
+    "unavailable": {
+      "title": "Gehe online!",
+      "message": "Eine Internetverbindung ist notwendig, um die Liste deiner letzten Teilungen einzusehen."
+    }
+  },
+  "Files": {
+    "share": {
+      "cta": "Freigeben",
+      "title": "Freigeben",
+      "details": {
+        "title": "Details freigeben",
+        "createdAt": "Am %{date}",
+        "ro": "Kann lesen",
+        "rw": "Darf ändern",
+        "desc": {
+          "ro": "Du kannst diesen Inhalt sehen, herunterladen und deinem Cozy hinzufügen. Du wirst Aktualisierungen des Besitzers erhalten, selbst jedoch keine Änderungen vornehmen können.",
+          "rw": "Du kannst diesen Inhalt sehen, ändern, löschen und deinem Cozy hinzufügen. Deine Änderungen sind auf anderen Cozies sichtbar."
+        }
+      },
+      "sharedByMe": "Von mir geteilt",
+      "sharedWithMe": "Mit mir geteilt",
+      "sharedBy": "Geteilt von %{name}",
+      "shareByLink": {
+        "subtitle": "Über öffentlichen Link",
+        "desc": "Jeder der den Link kennt, kann deine Dateien sehen und herunterladen.",
+        "creating": "Erstellen deines Links...",
+        "copy": "Link kopieren",
+        "copied": "Der Link wurde in deine Zwischenablage kopiert",
+        "failed": "Unfähig in deine Zwischenablage zu kopieren"
+      },
+      "shareByEmail": {
+        "subtitle": "Per E-Mail",
+        "email": "An:",
+        "emailPlaceholder": "Gib die E-Mail-Adresse oder den Namen des Empfängers ein",
+        "send": "Senden",
+        "genericSuccess": "Du hast eine Einladung an %{count} Kontakte gesendet.",
+        "success": "Du hast eine Einladung an %{email} gesendet.",
+        "comingsoon": "Bald verfügbar: Du wirst mit nur einem Klick Fotos und Dokumente deiner Familie, deinen Freunden und sogar deinen Kollegen freigeben können. Keine Sorge, wir benachrichtigen dich sobald es soweit ist!",
+        "onlyByLink": "Dieser %{type} kann nur als Link geteilt werden, da",
+        "type": {
+          "file": "Datei",
+          "folder": "Ordner"
+        },
+        "hasSharedParent": "hat einen geteilten Ursprung",
+        "hasSharedChild": "enthält ein geteiltes Element"
+      },
+      "revoke": {
+        "title": "Freigabe aufheben",
+        "desc": "Dieser Kontakt behält eine Kopie. Änderungen werden jedoch nicht mehr synchronisiert.",
+        "success": "Du hast diese geteilte Datei von %{email} entfernt."
+      },
+      "revokeSelf": {
+        "title": "Entferne mich von der Freigabe",
+        "desc": "Du behältst den Inhalt. Er wird aber nicht mehr in deinem Cozy erneuert.",
+        "success": "Du wurdest von dieser Freigabe entfernt."
+      },
+      "sharingLink": {
+        "title": "Link zum Freigeben",
+        "copy": "Kopieren",
+        "copied": "Kopiert"
+      },
+      "whoHasAccess": {
+        "title": "1 Person hat Zugriff |||| %{smart_count} Personen haben Zugriff"
+      },
+      "protectedShare": {
+        "title": "Bald verfügbar!",
+        "desc": "Teile alles per E-Mail mit deiner Familie und Freunden!"
+      },
+      "close": "Schließen",
+      "gettingLink": "Erstelle deinen Link ...",
+      "error": {
+        "generic": "Beim Erstellen des Dateifreigabelinks ist ein Fehler aufgetreten, bitte versuche es erneut.",
+        "revoke": "Hoppla, das hat nicht geklappt. Bitte kontaktiere uns, damit wir den Fehler so schnell wie möglich beheben können."
+      },
+      "specialCase": {
+        "base": "Dieser %{type} kann nur als Link geteilt werden, da",
+        "isInSharedFolder": "ist in einem geteilten Ordner",
+        "hasSharedFolder": "enthält einen geteilten Ordner"
+      }
+    },
+    "viewer-fallback": "Sobald der Download begonnen hat, kannst du mich schließen.",
+    "dropzone": {
+      "teaser": "Ziehe Dateien hierher um sie hochzuladen:",
+      "noFolderSupport": "Ordner drag&drop wird von deinem Browser derzeit nicht unterstützt. Lade deine Dateien bitte manuell hoch."
+    }
+  },
+  "table": {
+    "head_name": "Name",
+    "head_update": "Letzte Änderung",
+    "head_size": "Größe",
+    "head_status": "Teilen",
+    "head_thumbnail_size": "Wechsele die Größe des Vorschaubildes",
+    "row_update_format": "DD.MM.YYYY",
+    "row_update_format_full": "DD.MM.YYYY",
+    "row_read_only": "Freigeben (nur Lesen)",
+    "row_read_write": "Freigeben (Lesen & Schreiben)",
+    "row_size_symbols": {
+      "B": "Byte",
+      "KB": "Kilobyte",
+      "MB": "Megabyte",
+      "GB": "Gigabyte",
+      "TB": "Terabyte",
+      "PB": "Petabyte",
+      "EB": "Exabyte",
+      "ZB": "Zettabyte",
+      "YB": "Yottabyte"
+    },
+    "load_more": "Mehr laden",
+    "mobile": {
+      "head_name_asc": "A-Z",
+      "head_name_desc": "Z-A",
+      "head_updated_at_asc": "Älteste zuerst",
+      "head_updated_at_desc": "Neueste zuerst",
+      "head_size_asc": "Kleinste zuerst",
+      "head_size_desc": "Größte zuerst"
+    },
+    "tooltip": {
+      "carbonCopy": {
+        "title": "Durchschlag",
+        "caption": "Zeigt an, ob das Dokument von Cozy Cloud, dem Host Ihrer Cozy, als \"authentisch und original\" definiert wird, da es behaupten kann, dass es direkt von einem Drittanbieterdienst stammt, ohne dass es verändert wurde."
+      },
+      "electronicSafe": {
+        "title": "Elektronischer Tresor",
+        "caption": "Gibt an, ob das Originaldokument in Ihrem persönlichen digitalen Tresor mit den Zertifizierungen, die ihm Beweiskraft verleihen, und einer 50-jährigen Aufbewahrungsgarantie über die Hinterlegung hinaus gesichert ist."
+      }
+    }
+  },
+  "SelectionBar": {
+    "selected_count": "Element ausgewählt |||| Elemente ausgewählt",
+    "share": "Freigeben",
+    "download": "Herunterladen",
+    "trash": "Entfernen",
+    "destroy": "Dauerhaft löschen",
+    "rename": "Umbenennen",
+    "restore": "Wiederherstellen",
+    "close": "Schließen",
+    "openWith": "Öffnen mit...",
+    "applePreview": "Apple Vorschau",
+    "forward": "Weiterleiten",
+    "forwardTo": "Weiterleiten an...",
+    "moveto": "Verschieben nach...",
+    "phone-download": "Offline verfügbar machen",
+    "qualify": "Kategorisieren",
+    "history": "Verlauf"
+  },
+  "deleteconfirmation": {
+    "title": "Dieses Element löschen? |||| Diese Elemente löschen?",
+    "trash": "Es wird in den Papierkorb verschoben. |||| Sie werden in den Papierkorb verschoben.",
+    "restore": "Du kannst es jederzeit wiederherstellen. |||| Du kannst sie jederzeit wiederherstellen.",
+    "link": "Link Freigabe wird nicht länger aktiv sein",
+    "referenced": "Einige der Dateien innerhalb der Auswahl beziehen sich auf ein Fotoalbum. Sie werden aus ihm entfernt, wenn du sie in den Müll verschiebst.",
+    "cancel": "Abbrechen",
+    "delete": "Entfernen"
+  },
+  "emptytrashconfirmation": {
+    "title": " Dauerhaft löschen? ",
+    "forbidden": "Du kannst nicht mehr auf diese Dateien zugreifen.",
+    "restore": "Du kannst diese Dateien nicht wiederherstellen, wenn du keine Sicherung gemacht hast.",
+    "cancel": "Abbrechen",
+    "delete": "Alles löschen"
+  },
+  "destroyconfirmation": {
+    "title": "Dauerhaft löschen?",
+    "forbidden": "Du kannst nicht mehr auf diese Datei zugreifen. |||| Du kannst nicht mehr auf diese Dateien zugreifen.",
+    "restore": "Du kannst diese Datei nicht wiederherstellen, wenn du keine Sicherung gemacht hast. |||| Du kannst diese Dateien nicht wiederherstellen, wenn du keine Sicherung gemacht hast.",
+    "cancel": "Abbrechen",
+    "delete": "Dauerhaft löschen"
+  },
+  "quotaalert": {
+    "title": "Dein Speicherplatz ist voll :(",
+    "desc": "Bitte entferne Dateien, leere deinen Mülleiemer oder erhöhe dein Speicherkontingent bevor du wieder Dateien hochlädtst.",
+    "confirm": "OK",
+    "increase": "Erhöhe dein Speicherkontingent"
+  },
+  "loading": {
+    "message": "Lädt",
+    "onlyOfficeCreateInProgress": "Erstellen der aktuellen Datei..."
+  },
+  "empty": {
+    "title": "Du hast keine Dateien in diesem Ordner.",
+    "trash_title": "Du hast keine gelöschten Dateien.",
+    "trash_text": "Verschiebe Dateien, die du nicht länger benötigst in den Papierkorb und lösche Elemente dauerhaft, um Speicherplatz freizumachen."
+  },
+  "error": {
+    "open_folder": "Beim Öffnen des Ordners ist etwas schief gelaufen.",
+    "open_file": "Beim Öffnen der Datei ist etwas schief gelaufen.",
+    "button": {
+      "reload": "Jetzt aktualisieren"
+    },
+    "download_file": {
+      "offline": "Du solltest verbunden sein, um diese Datei herunterzuladen.",
+      "missing": "Diese Datei fehlt",
+      "encryption_many": "Sie können nicht mehrere verschlüsselte Dateien auf einmal herunterladen"
+    }
+  },
+  "Error": {
+    "public_unshared_title": "Entschuldige, dieser Links ist nicht länger verfügbar.",
+    "public_unshared_text": "Dieser Link ist abgelaufen oder vom Besitzer entfernt worden. Lass' es ihn wissen, dass du ihn verpasst hast.",
+    "generic": "Etwas ist schiefgelaufen. Warte ein paar Minuten und versuche es erneut."
+  },
+  "alert": {
+    "could_not_open_file": "Diese Datei konnte nicht geöffnet werden",
+    "try_again": "Ein Fehler ist aufgetreten, bitte versuche es gleich noch einmal.",
+    "restore_file_success": "Die Auswahl wurde erfolgreich wiederhergestellt.",
+    "trash_file_success": "Die Auswahl wurde in den Papierkorb verschoben.",
+    "destroy_file_success": "Die Auswahl wurde endgültig gelöscht.",
+    "empty_trash_progress": "Dein Papierkorb wird entleert. Dies kann einen Augenblick dauern.",
+    "empty_trash_success": "Der Papierkorb wurde entleert.",
+    "folder_name": "Das Element %{folderName} existiert bereits, bitte wähle einen neuen Namen.",
+    "file_name": "Das Element %{fileName} existiert bereits, bitte wähle einen neuen Namen.",
+    "file_name_missing": "Der Dateiname ist falsch, bitte geben Sie einen neuen Namen ein.",
+    "file_name_illegal_name": "Der Name %{fileName} ist ungültig, bitte wählen Sie einen neuen Namen.",
+    "file_name_illegal_characters": "Das Element %{fileName} enthält ungültige Zeichen: %{characters}",
+    "folder_generic": " Ein Fehler ist aufgetreten, bitte versuche es noch einmal.",
+    "folder_abort": "Du musst deinem neuen Ordner einen Namen hinzufügen, wenn du ihn speichern möchtest. Deine Daten wurden nicht gespeichert.",
+    "offline": "Diese Funktion ist offline nicht verfügbar.",
+    "preparing": "Deine Dateien werden vorbereitet..."
+  },
+  "mobile": {
+    "onboarding": {
+      "welcome": {
+        "title": "Cozy Drive",
+        "desc": "Erstelle einen Cozy oder melde dich an, um auf Cozy Drive zuzugreifen",
+        "button": "Anmelden",
+        "no_account_link": "Ich habe keinen Cozy",
+        "create_my_cozy": "Erstelle meinen Cozy"
+      },
+      "server_selection": {
+        "title": "Anmelden",
+        "lostpwd": "[Ich habe die Adresse meines Cozies vergessen](https://manager.cozycloud.cc/cozy/reminder)",
+        "label": "Adresse meines Cozies",
+        "cozy_address_placeholder": "claude",
+        "cozy_custom_address_placeholder": "claude.mydomain.com",
+        "domain_cozy": ".mycozy.cloud",
+        "domain_custom": "andere",
+        "button": "Weiter",
+        "wrong_address_with_email": "Du hast eine E-Mail-Adresse eingegeben. Um dich mit deinem Cozy zu verbinden, musst du seine URL eingeben, etwa so: https://camillenimbus.mycozy.cloud",
+        "wrong_address_v2": "Du hast gerade die Adresse der alten Cozy Version eingegeben. Diese Anwendung ist nur mit der neuesten Version kompatibel. [Bitte beachte unsere Website für weitere Informationen.] (https://blog.cozycloud.cc/post/2016/11/21/On-the-road-to-Cozy-version-3?lang=en)",
+        "wrong_address": "Unter dieser Adresse scheint es keinen Cozy zu geben. Bitte überprüfe die von dir angegebene Adresse.",
+        "wrong_address_cosy": "Hoppla, die Adresse ist nicht korrekt. Versuche es mit \"Cozy\" mit einem \"z\"!"
+      },
+      "files": {
+        "title": "Greife auf dein Laufwerk zu",
+        "description": "Um Ihr Cozy Drive auf Ihrem Gerät zu speichern, muss die Anwendung auf deine Dateien zugreifen."
+      },
+      "photos": {
+        "title": "Sichere deine Fotos und Videos",
+        "description": "Sichere Fotos, die mit deinem Telefon aufgenommen wurden, automatisch in Cozy, um sie nie zu verlieren."
+      },
+      "contacts": {
+        "title": "Synchronisiere deine Kontakte",
+        "description": "Speichere die Kontakte auf deinem Telefon auf dein Cozy - das erleichtert das Freigeben von Dateien mit deinen Kontakten."
+      },
+      "step": {
+        "button": "Jetzt aktivieren",
+        "skip": "Später",
+        "next": "Weiter"
+      },
+      "analytics": {
+        "title": "Hilf uns, Cozy zu verbessern",
+        "description": "Die Anwendung liefert automatisch Daten (hauptsächlich Fehler) an Cozy Cloud. Dies ermöglicht uns, Probleme schneller zu lösen."
+      }
+    },
+    "settings": {
+      "title": "Einstellungen",
+      "about": {
+        "title": "Über",
+        "app_version": "App Version",
+        "account": "Konto"
+      },
+      "unlink": {
+        "title": "Melde dich aus deinem Cozy ab",
+        "description": "Durch das Abmelden deines Cozys von diesem Gerät, wirst du keine Daten verlieren. Dies wird deine offline gespeicherten Dateien deines Cozys von diesem Gerät entfernen.",
+        "button": "Abmelden"
+      },
+      "media_backup": {
+        "media_folder": "Fotos",
+        "backup_folder": "Gesichert von meinem Handy",
+        "legacy_backup_folder": "Gesichert von meinem Handy",
+        "title": "Mediensicherung",
+        "images": {
+          "title": "Fotosicherung",
+          "label": "Sichere deine Bilder automatisch in deinem Cozy, um sie niemals zu verlieren und sie leicht freizugeben."
+        },
+        "launch": "Sicherungskopie starten",
+        "stop": "Sicherungskopie stoppen",
+        "wifi": {
+          "title": "Sicherungskopie nur per WLAN",
+          "label": "Wenn die Option aktiviert ist, wird dein Gerät nur Fotos sichern, wenn WLAN aktiviert ist."
+        },
+        "media_upload": "%{smart_count} verbleibendes Bild |||| %{smart_count} verbleibende Bilder",
+        "media_uptodate": "Mediensicherung ist auf dem neuesten Stand",
+        "preparing": "Suche nach ungesicherten Medien...",
+        "no_wifi": "Bitte verbinde dich per WIFI",
+        "quota": "Speicherplatz fast voll",
+        "quota_contact": "Verwalte deinen Speicherplatz"
+      },
+      "support": {
+        "title": "Hilfe",
+        "analytics": {
+          "title": "Hilf uns, Cozy zu verbessern",
+          "label": "Die Anwendung liefert automatisch Daten (hauptsächlich Fehler) an Cozy Cloud. Dies ermöglicht uns, Probleme schneller zu lösen."
+        },
+        "feedback": {
+          "title": "Hilf, Cozy Drive zu verbessern",
+          "description": "Sende uns dein Feedback, um uns bei der Verbesserung von Cozy Drive zu helfen. Klicke auf den unteren Button, erläutere das Problem oder mache einen Vorschlag und sende es ab. Geschafft!",
+          "button": "Feedback geben"
+        },
+        "logs": {
+          "title": "Hilf uns, dein Problem zu verstehen",
+          "description": "Sende das Anwendungsprotokoll, um uns zu helfen, die Qualität und Stabilität zu verbessern.",
+          "button": "Sende meine Log-Dateien",
+          "success": "Danke, wir werden dein Problem untersuchen und dann mit dir in Verbindung treten.",
+          "error": "Ein Problem ist aufgetreten, Log-Dateien konnten nicht gesendet werden, bitte versuche es erneut."
+        }
+      },
+      "contacts": {
+        "title": "Kontakte",
+        "subtitle": "Importiere Kontakte",
+        "text": "Importiere Kontakte von deinem Gerät in dein Cozy, um ihnen leicht Inhalte freizugeben."
+      }
+    },
+    "error": {
+      "open_with": {
+        "offline": "Du sollten verbunden sein, um diese Datei zu öffnen",
+        "noapp": "Keine deiner Anwendungen kann diesen Datei Mime Typen öffnen: %{fileMime}",
+        "missing": "Diese Datei fehlt"
+      },
+      "make_available_offline": {
+        "offline": "Du solltest verbunden sein, um diese Datei zu öffnen",
+        "noapp": "Keine deiner Anwendungen kann diesen Datei Mime Typen öffnen: %{fileMime}"
+      }
+    },
+    "revoked": {
+      "title": "Zugang widerrufen",
+      "description": "Es scheint, dass du dieses Gerät von deinem Cozy widerrufen hast. Wenn du das nicht getan hast, informiere uns bitte unter contact@cozycloud.cc. Alle deine lokalen Daten im Zusammenhang mit deinem Cozy werden entfernt.",
+      "loginagain": "Nochmal anmelden",
+      "logout": "Ausloggen"
+    },
+    "rating": {
+      "enjoy": {
+        "title": "Genießt du Cozy Drive?",
+        "yes": "Ja!",
+        "no": "Nicht wirklich"
+      },
+      "rate": {
+        "title": "Würdest du es bewerten?",
+        "yes": "Lass' uns das tun!",
+        "no": "Nein, Danke",
+        "later": "Vielleicht später"
+      },
+      "feedback": {
+        "title": "Würdest du uns etwas Feedback geben?",
+        "yes": "Senden",
+        "no": "Nein, Danke"
+      },
+      "email": {
+        "subject": "Feedback zu Cozy Drive",
+        "placeholder": "Hallo, ich denke Cozy Drive wäre besser, wenn ..."
+      },
+      "alert": {
+        "rated": "Danke! Du bist ⭐️⭐️⭐️⭐️⭐️",
+        "declined": "Genial. Du wirst die kommenden Features lieben. Bleib' bei Cozy!",
+        "later": "Kein Problem, wir werden später noch einmal fragen.",
+        "feedback": "Danke für die Bewertung. Wir werden definitiv daran arbeiten!"
+      }
+    },
+    "first_sync": {
+      "title": "Du bist kurz davor, dein erstes Fotobackup zu starten 🎉",
+      "tips": "Tipps",
+      "tip_bed": "Öffne Cozy Drive bevor du zu Bett gehst oder wenn du dein Handy nicht benutzt.",
+      "tip_wifi": "Aktiviere WLAN um deine Daten zu bewahren",
+      "tip_lock": "Deaktiviere deinen Sperrbildschirm.",
+      "result": "Am Morgen werden alle deine Fotos an einem sicheren Ort gespeichert sein.",
+      "button": "Alles klar!"
+    },
+    "notifications": {
+      "backup_paused": "Deine Fotosicherung ist pausiert. Lass' die Anwendung geöffnet und verhindere den Ruhemodus des Bildschirms, um die Sicherung abzuschließen."
+    },
+    "download": {
+      "success": "Deine Datei wurde erfolgreich geteilt."
+    }
+  },
+  "upload": {
+    "alert": {
+      "network": "Du bist zurzeit offline. Bitte versuche es erneut, sobald du wieder verbunden bist."
+    }
+  },
+  "intents": {
+    "alert": {
+      "error": "Unfähig, die Datei automatisch hochzuladen, bitte lade sie manuell über das Hochlademenü hoch."
+    },
+    "picker": {
+      "select": "Auswählen",
+      "cancel": "Abbrechen",
+      "new_folder": "Neuer Ordner",
+      "instructions": "Wähle ein Ziel"
+    }
+  },
+  "UploadQueue": {
+    "header": "Hochladen von %{smart_count} Foto in dein Cozy Drive |||| Hochladen von %{smart_count} Fotos in dein Cozy Drive",
+    "header_mobile": "Hochladen %{done} von %{total}",
+    "header_done": "Hochladen %{done} aus %{total} erfolgreich",
+    "close": "Schließen",
+    "item": {
+      "pending": "Ausstehend"
+    }
+  },
+  "Viewer": {
+    "close": "Schließen",
+    "noviewer": {
+      "download": "Diese Datei herunterladen",
+      "openWith": "Öffnen mit...",
+      "openInOnlyOffice": "Öffnen mit Only Office",
+      "cta": {
+        "saveTime": "Spare etwas Zeit!",
+        "installDesktop": "Installiere das Synchronisationstool für deinen Computer",
+        "accessFiles": "Greife direkt von deinem Computer auf deine Datein zu"
+      }
+    },
+    "actions": {
+      "download": "Herunterladen",
+      "forward": "Weiterleiten"
+    },
+    "loading": {
+      "error": "Diese Datei konnte nicht geladen werden. Hast du eine funktionierende Internetverbindung?",
+      "retry": "Wiederholen"
+    },
+    "error": {
+      "noapp": "Keine Anwendung auf Ihrem Gerät kann diese Datei verarbeiten.",
+      "generic": "Ein Fehler ist beim Öffnen dieser Datei aufgetreten, bitte versuche es erneut.",
+      "noNetwork": "Du bist derzeit offline."
+    },
+    "panel": {
+      "title": "Nützliche Informationen"
+    }
+  },
+  "Move": {
+    "to": "Verschiebe zu:",
+    "action": "Verschieben",
+    "cancel": "Abbrechen",
+    "modalTitle": "Verschieben",
+    "title": "%{smart_count} Element |||| %{smart_count} Elemente",
+    "success": "%{subject} wurde in %{target} verschoben. |||| %{smart_count} Elemente wurden in %{target} verschoben.",
+    "error": "Etwas ist beim Verschieben dieses Elements schiefgelaufen, bitte versuche es später erneut. |||| Etwas ist beim Verschieben dieser Elemente schiefgelaufen, bitte versuche es später erneut.",
+    "cancelled": "%{subject} wurde zurück an seinen Ursprungsort geschoben. |||| %{smart_count} Elemente wurden zurück an ihren Ursprungsort geschoben.",
+    "cancelledWithRestoreErrors": "%{subject} wurde zurück an seinen Ursprungsort geschoben, aber es gab einen Fehler beim Wiederherstellen der Datei aus dem Papierkorb. |||| %{smart_count} Elemente wurden zurück an ihren Ursprungsort geschoben, aber es gab %{restoreErrorsCount} Fehler beim Wiederherstellen der Datei(en) aus dem Papierkorb.",
+    "cancelled_error": "Entschuldige, es gab einen Fehler beim Zurückschieben dieses Elements. |||| Entschuldige, es gab einen Fehler beim Zurückschieben dieser Elemente."
+  },
+  "ImportToDrive": {
+    "title": "%{smart_count} Element |||| %{smart_count} Elemente",
+    "to": "Speichern in:",
+    "action": "Speichern",
+    "cancel": "Abbrechen",
+    "success": "%{smart_count} gesicherte Datei |||| %{smart_count} gesicherte Dateien",
+    "error": "Etwas ist schiefgelaufen. Bitte versuche es erneut"
+  },
+  "FileOpenerExternal": {
+    "fileNotFoundError": "Fehler: Datei nicht gefunden"
+  },
+  "TOS": {
+    "updated": {
+      "title": "GDPR wird Realität!",
+      "detail": "Im Rahmen der General Data Protection Regulation (GDPR), [wurden unsere Nutzungsbedingungen aktualisiert](%{link}) und werden ab dem 25. März 2018 auf alle unsere Nutzer angewandt.",
+      "cta": "TOS akzeptieren und fortfahren",
+      "disconnect": "Ablehnen und trennen",
+      "error": "Etwas ist schiefgelaufen. Bitte versuche es später erneut"
+    }
+  },
+  "manifest": {
+    "permissions": {
+      "contacts": {
+        "description": "Erforderlich, um deinen Kontakten Dateien freizugeben"
+      },
+      "groups": {
+        "description": "Erforderlich, um deinen Gruppen Dateien freizugeben"
+      }
+    }
+  },
+  "models": {
+    "contact": {
+      "defaultDisplayName": "Anonym"
+    }
+  },
+  "Scan": {
+    "scan_a_doc": "Scanne ein Dokument",
+    "save_doc": "Speichere das Dokument",
+    "filename": "Dateiname",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "qualify": "Kategorisieren",
+    "apply": "Anwenden",
+    "error": {
+      "offline": "Du bist derzeit offline und kannst diese Funktion nicht nutzen. Versuche es später erneut",
+      "uploading": "Du lädst bereits eine Datei hoch. Warte bis zur Fertigstellung und versuche es erneut.",
+      "generic": "Etwas ist schiefgelaufen. Bitte versuche es erneut"
+    },
+    "successful": {
+      "qualified_ok": "Du hast die Datei erfolgreich kategorisiert!"
+    }
+  },
+  "History": {
+    "description": "Die letzten 20 Versionen deiner Dateien werden automatisch behalten. Wähle eine Version aus, um sie herunterzuladen.",
+    "current_version": "Aktuelle Version",
+    "loading": "Lädt...",
+    "noFileVersionEnabled": "Dein Cozy wird bald dazu in der Lage sein, deine letzten Dateiänderungen zu archivieren, um einem Verlust vorzubeugen"
+  },
+  "External": {
+    "redirection": {
+      "title": "Weiterleitung",
+      "text": "Du wirst gleich weitergeleitet...",
+      "error": "Fehler während der Weiterleitung. Im Allgemeinen deutet dies auf ein falsches Format deines Inhalts hin."
+    }
+  },
+  "RenameModal": {
+    "title": "Umbenennen",
+    "description": "Du bist dabei, die Dateiendung zu ändern. Möchtest du fortfahren?",
+    "continue": "Fortsetzen",
+    "cancel": "Abbrechen"
+  },
+  "Shortcut": {
+    "title_modal": "Erstelle eine Verknüpfung",
+    "filename": "Dateiname",
+    "url": "URL",
+    "cancel": "Abbrechen",
+    "create": "Erstellen",
+    "created": "Deine Verknüpfung wurde erstellt",
+    "errored": "Ein Fehler ist aufgetreten",
+    "filename_error_ends": "Der Name sollte mit .url enden",
+    "needs_info": "Die Verknüpfung benötigt mindestens eine URL und einen Dateinamen",
+    "url_badformat": "Deine URL hat nicht das richtige Format"
+  },
+  "OnlyOffice": {
+    "Error": {
+      "title": "Etwas geht schief",
+      "text": "Bitte versuchen Sie, die Seite neu zu laden"
+    },
+    "readOnly": {
+      "title": "Nur lesen",
+      "tooltip": "Sie sind nur berechtigt, dieses Dokument anzusehen. Kontaktieren Sie den Eigentümer, um Schreibrechte zu erhalten."
+    },
+    "createFileName": {
+      "text": "Neues Textdokument",
+      "spreadsheet": " Neue Tabellenkalkulation",
+      "slide": "Neue Präsentation"
+    }
+  },
+  "Migration": {
+    "title": "Aktualisierte Cozy Drive",
+    "content": "Cozy Drive muss aktualisiert werden, um seine Leistung zu verbessern. Dies kann bis zu mehreren Minuten dauern, während derer Sie Ihre App nicht nutzen können. Möchten Sie es jetzt tun? Wenn Sie sich weigern, werden wir Sie beim nächsten Mal wieder fragen",
+    "confirm": "Okay, los geht's!",
+    "cancel": "Nein, nicht jetzt"
+  },
+  "searchbar": {
+    "placeholder": "Alle Dateien durchsuchen",
+    "empty": "Es wurde kein Ergebnis für die Suche \"%{query}\" gefunden"
+  }
+}

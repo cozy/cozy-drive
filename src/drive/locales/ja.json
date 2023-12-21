@@ -1,0 +1,593 @@
+{
+  "Nav": {
+    "item_drive": "ドライブ",
+    "item_recent": "最近使用したファイル",
+    "item_sharings": "共有",
+    "item_shared": "自分が共有した",
+    "item_activity": "アクティビティ",
+    "item_trash": "ゴミ箱",
+    "item_settings": "設定",
+    "item_collect": "管理",
+    "btn-client": "デスクトップ用 Cozy ドライブを入手",
+    "support-us": "提案を表示",
+    "support-us-description": "より多くの容量を活用したり、Cozy のサポートを希望しますか?",
+    "btn-client-web": "Cozy を入手する",
+    "btn-client-mobile": "お使いのモバイルで Cozy ドライブを入手しましょう!",
+    "banner-txt-client": "デスクトップ用 Cozy ドライブを入手して、ファイルに安全に同期していつでもアクセスできるようにしましょう。",
+    "banner-btn-client": "ダウンロード",
+    "link-client": "https://cozy.io/en/download/",
+    "link-client-desktop": "https://nuts.cozycloud.cc/download/channel/stable/",
+    "link-client-android": "https://play.google.com/store/apps/details?id=io.cozy.drive.mobile",
+    "link-client-ios": "https://itunes.apple.com/us/app/cozy-drive/id1224102389?mt=8",
+    "link-client-web": "https://cozy.io/try-it"
+  },
+  "breadcrumb": {
+    "title_drive": "ドライブ",
+    "title_recent": "最近使用したファイル",
+    "title_sharings": "共有",
+    "title_shared": "自分が共有した",
+    "title_activity": "アクティビティ",
+    "title_trash": "ゴミ箱"
+  },
+  "Toolbar": {
+    "more": "さらに"
+  },
+  "toolbar": {
+    "item_upload": "アップロード",
+    "item_more": "さらに",
+    "menu_select": "アイテムを選択",
+    "menu_share_folder": "フォルダーを共有",
+    "menu_download_folder": "ダウンロードフォルダー",
+    "menu_download_file": "このファイルをダウンロード",
+    "menu_open_cozy": "自分の Cozy で開く",
+    "empty_trash": "ゴミ箱を空にする",
+    "share": "共有",
+    "trash": "削除",
+    "leave": "共有されたフォルダーから離れて削除する"
+  },
+  "Share": {
+    "status": {
+      "owner": "所有者",
+      "pending": "保留",
+      "ready": "受付",
+      "refused": "拒否されました",
+      "error": "エラー",
+      "unregistered": "エラー",
+      "mail-not-sent": "保留",
+      "revoked": "エラー"
+    },
+    "type": {
+      "one-way": "表示可能",
+      "two-way": "変更可能",
+      "desc": {
+        "one-way": "連絡先は、コンテンツを表示、ダウンロード、Cozyに追加することができます。 Cozyにコンテンツを追加すると、コンテンツに加えられた更新を取得できますが、更新はできません。",
+        "two-way": "連絡先は、Cozyにコンテンツを更新、削除、追加することができます。 コンテンツの更新は他のCozy利用者も見られます。"
+      }
+    },
+    "locked-type-file": "近日公開予定: ファイルに付与されているアクセス許可を変更することができます。",
+    "locked-type-folder": "近日公開予定: フォルダーに付与されているアクセス許可を変更することができます。",
+    "recipients": {
+      "you": "あなた",
+      "accessCount": "%{count} 人がアクセスできます"
+    },
+    "create-cozy": "自分の Cozy を作成する",
+    "members": {
+      "count": "1 メンバー |||| %{smart_count} メンバー",
+      "others": "と他の 1 人… |||| と他の %{smart_count} 人…",
+      "otherContacts": "他の連絡先 |||| 他の連絡先"
+    },
+    "contacts": {
+      "permissionRequired": {
+        "title": "Cozy に連絡先を保存しますか?",
+        "desc": "アプリケーションがCozyの連絡先にアクセスする権限を付与します: 次回、連絡先を選択することができます。",
+        "action": "アクセスの承認",
+        "success": "アプリケーションは連絡先にアクセスできます"
+      }
+    }
+  },
+  "Sharings": {
+    "unavailable": {
+      "title": "オンラインに切り替え!",
+      "message": "前回の共有リストを表示するには、インターネット接続が必要です。"
+    }
+  },
+  "Files": {
+    "share": {
+      "cta": "共有",
+      "title": "共有",
+      "details": {
+        "title": "共有の詳細",
+        "createdAt": "日付 %{date}",
+        "ro": "読み取り可能",
+        "rw": "変更可能",
+        "desc": {
+          "ro": "このコンテンツを表示、ダウンロード、あなたの Cozy に追加することができます。 所有者による更新を受け取りますが、あなた自身でこのコンテンツを更新することはできません。",
+          "rw": "このコンテンツを表示、更新、削除、あなたの Cozy に追加することができます。 行った更新は他の Cozy でも見られます。"
+        }
+      },
+      "sharedByMe": "自分が共有した",
+      "sharedWithMe": "自分と共有",
+      "sharedBy": "%{name} が共有しました",
+      "shareByLink": {
+        "subtitle": "公開リンクで",
+        "desc": "提供されたリンクを持つ人は、誰でもあなたのファイルを見たりダウンロードしたりすることができます。",
+        "creating": "リンクを作成中...",
+        "copy": "リンクをコピー",
+        "copied": "リンクをクリップボードにコピーしました",
+        "failed": "クリップボードにコピーできません"
+      },
+      "shareByEmail": {
+        "subtitle": "メールで",
+        "email": "宛先:",
+        "emailPlaceholder": "メールアドレスまたは受信者の名前を入力してください",
+        "send": "送信",
+        "genericSuccess": "%{count} 連絡先に招待状を送信しました。",
+        "success": "招待状を %{email} に送信しました。",
+        "comingsoon": "まもなく登場します! 家族や友達、さらには同僚ともワンクリックで文書や写真を共有できます。 ご心配なく、準備ができたらお知らせします!",
+        "onlyByLink": "この %{type} はリンクを共有することだけできます。",
+        "type": {
+          "file": "ファイル",
+          "folder": "フォルダー"
+        },
+        "hasSharedParent": "共有した親があります",
+        "hasSharedChild": "共有した要素を含みます"
+      },
+      "revoke": {
+        "title": "共有から削除",
+        "desc": "この連絡先はコピーを保存しますが、変更は同期されません。",
+        "success": "この共有済ファイルを %{email} から削除しました。"
+      },
+      "revokeSelf": {
+        "title": "共有から自分を削除",
+        "desc": "コンテンツを保存しますが、もうお使いの Cozy 間で更新されません。",
+        "success": "この共有から削除されました。"
+      },
+      "sharingLink": {
+        "title": "共有するリンク",
+        "copy": "コピー",
+        "copied": "コピーしました"
+      },
+      "whoHasAccess": {
+        "title": "1 人がアクセスできます |||| %{smart_count} 人がアクセスできます"
+      },
+      "protectedShare": {
+        "title": "まもなく登場します!",
+        "desc": "あなたの家族や友達とメールで何でも共有してください!"
+      },
+      "close": "閉じる",
+      "gettingLink": "リンクの取得中...",
+      "error": {
+        "generic": "ファイル共有リンクの作成中にエラーが発生しました。もう一度やり直してください。",
+        "revoke": "エラーが発生しました。 できるだけ早くこの問題を解決できるように、私たちにご連絡ください。"
+      },
+      "specialCase": {
+        "base": "この %{type} は共有できませんが、リンクできます",
+        "isInSharedFolder": "共有フォルダーの中にあります",
+        "hasSharedFolder": "共有フォルダーを含みます"
+      }
+    },
+    "viewer-fallback": "ファイルのダウンロードが始まったら、これを閉じることができます。",
+    "dropzone": {
+      "teaser": "ファイルをドラッグ＆ドロップするとアップロードします:",
+      "noFolderSupport": "現在お使いのブラウザーでフォルダーのドラッグ＆ドロップはサポートされていません。 手動でファイルをアップロードしてください。"
+    }
+  },
+  "table": {
+    "head_name": "名前",
+    "head_update": "最終更新",
+    "head_size": "サイズ",
+    "head_thumbnail_size": "サムネイルのサイズを切り替え",
+    "row_update_format": "yyyy/MM/dd",
+    "row_update_format_full": "YYYY/MM/DD",
+    "row_read_only": "共有 (読み取り専用)",
+    "row_read_write": "共有 (読み書き)",
+    "row_size_symbols": {
+      "B": "B",
+      "KB": "KB",
+      "MB": "MB",
+      "GB": "GB",
+      "TB": "TB",
+      "PB": "PB",
+      "EB": "EB",
+      "ZB": "ZB",
+      "YB": "YB"
+    },
+    "load_more": "さらに読み込む",
+    "mobile": {
+      "head_name_asc": "A-Z",
+      "head_name_desc": "Z-A",
+      "head_updated_at_asc": "古いものが先頭",
+      "head_updated_at_desc": "最近使用したものが先頭",
+      "head_size_asc": "小さいものが先頭",
+      "head_size_desc": "大きなものが先頭"
+    }
+  },
+  "SelectionBar": {
+    "selected_count": "アイテム選択 |||| アイテム選択",
+    "share": "共有",
+    "download": "ダウンロード",
+    "trash": "削除",
+    "destroy": "完全に削除",
+    "rename": "名前の変更",
+    "restore": "復元",
+    "close": "閉じる",
+    "moveto": "移動…",
+    "phone-download": "オフラインで利用可能にする",
+    "qualify": "分類",
+    "history": "履歴"
+  },
+  "deleteconfirmation": {
+    "title": "この要素を削除しますか? |||| これらの要素を削除しますか?",
+    "trash": "ゴミ箱に移動されます。 |||| ゴミ箱に移動されます。",
+    "restore": "いつでも元に戻すことができます。 |||| いつでも元に戻すことができます。",
+    "referenced": "選択範囲内の一部のファイルがフォトアルバムに関連しています。それらはゴミ箱に移動すると、削除されます。",
+    "cancel": "キャンセル",
+    "delete": "削除"
+  },
+  "emptytrashconfirmation": {
+    "title": "完全に削除しますか?",
+    "forbidden": "これらのファイルにもうアクセスすることはできません。",
+    "restore": "バックアップを作成していない場合、これらのファイルを復元することはできません。",
+    "cancel": "キャンセル",
+    "delete": "すべて削除"
+  },
+  "destroyconfirmation": {
+    "title": "完全に削除しますか?",
+    "forbidden": "このファイルにもうアクセスすることはできません。 |||| これらのファイルにもうアクセスすることはできません。",
+    "restore": "バックアップを作成していない場合、このファイルを復元することはできません。 |||| バックアップを作成していない場合、これらのファイルを復元することはできません。",
+    "cancel": "キャンセル",
+    "delete": "完全に削除"
+  },
+  "quotaalert": {
+    "title": "お使いのディスク容量が一杯です :(",
+    "desc": "ファイルを再度アップロードする前に、ファイルを削除するか、ゴミ箱を空にするか、ディスク容量を増やしてください。",
+    "confirm": "OK",
+    "increase": "ディスク容量を増やす"
+  },
+  "loading": {
+    "message": "読み込み中"
+  },
+  "empty": {
+    "title": "このフォルダーにファイルはありません。",
+    "trash_title": "削除されたファイルはありません。",
+    "trash_text": "不要になったファイルをゴミ箱に移動し、アイテムを完全に削除するとストレージページを解放します。"
+  },
+  "error": {
+    "open_folder": "フォルダーを開くときに何か問題が発生しました。",
+    "button": {
+      "reload": "今すぐ更新"
+    },
+    "download_file": {
+      "offline": "このファイルをダウンロードするには接続している必要があります",
+      "missing": "このファイルが見つかりません"
+    }
+  },
+  "Error": {
+    "public_unshared_title": "申し訳ありません。このリンクはもう利用できません。",
+    "public_unshared_text": "このリンクは有効期限が切れているか、所有者によって削除されています。 見つからないことを彼または彼女に知らせてください!",
+    "generic": "エラーが発生しました。数分待ってからもう一度やり直してください。"
+  },
+  "alert": {
+    "could_not_open_file": "ファイルを開くことができません",
+    "try_again": "エラーが発生しました。しばらくしてからもう一度やり直してください。",
+    "restore_file_success": "選択を正常に復元しました。",
+    "trash_file_success": "選択をゴミ箱に移動しました。",
+    "destroy_file_success": "選択を完全に削除しました。",
+    "empty_trash_progress": "ゴミ箱を空にしています。これは数分かかることがあります。",
+    "empty_trash_success": "ゴミ箱を空にしました。",
+    "folder_name": "要素 %{folderName} はすでに存在します。新しい名前を選んでください。",
+    "folder_generic": "エラーが発生しました。もう一度やり直してください。",
+    "folder_abort": "保存したい場合、新しいフォルダーに名前を追加する必要があります。 情報は保存されていません。",
+    "offline": "この機能はオフラインでは利用できません。",
+    "preparing": "ファイルを準備しています…"
+  },
+  "mobile": {
+    "onboarding": {
+      "welcome": {
+        "title": "Cozy ドライブ",
+        "desc": "Cozy を作成、または、サインインして Cozy ドライブにアクセスします",
+        "button": "サインイン",
+        "no_account_link": "私は Cozy がありません",
+        "create_my_cozy": "自分の Cozy を作成する"
+      },
+      "server_selection": {
+        "title": "サインイン",
+        "lostpwd": "[自分の Cozy のアドレスを忘れた場合](https://manager.cozycloud.cc/cozy/reminder)",
+        "label": "自分の Cozy のアドレス",
+        "cozy_address_placeholder": "claude",
+        "cozy_custom_address_placeholder": "claude.mydomain.com",
+        "domain_cozy": ".mycozy.cloud",
+        "domain_custom": "その他",
+        "button": "次へ",
+        "wrong_address_with_email": "メールアドレスを入力しましたが、Cozy に接続するには https://camillenimbus.mycozy.cloud のような URL を入力する必要があります",
+        "wrong_address_v2": "古い Cozy バージョンのアドレスを入力しました。 このアプリケーションは、最新バージョンとのみ互換性があります。 [詳細については、私たちのサイトを参照してください。](https://blog.cozycloud.cc/post/2016/11/21/On-the-road-to-Cozy-version-3?lang=en)",
+        "wrong_address": "このアドレスは Cozy ではないようです。 入力したアドレスを確認してください。",
+        "wrong_address_cosy": "アドレスが正しくありません。 \"cozy\" は \"z\" で試してください!"
+      },
+      "files": {
+        "title": "ファイルのアクセス",
+        "description": "お使いのデバイスで Cozy のファイルを保存するには、アプリケーションがファイルにアクセスする必要があります。"
+      },
+      "photos": {
+        "title": "写真とビデオをバックアップ",
+        "description": "お使いの電話で撮影した写真を自動的に Cozy にバックアップして、失わないようにします。"
+      },
+      "contacts": {
+        "title": "連絡先を同期",
+        "description": "お使いの携帯電話の連絡先を Cozy に保存します — これにより、連絡先とファイルの共有が容易になります。"
+      },
+      "step": {
+        "button": "今すぐ有効にする",
+        "skip": "後で",
+        "next": "次へ"
+      },
+      "analytics": {
+        "title": "Cozy の改善を手伝う",
+        "description": "アプリケーションは、自動的にデータ (主にエラー) を Cozy クラウドに提供します。 これにより問題をより早く解決することができます。"
+      }
+    },
+    "settings": {
+      "title": "設定",
+      "about": {
+        "title": "アプリについて",
+        "app_version": "アプリのバージョン",
+        "account": "アカウント"
+      },
+      "unlink": {
+        "title": "Cozy をサインアウト",
+        "description": "このデバイスから Cozy をサインアウトすることで Cozy のデータを失うことはありません。 Cozy に関連するオフラインファイルをこのデバイスから削除します。",
+        "button": "サインアウト"
+      },
+      "media_backup": {
+        "media_folder": "Photos",
+        "backup_folder": "自分のモバイルからバックアップ",
+        "legacy_backup_folder": "自分のモバイルからバックアップしました",
+        "title": "メディアバックアップ",
+        "images": {
+          "title": "画像のバックアップ",
+          "label": "画像を自動的に Cozy にバックアップして、無くさないようにして、簡単に共有できるようにします。"
+        },
+        "launch": "バックアップを起動",
+        "stop": "バックアップを停止",
+        "wifi": {
+          "title": "WIFI でのみバックアップ",
+          "label": "このオプションが有効になっている場合、パケットを節約するために、お使いのデバイスが WIFI 接続時にのみ写真をバックアップします。"
+        },
+        "media_upload": "%{smart_count} の写真が残っています |||| %{smart_count} の写真が残っています",
+        "media_uptodate": "メディアのバックアップは最新です",
+        "preparing": "バックアップするメディアを検索しています...",
+        "no_wifi": "WIFI に接続してください",
+        "quota": "ストレージ容量の制限に近づきました",
+        "quota_contact": "ストレージ容量の管理"
+      },
+      "support": {
+        "title": "サポート",
+        "analytics": {
+          "title": "Cozy の改善を手伝う",
+          "label": "アプリケーションは、自動的にデータ (主にエラー) を Cozy クラウドに提供します。 これにより問題をより早く解決することができます。"
+        },
+        "feedback": {
+          "title": "Cozy ドライブの改善を手伝う",
+          "description": "フィードバックを送って、Cozy ドライブの改善を手伝ってください。下のボタンをクリックして、問題を説明したり提案を送ってください。ありがとうございます!",
+          "button": "フィードバックをやめる"
+        },
+        "logs": {
+          "title": "あなたの問題を理解できるように私たちを手伝ってください",
+          "description": "アプリケーションログをメールで送って、品質と安定性の向上を支援してください。",
+          "button": "ログを送信",
+          "success": "ありがとうございます、私たちは問題を調査し、すぐにご連絡いたします。",
+          "error": "問題が発生しました。ログを送信できませんでした。もう一度やり直してください。"
+        }
+      },
+      "contacts": {
+        "title": "連絡先",
+        "subtitle": "連絡先をインポート",
+        "text": "お使いのデバイスから Cozy に連絡先をインポートすると、コンテンツを簡単に共有できます。"
+      }
+    },
+    "error": {
+      "open_with": {
+        "offline": "このファイルを開くには接続している必要があります"
+      },
+      "make_available_offline": {
+        "offline": "このファイルを開くには接続している必要があります"
+      }
+    },
+    "revoked": {
+      "title": "アクセスが取り消されました",
+      "description": "あなたはこのデバイスを Cozy から取り消したようです。 あなたが行っていない場合は、contact@cozycloud.cc までお知らせください。 あなたの Cozy に関連するすべてのローカルデータが削除されます。",
+      "loginagain": "もう一度ログイン",
+      "logout": "ログアウト"
+    },
+    "rating": {
+      "enjoy": {
+        "title": "Cozy ドライブを楽しんでますか?",
+        "yes": "はい!",
+        "no": "あまり"
+      },
+      "rate": {
+        "title": "評価して頂けますか?",
+        "yes": "そうする!",
+        "no": "いいえ結構です",
+        "later": "後で"
+      },
+      "feedback": {
+        "title": "フィードバックをお願いできますか?",
+        "yes": "送信",
+        "no": "いいえ結構です"
+      },
+      "email": {
+        "subject": "Cozy ドライブでフィードバック",
+        "placeholder": "こんにちは、Cozy ドライブはいいと思います..."
+      },
+      "alert": {
+        "rated": "ありがとう! ⭐️⭐️⭐️⭐️⭐️ です",
+        "declined": "素晴らしい。今後の機能が楽しみです。 Cozy を使い続けます!",
+        "later": "問題ありません、後でまた尋ねます。",
+        "feedback": "フィードバックいただきありがとうございます。 私たちは間違いなく取り組んでいきます!"
+      }
+    },
+    "first_sync": {
+      "title": "最初の写真のバックアップを行います 🎉",
+      "tips": "ヒント",
+      "tip_bed": "あなたが寝る前、またはお使いの携帯電話を使用していないときに、Cozy ドライブを開いてください。",
+      "tip_wifi": "Wi-Fi を有効にしてデータを保存します。",
+      "tip_lock": "ロック画面を無効にする",
+      "result": "朝、すべての写真が安全でセキュリティで保護された場所に保管されます。",
+      "button": "了解!"
+    },
+    "notifications": {
+      "backup_paused": "写真のバックアップが一時停止されています。 バックアップを完了するため、アプリケーションを開いたままにして、画面がスリープ状態にならないようにします。"
+    },
+    "download": {
+      "success": "ファイルは正常に共有されました"
+    }
+  },
+  "upload": {
+    "alert": {
+      "network": "現在オフラインです。 接続したらもう一度やり直してください。"
+    }
+  },
+  "intents": {
+    "alert": {
+      "error": "ファイルを自動的にアップロードできません。アップロードメニューで手動でアップロードしてください。"
+    },
+    "picker": {
+      "select": "選択",
+      "cancel": "キャンセル",
+      "new_folder": "新しいフォルダー",
+      "instructions": "対象を選択"
+    }
+  },
+  "UploadQueue": {
+    "header": "%{smart_count} 枚の写真を Cozy ドライブにアップロード中 |||| %{smart_count} 枚の写真を Cozy ドライブにアップロード中",
+    "header_mobile": "アップロード中 %{done} / %{total}",
+    "header_done": "%{done} / %{total} を正常にアップロードしました",
+    "close": "閉じる",
+    "item": {
+      "pending": "保留"
+    }
+  },
+  "Viewer": {
+    "close": "閉じる",
+    "noviewer": {
+      "download": "このファイルをダウンロード",
+      "openWith": "...で開く",
+      "cta": {
+        "saveTime": "時間を節約しましょう!",
+        "installDesktop": "コンピュータに同期ツールをインストール",
+        "accessFiles": "自分のコンピュータ上のファイルに直接アクセス"
+      }
+    },
+    "actions": {
+      "download": "ダウンロード"
+    },
+    "loading": {
+      "error": "このファイルを読み込めませんでした。 現在、インターネットに接続していますか?",
+      "retry": "再試行"
+    },
+    "error": {
+      "generic": "このファイルを開くときにエラーが発生しました。もう一度やり直してください。",
+      "noNetwork": "現在オフラインです。"
+    }
+  },
+  "Move": {
+    "to": "移動先:",
+    "action": "移動",
+    "cancel": "キャンセル",
+    "modalTitle": "移動",
+    "title": "%{smart_count} アイテム |||| %{smart_count} アイテム",
+    "success": "%{subject} を %{target} に移動しました。 |||| %{smart_count} アイテムを %{target} に移動しました。",
+    "error": "このアイテムを移動中に問題が発生しました。後でもう一度やり直してください。 |||| これらのアイテムを移動中に問題が発生しました。後でもう一度やり直してください。",
+    "cancelled": "%{subject} を元の場所にもどしました。 |||| %{smart_count} アイテムを元の場所に戻しました。",
+    "cancelledWithRestoreErrors": "%{subject} を元の場所に戻しましたが、ゴミ箱からファイルを復元する時にエラーが発生しました。 |||| %{smart_count} 件を元の場所に戻しましたが、ゴミ箱からファイルを復元する時に %{restoreErrorsCount} エラーが発生しました。",
+    "cancelled_error": "アイテムを戻す際にエラーが発生しました。 |||| アイテムを戻す際にエラーが発生しました。"
+  },
+  "ImportToDrive": {
+    "title": "%{smart_count} アイテム |||| %{smart_count} アイテム",
+    "to": "保存先:",
+    "action": "保存",
+    "cancel": "キャンセル",
+    "success": "%{smart_count} 保存済ファイル |||| %{smart_count} 保存済ファイル",
+    "error": "何か問題が発生しました。もう一度やり直してください"
+  },
+  "FileOpenerExternal": {
+    "fileNotFoundError": "エラー: ファイルが見つかりません"
+  },
+  "TOS": {
+    "updated": {
+      "title": "GDPR が現実のものになります !",
+      "detail": "一般データ保護規則に従って、[利用規約が更新されました](%{link}) 、2018 年 5 月 25 日にすべての Cozy ユーザーに適用されます。",
+      "cta": "利用規約に同意して続行する",
+      "disconnect": "拒否して切断する",
+      "error": "問題が発生しました。後でもう一度やり直してください"
+    }
+  },
+  "manifest": {
+    "permissions": {
+      "contacts": {
+        "description": "連絡先とファイルを共有するために必要です"
+      },
+      "groups": {
+        "description": "グループとファイルを共有するために必要です"
+      }
+    }
+  },
+  "models": {
+    "contact": {
+      "defaultDisplayName": "匿名"
+    }
+  },
+  "Scan": {
+    "scan_a_doc": "ドキュメントをスキャン",
+    "save_doc": "ドキュメントを保存",
+    "filename": "ファイル名",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "qualify": "分類",
+    "apply": "適用",
+    "error": {
+      "offline": "現在オフラインのため、この機能は使用できません。 後でもう一度やり直してください",
+      "uploading": "すでにファイルをアップロードしています。 このアップロードが終了するまで待ってから、もう一度やり直してください。",
+      "generic": "何か問題が発生しました。もう一度やり直してください。"
+    },
+    "successful": {
+      "qualified_ok": "ファイルの分類ができました!"
+    }
+  },
+  "History": {
+    "description": "ファイルの最新の20バージョンが自動的に保存されます。 ダウンロードするバージョンを選択してください。",
+    "current_version": "現在のバージョン",
+    "loading": "読み込んでいます...",
+    "noFileVersionEnabled": "Cozy は、ファイルの最後の変更をすぐにアーカイブできるので、もう失う危険はありません。"
+  },
+  "External": {
+    "redirection": {
+      "title": "リダイレクト",
+      "text": "リダイレクトしています…",
+      "error": "リダイレクト中にエラーが発生しました。 通常、これはファイルの内容が正しい形式ではないことを意味します。"
+    }
+  },
+  "RenameModal": {
+    "title": "名前の変更",
+    "description": "ファイルの拡張子を変更しようとしています。 続行してもよろしいですか?",
+    "continue": "続行",
+    "cancel": "キャンセル"
+  },
+  "Shortcut": {
+    "title_modal": "ショートカットの作成",
+    "filename": "ファイル名",
+    "url": "URL",
+    "cancel": "キャンセル",
+    "create": "作成",
+    "created": "ショートカットを作成しました",
+    "errored": "エラーが発生しました",
+    "filename_error_ends": "名前は .url で終了する必要があります",
+    "needs_info": "ショートカットは URL とファイル名である必要があります",
+    "url_badformat": "URL が正しい形式ではありません"
+  },
+  "searchbar": {
+    "placeholder": "検索します",
+    "empty": "問い合わせ “%{query}” の結果が見つかりません"
+  }
+}
