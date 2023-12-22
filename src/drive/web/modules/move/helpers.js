@@ -85,25 +85,6 @@ export const getEntriesName = (entries, t) => {
 }
 
 /**
- * Get type from the entries
- * @param {IOCozyFile[]} entries - List of files moved
- * @returns {string} - Type from the entries
- */
-export const getEntriesType = entries => {
-  return entries.reduce((previous, current) => {
-    const type =
-      current.type === 'file' || current.type === 'folder'
-        ? current.type
-        : 'element'
-
-    if (previous !== null) {
-      return previous === type ? previous : 'element'
-    }
-    return current.type
-  }, null)
-}
-
-/**
  * @typedef {Object} SharedDoc
  * @property {string[]} permissions - List of permissions
  * @property {string[]} sharings - List of sharings

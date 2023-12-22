@@ -563,11 +563,6 @@
     "cancelledWithRestoreErrors": "%{subject} is teruggeplaatst op de oorspronkelijke locatie, maar er is een fout opgetreden. ||| %{smart_count} items zijn teruggeplaatst op hun oorspronkelijke locatie, maar er zijn %{restoreErrorsCount} fouten opgetreden.",
     "cancelled_error": "Sorry, er is iets misgegaan tijdens het terughalen van dit item. |||| Sorry, er is iets misgegaan tijdens terughalen van deze items.",
     "multipleEntries": "%{smart_count} item |||| %{smart_count} items",
-    "entriesType": {
-      "file": "bestand",
-      "directory": "map",
-      "element": "item"
-    },
     "outsideSharedFolder": {
       "title": "Verplaatsen buiten de map ‘%{sharedFolder}’",
       "cancel": "Annuleren",
@@ -708,5 +703,10 @@
         "second": "Abonnementen bekĳken"
       }
     }
+  },
+  "EntriesType": {
+    "file": "bestand |||| bestanden",
+    "directory": "map |||| mappen",
+    "element": "item |||| items"
   }
 }

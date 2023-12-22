@@ -580,11 +580,6 @@
     "cancelledWithRestoreErrors": "%{subject} a été rapatrié dans son dossier d'origine mais il y a eu une erreur lors de la restauration du fichier depuis la corbeille. |||| %{smart_count} éléments ont été rapatriés dans leur dossiers d'origine mais il y a eu %{restoreErrorsCount} erreur(s) lors de la restauration des fichiers depuis la corbeille.",
     "cancelled_error": "Une erreur est survenue lors de l’annulation du déplacement. |||| Une erreur est survenue lors de l’annulation de ces déplacements.",
     "multipleEntries": "%{smart_count} élément |||| %{smart_count} éléments",
-    "entriesType": {
-      "file": "fichier",
-      "directory": "dossier",
-      "element": "élément"
-    },
     "outsideSharedFolder": {
       "title": "Déplacement en dehors du dossier %{sharedFolder}",
       "content_1": "Attention, vous souhaitez déplacer %{name} en dehors du dossier partagé %{sharedFolder}. |||| Attention, vous souhaitez déplacer %{smart_count} %{type}s en dehors du dossier partagé %{sharedFolder}.",
@@ -767,5 +762,10 @@
     "restoreSuccess": "L’élément a bien été restauré",
     "restoreError": "Une erreur est survenue, merci de réessayer.",
     "destroySuccess": "L’élément a bien été supprimé"
+  },
+  "EntriesType": {
+    "file": "fichier |||| fichiers",
+    "directory": "dossier |||| dossiers",
+    "element": "élément |||| éléments"
   }
 }

@@ -10,7 +10,7 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 
 import { buildFolderByPathQuery } from 'drive/web/modules/queries'
 import { LoaderModal } from 'drive/components/LoaderModal'
-import { getEntriesType } from 'drive/web/modules/move/helpers'
+import { getEntriesTypeTranslated } from 'drive/lib/entries'
 
 /**
  * Alert the user when is trying to move a folder/file outside of a shared folder
@@ -27,7 +27,7 @@ const MoveOutsideSharedFolderModal = ({ entries, onCancel, onConfirm }) => {
   )
 
   if (fetchStatus === 'loaded') {
-    const type = t(`Move.entriesType.${getEntriesType(entries)}`)
+    const type = getEntriesTypeTranslated(t, entries)
 
     return (
       <ConfirmDialog
