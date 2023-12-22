@@ -145,7 +145,7 @@
     "moveto": "移動到...",
     "phone-download": "使離線可用"
   },
-  "deleteconfirmation": {
+  "DeleteConfirm": {
     "cancel": "取消",
     "delete": "移除"
   },

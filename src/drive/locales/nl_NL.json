@@ -258,7 +258,7 @@
     "history": "Geschiedenis",
     "more": "Meer"
   },
-  "deleteconfirmation": {
+  "DeleteConfirm": {
     "title": "Dit item verwijderen? |||| Deze items verwijderen?",
     "trash": "Het wordt verplaatst naar de prullenbak. |||| Ze worden verplaatst naar de prullenbak.",
     "restore": "Je kunt het ten allen tijde herstellen. |||| Je kunt ze ten allen tijde herstellen.",

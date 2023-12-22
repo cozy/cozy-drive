@@ -247,7 +247,7 @@
     "qualify": "Clasificar",
     "history": "Historia"
   },
-  "deleteconfirmation": {
+  "DeleteConfirm": {
     "title": "¿Suprimir este elemento? |||| ¿Suprimir estos elementos?",
     "trash": "Será desplazado a la Papelera. ||| Serán desplazados a la Papelera.",
     "restore": "Usted puede restaurarlo cuando lo desee. ||| Usted puede restaurarlos cuando lo desee.",

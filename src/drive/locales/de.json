@@ -254,7 +254,7 @@
     "qualify": "Kategorisieren",
     "history": "Verlauf"
   },
-  "deleteconfirmation": {
+  "DeleteConfirm": {
     "title": "Dieses Element löschen? |||| Diese Elemente löschen?",
     "trash": "Es wird in den Papierkorb verschoben. |||| Sie werden in den Papierkorb verschoben.",
     "restore": "Du kannst es jederzeit wiederherstellen. |||| Du kannst sie jederzeit wiederherstellen.",

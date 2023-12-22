@@ -259,7 +259,7 @@
     "history": "Versions",
     "more": "Afficher plus d'action"
   },
-  "deleteconfirmation": {
+  "DeleteConfirm": {
     "title": "Supprimer cet élément ? |||| Supprimer ces éléments ?",
     "trash": "Cet élément sera déplacé dans la corbeille. |||| Ces éléments seront déplacés dans la corbeille.",
     "restore": "Vous pouvez toujours le restaurer quand vous voulez.",
