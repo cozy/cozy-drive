@@ -5,9 +5,11 @@ import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Stack from 'cozy-ui/transpiled/react/Stack'
+import { splitFilename } from 'cozy-client/dist/models/file'
 
 import { deleteFilesPermanently } from 'drive/web/modules/actions/utils'
 import { Message } from 'drive/web/modules/confirm/Message'
+import { getEntriesTypeTranslated } from 'drive/lib/entries'
 
 const DestroyConfirm = ({ files, onCancel, onConfirm }) => {
   const { t } = useI18n()
@@ -25,20 +27,32 @@ const DestroyConfirm = ({ files, onCancel, onConfirm }) => {
     }
   }
 
+  const entriesType = getEntriesTypeTranslated(t, files)
+
   return (
     <ConfirmDialog
       open
       onClose={onCancel}
-      title={t('destroyconfirmation.title', files.length)}
+      title={t('DestroyConfirm.title', {
+        filename: splitFilename(files[0]).filename,
+        smart_count: files.length,
+        type: entriesType
+      })}
       content={
         <Stack>
           <Message
             icon="forbidden"
-            text={t(`destroyconfirmation.forbidden`, files.length)}
+            text={t(`DestroyConfirm.forbidden`, {
+              smart_count: files.length,
+              type: entriesType
+            })}
           />
           <Message
             icon="restore"
-            text={t(`destroyconfirmation.restore`, files.length)}
+            text={t(`DestroyConfirm.restore`, {
+              smart_count: files.length,
+              type: entriesType
+            })}
           />
         </Stack>
       }
@@ -47,11 +61,11 @@ const DestroyConfirm = ({ files, onCancel, onConfirm }) => {
           <Button
             theme="secondary"
             onClick={onCancel}
-            label={t('destroyconfirmation.cancel')}
+            label={t('DestroyConfirm.cancel')}
           />
           <Button
             theme="danger"
-            label={t('destroyconfirmation.delete')}
+            label={t('DestroyConfirm.delete')}
             busy={isLoading}
             onClick={handleDestroy}
           />
