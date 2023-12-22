@@ -279,9 +279,9 @@
     "delete": "Tout supprimer"
   },
   "DestroyConfirm": {
-    "title": "Supprimer définitivement ?",
-    "forbidden": "Vous ne pourrez plus accéder à ce fichier. |||| Vous ne pourrez plus accéder à ces fichiers.",
-    "restore": "Vous ne pourrez pas restaurer ce fichier. |||| Vous ne pourrez pas restaurer ces fichiers.",
+    "title": "Supprimer %{filename} ? |||| Supprimer %{smart_count} %{type} ?",
+    "forbidden": "Vous ne pourrez plus accéder à ce %{type}. |||| Vous ne pourrez plus accéder à ces %{type}.",
+    "restore": "Vous ne pourrez pas restaurer ce %{type}. |||| Vous ne pourrez pas restaurer ces %{type}.",
     "cancel": "Annuler",
     "delete": "Supprimer définitivement"
   },

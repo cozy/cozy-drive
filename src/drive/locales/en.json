@@ -279,9 +279,9 @@
     "delete": "Delete all"
   },
   "DestroyConfirm": {
-    "title": "Permanently delete? |||| Delete X files?",
-    "forbidden": "You won't be able to access this file anymore. |||| You won't be able to access these files anymore.",
-    "restore": "You won't be able to restore this file if you didn't make a backup. |||| You won't be able to restore these files if you didn't make a backup.",
+    "title": "Delete %{filename}? |||| Delete %{smart_count} %{type}?",
+    "forbidden": "You won't be able to access this %{type} anymore. |||| You won't be able to access these %{type} anymore.",
+    "restore": "You won't be able to restore this %{type} if you didn't make a backup. |||| You won't be able to restore these %{type} if you didn't make a backup.",
     "cancel": "Cancel",
     "delete": "Delete permanently"
   },
