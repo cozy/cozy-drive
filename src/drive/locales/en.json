@@ -260,7 +260,7 @@
     "more": "More"
   },
   "DeleteConfirm": {
-    "title": "Delete this element? |||| Delete these elements?",
+    "title": "Delete %{filename}? |||| Delete %{smart_count} %{type}?",
     "trash": "It will be moved to the Trash. |||| They will be moved to the Trash.",
     "restore": "You can still restore it whenever you want. |||| You can still restore them whenever you want.",
     "share_accepted": "Sharing will be stopped. The following contacts will keep a copy, but your changes will no longer be synchronised:",
