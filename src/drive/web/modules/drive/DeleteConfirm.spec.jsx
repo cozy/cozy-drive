@@ -29,7 +29,7 @@ describe('DeleteConfirm', () => {
       </AppLike>
     )
 
-    expect(getByText('Delete this element?')).toBeTruthy()
+    expect(getByText('Delete foobar10?')).toBeTruthy()
 
     const confirmButton = getByText('Remove')
     fireEvent.click(confirmButton)

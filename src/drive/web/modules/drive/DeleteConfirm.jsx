@@ -1,18 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react'
+
 import { useClient } from 'cozy-client'
 import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Button from 'cozy-ui/transpiled/react/deprecated/Button'
-import { buildAlbumByIdQuery } from 'drive/web/modules/queries'
 import { Media, Img, Bd } from 'cozy-ui/transpiled/react/deprecated/Media'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import Stack from 'cozy-ui/transpiled/react/Stack'
-
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-
 import { SharedDocument, SharedRecipientsList } from 'cozy-sharing'
+import { splitFilename } from 'cozy-client/dist/models/file'
 
+import { buildAlbumByIdQuery } from 'drive/web/modules/queries'
 import { trashFiles } from 'drive/web/modules/actions/utils'
 import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
+import { getEntriesTypeTranslated } from 'drive/lib/entries'
 
 const Message = ({ type, fileCount }) => {
   const ico =
@@ -80,11 +81,17 @@ export const DeleteConfirm = ({
     onClose()
   }, [client, files, afterConfirmation, onClose])
 
+  const entriesType = getEntriesTypeTranslated(t, files)
+
   return (
     <ConfirmDialog
       open={true}
       onClose={onClose}
-      title={t('DeleteConfirm.title', fileCount)}
+      title={t('DeleteConfirm.title', {
+        filename: splitFilename(files[0]).filename,
+        smart_count: fileCount,
+        type: entriesType
+      })}
       content={
         <Stack>
           <Message type="trash" fileCount={fileCount} />

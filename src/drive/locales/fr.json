@@ -260,7 +260,7 @@
     "more": "Afficher plus d'action"
   },
   "DeleteConfirm": {
-    "title": "Supprimer cet élément ? |||| Supprimer ces éléments ?",
+    "title": "Supprimer %{filename} ? |||| Supprimer %{smart_count} %{type} ?",
     "trash": "Cet élément sera déplacé dans la corbeille. |||| Ces éléments seront déplacés dans la corbeille.",
     "restore": "Vous pouvez toujours le restaurer quand vous voulez.",
     "share_accepted": "Le partage sera arrêté. Ainsi, les contacts suivant conserveront une copie mais vos changements ne seront plus synchronisés :",
