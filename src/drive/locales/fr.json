@@ -278,7 +278,7 @@
     "cancel": "Annuler",
     "delete": "Tout supprimer"
   },
-  "destroyconfirmation": {
+  "DestroyConfirm": {
     "title": "Supprimer définitivement ?",
     "forbidden": "Vous ne pourrez plus accéder à ce fichier. |||| Vous ne pourrez plus accéder à ces fichiers.",
     "restore": "Vous ne pourrez pas restaurer ce fichier. |||| Vous ne pourrez pas restaurer ces fichiers.",

@@ -263,7 +263,7 @@
     "cancel": "Anular",
     "delete": "Suprimir definitivamente"
   },
-  "destroyconfirmation": {
+  "DestroyConfirm": {
     "title": "¿Suprimir definitivamente?",
     "forbidden": "Usted no podrá acceder más a este archivo. ||| Usted no podrá acceder más a estos archivos.",
     "restore": "Usted no podrá recuperar este archivo si no ha hecho una copia de seguridad. ||| Usted no podrá recuperar estos archivos si no ha hecho una copia de seguridad.",

@@ -232,7 +232,7 @@
     "cancel": "Annulla",
     "delete": "Elimina tutto"
   },
-  "destroyconfirmation": {
+  "DestroyConfirm": {
     "title": "Eliminare permanentemente?",
     "cancel": "Annulla",
     "delete": "Elimina permanentemente"

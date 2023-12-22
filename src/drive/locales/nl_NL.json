@@ -274,7 +274,7 @@
     "cancel": "Annuleren",
     "delete": "Alles verwijderen"
   },
-  "destroyconfirmation": {
+  "DestroyConfirm": {
     "title": "Permanent verwijderen?",
     "forbidden": "Je hebt dan geen toegang meer tot dit bestand. |||| Je hebt dat geen toegang meer tot deze bestanden.",
     "restore": "Je kunt dit bestand niet herstellen als je geen back-up hebt gemaakt. |||| Je kunt deze bestanden niet herstellen als je geen back-up hebt gemaakt.",

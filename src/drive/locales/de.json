@@ -270,7 +270,7 @@
     "cancel": "Abbrechen",
     "delete": "Alles löschen"
   },
-  "destroyconfirmation": {
+  "DestroyConfirm": {
     "title": "Dauerhaft löschen?",
     "forbidden": "Du kannst nicht mehr auf diese Datei zugreifen. |||| Du kannst nicht mehr auf diese Dateien zugreifen.",
     "restore": "Du kannst diese Datei nicht wiederherstellen, wenn du keine Sicherung gemacht hast. |||| Du kannst diese Dateien nicht wiederherstellen, wenn du keine Sicherung gemacht hast.",
