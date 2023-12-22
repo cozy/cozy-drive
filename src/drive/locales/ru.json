@@ -194,7 +194,7 @@
     "cancel": "Отмена",
     "delete": "Удалить все"
   },
-  "destroyconfirmation": {
+  "DestroyConfirm": {
     "title": "Удалить полностью?",
     "cancel": "Отмена",
     "delete": "Удалить полностью"

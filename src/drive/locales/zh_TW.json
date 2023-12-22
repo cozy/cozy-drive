@@ -154,7 +154,7 @@
     "cancel": "取消",
     "delete": "全部刪除"
   },
-  "destroyconfirmation": {
+  "DestroyConfirm": {
     "title": "永久刪除嗎？",
     "cancel": "取消",
     "delete": "永久刪除"

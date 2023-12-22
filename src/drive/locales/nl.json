@@ -43,7 +43,7 @@
     "cancel": "Annuleren",
     "delete": "Verwijder alles"
   },
-  "destroyconfirmation": {
+  "DestroyConfirm": {
     "title": "Verwijder permanent?",
     "forbidden": "Je kunt dit bestand net meer benaderen. |||| Je kunt deze bestanden niet meer benaderen.",
     "restore": "Als je geen back-up gemaakt hebt, kun je dit bestand niet meer terugzetten. |||| Als je geen back-up gemaakt hebt, kun je deze bestanden niet meer terugzetten.",
