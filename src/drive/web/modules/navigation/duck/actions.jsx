@@ -10,6 +10,7 @@ import QuotaAlert from 'drive/web/modules/upload/QuotaAlert'
 import { getFolderContent } from 'drive/web/modules/selectors'
 import { createEncryptedDir } from 'drive/lib/encryption'
 import { logException } from 'drive/lib/reporter'
+import { getEntriesTypeTranslated } from 'drive/lib/entries'
 
 export const SORT_FOLDER = 'SORT_FOLDER'
 
@@ -64,36 +65,18 @@ export const uploadFiles =
     )
   }
 
-const getEntriesType = entries => {
-  const types = entries.reduce((acc, entry) => {
-    if (entry.isDirectory) {
-      acc.add('directory')
-    } else {
-      acc.add('file')
-    }
-    return acc
-  }, new Set())
-
-  if (types.size > 1) {
-    return 'element'
-  } else {
-    return types.has('directory') ? 'directory' : 'file'
-  }
-}
-
 const uploadQueueProcessed =
   (created, quotas, conflicts, networkErrors, errors, updated, t) =>
   dispatch => {
     const conflictCount = conflicts.length
     const createdCount = created.length
     const updatedCount = updated.length
-    const type = t(
-      `upload.documentType.${getEntriesType([
-        ...created,
-        ...updated,
-        ...conflicts
-      ])}`
-    )
+    const type = getEntriesTypeTranslated(t, [
+      ...created,
+      ...updated,
+      ...conflicts
+    ])
+
     if (quotas.length > 0) {
       logger.warn(`Upload module triggers a quota alert: ${quotas}`)
       // quota errors have their own modal instead of a notification
