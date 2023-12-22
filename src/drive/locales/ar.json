@@ -80,7 +80,7 @@
     "restore": "إسترجاع",
     "close": "غلق"
   },
-  "deleteconfirmation": {
+  "DeleteConfirm": {
     "cancel": "إلغاء",
     "delete": "حذف"
   },

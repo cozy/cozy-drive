@@ -29,7 +29,7 @@
       "YB": "YB"
     }
   },
-  "deleteconfirmation": {
+  "DeleteConfirm": {
     "title": "Verwijder dit element? |||| Verwijder deze elementen?",
     "trash": "Het zal worden verplaatst naar de Prullenbak. ||| Ze zullen worden verplaatst naar de Prullenbak.",
     "restore": "Je kunt het nog steeds terughalen als je wilt. |||| Je kunt ze nog steeds terughalen als je wilt.",

@@ -184,7 +184,7 @@
     "restore": "Сбросить",
     "close": "Закрыть"
   },
-  "deleteconfirmation": {
+  "DeleteConfirm": {
     "title": "Удалить этот элемент? |||| Удалить эти элементы?",
     "cancel": "Отмена",
     "delete": "Удалить"

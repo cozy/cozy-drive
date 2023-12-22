@@ -259,7 +259,7 @@
     "history": "History",
     "more": "More"
   },
-  "deleteconfirmation": {
+  "DeleteConfirm": {
     "title": "Delete this element? |||| Delete these elements?",
     "trash": "It will be moved to the Trash. |||| They will be moved to the Trash.",
     "restore": "You can still restore it whenever you want. |||| You can still restore them whenever you want.",

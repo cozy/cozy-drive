@@ -24,9 +24,7 @@ const Message = ({ type, fileCount }) => {
       <Img>
         <Icon icon={ico} color="var(--coolGrey)" />
       </Img>
-      <Bd className={'u-pl-1-half'}>
-        {t(`deleteconfirmation.${type}`, fileCount)}
-      </Bd>
+      <Bd className={'u-pl-1-half'}>{t(`DeleteConfirm.${type}`, fileCount)}</Bd>
     </Media>
   )
 }
@@ -86,7 +84,7 @@ export const DeleteConfirm = ({
     <ConfirmDialog
       open={true}
       onClose={onClose}
-      title={t('deleteconfirmation.title', fileCount)}
+      title={t('DeleteConfirm.title', fileCount)}
       content={
         <Stack>
           <Message type="trash" fileCount={fileCount} />
@@ -102,12 +100,12 @@ export const DeleteConfirm = ({
           <Button
             theme="secondary"
             onClick={onClose}
-            label={t('deleteconfirmation.cancel')}
+            label={t('DeleteConfirm.cancel')}
           />
           <Button
             busy={isDeleting}
             theme="danger"
-            label={t('deleteconfirmation.delete')}
+            label={t('DeleteConfirm.delete')}
             onClick={onDelete}
           />
         </>
