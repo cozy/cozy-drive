@@ -10207,10 +10207,10 @@ cozy-scanner@^7.0.1:
   dependencies:
     cozy-device-helper "^3.0.0"
 
-cozy-scripts@^8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-scripts/-/cozy-scripts-8.1.0.tgz#bb8ae227c587c671cc2450fdffbad7f9daa20614"
-  integrity sha512-wNWShe11ENjcguNX3w69xnI69zqaZMCZmbp7EUCsxVnRY7GAaFR3bynti/+Z9pDemIWwgWD+uUsgUiyFKaHmZw==
+cozy-scripts@^8.2.0:
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/cozy-scripts/-/cozy-scripts-8.2.0.tgz#a3286078ab331e55e24fcc41ef3d20b90a5c64cc"
+  integrity sha512-kAHBOkPBP/2nkpP/EU9I54HrUEcTusxx2j745RWuTK+Ag/QtqVccLxYQdFo+Bf69akNXJ8cMfM3YQc24VpqFRQ==
   dependencies:
     "@babel/core" "7.10.0"
     "@babel/polyfill" "^7.10.4"
