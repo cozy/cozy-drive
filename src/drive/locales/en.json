@@ -587,6 +587,12 @@
       "cancel": "Cancel",
       "confirm": "I understand"
     },
+    "insideSharedFolder": {
+      "title": "Move to a shared folder?",
+      "content": "All members with access to %{destination} will also have access to %{source}. |||| All members with access to %{destination} will also have access to the selected %{type}.",
+      "cancel": "Annuler",
+      "confirm": "Ok"
+    },
     "sharedFolderInsideAnother": {
       "title": "Cannot be moved",
       "content_1": "You want to move a shared element into a shared folder. This type of move is not allowed.",

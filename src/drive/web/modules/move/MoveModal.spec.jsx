@@ -112,6 +112,24 @@ describe('MoveModal component', () => {
       }
     })
 
+    CozyFile.getFullpath.mockImplementation(
+      (destinationFolder, name) => `/${destinationFolder}/${name}`
+    )
+
+    CozyFile.move.mockImplementation(id => {
+      if (id === 'bill_201902') {
+        return Promise.resolve({
+          deleted: 'other_bill_201902',
+          moved: { id }
+        })
+      } else {
+        return Promise.resolve({
+          deleted: null,
+          moved: { id }
+        })
+      }
+    })
+
     return render(
       <AppLike client={mockClient}>
         <MoveModal {...props} />
@@ -136,19 +154,6 @@ describe('MoveModal component', () => {
           name === 'bill_201903.pdf' ? '/bills/bill_201903.pdf' : '/whatever'
         )
       )
-      CozyFile.move.mockImplementation(id => {
-        if (id === 'bill_201902') {
-          return Promise.resolve({
-            deleted: 'other_bill_201902',
-            moved: { id }
-          })
-        } else {
-          return Promise.resolve({
-            deleted: null,
-            moved: { id }
-          })
-        }
-      })
 
       setup()
 
@@ -228,25 +233,31 @@ describe('MoveModal component', () => {
     })
   })
 
-  describe('move shared folder inside another', () => {
-    it('should move the shared folder inside another if its by link', async () => {
-      CozyFile.getFullpath.mockImplementation((destinationFolder, name) =>
-        Promise.resolve(`/${destinationFolder}/${name}`)
-      )
-
+  describe('move inside shared folder', () => {
+    it('should display an alert when moving files inside a shared folder', async () => {
       setup({
-        sharedPaths: ['/bills/bill_201903.pdf', '/destinationFolder'],
-        byDocId: {
-          bill_201903: {
-            permissions: ['perm1'],
-            sharings: []
-          }
-        },
-        getSharedParentPath: () => null
+        sharedPaths: ['/destinationFolder'],
+        getSharedParentPath: () => '/bills'
       })
 
       const moveButton = await screen.findByText('Move')
       fireEvent.click(moveButton)
+
+      const modalTitle = await screen.findByText('Move to a shared folder?')
+      expect(modalTitle).toBeInTheDocument()
+    })
+
+    it('should move files when user confirms', async () => {
+      setup({
+        sharedPaths: ['/destinationFolder'],
+        getSharedParentPath: () => '/bills'
+      })
+
+      const moveButton = await screen.findByText('Move')
+      fireEvent.click(moveButton)
+
+      const confirmButton = await screen.findByText('Ok')
+      fireEvent.click(confirmButton)
 
       await waitFor(() => {
         expect(CozyFile.move).toHaveBeenCalled()
@@ -254,7 +265,9 @@ describe('MoveModal component', () => {
         expect(refreshSpy).toHaveBeenCalled()
       })
     })
+  })
 
+  describe('move shared folder inside another', () => {
     it('should display an alert when move shared folder inside another', async () => {
       CozyFile.getFullpath.mockImplementation((destinationFolder, name) =>
         Promise.resolve(`/${destinationFolder}/${name}`)
