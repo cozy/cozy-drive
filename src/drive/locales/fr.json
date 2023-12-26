@@ -587,6 +587,12 @@
       "cancel": "Annuler",
       "confirm": "J'ai compris"
     },
+    "insideSharedFolder": {
+      "title": "Déplacer vers un dossier partagé ?",
+      "content": "Tous les membres ayant accès à %{destination} auront également accès à %{source}. |||| Tous les membres ayant accès à %{destination} auront également accès aux %{type} sélectionnés.",
+      "cancel": "Annuler",
+      "confirm": "Ok"
+    },
     "sharedFolderInsideAnother": {
       "title": "Déplacement impossible",
       "content_1": "Vous souhaitez déplacer un élément partagé dans un dossier lui-même partagé. Ce type déplacement n'est pas autorisé.",
