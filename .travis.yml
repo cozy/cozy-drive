@@ -1,7 +1,8 @@
 language: node_js
 node_js: 16
 dist: jammy
-cache: yarn
+cache:
+  npm: false
 branches:
   only:
     - master
