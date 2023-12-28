@@ -26,22 +26,14 @@ import { MoveOutsideSharedFolderModal } from 'drive/web/modules/move/MoveOutside
 import { MoveSharedFolderInsideAnotherModal } from 'drive/web/modules/move/MoveSharedFolderInsideAnotherModal'
 import { MoveInsideSharedFolderModal } from 'drive/web/modules/move/MoveInsideSharedFolderModal'
 
-const styles = theme => ({
+const styles = () => ({
   paper: {
     height: '100%',
     '& .MuiDialogContent-root': {
       padding: '0'
     },
     '& .MuiDialogTitle-root': {
-      padding: '0',
-      [theme.breakpoints.down('sm')]: {
-        width: '100%',
-        overflow: 'visible',
-        // back button
-        '& .MuiButtonBase-root': {
-          display: 'none'
-        }
-      }
+      padding: '0'
     }
   }
 })
