@@ -15,7 +15,7 @@ import {
   toggleMenu
 } from 'drive/web/modules/drive/Toolbar/components/MoreMenu'
 import AddMenu from 'drive/web/modules/drive/AddMenu/AddMenu'
-import ScanWrapper from 'drive/web/modules/drive/Toolbar/components/ScanWrapper'
+import { ScanWrapper } from 'drive/web/modules/drive/Toolbar/components/ScanWrapper'
 import { isEncryptedFolder } from 'drive/lib/encryption'
 
 export const AddMenuContext = createContext()

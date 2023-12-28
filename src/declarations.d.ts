@@ -1,5 +1,14 @@
 declare module 'cozy-ui/*'
 
+declare module 'cozy-ui/transpiled/react/Icons/*' {
+  const Icon: React.ComponentType<{
+    className?: string
+    color?: string
+    size?: string
+  }>
+  export default Icon
+}
+
 declare module 'cozy-ui/transpiled/react' {
   export const Alerter: {
     error: (message: string) => void

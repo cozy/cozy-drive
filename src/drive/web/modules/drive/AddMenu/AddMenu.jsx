@@ -1,20 +1,20 @@
 import React from 'react'
 
-import { isMobileApp } from 'cozy-device-helper'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import ActionMenu from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import Typography from 'cozy-ui/transpiled/react/Typography'
+import flag from 'cozy-flags'
 
 import AddFolderItem from 'drive/web/modules/drive/Toolbar/components/AddFolderItem'
 import AddEncryptedFolderItem from 'drive/web/modules/drive/Toolbar/components/AddEncryptedFolderItem'
 import CreateNoteItem from 'drive/web/modules/drive/Toolbar/components/CreateNoteItem'
 import CreateShortcut from 'drive/web/modules/drive/Toolbar/components/CreateShortcut'
 import UploadItem from 'drive/web/modules/drive/Toolbar/components/UploadItem'
-import StartScanner from 'drive/web/modules/drive/Toolbar/components/StartScanner'
+import { StartScanner } from 'drive/web/modules/drive/Toolbar/components/StartScanner.tsx'
 import CreateOnlyOfficeItem from 'drive/web/modules/drive/Toolbar/components/CreateOnlyOfficeItem'
 import { isOfficeEditingEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
-import flag from 'cozy-flags'
+import { ScannerContext } from 'drive/web/modules/drive/Toolbar/components/ScanWrapper'
 
 export const ActionMenuContent = ({
   isDisabled,
@@ -29,6 +29,7 @@ export const ActionMenuContent = ({
 }) => {
   const { t } = useI18n()
   const { isMobile, isDesktop } = useBreakpoints()
+  const { hasScanner } = React.useContext(ScannerContext)
 
   return (
     <>
@@ -77,7 +78,7 @@ export const ActionMenuContent = ({
           displayedFolder={displayedFolder}
         />
       )}
-      {isMobileApp() && canUpload && <StartScanner disabled={isDisabled} />}
+      {hasScanner && <StartScanner />}
     </>
   )
 }
