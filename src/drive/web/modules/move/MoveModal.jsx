@@ -20,10 +20,7 @@ import Topbar from 'drive/web/modules/move/Topbar'
 import { CozyFile } from 'models'
 import logger from 'lib/logger'
 import { useDisplayedFolder } from 'drive/hooks'
-import {
-  buildMoveOrImportQuery,
-  buildOnlyFolderQuery
-} from 'drive/web/modules/queries'
+import { buildMoveOrImportQuery } from 'drive/web/modules/queries'
 import {
   cancelMove,
   hasOneOfEntriesShared
@@ -188,7 +185,6 @@ const MoveModal = ({ onClose, entries, classes }) => {
   }
 
   const contentQuery = buildMoveOrImportQuery(folderId)
-  const folderQuery = buildOnlyFolderQuery(folderId)
 
   const handleCancelMovingOutside = () => {
     setMovingOutsideSharedFolder(false)
@@ -236,20 +232,7 @@ const MoveModal = ({ onClose, entries, classes }) => {
         title={
           <>
             <Header entries={entries} />
-            <Query
-              query={folderQuery.definition()}
-              fetchPolicy={folderQuery.options.fetchPolicy}
-              as={folderQuery.options.as}
-              key={`breadcrumb-${folderId}`}
-            >
-              {({ data, fetchStatus }) => (
-                <Topbar
-                  navigateTo={navigateTo}
-                  currentDir={data}
-                  fetchStatus={fetchStatus}
-                />
-              )}
-            </Query>
+            <Topbar navigateTo={navigateTo} folderId={folderId} />
           </>
         }
         content={
