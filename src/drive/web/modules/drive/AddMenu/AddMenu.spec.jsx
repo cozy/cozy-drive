@@ -5,7 +5,7 @@ import { isMobileApp } from 'cozy-device-helper'
 
 import { setupFolderContent, mockCozyClientRequestQuery } from 'test/setup'
 import { useAppLinkWithStoreFallback } from 'cozy-client'
-import ScanWrapper from 'drive/web/modules/drive/Toolbar/components/ScanWrapper'
+import { ScanWrapper } from 'drive/Toolbar/components/ScanWrapper'
 import AppLike from 'test/components/AppLike'
 import { ActionMenuContent } from './AddMenu'
 
