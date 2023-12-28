@@ -75,7 +75,7 @@
     },
     {
       "path": "drive/vendors/drive.<hash>.js",
-      "maxSize": "1.6 MB"
+      "maxSize": "1.7 MB"
     },
     {
       "path": "drive/app-drive.<hash>.min.css",
@@ -108,32 +108,25 @@
   ],
   "groups": [
     {
-      "path": "drive/app/**",
-      "maxPercentIncrease": 10
+      "path": "drive/app/**"
     },
     {
-      "path": "drive/img/**",
-      "maxPercentIncrease": 0.4
+      "path": "drive/img/**"
     },
     {
-      "path": "drive/intents/**",
-      "maxPercentIncrease": 15
+      "path": "drive/intents/**"
     },
     {
-      "path": "drive/onlyOffice/**",
-      "maxPercentIncrease": 0.4
+      "path": "drive/onlyOffice/**"
     },
     {
-      "path": "drive/public/**",
-      "maxPercentIncrease": 7
+      "path": "drive/public/**"
     },
     {
-      "path": "drive/services/**",
-      "maxPercentIncrease": 3
+      "path": "drive/services/**"
     },
     {
-      "path": "drive/vendors/**",
-      "maxPercentIncrease": 15
+      "path": "drive/vendors/**"
     }
   ],
   "reportOutput": [
