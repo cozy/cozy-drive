@@ -1,6 +1,6 @@
 {
   "name": "cozy-drive",
-  "version": "1.65.0",
+  "version": "1.66.0",
   "main": "src/main.jsx",
   "scripts": {
     "build": "cozy-scripts build --manifest src/drive/targets/manifest.webapp --build-dir build/drive --src-dir src/drive --barV7 false --cozyClientJs",
