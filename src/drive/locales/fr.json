@@ -1,6 +1,6 @@
 {
   "Nav": {
-    "item_drive": "Drive",
+    "item_drive": "Conduite",
     "item_recent": "Récents",
     "item_sharings": "Partages",
     "item_shared": "Partagés",
@@ -8,12 +8,12 @@
     "item_trash": "Corbeille",
     "item_settings": "Paramètres",
     "item_collect": "Administratif",
-    "btn-client": "Télécharger Cozy Drive ",
+    "btn-client": "Télécharger Conduite Douillette ",
     "support-us": "Voir les offres",
     "support-us-description": "Vous souhaitez bénéficier de plus d’espace ou simplement soutenir cozy ?",
-    "btn-client-web": "Obtenez un Cozy",
-    "btn-client-mobile": "Téléchargez Cozy Drive sur votre mobile !",
-    "banner-txt-client": "Installez Cozy Drive pour ordinateur et synchronisez vos fichiers pour les rendre accessibles à tout moment.",
+    "btn-client-web": "Obtenez un Nuage Douillet",
+    "btn-client-mobile": "Téléchargez Conduite Douillette sur votre mobile !",
+    "banner-txt-client": "Installez Conduite Douillette pour ordinateur et synchronisez vos fichiers pour les rendre accessibles à tout moment.",
     "banner-btn-client": "Télécharger",
     "link-client": "https://cozy.io/fr/download/",
     "link-client-desktop": "https://nuts.cozycloud.cc/download/channel/stable/",
@@ -22,7 +22,7 @@
     "link-client-web": "https://cozy.io/try-it"
   },
   "breadcrumb": {
-    "title_drive": "Drive",
+    "title_drive": "Conduite",
     "title_recent": "Récents",
     "title_sharings": "Partages",
     "title_shared": "Mes fichiers partagés",
@@ -42,11 +42,11 @@
     "menu_select": "Sélectionner les éléments",
     "menu_share_folder": "Partager le dossier",
     "menu_download": "Télécharger",
-    "menu_sync_cozy": "Synchroniser dans mon Cozy",
-    "add_to_mine": "Ajouter à mon Cozy",
+    "menu_sync_cozy": "Synchroniser dans mon Nuage Douillet",
+    "add_to_mine": "Ajouter à mon Nuage Douillet",
     "menu_download_folder": "Télécharger le dossier",
     "menu_download_file": "Télécharger ce fichier",
-    "menu_open_cozy": "Ouvrir dans mon Cozy",
+    "menu_open_cozy": "Ouvrir dans mon Nuage Douillet",
     "menu_create_note": "Note",
     "menu_create_shortcut": "Raccourci",
     "empty_trash": "Vider la corbeille",
@@ -76,8 +76,8 @@
       "one-way": "Peut consulter",
       "two-way": "Peut modifier",
       "desc": {
-        "one-way": "Les contacts peuvent consulter, télécharger, et ajouter le contenu à leur Cozy. En cas d’ajout à leur Cozy, ils recevront vos modifications sur le contenu mais ils ne pourront pas le modifier.",
-        "two-way": "Les contacts peuvent modifier, supprimer et ajouter le contenu à leur Cozy. Les modifications sur le contenu seront répercutées automatiquement entre vos Cozy."
+        "one-way": "Les contacts peuvent consulter, télécharger, et ajouter le contenu à leur Nuage Douillet. En cas d’ajout à leur Nuage Douillet, ils recevront vos modifications sur le contenu mais ils ne pourront pas le modifier.",
+        "two-way": "Les contacts peuvent modifier, supprimer et ajouter le contenu à leur Nuage Douillet. Les modifications sur le contenu seront répercutées automatiquement entre vos Nuage Douillet."
       }
     },
     "locked-type-file": "Bientôt : vous pourrez changer la permission donnée sur le fichier.",
@@ -86,7 +86,7 @@
       "you": "Vous",
       "accessCount": "%{count} personnes y ont accès"
     },
-    "create-cozy": "Créer mon Cozy",
+    "create-cozy": "Créer mon Nuage Douillet",
     "members": {
       "count": "1 membre |||| %{smart_count} membres",
       "others": "et 1 autre… |||| et %{smart_count} autres…",
@@ -94,19 +94,19 @@
     },
     "contacts": {
       "permissionRequired": {
-        "title": "Enregistrer vos contacts dans votre Cozy ?",
-        "desc": "Autorisez l'application à accéder aux contacts de votre Cozy : vous pourrez les sélectionner la prochaine fois.",
+        "title": "Enregistrer vos contacts dans votre Nuage Douillet ?",
+        "desc": "Autorisez l'application à accéder aux contacts de votre Nuage Douillet : vous pourrez les sélectionner la prochaine fois.",
         "action": "Autoriser l'accès",
         "success": "L'application a accès à vos contacts"
       }
     },
     "banner": {
-      "shared_from": "Partagé depuis le cozy de ![avatar](%{image}) %{name}.",
-      "synchronise": "Synchronisez ce contenu dans votre cozy pour pouvoir le modifier ou pour le conserver en cas d'annulation de partage.",
-      "whats_cozy": "Cozy est un domicile numérique sécurisé pour toutes vos données, hébergé en France - ",
+      "shared_from": "Partagé depuis le Nuage Douillet de ![avatar](%{image}) %{name}.",
+      "synchronise": "Synchronisez ce contenu dans votre Nuage Douillet pour pouvoir le modifier ou pour le conserver en cas d'annulation de partage.",
+      "whats_cozy": "Nuage Douillet est un domicile numérique sécurisé pour toutes vos données, hébergé en France - ",
       "know_more": "En savoir plus",
-      "sync_to_mine": "Synchroniser dans mon Cozy",
-      "add_to_mine": "Ajouter à mon Cozy",
+      "sync_to_mine": "Synchroniser dans mon Nuage Douillet",
+      "add_to_mine": "Ajouter à mon Nuage Douillet",
       "close": "Fermer"
     }
   },
@@ -126,8 +126,8 @@
         "ro": "Peut consulter",
         "rw": "Peut modifier",
         "desc": {
-          "ro": "Vous pouvez consulter, télécharger, et ajouter ce contenu à votre Cozy. Vous recevrez les modifications faites par le propriétaire, mais vous ne pourrez pas le modifier.",
-          "rw": "Vous pouvez consulter, modifier et supprimer du contenu. Les modifications sur le contenu seront répercutées automatiquement entre vos Cozy."
+          "ro": "Vous pouvez consulter, télécharger, et ajouter ce contenu à votre Nuage Douillet. Vous recevrez les modifications faites par le propriétaire, mais vous ne pourrez pas le modifier.",
+          "rw": "Vous pouvez consulter, modifier et supprimer du contenu. Les modifications sur le contenu seront répercutées automatiquement entre vos Nuage Douillet."
         }
       },
       "sharedByMe": "Partagé",
@@ -164,7 +164,7 @@
       },
       "revokeSelf": {
         "title": "Arrêter le partage",
-        "desc": "Vous conservez le contenu mais il ne sera plus mis à jour entre vos Cozy.",
+        "desc": "Vous conservez le contenu mais il ne sera plus mis à jour entre vos Nuage Douillet.",
         "success": "Vous avez été retiré de ce partage."
       },
       "sharingLink": {
@@ -231,7 +231,7 @@
     "tooltip": {
       "carbonCopy": {
         "title": "Copie conforme",
-        "caption": "Le document est défini \"authentique et original\" par Cozy Cloud, l'hébergeur de votre Cozy, car il peut affirmer qu'il provient directement des services de son émetteur sans avoir subi aucune modification."
+        "caption": "Le document est défini \"authentique et original\" par Nuage Douillet Cloud, l'hébergeur de votre Nuage Douillet, car il peut affirmer qu'il provient directement des services de son émetteur sans avoir subi aucune modification."
       },
       "electronicSafe": {
         "title": "Coffre-fort numérique",
@@ -265,7 +265,7 @@
     "restore": "Vous pouvez toujours le restaurer quand vous voulez.",
     "share_accepted": "Le partage sera arrêté. Ainsi, les contacts suivant conserveront une copie mais vos changements ne seront plus synchronisés :",
     "share_waiting": "Le partage sera arrêté. Ainsi, les contacts suivant ne pourront donc plus accepter le partage et ne pourront plus accéder aux contenus partagés :",
-    "share_both": "Le partage sera arrêté. Ainsi, les contacts ayant stocké les fichiers dans leur Cozy conserveront une copie, les autres contacts ne pourront plus accéder aux contenus partagés :",
+    "share_both": "Le partage sera arrêté. Ainsi, les contacts ayant stocké les fichiers dans leur Nuage Douillet conserveront une copie, les autres contacts ne pourront plus accéder aux contenus partagés :",
     "link": "Le partage par lien ne sera plus actif",
     "referenced": "Des photos de la sélection sont dans un album. Elles seront retirées de l'album si vous confirmez.",
     "cancel": "Annuler",
@@ -339,37 +339,37 @@
   "mobile": {
     "onboarding": {
       "welcome": {
-        "title": "Bienvenue sur Cozy Drive",
-        "desc": "Créez ou connectez votre Cozy pour accéder aux services de Cozy Drive.",
-        "button": "J’ai déjà mon Cozy",
-        "no_account_link": "Je n’ai pas de cozy",
-        "create_my_cozy": "Créer mon Cozy"
+        "title": "Bienvenue sur Conduite Douillette",
+        "desc": "Créez ou connectez votre Nuage Douillet pour accéder aux services de Conduite Douillette.",
+        "button": "J’ai déjà mon Nuage Douillet",
+        "no_account_link": "Je n’ai pas de Nuage Douillet",
+        "create_my_cozy": "Créer mon Nuage Douillet"
       },
       "server_selection": {
         "title": "Se connecter",
-        "lostpwd": "[J'ai oublié l'adresse de mon Cozy](https://manager.cozycloud.cc/cozy/reminder)",
-        "label": "Adresse de mon Cozy",
+        "lostpwd": "[J'ai oublié l'adresse de mon Nuage Douillet](https://manager.cozycloud.cc/cozy/reminder)",
+        "label": "Adresse de mon Nuage Douillet",
         "cozy_address_placeholder": "claude",
         "cozy_custom_address_placeholder": "claude.mondomaine.com",
         "domain_cozy": ".mycozy.cloud",
         "domain_custom": "autre",
         "button": "Continuer",
-        "wrong_address_with_email": "Vous avez entré une adresse email. Pour vous connecter à votre Cozy vous devez entrer son url, sous la forme https://camillenimbus.mycozy.cloud",
-        "wrong_address_v2": "Vous avez entré l'adresse d'une Cozy v2. Cette application n'est compatible qu'avec la dernière version de Cozy. Rendez-vous sur [notre site](https://blog.cozycloud.cc/post/2016/11/21/On-the-road-to-Cozy-version-3?lang=fr) pour plus d'informations",
-        "wrong_address": "Cette adresse ne semble pas correspondre à un Cozy.",
-        "wrong_address_cosy": "Oups, ce n'est pas la bonne adresse. Essayez d'écrire \"cozy\" avec un \"z\" !"
+        "wrong_address_with_email": "Vous avez entré une adresse email. Pour vous connecter à votre Nuage Douillet vous devez entrer son url, sous la forme https://camillenimbus.mycozy.cloud",
+        "wrong_address_v2": "Vous avez entré l'adresse d'une Nuage Douillet v2. Cette application n'est compatible qu'avec la dernière version de Nuage Douillet. Rendez-vous sur [notre site](https://blog.cozycloud.cc/post/2016/11/21/On-the-road-to-Nuage Douillet-version-3?lang=fr) pour plus d'informations",
+        "wrong_address": "Cette adresse ne semble pas correspondre à un Nuage Douillet.",
+        "wrong_address_cosy": "Oups, ce n'est pas la bonne adresse. Essayez d'écrire \"Nuage Douillet\" avec un \"z\" !"
       },
       "files": {
         "title": "Accéder à vos fichiers",
-        "description": "Pour sauvegarder les fichiers de votre Cozy sur votre périphérique, l'application doit accéder à vos fichiers."
+        "description": "Pour sauvegarder les fichiers de votre Nuage Douillet sur votre périphérique, l'application doit accéder à vos fichiers."
       },
       "photos": {
         "title": "Sauvegarder vos photos et vos vidéos",
-        "description": "Sauvegarder automatiquement les photos prises avec votre téléphone dans votre Cozy, pour ne jamais les perdre."
+        "description": "Sauvegarder automatiquement les photos prises avec votre téléphone dans votre Nuage Douillet, pour ne jamais les perdre."
       },
       "contacts": {
         "title": "Synchronisez vos contacts",
-        "description": "Sauvegardez les contacts de votre appareil sur votre Cozy — cela facilitera le partage de fichiers avec eux."
+        "description": "Sauvegardez les contacts de votre appareil sur votre Nuage Douillet — cela facilitera le partage de fichiers avec eux."
       },
       "step": {
         "button": "Activer maintenant",
@@ -377,7 +377,7 @@
         "next": "Suivant"
       },
       "analytics": {
-        "title": "Aidez-nous à améliorer Cozy",
+        "title": "Aidez-nous à améliorer Nuage Douillet",
         "description": "Cette application transmettra automatiquement des données (surtout des erreurs) à notre équipe support. Cela nous permettra de résoudre les problèmes plus vite."
       }
     },
@@ -389,8 +389,8 @@
         "account": "Compte"
       },
       "unlink": {
-        "title": "Déconnecter votre Cozy",
-        "description": "En déconnectant votre Cozy de cette application, vous ne perdrez aucune donnée de votre Cozy. Cela supprimera vos fichiers disponibles hors connexion de cet appareil lié à votre Cozy.",
+        "title": "Déconnecter votre Nuage Douillet",
+        "description": "En déconnectant votre Nuage Douillet de cette application, vous ne perdrez aucune donnée de votre Nuage Douillet. Cela supprimera vos fichiers disponibles hors connexion de cet appareil lié à votre Nuage Douillet.",
         "button": "Déconnecter"
       },
       "media_backup": {
@@ -400,7 +400,7 @@
         "title": "Sauvegarder des médias",
         "images": {
           "title": "Sauvegarde des images",
-          "label": "Sauvegardez vos photos automatiquement dans votre Cozy pour ne jamais les perdre et les partager efficacement."
+          "label": "Sauvegardez vos photos automatiquement dans votre Nuage Douillet pour ne jamais les perdre et les partager efficacement."
         },
         "launch": "Lancer la sauvegarde",
         "stop": "Arrêter la sauvegarde",
@@ -418,12 +418,12 @@
       "support": {
         "title": "Support",
         "analytics": {
-          "title": " Aidez-nous à améliorer Cozy",
+          "title": " Aidez-nous à améliorer Nuage Douillet",
           "label": "Cette application transmettra automatiquement des données (surtout des erreurs) à notre équipe support. Cela nous permettra de résoudre les problèmes plus vite."
         },
         "feedback": {
-          "title": "Aidez-nous à améliorer Cozy Drive",
-          "description": "Faites nous part de vos commentaires pour nous aider à améliorer Cozy Drive. Cliquez sur le bouton ci-dessous, expliquez le problème ou faites une suggestion et envoyez le tout. Et voilà !",
+          "title": "Aidez-nous à améliorer Conduite Douillette",
+          "description": "Faites nous part de vos commentaires pour nous aider à améliorer Conduite Douillette. Cliquez sur le bouton ci-dessous, expliquez le problème ou faites une suggestion et envoyez le tout. Et voilà !",
           "button": "faire un commentaire"
         },
         "logs": {
@@ -437,7 +437,7 @@
       "contacts": {
         "title": "Contacts",
         "subtitle": "Import de contacts",
-        "text": "Importez les contacts de votre téléphone dans votre Cozy pour partager plus facilement du contenu avec eux."
+        "text": "Importez les contacts de votre téléphone dans votre Nuage Douillet pour partager plus facilement du contenu avec eux."
       }
     },
     "error": {
@@ -453,13 +453,13 @@
     },
     "revoked": {
       "title": "Accès révoqué",
-      "description": "Vous semblez avoir révoqué votre périphérique depuis votre Cozy. Si ce n'est pas vous, n'hésitez pas à nous contacter à contact@cozycloud.cc. Toutes les données relatives à Cozy présentes localement vont être supprimées.",
+      "description": "Vous semblez avoir révoqué votre périphérique depuis votre Nuage Douillet. Si ce n'est pas vous, n'hésitez pas à nous contacter à contact@cozycloud.cc. Toutes les données relatives à Nuage Douillet présentes localement vont être supprimées.",
       "loginagain": "Se réenregistrer",
       "logout": "Se déconnecter"
     },
     "rating": {
       "enjoy": {
-        "title": "Aimez-vous Cozy Drive ?",
+        "title": "Aimez-vous Conduite Douillette ?",
         "yes": "Oui !",
         "no": "Pas vraiment"
       },
@@ -475,12 +475,12 @@
         "no": "Non, merci"
       },
       "email": {
-        "subject": "Amélioration de Cozy Drive",
-        "placeholder": "Bonjour,\nJ'aimerais faire des suggestions sur Cozy Drive. Je pense que vous pourriez améliorer…"
+        "subject": "Amélioration de Conduite Douillette",
+        "placeholder": "Bonjour,\nJ'aimerais faire des suggestions sur Conduite Douillette. Je pense que vous pourriez améliorer…"
       },
       "alert": {
         "rated": "Merci ! Vous êtes au top ⭐️⭐️⭐️⭐️⭐️",
-        "declined": "Pas de problème. Vous allez adorer les prochaines améliorations. Restez Cozy !",
+        "declined": "Pas de problème. Vous allez adorer les prochaines améliorations. Restez Nuage Douillet !",
         "later": "Vous avez raison de prendre votre temps pour nous répondre.",
         "feedback": "Merci pour votre retour. Nous allons y travailler."
       }
@@ -488,7 +488,7 @@
     "first_sync": {
       "title": "Vous êtes sur le point de lancer votre première sauvegarde de photos 🎉\n",
       "tips": "Astuces",
-      "tip_bed": "Ouvrir l’application Cozy Drive avant de vous coucher ou quand vous n’utilisez pas votre mobile.",
+      "tip_bed": "Ouvrir l’application Conduite Douillette avant de vous coucher ou quand vous n’utilisez pas votre mobile.",
       "tip_wifi": "Activer le Wi-Fi pour ne pas consommer votre forfait.",
       "tip_lock": "Désactiver le verrouillage de votre écran de veille.",
       "result": "Au petit-déjeuner, toutes vos photos seront ainsi stockées dans un endroit sécurisé. ",
@@ -520,7 +520,7 @@
   },
   "intents": {
     "alert": {
-      "error": "La récupération du fichier a échoué. Téléchargez le fichier manuellement puis ajoutez-le à Cozy. "
+      "error": "La récupération du fichier a échoué. Téléchargez le fichier manuellement puis ajoutez-le à Nuage Douillet. "
     },
     "picker": {
       "select": "Sélectionner",
@@ -530,7 +530,7 @@
     }
   },
   "UploadQueue": {
-    "header": "Import de %{smart_count} fichier dans votre Cozy |||| Import de %{smart_count} fichiers dans votre Cozy",
+    "header": "Import de %{smart_count} fichier dans votre Nuage Douillet |||| Import de %{smart_count} fichiers dans votre Nuage Douillet",
     "header_mobile": "Import de %{done} sur %{total}",
     "header_done": "%{done} sur %{total} élément(s) importé(s)",
     "success_flagship": "%{smart_count} fichier importé avec succès. |||| %{smart_count} fichiers importés avec succès.",
@@ -657,7 +657,7 @@
     "description": "Les 20 dernières versions de vos fichiers sont conservées automatiquement. Sélectionnez une version pour la télécharger.",
     "current_version": "Version actuelle",
     "loading": "Chargement...",
-    "noFileVersionEnabled": "Nouveauté : votre Cozy pourra prochainement archiver les dernières modifications d'un fichier pour ne plus jamais risquer de les perdre"
+    "noFileVersionEnabled": "Nouveauté : votre Nuage Douillet pourra prochainement archiver les dernières modifications d'un fichier pour ne plus jamais risquer de les perdre"
   },
   "External": {
     "redirection": {
@@ -707,8 +707,8 @@
     }
   },
   "Migration": {
-    "title": "Mettre à jour Cozy Drive",
-    "content": "Cozy Drive doit être mis à jour afin d'améliorer ses performances. Cela peut prendre jusqu'à plusieurs minutes durant lesquelles vous ne pourrez pas utiliser l'application. Souhaitez-vous le faire maintenant ? Si vous refusez, nous vous redemanderons la prochaine fois.",
+    "title": "Mettre à jour Conduite Douillette",
+    "content": "Conduite Douillette doit être mis à jour afin d'améliorer ses performances. Cela peut prendre jusqu'à plusieurs minutes durant lesquelles vous ne pourrez pas utiliser l'application. Souhaitez-vous le faire maintenant ? Si vous refusez, nous vous redemanderons la prochaine fois.",
     "confirm": "Ok, c'est parti !",
     "cancel": "Non, pas maintenant"
   },
