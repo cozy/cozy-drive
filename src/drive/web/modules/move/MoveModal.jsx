@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { withStyles } from 'cozy-ui/transpiled/react/styles'
-import { Query, cancelable, Q, useClient } from 'cozy-client'
+import { cancelable, Q, useClient } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
@@ -11,16 +11,13 @@ import { useBreakpoints } from 'cozy-ui/transpiled/react'
 
 import { ROOT_DIR_ID } from 'drive/constants/config'
 import Header from 'drive/web/modules/move/Header'
-import Explorer from 'drive/web/modules/move/Explorer'
-import FileList from 'drive/web/modules/move/FileList'
-import Loader from 'drive/web/modules/move/Loader'
-import LoadMore from 'drive/web/modules/move/LoadMore'
+import { MoveModalContent } from 'drive/web/modules/move/MoveModalContent'
+
 import Footer from 'drive/web/modules/move/Footer'
 import Topbar from 'drive/web/modules/move/Topbar'
 import { CozyFile } from 'models'
 import logger from 'lib/logger'
 import { useDisplayedFolder } from 'drive/hooks'
-import { buildMoveOrImportQuery } from 'drive/web/modules/queries'
 import {
   cancelMove,
   hasOneOfEntriesShared
@@ -184,8 +181,6 @@ const MoveModal = ({ onClose, entries, classes }) => {
     }
   }
 
-  const contentQuery = buildMoveOrImportQuery(folderId)
-
   const handleCancelMovingOutside = () => {
     setMovingOutsideSharedFolder(false)
   }
@@ -236,30 +231,11 @@ const MoveModal = ({ onClose, entries, classes }) => {
           </>
         }
         content={
-          <Query
-            query={contentQuery.definition()}
-            fetchPolicy={contentQuery.options.fetchPolicy}
-            as={contentQuery.options.as}
-            key={`content-${folderId}`}
-          >
-            {({ data, fetchStatus, hasMore, fetchMore }) => {
-              return (
-                <Explorer>
-                  <Loader
-                    fetchStatus={fetchStatus}
-                    hasNoData={data.length === 0}
-                  >
-                    <FileList
-                      files={data}
-                      targets={entries}
-                      navigateTo={navigateTo}
-                    />
-                    <LoadMore hasMore={hasMore} fetchMore={fetchMore} />
-                  </Loader>
-                </Explorer>
-              )
-            }}
-          </Query>
+          <MoveModalContent
+            folderId={folderId}
+            navigateTo={navigateTo}
+            entries={entries}
+          />
         }
         actions={
           <Footer
