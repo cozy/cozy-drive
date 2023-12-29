@@ -5,13 +5,28 @@ import { useQuery, isQueryLoading, Q } from 'cozy-client'
 import { LaunchTriggerCard } from 'cozy-harvest-lib'
 import Divider from 'cozy-ui/transpiled/react/Divider'
 
-import { buildTriggersQueryByAccountId } from 'drive/web/modules/queries'
+import {
+  buildTriggersQueryByAccountId,
+  buildFileByIdQuery
+} from 'drive/web/modules/queries'
 import useDocument from 'components/useDocument'
 
 const HarvestBanner = ({ folderId }) => {
   const folder = useDocument('io.cozy.files', folderId)
-  const konnectorSlug = folder?.cozyMetadata?.createdByApp
-  const accountId = folder?.cozyMetadata?.sourceAccount
+
+  let konnectorSlug = undefined
+  let accountId = undefined
+
+  const fileId = folder?.relationships?.contents?.data?.[0].id
+  const fileQuery = buildFileByIdQuery(fileId)
+  const file = useQuery(fileQuery.definition, {
+    ...fileQuery.options,
+    enabled: Boolean(fileId)
+  })
+  if (file.data) {
+    konnectorSlug = file.data.cozyMetadata?.createdByApp
+    accountId = file.data.cozyMetadata?.sourceAccount
+  }
   const queryTriggers = buildTriggersQueryByAccountId(
     accountId,
     Boolean(accountId)
@@ -21,7 +36,6 @@ const HarvestBanner = ({ folderId }) => {
     queryTriggers.options
   )
   const isTriggersLoading = isQueryLoading(triggersQueryLeft)
-
   const konnector = useQuery(
     Q('io.cozy.konnectors').getById(
       `io.cozy.konnectors/${konnectorSlug}` || ' '
