@@ -5,7 +5,7 @@ import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import CameraIcon from 'cozy-ui/transpiled/react/Icons/Camera'
 
-import { ScannerContext } from './ScannerContext'
+import { ScannerContext } from 'drive/web/modules/drive/Toolbar/components/Scanner/ScannerContext'
 
 /**
  * Renders a scanner menu item.
