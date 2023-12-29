@@ -75,7 +75,7 @@
     },
     {
       "path": "drive/vendors/drive.<hash>.js",
-      "maxSize": "1.7 MB"
+      "maxSize": "2.0 MB"
     },
     {
       "path": "drive/app-drive.<hash>.min.css",
