@@ -3,9 +3,9 @@ import React from 'react'
 import { isFlagshipApp } from 'cozy-device-helper'
 import { BreakpointsProvider, MuiCozyTheme } from 'cozy-ui/transpiled/react'
 
-import { ScannerContext } from './ScannerContext'
-import { useStartScanner } from './useStartScanner'
-import { useScanner } from './useScanner'
+import { ScannerContext } from 'drive/web/modules/drive/Toolbar/components/Scanner/ScannerContext'
+import { useStartScanner } from 'drive/web/modules/drive/Toolbar/components/Scanner/useStartScanner'
+import { useScanner } from 'drive/web/modules/drive/Toolbar/components/Scanner/useScanner'
 
 interface ScannerProviderProps {
   children: React.ReactNode

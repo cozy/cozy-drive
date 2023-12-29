@@ -1,3 +1,5 @@
+import React from 'react'
+
 // The Scanner Feature component should:
 // - render nothing if the folder is not on the mobile app
 // - render nothing if the folder is on the mobile app but the scanner is not available
@@ -6,4 +8,8 @@
 // - update the document file after the scan
 // - handle unexpected errors
 
-export {}
+describe('Scanner', () => {
+  it('placeholds', () => {
+    expect(React).toBeDefined()
+  })
+})

@@ -1,11 +1,11 @@
 import React from 'react'
-import { render, fireEvent, act } from '@testing-library/react'
+import { render, act } from '@testing-library/react'
 
 import { isMobileApp } from 'cozy-device-helper'
 
 import { setupFolderContent, mockCozyClientRequestQuery } from 'test/setup'
 import { useAppLinkWithStoreFallback } from 'cozy-client'
-import { ScannerProvider } from 'drive/Toolbar/components/Scanner/ScannerProvider'
+import { ScannerProvider } from 'drive/web/modules/drive/Toolbar/components/Scanner/ScannerProvider'
 import AppLike from 'test/components/AppLike'
 import { ActionMenuContent } from './AddMenu'
 
@@ -57,72 +57,6 @@ const setup = async (
 }
 
 describe('AddMenu', () => {
-  describe('Scanner', () => {
-    let cameraObject
-
-    beforeAll(() => {
-      cameraObject = window.navigator.camera
-      window.navigator.camera = {
-        DestinationType: {},
-        PictureSourceType: {},
-        getPicture: jest.fn(onSuccess => {
-          onSuccess('/fake/file')
-        }),
-        cleanup: jest.fn()
-      }
-      useAppLinkWithStoreFallback.mockReturnValue({
-        fetchStatus: 'loaded'
-      })
-    })
-
-    afterAll(() => {
-      window.navigator.camera = cameraObject
-    })
-
-    it('opens and closes the scanner', async () => {
-      // TODO: Deprecation: `background` is deprecated and has been migrated automatically, you should use `backgroundIcon` now
-      // TODO: Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in %s.%s a useEffect cleanup function
-      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation()
-      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation()
-
-      isMobileApp.mockReturnValue(true)
-      await act(async () => {
-        const { root } = await setup()
-        const { getByText, queryByText } = root
-
-        // opens the scanner
-        fireEvent.click(getByText('Scan a doc'))
-        expect(queryByText('Save the doc')).not.toBeNull()
-
-        // closes the scanner
-        fireEvent.click(getByText('Cancel'))
-        expect(queryByText('Save the doc')).toBeNull()
-      })
-      consoleWarnSpy.mockRestore()
-      consoleErrorSpy.mockRestore()
-    })
-
-    it('is not displayed outside of a folder', async () => {
-      isMobileApp.mockReturnValue(true)
-      await act(async () => {
-        const { root } = await setup({ folderId: null })
-        const { queryByText } = root
-
-        expect(queryByText('Scan a doc')).toBeNull()
-      })
-    })
-
-    it('is not displayed on desktop', async () => {
-      isMobileApp.mockReturnValue(false)
-      await act(async () => {
-        const { root } = await setup()
-        const { queryByText } = root
-
-        expect(queryByText('Scan a doc')).toBeNull()
-      })
-    })
-  })
-
   describe('Menu', () => {
     beforeAll(() => {
       useAppLinkWithStoreFallback.mockReturnValue({

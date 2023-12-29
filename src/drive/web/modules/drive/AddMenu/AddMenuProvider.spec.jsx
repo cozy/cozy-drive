@@ -5,11 +5,6 @@ import { logException } from 'drive/lib/reporter'
 import AppLike from 'test/components/AppLike'
 import { createMockClient } from 'cozy-client'
 
-jest.mock(
-  'drive/web/modules/drive/Toolbar/components/Scanner/ScannerProvider',
-  // eslint-disable-next-line react/display-name
-  () => () => <div />
-)
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: jest.fn()
