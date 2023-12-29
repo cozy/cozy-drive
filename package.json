@@ -132,6 +132,7 @@
     "filesize": "3.6.1",
     "justified-layout": "2.1.2",
     "kd-tree-javascript": "1.0.3",
+    "leaflet": "^1.9.4",
     "localforage": "1.10.0",
     "lodash": "4.17.21",
     "log-prefix": "0.1.1",

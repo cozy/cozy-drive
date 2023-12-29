@@ -30,7 +30,7 @@ import { ShareFileView } from 'drive/web/modules/views/Modal/ShareFileView'
 import { QualifyFileView } from 'drive/web/modules/views/Modal/QualifyFileView'
 import { MoveFilesView } from 'drive/web/modules/views/Modal/MoveFilesView'
 import { UploaderComponent } from 'drive/web/modules//views/Upload/UploaderComponent'
-
+import HarvestRoutes from 'drive/web/modules/views/Drive/HarvestRoutes'
 const FilesRedirect = () => {
   const { folderId } = useParams()
   return <Navigate to={`/folder/${folderId}`} replace={true} />
@@ -47,10 +47,9 @@ const AppRoute = () => (
       <Route path="/files/:folderId" element={<FilesRedirect />} />
       <Route path="/" element={<Index />} />
 
-      <Route path="folder" element={<DriveView />}>
-        {/* For FilesViewer and FileHistory, we want 2 routes to match: `/folder/:folderId/file/:fileId` and `/folder/file/:fileId`. The `:folderId` is not present when opening a file from the root folder. */}
-        <Route path="move" element={<MoveFilesView />} />
-        <Route path=":folderId">
+      <Route path="folder">
+        <Route index element={<DriveView />} />
+        <Route path=":folderId" element={<DriveView />}>
           <Route path="file/:fileId" element={<FilesViewerDrive />} />
           <Route path="file/:fileId/revision" element={<FileHistory />} />
           <Route path="file/:fileId/share" element={<ShareFileView />} />
@@ -58,11 +57,8 @@ const AppRoute = () => (
           <Route path="paywall" element={<OnlyOfficePaywallView />} />
           <Route path="share" element={<ShareDisplayedFolderView />} />
           <Route path="move" element={<MoveFilesView />} />
+          <Route path="harvest/:konnectorSlug/*" element={<HarvestRoutes />} />
         </Route>
-        <Route path="file/:fileId" element={<FilesViewerDrive />} />
-        <Route path="file/:fileId/revision" element={<FileHistory />} />
-        <Route path="file/:fileId/share" element={<ShareFileView />} />
-        <Route path="file/:fileId/qualify" element={<QualifyFileView />} />
       </Route>
 
       <Route path="recent" element={<RecentView />}>

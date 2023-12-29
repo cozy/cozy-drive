@@ -384,3 +384,26 @@ export const buildTriggersQueryByAccountId = (accountId, enabled) => ({
     fetchPolicy: defaultFetchPolicy
   }
 })
+
+export const buildKonnectorsQueryById = (id, enabled = true) => ({
+  definition: () => Q('io.cozy.konnectors').getById(id),
+  options: {
+    as: `io.cozy.konnectors/${id}`,
+    fetchPolicy: defaultFetchPolicy,
+    enabled
+  }
+})
+
+export const buildTriggersQueryByKonnectorSlug = (slug, enabled) => ({
+  definition: () =>
+    Q('io.cozy.triggers')
+      .where({
+        'message.konnector': slug
+      })
+      .indexFields(['message.konnector']),
+  options: {
+    as: `io.cozy.triggers/slug/${slug}`,
+    fetchPolicy: defaultFetchPolicy,
+    enabled
+  }
+})
