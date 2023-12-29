@@ -4,6 +4,9 @@ import PropTypes from 'prop-types'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useQuery } from 'cozy-client'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import IconButton from 'cozy-ui/transpiled/react/IconButton'
+import FolderAddIcon from 'cozy-ui/transpiled/react/Icons/FolderAdd'
 
 import Topbar from 'drive/web/modules/layout/Topbar'
 import Breadcrumb from 'drive/web/modules/navigation/Breadcrumb/Breadcrumb'
@@ -11,7 +14,7 @@ import BackButton from 'components/Button/BackButton'
 import { getBreadcrumbPath } from 'drive/web/modules/move/helpers'
 import { buildOnlyFolderQuery } from 'drive/web/modules/queries'
 
-const MoveTopbar = ({ navigateTo, folderId }) => {
+const MoveTopbar = ({ navigateTo, folderId, showFolderCreation }) => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
   const folderQuery = buildOnlyFolderQuery(folderId)
@@ -34,6 +37,9 @@ const MoveTopbar = ({ navigateTo, folderId }) => {
         opening={false}
         inlined
       />
+      <IconButton onClick={showFolderCreation} aria-label={t('Move.addFolder')}>
+        <Icon icon={FolderAddIcon} />
+      </IconButton>
     </Topbar>
   )
 }

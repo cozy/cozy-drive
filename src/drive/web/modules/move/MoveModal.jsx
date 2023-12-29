@@ -79,6 +79,8 @@ const MoveModal = ({ onClose, entries, classes }) => {
   ] = useState(false)
   const [isMovingInsideSharedFolder, setMovingInsideSharedFolder] =
     useState(false)
+  const [isFolderCreationDisplayed, setFolderCreationDisplayed] =
+    useState(false)
 
   useEffect(() => {
     // unregister cancelables when component will unmount
@@ -91,6 +93,7 @@ const MoveModal = ({ onClose, entries, classes }) => {
 
   const navigateTo = folder => {
     setFolderId(folder._id)
+    setFolderCreationDisplayed(false)
   }
 
   const registerCancelable = promise => {
@@ -215,6 +218,14 @@ const MoveModal = ({ onClose, entries, classes }) => {
     setMovingSharedFolderInsideAnother(false)
   }
 
+  const showFolderCreation = () => {
+    setFolderCreationDisplayed(true)
+  }
+
+  const hideFolderCreation = () => {
+    setFolderCreationDisplayed(false)
+  }
+
   return (
     <>
       <FixedDialog
@@ -227,7 +238,11 @@ const MoveModal = ({ onClose, entries, classes }) => {
         title={
           <>
             <Header entries={entries} />
-            <Topbar navigateTo={navigateTo} folderId={folderId} />
+            <Topbar
+              navigateTo={navigateTo}
+              folderId={folderId}
+              showFolderCreation={showFolderCreation}
+            />
           </>
         }
         content={
@@ -235,6 +250,8 @@ const MoveModal = ({ onClose, entries, classes }) => {
             folderId={folderId}
             navigateTo={navigateTo}
             entries={entries}
+            isFolderCreationDisplayed={isFolderCreationDisplayed}
+            hideFolderCreation={hideFolderCreation}
           />
         }
         actions={

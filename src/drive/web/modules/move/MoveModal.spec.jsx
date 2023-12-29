@@ -192,6 +192,16 @@ describe('MoveModal component', () => {
         // TODO: check that trashedFiles are passed to cancel button
       })
     })
+
+    it('should display the folder creation input', async () => {
+      setup()
+
+      const addButton = await screen.findByLabelText('Add a folder')
+      fireEvent.click(addButton)
+
+      const filenameInput = await screen.findByTestId('name-input')
+      expect(filenameInput).toBeInTheDocument()
+    })
   })
 
   describe('move outside shared folder', () => {
