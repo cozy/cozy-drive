@@ -29,7 +29,6 @@ export const useStartScanner = (displayedFolder: {
   return useCallback(async () => {
     try {
       if (!displayedFolder) return
-
       logger('info', 'Starting scanner')
       const base64 = await scanDocument()
       logger(
