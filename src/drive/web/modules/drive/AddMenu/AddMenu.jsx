@@ -11,10 +11,10 @@ import AddEncryptedFolderItem from 'drive/web/modules/drive/Toolbar/components/A
 import CreateNoteItem from 'drive/web/modules/drive/Toolbar/components/CreateNoteItem'
 import CreateShortcut from 'drive/web/modules/drive/Toolbar/components/CreateShortcut'
 import UploadItem from 'drive/web/modules/drive/Toolbar/components/UploadItem'
-import { StartScanner } from 'drive/web/modules/drive/Toolbar/components/StartScanner.tsx'
+import { ScannerMenuItem } from 'drive/web/modules/drive/Toolbar/components/Scanner/ScannerMenuItem'
 import CreateOnlyOfficeItem from 'drive/web/modules/drive/Toolbar/components/CreateOnlyOfficeItem'
 import { isOfficeEditingEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
-import { ScannerContext } from 'drive/web/modules/drive/Toolbar/components/ScanWrapper'
+import { ScannerContext } from 'drive/web/modules/drive/Toolbar/components/Scanner/ScannerContext'
 
 export const ActionMenuContent = ({
   isDisabled,
@@ -78,7 +78,7 @@ export const ActionMenuContent = ({
           displayedFolder={displayedFolder}
         />
       )}
-      {hasScanner && <StartScanner />}
+      {hasScanner && <ScannerMenuItem />}
     </>
   )
 }

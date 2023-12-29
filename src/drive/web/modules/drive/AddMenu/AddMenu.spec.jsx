@@ -5,7 +5,7 @@ import { isMobileApp } from 'cozy-device-helper'
 
 import { setupFolderContent, mockCozyClientRequestQuery } from 'test/setup'
 import { useAppLinkWithStoreFallback } from 'cozy-client'
-import { ScanWrapper } from 'drive/Toolbar/components/ScanWrapper'
+import { ScannerProvider } from 'drive/Toolbar/components/Scanner/ScannerProvider'
 import AppLike from 'test/components/AppLike'
 import { ActionMenuContent } from './AddMenu'
 
@@ -39,7 +39,7 @@ const setup = async (
 
   const root = render(
     <AppLike client={client} store={store}>
-      <ScanWrapper displayedFolder={displayedFolder}>
+      <ScannerProvider displayedFolder={displayedFolder}>
         <ActionMenuContent
           isDisabled={isDisabled}
           canCreateFolder={canCreateFolder}
@@ -49,7 +49,7 @@ const setup = async (
           isEncryptedFolder={isEncryptedFolder}
           displayedFolder={displayedFolder}
         />
-      </ScanWrapper>
+      </ScannerProvider>
     </AppLike>
   )
 

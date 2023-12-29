@@ -15,7 +15,7 @@ import {
   toggleMenu
 } from 'drive/web/modules/drive/Toolbar/components/MoreMenu'
 import AddMenu from 'drive/web/modules/drive/AddMenu/AddMenu'
-import { ScanWrapper } from 'drive/web/modules/drive/Toolbar/components/ScanWrapper'
+import { ScannerProvider } from 'drive/web/modules/drive/Toolbar/components/Scanner/ScannerProvider'
 import { isEncryptedFolder } from 'drive/lib/encryption'
 
 export const AddMenuContext = createContext()
@@ -81,7 +81,7 @@ const AddMenuProvider = ({
       }}
     >
       {children}
-      <ScanWrapper displayedFolder={displayedFolder}>
+      <ScannerProvider displayedFolder={displayedFolder}>
         {menuIsVisible && (
           <AddMenu
             id="add-menu"
@@ -97,7 +97,7 @@ const AddMenuProvider = ({
             displayedFolder={displayedFolder}
           />
         )}
-      </ScanWrapper>
+      </ScannerProvider>
     </AddMenuContext.Provider>
   )
 }
