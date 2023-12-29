@@ -38,3 +38,16 @@ const toErrorWithMessage = (maybeError: unknown): ErrorWithMessage => {
 export const getErrorMessage = (error: unknown): string => {
   return toErrorWithMessage(error).message
 }
+
+export const getBlobFromBase64 = (base64: string): Blob => {
+  const byteString = atob(base64)
+  const mimeString = 'image/jpeg' // Assuming the mime type is image/jpeg
+  const byteNumbers = new Array(byteString.length)
+  for (let i = 0; i < byteString.length; i++) {
+    byteNumbers[i] = byteString.charCodeAt(i)
+  }
+  const byteArray = new Uint8Array(byteNumbers)
+
+  // Create Blob from the byte array
+  return new Blob([byteArray], { type: mimeString })
+}

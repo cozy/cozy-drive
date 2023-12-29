@@ -17,6 +17,9 @@ declare module 'cozy-ui/transpiled/react' {
   export const logger: {
     info: (message: string, ...rest: unknown[]) => void
   }
+
+  export const BreakpointsProvider: React.ComponentType
+  export const MuiCozyTheme: React.ComponentType
 }
 
 declare module 'cozy-ui/transpiled/react/providers/I18n' {

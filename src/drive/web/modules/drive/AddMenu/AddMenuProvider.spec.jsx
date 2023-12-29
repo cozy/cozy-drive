@@ -6,7 +6,7 @@ import AppLike from 'test/components/AppLike'
 import { createMockClient } from 'cozy-client'
 
 jest.mock(
-  'drive/web/modules/drive/Toolbar/components/ScanWrapper',
+  'drive/web/modules/drive/Toolbar/components/Scanner/ScannerProvider',
   // eslint-disable-next-line react/display-name
   () => () => <div />
 )

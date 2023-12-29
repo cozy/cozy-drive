@@ -25,12 +25,12 @@ export const sortFolder = (folderId, sortAttribute, sortOrder = 'asc') => {
   }
 }
 
-/*
- * @function
+/**
+ * Upload files to the given directory
  * @param {Array} files - The list of File objects to upload
  * @param {string} dirId - The id of the directory in which we upload the files
  * @param {Object} sharingState - The sharing context (provided by SharingContext.Provider)
- * @param {function} fileUploadedCallback - Optional function to call when the upload is completed
+ * @param {function} fileUploadedCallback - A callback called when a file is uploaded
  * @returns {function} - A function that dispatches addToUploadQueue action
  */
 export const uploadFiles =
