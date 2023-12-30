@@ -39,15 +39,30 @@ export const getErrorMessage = (error: unknown): string => {
   return toErrorWithMessage(error).message
 }
 
-export const getBlobFromBase64 = (base64: string): Blob => {
+export const getBlobFromBase64 = (base64: string, mimeString: string): Blob => {
   const byteString = atob(base64)
-  const mimeString = 'image/jpeg' // Assuming the mime type is image/jpeg
   const byteNumbers = new Array(byteString.length)
   for (let i = 0; i < byteString.length; i++) {
     byteNumbers[i] = byteString.charCodeAt(i)
   }
   const byteArray = new Uint8Array(byteNumbers)
 
-  // Create Blob from the byte array
   return new Blob([byteArray], { type: mimeString })
+}
+
+export const getFileFromBase64 = (
+  base64: string,
+  filename: string,
+  mimeString: string
+): File => {
+  const blob = getBlobFromBase64(base64, mimeString)
+  return new File([blob], filename, { type: mimeString })
+}
+
+export const getUniqueNameFromPrefix = (prefix: string): string => {
+  const timestamp = Date.now()
+  const randomString = Math.random().toString(36).substring(7)
+  const fileName = `${prefix}_${timestamp}_${randomString}.jpg`
+
+  return fileName
 }

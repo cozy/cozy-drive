@@ -5,7 +5,7 @@ import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import CameraIcon from 'cozy-ui/transpiled/react/Icons/Camera'
 
-import { useScannerContext } from 'drive/web/modules/drive/Toolbar/components/Scanner/ScannerContext'
+import { useScannerContext } from 'drive/web/modules/drive/Toolbar/components/Scanner/ScannerProvider'
 
 /**
  * Renders a scanner menu item.
@@ -13,12 +13,12 @@ import { useScannerContext } from 'drive/web/modules/drive/Toolbar/components/Sc
  */
 export const ScannerMenuItem = (): JSX.Element | null => {
   const { t } = useI18n()
-  const scannerContext = useScannerContext()
+  const { hasScanner, startScanner } = useScannerContext()
 
-  return scannerContext.hasScanner ? (
+  return hasScanner ? (
     <div data-testid="scan-doc">
       <ActionMenuItem
-        onClick={scannerContext.startScanner}
+        onClick={startScanner}
         left={<Icon icon={CameraIcon} />}
         data-testid="scan-doc"
       >
