@@ -14,7 +14,7 @@ import UploadItem from 'drive/web/modules/drive/Toolbar/components/UploadItem'
 import { ScannerMenuItem } from 'drive/web/modules/drive/Toolbar/components/Scanner/ScannerMenuItem'
 import CreateOnlyOfficeItem from 'drive/web/modules/drive/Toolbar/components/CreateOnlyOfficeItem'
 import { isOfficeEditingEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
-import { ScannerContext } from 'drive/web/modules/drive/Toolbar/components/Scanner/ScannerContext'
+import { useScannerContext } from 'drive/web/modules/drive/Toolbar/components/Scanner/ScannerProvider'
 
 export const ActionMenuContent = ({
   isDisabled,
@@ -29,7 +29,7 @@ export const ActionMenuContent = ({
 }) => {
   const { t } = useI18n()
   const { isMobile, isDesktop } = useBreakpoints()
-  const { hasScanner } = React.useContext(ScannerContext)
+  const { hasScanner } = useScannerContext()
 
   return (
     <>
