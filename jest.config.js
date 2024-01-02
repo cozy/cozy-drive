@@ -25,7 +25,8 @@ module.exports = {
     '^cozy-client$': 'cozy-client/dist/index.js',
     '^react-redux': '<rootDir>/node_modules/react-redux',
     '^cozy-ui/react(.*)$': '<rootDir>/node_modules/cozy-ui/transpiled/react$1',
-    '^config/(.*)': '<rootDir>/src/config/$1'
+    '^config/(.*)': '<rootDir>/src/config/$1',
+    '^constants/(.*)': '<rootDir>/src/constants/$1'
   },
   clearMocks: true,
   snapshotSerializers: ['enzyme-to-json/serializer'],

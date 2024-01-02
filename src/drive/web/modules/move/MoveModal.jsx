@@ -9,7 +9,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import { useBreakpoints } from 'cozy-ui/transpiled/react'
 
-import { ROOT_DIR_ID } from 'drive/constants/config'
+import { ROOT_DIR_ID } from 'constants/config'
 import Header from 'drive/web/modules/move/Header'
 import { MoveModalContent } from 'drive/web/modules/move/MoveModalContent'
 

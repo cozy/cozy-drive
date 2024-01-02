@@ -12,7 +12,7 @@ import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 
 import { uploadFilesFromNative } from 'drive/web/modules/upload'
-import { ROOT_DIR_ID } from 'drive/constants/config'
+import { ROOT_DIR_ID } from 'constants/config'
 import Header from 'drive/web/modules/move/Header'
 import Explorer from 'drive/web/modules/move/Explorer'
 import FileList from 'drive/web/modules/move/FileList'

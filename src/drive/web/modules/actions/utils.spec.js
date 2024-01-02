@@ -13,7 +13,7 @@ import {
   decryptFile
 } from 'drive/lib/encryption'
 import { DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
-import { TRASH_DIR_ID } from 'drive/constants/config'
+import { TRASH_DIR_ID } from 'constants/config'
 import { isMobileApp } from 'cozy-device-helper'
 import {
   saveAndOpenWithCordova,

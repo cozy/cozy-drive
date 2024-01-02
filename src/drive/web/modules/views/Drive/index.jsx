@@ -28,7 +28,7 @@ import {
   hr
 } from 'drive/web/modules/actions'
 import Toolbar from 'drive/web/modules/drive/Toolbar'
-import { ROOT_DIR_ID } from 'drive/constants/config'
+import { ROOT_DIR_ID } from 'constants/config'
 import MediaBackupProgression from 'drive/mobile/modules/mediaBackup/MediaBackupProgression'
 import RatingModal from 'drive/mobile/modules/settings/RatingModal'
 import FirstUploadModal from 'drive/mobile/modules/mediaBackup/FirstUploadModal'

@@ -1,5 +1,5 @@
 import { makeTitle } from './useUpdateDocumentTitle'
-import { TRASH_DIR_PATH } from 'drive/constants/config'
+import { TRASH_DIR_PATH } from 'constants/config'
 import Polyglot from 'node-polyglot'
 import en from 'drive/locales/en.json'
 

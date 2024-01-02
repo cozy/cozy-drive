@@ -1,6 +1,6 @@
 import { useQuery } from 'cozy-client'
 
-import { TRASH_DIR_ID } from 'drive/constants/config'
+import { TRASH_DIR_ID } from 'constants/config'
 import {
   isFileNotTrashed,
   useFilesQueryWithPath,

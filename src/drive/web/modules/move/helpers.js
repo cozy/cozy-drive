@@ -5,7 +5,7 @@ import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
 import { CozyFile } from 'models'
 import logger from 'lib/logger'
-import { ROOT_DIR_ID } from 'drive/constants/config'
+import { ROOT_DIR_ID } from 'constants/config'
 
 /**
  * Returns whether one of the targeted folders is part of the current folder

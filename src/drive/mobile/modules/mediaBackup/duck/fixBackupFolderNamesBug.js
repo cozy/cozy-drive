@@ -1,6 +1,6 @@
 import { getTranslateFunction } from 'drive/mobile/lib/i18n'
 import { REF_PHOTOS, getOrCreateFolderWithReference } from 'folder-references'
-import { ROOT_DIR_ID } from 'drive/constants/config'
+import { ROOT_DIR_ID } from 'constants/config'
 import { handleConflictOnMove } from './handleConflictOnMove'
 /**
  * Here is how the bugFix works

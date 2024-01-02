@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { TRASH_DIR_PATH } from 'drive/constants/config'
+import { TRASH_DIR_PATH } from 'constants/config'
 export const useTrashRedirect = displayedFolder => {
   const navigate = useNavigate()
 

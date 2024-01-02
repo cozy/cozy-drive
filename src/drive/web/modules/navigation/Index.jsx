@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useClient, Q, models } from 'cozy-client'
 
 import { getSharingIdFromUrl } from './duck'
-import { SHAREDWITHME_DIR_ID } from 'drive/constants/config'
+import { SHAREDWITHME_DIR_ID } from 'constants/config'
 import AcceptingSharingContext from 'drive/lib/AcceptingSharingContext'
 
 /**
