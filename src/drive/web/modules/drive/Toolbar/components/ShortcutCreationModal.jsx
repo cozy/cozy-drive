@@ -31,7 +31,7 @@ const makeURLValid = str => {
   return false
 }
 const ShortcutCreationModal = ({ onClose, onCreated }) => {
-  const displayedFolder = useDisplayedFolder()
+  const { displayedFolder } = useDisplayedFolder()
   const { t } = useI18n()
   const [fileName, setFilename] = useState('')
   const [url, setUrl] = useState('')

@@ -45,7 +45,7 @@ describe('ShortcutCreationModal', () => {
     // TODO: cozy-ui  Material-UI: You are trying to override a style that does not exist - Fix the `borderWidth` key of `theme.overrides.MuiTextField`
     jest.spyOn(console, 'error').mockImplementation()
     jest.spyOn(console, 'warn').mockImplementation()
-    useDisplayedFolder.mockReturnValue({ id: 'id' })
+    useDisplayedFolder.mockReturnValue({ displayedFolder: { id: 'id' } })
     window.matchMedia = createMatchMedia(window.innerWidth)
     tMock.mockImplementation(key => key)
   })

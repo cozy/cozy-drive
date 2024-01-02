@@ -6,7 +6,7 @@ import { ShareModal } from 'cozy-sharing'
 import { useDisplayedFolder } from 'hooks'
 
 const ShareDisplayedFolderView = () => {
-  const displayedFolder = useDisplayedFolder()
+  const { displayedFolder } = useDisplayedFolder()
   const navigate = useNavigate()
 
   if (displayedFolder) {

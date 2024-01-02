@@ -80,7 +80,7 @@ const PublicFolderView = () => {
   const { isMobile } = useBreakpoints()
   const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)
   const currentFolderId = useCurrentFolderId()
-  const displayedFolder = useDisplayedFolder()
+  const { displayedFolder } = useDisplayedFolder()
   const parentDirId = get(displayedFolder, 'dir_id')
   const parentFolder = useParentFolder(parentDirId)
   const { isSelectionBarVisible } = useSelectionContext()

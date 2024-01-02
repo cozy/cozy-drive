@@ -68,7 +68,9 @@ describe('MoveModal component', () => {
       classes: { paper: {} }
     }
 
-    useDisplayedFolder.mockReturnValue({ _id: displayedFolderId })
+    useDisplayedFolder.mockReturnValue({
+      displayedFolder: { _id: displayedFolderId }
+    })
 
     useSharingContext.mockReturnValue({
       sharedPaths,

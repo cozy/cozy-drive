@@ -30,7 +30,7 @@ const Toolbar = ({
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const params = useParams()
-  const displayedFolder = useDisplayedFolder()
+  const { displayedFolder } = useDisplayedFolder()
   const { isMobile } = useBreakpoints()
   const { showSelectionBar, isSelectionBarVisible } = useSelectionContext()
 

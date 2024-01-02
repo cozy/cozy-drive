@@ -1,15 +1,26 @@
-import { useClient } from 'cozy-client'
+import { useQuery } from 'cozy-client'
+
 import { useCurrentFolderId } from 'hooks'
-import { DOCTYPE_FILES } from 'drive/lib/doctypes'
+import { buildOnlyFolderQuery } from 'drive/web/modules/queries'
 
 const useDisplayedFolder = () => {
-  const client = useClient()
   const folderId = useCurrentFolderId()
 
+  const folderQuery = buildOnlyFolderQuery(folderId)
+  const folderResult = useQuery(folderQuery.definition, {
+    ...folderQuery.options,
+    enabled: !!folderId
+  })
+
   if (folderId) {
-    return client.getDocumentFromState(DOCTYPE_FILES, folderId)
+    return {
+      displayedFolder: folderResult.data
+    }
   }
-  return null
+
+  return {
+    displayedFolder: null
+  }
 }
 
 export default useDisplayedFolder
