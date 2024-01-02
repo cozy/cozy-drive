@@ -5,7 +5,7 @@ import { EditDocumentQualification } from 'cozy-scanner'
 import { hasQueryBeenLoaded, useQuery } from 'cozy-client'
 
 import { buildFileByIdQuery } from 'drive/web/modules/queries'
-import { LoaderModal } from 'drive/components/LoaderModal'
+import { LoaderModal } from 'components/LoaderModal'
 
 const QualifyFileView = () => {
   const navigate = useNavigate()

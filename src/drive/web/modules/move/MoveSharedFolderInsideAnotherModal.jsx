@@ -10,7 +10,7 @@ import { useSharingContext } from 'cozy-sharing'
 
 import { buildOnlyFolderQuery } from 'drive/web/modules/queries'
 import { getEntriesName } from 'drive/web/modules/move/helpers'
-import { LoaderModal } from 'drive/components/LoaderModal'
+import { LoaderModal } from 'components/LoaderModal'
 
 /**
  * Alert the user when is trying to move a shared folder/file inside another shared folder

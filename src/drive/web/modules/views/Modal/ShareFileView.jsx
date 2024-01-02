@@ -5,7 +5,7 @@ import { ShareModal } from 'cozy-sharing'
 import { hasQueryBeenLoaded, useQuery } from 'cozy-client'
 
 import { buildFileByIdQuery } from 'drive/web/modules/queries'
-import { LoaderModal } from 'drive/components/LoaderModal'
+import { LoaderModal } from 'components/LoaderModal'
 
 const ShareFileView = () => {
   const navigate = useNavigate()
