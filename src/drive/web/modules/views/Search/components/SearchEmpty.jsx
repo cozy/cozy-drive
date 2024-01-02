@@ -5,7 +5,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import Grid from 'cozy-ui/transpiled/react/Grid'
 
-import searchEmptyIllustration from 'drive/assets/icons/icon-search-empty.svg'
+import searchEmptyIllustration from 'assets/icons/icon-search-empty.svg'
 
 const SearchEmpty = ({ query }) => {
   const { t } = useI18n()

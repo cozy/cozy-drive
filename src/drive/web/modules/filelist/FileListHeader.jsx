@@ -10,8 +10,8 @@ import {
   TableRow
 } from 'cozy-ui/transpiled/react/Table'
 
-import iconList from 'drive/assets/icons/icon-list.svg'
-import iconListMin from 'drive/assets/icons/icon-list-min.svg'
+import iconList from 'assets/icons/icon-list.svg'
+import iconListMin from 'assets/icons/icon-list-min.svg'
 import HeaderCell from './HeaderCell'
 import { SORTABLE_ATTRIBUTES, DEFAULT_SORT } from 'drive/config/sort'
 
