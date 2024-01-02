@@ -9,7 +9,7 @@ import uniqBy from 'lodash/uniqBy'
 
 import { useClient, models } from 'cozy-client'
 import {
-  SharingContext,
+  useSharingContext,
   SharingBannerPlugin,
   useSharingInfos
 } from 'cozy-sharing'
@@ -157,7 +157,7 @@ const PublicFolderView = () => {
   const { hasWritePermissions } = usePublicWritePermissions()
 
   const { pushModal, popModal } = useContext(ModalContext)
-  const { refresh } = useContext(SharingContext)
+  const { refresh } = useSharingContext()
   const dispatch = useDispatch()
 
   const refreshAfterChange = () => {
