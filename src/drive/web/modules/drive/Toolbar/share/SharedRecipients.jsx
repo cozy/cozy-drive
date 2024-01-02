@@ -6,7 +6,7 @@ import { useDisplayedFolder } from 'hooks'
 import { getPathToShareDisplayedFolder } from 'drive/web/modules/drive/Toolbar/share/helpers'
 
 const SharedRecipientsComponent = () => {
-  const displayedFolder = useDisplayedFolder()
+  const { displayedFolder } = useDisplayedFolder()
   const navigate = useNavigate()
   const { pathname } = useLocation()
 

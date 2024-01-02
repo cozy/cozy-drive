@@ -29,7 +29,7 @@ const PublicToolbarByLink = ({
   const { t } = useI18n()
   const navigate = useNavigate()
   const params = useParams()
-  const displayedFolder = useDisplayedFolder()
+  const { displayedFolder } = useDisplayedFolder()
   const { showSelectionBar, isSelectionBarVisible } = useSelectionContext()
 
   const shouldDisplayMoreMenu = isMobile || (!isFile && files.length > 0)

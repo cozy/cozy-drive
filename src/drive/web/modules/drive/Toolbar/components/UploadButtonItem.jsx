@@ -8,7 +8,7 @@ import { compose } from 'redux'
 import { useDisplayedFolder } from 'hooks'
 
 const UploadButtonItem = ({ t, isDisabled, onUploaded }) => {
-  const displayedFolder = useDisplayedFolder()
+  const { displayedFolder } = useDisplayedFolder()
 
   return (
     <UploadButton

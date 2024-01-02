@@ -1,13 +1,11 @@
+import { useQuery } from 'cozy-client'
+
 import useDisplayedFolder from './useDisplayedFolder'
 import useCurrentFolderId from './useCurrentFolderId'
 
-const mockGetDocumentFromState = jest.fn()
-
 jest.mock('cozy-client', () => ({
   ...jest.requireActual('cozy-client'),
-  useClient: () => ({
-    getDocumentFromState: mockGetDocumentFromState
-  })
+  useQuery: jest.fn()
 }))
 
 jest.mock('./useCurrentFolderId')
@@ -18,10 +16,10 @@ describe('useDisplayedFolder', () => {
       id: 'folder-id',
       name: 'Folder name'
     }
-    mockGetDocumentFromState.mockReturnValue(FOLDER)
+    useQuery.mockReturnValue({ data: FOLDER })
     useCurrentFolderId.mockReturnValue(FOLDER.id)
 
-    const displayedFolder = useDisplayedFolder()
+    const { displayedFolder } = useDisplayedFolder()
 
     expect(displayedFolder).toBe(FOLDER)
   })
@@ -29,7 +27,7 @@ describe('useDisplayedFolder', () => {
   it('should return null if current folder does not exist', () => {
     useCurrentFolderId.mockReturnValue(null)
 
-    const displayedFolder = useDisplayedFolder()
+    const { displayedFolder } = useDisplayedFolder()
 
     expect(displayedFolder).toBe(null)
   })

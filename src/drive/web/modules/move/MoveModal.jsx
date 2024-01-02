@@ -45,7 +45,7 @@ const MoveModal = ({ onClose, entries, classes }) => {
   const { t } = useI18n()
   const client = useClient()
   const { isMobile } = useBreakpoints()
-  const displayedFolder = useDisplayedFolder()
+  const { displayedFolder } = useDisplayedFolder()
   const {
     sharedPaths,
     refresh: refreshSharing,
