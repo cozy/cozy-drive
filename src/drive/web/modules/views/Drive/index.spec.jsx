@@ -25,7 +25,7 @@ jest.mock('../Folder/FolderViewBreadcrumb', () =>
   )
 )
 
-jest.mock('drive/hooks', () => ({
+jest.mock('hooks', () => ({
   useCurrentFolderId: jest.fn().mockReturnValue('1234'),
   useDisplayedFolder: jest.fn().mockReturnValue('5678')
 }))

@@ -15,7 +15,7 @@ import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterAc
 import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
 import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-import { useCurrentFileId } from 'drive/hooks'
+import { useCurrentFileId } from 'hooks'
 
 import Fallback from 'drive/web/modules/viewer/Fallback'
 import {

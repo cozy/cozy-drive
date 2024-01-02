@@ -8,7 +8,7 @@ import {
 } from 'cozy-client'
 
 import logger from 'lib/logger'
-import { changeLocation } from 'drive/hooks/helpers'
+import { changeLocation } from 'hooks/helpers'
 
 /**
  * @typedef {object} ReturnRedirectLink

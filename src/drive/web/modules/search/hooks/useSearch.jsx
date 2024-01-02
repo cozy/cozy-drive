@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { useClient } from 'cozy-client'
 
 import { indexFiles } from 'drive/web/modules/search/components/helpers'
-import useDebounce from 'drive/hooks/useDebounce'
+import useDebounce from 'hooks/useDebounce'
 
 const useSearch = (searchTerm, { limit = 10 } = {}) => {
   const client = useClient()

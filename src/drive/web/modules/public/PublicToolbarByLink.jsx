@@ -16,7 +16,7 @@ import {
   isFilesIsFile,
   openExternalLink
 } from 'drive/web/modules/public/helpers'
-import { useDisplayedFolder } from 'drive/hooks'
+import { useDisplayedFolder } from 'hooks'
 import { useSelectionContext } from 'drive/web/modules/selection/SelectionProvider'
 
 const PublicToolbarByLink = ({

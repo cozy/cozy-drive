@@ -36,11 +36,7 @@ import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
 import PublicToolbar from 'drive/web/modules/public/PublicToolbar'
 import PublicViewer from 'drive/web/modules/viewer/PublicViewer'
-import {
-  useCurrentFolderId,
-  useDisplayedFolder,
-  useParentFolder
-} from 'drive/hooks'
+import { useCurrentFolderId, useDisplayedFolder, useParentFolder } from 'hooks'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
 import FabWithMenuContext from 'drive/web/modules/drive/FabWithMenuContext'

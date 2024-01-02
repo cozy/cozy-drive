@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import InsideRegularFolder from './InsideRegularFolder'
 
-jest.mock('drive/hooks')
+jest.mock('hooks')
 
 describe('InsideRegularFolder', () => {
   it('should return null when insideRegularFolder undefined', () => {

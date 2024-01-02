@@ -7,7 +7,7 @@ import FilesViewer from './FilesViewer'
 import AppLike from 'test/components/AppLike'
 import { generateFile } from 'test/generate'
 import { getEncryptionKeyFromDirId } from 'drive/lib/encryption'
-import { useCurrentFileId } from 'drive/hooks'
+import { useCurrentFileId } from 'hooks'
 
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 jest.mock('cozy-keys-lib', () => ({
@@ -20,7 +20,7 @@ jest.mock('drive/lib/encryption', () => ({
   getDecryptedFileURL: jest.fn()
 }))
 
-jest.mock('drive/hooks')
+jest.mock('hooks')
 
 jest.mock('cozy-ui/transpiled/react/Viewer', () => () => <div>Viewer</div>)
 

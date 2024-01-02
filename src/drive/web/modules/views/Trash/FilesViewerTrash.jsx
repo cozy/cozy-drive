@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useQuery } from 'cozy-client'
 
 import { buildTrashQuery } from 'drive/web/modules/queries'
-import { useCurrentFolderId } from 'drive/hooks'
+import { useCurrentFolderId } from 'hooks'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import FilesViewer, {
   FilesViewerLoading

@@ -11,7 +11,7 @@ import Alert from 'cozy-ui/transpiled/react/Alert'
 import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 import { useOnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice/OnlyOfficeProvider'
 import { makeOnlyOfficeFileRoute } from 'drive/web/modules/views/OnlyOffice/helpers'
-import { useRedirectLink } from 'drive/hooks/useRedirectLink'
+import { useRedirectLink } from 'hooks/useRedirectLink'
 
 const FileDeletedModal = () => {
   const { fileId, setFileDeleted, editorMode, isPublic } =

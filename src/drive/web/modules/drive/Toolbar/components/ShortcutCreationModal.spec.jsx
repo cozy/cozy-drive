@@ -10,7 +10,7 @@ import ShortcutCreationModal from './ShortcutCreationModal'
 import AppLike from 'test/components/AppLike'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 import { DOCTYPE_FILES_SHORTCUT } from 'drive/lib/doctypes'
-import useDisplayedFolder from 'drive/hooks/useDisplayedFolder'
+import useDisplayedFolder from 'hooks/useDisplayedFolder'
 
 const tMock = jest.fn()
 jest.mock('cozy-ui/transpiled/react/hooks/useBrowserOffline')
@@ -19,7 +19,7 @@ jest.mock('cozy-ui/transpiled/react/deprecated/Alerter', () => ({
   success: jest.fn()
 }))
 
-jest.mock('drive/hooks/useDisplayedFolder')
+jest.mock('hooks/useDisplayedFolder')
 
 function createMatchMedia(width) {
   return query => ({
