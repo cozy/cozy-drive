@@ -5,7 +5,7 @@ import { Main as MainUI } from 'cozy-ui/transpiled/react/Layout'
 
 import PushBanner from 'components/PushBanner'
 
-import styles from 'drive/styles/main.styl'
+import styles from 'styles/main.styl'
 
 const Main = ({ children, isPublic = false }) => (
   <MainUI

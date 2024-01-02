@@ -8,7 +8,7 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'
 
 import { getPathToShareDisplayedFolder } from 'drive/web/modules/drive/Toolbar/share/helpers'
-import styles from 'drive/styles/toolbar.styl'
+import styles from 'styles/toolbar.styl'
 
 const ShareItem = ({ displayedFolder, navigate, pathname }) => {
   const { t } = useI18n()

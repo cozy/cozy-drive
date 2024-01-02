@@ -3,7 +3,7 @@ import flag from 'cozy-flags'
 import FileIconMime from 'drive/web/modules/filelist/FileIconMime'
 import FileIconShortcut from 'drive/web/modules/filelist/FileIconShortcut'
 import FileImageLoader from 'cozy-ui/transpiled/react/FileImageLoader'
-import styles from 'drive/styles/filelist.styl'
+import styles from 'styles/filelist.styl'
 
 const FileIcon = ({ file, size, isEncrypted }) => {
   const isImage = file.class === 'image'

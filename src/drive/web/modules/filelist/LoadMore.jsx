@@ -6,7 +6,7 @@ import { Button, Spinner } from 'cozy-ui/transpiled/react'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import { TableRow } from 'cozy-ui/transpiled/react/Table'
 
-import styles from 'drive/styles/filelist.styl'
+import styles from 'styles/filelist.styl'
 
 const LoadMore = ({ onClick, isLoading, text }) => (
   <TableRow

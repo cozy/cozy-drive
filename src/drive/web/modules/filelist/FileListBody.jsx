@@ -6,7 +6,7 @@ import { TableBody } from 'cozy-ui/transpiled/react/Table'
 import { FabContext } from 'drive/lib/FabProvider'
 import { useSelectionContext } from 'drive/web/modules/selection/SelectionProvider'
 
-import styles from 'drive/styles/filelist.styl'
+import styles from 'styles/filelist.styl'
 
 const FileListBody = ({ className, children }) => {
   const { isSelectionBarVisible } = useSelectionContext()

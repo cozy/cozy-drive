@@ -8,7 +8,7 @@ import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { uploadFiles } from 'drive/web/modules/navigation/duck'
 
-import styles from 'drive/styles/dropzone.styl'
+import styles from 'styles/dropzone.styl'
 import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
 import DropzoneTeaser from 'drive/web/modules/upload/DropzoneTeaser'
 

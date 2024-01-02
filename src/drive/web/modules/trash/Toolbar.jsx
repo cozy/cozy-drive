@@ -20,7 +20,7 @@ import EmptyTrashConfirm from './components/EmptyTrashConfirm'
 import SearchButton from 'drive/web/modules/drive/Toolbar/components/SearchButton'
 import { useSelectionContext } from 'drive/web/modules/selection/SelectionProvider'
 
-import styles from 'drive/styles/toolbar.styl'
+import styles from 'styles/toolbar.styl'
 
 export const Toolbar = ({ disabled }) => {
   const { t } = useI18n()

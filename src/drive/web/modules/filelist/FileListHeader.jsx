@@ -15,7 +15,7 @@ import iconListMin from 'assets/icons/icon-list-min.svg'
 import HeaderCell from './HeaderCell'
 import { SORTABLE_ATTRIBUTES, DEFAULT_SORT } from 'drive/config/sort'
 
-import styles from 'drive/styles/filelist.styl'
+import styles from 'styles/filelist.styl'
 
 const FileListHeader = ({
   folderId,

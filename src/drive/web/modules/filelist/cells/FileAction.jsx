@@ -7,7 +7,7 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import palette from 'cozy-ui/transpiled/react/palette'
 import DotsIcon from 'cozy-ui/transpiled/react/Icons/Dots'
 
-import styles from 'drive/styles/filelist.styl'
+import styles from 'styles/filelist.styl'
 
 const FileAction = forwardRef(function FileAction(
   { t, onClick, disabled, isInSyncFromSharing },

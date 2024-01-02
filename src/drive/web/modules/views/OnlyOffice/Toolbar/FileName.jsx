@@ -11,7 +11,7 @@ import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
 import { useOnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice/OnlyOfficeProvider'
 import { RenameInput } from 'drive/web/modules/drive/RenameInput'
 
-import filelistStyles from 'drive/styles/filelist.styl'
+import filelistStyles from 'styles/filelist.styl'
 import styles from './styles.styl'
 
 const useStyles = makeStyles(theme => ({

@@ -8,7 +8,7 @@ import PhoneDownloadIcon from 'cozy-ui/transpiled/react/Icons/PhoneDownload'
 
 import { ShareContent } from 'drive/web/modules/filelist/cells/ShareContent'
 
-import styles from 'drive/styles/filelist.styl'
+import styles from 'styles/filelist.styl'
 
 const Status = ({
   isAvailableOffline,

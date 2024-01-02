@@ -8,7 +8,7 @@ import AppIcon from 'cozy-ui/transpiled/react/AppIcon'
 
 import CertificationTooltip from 'drive/web/modules/certifications/CertificationTooltip'
 
-import styles from 'drive/styles/filelist.styl'
+import styles from 'styles/filelist.styl'
 
 const ElectronicSafe = ({ file }) => {
   const { t } = useI18n()
