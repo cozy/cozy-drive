@@ -11,7 +11,7 @@ import {
 } from 'cozy-ui/transpiled/react/Table'
 
 import MobileSortMenu from './MobileSortMenu'
-import { DEFAULT_SORT } from 'drive/config/sort'
+import { DEFAULT_SORT } from 'config/sort'
 import styles from 'styles/filelist.styl'
 import iconList from 'assets/icons/icon-list.svg'
 import iconListMin from 'assets/icons/icon-list-min.svg'

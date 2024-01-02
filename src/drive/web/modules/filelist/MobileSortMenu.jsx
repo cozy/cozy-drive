@@ -7,7 +7,7 @@ import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import Radio from 'cozy-ui/transpiled/react/Radios'
 
-import { SORTABLE_ATTRIBUTES } from 'drive/config/sort'
+import { SORTABLE_ATTRIBUTES } from 'config/sort'
 
 const MobileSortMenu = ({ sort, onSort, onClose }) => {
   const { t } = useI18n()
