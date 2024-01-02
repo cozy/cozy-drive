@@ -6,11 +6,11 @@ import { createMockClient } from 'cozy-client'
 import { CozyFile } from 'models'
 import { MoveModal } from './MoveModal'
 import AppLike from 'test/components/AppLike'
-import useDisplayedFolder from 'drive/hooks/useDisplayedFolder'
+import useDisplayedFolder from 'hooks/useDisplayedFolder'
 import { useSharingContext } from 'cozy-sharing'
 import { ROOT_DIR_ID } from 'constants/config'
 
-jest.mock('drive/hooks/useDisplayedFolder')
+jest.mock('hooks/useDisplayedFolder')
 jest.mock('cozy-sharing', () => ({
   ...jest.requireActual('cozy-sharing'),
   useSharingContext: jest.fn()

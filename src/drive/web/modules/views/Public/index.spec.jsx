@@ -38,7 +38,7 @@ jest.mock('cozy-sharing', () => ({
   ...jest.requireActual('cozy-sharing'),
   useSharingContext: jest.fn()
 }))
-jest.mock('drive/hooks', () => ({
+jest.mock('hooks', () => ({
   useCurrentFolderId: jest.fn().mockReturnValue('1234'),
   useDisplayedFolder: jest.fn().mockReturnValue({
     dir_id: 'parent-folder-id',

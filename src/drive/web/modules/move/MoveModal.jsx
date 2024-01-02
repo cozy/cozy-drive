@@ -17,7 +17,7 @@ import Footer from 'drive/web/modules/move/Footer'
 import Topbar from 'drive/web/modules/move/Topbar'
 import { CozyFile } from 'models'
 import logger from 'lib/logger'
-import { useDisplayedFolder } from 'drive/hooks'
+import { useDisplayedFolder } from 'hooks'
 import {
   cancelMove,
   hasOneOfEntriesShared

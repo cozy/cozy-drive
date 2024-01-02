@@ -14,7 +14,7 @@ import FileIcon from 'drive/web/modules/views/OnlyOffice/Toolbar/FileIcon'
 import FileName from 'drive/web/modules/views/OnlyOffice/Toolbar/FileName'
 import ReadOnly from 'drive/web/modules/views/OnlyOffice/Toolbar/ReadOnly'
 import Sharing from 'drive/web/modules/views/OnlyOffice/Toolbar/Sharing'
-import { useRedirectLink } from 'drive/hooks/useRedirectLink'
+import { useRedirectLink } from 'hooks/useRedirectLink'
 
 const Toolbar = () => {
   const { isMobile } = useBreakpoints()

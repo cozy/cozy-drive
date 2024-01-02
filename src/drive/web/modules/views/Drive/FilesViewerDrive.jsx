@@ -5,7 +5,7 @@ import { useQuery } from 'cozy-client'
 import { buildDriveQuery } from 'drive/web/modules/queries'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
 
-import { useCurrentFolderId } from 'drive/hooks'
+import { useCurrentFolderId } from 'hooks'
 import FilesViewer, {
   FilesViewerLoading
 } from 'drive/web/modules/viewer/FilesViewer'

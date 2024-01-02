@@ -1,5 +1,5 @@
 import { useClient } from 'cozy-client'
-import { useCurrentFolderId } from 'drive/hooks'
+import { useCurrentFolderId } from 'hooks'
 import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 
 const useDisplayedFolder = () => {

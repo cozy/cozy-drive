@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 import { ShareButton } from 'cozy-sharing'
 
-import { useDisplayedFolder } from 'drive/hooks'
+import { useDisplayedFolder } from 'hooks'
 import { getPathToShareDisplayedFolder } from 'drive/web/modules/drive/Toolbar/share/helpers'
 import styles from './styles.styl'
 

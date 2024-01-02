@@ -9,7 +9,7 @@ import { officeDocParam } from 'test/data'
 
 import { OnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice/OnlyOfficeProvider'
 import Toolbar from 'drive/web/modules/views/OnlyOffice/Toolbar'
-import * as hookHelpers from 'drive/hooks/helpers'
+import * as hookHelpers from 'hooks/helpers'
 
 jest.mock('cozy-ui/transpiled/react/providers/Breakpoints', () => ({
   ...jest.requireActual('cozy-ui/transpiled/react/providers/Breakpoints'),

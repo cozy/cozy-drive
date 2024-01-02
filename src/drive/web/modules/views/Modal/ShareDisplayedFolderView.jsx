@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { ShareModal } from 'cozy-sharing'
 
-import { useDisplayedFolder } from 'drive/hooks'
+import { useDisplayedFolder } from 'hooks'
 
 const ShareDisplayedFolderView = () => {
   const displayedFolder = useDisplayedFolder()
