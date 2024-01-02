@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useMemo } from 'react'
 import { useNavigate, Outlet } from 'react-router-dom'
 
 import { useQuery, useClient } from 'cozy-client'
-import { SharingContext } from 'cozy-sharing'
+import { useSharingContext } from 'cozy-sharing'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
@@ -85,7 +85,7 @@ export const TrashFolderView = ({ currentFolderId }) => {
     [navigate, currentFolderId]
   )
 
-  const { refresh } = useContext(SharingContext)
+  const { refresh } = useSharingContext()
   const client = useClient()
   const { pushModal, popModal } = useContext(ModalContext)
   const actionsOptions = {

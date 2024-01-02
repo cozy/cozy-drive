@@ -4,7 +4,7 @@ import React, { useCallback, useContext, useEffect, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate, Outlet, useLocation, useParams } from 'react-router-dom'
 
-import { SharingContext } from 'cozy-sharing'
+import { useSharingContext } from 'cozy-sharing'
 import { useQuery, useClient } from 'cozy-client'
 import { useVaultClient } from 'cozy-keys-lib'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
@@ -127,12 +127,11 @@ const DriveView = () => {
     [navigate, currentFolderId]
   )
 
-  const { hasWriteAccess } = useContext(SharingContext)
+  const { hasWriteAccess, refresh } = useSharingContext()
   const client = useClient()
   const vaultClient = useVaultClient()
 
   const { pushModal, popModal } = useContext(ModalContext)
-  const { refresh } = useContext(SharingContext)
   const dispatch = useDispatch()
   const canWriteToCurrentFolder = hasWriteAccess(currentFolderId)
   const actionsOptions = {

@@ -3,7 +3,7 @@ import { useNavigate, useLocation, Outlet } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 import { useClient, hasQueryBeenLoaded } from 'cozy-client'
-import { SharingContext } from 'cozy-sharing'
+import { useSharingContext } from 'cozy-sharing'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
@@ -81,7 +81,7 @@ export const SharingsView = ({ sharedDocumentIds = [], allLoaded = true }) => {
 
   const client = useClient()
   const { pushModal, popModal } = useContext(ModalContext)
-  const { refresh } = useContext(SharingContext)
+  const { refresh } = useSharingContext()
   const dispatch = useDispatch()
   const actionsOptions = {
     client,
