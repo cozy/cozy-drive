@@ -21,7 +21,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
 import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
 
-import { ModalStack, ModalContext } from 'drive/lib/ModalContext'
+import { ModalStack, useModalContext } from 'drive/lib/ModalContext'
 import useActions from 'drive/web/modules/actions/useActions'
 import Main from 'drive/web/modules/layout/Main'
 import {
@@ -156,7 +156,7 @@ const PublicFolderView = () => {
 
   const { hasWritePermissions } = usePublicWritePermissions()
 
-  const { pushModal, popModal } = useContext(ModalContext)
+  const { pushModal, popModal } = useModalContext()
   const { refresh } = useSharingContext()
   const dispatch = useDispatch()
 

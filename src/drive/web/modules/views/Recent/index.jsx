@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback } from 'react'
 import { useNavigate, Outlet, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
@@ -10,7 +10,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import FolderView from '../Folder/FolderView'
 import FolderViewHeader from '../Folder/FolderViewHeader'
 import FolderViewBody from '../Folder/FolderViewBody'
-import { ModalContext } from 'drive/lib/ModalContext'
+import { useModalContext } from 'drive/lib/ModalContext'
 import Toolbar from 'drive/web/modules/drive/Toolbar'
 import { MobileAwareBreadcrumb as Breadcrumb } from 'drive/web/modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
 import useActions from 'drive/web/modules/actions/useActions'
@@ -76,7 +76,7 @@ export const RecentView = () => {
   )
 
   const client = useClient()
-  const { pushModal, popModal } = useContext(ModalContext)
+  const { pushModal, popModal } = useModalContext()
   const { refresh } = useSharingContext()
   const dispatch = useDispatch()
 
