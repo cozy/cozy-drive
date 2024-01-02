@@ -7,7 +7,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { useQuery } from 'cozy-client'
 
 import { buildOnlyFolderQuery } from 'drive/web/modules/queries'
-import { LoaderModal } from 'drive/components/LoaderModal'
+import { LoaderModal } from 'components/LoaderModal'
 import { getEntriesTypeTranslated } from 'drive/lib/entries'
 
 /**

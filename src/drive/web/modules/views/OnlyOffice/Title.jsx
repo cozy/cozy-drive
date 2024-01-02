@@ -9,7 +9,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useOnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice/OnlyOfficeProvider'
 import { showSharingBanner } from 'drive/web/modules/views/OnlyOffice/helpers'
 import Toolbar from 'drive/web/modules/views/OnlyOffice/Toolbar'
-import { TrashedBanner } from 'drive/components/TrashedBanner'
+import { TrashedBanner } from 'components/TrashedBanner'
 
 const useStyles = makeStyles(theme => ({
   root: {

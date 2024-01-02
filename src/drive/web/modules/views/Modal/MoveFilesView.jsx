@@ -5,7 +5,7 @@ import { hasQueryBeenLoaded, useQuery } from 'cozy-client'
 
 import MoveModal from 'drive/web/modules/move/MoveModal'
 import { buildParentsByIdsQuery } from 'drive/web/modules/queries'
-import { LoaderModal } from 'drive/components/LoaderModal'
+import { LoaderModal } from 'components/LoaderModal'
 
 const MoveFilesView = () => {
   const navigate = useNavigate()
