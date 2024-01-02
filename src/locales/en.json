@@ -774,5 +774,9 @@
     "file": "file |||| files",
     "directory": "folder |||| folders",
     "element": "element |||| elements"
+  },
+  "NotFound": {
+    "title": "The element cannot be found",
+    "text": "We have not found anything at this address. This may be a typing error."
   }
 }
