@@ -5,13 +5,14 @@ import { ModalManager } from 'react-cozy-helpers'
 
 import { ModalStack } from 'drive/lib/ModalContext'
 import Main from 'drive/web/modules/layout/Main'
+import { NotFound } from 'components/Error/NotFound'
 
-const FolderView = ({ children }) => (
+const FolderView = ({ children, isNotFound }) => (
   <Main>
     <RealTimeQueries doctype="io.cozy.files" />
     <ModalStack />
     <ModalManager />
-    {children}
+    {isNotFound ? <NotFound /> : children}
   </Main>
 )
 
