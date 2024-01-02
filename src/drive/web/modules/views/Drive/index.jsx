@@ -12,7 +12,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import flag from 'cozy-flags'
 
 import Dropzone from 'drive/web/modules/upload/Dropzone'
-import { ModalContext } from 'drive/lib/ModalContext'
+import { useModalContext } from 'drive/lib/ModalContext'
 import useActions from 'drive/web/modules/actions/useActions'
 import {
   share,
@@ -131,7 +131,7 @@ const DriveView = () => {
   const client = useClient()
   const vaultClient = useVaultClient()
 
-  const { pushModal, popModal } = useContext(ModalContext)
+  const { pushModal, popModal } = useModalContext()
   const dispatch = useDispatch()
   const canWriteToCurrentFolder = hasWriteAccess(currentFolderId)
   const actionsOptions = {

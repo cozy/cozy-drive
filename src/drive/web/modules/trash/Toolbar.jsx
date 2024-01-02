@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from 'react'
+import React, { useState, useCallback } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
@@ -12,7 +12,7 @@ import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { BarRightWithProvider } from 'components/Bar'
-import { ModalContext } from 'drive/lib/ModalContext'
+import { useModalContext } from 'drive/lib/ModalContext'
 import { emptyTrash } from 'drive/web/modules/actions/utils'
 import SelectableItem from '../drive/Toolbar/selectable/SelectableItem'
 import { MoreButton } from 'components/Button'
@@ -33,7 +33,7 @@ export const Toolbar = ({ disabled }) => {
   const openMenu = useCallback(() => setMenuVisible(true), [setMenuVisible])
   const closeMenu = useCallback(() => setMenuVisible(false), [setMenuVisible])
 
-  const { pushModal, popModal } = useContext(ModalContext)
+  const { pushModal, popModal } = useModalContext()
   const { showSelectionBar, isSelectionBarVisible } = useSelectionContext()
 
   const onEmptyTrash = useCallback(() => {

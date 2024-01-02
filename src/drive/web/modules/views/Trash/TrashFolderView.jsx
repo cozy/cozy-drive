@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { useNavigate, Outlet } from 'react-router-dom'
 
 import { useQuery, useClient } from 'cozy-client'
@@ -16,7 +16,7 @@ import {
   buildOnlyFolderQuery
 } from 'drive/web/modules/queries'
 import { useCurrentFolderId } from 'hooks'
-import { ModalContext } from 'drive/lib/ModalContext'
+import { useModalContext } from 'drive/lib/ModalContext'
 import TrashToolbar from 'drive/web/modules/trash/Toolbar'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
@@ -87,7 +87,7 @@ export const TrashFolderView = ({ currentFolderId }) => {
 
   const { refresh } = useSharingContext()
   const client = useClient()
-  const { pushModal, popModal } = useContext(ModalContext)
+  const { pushModal, popModal } = useModalContext()
   const actionsOptions = {
     client,
     refresh,

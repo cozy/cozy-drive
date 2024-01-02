@@ -1,4 +1,4 @@
-import React, { useContext, useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { useNavigate, useLocation, Outlet } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
@@ -7,7 +7,7 @@ import { useSharingContext } from 'cozy-sharing'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import { ModalContext } from 'drive/lib/ModalContext'
+import { useModalContext } from 'drive/lib/ModalContext'
 import Toolbar from 'drive/web/modules/drive/Toolbar'
 import FolderView from '../Folder/FolderView'
 import FolderViewHeader from '../Folder/FolderViewHeader'
@@ -80,7 +80,7 @@ export const SharingsView = ({ sharedDocumentIds = [], allLoaded = true }) => {
   )
 
   const client = useClient()
-  const { pushModal, popModal } = useContext(ModalContext)
+  const { pushModal, popModal } = useModalContext()
   const { refresh } = useSharingContext()
   const dispatch = useDispatch()
   const actionsOptions = {

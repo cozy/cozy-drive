@@ -23,8 +23,10 @@ export const ModalContextProvider = ({ children }) => {
   )
 }
 
+export const useModalContext = () => useContext(ModalContext)
+
 export const ModalStack = () => {
-  const { modalStack } = useContext(ModalContext)
+  const { modalStack } = useModalContext()
 
   if (modalStack.length === 0) return null
   else return modalStack[modalStack.length - 1]

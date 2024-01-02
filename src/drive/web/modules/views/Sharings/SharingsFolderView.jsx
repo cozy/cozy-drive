@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { useNavigate, Outlet, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
@@ -8,7 +8,7 @@ import SharedDocuments from 'cozy-sharing/dist/components/SharedDocuments'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import { ModalContext } from 'drive/lib/ModalContext'
+import { useModalContext } from 'drive/lib/ModalContext'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import {
   buildDriveQuery,
@@ -93,7 +93,7 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
 
   const client = useClient()
   const { hasWriteAccess, refresh } = useSharingContext()
-  const { pushModal, popModal } = useContext(ModalContext)
+  const { pushModal, popModal } = useModalContext()
   const dispatch = useDispatch()
 
   const hasWrite = hasWriteAccess(currentFolderId)
