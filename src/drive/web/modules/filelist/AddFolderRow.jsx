@@ -9,7 +9,7 @@ import FilenameInput from 'drive/web/modules/filelist/FilenameInput'
 import FileThumbnail from 'drive/web/modules/filelist/FileThumbnail'
 import { Empty as EmptyCell } from 'drive/web/modules/filelist/cells'
 
-import styles from 'drive/styles/filelist.styl'
+import styles from 'styles/filelist.styl'
 
 const AddFolderRow = ({ isEncrypted, onSubmit, onAbort, extraColumns }) => {
   const { f } = useI18n()

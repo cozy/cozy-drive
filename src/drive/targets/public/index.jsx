@@ -26,7 +26,7 @@ import App from 'components/App/App'
 import StyledApp from 'drive/web/modules/drive/StyledApp'
 import cozyBar from 'lib/cozyBar'
 import AppRouter from 'drive/targets/public/components/AppRouter'
-import styles from 'drive/styles/main.styl'
+import styles from 'styles/main.styl'
 
 const initCozyBar = (data, client) => {
   if (data.app.name && data.app.editor && data.app.icon && data.locale) {

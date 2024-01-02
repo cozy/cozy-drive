@@ -3,7 +3,7 @@
 import 'cozy-ui/dist/cozy-ui.min.css'
 import 'cozy-ui/transpiled/react/stylesheet.css'
 // eslint-disable-next-line no-unused-vars
-import mainStyles from 'drive/styles/main.styl'
+import mainStyles from 'styles/main.styl'
 
 // Uncomment to activate why-did-you-render
 // https://github.com/welldone-software/why-did-you-render

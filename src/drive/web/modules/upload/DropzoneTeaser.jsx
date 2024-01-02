@@ -2,7 +2,7 @@ import React from 'react'
 import { Icon } from 'cozy-ui/transpiled/react'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import styles from 'drive/styles/dropzone.styl'
+import styles from 'styles/dropzone.styl'
 import palette from 'cozy-ui/transpiled/react/palette'
 
 import IconDropZone from 'drive/web/modules/upload/IconDropZone'

@@ -7,7 +7,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { TableCell } from 'cozy-ui/transpiled/react/Table'
 import Circle from 'cozy-ui/transpiled/react/Circle'
 
-import styles from 'drive/styles/filelist.styl'
+import styles from 'styles/filelist.styl'
 
 const SharingShortcutBadge = ({ file }) => {
   const { t } = useI18n()

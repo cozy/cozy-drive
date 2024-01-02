@@ -7,7 +7,7 @@ import SafeIcon from 'cozy-ui/transpiled/react/Icons/Safe'
 
 import CertificationTooltip from 'drive/web/modules/certifications/CertificationTooltip'
 
-import styles from 'drive/styles/filelist.styl'
+import styles from 'styles/filelist.styl'
 
 const ElectronicSafeHeader = () => {
   const { t } = useI18n()

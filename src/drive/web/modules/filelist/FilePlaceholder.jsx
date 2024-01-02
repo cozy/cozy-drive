@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'
 
-import styles from 'drive/styles/filelist.styl'
+import styles from 'styles/filelist.styl'
 
 // using a seeded PRNG to prevent re-renders from changing the results
 const seededRandom = seed => {

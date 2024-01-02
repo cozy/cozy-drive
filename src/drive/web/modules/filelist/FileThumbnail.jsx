@@ -13,7 +13,7 @@ import LinkIcon from 'cozy-ui/transpiled/react/Icons/Link'
 import FileIcon from 'drive/web/modules/filelist/FileIcon'
 import { SharingShortcutIcon } from 'drive/web/modules/filelist/SharingShortcutIcon'
 
-import styles from 'drive/styles/filelist.styl'
+import styles from 'styles/filelist.styl'
 
 const FileThumbnail = ({ file, size, isInSyncFromSharing, isEncrypted }) => {
   const { isMobile } = useBreakpoints()

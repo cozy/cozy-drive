@@ -10,7 +10,7 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 
 import CertificationTooltip from 'drive/web/modules/certifications/CertificationTooltip'
 
-import styles from 'drive/styles/filelist.styl'
+import styles from 'styles/filelist.styl'
 
 const CarbonCopyIcon = ({ file }) => {
   const hasElectronicSafe = get(file, 'metadata.electronicSafe')

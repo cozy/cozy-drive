@@ -8,7 +8,7 @@ import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import { isDirectory } from 'cozy-client/dist/models/file'
 
-import styles from 'drive/styles/filenameinput.styl'
+import styles from 'styles/filenameinput.styl'
 
 const ENTER_KEY = 13
 const ESC_KEY = 27

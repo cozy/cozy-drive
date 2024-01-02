@@ -14,7 +14,7 @@ import QualifyIcon from 'cozy-ui/transpiled/react/Icons/Qualify'
 import { CozyFile } from 'models'
 import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
 
-import styles from 'drive/styles/actionmenu.styl'
+import styles from 'styles/actionmenu.styl'
 
 export const ActionMenuWithHeader = ({
   file,

@@ -27,7 +27,7 @@ import {
 } from './cells'
 import { extraColumnsPropTypes } from 'drive/web/modules/certifications'
 
-import styles from 'drive/styles/filelist.styl'
+import styles from 'styles/filelist.styl'
 import { useSelectionContext } from 'drive/web/modules/selection/SelectionProvider'
 
 const File = ({

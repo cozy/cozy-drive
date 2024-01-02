@@ -15,7 +15,7 @@ import CarbonCopyIcon from 'cozy-ui/transpiled/react/Icons/CarbonCopy'
 import RenameInput from 'drive/web/modules/drive/RenameInput'
 import { CozyFile } from 'models'
 
-import styles from 'drive/styles/filelist.styl'
+import styles from 'styles/filelist.styl'
 
 export const CertificationsIcons = ({ attributes }) => {
   const isCarbonCopy = get(attributes, 'metadata.carbonCopy')

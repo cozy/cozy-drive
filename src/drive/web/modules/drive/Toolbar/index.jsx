@@ -18,7 +18,7 @@ import { useDisplayedFolder } from 'drive/hooks'
 import { useSelectionContext } from 'drive/web/modules/selection/SelectionProvider'
 import { BarRightWithProvider } from 'components/Bar'
 
-import styles from 'drive/styles/toolbar.styl'
+import styles from 'styles/toolbar.styl'
 
 const Toolbar = ({
   folderId,

@@ -2,7 +2,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import { Modal, Button } from 'cozy-ui/transpiled/react'
-import styles from 'drive/styles/intentbutton.styl'
+import styles from 'styles/intentbutton.styl'
 
 class IntentButton extends React.Component {
   state = {

@@ -3,7 +3,7 @@ import cx from 'classnames'
 
 import { TableCell } from 'cozy-ui/transpiled/react/Table'
 
-import styles from 'drive/styles/filelist.styl'
+import styles from 'styles/filelist.styl'
 
 const _LastUpdate = ({ date, formatted = '—' }) => (
   <TableCell

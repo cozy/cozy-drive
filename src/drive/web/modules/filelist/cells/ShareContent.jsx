@@ -6,7 +6,7 @@ import { SharedStatus, useSharingContext } from 'cozy-sharing'
 
 import HammerComponent from 'drive/web/modules/filelist/HammerComponent'
 
-import styles from 'drive/styles/filelist.styl'
+import styles from 'styles/filelist.styl'
 
 const ShareContent = ({ file, disabled, isInSyncFromSharing }) => {
   const navigate = useNavigate()
