@@ -10,7 +10,7 @@ module.exports = {
     }),
     new CopyPlugin([
       {
-        from: `src/drive/assets/onlyOffice`,
+        from: `src/assets/onlyOffice`,
         to: 'onlyOffice'
       }
     ])
