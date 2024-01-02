@@ -8,7 +8,7 @@ import {
 export const getTranslateFunction = () => {
   if (_polyglot === undefined) {
     const lang = getLang()
-    const dictRequire = lang => require(`../../locales/${lang}`)
+    const dictRequire = lang => require(`../../../locales/${lang}`)
     initTranslation(lang, dictRequire)
   }
   return _polyglot.t.bind(_polyglot)

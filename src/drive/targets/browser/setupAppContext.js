@@ -34,9 +34,7 @@ const setupApp = memoize(() => {
   }
   const locale = data.locale
   registerClientPlugins(client)
-  const polyglot = initTranslation(locale, lang =>
-    require(`drive/locales/${lang}`)
-  )
+  const polyglot = initTranslation(locale, lang => require(`locales/${lang}`))
 
   const store = configureStore({
     client,

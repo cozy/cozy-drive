@@ -109,7 +109,7 @@ class InitAppMobile {
   getPolyglot = () => {
     if (!this.polyglot) {
       this.polyglot = initTranslation(getLang(), lang =>
-        require(`drive/locales/${lang}`)
+        require(`locales/${lang}`)
       )
     }
     return this.polyglot

@@ -46,7 +46,7 @@ const initCozyBar = (data, client) => {
 
 const renderError = (lang, root) =>
   render(
-    <I18n lang={lang} dictRequire={lang => require(`drive/locales/${lang}`)}>
+    <I18n lang={lang} dictRequire={lang => require(`locales/${lang}`)}>
       <StyledApp>
         <main className={styles['center-layout']}>
           <ErrorShare errorType={`public_unshared`} />
@@ -86,7 +86,7 @@ const init = async () => {
     token: sharecode
   })
   const polyglot = initTranslation(dataset.locale, lang =>
-    require(`drive/locales/${lang}`)
+    require(`locales/${lang}`)
   )
 
   const store = configureStore({
