@@ -31,6 +31,8 @@ import { QualifyFileView } from 'drive/web/modules/views/Modal/QualifyFileView'
 import { MoveFilesView } from 'drive/web/modules/views/Modal/MoveFilesView'
 import { UploaderComponent } from 'drive/web/modules//views/Upload/UploaderComponent'
 import HarvestRoutes from 'drive/web/modules/views/Drive/HarvestRoutes'
+import { ROOT_DIR_ID } from 'constants/config'
+
 const FilesRedirect = () => {
   const { folderId } = useParams()
   return <Navigate to={`/folder/${folderId}`} replace={true} />
@@ -47,18 +49,19 @@ const AppRoute = () => (
       <Route path="/files/:folderId" element={<FilesRedirect />} />
       <Route path="/" element={<Index />} />
 
-      <Route path="folder">
-        <Route index element={<DriveView />} />
-        <Route path=":folderId" element={<DriveView />}>
-          <Route path="file/:fileId" element={<FilesViewerDrive />} />
-          <Route path="file/:fileId/revision" element={<FileHistory />} />
-          <Route path="file/:fileId/share" element={<ShareFileView />} />
-          <Route path="file/:fileId/qualify" element={<QualifyFileView />} />
-          <Route path="paywall" element={<OnlyOfficePaywallView />} />
-          <Route path="share" element={<ShareDisplayedFolderView />} />
-          <Route path="move" element={<MoveFilesView />} />
-          <Route path="harvest/:konnectorSlug/*" element={<HarvestRoutes />} />
-        </Route>
+      <Route
+        path="folder"
+        element={<Navigate to={ROOT_DIR_ID} replace={true} />}
+      />
+      <Route path="folder/:folderId" element={<DriveView />}>
+        <Route path="file/:fileId" element={<FilesViewerDrive />} />
+        <Route path="file/:fileId/revision" element={<FileHistory />} />
+        <Route path="file/:fileId/share" element={<ShareFileView />} />
+        <Route path="file/:fileId/qualify" element={<QualifyFileView />} />
+        <Route path="paywall" element={<OnlyOfficePaywallView />} />
+        <Route path="share" element={<ShareDisplayedFolderView />} />
+        <Route path="move" element={<MoveFilesView />} />
+        <Route path="harvest/:konnectorSlug/*" element={<HarvestRoutes />} />
       </Route>
 
       <Route path="recent" element={<RecentView />}>
