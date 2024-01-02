@@ -17,7 +17,7 @@ const HarvestBanner = ({ folderId }) => {
   let konnectorSlug = undefined
   let accountId = undefined
 
-  const fileId = folder?.relationships?.contents?.data?.[0].id
+  const fileId = folder?.relationships?.contents?.data?.[0]?.id
   const fileQuery = buildFileByIdQuery(fileId)
   const file = useQuery(fileQuery.definition, {
     ...fileQuery.options,
