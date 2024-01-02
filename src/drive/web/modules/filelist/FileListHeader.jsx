@@ -13,7 +13,7 @@ import {
 import iconList from 'assets/icons/icon-list.svg'
 import iconListMin from 'assets/icons/icon-list-min.svg'
 import HeaderCell from './HeaderCell'
-import { SORTABLE_ATTRIBUTES, DEFAULT_SORT } from 'drive/config/sort'
+import { SORTABLE_ATTRIBUTES, DEFAULT_SORT } from 'config/sort'
 
 import styles from 'styles/filelist.styl'
 

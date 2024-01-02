@@ -5,7 +5,7 @@ import localforage from 'localforage'
 import { NOVIEWER_DESKTOP_CTA } from 'components/pushClient'
 
 jest.mock('localforage')
-jest.mock('drive/config/config.json', () => ({
+jest.mock('config/config.json', () => ({
   promoteDesktop: { isActivated: true }
 }))
 jest.mock('components/pushClient', () => ({

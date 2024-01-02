@@ -11,7 +11,7 @@ import {
   isLinux,
   NOVIEWER_DESKTOP_CTA
 } from 'components/pushClient'
-import Config from 'drive/config/config.json'
+import Config from 'config/config.json'
 
 import styles from './styles.styl'
 

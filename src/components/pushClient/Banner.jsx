@@ -21,7 +21,7 @@ import {
   isClientAlreadyInstalled,
   DESKTOP_BANNER
 } from '.'
-import Config from 'drive/config/config.json'
+import Config from 'config/config.json'
 import styles from './pushClient.styl'
 
 class BannerClient extends Component {
