@@ -8,7 +8,7 @@ import {
   buildParentsByIdsQuery,
   buildFileByIdQuery
 } from 'drive/web/modules/queries'
-import { TRASH_DIR_ID } from 'drive/constants/config'
+import { TRASH_DIR_ID } from 'constants/config'
 
 export const isFileNotTrashed = file =>
   file.dir_id !== TRASH_DIR_ID && file.trashed !== true

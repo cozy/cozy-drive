@@ -8,7 +8,7 @@ import { MoveModal } from './MoveModal'
 import AppLike from 'test/components/AppLike'
 import useDisplayedFolder from 'drive/hooks/useDisplayedFolder'
 import { useSharingContext } from 'cozy-sharing'
-import { ROOT_DIR_ID } from 'drive/constants/config'
+import { ROOT_DIR_ID } from 'constants/config'
 
 jest.mock('drive/hooks/useDisplayedFolder')
 jest.mock('cozy-sharing', () => ({

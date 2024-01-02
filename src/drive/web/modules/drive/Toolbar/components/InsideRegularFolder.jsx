@@ -1,4 +1,4 @@
-import { ROOT_DIR_ID } from 'drive/constants/config'
+import { ROOT_DIR_ID } from 'constants/config'
 import { isEncryptedFolder } from 'drive/lib/encryption'
 
 /**

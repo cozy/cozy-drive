@@ -7,7 +7,7 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 
 import { BarRightWithProvider } from 'components/Bar'
-import { HOME_LINK_HREF } from 'drive/constants/config'
+import { HOME_LINK_HREF } from 'constants/config'
 import AddButton from 'drive/web/modules/drive/Toolbar/components/AddButton'
 import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
 import { DownloadFilesButton } from 'drive/web/modules/public/DownloadButton'

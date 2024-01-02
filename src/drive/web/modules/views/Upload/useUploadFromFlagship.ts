@@ -13,7 +13,7 @@ import {
   Folder,
   UploadFromFlagship
 } from 'drive/web/modules/views/Upload/UploadTypes'
-import { ROOT_DIR_ID } from 'drive/constants/config'
+import { ROOT_DIR_ID } from 'constants/config'
 import { ADD_TO_UPLOAD_QUEUE, purgeUploadQueue } from 'drive/web/modules/upload'
 import {
   buildMoveOrImportQuery,

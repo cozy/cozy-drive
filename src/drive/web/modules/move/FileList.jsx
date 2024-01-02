@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { DumbFile as File } from 'drive/web/modules/filelist/File'
 import { VaultUnlocker } from 'cozy-keys-lib'
-import { ROOT_DIR_ID } from 'drive/constants/config'
+import { ROOT_DIR_ID } from 'constants/config'
 import { isEncryptedFolder } from 'drive/lib/encryption'
 
 const isInvalidMoveTarget = (subjects, target) => {

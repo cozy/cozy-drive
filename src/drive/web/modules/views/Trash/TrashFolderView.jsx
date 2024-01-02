@@ -9,7 +9,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import useActions from 'drive/web/modules/actions/useActions'
 import { restore, destroy } from 'drive/web/modules/actions'
-import { TRASH_DIR_ID } from 'drive/constants/config'
+import { TRASH_DIR_ID } from 'constants/config'
 import {
   buildTrashQuery,
   buildFileWithSpecificMetadataAttributeQuery,

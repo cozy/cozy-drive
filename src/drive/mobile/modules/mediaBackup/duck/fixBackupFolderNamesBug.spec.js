@@ -1,5 +1,5 @@
 import { fixMagicFolderName } from './fixBackupFolderNamesBug'
-import { ROOT_DIR_ID } from 'drive/constants/config'
+import { ROOT_DIR_ID } from 'constants/config'
 
 jest.mock('./handleConflictOnMove', () => ({
   ...jest.requireActual('./handleConflictOnMove'),

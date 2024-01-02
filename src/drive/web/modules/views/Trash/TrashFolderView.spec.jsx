@@ -4,7 +4,7 @@ import { render, act } from '@testing-library/react'
 import { useQuery } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
 
-import { TRASH_DIR_ID } from 'drive/constants/config'
+import { TRASH_DIR_ID } from 'constants/config'
 import { setupStoreAndClient } from 'test/setup'
 import AppLike from 'test/components/AppLike'
 import { generateFileFixtures } from '../testUtils'

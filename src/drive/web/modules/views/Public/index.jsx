@@ -49,7 +49,7 @@ import { FabContext } from 'drive/lib/FabProvider'
 
 import usePublicFilesQuery from './usePublicFilesQuery'
 import usePublicWritePermissions from './usePublicWritePermissions'
-import { ROOT_DIR_ID } from 'drive/constants/config'
+import { ROOT_DIR_ID } from 'constants/config'
 import OldFolderViewBreadcrumb from '../Folder/OldFolderViewBreadcrumb'
 import { useSelectionContext } from 'drive/web/modules/selection/SelectionProvider'
 

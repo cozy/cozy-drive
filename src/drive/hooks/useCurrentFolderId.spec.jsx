@@ -1,6 +1,6 @@
 import ReactRouter from 'react-router-dom'
 import useCurrentFolderId from './useCurrentFolderId'
-import { ROOT_DIR_ID, TRASH_DIR_ID } from 'drive/constants/config'
+import { ROOT_DIR_ID, TRASH_DIR_ID } from 'constants/config'
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),

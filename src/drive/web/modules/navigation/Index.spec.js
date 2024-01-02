@@ -1,7 +1,7 @@
 import { createMockClient } from 'cozy-client'
 const mockFileModels = require('cozy-client/dist/models/file')
 
-import { SHAREDWITHME_DIR_ID } from 'drive/constants/config'
+import { SHAREDWITHME_DIR_ID } from 'constants/config'
 
 import { fetchSharing } from './Index'
 

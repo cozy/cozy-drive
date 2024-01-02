@@ -2,7 +2,7 @@ import { models } from 'cozy-client'
 
 import FuzzyPathSearch from 'drive/lib/FuzzyPathSearch.js'
 import { makeOnlyOfficeFileRoute } from 'drive/web/modules/views/OnlyOffice/helpers'
-import { ROOT_DIR_ID } from 'drive/constants/config'
+import { ROOT_DIR_ID } from 'constants/config'
 import { isEncryptedFolder } from 'drive/lib/encryption'
 
 export const TYPE_DIRECTORY = 'directory'
