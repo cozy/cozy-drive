@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <DriveProvider
       client={client}
       lang={data.locale}
-      dictRequire={lang => require(`drive/locales/${lang}`)}
+      dictRequire={lang => require(`locales/${lang}`)}
     >
       <IntentHandler intentId={intent} />
     </DriveProvider>,

@@ -8,7 +8,7 @@ module.exports = {
     '.svg$': '<rootDir>/jestHelpers/mocks/iconMock.js',
     '.styl$': 'identity-obj-proxy',
     '\\.(css|less)$': 'identity-obj-proxy',
-    '^drive/locales/.*': '<rootDir>/src/drive/locales/en.json',
+    '^locales/.*': '<rootDir>/src/locales/en.json',
     '^drive/(.*)': '<rootDir>/src/drive/$1',
     '^models(.*)': '<rootDir>/src/models$1',
     '^sharing(.*)': '<rootDir>/src/sharing$1',
