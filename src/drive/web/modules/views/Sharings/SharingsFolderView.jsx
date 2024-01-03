@@ -14,7 +14,7 @@ import {
   buildDriveQuery,
   buildFileWithSpecificMetadataAttributeQuery
 } from 'drive/web/modules/queries'
-import { useCurrentFolderId } from 'hooks'
+import { useCurrentFolderId, useDisplayedFolder } from 'hooks'
 import useActions from 'drive/web/modules/actions/useActions'
 import {
   share,
@@ -44,6 +44,8 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
   const { pathname } = useLocation()
   const currentFolderId = useCurrentFolderId()
   const { isMobile } = useBreakpoints()
+
+  const { isNotFound } = useDisplayedFolder()
 
   useHead()
 
@@ -124,7 +126,7 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
   )
 
   return (
-    <FolderView>
+    <FolderView isNotFound={isNotFound}>
       <FolderViewHeader>
         {currentFolderId && (
           <FolderViewBreadcrumb

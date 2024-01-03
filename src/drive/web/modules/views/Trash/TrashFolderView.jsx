@@ -12,10 +12,9 @@ import { restore, destroy } from 'drive/web/modules/actions'
 import { TRASH_DIR_ID } from 'constants/config'
 import {
   buildTrashQuery,
-  buildFileWithSpecificMetadataAttributeQuery,
-  buildOnlyFolderQuery
+  buildFileWithSpecificMetadataAttributeQuery
 } from 'drive/web/modules/queries'
-import { useCurrentFolderId } from 'hooks'
+import { useCurrentFolderId, useDisplayedFolder } from 'hooks'
 import { useModalContext } from 'drive/lib/ModalContext'
 import TrashToolbar from 'drive/web/modules/trash/Toolbar'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
@@ -30,16 +29,15 @@ import useHead from 'components/useHead'
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-export const TrashFolderView = ({ currentFolderId }) => {
+export const TrashFolderView = () => {
   const { isMobile } = useBreakpoints()
   const navigate = useNavigate()
+  const currentFolderId = useCurrentFolderId()
 
   useHead()
-  const displayedFolderQuery = buildOnlyFolderQuery(currentFolderId)
-  const displayedFolder = useQuery(displayedFolderQuery.definition, {
-    ...displayedFolderQuery.options,
-    enabled: !!currentFolderId
-  }).data
+
+  const { displayedFolder, isNotFound } = useDisplayedFolder()
+
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
     isMobile,
     desktopExtraColumnsNames,
@@ -106,7 +104,7 @@ export const TrashFolderView = ({ currentFolderId }) => {
   )
 
   return (
-    <FolderView>
+    <FolderView isNotFound={isNotFound}>
       <FolderViewHeader>
         {currentFolderId && (
           <FolderViewBreadcrumb
@@ -132,12 +130,4 @@ export const TrashFolderView = ({ currentFolderId }) => {
   )
 }
 
-const TrashFolderViewWrapper = () => {
-  const currentFolderId = useCurrentFolderId()
-
-  // Since playing with qDef.options.enabled is not enought
-  // at the moment. See https://github.com/cozy/cozy-client/pull/1273
-  if (!currentFolderId) return null
-  return <TrashFolderView currentFolderId={currentFolderId} />
-}
-export default TrashFolderViewWrapper
+export default TrashFolderView

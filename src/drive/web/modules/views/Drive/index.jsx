@@ -34,10 +34,9 @@ import RatingModal from 'drive/mobile/modules/settings/RatingModal'
 import FirstUploadModal from 'drive/mobile/modules/mediaBackup/FirstUploadModal'
 import {
   buildDriveQuery,
-  buildFileWithSpecificMetadataAttributeQuery,
-  buildOnlyFolderQuery
+  buildFileWithSpecificMetadataAttributeQuery
 } from 'drive/web/modules/queries'
-import { useCurrentFolderId } from 'hooks'
+import { useCurrentFolderId, useDisplayedFolder } from 'hooks'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
@@ -80,11 +79,9 @@ const DriveView = () => {
     queryBuilder: buildFileWithSpecificMetadataAttributeQuery,
     currentFolderId
   })
-  const displayedFolderQuery = buildOnlyFolderQuery(currentFolderId)
-  const displayedFolder = useQuery(
-    displayedFolderQuery.definition,
-    displayedFolderQuery.options
-  ).data
+
+  const { displayedFolder, isNotFound } = useDisplayedFolder()
+
   useTrashRedirect(displayedFolder)
 
   const [sortOrder] = useFolderSort(currentFolderId)
@@ -188,7 +185,7 @@ const DriveView = () => {
   }, [setIsFabDisplayed, isMobile, canWriteToCurrentFolder])
 
   return (
-    <FolderView>
+    <FolderView isNotFound={isNotFound}>
       <FolderViewHeader>
         {currentFolderId && (
           <FolderViewBreadcrumb
