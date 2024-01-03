@@ -53,18 +53,27 @@ export const mockCozyClientRequestQuery = () => {
   })
 }
 
+export const setupStore = ({
+  client,
+  initialStoreState,
+  setStoreToClient = true
+} = {}) => {
+  return configureStore({
+    client,
+    t: x => x,
+    initialState: initialStoreState,
+    logger: false,
+    setStoreToClient
+  })
+}
+
 export const setupStoreAndClient = ({ initialStoreState } = {}) => {
   const client = new CozyClient({
     store: false
   })
   client.getStackClient().setUri('http://test.cloud')
 
-  const store = configureStore({
-    client,
-    t: x => x,
-    initialState: initialStoreState,
-    logger: false
-  })
+  const store = setupStore({ client, initialStoreState })
   return { store, client }
 }
 

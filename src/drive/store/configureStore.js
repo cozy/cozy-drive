@@ -19,7 +19,7 @@ import { ANALYTICS_URL, getReporterConfiguration } from 'drive/lib/reporter'
  * @return {ReduxStore}
  */
 const configureStore = options => {
-  const { client, t, initialState = {} } = options
+  const { client, t, initialState = {}, setStoreToClient = true } = options
 
   const middlewares = [thunkMiddleware.withExtraArgument({ client, t })]
   if (__TARGET__ === 'mobile' && !__DEVELOPMENT__) {
@@ -42,7 +42,9 @@ const configureStore = options => {
     composeEnhancers(applyMiddleware(...middlewares))
   )
 
-  client.setStore(store)
+  if (setStoreToClient) {
+    client.setStore(store)
+  }
 
   return store
 }
