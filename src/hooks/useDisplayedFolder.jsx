@@ -13,12 +13,18 @@ const useDisplayedFolder = () => {
   })
 
   if (folderId) {
+    const isNotFound =
+      folderResult.fetchStatus === 'failed' &&
+      folderResult.lastError.status === 404
+
     return {
+      isNotFound,
       displayedFolder: folderResult.data
     }
   }
 
   return {
+    isNotFound: true,
     displayedFolder: null
   }
 }

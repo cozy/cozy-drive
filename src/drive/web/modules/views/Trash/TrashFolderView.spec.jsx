@@ -1,52 +1,36 @@
 import React from 'react'
-import { render, act } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 
-import { useQuery } from 'cozy-client'
+import { createMockClient } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
 
 import { TRASH_DIR_ID } from 'constants/config'
-import { setupStoreAndClient } from 'test/setup'
+import { setupStore } from 'test/setup'
 import AppLike from 'test/components/AppLike'
 import { generateFileFixtures } from '../testUtils'
 import { TrashFolderView } from './TrashFolderView'
-import FolderViewBody from '../Folder/FolderViewBody'
+import { useCurrentFolderId } from 'hooks'
 
-jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 jest.mock('components/pushClient')
 jest.mock('components/useHead', () => jest.fn())
 jest.mock('cozy-sharing', () => ({
   ...jest.requireActual('cozy-sharing'),
   useSharingContext: jest.fn()
 }))
+jest.mock('hooks', () => ({
+  useCurrentFolderId: jest.fn(),
+  useDisplayedFolder: jest.fn().mockReturnValue({
+    isNotFound: false,
+    displayedFolder: {
+      _id: 'io.cozy.trash'
+    }
+  })
+}))
 
 useSharingContext.mockReturnValue({ byDocId: [] })
 
 describe('TrashFolderView', () => {
-  const mockClient = () => {
-    const { store, client } = setupStoreAndClient({})
-
-    client.plugins.realtime = {
-      subscribe: jest.fn(),
-      unsubscribe: jest.fn()
-    }
-    client.query = jest.fn().mockReturnValue([])
-    client.stackClient.fetchJSON = jest
-      .fn()
-      .mockReturnValue({ data: [], rows: [] })
-    return { store, client }
-  }
-  const setup = () => {
-    const { store, client } = mockClient()
-
-    const rendered = render(
-      <AppLike client={client} store={store}>
-        <TrashFolderView currentFolderId={TRASH_DIR_ID} />
-      </AppLike>
-    )
-    return { ...rendered, client }
-  }
-
-  it('renders the Trash view', async () => {
+  const setup = ({ currentFolderId = TRASH_DIR_ID, isEmpty = false } = {}) => {
     const nbFiles = 1
     const path = '/trash'
     const dir_id = 'io.cozy.files.trash-dir'
@@ -65,63 +49,63 @@ describe('TrashFolderView', () => {
       type: 'directory',
       prefix: 'folder'
     })
-    const { store, client } = mockClient()
-    const { getByText } = render(
-      <AppLike client={client} store={store}>
-        <FolderViewBody
-          navigateToFolder={jest.fn()}
-          currentFolderId={'io.cozy.trash'}
-          queryResults={[
-            {
-              data: filesFixture,
-              count: filesFixture.length
-            },
-            {
-              data: foldersFixture,
-              count: foldersFixture.length
+
+    const mockClient = createMockClient({
+      queries: {
+        'trash-directory io.cozy.files.trash-dir name asc': {
+          doctype: 'io.cozy.files',
+          definition: {
+            doctype: 'io.cozy.files',
+            selector: {
+              type: 'directory'
             }
-          ]}
-          actions={[]}
-        />
+          },
+          data: isEmpty ? [] : foldersFixture
+        },
+        'trash-file io.cozy.files.trash-dir name asc': {
+          doctype: 'io.cozy.files',
+          data: isEmpty ? [] : filesFixture
+        }
+      }
+    })
+
+    mockClient.plugins.realtime = {
+      subscribe: jest.fn(),
+      unsubscribe: jest.fn()
+    }
+
+    const store = setupStore({ client: mockClient, setStoreToClient: false })
+
+    useCurrentFolderId.mockReturnValue(currentFolderId)
+
+    return render(
+      <AppLike client={mockClient} store={store}>
+        <TrashFolderView />
       </AppLike>
     )
-    const sleep = duration =>
-      new Promise(resolve => setTimeout(resolve, duration))
-    await act(async () => {
-      await sleep(100)
-    })
-    // Check if we display the folder and the file
-    getByText(`folder0`)
-    getByText(`foobar0`)
+  }
+
+  it('renders the Trash view', async () => {
+    setup()
+
+    const folder = await screen.findByText('folder0')
+    expect(folder).toBeInTheDocument()
+
+    const file = await screen.findByTitle('foobar0.pdf')
+    expect(file).toBeInTheDocument()
   })
 
   it('renders the empty trash view', async () => {
-    useQuery.mockReturnValue({
-      data: [],
-      count: 0
-    })
+    setup({ isEmpty: true })
 
-    const { getByText } = setup()
-    const sleep = duration =>
-      new Promise(resolve => setTimeout(resolve, duration))
-    await act(async () => {
-      await sleep(100)
-    })
-    getByText(`You don’t have any deleted files.`)
+    const empty = await screen.findByText(`You don’t have any deleted files.`)
+    expect(empty).toBeInTheDocument()
   })
 
   it('should contain breadcrumb with root path', async () => {
-    useQuery.mockReturnValue({
-      data: [],
-      count: 0
-    })
+    setup()
 
-    const { getByText } = setup()
-    const sleep = duration =>
-      new Promise(resolve => setTimeout(resolve, duration))
-    await act(async () => {
-      await sleep(100)
-    })
-    getByText(`Trash`)
+    const title = await screen.findByText('Trash')
+    expect(title).toBeInTheDocument()
   })
 })
