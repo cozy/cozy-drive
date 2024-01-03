@@ -52,7 +52,7 @@ const AppLike = ({
   modalContextValue
 }) => (
   <CozyTheme>
-    <Provider store={(client && client.store) || store || mockStore}>
+    <Provider store={store || (client && client.store) || mockStore}>
       <CozyProvider client={client}>
         <TestI18n>
           <SharingContext.Provider

@@ -40,18 +40,6 @@ describe('FilesViewer', () => {
     useQueryResultAttributes,
     isEncrypted = false
   } = {}) => {
-    const store = {
-      subscribe: () => {},
-      getState: () => ({
-        view: {
-          sort: {
-            sortAttribute: 'name',
-            sortOrder: 'desc'
-          }
-        }
-      })
-    }
-
     const filesFixture = Array(nbFiles)
       .fill(null)
       .map((x, i) => generateFile({ i, type: 'file', encrypted: isEncrypted }))
@@ -68,7 +56,7 @@ describe('FilesViewer', () => {
     useCurrentFileId.mockReturnValue(fileId)
 
     return render(
-      <AppLike client={client} vaultClient={vaultClient} store={store}>
+      <AppLike client={client} vaultClient={vaultClient}>
         <FilesViewer
           files={filesFixture}
           filesQuery={mockedUseQueryReturnedValues}
