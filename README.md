@@ -116,12 +116,6 @@ Then simply run `mailhog` and open http://cozy.tools:8025/.
 
 With MailHog, **every email** sent by cozy-stack is caught. That means the email address *does not have to be a real one*, ie. `bob@cozy`, `bob@cozy.tools` are perfectly fine. It *could be a real one*, but the email will not reach the real recipient's inbox, say `contact@cozycloud.cc`.
 
-
-### Run on you mobile phone or your tablet :phone:
-
-[See specific documentation](src/drive/targets/mobile/README.md).
-
-
 ### Living on the edge
 
 [Cozy-ui] is our frontend stack library that provides common styles and components accross the whole Cozy's apps. You can use it for you own application to follow the official Cozy's guidelines and styles. If you need to develop / hack cozy-ui, it's sometimes more useful to develop on it through another app. You can do it by cloning cozy-ui locally and link it to yarn local index:
