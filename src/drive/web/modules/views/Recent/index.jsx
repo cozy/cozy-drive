@@ -23,7 +23,6 @@ import {
   duplicate,
   qualify,
   versions,
-  offline,
   hr,
   share
 } from 'drive/web/modules/actions'
@@ -103,7 +102,6 @@ export const RecentView = () => {
       move,
       duplicate,
       hr,
-      offline,
       open,
       versions,
       hr,

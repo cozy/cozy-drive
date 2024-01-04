@@ -2,15 +2,10 @@ import { createMockClient } from 'cozy-client'
 import { shouldBeOpenedByOnlyOffice } from 'cozy-client/dist/models/file'
 
 import { generateFile } from 'test/generate'
-import { openLocalFile } from 'drive/mobile/modules/offline/duck'
 import createFileOpeningHandler from './createFileOpeningHandler'
 
 const mockUseWebviewIntent = jest.fn()
 const mockIsFlagshipApp = jest.fn()
-
-jest.mock('drive/mobile/modules/offline/duck', () => ({
-  openLocalFile: jest.fn()
-}))
 
 jest.mock('cozy-client/dist/models/file', () => ({
   ...jest.requireActual('cozy-client/dist/models/file'),
@@ -28,7 +23,6 @@ jest.mock('cozy-device-helper', () => ({
 
 describe('createFileOpeningHandler', () => {
   let client
-  let dispatch
   let navigateToFile
   let replaceCurrentUrl
   let openInNewTab
@@ -42,7 +36,6 @@ describe('createFileOpeningHandler', () => {
 
   beforeEach(() => {
     client = createMockClient({})
-    dispatch = jest.fn()
     navigateToFile = jest.fn()
     replaceCurrentUrl = jest.fn()
     openInNewTab = jest.fn()
@@ -86,7 +79,6 @@ describe('createFileOpeningHandler', () => {
       createFileOpeningHandler({
         client,
         isFlatDomain,
-        dispatch,
         navigateToFile,
         replaceCurrentUrl,
         openInNewTab,
@@ -96,15 +88,9 @@ describe('createFileOpeningHandler', () => {
       })
   })
 
-  it('should open an offline file', async () => {
-    const handler = setup()
-    await handler({ file: genericFile, isAvailableOffline: true })
-    expect(openLocalFile).toHaveBeenCalledWith(client, genericFile)
-  })
-
   it('should navigate to a normal file', async () => {
     const handler = setup()
-    await handler({ file: genericFile, isAvailableOffline: false })
+    await handler({ file: genericFile })
     expect(navigateToFile).toHaveBeenCalledWith(genericFile)
   })
 
@@ -120,7 +106,7 @@ describe('createFileOpeningHandler', () => {
       }
     })
     const handler = setup()
-    await handler({ file: noteFile, isAvailableOffline: false })
+    await handler({ file: noteFile })
     expect(replaceCurrentUrl).toHaveBeenCalledWith(
       'https://cozy-tools-notes.cloud/public/?id=note-id&sharecode=sharecode&username=public+note#/'
     )
@@ -140,7 +126,7 @@ describe('createFileOpeningHandler', () => {
       }
     })
     const handler = setup()
-    await handler({ file: noteFile, isAvailableOffline: false })
+    await handler({ file: noteFile })
 
     expect(replaceCurrentUrl).not.toHaveBeenCalled()
     expect(mockUseWebviewIntent).toHaveBeenCalledWith(
@@ -165,8 +151,7 @@ describe('createFileOpeningHandler', () => {
     })
     const handler = setup({ webviewIntent: undefined })
     await handler({
-      file: noteFile,
-      isAvailableOffline: false
+      file: noteFile
     })
 
     expect(replaceCurrentUrl).toHaveBeenCalledWith(
@@ -177,7 +162,7 @@ describe('createFileOpeningHandler', () => {
 
   it('should open a shortcut in a new tab', async () => {
     const handler = setup()
-    await handler({ file: shortcutFile, isAvailableOffline: false })
+    await handler({ file: shortcutFile })
     expect(openInNewTab).toHaveBeenCalledWith(
       `http://cozy-drive.tools/#/external/${shortcutFile.id}`
     )
@@ -188,8 +173,7 @@ describe('createFileOpeningHandler', () => {
     const handler = setup()
     await handler({
       event: {},
-      file: onlyofficeFile,
-      isAvailableOffline: false
+      file: onlyofficeFile
     })
 
     expect(openInNewTab).not.toHaveBeenCalled()
@@ -201,7 +185,7 @@ describe('createFileOpeningHandler', () => {
   it('should redirect to the file for an onlyoffice document with onlyoffice deactivated', async () => {
     shouldBeOpenedByOnlyOffice.mockReturnValue(true)
     const handler = setup({ isOfficeEnabled: false })
-    await handler({ file: onlyofficeFile, isAvailableOffline: false })
+    await handler({ file: onlyofficeFile })
     expect(navigateToFile).toHaveBeenCalledWith(onlyofficeFile)
   })
 
@@ -213,8 +197,7 @@ describe('createFileOpeningHandler', () => {
     for (const event of events) {
       await handler({
         event,
-        file: onlyofficeFile,
-        isAvailableOffline: false
+        file: onlyofficeFile
       })
 
       expect(openInNewTab).toHaveBeenCalled()
@@ -229,8 +212,7 @@ describe('createFileOpeningHandler', () => {
     const handler = setup()
     await handler({
       event: {},
-      file: onlyofficeFile,
-      isAvailableOffline: false
+      file: onlyofficeFile
     })
 
     expect(openInNewTab).not.toHaveBeenCalled()

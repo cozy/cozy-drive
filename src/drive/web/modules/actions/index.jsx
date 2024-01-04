@@ -20,7 +20,6 @@ import Divider from 'cozy-ui/transpiled/react/Divider'
 
 import { isEncryptedFolder, isEncryptedFile } from 'drive/lib/encryption'
 import DeleteConfirm from 'drive/web/modules/drive/DeleteConfirm'
-import MakeAvailableOfflineMenuItem from 'drive/web/modules/drive/MakeAvailableOfflineMenuItem'
 import DestroyConfirm from 'drive/web/modules/trash/components/DestroyConfirm'
 import { startRenamingAsync } from 'drive/web/modules/drive/rename'
 
@@ -247,18 +246,6 @@ export const versions = ({ navigate, pathname }) => {
         </ActionsMenuItem>
       )
     })
-  }
-}
-
-export const offline = () => {
-  return {
-    name: 'phone-download',
-    icon: 'phone-download',
-    displayCondition: selections =>
-      isMobileApp() && selections.length === 1 && isFile(selections[0]),
-    Component: function MakeAvailableOfflineMenuItemInMenu({ files, ...rest }) {
-      return <MakeAvailableOfflineMenuItem file={files[0]} {...rest} />
-    }
   }
 }
 

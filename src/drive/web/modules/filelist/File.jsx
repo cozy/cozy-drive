@@ -14,7 +14,6 @@ import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'
 import { ActionMenuWithHeader } from 'drive/web/modules/actionmenu/ActionMenuWithHeader'
 import FileThumbnail from 'drive/web/modules/filelist/FileThumbnail'
 import { isRenaming, getRenamingFile } from 'drive/web/modules/drive/rename'
-import { isAvailableOffline } from 'drive/mobile/modules/offline/duck'
 import FileOpener from 'drive/web/modules/filelist/FileOpener'
 import {
   SelectBox,
@@ -38,7 +37,6 @@ const File = ({
   isRenaming,
   withSelectionCheckbox,
   withFilePath,
-  isAvailableOffline,
   disabled,
   styleDisabled,
   thumbnailSizeBig,
@@ -85,8 +83,7 @@ const File = ({
     } else {
       onFileOpen({
         event,
-        file: attributes,
-        isAvailableOffline
+        file: attributes
       })
     }
   }
@@ -169,7 +166,6 @@ const File = ({
           ))}
         <Status
           file={attributes}
-          isAvailableOffline={isAvailableOffline}
           disabled={isRowDisabledOrInSyncFromSharing}
           isInSyncFromSharing={isInSyncFromSharing}
         />
@@ -206,7 +202,6 @@ File.propTypes = {
   isRenaming: PropTypes.bool,
   withSelectionCheckbox: PropTypes.bool.isRequired,
   withFilePath: PropTypes.bool,
-  isAvailableOffline: PropTypes.bool.isRequired,
   /** Disables row actions */
   disabled: PropTypes.bool,
   /** Apply disabled style on row */
@@ -224,7 +219,6 @@ File.propTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  isAvailableOffline: isAvailableOffline(state, ownProps.attributes.id),
   isRenaming:
     isRenaming(state) &&
     get(getRenamingFile(state), 'id') === ownProps.attributes.id

@@ -22,7 +22,6 @@ import {
   duplicate,
   qualify,
   versions,
-  offline,
   hr
 } from 'drive/web/modules/actions'
 import Toolbar from 'drive/web/modules/drive/Toolbar'
@@ -149,7 +148,6 @@ const DriveView = () => {
       move,
       duplicate,
       hr,
-      offline,
       open,
       versions,
       hr,

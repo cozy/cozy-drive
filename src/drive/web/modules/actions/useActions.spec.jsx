@@ -21,7 +21,6 @@ import {
   move,
   qualify,
   versions,
-  offline,
   restore,
   destroy
 } from './index'
@@ -90,7 +89,6 @@ describe('useActions', () => {
             move,
             qualify,
             versions,
-            offline,
             restore,
             destroy
           ],
@@ -140,7 +138,6 @@ describe('useActions', () => {
       'moveto',
       'qualify',
       'history',
-      'phone-download',
       'restore',
       'destroy'
     ])
@@ -387,29 +384,6 @@ describe('useActions', () => {
       expect(navigate).toHaveBeenCalledWith(
         'folder/:folderId/file/abc/revision'
       )
-    })
-  })
-
-  describe('offline action', () => {
-    it('is only displayed on mobile with a single file selected', () => {
-      const offlineAction = getAction('phone-download')
-
-      const validSelection = [{ type: 'file', id: 'abc' }]
-
-      isMobileApp.mockReturnValue(true)
-      expect(offlineAction.displayCondition(validSelection)).toBe(true)
-
-      isMobileApp.mockReturnValue(false)
-      expect(offlineAction.displayCondition(validSelection)).toBe(false)
-      expect(
-        offlineAction.displayCondition([
-          { type: 'file', id: 'abc' },
-          { type: 'file', id: 'def' }
-        ])
-      ).toBe(false)
-      expect(
-        offlineAction.displayCondition([{ type: 'folder', id: 'abc' }])
-      ).toBe(false)
     })
   })
 

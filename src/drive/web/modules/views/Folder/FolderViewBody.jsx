@@ -1,5 +1,4 @@
 import React, { useCallback, useContext, useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 import get from 'lodash/get'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -91,14 +90,12 @@ const FolderViewBody = ({
 
   const { capabilities } = useCapabilities(client)
   const isFlatDomain = get(capabilities, 'flat_subdomains')
-  const dispatch = useDispatch()
 
   const handleFileOpen = useCallback(
-    ({ event, file, isAvailableOffline }) => {
+    ({ event, file }) => {
       return createFileOpeningHandler({
         client,
         isFlatDomain,
-        dispatch,
         navigateToFile,
         replaceCurrentUrl: url => (window.location.href = url),
         openInNewTab: url => window.open(url, '_blank'),
@@ -109,13 +106,11 @@ const FolderViewBody = ({
         fromPublicFolder: isPublic
       })({
         event,
-        file,
-        isAvailableOffline
+        file
       })
     },
     [
       client,
-      dispatch,
       navigateToFile,
       isFlatDomain,
       navigate,
