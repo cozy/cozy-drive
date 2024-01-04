@@ -11,7 +11,6 @@
     "lint": "npm-run-all --parallel 'lint:*'",
     "lint:styles": "stylint src --config ./node_modules/cozy-scripts/config/.stylintrc",
     "lint:js": "eslint '{src,test}/**/*.{js,jsx}'",
-    "testcafe:drive": "node testcafe/runner-drive.js",
     "test": "env NODE_ENV='test' jest",
     "version": "yarn version:manifest",
     "version:manifest": "replace '\\d+\\.\\d+\\.\\d+' $npm_package_version ./src/drive/targets/manifest.webapp",
@@ -67,9 +66,7 @@
     "react-test-renderer": "16.14.0",
     "replace": "1.2.1",
     "stylint": "1.5.9",
-    "tar": "6.1.12",
     "terser-webpack-plugin": "1.4.5",
-    "testcafe": "2.0.2",
     "unzipper": "0.10.11",
     "visualreview-client": "git+https://github.com/cozy/VisualReview-node-client.git#v0.0.4",
     "worker-loader": "2.0.0"
