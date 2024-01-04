@@ -30,21 +30,6 @@ describe('Breadcrumbs', () => {
       // Then
       expect(container.querySelector('.inlined')).not.toBeEmptyDOMElement()
     })
-
-    it('should add inlined style while inlined prop true', () => {
-      // Given
-      const target = __TARGET__ // eslint-disable-line no-undef
-      __TARGET__ = 'mobile' // eslint-disable-line no-undef
-
-      // When
-      const { container } = render(<Breadcrumb path={path} />)
-
-      // Then
-      expect(container.querySelector('.mobile')).not.toBeEmptyDOMElement()
-
-      // After
-      __TARGET__ = target // eslint-disable-line no-undef
-    })
   })
 
   describe('events', () => {

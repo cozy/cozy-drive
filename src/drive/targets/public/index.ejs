@@ -21,10 +21,7 @@
     <meta name="theme-color" content="#ffffff" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow, noimageindex" />
-    <% if (__TARGET__ === 'mobile') { %>
-    <meta name="format-detection" content="telephone=no" />
-    <script src="cordova.js" defer></script>
-    <% } else if (__STACK_ASSETS__) { %>
+    <% if (__STACK_ASSETS__) { %>
     {{.CozyClientJS}}
     {{.CozyFonts}}
     <% } %> <% _.forEach(htmlWebpackPlugin.files.css, function(file) { %>

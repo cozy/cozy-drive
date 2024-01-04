@@ -1,4 +1,3 @@
-/* global __TARGET__ */
 import React, { useState } from 'react'
 
 import UINav from 'cozy-ui/transpiled/react/Nav'
@@ -33,15 +32,6 @@ export const Nav = () => {
         rx={/\/trash(\/.*)?/}
         clickState={clickState}
       />
-      {__TARGET__ === 'mobile' ? (
-        <NavItem
-          to="/settings"
-          icon="gear"
-          label="settings"
-          rx={/\/settings(\/.*)?/}
-          clickState={clickState}
-        />
-      ) : null}
     </UINav>
   )
 }

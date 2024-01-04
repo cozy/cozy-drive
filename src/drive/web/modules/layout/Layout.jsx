@@ -1,4 +1,3 @@
-/* global __TARGET__ */
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 
@@ -16,7 +15,6 @@ import Nav from 'drive/web/modules/navigation/Nav'
 import ButtonClient from 'components/pushClient/Button'
 import SupportUs from 'components/pushClient/SupportUs'
 import { UploadQueue } from 'drive/web/modules/upload'
-import UserActionRequired from 'drive/mobile/modules/authorization/UserActionRequired'
 import { SelectionProvider } from 'drive/web/modules/selection/SelectionProvider'
 
 initFlags()
@@ -35,7 +33,6 @@ const Layout = () => {
       </Sidebar>
       <Alerter t={t} />
       <UploadQueue />
-      {__TARGET__ === 'mobile' && <UserActionRequired />}
       <SelectionProvider>
         <Outlet />
       </SelectionProvider>

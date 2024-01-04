@@ -1,4 +1,3 @@
-/* global __TARGET__ */
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -28,7 +27,7 @@ const PushBanner = ({ isPublic }) => {
     return <QuotaBanner />
   }
 
-  if (__TARGET__ !== 'mobile' && !isFlagshipApp()) {
+  if (!isFlagshipApp()) {
     return <BannerClient />
   }
 

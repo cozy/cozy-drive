@@ -1,11 +1,9 @@
-/* global __DEVELOPMENT__, __TARGET__ */
+/* global __DEVELOPMENT__ */
 import { compose, createStore, applyMiddleware } from 'redux'
 import flag from 'cozy-flags'
 import { createLogger } from 'redux-logger'
-import RavenMiddleWare from 'redux-raven-middleware'
 import thunkMiddleware from 'redux-thunk'
 import createRootReducer from './rootReducer'
-import { ANALYTICS_URL, getReporterConfiguration } from 'drive/lib/reporter'
 
 /**
  * Creates the redux store
@@ -22,9 +20,6 @@ const configureStore = options => {
   const { client, t, initialState = {}, setStoreToClient = true } = options
 
   const middlewares = [thunkMiddleware.withExtraArgument({ client, t })]
-  if (__TARGET__ === 'mobile' && !__DEVELOPMENT__) {
-    middlewares.push(RavenMiddleWare(ANALYTICS_URL, getReporterConfiguration()))
-  }
 
   if (flag('drive.logger')) {
     middlewares.push(createLogger(loggerOptions()))

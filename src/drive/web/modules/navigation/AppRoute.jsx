@@ -1,14 +1,9 @@
-/* global __TARGET__ */
 import React from 'react'
 import { Routes, Route, useParams, Navigate } from 'react-router-dom'
-
-import Settings from 'drive/mobile/modules/settings/Settings'
-import OnBoarding from 'drive/mobile/modules/onboarding/OnBoarding'
 
 import Layout from 'drive/web/modules/layout/Layout'
 import FileOpenerExternal from 'drive/web/modules/viewer/FileOpenerExternal'
 import FileHistory from 'components/FileHistory'
-import UploadFromMobile from 'drive/mobile/modules/upload'
 
 import ExternalRedirect from './ExternalRedirect'
 import Index from './Index'
@@ -42,9 +37,6 @@ const AppRoute = () => (
   <Routes>
     <Route path="external/:fileId" element={<ExternalRedirect />} />
     <Route element={<Layout />}>
-      {__TARGET__ === 'mobile' && (
-        <Route path="uploadfrommobile" element={<UploadFromMobile />} />
-      )}
       <Route path="upload" element={<UploaderComponent />} />
       <Route path="/files/:folderId" element={<FilesRedirect />} />
       <Route path="/" element={<Index />} />
@@ -110,15 +102,9 @@ const AppRoute = () => (
         element={<OnlyOfficeCreateView />}
       />
 
-      {__TARGET__ === 'mobile' && (
-        <Route path="settings" element={<Settings />} />
-      )}
       <Route path="file/:fileId" element={<FileOpenerExternal />} />
       <Route path="search" element={<SearchView />} />
     </Route>
-    {__TARGET__ === 'mobile' && (
-      <Route path="onboarding" element={<OnBoarding />} />
-    )}
   </Routes>
 )
 
