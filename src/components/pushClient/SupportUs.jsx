@@ -8,7 +8,7 @@ import {
   shouldDisplayOffers,
   buildPremiumLink
 } from 'cozy-client/dist/models/instance'
-import { isMobileApp, isFlagshipApp } from 'cozy-device-helper'
+import { isFlagshipApp } from 'cozy-device-helper'
 import { useInstanceInfo } from 'cozy-client'
 
 import styles from './supportUs.styl'
@@ -17,7 +17,7 @@ const SupportUs = () => {
   const { t } = useI18n()
   const instanceInfo = useInstanceInfo()
 
-  if (!instanceInfo.isLoaded || isMobileApp() || isFlagshipApp()) return null
+  if (!instanceInfo.isLoaded || isFlagshipApp()) return null
 
   if (shouldDisplayOffers(instanceInfo)) {
     return (
