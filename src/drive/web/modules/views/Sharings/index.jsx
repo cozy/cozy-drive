@@ -22,7 +22,6 @@ import {
   move,
   qualify,
   versions,
-  offline,
   share,
   hr
 } from 'drive/web/modules/actions'
@@ -97,7 +96,7 @@ export const SharingsView = ({ sharedDocumentIds = [], allLoaded = true }) => {
   }
 
   const actions = useActions(
-    [share, download, hr, qualify, rename, move, hr, offline, open, versions],
+    [share, download, hr, qualify, rename, move, hr, open, versions],
     actionsOptions
   )
 

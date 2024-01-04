@@ -43,7 +43,6 @@ const FileList = ({ targets, files, folder, navigateTo }) => {
             withFilePath={false}
             withSharedBadge
             disableSelection={true}
-            isAvailableOffline={false}
           />
         ))}
       </>

@@ -24,8 +24,7 @@ import {
   rename,
   move,
   qualify,
-  versions,
-  offline
+  versions
 } from 'drive/web/modules/actions'
 import Toolbar from 'drive/web/modules/drive/Toolbar'
 import FolderView from '../Folder/FolderView'
@@ -112,7 +111,7 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
     canMove: true
   }
   const actions = useActions(
-    [share, download, trash, open, rename, move, qualify, versions, offline],
+    [share, download, trash, open, rename, move, qualify, versions],
     actionsOptions
   )
 
