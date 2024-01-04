@@ -4,12 +4,10 @@ import { generateFile } from 'test/generate'
 import { trashFiles, downloadFiles } from './utils'
 import {
   getEncryptionKeyFromDirId,
-  downloadEncryptedFile,
-  decryptFile
+  downloadEncryptedFile
 } from 'drive/lib/encryption'
 import { DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
 import { TRASH_DIR_ID } from 'constants/config'
-import { saveAndOpenWithCordova } from 'cozy-client/dist/models/fsnative'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
 jest.mock('drive/web/modules/navigation/AppRoute', () => ({
@@ -18,12 +16,6 @@ jest.mock('drive/web/modules/navigation/AppRoute', () => ({
 
 jest.mock('cozy-stack-client/dist/utils', () => ({
   forceFileDownload: jest.fn()
-}))
-
-jest.mock('cozy-client/dist/models/fsnative', () => ({
-  ...jest.requireActual('cozy-client/dist/models/fsnative'),
-  saveAndOpenWithCordova: jest.fn(),
-  saveFileWithCordova: jest.fn()
 }))
 
 jest.mock('cozy-ui/transpiled/react/deprecated/Alerter', () => ({
