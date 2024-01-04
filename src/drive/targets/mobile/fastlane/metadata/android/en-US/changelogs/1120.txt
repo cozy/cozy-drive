@@ -1,6 +1,0 @@
-Thanks for using Cozy Drive ! ☁️
-
-This update includes
-- improvements on sharing by links
-- and as usual some fixed bugs
-

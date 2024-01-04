@@ -1,8 +1,0 @@
-{
-  "config_ios": {
-    "NSContactsUsageDescription": "Sauvegardez les contacts de votre appareil sur votre Cozy — cela facilitera le partage de fichiers avec eux.",
-    "NSPhotoLibraryUsageDescription": "Sauvegarde et synchronisation automatique de vos photos pour ne plus jamais les perdre.",
-    "NSCameraUsageDescription": "Prenez une photo et synchronisez la automatiquement sur votre Cozy.",
-    "NSPhotoLibraryAddUsageDescription": "need photo library access to save pictures there"
-  }
-}

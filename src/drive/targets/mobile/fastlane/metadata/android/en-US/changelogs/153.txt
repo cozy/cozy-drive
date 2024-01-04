@@ -1,2 +1,0 @@
-Thank you for using Cozy Drive! ☁️
-This version fixes a number of small bugs, such as the list of file not updating after an upload and specific error messages when trying to upload files while offline.

@@ -1,4 +1,0 @@
-Merci d’utiliser Cozy ! Voici ce qu’apporte cette nouvelle version :
-- ajout d'une invitation à noter l'application
-- ajout d'un écran lors de la mise en route pour activer la synchronisation de contacts dès le départ
-- divers corrections

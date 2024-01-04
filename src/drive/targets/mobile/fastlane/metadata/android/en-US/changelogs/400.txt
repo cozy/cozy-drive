@@ -1,4 +1,0 @@
-- You can view files offline
-- Photos backup stability and performance has been improved
-- You can view recently modified files directly from the new "Recents" tab
-- Minor fixes to sharing

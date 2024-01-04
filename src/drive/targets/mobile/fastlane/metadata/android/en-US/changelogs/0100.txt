@@ -1,6 +1,0 @@
-Thank you for using Cozy! Here are the latest changes:
-
-- add the PDF viewer
-- improved handling of files unsupported by the viewer
-- re-enabled of folder renaming (finally!)
-- improve media backup interface

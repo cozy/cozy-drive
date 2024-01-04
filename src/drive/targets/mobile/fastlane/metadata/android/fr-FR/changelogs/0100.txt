@@ -1,7 +1,0 @@
-Merci d'utiliser Cozy Drive ! ☁️
-Dans cette version :
-
-- ajout de la visionneuse PDF
-- amélioration de la gestion des fichiers non supportés par la visionneuse
-- réactivation du renommage de dossier (finalement !)
-- amélioration de l'interface de sauvegarde de médias

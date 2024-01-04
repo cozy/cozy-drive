@@ -1,6 +1,0 @@
-Thank you for using Cozy Drive! ☁️
-Here are the changes in the latest version of the app:
-
-- Minor UX improvements
-- Improved status indicator of a shared folder
-- Fixed a bug when an invoice was opened from Cozy Banks

@@ -1,5 +1,0 @@
-Thank you for using Cozy! Here are the latest changes:
-- new feature: new upload component that supports multiple files and shows a progress meter
-- better error messages
-- fixed bugs on date format of files
-- other minor bug fixes

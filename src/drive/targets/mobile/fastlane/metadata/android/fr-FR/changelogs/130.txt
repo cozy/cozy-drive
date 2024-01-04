@@ -1,6 +1,0 @@
-Merci d'utiliser Cozy Drive ! ☁️
-Dans cette version :
-
-- Le bouton de fermeture de la visionneuse est désormais à sa place, en haut à droite !
-- Correction : les liens de partage n'étaient pas supprimés lorsqu'un dossier était supprimé
-- Suppression de la sauvegarde de contacts. C'était source de confusion, et nous allons rendre disponible quelque chose de mieux !

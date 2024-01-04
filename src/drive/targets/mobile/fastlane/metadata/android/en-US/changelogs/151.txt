@@ -1,7 +1,0 @@
-Thank you for using Cozy Drive! ☁️
-Here are the changes in the latest version of the app:
-
-- Files are now loaded by batches of 100 instead of 50
-- Add files to your Cozy from other apps
-- Disabled sorting on mobile for performance reasons
-- Multiple bug fixes

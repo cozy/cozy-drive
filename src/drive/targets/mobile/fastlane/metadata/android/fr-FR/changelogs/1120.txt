@@ -1,5 +1,0 @@
-Merci d'utiliser Cozy Drive ! ☁️
-
-Cette nouvelle version comprend
-- des améliorations sur le partage et la suppression des liens partagés
-- et des corrections de bugs.

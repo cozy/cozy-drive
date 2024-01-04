@@ -1,8 +1,0 @@
-Thank you for using Cozy Drive! ☁️
-Here are the latest changes:
-
-- Improve media backup (more to come!)
-- Improve recent tab: folder path are now shown
-- Add a search bar (not enabled yet)
-- Fix the generated link when sharing by link
-- Fix many, many bugs

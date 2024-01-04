@@ -1,4 +1,0 @@
-Thank you for using Cozy! Here are the latest changes:
-- Sharing a folder or a file with another Cozy is now possible!
-- A default contact picture is now displayed next to each contact (sharing)
-- Fix the "Download Cozy Drive for desktop" button in the web interface

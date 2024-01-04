@@ -1,7 +1,0 @@
-Thank you for using Cozy Drive! ☁️
-New in this version:
-
-- UX improvements around the sharing dialog
-- Downloading a large file would crash the app — this is now solved
-- Show the upload progress of individual photos
-- Various fixes

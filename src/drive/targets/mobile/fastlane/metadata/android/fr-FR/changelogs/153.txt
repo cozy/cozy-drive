@@ -1,2 +1,0 @@
-Merci d'utiliser Cozy Drive ! ☁️
-Cette version corrige quelques problèmes mineurs, comme la liste de fichiers qui ne se mettait plus à jour après un ajout ou la détection de l'état hors-ligne lors d'un upload.

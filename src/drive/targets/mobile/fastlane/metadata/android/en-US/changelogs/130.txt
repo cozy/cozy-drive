@@ -1,3 +1,0 @@
-- The viewer's close button is now at its proper place, on the top right corner!
-- Fix: sharing links were not removed when a folder was deleted
-- Remove contacts backup. It was confusing, and something better is coming!

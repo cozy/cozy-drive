@@ -1,6 +1,0 @@
-Merci d'utiliser Cozy Drive ! ☁️
-Dans cette version :
-
-- Ajout d'une visionneuse d'images
-- Amélioration de la première expérience d'utilisation
-- Correction d'un bogue sur Firefox 52 qui provoquait une erreur critique de l'application

@@ -1,3 +1,0 @@
-- correction : le barre de menu en haut de l'écran est désormais cachée sur tablette (comme prévu)
-- amélioration de la lisibilité et de la visibilité du menu
-- correction: toutes les photos étaient sauvegardées, et pas seulement celles de l'appareil photos

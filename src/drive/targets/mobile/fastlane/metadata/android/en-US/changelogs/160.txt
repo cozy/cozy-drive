@@ -1,9 +1,0 @@
-Thank you for using Cozy Drive! ☁️
-
-- The sort feature is back, with improved performances
-- Overall performances have been improved
-- Fix display for iphone X
-- Add a feature to export files to other applications
-- Improve unsupported file state in the viewer
-- Block the application when user has not accepted new CGUs (hosted by Cozy Cloud only)
-- Various minor improvements in the interface

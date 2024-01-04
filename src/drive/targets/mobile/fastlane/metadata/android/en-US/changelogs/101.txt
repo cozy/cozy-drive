@@ -1,8 +1,0 @@
-Today is day one! 🎉
-We are officially launching our platform along with the apps. We hope you will like our version 1! 😎
-
-Thank you for using Cozy Drive! ☁️
-In this release:
-- improved performance, especially once the initialization is done
-- improved visual feedback during photos backup
-- many bug fixes

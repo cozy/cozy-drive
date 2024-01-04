@@ -1,7 +1,0 @@
-Thank you for using Cozy Drive! ☁️
-New in this version:
-
-- Before accepting shared content, friends and family will now be able to see a preview of the content
-- The app will now warn you if you're about to delete content that is shared with someone else
-- Files made available offline in the mobile app will stay up to date, even if you change them on another device
-- Lots of fixed bugs!

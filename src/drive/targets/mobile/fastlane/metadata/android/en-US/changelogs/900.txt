@@ -1,6 +1,0 @@
-Thank you for using Cozy Drive! ☁️
-Here are the latest changes:
-
-- Add an image viewer
-- Improve first time user experience
-- Fix a bug for Firefox 52 which crashed the application

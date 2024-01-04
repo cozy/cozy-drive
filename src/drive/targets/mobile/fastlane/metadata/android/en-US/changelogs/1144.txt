@@ -1,4 +1,0 @@
-Thank you for using Cozy Drive!
-This version only contains some minor bugs fixed. That's it.
-
-If you've come across a problem, want to provide a suggestion or require support, you can reach Claude, he will be glad to help : claude@cozycloud.cc
