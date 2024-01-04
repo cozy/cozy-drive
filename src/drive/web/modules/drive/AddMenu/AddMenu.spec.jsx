@@ -1,8 +1,6 @@
 import React from 'react'
 import { render, act } from '@testing-library/react'
 
-import { isMobileApp } from 'cozy-device-helper'
-
 import { setupFolderContent, mockCozyClientRequestQuery } from 'test/setup'
 import { useAppLinkWithStoreFallback } from 'cozy-client'
 import { ScannerProvider } from 'drive/web/modules/drive/Toolbar/components/Scanner/ScannerProvider'
@@ -10,11 +8,6 @@ import AppLike from 'test/components/AppLike'
 import { ActionMenuContent } from './AddMenu'
 
 jest.mock('cozy-client/dist/hooks/useAppLinkWithStoreFallback', () => jest.fn())
-
-jest.mock('cozy-device-helper', () => ({
-  ...jest.requireActual('cozy-device-helper'),
-  isMobileApp: jest.fn().mockReturnValue(false)
-}))
 
 mockCozyClientRequestQuery()
 
@@ -64,8 +57,6 @@ describe('AddMenu', () => {
       })
     })
     it('does not display createNote on public Page', async () => {
-      isMobileApp.mockReturnValue(true)
-
       await act(async () => {
         const { root } = await setup(
           { folderId: 'directory-foobar0' },
@@ -77,8 +68,6 @@ describe('AddMenu', () => {
     })
 
     it('displays createNote on private Page', async () => {
-      isMobileApp.mockReturnValue(true)
-
       await act(async () => {
         const { root } = await setup(
           { folderId: 'directory-foobar0' },
@@ -90,8 +79,6 @@ describe('AddMenu', () => {
     })
 
     it('does not display non-supported items inside an encrypted directory', async () => {
-      isMobileApp.mockReturnValue(false)
-
       await act(async () => {
         const { root } = await setup(
           { folderId: 'directory-foobar0' },
