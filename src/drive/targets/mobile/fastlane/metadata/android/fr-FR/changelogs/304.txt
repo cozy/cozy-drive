@@ -1,5 +1,0 @@
-Merci d’utiliser Cozy ! Voici ce qu’apporte cette nouvelle version :
-- nouvelle fonctionnalité : nouveau composant de téléversement qui supporte plusieurs fichiers et affiche une barre de progression
-- de meilleurs messages d’erreurs
-- correction du format de la date des fichiers
-- autres améliorations mineures.

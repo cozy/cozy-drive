@@ -1,8 +1,0 @@
-Merci d'utiliser Cozy Drive ! ☁️
-Dans cette version:
-
-- Ajout du tri par nom et date
-- Amélioration de l'état de chargement d'un dossier
-- Les résultats de recherche s'ouvrent désormais dans la visionneuse
-- (mobile) Amélioration de la lisibilité (des lignes plus grandes avec plus d'informations)
-- Correction de bogues mineurs

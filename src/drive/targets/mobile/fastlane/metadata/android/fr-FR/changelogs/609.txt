@@ -1,2 +1,0 @@
-- Amélioration de la vitesse de réaction des boutons sur iOS
-- Amélioration massive de la sauvegarde de photos, particulièrement sur iOS

@@ -1,6 +1,0 @@
-Thank you for using Cozy Drive! ☁️
-Here are the changes in the latest version of the app:
-
-- Longer delay before asking you to rate the mobile app
-- The UI shows when the app is looking for files to back up
-- Fixed a bug causing the app to claim it had been revoked when it hadn't

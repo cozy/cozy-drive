@@ -1,7 +1,0 @@
-Merci d'utiliser Cozy Drive ! ☁️
-Voici les derniers changements:
-
-- Amelioration de l'UX autour du partage
-- Le téléchargement d'un fichier trop volumineux faisait planter l'app
-- Affichage du progrès d'upload des photos individuelles
-- Divers corrections

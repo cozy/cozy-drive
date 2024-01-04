@@ -1,7 +1,0 @@
-Merci d'utiliser Cozy Drive ! ☁️
-Voici les derniers changements:
-
-- Amis et famille pourront maintenant prévisualiser le contenu d'un partage avant de l'accepter.
-- L'application vous préviendras désormais avant de supprimer un contenu partagé.
-- Les fichiers dont vous gardez une copie hors ligne seront mis à jour, même si vous les modifiez sur un autre appareil.
-- … et de nombreuses corrections de bugs !

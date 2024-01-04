@@ -1,3 +1,0 @@
-package_name "io.cozy.drive.mobile"
-json_key "./keys/android/key.json"
-apk "build/android/cozy-drive.apk"

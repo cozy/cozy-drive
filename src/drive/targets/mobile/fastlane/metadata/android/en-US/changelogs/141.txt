@@ -1,8 +1,0 @@
-Thank you for using Cozy Drive! ☁️
-Here are the changes in the latest version of the app:
-
-- Add sort by name & date
-- Improve folder loading state
-- Search results now open within the viewer
-- (mobile) Improve readability (bigger lines with more information)
-- Minor bug fixes

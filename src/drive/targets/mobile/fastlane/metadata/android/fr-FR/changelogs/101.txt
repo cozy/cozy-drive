@@ -1,8 +1,0 @@
-Aujourd’hui est le dernier du reste de notre vie ! 🎉
-Nous lançons officiellement notre plateforme avec ses apps. Nous espérons que vous allez aimez notre version 1 ! 😎
-
-Merci d'utiliser Cozy Drive ! ☁️
-Dans cette version :
-- amélioration des performances, particulièrement une fois que l'initialisation est terminée
-- amélioration du retour visuel lors de la sauvegarde des photos
-- de nombreuses corrections de bogues

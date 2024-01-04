@@ -1,7 +1,0 @@
-Thank you for using Cozy Drive! ☁️
-New in this version:
-
-- There's now a new view dedicated to shared files
-- The existing UI around sharings has been improved
-- Fixed a bug with contact details autocompletes not being available
-- Changes made to files and folders elsewhere are now reflected in real time

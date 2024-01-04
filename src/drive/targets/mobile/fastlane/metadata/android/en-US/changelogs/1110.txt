@@ -1,7 +1,0 @@
-Thank you for using Cozy Drive! ☁️
-New in this version:
-
-- You can now move your files and folders inside your Cozy!
-- This includes the folder containing the backup of your photos — place it and name it at your leisure.
-- The sharing UI is back, easier to use than ever and with better performances!
-- You can now download photos straight from the photo viewer.

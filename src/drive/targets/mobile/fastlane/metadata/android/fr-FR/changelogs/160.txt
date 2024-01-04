@@ -1,9 +1,0 @@
-Merci d'utiliser Cozy Drive ! ☁️
-
-- Réapparition de la fonction de tri, avec des peformances améliorées
-- Amélioration de performances globales
-- Correction de l'affichage iphone X
-- Ajout d'une fonctionnalité d'exportation de fichiers vers d'autres apps
-- Amélioration de l'état de la visionneuse quand le fichier n'est pas pris en charge
-- Ajout d'un mécanisme de blocage de l'app quand l'utilisateur n'a pas accepté des nouvelles CGUs (hébergement Cozy Cloud uniquement)
-- Plusieurs petites améliorations d'affichage dans l'application

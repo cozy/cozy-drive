@@ -1,7 +1,0 @@
-Merci d'utiliser Cozy Drive ! ☁️
-Voici les derniers changements:
-
-- Vous pouvez désormais déplacer vos fichiers et dossiers à l'intérieur de votre Cozy !
-- Le dossier qui abrite vos photos sauvegardées peut lui aussi être déplacé et renommer sans problème.
-- L'interface de partage reviens avec des performances ameilorées et une UI plus ergonomique
-- Possibilité de télécharger une photo depuis la visionneuse

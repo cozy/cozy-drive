@@ -1,6 +1,0 @@
-Merci d'utiliser Cozy Drive ! ☁️
-Dans cette version:
-
-- Les fichiers sont maintenant chargés par groupe de 100 à la place de 50
-- Possibilité d'ajouter des fichiers dans son Cozy via d'autres applications sur mobile
-- Correctifs divers

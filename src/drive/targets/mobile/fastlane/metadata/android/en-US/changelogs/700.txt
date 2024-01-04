@@ -1,7 +1,0 @@
-Thank you for using Cozy Drive! ☁️
-Here are the latest changes:
-
-- Improve "Recent" tab: folder paths are now shown
-- Improve the contact picker in the sharing form
-- Fix multiple issues with sharing
-- Fix minor issues (almost invisible to users)

@@ -1,8 +1,0 @@
-Merci d'utiliser Cozy Drive ! ☁️
-Dans cette version :
-
-- Amélioration de la sauvegarde de médias (et ce n'est pas fini !)
-- Amélioration de l'onglet récent : le chemin des dossiers est affiché
-- Ajout d'une barre de recherche (pas encore activé)
-- Correction du lien généré par le partage par lien
-- Correction de très nombreux bogues

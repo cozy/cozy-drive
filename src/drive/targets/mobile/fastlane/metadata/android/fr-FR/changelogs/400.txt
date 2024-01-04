@@ -1,4 +1,0 @@
-- Vous pouvez consulter des fichiers hors-ligne
-- La stabilité et les performances de la sauvegarde de photos ont été améliorées
-- Vous pouvez consulter les fichiers récemment modifiées directement depuis le nouvel onglet "Récent"
-- Des corrections mineurs ont été apportées au partage

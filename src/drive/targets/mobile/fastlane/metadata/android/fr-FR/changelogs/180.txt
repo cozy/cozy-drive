@@ -1,7 +1,0 @@
-Merci d'utiliser Cozy Drive ! ☁️
-Voici les derniers changements:
-
-- Il y a maintenant une vue dédiée aux fichiers partagés.
-- L'interface existante autour des partages a été améliorée.
-- Correction d'un bug empêchant l'auto-completion de contacts lors d'un partage.
-- Les changements apportés aux fichiers et dossiers en dehors de l'application sont maintenant affichés en temps réel.

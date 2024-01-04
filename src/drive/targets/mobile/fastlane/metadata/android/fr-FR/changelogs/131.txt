@@ -1,6 +1,0 @@
-Merci d'utiliser Cozy Drive ! ☁️
-Dans cette version:
-
-- Améliorations mineures de l'expérience utilisateur
-- Amélioration de l'affichage du statut d'un dossier partagé
-- Correction d'une anomalie à l'ouverture d'une facture depuis Cozy Banks

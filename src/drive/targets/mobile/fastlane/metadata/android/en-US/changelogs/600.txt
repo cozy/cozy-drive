@@ -1,5 +1,0 @@
-Thank you for using Cozy! Here are the latest changes:
-- You can share to multiple contacts at once
-- Fix public link sharing which was sometimes showing an error message
-- The photo backup has been improved
-- Fix the trash screen on mobile

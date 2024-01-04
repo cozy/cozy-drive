@@ -1,2 +1,0 @@
-- Improvement of button responsiveness on iOS
-- Massive improvement of photo backup, especially on iOS

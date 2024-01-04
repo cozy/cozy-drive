@@ -1,4 +1,0 @@
-Thank you for using Cozy! Here are the latest changes:
-- added a dialog to invite users to give feedbacks and rate the application
-- added a screen during onboarding so users can enable contact saving from the get go
-- various fixes

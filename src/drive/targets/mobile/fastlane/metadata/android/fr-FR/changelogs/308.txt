@@ -1,4 +1,0 @@
-Merci d’utiliser Cozy ! Voici ce qu’apporte cette nouvelle version :
-- Le partage d'un dossier ou d'un fichier à un autre Cozy est désormais disponible !
-- Une image de contact par défaut est désormais affichée pour chaque contact (partage)
-- Correction du bouton "Télécharger Cozy Drive pour ordinateur" dans l'interface web
