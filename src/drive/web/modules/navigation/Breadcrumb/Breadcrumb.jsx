@@ -1,4 +1,3 @@
-/* global __TARGET__ */
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -49,7 +48,6 @@ const Breadcrumb = ({
         styles['fil-path-backdrop'],
         { [styles['deployed']]: deployed },
         { [styles['inlined']]: inlined },
-        { [styles['mobile']]: __TARGET__ === 'mobile' },
         className
       )}
     >

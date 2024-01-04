@@ -1,5 +1,3 @@
-/* global __TARGET__ */
-
 import React, { useCallback, useContext, useEffect, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate, Outlet, useLocation, useParams } from 'react-router-dom'
@@ -29,9 +27,6 @@ import {
 } from 'drive/web/modules/actions'
 import Toolbar from 'drive/web/modules/drive/Toolbar'
 import { ROOT_DIR_ID } from 'constants/config'
-import MediaBackupProgression from 'drive/mobile/modules/mediaBackup/MediaBackupProgression'
-import RatingModal from 'drive/mobile/modules/settings/RatingModal'
-import FirstUploadModal from 'drive/mobile/modules/mediaBackup/FirstUploadModal'
 import {
   buildDriveQuery,
   buildFileWithSpecificMetadataAttributeQuery
@@ -200,16 +195,9 @@ const DriveView = () => {
           disabled={isLoading || isInError || isPending}
         />
       </FolderViewHeader>
-      {__TARGET__ === 'mobile' && (
-        <div>
-          {currentFolderId === ROOT_DIR_ID && <MediaBackupProgression />}
-          <FirstUploadModal />
-          <RatingModal />
-        </div>
-      )}
       <Dropzone
         role="main"
-        disabled={__TARGET__ === 'mobile' || !canWriteToCurrentFolder}
+        disabled={!canWriteToCurrentFolder}
         displayedFolder={displayedFolder}
       >
         {flag('drive.show.harvest-banner') && (

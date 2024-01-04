@@ -1,5 +1,3 @@
-/* global __TARGET__ */
-
 import PropTypes from 'prop-types'
 
 import {
@@ -54,7 +52,4 @@ export const makeExtraColumnsNamesFromMedia = ({
   isMobile,
   mobileExtraColumnsNames,
   desktopExtraColumnsNames
-}) =>
-  isMobile || __TARGET__ === 'mobile'
-    ? mobileExtraColumnsNames
-    : desktopExtraColumnsNames
+}) => (isMobile ? mobileExtraColumnsNames : desktopExtraColumnsNames)
