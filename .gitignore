@@ -34,9 +34,6 @@ desktop.ini
 .flooignore
 .brackets.json
 
-# testcafe data
-testcafe/data/FILES TO TEST
-
 # cozy-jobs-cli
 .token.json
 konnector-dev-config.json
