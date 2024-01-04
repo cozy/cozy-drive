@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react'
 
 import { isFile } from 'cozy-client/dist/models/file'
-import { isIOSApp, isMobileApp } from 'cozy-device-helper'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
@@ -11,8 +10,6 @@ import MultiFilesIcon from 'cozy-ui/transpiled/react/Icons/MultiFiles'
 import QualifyIcon from 'cozy-ui/transpiled/react/Icons/Qualify'
 import HistoryIcon from 'cozy-ui/transpiled/react/Icons/History'
 import RestoreIcon from 'cozy-ui/transpiled/react/Icons/Restore'
-import LinkOutIcon from 'cozy-ui/transpiled/react/Icons/LinkOut'
-import EyeIcon from 'cozy-ui/transpiled/react/Icons/Eye'
 import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
@@ -23,7 +20,7 @@ import DeleteConfirm from 'drive/web/modules/drive/DeleteConfirm'
 import DestroyConfirm from 'drive/web/modules/trash/components/DestroyConfirm'
 import { startRenamingAsync } from 'drive/web/modules/drive/rename'
 
-import { downloadFiles, openFileWith, restoreFiles } from './utils'
+import { downloadFiles, restoreFiles } from './utils'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import {
   navigateToModal,
@@ -97,35 +94,6 @@ export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
             <Icon icon={TrashIcon} color="var(--errorColor)" />
           </ListItemIcon>
           <ListItemText className="u-error" primary={t('SelectionBar.trash')} />
-        </ActionsMenuItem>
-      )
-    })
-  }
-}
-export const open = ({ client, vaultClient }) => {
-  return {
-    name: 'openWith',
-    icon: 'openWith',
-    displayCondition: selection =>
-      isMobileApp() && selection.length === 1 && isFile(selection[0]),
-    action: files =>
-      openFileWith(client, Array.isArray(files) ? files[0] : files, {
-        vaultClient
-      }),
-    Component: forwardRef(function Open(props, ref) {
-      const { t } = useI18n()
-      return (
-        <ActionsMenuItem {...props} ref={ref}>
-          <ListItemIcon>
-            <Icon icon={isIOSApp() ? EyeIcon : LinkOutIcon} />
-          </ListItemIcon>
-          <ListItemText
-            primary={
-              isIOSApp()
-                ? t('SelectionBar.applePreview')
-                : t('SelectionBar.openWith')
-            }
-          />
         </ActionsMenuItem>
       )
     })

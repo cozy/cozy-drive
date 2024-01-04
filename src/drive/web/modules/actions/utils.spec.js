@@ -1,7 +1,7 @@
 import { createMockClient } from 'cozy-client'
 import { initQuery, receiveQueryResult } from 'cozy-client/dist/store'
 import { generateFile } from 'test/generate'
-import { trashFiles, downloadFiles, openFileWith } from './utils'
+import { trashFiles, downloadFiles } from './utils'
 import {
   getEncryptionKeyFromDirId,
   downloadEncryptedFile,
@@ -9,7 +9,6 @@ import {
 } from 'drive/lib/encryption'
 import { DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
 import { TRASH_DIR_ID } from 'constants/config'
-import { isMobileApp } from 'cozy-device-helper'
 import { saveAndOpenWithCordova } from 'cozy-client/dist/models/fsnative'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
@@ -19,11 +18,6 @@ jest.mock('drive/web/modules/navigation/AppRoute', () => ({
 
 jest.mock('cozy-stack-client/dist/utils', () => ({
   forceFileDownload: jest.fn()
-}))
-
-jest.mock('cozy-device-helper', () => ({
-  ...jest.requireActual('cozy-device-helper'),
-  isMobileApp: jest.fn()
 }))
 
 jest.mock('cozy-client/dist/models/fsnative', () => ({
@@ -207,87 +201,5 @@ describe('downloadFiles', () => {
     expect(Alerter.error).toHaveBeenCalledWith(
       'error.download_file.encryption_many'
     )
-  })
-})
-
-describe('openFileWith', () => {
-  const mockClient = createMockClient({})
-  const blobMock = jest.fn()
-  const file = generateFile({ i: 0 })
-  file.mime = 'text'
-  const encryptedFile = { ...file, encrypted: true }
-  const vaultClient = {}
-  let cordovaBackup
-
-  beforeEach(() => {
-    jest.resetAllMocks()
-    isMobileApp.mockReturnValue(true)
-
-    mockClient.collection = jest.fn().mockReturnValue(mockClient)
-    mockClient.fetchFileContentById = jest.fn().mockReturnValue({
-      blob: blobMock
-    })
-    mockClient.getFileTypeFromName = jest.fn().mockReturnValue('fake-mime')
-
-    cordovaBackup = window.cordova
-    window.cordova = { plugins: { fileOpener2: {} } }
-  })
-
-  afterEach(() => {
-    window.cordova = cordovaBackup
-  })
-
-  it('opens the file with cordova', async () => {
-    blobMock.mockReturnValue('fake file blob')
-    await openFileWith(mockClient, file)
-    expect(mockClient.fetchFileContentById).toHaveBeenCalledWith(file.id)
-    expect(saveAndOpenWithCordova).toHaveBeenCalledWith('fake file blob', file)
-  })
-
-  it('open an encrypted file', async () => {
-    getEncryptionKeyFromDirId.mockResolvedValueOnce('encryption-key')
-    decryptFile.mockResolvedValueOnce('fake file blob')
-    await openFileWith(mockClient, encryptedFile, { vaultClient })
-    expect(decryptFile).toHaveBeenCalledWith(
-      mockClient,
-      {},
-      {
-        file: encryptedFile,
-        encryptionKey: 'encryption-key'
-      }
-    )
-    expect(saveAndOpenWithCordova).toHaveBeenCalledWith('fake file blob', {
-      ...encryptedFile,
-      mime: 'fake-mime'
-    })
-  })
-
-  it('errors when the plugin is not present', async () => {
-    window.cordova.plugins.fileOpener2 = null
-
-    await openFileWith(mockClient, file)
-    expect(Alerter.info).toHaveBeenCalledWith('mobile.error.open_with.noapp', {
-      fileMime: file.mime
-    })
-  })
-
-  it('errors when it fails to download the file', async () => {
-    expect.assertions(2)
-    mockClient.fetchFileContentById = jest.fn().mockRejectedValue('nope')
-    try {
-      await openFileWith(mockClient, file)
-    } catch (e) {
-      expect(e).toMatch('nope')
-    }
-    expect(Alerter.error).toHaveBeenCalled()
-  })
-
-  it('errors when opening the filewith cordova fails', async () => {
-    saveAndOpenWithCordova.mockRejectedValue('nope')
-    await openFileWith(mockClient, file)
-
-    expect(Alerter.info).toHaveBeenCalledWith('mobile.error.open_with.noapp', {
-      fileMime: file.mime
-    })
   })
 })

@@ -20,7 +20,6 @@ import {
   share,
   download,
   trash,
-  open,
   rename,
   move,
   qualify,
@@ -111,7 +110,7 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
     canMove: true
   }
   const actions = useActions(
-    [share, download, trash, open, rename, move, qualify, versions],
+    [share, download, trash, rename, move, qualify, versions],
     actionsOptions
   )
 

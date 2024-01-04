@@ -1,13 +1,12 @@
 import React from 'react'
 import { renderHook } from '@testing-library/react-hooks'
 import { createMockClient } from 'cozy-client'
-import { isMobileApp } from 'cozy-device-helper'
 
 import AppLike from 'test/components/AppLike'
 import DeleteConfirm from 'drive/web/modules/drive/DeleteConfirm'
 import DestroyConfirm from 'drive/web/modules/trash/components/DestroyConfirm'
 import { createStore } from 'redux'
-import { downloadFiles, openFileWith, restoreFiles } from './utils'
+import { downloadFiles, restoreFiles } from './utils'
 import * as renameModule from 'drive/web/modules/drive/rename'
 import { useSelectionContext } from 'drive/web/modules/selection/SelectionProvider'
 
@@ -16,7 +15,6 @@ import {
   share,
   download,
   trash,
-  open,
   rename,
   move,
   qualify,
@@ -30,11 +28,6 @@ jest.mock('./utils', () => ({
   trashFiles: jest.fn(),
   openFileWith: jest.fn(),
   restoreFiles: jest.fn()
-}))
-
-jest.mock('cozy-device-helper', () => ({
-  ...jest.requireActual('cozy-device-helper'),
-  isMobileApp: jest.fn()
 }))
 
 jest.mock('drive/web/modules/selection/SelectionProvider', () => ({
@@ -84,7 +77,6 @@ describe('useActions', () => {
             share,
             download,
             trash,
-            open,
             rename,
             move,
             qualify,
@@ -133,7 +125,6 @@ describe('useActions', () => {
       'share',
       'download',
       'trash',
-      'openWith',
       'rename',
       'moveto',
       'qualify',
@@ -235,39 +226,6 @@ describe('useActions', () => {
 
       actuallyCalledModal.props.afterConfirmation()
       expect(mockRefresh).toHaveBeenCalled()
-    })
-  })
-
-  describe('open action', () => {
-    it('is only displayed on mobile with a single file selected', () => {
-      const openAction = getAction('openWith')
-
-      const validSelection = [{ type: 'file', id: 'abc' }]
-      isMobileApp.mockReturnValue(true)
-
-      expect(openAction.displayCondition(validSelection)).toBe(true)
-
-      isMobileApp.mockReturnValue(false)
-      expect(openAction.displayCondition(validSelection)).toBe(false)
-      expect(
-        openAction.displayCondition([
-          { type: 'file', id: 'abc' },
-          { type: 'file', id: 'def' }
-        ])
-      ).toBe(false)
-      expect(openAction.displayCondition([{ type: 'folder', id: 'abc' }])).toBe(
-        false
-      )
-    })
-
-    it('opens a file when activated', () => {
-      const openAction = getAction('openWith')
-      const mockDocument = { id: 'abc', name: 'my-file.md' }
-
-      openAction.action([mockDocument])
-      expect(openFileWith).toHaveBeenCalledWith(mockClient, mockDocument, {
-        vaultClient: {}
-      })
     })
   })
 
