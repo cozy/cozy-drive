@@ -17,7 +17,6 @@ import useActions from 'drive/web/modules/actions/useActions'
 import {
   download,
   trash,
-  open,
   rename,
   move,
   duplicate,
@@ -102,7 +101,6 @@ export const RecentView = () => {
       move,
       duplicate,
       hr,
-      open,
       versions,
       hr,
       trash

@@ -16,7 +16,6 @@ import {
   share,
   download,
   trash,
-  open,
   rename,
   move,
   duplicate,
@@ -148,7 +147,6 @@ const DriveView = () => {
       move,
       duplicate,
       hr,
-      open,
       versions,
       hr,
       trash

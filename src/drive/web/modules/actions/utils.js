@@ -1,14 +1,10 @@
-import { saveAndOpenWithCordova } from 'cozy-client/dist/models/fsnative'
 import { isDirectory } from 'cozy-client/dist/models/file'
 import { receiveQueryResult } from 'cozy-client/dist/store'
-import { isMobileApp } from 'cozy-device-helper'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import {
   getEncryptionKeyFromDirId,
   downloadEncryptedFile,
-  isEncryptedFolder,
-  decryptFile,
-  isEncryptedFile
+  isEncryptedFolder
 } from 'drive/lib/encryption'
 import { DOCTYPE_FILES } from 'drive/lib/doctypes'
 
@@ -18,12 +14,6 @@ const downloadFileError = error => {
   return isMissingFileError(error)
     ? 'error.download_file.missing'
     : 'error.download_file.offline'
-}
-
-const openFileDownloadError = error => {
-  return isMissingFileError(error)
-    ? 'mobile.error.open_with.missing'
-    : 'mobile.error.open_with.offline'
 }
 
 /**
@@ -112,47 +102,6 @@ export const trashFiles = async (client, files) => {
     if (!isAlreadyInTrash(err)) {
       Alerter.error('alert.try_again')
     }
-  }
-}
-
-/**
- * openFileWith - Opens a file on a mobile device
- *
- * @param {CozyClient} client
- * @param {object} file   io.cozy.files document
- */
-export const openFileWith = async (client, file, { vaultClient } = {}) => {
-  if (isMobileApp() && window.cordova.plugins.fileOpener2) {
-    let blob
-    let originalMime = file.mime
-    try {
-      if (isEncryptedFile(file)) {
-        const encryptionKey = await getEncryptionKeyFromDirId(
-          client,
-          file.dir_id
-        )
-        blob = await decryptFile(client, vaultClient, { file, encryptionKey })
-        originalMime = client
-          .collection(DOCTYPE_FILES)
-          .getFileTypeFromName(file.name)
-      } else {
-        const response = await client
-          .collection(DOCTYPE_FILES)
-          .fetchFileContentById(file.id)
-
-        blob = await response.blob()
-      }
-    } catch (error) {
-      Alerter.error(openFileDownloadError(error))
-      throw error
-    }
-    try {
-      await saveAndOpenWithCordova(blob, { ...file, mime: originalMime })
-    } catch (error) {
-      Alerter.info('mobile.error.open_with.noapp', { fileMime: file.mime })
-    }
-  } else {
-    Alerter.info('mobile.error.open_with.noapp', { fileMime: file.mime })
   }
 }
 
