@@ -1,6 +1,6 @@
 import { models, Q } from 'cozy-client'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
-import { isFlagshipApp, isMobileApp } from 'cozy-device-helper'
+import { isFlagshipApp } from 'cozy-device-helper'
 
 import generateShortcutUrl from 'drive/web/modules/views/Folder/generateShortcutUrl'
 import { makeOnlyOfficeFileRoute } from 'drive/web/modules/views/OnlyOffice/helpers'
@@ -25,7 +25,7 @@ const createFileOpeningHandler =
     const isOnlyOffice = models.file.shouldBeOpenedByOnlyOffice(file)
 
     if (isShortcut) {
-      if (isMobileApp() || isFlagshipApp()) {
+      if (isFlagshipApp()) {
         try {
           const resp = await client.query(
             Q(DOCTYPE_FILES_SHORTCUT).getById(file.id)
