@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react'
 
-import { isMobileApp, isIOSApp } from 'cozy-device-helper'
+import { isIOSApp } from 'cozy-device-helper'
 import ActionMenu from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
@@ -93,14 +93,12 @@ const MoreMenu = ({
                 />
               </InsideRegularFolder>
             )}
-            {!isMobileApp() && (
-              <InsideRegularFolder
-                displayedFolder={displayedFolder}
-                folderId={folderId}
-              >
-                <DownloadButtonItem displayedFolder={displayedFolder} />
-              </InsideRegularFolder>
-            )}
+            <InsideRegularFolder
+              displayedFolder={displayedFolder}
+              folderId={folderId}
+            >
+              <DownloadButtonItem displayedFolder={displayedFolder} />
+            </InsideRegularFolder>
             {isMobile && hasWriteAccess && <AddMenuItem />}
             <SelectableItem showSelectionBar={showSelectionBar} />
             {hasWriteAccess && (
