@@ -18,7 +18,6 @@ module.exports = {
     '^components(.*)': '<rootDir>/src/components$1',
     '^hooks(.*)': '<rootDir>/src/hooks$1',
     '^test(.*)': '<rootDir>/test/$1',
-    '^folder-references(.*)': '<rootDir>/src/folder-references$1',
     '^lib(.*)': '<rootDir>/src/lib$1',
     'react-pdf/dist/esm/pdf.worker.entry':
       '<rootDir>/jestHelpers/mocks/pdfjsWorkerMock.js',
