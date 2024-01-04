@@ -1,12 +1,7 @@
 import { createMockClient } from 'cozy-client'
 import { initQuery, receiveQueryResult } from 'cozy-client/dist/store'
 import { generateFile } from 'test/generate'
-import {
-  trashFiles,
-  downloadFiles,
-  openFileWith,
-  exportFilesNative
-} from './utils'
+import { trashFiles, downloadFiles, openFileWith } from './utils'
 import {
   getEncryptionKeyFromDirId,
   downloadEncryptedFile,
@@ -297,68 +292,5 @@ describe('openFileWith', () => {
     expect(Alerter.info).toHaveBeenCalledWith('mobile.error.open_with.noapp', {
       fileMime: file.mime
     })
-  })
-})
-
-describe('exportFilesNative', () => {
-  const mockClient = createMockClient({})
-  const files = [generateFile({ i: 0 }), generateFile({ i: 1 })]
-  const encryptedFiles = files.map(file => ({
-    ...file,
-    encrypted: true
-  }))
-  const exportMock = jest.fn()
-  let pluginsBackup
-  const vaultClient = {}
-
-  beforeEach(() => {
-    jest.resetAllMocks()
-
-    mockClient.collection = jest.fn().mockReturnValue(mockClient)
-    mockClient.fetchFileContentById = jest.fn().mockReturnValue({
-      blob: jest.fn().mockReturnValue()
-    })
-    saveFileWithCordova.mockReturnValue({
-      nativeURL: ''
-    })
-
-    pluginsBackup = window.plugins
-    window.plugins = { socialsharing: { shareWithOptions: exportMock } }
-  })
-
-  afterEach(() => {
-    window.plugins = pluginsBackup
-  })
-
-  it('exports all files', async () => {
-    await exportFilesNative(mockClient, files)
-
-    files.forEach(file =>
-      expect(mockClient.fetchFileContentById).toHaveBeenCalledWith(file.id)
-    )
-    expect(exportMock).toHaveBeenCalled()
-  })
-
-  it('exports encrypted files', async () => {
-    getEncryptionKeyFromDirId.mockResolvedValueOnce('encryption-key')
-    await exportFilesNative(mockClient, encryptedFiles, { vaultClient })
-
-    encryptedFiles.forEach(file =>
-      expect(decryptFile).toHaveBeenCalledWith(
-        mockClient,
-        {},
-        {
-          file,
-          encryptionKey: 'encryption-key'
-        }
-      )
-    )
-    expect(exportMock).toHaveBeenCalled()
-  })
-
-  it('reports an error', async () => {
-    mockClient.fetchFileContentById.mockRejectedValue('nope')
-    await exportFilesNative(mockClient, files)
-    expect(Alerter.error).toHaveBeenCalled()
   })
 })

@@ -11,8 +11,6 @@ import MultiFilesIcon from 'cozy-ui/transpiled/react/Icons/MultiFiles'
 import QualifyIcon from 'cozy-ui/transpiled/react/Icons/Qualify'
 import HistoryIcon from 'cozy-ui/transpiled/react/Icons/History'
 import RestoreIcon from 'cozy-ui/transpiled/react/Icons/Restore'
-import ReplyIcon from 'cozy-ui/transpiled/react/Icons/Reply'
-import ShareIosIcon from 'cozy-ui/transpiled/react/Icons/ShareIos'
 import LinkOutIcon from 'cozy-ui/transpiled/react/Icons/LinkOut'
 import EyeIcon from 'cozy-ui/transpiled/react/Icons/Eye'
 import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
@@ -26,12 +24,7 @@ import MakeAvailableOfflineMenuItem from 'drive/web/modules/drive/MakeAvailableO
 import DestroyConfirm from 'drive/web/modules/trash/components/DestroyConfirm'
 import { startRenamingAsync } from 'drive/web/modules/drive/rename'
 
-import {
-  exportFilesNative,
-  downloadFiles,
-  openFileWith,
-  restoreFiles
-} from './utils'
+import { downloadFiles, openFileWith, restoreFiles } from './utils'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import {
   navigateToModal,
@@ -41,61 +34,34 @@ import {
 export { share } from './share'
 
 export const download = ({ client, vaultClient }) => {
-  return isMobileApp()
-    ? {
-        name: 'forwardTo',
-        icon: 'download',
-        displayCondition: files => {
-          if (isIOSApp()) return files.length === 1 && isFile(files[0])
-          return files.reduce(
-            (onlyFiles, file) => onlyFiles && isFile(file),
-            true
-          )
-        },
-        action: files =>
-          exportFilesNative(client, Array.isArray(files) ? files : [files], {
-            vaultClient
-          }),
-        Component: forwardRef(function Download(props, ref) {
-          const { t } = useI18n()
-          return (
-            <ActionsMenuItem {...props} ref={ref}>
-              <ListItemIcon>
-                <Icon icon={isIOSApp() ? ShareIosIcon : ReplyIcon} />
-              </ListItemIcon>
-              <ListItemText primary={t('SelectionBar.forwardTo')} />
-            </ActionsMenuItem>
-          )
-        })
-      }
-    : {
-        name: 'download',
-        icon: 'download',
-        displayCondition: files => {
-          // We cannot generate archive for encrypted files, for now.
-          // Then, we do not display the download button when the selection
-          // includes an encrypted folder or several encrypted files
-          return (
-            !files.some(file => isEncryptedFolder(file)) &&
-            !(files.length > 1 && files.some(file => isEncryptedFile(file)))
-          )
-        },
-        action: files =>
-          downloadFiles(client, Array.isArray(files) ? files : [files], {
-            vaultClient
-          }),
-        Component: forwardRef(function Download(props, ref) {
-          const { t } = useI18n()
-          return (
-            <ActionsMenuItem {...props} ref={ref}>
-              <ListItemIcon>
-                <Icon icon={DownloadIcon} />
-              </ListItemIcon>
-              <ListItemText primary={t('SelectionBar.download')} />
-            </ActionsMenuItem>
-          )
-        })
-      }
+  return {
+    name: 'download',
+    icon: 'download',
+    displayCondition: files => {
+      // We cannot generate archive for encrypted files, for now.
+      // Then, we do not display the download button when the selection
+      // includes an encrypted folder or several encrypted files
+      return (
+        !files.some(file => isEncryptedFolder(file)) &&
+        !(files.length > 1 && files.some(file => isEncryptedFile(file)))
+      )
+    },
+    action: files =>
+      downloadFiles(client, Array.isArray(files) ? files : [files], {
+        vaultClient
+      }),
+    Component: forwardRef(function Download(props, ref) {
+      const { t } = useI18n()
+      return (
+        <ActionsMenuItem {...props} ref={ref}>
+          <ListItemIcon>
+            <Icon icon={DownloadIcon} />
+          </ListItemIcon>
+          <ListItemText primary={t('SelectionBar.download')} />
+        </ActionsMenuItem>
+      )
+    })
+  }
 }
 
 export const hr = () => {

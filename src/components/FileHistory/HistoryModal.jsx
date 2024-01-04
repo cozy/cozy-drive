@@ -13,8 +13,6 @@ import HistoryRow from 'cozy-ui/transpiled/react/HistoryRow'
 import styles from './styles.styl'
 
 import { CozyFile } from 'models'
-import { isMobileApp } from 'cozy-device-helper'
-import { exportFilesNative } from 'drive/web/modules/actions/utils'
 import { Dialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 
 const formatDate = (date, f) => {
@@ -63,11 +61,7 @@ const HistoryModal = ({
             primaryText={formatDate(file.updated_at, f)}
             secondaryText={fileCollection.getBeautifulSize(file)}
             downloadLink={() => {
-              if (!isMobileApp()) {
-                fileCollection.download(file)
-              } else {
-                exportFilesNative(client, [file], file.name)
-              }
+              fileCollection.download(file)
             }}
           />
           {revisionsFetchStatus === 'loading' && (
@@ -83,19 +77,11 @@ const HistoryModal = ({
                   secondaryText={fileCollection.getBeautifulSize(revision)}
                   key={revision._id}
                   downloadLink={() => {
-                    if (!isMobileApp()) {
-                      fileCollection.download(
-                        file,
-                        revision.id,
-                        CozyFile.generateFileNameForRevision(file, revision, f)
-                      )
-                    } else {
-                      exportFilesNative(
-                        client,
-                        [revision],
-                        CozyFile.generateFileNameForRevision(file, revision, f)
-                      )
-                    }
+                    fileCollection.download(
+                      file,
+                      revision.id,
+                      CozyFile.generateFileNameForRevision(file, revision, f)
+                    )
                   }}
                 />
               )
