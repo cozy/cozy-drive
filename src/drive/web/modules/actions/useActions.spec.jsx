@@ -7,12 +7,7 @@ import AppLike from 'test/components/AppLike'
 import DeleteConfirm from 'drive/web/modules/drive/DeleteConfirm'
 import DestroyConfirm from 'drive/web/modules/trash/components/DestroyConfirm'
 import { createStore } from 'redux'
-import {
-  exportFilesNative,
-  downloadFiles,
-  openFileWith,
-  restoreFiles
-} from './utils'
+import { downloadFiles, openFileWith, restoreFiles } from './utils'
 import * as renameModule from 'drive/web/modules/drive/rename'
 import { useSelectionContext } from 'drive/web/modules/selection/SelectionProvider'
 
@@ -32,7 +27,6 @@ import {
 } from './index'
 
 jest.mock('./utils', () => ({
-  exportFilesNative: jest.fn(),
   downloadFiles: jest.fn(),
   trashFiles: jest.fn(),
   openFileWith: jest.fn(),
@@ -195,82 +189,16 @@ describe('useActions', () => {
   })
 
   describe('download action', () => {
-    describe('desktop', () => {
-      it('triggers a file download', () => {
-        const downloadAction = getAction('download')
-        const mockDocuments = [
-          { id: 'abc', name: 'my-file.md' },
-          { id: 'def', name: 'my-file-2.md' }
-        ]
+    it('triggers a file download', () => {
+      const downloadAction = getAction('download')
+      const mockDocuments = [
+        { id: 'abc', name: 'my-file.md' },
+        { id: 'def', name: 'my-file-2.md' }
+      ]
 
-        downloadAction.action(mockDocuments)
-        expect(downloadFiles).toHaveBeenCalledWith(mockClient, mockDocuments, {
-          vaultClient: {}
-        })
-      })
-    })
-
-    describe('mobile', () => {
-      beforeEach(() => {
-        isMobileApp.mockReturnValue(true)
-      })
-
-      afterEach(() => {
-        global.window.cordova = null
-      })
-
-      it('is visible for a single file on iOS', () => {
-        global.window.cordova = { platformId: 'ios' }
-        const downloadAction = getAction('forwardTo')
-        expect(
-          downloadAction.displayCondition([{ id: 'abc', type: 'file' }])
-        ).toBe(true)
-        expect(
-          downloadAction.displayCondition([{ id: 'abc', type: 'folder' }])
-        ).toBe(false)
-        expect(
-          downloadAction.displayCondition([
-            { id: 'abc', type: 'file' },
-            { id: 'def', type: 'file' }
-          ])
-        ).toBe(false)
-        expect(
-          downloadAction.displayCondition([
-            { id: 'abc', type: 'file' },
-            { id: 'def', type: 'folder' }
-          ])
-        ).toBe(false)
-      })
-
-      it('is visible if only files are selected on android', () => {
-        global.window.cordova = { platformId: 'android' }
-        const downloadAction = getAction('forwardTo')
-        expect(
-          downloadAction.displayCondition([
-            { id: 'abc', type: 'file' },
-            { id: 'def', type: 'file' }
-          ])
-        ).toBe(true)
-        expect(
-          downloadAction.displayCondition([
-            { id: 'abc', type: 'file' },
-            { id: 'def', type: 'folder' }
-          ])
-        ).toBe(false)
-      })
-
-      it('export files to the device when activated', () => {
-        const downloadAction = getAction('forwardTo')
-        const mockDocuments = [
-          { id: 'abc', name: 'my-file.md' },
-          { id: 'def', name: 'my-file-2.md' }
-        ]
-        downloadAction.action(mockDocuments)
-        expect(exportFilesNative).toHaveBeenCalledWith(
-          mockClient,
-          mockDocuments,
-          { vaultClient: {} }
-        )
+      downloadAction.action(mockDocuments)
+      expect(downloadFiles).toHaveBeenCalledWith(mockClient, mockDocuments, {
+        vaultClient: {}
       })
     })
   })

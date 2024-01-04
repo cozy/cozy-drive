@@ -1,10 +1,7 @@
-import {
-  saveFileWithCordova,
-  saveAndOpenWithCordova
-} from 'cozy-client/dist/models/fsnative'
+import { saveAndOpenWithCordova } from 'cozy-client/dist/models/fsnative'
 import { isDirectory } from 'cozy-client/dist/models/file'
 import { receiveQueryResult } from 'cozy-client/dist/store'
-import { isMobileApp, isIOS } from 'cozy-device-helper'
+import { isMobileApp } from 'cozy-device-helper'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import {
   getEncryptionKeyFromDirId,
@@ -115,75 +112,6 @@ export const trashFiles = async (client, files) => {
     if (!isAlreadyInTrash(err)) {
       Alerter.error('alert.try_again')
     }
-  }
-}
-
-/**
- * exportFilesNative - Triggers a prompt to download a file on mobile devices
- *
- * @param {CozyClient} client
- * @param {array} files    One or more files to download
- */
-export const exportFilesNative = async (
-  client,
-  files,
-  { vaultClient } = {}
-) => {
-  const encryptionKey = isEncryptedFile(files[0])
-    ? await getEncryptionKeyFromDirId(client, files[0].dir_id)
-    : null
-  const downloadAllFiles = files.map(async file => {
-    let blob
-    if (encryptionKey) {
-      blob = await decryptFile(client, vaultClient, { file, encryptionKey })
-    } else {
-      const response = await client
-        .collection(DOCTYPE_FILES)
-        .fetchFileContentById(file.id)
-
-      blob = await response.blob()
-    }
-    const filenameToUse = file.name
-    const localFile = await saveFileWithCordova(blob, filenameToUse)
-    return localFile.nativeURL
-  })
-
-  try {
-    Alerter.info('alert.preparing', {
-      duration: Math.min(downloadAllFiles.length * 2000, 6000)
-    })
-    // TODO use a promise pool here
-    const urls = await Promise.all(downloadAllFiles)
-    if (urls.length === 1 && isIOS()) {
-      // TODO
-      // It seems that files: is not well supported on iOS. url seems to work well
-      // at with one file. Need to check when severals
-      window.plugins.socialsharing.shareWithOptions(
-        {
-          url: urls[0]
-        },
-        result => {
-          if (result.completed === true) {
-            Alerter.success('mobile.download.success')
-          }
-        },
-        error => {
-          throw error
-        }
-      )
-    } else {
-      window.plugins.socialsharing.shareWithOptions(
-        {
-          files: urls
-        },
-        null,
-        error => {
-          throw error
-        }
-      )
-    }
-  } catch (error) {
-    Alerter.error(downloadFileError(error))
   }
 }
 
