@@ -34,25 +34,6 @@ desktop.ini
 .flooignore
 .brackets.json
 
-# Mobile
-src/drive/targets/mobile/hooks
-src/drive/targets/mobile/ul_web_hooks
-src/drive/targets/mobile/platforms
-src/drive/targets/mobile/plugins
-src/drive/targets/mobile/www
-src/drive/targets/mobile/keys
-src/drive/targets/mobile/res/icons
-src/drive/targets/mobile/res/screens
-src/drive/targets/mobile/icon.png
-src/drive/targets/mobile/store
-
-# fastlane
-src/drive/targets/mobile/fastlane/README.md
-src/drive/targets/mobile/fastlane/report.xml
-src/drive/targets/mobile/fastlane/Error*.png
-src/drive/targets/mobile/fastlane/Preview.html
-src/drive/targets/mobilePreview.html
-
 # testcafe data
 testcafe/data/FILES TO TEST
 

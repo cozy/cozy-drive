@@ -1,5 +1,3 @@
 node_modules/**
 src/authentication/node_modules/**
 src/authentication/build/**
-src/drive/targets/mobile/**
-!src/drive/targets/mobile/InitAppMobile.*
