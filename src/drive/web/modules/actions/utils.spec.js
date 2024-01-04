@@ -10,10 +10,7 @@ import {
 import { DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
 import { TRASH_DIR_ID } from 'constants/config'
 import { isMobileApp } from 'cozy-device-helper'
-import {
-  saveAndOpenWithCordova,
-  saveFileWithCordova
-} from 'cozy-client/dist/models/fsnative'
+import { saveAndOpenWithCordova } from 'cozy-client/dist/models/fsnative'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
 jest.mock('drive/web/modules/navigation/AppRoute', () => ({

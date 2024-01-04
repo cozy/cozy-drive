@@ -13,7 +13,6 @@ import {
   SharingBannerPlugin,
   useSharingInfos
 } from 'cozy-sharing'
-import { isMobileApp } from 'cozy-device-helper'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { Content } from 'cozy-ui/transpiled/react'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
@@ -123,9 +122,7 @@ const PublicFolderView = () => {
       try {
         const noteUrl = await models.note.fetchURL(client, file)
         const url = new URL(noteUrl)
-        if (!isMobileApp()) {
-          url.searchParams.set('returnUrl', window.location.href)
-        }
+        url.searchParams.set('returnUrl', window.location.href)
         window.location.href = url.toString()
       } catch (e) {
         Alerter.error('alert.offline')
