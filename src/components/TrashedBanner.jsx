@@ -10,8 +10,8 @@ import { useClient, useQuery } from 'cozy-client'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import DestroyConfirm from 'drive/web/modules/trash/components/DestroyConfirm'
-import { buildFileByIdQuery } from 'drive/web/modules/queries'
+import DestroyConfirm from 'modules/trash/components/DestroyConfirm'
+import { buildFileByIdQuery } from 'modules/queries'
 import logger from 'lib/logger'
 
 const TrashedBanner = ({ fileId, isPublic }) => {

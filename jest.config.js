@@ -25,7 +25,8 @@ module.exports = {
     '^react-redux': '<rootDir>/node_modules/react-redux',
     '^cozy-ui/react(.*)$': '<rootDir>/node_modules/cozy-ui/transpiled/react$1',
     '^config/(.*)': '<rootDir>/src/config/$1',
-    '^constants/(.*)': '<rootDir>/src/constants/$1'
+    '^constants/(.*)': '<rootDir>/src/constants/$1',
+    '^modules/(.*)': '<rootDir>/src/modules/$1'
   },
   clearMocks: true,
   snapshotSerializers: ['enzyme-to-json/serializer'],

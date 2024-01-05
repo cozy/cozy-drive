@@ -1,7 +1,7 @@
 import get from 'lodash/get'
 import flag from 'cozy-flags'
 import { DOCTYPE_FILES, DOCTYPE_FILES_ENCRYPTION } from 'lib/doctypes'
-import { buildEncryptionByIdQuery } from 'drive/web/modules/queries'
+import { buildEncryptionByIdQuery } from 'modules/queries'
 import { models } from 'cozy-client'
 const { isEncrypted } = models.file
 

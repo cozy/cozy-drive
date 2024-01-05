@@ -1,0 +1,72 @@
+import React, { useMemo } from 'react'
+import { makeStyles } from 'cozy-ui/transpiled/react/styles'
+
+import { SharingBannerPlugin } from 'cozy-sharing'
+import { DialogTitle } from 'cozy-ui/transpiled/react/Dialog'
+import Divider from 'cozy-ui/transpiled/react/Divider'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+
+import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
+import { showSharingBanner } from 'modules/views/OnlyOffice/helpers'
+import Toolbar from 'modules/views/OnlyOffice/Toolbar'
+import { TrashedBanner } from 'components/TrashedBanner'
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    width: '100%',
+    height: '3.5rem',
+    backgroundColor: theme.palette.background.paper
+  }
+}))
+
+const Title = () => {
+  const { isMobile } = useBreakpoints()
+  const {
+    fileId,
+    isPublic,
+    isFromSharing,
+    isInSharedFolder,
+    isEditorModeView,
+    isTrashed
+  } = useOnlyOfficeContext()
+  const styles = useStyles()
+
+  const showBanner = useMemo(
+    () =>
+      showSharingBanner({
+        isPublic,
+        isFromSharing,
+        isInSharedFolder
+      }),
+    [isPublic, isFromSharing, isInSharedFolder]
+  )
+
+  const showDialogToolbar = isEditorModeView || !isMobile
+
+  return (
+    <div style={{ zIndex: 'var(--zIndex-nav)' }}>
+      {showDialogToolbar && (
+        <>
+          <DialogTitle
+            data-testid="onlyoffice-title"
+            disableTypography
+            className="u-ellipsis u-flex u-flex-items-center u-p-0 u-pr-1"
+            classes={styles}
+          >
+            <Toolbar />
+          </DialogTitle>
+          <Divider />
+        </>
+      )}
+      {isTrashed ? (
+        <div style={{ backgroundColor: 'var(--paperBackgroundColor)' }}>
+          <TrashedBanner fileId={fileId} isPublic={isPublic} />
+        </div>
+      ) : showBanner ? (
+        <SharingBannerPlugin />
+      ) : null}
+    </div>
+  )
+}
+
+export default React.memo(Title)

@@ -3,15 +3,15 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 
 import { models } from 'cozy-client'
 
-import PublicLayout from 'drive/web/modules/public/PublicLayout'
-import PublicFolderView from 'drive/web/modules/views/Public'
-import LightFileViewer from 'drive/web/modules/public/LightFileViewer'
+import PublicLayout from 'modules/public/PublicLayout'
+import PublicFolderView from 'modules/views/Public'
+import LightFileViewer from 'modules/public/LightFileViewer'
 import FileHistory from 'components/FileHistory'
-import OnlyOfficePaywallView from 'drive/web/modules/views/OnlyOffice/OnlyOfficePaywallView'
-import OnlyOfficeView from 'drive/web/modules/views/OnlyOffice'
-import OnlyOfficeCreateView from 'drive/web/modules/views/OnlyOffice/Create'
-import { isOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
-import ExternalRedirect from 'drive/web/modules/navigation/ExternalRedirect'
+import OnlyOfficePaywallView from 'modules/views/OnlyOffice/OnlyOfficePaywallView'
+import OnlyOfficeView from 'modules/views/OnlyOffice'
+import OnlyOfficeCreateView from 'modules/views/OnlyOffice/Create'
+import { isOfficeEnabled } from 'modules/views/OnlyOffice/helpers'
+import ExternalRedirect from 'modules/navigation/ExternalRedirect'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 const AppRouter = ({

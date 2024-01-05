@@ -13,7 +13,7 @@ import IconText from 'cozy-ui/transpiled/react/Icons/FileTypeText'
 import IconVideo from 'cozy-ui/transpiled/react/Icons/FileTypeVideo'
 import IconZip from 'cozy-ui/transpiled/react/Icons/FileTypeZip'
 import IconNote from 'cozy-ui/transpiled/react/Icons/FileTypeNote'
-import IconEncryptedFolder from 'drive/web/modules/views/Folder/EncryptedFolderIcon'
+import IconEncryptedFolder from 'modules/views/Folder/EncryptedFolderIcon'
 
 import { getFileMimetype } from 'lib/getFileMimetype'
 
