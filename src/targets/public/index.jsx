@@ -25,7 +25,7 @@ import logger from 'lib/logger'
 import App from 'components/App/App'
 import StyledApp from 'drive/web/modules/drive/StyledApp'
 import cozyBar from 'lib/cozyBar'
-import AppRouter from 'drive/targets/public/components/AppRouter'
+import AppRouter from './components/AppRouter'
 import styles from 'styles/main.styl'
 
 const initCozyBar = (data, client) => {
