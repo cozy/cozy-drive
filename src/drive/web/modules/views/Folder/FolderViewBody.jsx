@@ -7,8 +7,8 @@ import { useVaultClient, VaultUnlocker } from 'cozy-keys-lib'
 import { isSharingShortcut } from 'cozy-client/dist/models/file'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import { ThumbnailSizeContext } from 'drive/lib/ThumbnailSizeContext'
-import AcceptingSharingContext from 'drive/lib/AcceptingSharingContext'
+import { ThumbnailSizeContext } from 'lib/ThumbnailSizeContext'
+import AcceptingSharingContext from 'lib/AcceptingSharingContext'
 import { FileList } from 'drive/web/modules/filelist/FileList'
 import FileListBody from 'drive/web/modules/filelist/FileListBody'
 import AddFolder from 'drive/web/modules/filelist/AddFolder'
@@ -26,7 +26,7 @@ import createFileOpeningHandler from 'drive/web/modules/views/Folder/createFileO
 import { useSyncingFakeFile } from './useSyncingFakeFile'
 import { isReferencedByShareInSharingContext } from 'drive/web/modules/views/Folder/syncHelpers'
 import { isOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
-import { isEncryptedFolder } from 'drive/lib/encryption'
+import { isEncryptedFolder } from 'lib/encryption'
 import { useWebviewIntent } from 'cozy-intent'
 
 // TODO: extraColumns is then passed to 'FileListHeader', 'AddFolder',

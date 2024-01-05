@@ -12,8 +12,8 @@ import { splitFilename } from 'cozy-client/dist/models/file'
 
 import { buildAlbumByIdQuery } from 'drive/web/modules/queries'
 import { trashFiles } from 'drive/web/modules/actions/utils'
-import { DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
-import { getEntriesTypeTranslated } from 'drive/lib/entries'
+import { DOCTYPE_ALBUMS } from 'lib/doctypes'
+import { getEntriesTypeTranslated } from 'lib/entries'
 
 const Message = ({ type, fileCount }) => {
   const ico =

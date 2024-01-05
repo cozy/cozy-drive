@@ -1,5 +1,5 @@
 // @ts-check
-import { queryAllDocsWithFields } from 'drive/lib/dacc/query'
+import { queryAllDocsWithFields } from 'lib/dacc/query'
 import log from 'cozy-logger'
 
 /**

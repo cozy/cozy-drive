@@ -1,10 +1,10 @@
 import log from 'cozy-logger'
 import CozyClient from 'cozy-client'
-import { schema } from 'drive/lib/doctypes'
+import { schema } from 'lib/doctypes'
 import flag from 'cozy-flags'
 import { endOfMonth, startOfMonth, format, subMonths } from 'date-fns'
 
-import { aggregateFilesSize, sendToRemoteDoctype } from 'drive/lib/dacc/dacc'
+import { aggregateFilesSize, sendToRemoteDoctype } from 'lib/dacc/dacc'
 
 /**
  * This service aggregates files size by createdByApps slug and send them to the DACC.

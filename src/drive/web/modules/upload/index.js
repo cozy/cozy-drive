@@ -3,13 +3,13 @@ import { combineReducers } from 'redux'
 import logger from 'lib/logger'
 import { CozyFile } from 'models'
 
-import { logException } from 'drive/lib/reporter'
+import { logException } from 'lib/reporter'
 import UploadQueue from './UploadQueue'
 import {
   encryptAndUploadNewFile,
   getEncryptionKeyFromDirId
-} from 'drive/lib/encryption'
-import { DOCTYPE_FILES } from 'drive/lib/doctypes'
+} from 'lib/encryption'
+import { DOCTYPE_FILES } from 'lib/doctypes'
 import flag from 'cozy-flags'
 
 import { models } from 'cozy-client'

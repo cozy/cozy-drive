@@ -15,7 +15,7 @@ import IconZip from 'cozy-ui/transpiled/react/Icons/FileTypeZip'
 import IconNote from 'cozy-ui/transpiled/react/Icons/FileTypeNote'
 import IconEncryptedFolder from 'drive/web/modules/views/Folder/EncryptedFolderIcon'
 
-import { getFileMimetype } from 'drive/lib/getFileMimetype'
+import { getFileMimetype } from 'lib/getFileMimetype'
 
 const getMimeTypeIcon = (
   isDirectory,

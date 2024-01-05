@@ -7,7 +7,7 @@ import { useSharingContext } from 'cozy-sharing'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import { useModalContext } from 'drive/lib/ModalContext'
+import { useModalContext } from 'lib/ModalContext'
 import Toolbar from 'drive/web/modules/drive/Toolbar'
 import FolderView from '../Folder/FolderView'
 import FolderViewHeader from '../Folder/FolderViewHeader'

@@ -10,7 +10,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import DriveIcon from 'cozy-ui/transpiled/react/Icons/FileTypeFolder'
 import FileThumbnail from '../filelist/FileThumbnail'
-import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
+import getMimeTypeIcon from 'lib/getMimeTypeIcon'
 const HeaderIlustration = ({ entries }) => {
   if (entries.length === 1) {
     const firstItem = entries[0]

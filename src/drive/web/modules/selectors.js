@@ -2,7 +2,7 @@ import maxBy from 'lodash/maxBy'
 
 import { getDocumentFromState } from 'cozy-client/dist/store'
 
-import { DOCTYPE_FILES } from 'drive/lib/doctypes'
+import { DOCTYPE_FILES } from 'lib/doctypes'
 
 import { getMirrorQueryId, parseFolderQueryId } from './queries'
 

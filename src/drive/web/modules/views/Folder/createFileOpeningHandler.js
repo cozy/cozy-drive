@@ -4,7 +4,7 @@ import { isFlagshipApp } from 'cozy-device-helper'
 
 import generateShortcutUrl from 'drive/web/modules/views/Folder/generateShortcutUrl'
 import { makeOnlyOfficeFileRoute } from 'drive/web/modules/views/OnlyOffice/helpers'
-import { DOCTYPE_FILES_SHORTCUT } from 'drive/lib/doctypes'
+import { DOCTYPE_FILES_SHORTCUT } from 'lib/doctypes'
 
 const createFileOpeningHandler =
   ({

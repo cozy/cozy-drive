@@ -1,5 +1,5 @@
 import { Contact, Group } from 'models'
-import extraDoctypes from 'drive/lib/extraDoctypes'
+import extraDoctypes from 'lib/extraDoctypes'
 
 export const DOCTYPE_FILES = 'io.cozy.files'
 export const DOCTYPE_FILES_SETTINGS = 'io.cozy.files.settings'

@@ -15,7 +15,7 @@ import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import Divider from 'cozy-ui/transpiled/react/Divider'
 
-import { isEncryptedFolder, isEncryptedFile } from 'drive/lib/encryption'
+import { isEncryptedFolder, isEncryptedFile } from 'lib/encryption'
 import DeleteConfirm from 'drive/web/modules/drive/DeleteConfirm'
 import DestroyConfirm from 'drive/web/modules/trash/components/DestroyConfirm'
 import { startRenamingAsync } from 'drive/web/modules/drive/rename'

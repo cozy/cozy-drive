@@ -27,7 +27,7 @@ import {
   isEncryptedFile,
   getEncryptionKeyFromDirId,
   getDecryptedFileURL
-} from 'drive/lib/encryption'
+} from 'lib/encryption'
 
 export const FilesViewerLoading = () => (
   <Overlay>

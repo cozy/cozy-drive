@@ -20,7 +20,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
 import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
 
-import { ModalStack, useModalContext } from 'drive/lib/ModalContext'
+import { ModalStack, useModalContext } from 'lib/ModalContext'
 import useActions from 'drive/web/modules/actions/useActions'
 import Main from 'drive/web/modules/layout/Main'
 import {
@@ -40,7 +40,7 @@ import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumn
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
 import FabWithMenuContext from 'drive/web/modules/drive/FabWithMenuContext'
 import AddMenuProvider from 'drive/web/modules/drive/AddMenu/AddMenuProvider'
-import { FabContext } from 'drive/lib/FabProvider'
+import { FabContext } from 'lib/FabProvider'
 
 import usePublicFilesQuery from './usePublicFilesQuery'
 import usePublicWritePermissions from './usePublicWritePermissions'

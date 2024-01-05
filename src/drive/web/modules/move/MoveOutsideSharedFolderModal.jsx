@@ -10,7 +10,7 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 
 import { buildFolderByPathQuery } from 'drive/web/modules/queries'
 import { LoaderModal } from 'components/LoaderModal'
-import { getEntriesTypeTranslated } from 'drive/lib/entries'
+import { getEntriesTypeTranslated } from 'lib/entries'
 
 /**
  * Alert the user when is trying to move a folder/file outside of a shared folder

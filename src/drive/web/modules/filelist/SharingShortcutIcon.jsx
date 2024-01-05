@@ -6,8 +6,8 @@ import {
   getSharingShortcutTargetDoctype
 } from 'cozy-client/dist/models/file'
 
-import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
-import { DOCTYPE_FILES } from 'drive/lib/doctypes'
+import getMimeTypeIcon from 'lib/getMimeTypeIcon'
+import { DOCTYPE_FILES } from 'lib/doctypes'
 import FileIconShortcut from 'drive/web/modules/filelist/FileIconShortcut'
 
 const SharingShortcutIcon = ({ file, size }) => {

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { fireEvent, render } from '@testing-library/react'
 import AddMenuProvider, { AddMenuContext } from './AddMenuProvider'
-import { logException } from 'drive/lib/reporter'
+import { logException } from 'lib/reporter'
 import AppLike from 'test/components/AppLike'
 import { createMockClient } from 'cozy-client'
 
@@ -9,7 +9,7 @@ jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: jest.fn()
 }))
-jest.mock('drive/lib/reporter', () => ({
+jest.mock('lib/reporter', () => ({
   logException: jest.fn()
 }))
 

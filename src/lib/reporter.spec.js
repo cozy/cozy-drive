@@ -1,4 +1,4 @@
-import { normalizeData } from 'drive/lib/reporter'
+import { normalizeData } from 'lib/reporter'
 
 describe('Normalization function', () => {
   it('should normalize the culprit', () => {

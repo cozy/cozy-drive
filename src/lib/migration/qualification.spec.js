@@ -3,7 +3,7 @@ import {
   getFileRequalification,
   getMostRecentUpdatedDate,
   removeOldQualificationAttributes
-} from 'drive/lib/migration/qualification'
+} from 'lib/migration/qualification'
 import log from 'cozy-logger'
 
 jest.mock('cozy-logger', () => jest.fn())

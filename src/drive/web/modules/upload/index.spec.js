@@ -1,6 +1,6 @@
 import { CozyFile } from 'models'
 import { doMobileUpload, readMobileFile } from 'cozy-client/dist/models/file'
-import { getEncryptionKeyFromDirId } from 'drive/lib/encryption'
+import { getEncryptionKeyFromDirId } from 'lib/encryption'
 
 import logger from 'lib/logger'
 
@@ -15,12 +15,12 @@ import {
 } from './index'
 
 jest.mock('cozy-doctypes')
-jest.mock('drive/lib/reporter', () => ({
+jest.mock('lib/reporter', () => ({
   logException: jest.fn()
 }))
 
-jest.mock('drive/lib/encryption', () => ({
-  ...jest.requireActual('drive/lib/encryption'),
+jest.mock('lib/encryption', () => ({
+  ...jest.requireActual('lib/encryption'),
   getEncryptionKeyFromDirId: jest.fn()
 }))
 

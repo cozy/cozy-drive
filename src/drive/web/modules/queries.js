@@ -1,6 +1,6 @@
 import CozyClient, { Q } from 'cozy-client'
 import { TRASH_DIR_ID } from 'constants/config'
-import { DOCTYPE_FILES_ENCRYPTION, DOCTYPE_ALBUMS } from 'drive/lib/doctypes'
+import { DOCTYPE_FILES_ENCRYPTION, DOCTYPE_ALBUMS } from 'lib/doctypes'
 
 // Needs to be less than 10 minutes, since "thumbnails" links
 // are only valid for 10 minutes.

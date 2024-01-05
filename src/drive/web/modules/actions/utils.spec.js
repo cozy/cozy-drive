@@ -5,8 +5,8 @@ import { trashFiles, downloadFiles } from './utils'
 import {
   getEncryptionKeyFromDirId,
   downloadEncryptedFile
-} from 'drive/lib/encryption'
-import { DOCTYPE_FILES_ENCRYPTION } from 'drive/lib/doctypes'
+} from 'lib/encryption'
+import { DOCTYPE_FILES_ENCRYPTION } from 'lib/doctypes'
 import { TRASH_DIR_ID } from 'constants/config'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
@@ -24,8 +24,8 @@ jest.mock('cozy-ui/transpiled/react/deprecated/Alerter', () => ({
   info: jest.fn()
 }))
 
-jest.mock('drive/lib/encryption', () => ({
-  ...jest.requireActual('drive/lib/encryption'),
+jest.mock('lib/encryption', () => ({
+  ...jest.requireActual('lib/encryption'),
   getEncryptionKeyFromDirId: jest.fn(),
   downloadEncryptedFile: jest.fn(),
   decryptFile: jest.fn()
