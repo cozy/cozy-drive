@@ -1,6 +1,6 @@
 /* global __SENTRY_URL__, __DEVELOPMENT__ */
 import Raven from 'raven-js'
-import appMetadata from 'drive/appMetadata'
+import appMetadata from 'lib/appMetadata'
 import logger from 'lib/logger'
 
 export const ANALYTICS_URL =

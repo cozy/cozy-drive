@@ -6,7 +6,7 @@ import CozyClient from 'cozy-client'
 import { configureReporter, setCozyUrl } from 'lib/reporter'
 import registerClientPlugins from 'lib/registerClientPlugins'
 
-import appMetadata from 'drive/appMetadata'
+import appMetadata from 'lib/appMetadata'
 import configureStore from 'store/configureStore'
 import { schema } from 'lib/doctypes'
 import { Document } from 'cozy-doctypes'
