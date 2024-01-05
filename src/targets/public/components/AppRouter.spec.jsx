@@ -5,30 +5,30 @@ import AppLike from 'test/components/AppLike'
 import '@testing-library/jest-dom'
 import AppRouter from './AppRouter'
 import { createMockClient } from 'cozy-client'
-import { isOfficeEnabled } from 'drive/web/modules/views/OnlyOffice/helpers'
+import { isOfficeEnabled } from 'modules/views/OnlyOffice/helpers'
 
 const client = createMockClient({})
 
-jest.mock('drive/web/modules/views/OnlyOffice/helpers', () => ({
-  ...jest.requireActual('drive/web/modules/views/OnlyOffice/helpers'),
+jest.mock('modules/views/OnlyOffice/helpers', () => ({
+  ...jest.requireActual('modules/views/OnlyOffice/helpers'),
   isOfficeEnabled: jest.fn().mockImplementation(() => true)
 }))
 
-jest.mock('drive/web/modules/upload/UploadQueue')
+jest.mock('modules/upload/UploadQueue')
 
-jest.mock('drive/web/modules/views/Public', () => {
+jest.mock('modules/views/Public', () => {
   return jest.fn().mockImplementation(() => {
     return <div>PublicFolderView</div>
   })
 })
 
-jest.mock('drive/web/modules/public/LightFileViewer', () => {
+jest.mock('modules/public/LightFileViewer', () => {
   return jest.fn().mockImplementation(() => {
     return <div>LightFileViewer</div>
   })
 })
 
-jest.mock('drive/web/modules/views/OnlyOffice', () => {
+jest.mock('modules/views/OnlyOffice', () => {
   return jest.fn().mockImplementation(() => {
     return <div>OnlyOfficeView</div>
   })

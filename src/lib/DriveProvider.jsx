@@ -13,7 +13,7 @@ import {
 import AlertProvider from 'cozy-ui/transpiled/react/providers/Alert'
 
 import FabProvider from 'lib/FabProvider'
-import StyledApp from 'drive/web/modules/drive/StyledApp'
+import StyledApp from 'modules/drive/StyledApp'
 
 const DriveProvider = ({ client, lang, polyglot, dictRequire, children }) => {
   return (

@@ -10,7 +10,7 @@ import { ModalContextProvider } from 'lib/ModalContext'
 import { AcceptingSharingProvider } from 'lib/AcceptingSharingContext'
 import PushBannerProvider from 'components/PushBanner/PushBannerProvider'
 import cozyBar from 'lib/cozyBar'
-import { onFileUploaded } from 'drive/web/modules/views/Upload/UploadUtils'
+import { onFileUploaded } from 'modules/views/Upload/UploadUtils'
 
 const App = ({ store, client, lang, polyglot, children }) => {
   return (

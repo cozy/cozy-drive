@@ -6,7 +6,7 @@ import Empty from 'cozy-ui/transpiled/react/Empty'
 import DriveIcon from 'cozy-ui/transpiled/react/Icons/FileTypeFolder'
 import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
 import PhotosIcon from 'cozy-ui/transpiled/react/Icons/FileTypeImage'
-import EncryptedFolderIcon from 'drive/web/modules/views/Folder/EncryptedFolderIcon'
+import EncryptedFolderIcon from 'modules/views/Folder/EncryptedFolderIcon'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import styles from './empty.styl'

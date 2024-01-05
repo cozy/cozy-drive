@@ -1,7 +1,7 @@
 import { useQuery } from 'cozy-client'
 
 import { useCurrentFolderId } from 'hooks'
-import { buildOnlyFolderQuery } from 'drive/web/modules/queries'
+import { buildOnlyFolderQuery } from 'modules/queries'
 
 const useDisplayedFolder = () => {
   const folderId = useCurrentFolderId()

@@ -15,7 +15,7 @@ import { HashRouter } from 'react-router-dom'
 import { AcceptingSharingProvider } from 'lib/AcceptingSharingContext'
 import FabProvider from 'lib/FabProvider'
 import PushBannerProvider from 'components/PushBanner/PushBannerProvider'
-import { SelectionProvider } from 'drive/web/modules/selection/SelectionProvider'
+import { SelectionProvider } from 'modules/selection/SelectionProvider'
 import enLocale from 'locales/en.json'
 
 const mockStore = createStore(() => ({

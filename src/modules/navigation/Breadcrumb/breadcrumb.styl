@@ -1,0 +1,123 @@
+@require 'components/popover.styl'
+@require 'settings/palette.styl'
+@require 'settings/breakpoints.styl'
+@require 'settings/z-index.styl'
+@require '../../../styles/coz-bar-size.styl'
+
+.fil-path-backdrop
+    flex 1 1 auto
+    width 1%
+    min-width 0
+
+    &:not([override])
+        margin-right 2rem
+
+    ol
+        flex-wrap nowrap
+        min-width 0
+        overflow hidden
+        text-overflow ellipsis
+
+        li
+            &:last-child
+                min-width 0
+
+.fil-path-title
+    margin    0
+    font-size 1.5rem
+    overflow hidden
+    white-space nowrap
+    text-overflow ellipsis
+    display block
+
+.fil-path-link
+    display          inline-flex
+    align-items      baseline
+    font-weight      normal
+    color            var(--coolGrey)
+    text-decoration  none
+    cursor           pointer
+
+    .fil-path-separator
+        margin 0 .25rem
+
+    &:hover
+        color          var(--primaryTextColor)
+
+.fil-path-down
+    display     none
+    min-width   .875rem
+    height      .625rem
+    margin-left .4375rem
+    border      0
+    background  embedurl('../../../assets/icons/icon-arrow-down.svg') center center no-repeat
+
+.fil-path-current-name
+    text-overflow  ellipsis
+    overflow       hidden
+    white-space    nowrap
+    color          var(--primaryTextColor)
+    font-weight    bold
+
++small-screen() // @stylint ignore
+    .fil-path-backdrop
+        min-width 0
+        width auto
+
+    .fil-path-title
+        display        flex
+        flex-direction column-reverse
+        font-size      1.3rem
+
+    .fil-path-link
+    .fil-path-current
+        display       flex
+        align-items   center
+        box-sizing    border-box
+        height        $coz-bar-size
+        padding       0 .25rem
+
+    .fil-path-down
+        display inline-block
+
+    .fil-path-link
+    .fil-path-separator
+        display none
+
+    .fil-path-backdrop.deployed
+        margin   0
+        position fixed
+        top      0
+        right    0
+        bottom     0
+        left       0
+        z-index $overlay-index
+
+        &.inlined
+            position absolute
+
+        .fil-path-title
+            z-index    $popover-index
+            box-shadow 0 .0625rem 0 0 var(--silver), 0 .375rem 1.5rem 0 rgba(50, 54, 63, .24)
+
+        .fil-path-link
+        .fil-path-current
+            padding-left 'calc(%s + .25rem)' % $coz-bar-size
+
+        .fil-path-link
+            display flex
+            color   var(--charcoalGrey)
+            background var(--white)
+
+        .fil-path-link-name
+            text-overflow  ellipsis
+            overflow       hidden
+            white-space    nowrap
+
+        .fil-path-current
+            height     $coz-bar-size
+            box-shadow inset 0 -.0625rem 0 0 var(--silver)
+            padding-right 2.35rem
+
+    .fil-path-backdrop.mobile
+        left 0

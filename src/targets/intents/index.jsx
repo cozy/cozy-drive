@@ -14,7 +14,7 @@ import DriveProvider from 'lib/DriveProvider'
 import registerClientPlugins from 'lib/registerClientPlugins'
 import { schema } from 'lib/doctypes'
 import appMetadata from 'lib/appMetadata'
-import IntentHandler from 'drive/web/modules/services'
+import IntentHandler from 'modules/services'
 
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.getElementById('main')

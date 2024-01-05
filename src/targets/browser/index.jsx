@@ -15,8 +15,8 @@ import { render } from 'react-dom'
 import { HashRouter } from 'react-router-dom'
 import flag from 'cozy-flags'
 
-import AppRoute from 'drive/web/modules/navigation/AppRoute'
-import AppBarSearch from 'drive/web/modules/search/AppBarSearch'
+import AppRoute from 'modules/navigation/AppRoute'
+import AppBarSearch from 'modules/search/AppBarSearch'
 
 import App from 'components/App/App'
 import setupApp from './setupAppContext'
