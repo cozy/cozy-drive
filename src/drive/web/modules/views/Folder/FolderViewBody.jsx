@@ -219,12 +219,16 @@ const FolderViewBody = ({
           which empty component to display. It should be done by the "view" itself.
           But adding a new prop like <FolderViewBody emptyComponent={}
           is not good enought too */}
-            {isEmpty && currentFolderId !== TRASH_DIR_ID && (
-              <EmptyDrive isEncrypted={isEncFolder} canUpload={canUpload} />
-            )}
-            {isEmpty && currentFolderId === TRASH_DIR_ID && (
-              <EmptyTrash canUpload={canUpload} />
-            )}
+            {displayedFolder !== null &&
+              isEmpty &&
+              currentFolderId !== TRASH_DIR_ID && (
+                <EmptyDrive isEncrypted={isEncFolder} canUpload={canUpload} />
+              )}
+            {displayedFolder !== null &&
+              isEmpty &&
+              currentFolderId === TRASH_DIR_ID && (
+                <EmptyTrash canUpload={canUpload} />
+              )}
             {hasDataToShow && !needsToWait && (
               <div className={!isDesktop ? 'u-ov-hidden' : ''}>
                 <>
