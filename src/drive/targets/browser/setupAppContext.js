@@ -7,7 +7,7 @@ import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
 import registerClientPlugins from 'drive/lib/registerClientPlugins'
 
 import appMetadata from 'drive/appMetadata'
-import configureStore from 'drive/store/configureStore'
+import configureStore from 'store/configureStore'
 import { schema } from 'drive/lib/doctypes'
 import { Document } from 'cozy-doctypes'
 import cozyBar from 'lib/cozyBar'
