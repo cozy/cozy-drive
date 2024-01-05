@@ -9,7 +9,6 @@ module.exports = {
     '.styl$': 'identity-obj-proxy',
     '\\.(css|less)$': 'identity-obj-proxy',
     '^locales/.*': '<rootDir>/src/locales/en.json',
-    '^drive/(.*)': '<rootDir>/src/drive/$1',
     '^models(.*)': '<rootDir>/src/models$1',
     '^sharing(.*)': '<rootDir>/src/sharing$1',
     '^authentication(.*)': '<rootDir>/src/authentication$1',
