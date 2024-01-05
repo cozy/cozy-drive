@@ -3,9 +3,9 @@
   "version": "1.66.0",
   "main": "src/main.jsx",
   "scripts": {
-    "build": "cozy-scripts build --manifest src/targets/manifest.webapp --build-dir build/drive --src-dir src --barV7 false --cozyClientJs",
-    "watch": "cozy-scripts watch --manifest src/targets/manifest.webapp --build-dir build/drive --src-dir src --barV7 false --cozyClientJs",
-    "start": "cozy-scripts start --manifest src/targets/manifest.webapp --build-dir build/drive --src-dir src --barV7 false --cozyClientJs",
+    "build": "cozy-scripts build --build-dir build/drive --barV7 false --cozyClientJs",
+    "watch": "cozy-scripts watch --build-dir build/drive --barV7 false --cozyClientJs",
+    "start": "cozy-scripts start --build-dir build/drive --barV7 false --cozyClientJs",
     "deploy": "cozy-app-publish --token $REGISTRY_TOKEN --build-dir 'build/drive/' --prepublish downcloud --postpublish mattermost",
     "tx": "tx pull --all || true",
     "lint": "npm-run-all --parallel 'lint:*'",
@@ -13,8 +13,8 @@
     "lint:js": "eslint '{src,test}/**/*.{js,jsx}'",
     "test": "env NODE_ENV='test' jest",
     "version": "yarn version:manifest",
-    "version:manifest": "replace '\\d+\\.\\d+\\.\\d+' $npm_package_version ./src/targets/manifest.webapp",
-    "service": "yarn cozy-konnector-dev -m src/targets/manifest.webapp"
+    "version:manifest": "replace '\\d+\\.\\d+\\.\\d+' $npm_package_version ./manifest.webapp",
+    "service": "yarn cozy-konnector-dev -m ./manifest.webapp"
   },
   "repository": {
     "type": "git",

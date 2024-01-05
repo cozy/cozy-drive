@@ -1,4 +1,4 @@
-import manifest from '../targets/manifest.webapp'
+import manifest from '../../manifest.webapp'
 
 const appMetadata = {
   slug: manifest.slug,
