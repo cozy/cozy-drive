@@ -1,4 +1,4 @@
-import manifest from 'drive/targets/manifest.webapp'
+import manifest from '../targets/manifest.webapp'
 
 const appMetadata = {
   slug: manifest.slug,
