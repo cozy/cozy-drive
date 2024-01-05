@@ -8,6 +8,7 @@ import { useClient } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { useWebviewIntent } from 'cozy-intent'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import AlertProvider from 'cozy-ui/transpiled/react/providers/Alert'
 
 const wrap = (Component, className) => {
   const WrappedBarComponent = ({ children }) => {
@@ -47,7 +48,9 @@ export const BarRightWithProvider = ({ store, children }) => {
           webviewService={webviewIntent}
         >
           <VaultProvider cozyClient={client}>
-            <VaultUnlockProvider>{children}</VaultUnlockProvider>
+            <VaultUnlockProvider>
+              <AlertProvider>{children}</AlertProvider>
+            </VaultUnlockProvider>
           </VaultProvider>
         </BarContextProvider>
       </BarRight>
