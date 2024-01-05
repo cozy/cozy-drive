@@ -2,7 +2,7 @@ import React from 'react'
 import { render, fireEvent, act } from '@testing-library/react'
 import { waitForElementToBeRemoved } from '@testing-library/dom'
 import { createMockClient } from 'cozy-client'
-import { ModalContextProvider, ModalStack } from 'drive/lib/ModalContext'
+import { ModalContextProvider, ModalStack } from 'lib/ModalContext'
 
 import AppLike from 'test/components/AppLike'
 import { Toolbar } from './Toolbar'

@@ -11,7 +11,7 @@ import InputAdornment from 'cozy-ui/transpiled/react/InputAdornment'
 import Stack from 'cozy-ui/transpiled/react/Stack'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
-import { DOCTYPE_FILES_SHORTCUT } from 'drive/lib/doctypes'
+import { DOCTYPE_FILES_SHORTCUT } from 'lib/doctypes'
 import { useDisplayedFolder } from 'hooks'
 
 const ENTER_KEY = 13

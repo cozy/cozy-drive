@@ -8,7 +8,7 @@ import SharedDocuments from 'cozy-sharing/dist/components/SharedDocuments'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import { useModalContext } from 'drive/lib/ModalContext'
+import { useModalContext } from 'lib/ModalContext'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import {
   buildDriveQuery,

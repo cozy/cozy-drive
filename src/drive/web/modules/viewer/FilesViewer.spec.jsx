@@ -6,7 +6,7 @@ import CozyClient, { useQuery } from 'cozy-client'
 import FilesViewer from './FilesViewer'
 import AppLike from 'test/components/AppLike'
 import { generateFile } from 'test/generate'
-import { getEncryptionKeyFromDirId } from 'drive/lib/encryption'
+import { getEncryptionKeyFromDirId } from 'lib/encryption'
 import { useCurrentFileId } from 'hooks'
 
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
@@ -14,8 +14,8 @@ jest.mock('cozy-keys-lib', () => ({
   useVaultClient: jest.fn()
 }))
 
-jest.mock('drive/lib/encryption', () => ({
-  ...jest.requireActual('drive/lib/encryption'),
+jest.mock('lib/encryption', () => ({
+  ...jest.requireActual('lib/encryption'),
   getEncryptionKeyFromDirId: jest.fn(),
   getDecryptedFileURL: jest.fn()
 }))

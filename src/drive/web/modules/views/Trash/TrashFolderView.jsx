@@ -15,7 +15,7 @@ import {
   buildFileWithSpecificMetadataAttributeQuery
 } from 'drive/web/modules/queries'
 import { useCurrentFolderId, useDisplayedFolder } from 'hooks'
-import { useModalContext } from 'drive/lib/ModalContext'
+import { useModalContext } from 'lib/ModalContext'
 import TrashToolbar from 'drive/web/modules/trash/Toolbar'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'

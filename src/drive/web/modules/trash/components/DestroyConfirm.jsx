@@ -9,7 +9,7 @@ import { splitFilename } from 'cozy-client/dist/models/file'
 
 import { deleteFilesPermanently } from 'drive/web/modules/actions/utils'
 import { Message } from 'drive/web/modules/confirm/Message'
-import { getEntriesTypeTranslated } from 'drive/lib/entries'
+import { getEntriesTypeTranslated } from 'lib/entries'
 
 const DestroyConfirm = ({ files, onCancel, onConfirm }) => {
   const { t } = useI18n()

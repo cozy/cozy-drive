@@ -8,9 +8,9 @@ import { addToUploadQueue } from 'drive/web/modules/upload'
 import logger from 'lib/logger'
 import QuotaAlert from 'drive/web/modules/upload/QuotaAlert'
 import { getFolderContent } from 'drive/web/modules/selectors'
-import { createEncryptedDir } from 'drive/lib/encryption'
-import { logException } from 'drive/lib/reporter'
-import { getEntriesTypeTranslated } from 'drive/lib/entries'
+import { createEncryptedDir } from 'lib/encryption'
+import { logException } from 'lib/reporter'
+import { getEntriesTypeTranslated } from 'lib/entries'
 
 export const SORT_FOLDER = 'SORT_FOLDER'
 

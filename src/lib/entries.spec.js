@@ -1,4 +1,4 @@
-import { getEntriesType } from 'drive/lib/entries'
+import { getEntriesType } from 'lib/entries'
 
 describe('getEntriesType', () => {
   it('should return file for entries only file', () => {

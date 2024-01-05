@@ -12,7 +12,7 @@ import {
 } from 'cozy-keys-lib'
 import AlertProvider from 'cozy-ui/transpiled/react/providers/Alert'
 
-import FabProvider from 'drive/lib/FabProvider'
+import FabProvider from 'lib/FabProvider'
 import StyledApp from 'drive/web/modules/drive/StyledApp'
 
 const DriveProvider = ({ client, lang, polyglot, dictRequire, children }) => {

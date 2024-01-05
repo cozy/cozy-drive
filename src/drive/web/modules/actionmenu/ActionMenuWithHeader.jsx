@@ -12,7 +12,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import QualifyIcon from 'cozy-ui/transpiled/react/Icons/Qualify'
 
 import { CozyFile } from 'models'
-import getMimeTypeIcon from 'drive/lib/getMimeTypeIcon'
+import getMimeTypeIcon from 'lib/getMimeTypeIcon'
 
 import styles from 'styles/actionmenu.styl'
 

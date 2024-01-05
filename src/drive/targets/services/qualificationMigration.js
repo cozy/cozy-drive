@@ -1,12 +1,12 @@
 import log from 'cozy-logger'
 import CozyClient, { Q } from 'cozy-client'
-import { schema, DOCTYPE_FILES_SETTINGS } from 'drive/lib/doctypes'
+import { schema, DOCTYPE_FILES_SETTINGS } from 'lib/doctypes'
 import {
   migrateQualifiedFiles,
   extractFilesToMigrate,
   queryFilesFromDate,
   getMostRecentUpdatedDate
-} from 'drive/lib/migration/qualification'
+} from 'lib/migration/qualification'
 import fetch from 'node-fetch'
 
 global.fetch = fetch

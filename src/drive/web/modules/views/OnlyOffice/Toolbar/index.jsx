@@ -3,7 +3,7 @@ import React from 'react'
 import { RealTimeQueries } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import { DOCTYPE_FILES } from 'drive/lib/doctypes'
+import { DOCTYPE_FILES } from 'lib/doctypes'
 import { useOnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice/OnlyOfficeProvider'
 import { useFileWithPath } from 'drive/web/modules/views/hooks'
 import HomeIcon from 'drive/web/modules/views/OnlyOffice/Toolbar/HomeIcon'

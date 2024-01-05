@@ -1,4 +1,4 @@
-import { DOCTYPE_FILES } from 'drive/lib/doctypes'
+import { DOCTYPE_FILES } from 'lib/doctypes'
 
 /**
  * Query all files by filtering on required fields

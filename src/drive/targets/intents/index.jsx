@@ -10,9 +10,9 @@ import { render } from 'react-dom'
 import { getQueryParameter } from 'react-cozy-helpers'
 import CozyClient from 'cozy-client'
 
-import DriveProvider from 'drive/lib/DriveProvider'
-import registerClientPlugins from 'drive/lib/registerClientPlugins'
-import { schema } from 'drive/lib/doctypes'
+import DriveProvider from 'lib/DriveProvider'
+import registerClientPlugins from 'lib/registerClientPlugins'
+import { schema } from 'lib/doctypes'
 import appMetadata from 'drive/appMetadata'
 import IntentHandler from 'drive/web/modules/services'
 

@@ -5,8 +5,8 @@ import {
   getEncryptionKeyFromDirId,
   downloadEncryptedFile,
   isEncryptedFolder
-} from 'drive/lib/encryption'
-import { DOCTYPE_FILES } from 'drive/lib/doctypes'
+} from 'lib/encryption'
+import { DOCTYPE_FILES } from 'lib/doctypes'
 
 const isMissingFileError = error => error.status === 404
 

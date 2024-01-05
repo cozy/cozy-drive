@@ -12,7 +12,7 @@ import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { BarRightWithProvider } from 'components/Bar'
-import { useModalContext } from 'drive/lib/ModalContext'
+import { useModalContext } from 'lib/ModalContext'
 import { emptyTrash } from 'drive/web/modules/actions/utils'
 import SelectableItem from '../drive/Toolbar/selectable/SelectableItem'
 import { MoreButton } from 'components/Button'

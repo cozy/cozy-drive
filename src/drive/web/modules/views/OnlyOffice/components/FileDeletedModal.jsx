@@ -8,7 +8,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import Alert from 'cozy-ui/transpiled/react/Alert'
 
-import { DOCTYPE_FILES } from 'drive/lib/doctypes'
+import { DOCTYPE_FILES } from 'lib/doctypes'
 import { useOnlyOfficeContext } from 'drive/web/modules/views/OnlyOffice/OnlyOfficeProvider'
 import { makeOnlyOfficeFileRoute } from 'drive/web/modules/views/OnlyOffice/helpers'
 import { useRedirectLink } from 'hooks/useRedirectLink'

@@ -11,7 +11,7 @@ import {
   buildOnlyFolderQuery
 } from 'drive/web/modules/queries'
 import { AddFolderWithoutState } from 'drive/web/modules/filelist/AddFolder'
-import { isEncryptedFolder } from 'drive/lib/encryption'
+import { isEncryptedFolder } from 'lib/encryption'
 
 const MoveModalContent = ({
   folderId,

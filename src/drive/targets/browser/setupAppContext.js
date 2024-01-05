@@ -3,12 +3,12 @@
 import memoize from 'lodash/memoize'
 import { initTranslation } from 'cozy-ui/transpiled/react/providers/I18n'
 import CozyClient from 'cozy-client'
-import { configureReporter, setCozyUrl } from 'drive/lib/reporter'
-import registerClientPlugins from 'drive/lib/registerClientPlugins'
+import { configureReporter, setCozyUrl } from 'lib/reporter'
+import registerClientPlugins from 'lib/registerClientPlugins'
 
 import appMetadata from 'drive/appMetadata'
 import configureStore from 'store/configureStore'
-import { schema } from 'drive/lib/doctypes'
+import { schema } from 'lib/doctypes'
 import { Document } from 'cozy-doctypes'
 import cozyBar from 'lib/cozyBar'
 

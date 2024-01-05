@@ -1,6 +1,6 @@
 import { useContext, useMemo } from 'react'
 
-import AcceptingSharingContext from 'drive/lib/AcceptingSharingContext'
+import AcceptingSharingContext from 'lib/AcceptingSharingContext'
 import { getSharingIdFromUrl } from 'drive/web/modules/navigation/duck'
 import { computeSyncingFakeFile } from './syncHelpers'
 

@@ -9,7 +9,7 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'
 import { SharedRecipients } from 'cozy-sharing'
 
-import { isEncryptedFileOrFolder } from 'drive/lib/encryption'
+import { isEncryptedFileOrFolder } from 'lib/encryption'
 import { navigateToModal } from 'drive/web/modules/actions/helpers'
 
 const share = ({ hasWriteAccess, navigate, pathname }) => {

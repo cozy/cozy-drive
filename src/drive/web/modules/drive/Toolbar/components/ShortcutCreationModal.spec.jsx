@@ -9,7 +9,7 @@ import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import ShortcutCreationModal from './ShortcutCreationModal'
 import AppLike from 'test/components/AppLike'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
-import { DOCTYPE_FILES_SHORTCUT } from 'drive/lib/doctypes'
+import { DOCTYPE_FILES_SHORTCUT } from 'lib/doctypes'
 import useDisplayedFolder from 'hooks/useDisplayedFolder'
 
 const tMock = jest.fn()

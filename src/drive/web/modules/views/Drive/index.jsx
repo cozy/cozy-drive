@@ -10,7 +10,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import flag from 'cozy-flags'
 
 import Dropzone from 'drive/web/modules/upload/Dropzone'
-import { useModalContext } from 'drive/lib/ModalContext'
+import { useModalContext } from 'lib/ModalContext'
 import useActions from 'drive/web/modules/actions/useActions'
 import {
   share,
@@ -33,7 +33,7 @@ import { useCurrentFolderId, useDisplayedFolder } from 'hooks'
 import { useFolderSort } from 'drive/web/modules/navigation/duck'
 import { useExtraColumns } from 'drive/web/modules/certifications/useExtraColumns'
 import { makeExtraColumnsNamesFromMedia } from 'drive/web/modules/certifications'
-import { FabContext } from 'drive/lib/FabProvider'
+import { FabContext } from 'lib/FabProvider'
 
 import FolderView from 'drive/web/modules/views/Folder/FolderView'
 import FolderViewHeader from 'drive/web/modules/views/Folder/FolderViewHeader'

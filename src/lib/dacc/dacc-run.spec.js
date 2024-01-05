@@ -1,6 +1,6 @@
 import { run } from './dacc-run'
 import flag from 'cozy-flags'
-import { aggregateFilesSize } from 'drive/lib/dacc/dacc'
+import { aggregateFilesSize } from 'lib/dacc/dacc'
 import log from 'cozy-logger'
 import CozyClient from 'cozy-client'
 import { endOfMonth, subMonths } from 'date-fns'
@@ -8,7 +8,7 @@ import { endOfMonth, subMonths } from 'date-fns'
 jest.mock('cozy-flags')
 jest.mock('cozy-client')
 jest.mock('cozy-logger')
-jest.mock('drive/lib/dacc/dacc')
+jest.mock('lib/dacc/dacc')
 
 describe('dacc', () => {
   const maxGivenDate = '2022-01-01'

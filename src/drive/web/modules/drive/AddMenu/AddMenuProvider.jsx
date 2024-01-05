@@ -6,7 +6,7 @@ import React, {
   createContext
 } from 'react'
 
-import { logException } from 'drive/lib/reporter'
+import { logException } from 'lib/reporter'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
@@ -16,7 +16,7 @@ import {
 } from 'drive/web/modules/drive/Toolbar/components/MoreMenu'
 import AddMenu from 'drive/web/modules/drive/AddMenu/AddMenu'
 import { ScannerProvider } from 'drive/web/modules/drive/Toolbar/components/Scanner/ScannerProvider'
-import { isEncryptedFolder } from 'drive/lib/encryption'
+import { isEncryptedFolder } from 'lib/encryption'
 
 export const AddMenuContext = createContext()
 

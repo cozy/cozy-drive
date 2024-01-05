@@ -1,10 +1,7 @@
-import {
-  aggregateFilesSize,
-  aggregateNonExcludedSlugs
-} from 'drive/lib/dacc/dacc'
-import { queryAllDocsWithFields } from 'drive/lib/dacc/query'
+import { aggregateFilesSize, aggregateNonExcludedSlugs } from 'lib/dacc/dacc'
+import { queryAllDocsWithFields } from 'lib/dacc/query'
 
-jest.mock('drive/lib/dacc/query')
+jest.mock('lib/dacc/query')
 
 const mockedFilesQueryResponse = [
   {
