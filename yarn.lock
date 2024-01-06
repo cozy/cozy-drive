@@ -5997,12 +5997,12 @@ cozy-app-publish@^0.27.2:
     request "^2.88.0"
     tar "^4.4.13"
 
-cozy-authentication@2.10.10:
-  version "2.10.10"
-  resolved "https://registry.yarnpkg.com/cozy-authentication/-/cozy-authentication-2.10.10.tgz#276ce5ef17137dda8b017e05adda87069a7ab4ea"
-  integrity sha512-7x2ODKU9FsbKJmIaTs1rQKrekodwq1+dtURy+buBE+ObCdR0UumhXDgYhP5nGiYTbnC1c1djex8XkgcMALKGZw==
+cozy-authentication@2.14.0:
+  version "2.14.0"
+  resolved "https://registry.yarnpkg.com/cozy-authentication/-/cozy-authentication-2.14.0.tgz#2933c9cf734280683b4aabf0b889f8244af63116"
+  integrity sha512-t76GJnMU0K2I3V2SjUtF2N2QtZjDjGeI7cm4OUy+A/14e+GHsONkAJGMGxkUiz7g4ZMp0edlG/vZJqR5dzW2Qw==
   dependencies:
-    cozy-device-helper "^2.5.0"
+    cozy-device-helper "^2.7.0"
     localforage "1.7.3"
     prop-types "15.7.2"
     snarkdown "1.2.2"
