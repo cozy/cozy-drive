@@ -6348,10 +6348,10 @@ cozy-scanner@^7.0.1:
   dependencies:
     cozy-device-helper "^3.0.0"
 
-cozy-scripts@^8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-scripts/-/cozy-scripts-8.1.0.tgz#bb8ae227c587c671cc2450fdffbad7f9daa20614"
-  integrity sha512-wNWShe11ENjcguNX3w69xnI69zqaZMCZmbp7EUCsxVnRY7GAaFR3bynti/+Z9pDemIWwgWD+uUsgUiyFKaHmZw==
+cozy-scripts@^8.3.0:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/cozy-scripts/-/cozy-scripts-8.3.0.tgz#dec3a5c9568a5e44e1baf6cd9983a7c55418ba95"
+  integrity sha512-UrzifMUyIleTs7M+H449uOm/3OA/7vqUVlpA6IYi+BftUG4WbOEmU3oG9dmxRK5kVK+VhJURBk+9LJ+C+84syg==
   dependencies:
     "@babel/core" "7.10.0"
     "@babel/polyfill" "^7.10.4"
@@ -6446,10 +6446,10 @@ cozy-tsconfig@1.2.0:
   resolved "https://registry.yarnpkg.com/cozy-tsconfig/-/cozy-tsconfig-1.2.0.tgz#17e61f960f139fae4d26cbac2254b9ab632b269e"
   integrity sha512-TRHnY9goF3FzVlUbP7BcHxuN2XAA4AmppT4fHHZmTKaSwYTByVR1Al+riFMDbce94kJZ1wzl9WNLWQuqzGZ6Cw==
 
-cozy-ui@100.1.0:
-  version "100.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-100.1.0.tgz#7a83a8684e6b37c9440cb64266638edb94f83561"
-  integrity sha512-wtt0dsAfDYFhEJSSmF/+ETHr+AFgBuvJGEB5mT3JBV6vvMA6Q+2yEt5gQw6/mtnRmp6kdn25P1uDJUyBF6Dxbw==
+cozy-ui@^101.1.0:
+  version "101.1.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-101.1.0.tgz#dbad7bd569457de9bd3d17fca89558977c9b6ca2"
+  integrity sha512-aSxfd1IblCy6qKN4XTJb7LWobPkblsDgnMLBLtAxI7vCM4L2dXY0zTLuCZcRPHjsOINTwsoTxvtE3KPk7cEUNg==
   dependencies:
     "@babel/runtime" "^7.3.4"
     "@material-ui/core" "4.12.3"

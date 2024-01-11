@@ -4,12 +4,28 @@ exports[`should display the Searchbar 1`] = `
 {
   "asFragment": [Function],
   "baseElement": <body>
+    <div
+      class="CozyTheme--dark-inverted"
+      style="display: none;"
+    />
+    <div
+      class="CozyTheme--dark-normal"
+      style="display: none;"
+    />
+    <div
+      class="CozyTheme--light-inverted"
+      style="display: none;"
+    />
+    <div
+      class="CozyTheme--light-normal"
+      style="display: none;"
+    />
     <div>
       <div
-        class="CozyTheme--normal u-dc"
+        class="CozyTheme--light-normal u-dc"
       >
         <div
-          class="u-flex u-flex-items-center u-flex-grow CozyTheme--normal u-dc"
+          class="u-flex u-flex-items-center u-flex-grow CozyTheme--light-normal u-dc"
         >
           <div
             class="bar-search-container"
@@ -67,10 +83,10 @@ exports[`should display the Searchbar 1`] = `
   </body>,
   "container": <div>
     <div
-      class="CozyTheme--normal u-dc"
+      class="CozyTheme--light-normal u-dc"
     >
       <div
-        class="u-flex u-flex-items-center u-flex-grow CozyTheme--normal u-dc"
+        class="u-flex u-flex-items-center u-flex-grow CozyTheme--light-normal u-dc"
       >
         <div
           class="bar-search-container"

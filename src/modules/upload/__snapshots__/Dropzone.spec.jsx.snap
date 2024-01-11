@@ -22,6 +22,7 @@ exports[`Dropzone should match snapshot 1`] = `
     variant="normal"
   >
     <MuiCozyTheme
+      type="light"
       variant="normal"
     >
       <ThemeProvider
@@ -1467,7 +1468,7 @@ exports[`Dropzone should match snapshot 1`] = `
                     "& $indicator": {
                       "backgroundColor": "#fff",
                       "borderRadius": "99px",
-                      "boxShadow": "var(--shadow1)",
+                      "boxShadow": "#fff",
                       "height": "calc(100% - 2px)",
                       "top": "1px",
                       "transform": "scale(0.99)",
@@ -1588,6 +1589,7 @@ exports[`Dropzone should match snapshot 1`] = `
               },
               "tonalOffset": 0.2,
               "type": "light",
+              "variant": "normal",
               "warning": {
                 "contrastText": "#fff",
                 "dark": "#fff",
@@ -1597,32 +1599,31 @@ exports[`Dropzone should match snapshot 1`] = `
             },
             "props": {},
             "shadows": [
-              "var(--shadow0)",
-              "var(--shadow1)",
-              "var(--shadow2)",
-              "var(--shadow3)",
-              "var(--shadow4)",
-              "var(--shadow5)",
-              "var(--shadow6)",
-              "var(--shadow7)",
-              "var(--shadow8)",
-              "var(--shadow9)",
-              "var(--shadow10)",
-              "var(--shadow11)",
-              "var(--shadow12)",
-              "var(--shadow13)",
-              "var(--shadow14)",
-              "var(--shadow15)",
-              "var(--shadow16)",
-              "var(--shadow17)",
-              "var(--shadow18)",
-              "var(--shadow19)",
-              "var(--shadow20)",
-              "var(--shadow21)",
-              "var(--shadow22)",
-              "var(--shadow23)",
-              "var(--shadow24)",
-              "var(--shadow25)",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
+              "#fff",
             ],
             "shape": {
               "borderRadius": 6,
@@ -1762,7 +1763,7 @@ exports[`Dropzone should match snapshot 1`] = `
         }
       >
         <div
-          className="CozyTheme--normal u-dc"
+          className="CozyTheme--light-normal u-dc"
         >
           <Provider
             store={
