@@ -1,17 +1,11 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { useClient } from 'cozy-client'
 import { useWebviewIntent } from 'cozy-intent'
 import logger from 'cozy-logger'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
-import {
-  getUploadQueue,
-  ADD_TO_UPLOAD_QUEUE,
-  getProcessed,
-  getSuccessful
-} from 'drive/web/modules/upload'
+import { getUploadQueue, ADD_TO_UPLOAD_QUEUE } from 'drive/web/modules/upload'
 import { FileFromNative } from 'drive/web/modules/views/Upload/UploadTypes'
 import { getErrorMessage } from 'drive/web/modules/drive/helpers'
 
@@ -20,8 +14,6 @@ export const useResumeUploadFromFlagship = (): void => {
   const dispatch = useDispatch()
   const webviewIntent = useWebviewIntent()
   const uploadQueue = useSelector(getUploadQueue) as FileFromNative[]
-  const state = useSelector(state => state)
-  const didFlow = useRef(false)
 
   useEffect(() => {
     const doResumeCheck = async (): Promise<void> => {
@@ -54,27 +46,4 @@ export const useResumeUploadFromFlagship = (): void => {
 
     void doResumeCheck()
   }, [client, dispatch, webviewIntent, uploadQueue])
-
-  useEffect(() => {
-    // The upload can only happen once as the webapp is closed before the upload process can start again
-    if (didFlow.current) return
-
-    const processed = (getProcessed(state) as () => unknown[]).length
-    const queued = uploadQueue.length
-
-    // If there are no files processed, we are not in the upload flow
-    if (processed === 0) return
-
-    // Assuming that the upload is finished if all files have been processed (success or error)
-    if (processed === queued) {
-      const successful = (getSuccessful(state) as () => unknown[]).length
-
-      // Using success count instead of queued count because some files may have been skipped/errored
-      Alerter.success('UploadQueue.success_flagship', {
-        smart_count: successful
-      })
-
-      didFlow.current = true
-    }
-  }, [dispatch, state, uploadQueue])
 }

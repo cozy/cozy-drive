@@ -124,18 +124,4 @@ describe('useResumeUploadFromFlagship', () => {
       expect(mockDispatch).not.toHaveBeenCalled()
     })
   })
-
-  it('should display a success message on completion', async () => {
-    mockGetProcessed.mockReturnValue([{ name: 'testFile' }])
-    mockUseSelector.mockReturnValue([{ name: 'testFile' }])
-    mockGetSuccessful.mockReturnValue([{ name: 'testFile' }])
-
-    render(<TestComponent />)
-
-    await waitFor(() => {
-      expect(Alerter.success).toHaveBeenCalledWith(expect.any(String), {
-        smart_count: 1
-      })
-    })
-  })
 })
