@@ -106,16 +106,24 @@ describe('Scanner', () => {
       )
     })
 
-    // Assert that the mockUploadFiles function was called with the expected arguments
-    expect((mockUploadFiles.mock.calls[0] as [unknown])[0]).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          file: expect.any(Object) as Record<string, unknown>,
-          isDirectory: false,
-          name: expect.stringMatching(/\.jpg$/) as string
-        })
-      ])
-    )
+    // Create a mock File object
+    const mockFile = new File([], 'testfile')
+
+    // Assert that mockUploadFiles was called once with the expected arguments
+    expect(mockUploadFiles).toHaveBeenCalledTimes(1)
+
+    const calls = mockUploadFiles.mock.calls as unknown[][]
+
+    expect(calls[0][0]).toEqual([mockFile]) // File
+    expect(calls[0][1]).toBe('test') // Directory ID
+    expect(calls[0][2]).toEqual({ isScanned: true }) // Upload options
+    expect(typeof calls[0][3]).toBe('function') // Success callback
+    // Dependencies
+    expect(calls[0][4]).toMatchObject({
+      client: expect.anything() as Record<string, unknown>,
+      vaultClient: {},
+      t: expect.anything() as (key: string) => string
+    })
   })
 
   // Test case: Handle unexpected errors gracefully

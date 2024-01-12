@@ -66,14 +66,14 @@ export const useScannerService = (displayedFolder: {
 
       const base64 = await scanDocument()
 
-      const fileName = getUniqueNameFromPrefix('scan')
-      const file = {
-        file: getFileFromBase64(base64, fileName, 'image/jpeg'),
-        isDirectory: false,
-        name: fileName
-      }
       const payload = uploadFiles(
-        [file],
+        [
+          getFileFromBase64(
+            base64,
+            getUniqueNameFromPrefix('scan'),
+            'image/jpeg'
+          )
+        ],
         displayedFolder.id,
         { isScanned: true },
         () => logger('info', `File uploaded successfully`),
