@@ -1,11 +1,11 @@
 import React from 'react'
 
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-import Typography from 'cozy-ui/transpiled/react/Typography'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import LockIcon from 'cozy-ui/transpiled/react/Icons/Lock'
 import Tooltip from 'cozy-ui/transpiled/react/Tooltip'
+import Typography from 'cozy-ui/transpiled/react/Typography'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 const ReadOnly = () => {
   const { t } = useI18n()

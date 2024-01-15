@@ -1,30 +1,29 @@
+import { useCurrentFolderId, useDisplayedFolder } from 'hooks'
 import React, { useCallback, useMemo } from 'react'
 import { useNavigate, Outlet } from 'react-router-dom'
 
 import { useQuery, useClient } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { useFolderSort } from 'modules/navigation/duck'
-import useActions from 'modules/actions/useActions'
-import { restore, destroy } from 'modules/actions'
+import FolderView from '../Folder/FolderView'
+import FolderViewBody from '../Folder/FolderViewBody'
+import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
+import FolderViewHeader from '../Folder/FolderViewHeader'
+import useHead from 'components/useHead'
 import { TRASH_DIR_ID } from 'constants/config'
+import { useModalContext } from 'lib/ModalContext'
+import { restore, destroy } from 'modules/actions'
+import useActions from 'modules/actions/useActions'
+import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
+import { useExtraColumns } from 'modules/certifications/useExtraColumns'
+import { useFolderSort } from 'modules/navigation/duck'
 import {
   buildTrashQuery,
   buildFileWithSpecificMetadataAttributeQuery
 } from 'modules/queries'
-import { useCurrentFolderId, useDisplayedFolder } from 'hooks'
-import { useModalContext } from 'lib/ModalContext'
 import TrashToolbar from 'modules/trash/Toolbar'
-import { useExtraColumns } from 'modules/certifications/useExtraColumns'
-import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
-
-import FolderView from '../Folder/FolderView'
-import FolderViewHeader from '../Folder/FolderViewHeader'
-import FolderViewBody from '../Folder/FolderViewBody'
-import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
-import useHead from 'components/useHead'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []

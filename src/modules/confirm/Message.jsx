@@ -1,6 +1,7 @@
 import React from 'react'
-import { Media, Img, Bd } from 'cozy-ui/transpiled/react/deprecated/Media'
+
 import Icon from 'cozy-ui/transpiled/react/Icon'
+import { Media, Img, Bd } from 'cozy-ui/transpiled/react/deprecated/Media'
 
 /**
  * Used to display a message and an icon
@@ -15,7 +16,7 @@ export const Message = ({ icon, text }) => {
       <Img>
         <Icon icon={icon} color="var(--coolGrey)" />
       </Img>
-      <Bd className={'u-pl-1-half'}>{text}</Bd>
+      <Bd className="u-pl-1-half">{text}</Bd>
     </Media>
   )
 }

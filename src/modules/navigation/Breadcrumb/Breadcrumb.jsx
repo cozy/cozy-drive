@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react'
-import PropTypes from 'prop-types'
 import cx from 'classnames'
+import PropTypes from 'prop-types'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 
-import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import RightIcon from 'cozy-ui/transpiled/react/Icons/Right'
+import Spinner from 'cozy-ui/transpiled/react/Spinner'
 
 import styles from 'modules/navigation/Breadcrumb/breadcrumb.styl'
 

@@ -1,5 +1,5 @@
-import React from 'react'
 import cx from 'classnames'
+import React from 'react'
 
 import { TableCell } from 'cozy-ui/transpiled/react/Table'
 

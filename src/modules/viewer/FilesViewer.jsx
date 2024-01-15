@@ -1,33 +1,32 @@
+import { useCurrentFileId } from 'hooks'
 import React, { useCallback, useEffect, useState, useMemo } from 'react'
 import { RemoveScroll } from 'react-remove-scroll'
 import { useNavigate } from 'react-router-dom'
 
 import { Q, useClient } from 'cozy-client'
-import { useVaultClient } from 'cozy-keys-lib'
 import { isIOSApp } from 'cozy-device-helper'
-import logger from 'lib/logger'
-import Overlay from 'cozy-ui/transpiled/react/deprecated/Overlay'
+import { useVaultClient } from 'cozy-keys-lib'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import Viewer from 'cozy-ui/transpiled/react/Viewer'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import palette from 'cozy-ui/transpiled/react/palette'
 import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
 import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
 import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
+import Overlay from 'cozy-ui/transpiled/react/deprecated/Overlay'
+import palette from 'cozy-ui/transpiled/react/palette'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-import { useCurrentFileId } from 'hooks'
-
-import Fallback from 'modules/viewer/Fallback'
-import {
-  isOfficeEnabled,
-  makeOnlyOfficeFileRoute
-} from 'modules/views/OnlyOffice/helpers'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import {
   isEncryptedFile,
   getEncryptionKeyFromDirId,
   getDecryptedFileURL
 } from 'lib/encryption'
+import logger from 'lib/logger'
+import Fallback from 'modules/viewer/Fallback'
+import {
+  isOfficeEnabled,
+  makeOnlyOfficeFileRoute
+} from 'modules/views/OnlyOffice/helpers'
 
 export const FilesViewerLoading = () => (
   <Overlay>

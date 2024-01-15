@@ -1,25 +1,26 @@
-import React, { useState, useCallback } from 'react'
 import cx from 'classnames'
-
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-import Input from 'cozy-ui/transpiled/react/Input'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import List from 'cozy-ui/transpiled/react/List'
-import { isFlagshipApp } from 'cozy-device-helper'
-import { useWebviewIntent } from 'cozy-intent'
-import { models, useClient } from 'cozy-client'
-import LoadMore from 'cozy-ui/transpiled/react/LoadMore'
-
-import BackButton from 'components/Button/BackButton'
-import { BarLeft, BarSearch } from 'components/Bar'
-import useSearch from 'modules/search/hooks/useSearch'
-import SuggestionItem from 'modules/search/components/SuggestionItem'
-import SuggestionListSkeleton from 'modules/search/components/SuggestionListSkeleton'
-import BarSearchInputGroup from 'modules/search/components/BarSearchInputGroup'
-import styles from 'modules/search/components/styles.styl'
-import SearchEmpty from './components/SearchEmpty'
+import React, { useState, useCallback } from 'react'
 import { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+
+import { models, useClient } from 'cozy-client'
+import { isFlagshipApp } from 'cozy-device-helper'
+import { useWebviewIntent } from 'cozy-intent'
+import Input from 'cozy-ui/transpiled/react/Input'
+import List from 'cozy-ui/transpiled/react/List'
+import LoadMore from 'cozy-ui/transpiled/react/LoadMore'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+
+import SearchEmpty from './components/SearchEmpty'
+import { BarLeft, BarSearch } from 'components/Bar'
+import BackButton from 'components/Button/BackButton'
+import BarSearchInputGroup from 'modules/search/components/BarSearchInputGroup'
+import SuggestionItem from 'modules/search/components/SuggestionItem'
+import SuggestionListSkeleton from 'modules/search/components/SuggestionListSkeleton'
+import useSearch from 'modules/search/hooks/useSearch'
+
+import styles from 'modules/search/components/styles.styl'
 
 const SearchView = () => {
   const webviewIntent = useWebviewIntent()

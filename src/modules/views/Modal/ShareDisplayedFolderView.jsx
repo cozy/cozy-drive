@@ -1,9 +1,8 @@
+import { useDisplayedFolder } from 'hooks'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { ShareModal } from 'cozy-sharing'
-
-import { useDisplayedFolder } from 'hooks'
 
 const ShareDisplayedFolderView = () => {
   const { displayedFolder } = useDisplayedFolder()

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 
 import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
+import Stack from 'cozy-ui/transpiled/react/Stack'
 import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
-import Stack from 'cozy-ui/transpiled/react/Stack'
 
 import { Message } from 'modules/confirm/Message'
 const EmptyTrashConfirm = ({ t, onConfirm, onClose }) => {

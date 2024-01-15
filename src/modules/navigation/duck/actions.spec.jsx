@@ -1,10 +1,9 @@
 import CozyClient from 'cozy-client'
 import { WebVaultClient } from 'cozy-keys-lib'
 
-import { setupFolderContent } from 'test/setup'
-import { generateFile } from 'test/generate'
-
 import { createFolder } from './actions'
+import { generateFile } from 'test/generate'
+import { setupFolderContent } from 'test/setup'
 
 jest.mock('cozy-keys-lib', () => ({
   withVaultClient: jest.fn().mockReturnValue({}),

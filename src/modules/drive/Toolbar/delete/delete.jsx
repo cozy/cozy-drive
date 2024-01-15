@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react'
+import { showModal } from 'react-cozy-helpers'
 import { connect } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-
-import { showModal } from 'react-cozy-helpers'
 
 import DeleteConfirm from '../../DeleteConfirm'
 

@@ -1,10 +1,10 @@
-import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
+import React from 'react'
 
-import { setupFolderContent, mockCozyClientRequestQuery } from 'test/setup'
+import MoreMenu from './MoreMenu'
 import { downloadFiles } from 'modules/actions/utils'
 import AppLike from 'test/components/AppLike'
-import MoreMenu from './MoreMenu'
+import { setupFolderContent, mockCozyClientRequestQuery } from 'test/setup'
 
 jest.mock('modules/actions/utils', () => ({
   downloadFiles: jest.fn().mockResolvedValue()
@@ -28,7 +28,7 @@ describe('MoreMenu', () => {
           canUpload
           hasWriteAccess
           displayedFolder={{ id: 'id2' }}
-          folderId={'id1'}
+          folderId="id1"
           showSelectionBar={jest.fn()}
         />
       </AppLike>

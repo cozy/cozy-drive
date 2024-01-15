@@ -1,13 +1,13 @@
 import React from 'react'
 import { HashRouter, Routes, Route } from 'react-router-dom'
 
-import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
+import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 
 import FileOpenerExternal from 'modules/viewer/FileOpenerExternal'
-import { isOfficeEnabled } from 'modules/views/OnlyOffice/helpers'
 import OnlyOfficeView from 'modules/views/OnlyOffice'
+import { isOfficeEnabled } from 'modules/views/OnlyOffice/helpers'
 
 class Embeder extends React.Component {
   constructor(props) {

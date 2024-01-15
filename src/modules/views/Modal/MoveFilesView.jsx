@@ -3,9 +3,9 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 
 import { hasQueryBeenLoaded, useQuery } from 'cozy-client'
 
+import { LoaderModal } from 'components/LoaderModal'
 import MoveModal from 'modules/move/MoveModal'
 import { buildParentsByIdsQuery } from 'modules/queries'
-import { LoaderModal } from 'components/LoaderModal'
 
 const MoveFilesView = () => {
   const navigate = useNavigate()

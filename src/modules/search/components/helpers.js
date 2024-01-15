@@ -1,9 +1,9 @@
 import { models } from 'cozy-client'
 
-import FuzzyPathSearch from 'lib/FuzzyPathSearch.js'
-import { makeOnlyOfficeFileRoute } from 'modules/views/OnlyOffice/helpers'
 import { ROOT_DIR_ID } from 'constants/config'
+import FuzzyPathSearch from 'lib/FuzzyPathSearch.js'
 import { isEncryptedFolder } from 'lib/encryption'
+import { makeOnlyOfficeFileRoute } from 'modules/views/OnlyOffice/helpers'
 
 export const TYPE_DIRECTORY = 'directory'
 

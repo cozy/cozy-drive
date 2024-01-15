@@ -1,12 +1,12 @@
-import React from 'react'
 import cx from 'classnames'
+import React from 'react'
 
 import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import FilenameInput from 'modules/filelist/FilenameInput'
 import FileThumbnail from 'modules/filelist/FileThumbnail'
+import FilenameInput from 'modules/filelist/FilenameInput'
 import { Empty as EmptyCell } from 'modules/filelist/cells'
 
 import styles from 'styles/filelist.styl'

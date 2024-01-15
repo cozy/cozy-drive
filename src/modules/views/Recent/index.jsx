@@ -1,19 +1,17 @@
 import React, { useCallback } from 'react'
-import { useNavigate, Outlet, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { useNavigate, Outlet, useLocation } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import FolderView from '../Folder/FolderView'
-import FolderViewHeader from '../Folder/FolderViewHeader'
 import FolderViewBody from '../Folder/FolderViewBody'
+import FolderViewHeader from '../Folder/FolderViewHeader'
+import useHead from 'components/useHead'
 import { useModalContext } from 'lib/ModalContext'
-import Toolbar from 'modules/drive/Toolbar'
-import { MobileAwareBreadcrumb as Breadcrumb } from 'modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
-import useActions from 'modules/actions/useActions'
 import {
   download,
   trash,
@@ -25,14 +23,16 @@ import {
   hr,
   share
 } from 'modules/actions'
+import useActions from 'modules/actions/useActions'
+import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
+import { useExtraColumns } from 'modules/certifications/useExtraColumns'
+import Toolbar from 'modules/drive/Toolbar'
+import { MobileAwareBreadcrumb as Breadcrumb } from 'modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
 import {
   buildRecentQuery,
   buildRecentWithMetadataAttributeQuery
 } from 'modules/queries'
 import { useFilesQueryWithPath } from 'modules/views/hooks'
-import { useExtraColumns } from 'modules/certifications/useExtraColumns'
-import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
-import useHead from 'components/useHead'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []

@@ -1,5 +1,7 @@
 import React from 'react'
+
 import SelectionBarUI from 'cozy-ui/transpiled/react/SelectionBar'
+
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 
 const driveActionsToSelectionBarActions = driveActions => {

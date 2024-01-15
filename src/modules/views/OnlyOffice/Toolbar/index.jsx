@@ -3,18 +3,18 @@ import React from 'react'
 import { RealTimeQueries } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
+import { useRedirectLink } from 'hooks/useRedirectLink'
 import { DOCTYPE_FILES } from 'lib/doctypes'
 import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
-import { useFileWithPath } from 'modules/views/hooks'
-import HomeIcon from 'modules/views/OnlyOffice/Toolbar/HomeIcon'
-import HomeLinker from 'modules/views/OnlyOffice/Toolbar/HomeLinker'
-import Separator from 'modules/views/OnlyOffice/Toolbar/Separator'
 import BackButton from 'modules/views/OnlyOffice/Toolbar/BackButton'
 import FileIcon from 'modules/views/OnlyOffice/Toolbar/FileIcon'
 import FileName from 'modules/views/OnlyOffice/Toolbar/FileName'
+import HomeIcon from 'modules/views/OnlyOffice/Toolbar/HomeIcon'
+import HomeLinker from 'modules/views/OnlyOffice/Toolbar/HomeLinker'
 import ReadOnly from 'modules/views/OnlyOffice/Toolbar/ReadOnly'
+import Separator from 'modules/views/OnlyOffice/Toolbar/Separator'
 import Sharing from 'modules/views/OnlyOffice/Toolbar/Sharing'
-import { useRedirectLink } from 'hooks/useRedirectLink'
+import { useFileWithPath } from 'modules/views/hooks'
 
 const Toolbar = () => {
   const { isMobile } = useBreakpoints()

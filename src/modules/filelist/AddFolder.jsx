@@ -1,17 +1,17 @@
+import compose from 'lodash/flowRight'
 import React from 'react'
 import { connect, useDispatch } from 'react-redux'
-import compose from 'lodash/flowRight'
 
 import { withClient } from 'cozy-client'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
+import { AddFolderRow } from 'modules/filelist/AddFolderRow'
 import {
   isTypingNewFolderName,
   hideNewFolderInput,
   isEncryptedFolder
 } from 'modules/filelist/duck'
 import { createFolder } from 'modules/navigation/duck'
-import { AddFolderRow } from 'modules/filelist/AddFolderRow'
 
 const AddFolder = ({
   visible,

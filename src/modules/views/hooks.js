@@ -1,11 +1,11 @@
 import get from 'lodash/get'
-import uniq from 'lodash/uniq'
 import keyBy from 'lodash/keyBy'
+import uniq from 'lodash/uniq'
 
 import { useQuery } from 'cozy-client'
 
-import { buildParentsByIdsQuery, buildFileByIdQuery } from 'modules/queries'
 import { TRASH_DIR_ID } from 'constants/config'
+import { buildParentsByIdsQuery, buildFileByIdQuery } from 'modules/queries'
 
 export const isFileNotTrashed = file =>
   file.dir_id !== TRASH_DIR_ID && file.trashed !== true

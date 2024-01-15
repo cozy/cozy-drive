@@ -1,16 +1,16 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 
 import { useQuery } from 'cozy-client'
+import { useSharingContext } from 'cozy-sharing'
 import { ConfirmDialog } from 'cozy-ui/react/CozyDialogs'
 import Buttons from 'cozy-ui/transpiled/react/Buttons'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Typography from 'cozy-ui/transpiled/react/Typography'
-import { useSharingContext } from 'cozy-sharing'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { buildOnlyFolderQuery } from 'modules/queries'
-import { getEntriesName } from 'modules/move/helpers'
 import { LoaderModal } from 'components/LoaderModal'
+import { getEntriesName } from 'modules/move/helpers'
+import { buildOnlyFolderQuery } from 'modules/queries'
 
 /**
  * Alert the user when is trying to move a shared folder/file inside another shared folder

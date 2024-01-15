@@ -1,8 +1,8 @@
 import { createMockClient } from 'cozy-client'
 import { shouldBeOpenedByOnlyOffice } from 'cozy-client/dist/models/file'
 
-import { generateFile } from 'test/generate'
 import createFileOpeningHandler from './createFileOpeningHandler'
+import { generateFile } from 'test/generate'
 
 const mockUseWebviewIntent = jest.fn()
 const mockIsFlagshipApp = jest.fn()

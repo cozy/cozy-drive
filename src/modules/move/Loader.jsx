@@ -1,7 +1,8 @@
-import React from 'react'
 import PropTypes from 'prop-types'
-import Oops from 'components/Error/Oops'
+import React from 'react'
+
 import { EmptyDrive } from 'components/Error/Empty'
+import Oops from 'components/Error/Oops'
 import FileListRowsPlaceholder from 'modules/filelist/FileListRowsPlaceholder'
 
 const Loader = ({ fetchStatus, hasNoData, children }) => {

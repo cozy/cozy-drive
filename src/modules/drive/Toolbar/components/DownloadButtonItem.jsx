@@ -1,12 +1,12 @@
+import compose from 'lodash/flowRight'
 import React from 'react'
 import { connect } from 'react-redux'
-import compose from 'lodash/flowRight'
 
 import { withClient } from 'cozy-client'
-import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
+import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { downloadFiles } from 'modules/actions/utils'
 

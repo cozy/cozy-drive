@@ -1,16 +1,9 @@
-import React from 'react'
 import { renderHook } from '@testing-library/react-hooks'
+import React from 'react'
+import { createStore } from 'redux'
+
 import { createMockClient } from 'cozy-client'
 
-import AppLike from 'test/components/AppLike'
-import DeleteConfirm from 'modules/drive/DeleteConfirm'
-import DestroyConfirm from 'modules/trash/components/DestroyConfirm'
-import { createStore } from 'redux'
-import { downloadFiles, restoreFiles } from './utils'
-import * as renameModule from 'modules/drive/rename'
-import { useSelectionContext } from 'modules/selection/SelectionProvider'
-
-import useActions from './useActions'
 import {
   share,
   download,
@@ -22,6 +15,13 @@ import {
   restore,
   destroy
 } from './index'
+import useActions from './useActions'
+import { downloadFiles, restoreFiles } from './utils'
+import DeleteConfirm from 'modules/drive/DeleteConfirm'
+import * as renameModule from 'modules/drive/rename'
+import { useSelectionContext } from 'modules/selection/SelectionProvider'
+import DestroyConfirm from 'modules/trash/components/DestroyConfirm'
+import AppLike from 'test/components/AppLike'
 
 jest.mock('./utils', () => ({
   downloadFiles: jest.fn(),

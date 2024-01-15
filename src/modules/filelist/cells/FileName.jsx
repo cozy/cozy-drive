@@ -1,19 +1,18 @@
-import React, { useCallback } from 'react'
 import cx from 'classnames'
-import { Link } from 'react-router-dom'
 import get from 'lodash/get'
+import { CozyFile } from 'models'
+import React, { useCallback } from 'react'
+import { Link } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
 import { isDirectory } from 'cozy-client/dist/models/file'
-
-import { TableCell } from 'cozy-ui/transpiled/react/Table'
-import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
-import Icon from 'cozy-ui/transpiled/react/Icon'
 import AppIcon from 'cozy-ui/transpiled/react/AppIcon'
+import Icon from 'cozy-ui/transpiled/react/Icon'
 import CarbonCopyIcon from 'cozy-ui/transpiled/react/Icons/CarbonCopy'
+import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
+import { TableCell } from 'cozy-ui/transpiled/react/Table'
 
 import RenameInput from 'modules/drive/RenameInput'
-import { CozyFile } from 'models'
 
 import styles from 'styles/filelist.styl'
 

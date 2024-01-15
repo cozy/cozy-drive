@@ -1,8 +1,9 @@
+import { useDisplayedFolder } from 'hooks'
 import React from 'react'
-import { SharedRecipients } from 'cozy-sharing'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-import { useDisplayedFolder } from 'hooks'
+import { SharedRecipients } from 'cozy-sharing'
+
 import { getPathToShareDisplayedFolder } from 'modules/drive/Toolbar/share/helpers'
 
 const SharedRecipientsComponent = () => {

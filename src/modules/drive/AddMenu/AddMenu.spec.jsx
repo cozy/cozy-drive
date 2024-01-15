@@ -1,11 +1,12 @@
-import React from 'react'
 import { render, act } from '@testing-library/react'
+import React from 'react'
 
-import { setupFolderContent, mockCozyClientRequestQuery } from 'test/setup'
 import { useAppLinkWithStoreFallback } from 'cozy-client'
+
+import { ActionMenuContent } from './AddMenu'
 import { ScannerProvider } from 'modules/drive/Toolbar/components/Scanner/ScannerProvider'
 import AppLike from 'test/components/AppLike'
-import { ActionMenuContent } from './AddMenu'
+import { setupFolderContent, mockCozyClientRequestQuery } from 'test/setup'
 
 jest.mock('cozy-client/dist/hooks/useAppLinkWithStoreFallback', () => jest.fn())
 

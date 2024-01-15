@@ -1,6 +1,7 @@
+import Polyglot from 'node-polyglot'
+
 import { makeTitle } from './useUpdateDocumentTitle'
 import { TRASH_DIR_PATH } from 'constants/config'
-import Polyglot from 'node-polyglot'
 import en from 'locales/en.json'
 
 const p = new Polyglot()

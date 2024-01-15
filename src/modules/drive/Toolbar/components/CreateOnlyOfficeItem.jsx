@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo } from 'react'
 
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
+import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { ROOT_DIR_ID } from 'constants/config'
 import {

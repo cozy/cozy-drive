@@ -1,8 +1,9 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 
 import { isDirectory } from 'cozy-client/dist/models/file'
 import { Icon } from 'cozy-ui/transpiled/react'
+
 import { isEncryptedFolder } from 'lib/encryption'
 import getMimeTypeIcon from 'lib/getMimeTypeIcon'
 

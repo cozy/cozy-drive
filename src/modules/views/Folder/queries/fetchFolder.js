@@ -1,4 +1,5 @@
 import get from 'lodash/get'
+
 import { buildFolderQuery } from 'modules/queries'
 
 export const fetchFolder = async ({ client, folderId }) => {

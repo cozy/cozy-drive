@@ -2,16 +2,16 @@ import React, { useMemo, useCallback } from 'react'
 import { RemoveScroll } from 'react-remove-scroll'
 
 import { isQueryLoading, useQuery } from 'cozy-client'
-import Viewer from 'cozy-ui/transpiled/react/Viewer'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import Viewer from 'cozy-ui/transpiled/react/Viewer'
 import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
 import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
 import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import Oops from 'components/Error/Oops'
-import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
 import { buildFileByIdQuery } from 'modules/queries'
+import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
 
 const Error = () => {
   const { t } = useI18n()

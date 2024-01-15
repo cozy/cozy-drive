@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
-import { withClient } from 'cozy-client'
 import localforage from 'localforage'
+import React, { Component } from 'react'
 
-import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
-import { default as UIButtonClient } from 'cozy-ui/transpiled/react/deprecated/PushClientButton'
+import { withClient } from 'cozy-client'
 import { isFlagshipApp } from 'cozy-device-helper'
+import { default as UIButtonClient } from 'cozy-ui/transpiled/react/deprecated/PushClientButton'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { isLinux, isClientAlreadyInstalled, DESKTOP_BANNER } from '.'
 import Config from 'config/config.json'
@@ -39,7 +39,7 @@ class ButtonClient extends Component {
       <UIButtonClient
         label={t('Nav.btn-client')}
         href={t(isLinux() ? 'Nav.link-client' : 'Nav.link-client-desktop')}
-        className={'u-m-1 u-dn-m'}
+        className="u-m-1 u-dn-m"
       />
     )
   }

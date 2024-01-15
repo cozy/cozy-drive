@@ -1,4 +1,5 @@
 import React from 'react'
+
 import SharedDocuments from 'cozy-sharing/dist/components/SharedDocuments'
 
 const withSharedDocumentIds = BaseComponent => {

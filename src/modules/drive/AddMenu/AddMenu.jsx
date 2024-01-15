@@ -1,20 +1,20 @@
 import React from 'react'
 
+import flag from 'cozy-flags'
+import Typography from 'cozy-ui/transpiled/react/Typography'
+import ActionMenu from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import ActionMenu from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
-import Typography from 'cozy-ui/transpiled/react/Typography'
-import flag from 'cozy-flags'
 
-import AddFolderItem from 'modules/drive/Toolbar/components/AddFolderItem'
 import AddEncryptedFolderItem from 'modules/drive/Toolbar/components/AddEncryptedFolderItem'
+import AddFolderItem from 'modules/drive/Toolbar/components/AddFolderItem'
 import CreateNoteItem from 'modules/drive/Toolbar/components/CreateNoteItem'
-import CreateShortcut from 'modules/drive/Toolbar/components/CreateShortcut'
-import UploadItem from 'modules/drive/Toolbar/components/UploadItem'
-import { ScannerMenuItem } from 'modules/drive/Toolbar/components/Scanner/ScannerMenuItem'
 import CreateOnlyOfficeItem from 'modules/drive/Toolbar/components/CreateOnlyOfficeItem'
-import { isOfficeEditingEnabled } from 'modules/views/OnlyOffice/helpers'
+import CreateShortcut from 'modules/drive/Toolbar/components/CreateShortcut'
+import { ScannerMenuItem } from 'modules/drive/Toolbar/components/Scanner/ScannerMenuItem'
 import { useScannerContext } from 'modules/drive/Toolbar/components/Scanner/ScannerProvider'
+import UploadItem from 'modules/drive/Toolbar/components/UploadItem'
+import { isOfficeEditingEnabled } from 'modules/views/OnlyOffice/helpers'
 
 export const ActionMenuContent = ({
   isDisabled,

@@ -2,16 +2,17 @@
  * Setup utilities to be used in tests
  */
 
-import React from 'react'
-import { mount } from 'enzyme'
 import { configure } from '@testing-library/react'
+import { mount } from 'enzyme'
+import React from 'react'
+import { act } from 'react-dom/test-utils'
+
 import CozyClient from 'cozy-client'
 
+import { generateFile } from './generate'
 import configureStore from '../src/store/configureStore'
 import AppLike from 'test/components/AppLike'
 import FolderContent from 'test/components/FolderContent'
-import { generateFile } from './generate'
-import { act } from 'react-dom/test-utils'
 
 jest.mock('cozy-keys-lib', () => ({
   withVaultClient: BaseComponent => {

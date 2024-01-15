@@ -1,9 +1,11 @@
-import { run } from './dacc-run'
-import flag from 'cozy-flags'
-import { aggregateFilesSize } from 'lib/dacc/dacc'
-import log from 'cozy-logger'
-import CozyClient from 'cozy-client'
 import { endOfMonth, subMonths } from 'date-fns'
+
+import CozyClient from 'cozy-client'
+import flag from 'cozy-flags'
+import log from 'cozy-logger'
+
+import { run } from './dacc-run'
+import { aggregateFilesSize } from 'lib/dacc/dacc'
 
 jest.mock('cozy-flags')
 jest.mock('cozy-client')

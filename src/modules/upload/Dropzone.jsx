@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import UIDropzone from 'react-dropzone'
+import { connect } from 'react-redux'
 import { compose } from 'redux'
-import { withVaultClient } from 'cozy-keys-lib'
+
 import { withClient } from 'cozy-client'
+import { withVaultClient } from 'cozy-keys-lib'
+import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { uploadFiles } from 'modules/navigation/duck'
+import DropzoneTeaser from 'modules/upload/DropzoneTeaser'
 
 import styles from 'styles/dropzone.styl'
-import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
-import DropzoneTeaser from 'modules/upload/DropzoneTeaser'
 
 export class Dropzone extends Component {
   state = {

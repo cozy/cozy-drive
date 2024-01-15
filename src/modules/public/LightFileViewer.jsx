@@ -1,15 +1,15 @@
-import React, { useCallback } from 'react'
-import PropTypes from 'prop-types'
 import cx from 'classnames'
+import PropTypes from 'prop-types'
+import React, { useCallback } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { SharingBannerPlugin, useSharingInfos } from 'cozy-sharing'
 import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
 import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import PublicViewer from 'modules/viewer/PublicViewer'
 import PublicToolbar from 'modules/public/PublicToolbar'
+import PublicViewer from 'modules/viewer/PublicViewer'
 import {
   isOfficeEnabled,
   makeOnlyOfficeFileRoute
@@ -43,7 +43,7 @@ const LightFileViewer = ({ files }) => {
           sharingInfos={sharingInfos}
         />
       )}
-      <div className={'u-pos-relative u-h-100'}>
+      <div className="u-pos-relative u-h-100">
         <PublicViewer
           files={files}
           currentIndex={0}

@@ -1,9 +1,10 @@
-import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
+import React from 'react'
+
 import { createMockClient } from 'cozy-client'
-import AppLike from 'test/components/AppLike'
 
 import MobileBreadcrumb from './MobileBreadcrumb'
+import AppLike from 'test/components/AppLike'
 
 describe('MobileBreadcrumb', () => {
   it('works', async () => {

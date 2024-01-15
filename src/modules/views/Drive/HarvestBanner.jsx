@@ -5,11 +5,11 @@ import { useQuery, isQueryLoading, Q } from 'cozy-client'
 import { LaunchTriggerCard } from 'cozy-harvest-lib'
 import Divider from 'cozy-ui/transpiled/react/Divider'
 
+import useDocument from 'components/useDocument'
 import {
   buildTriggersQueryByAccountId,
   buildFileByIdQuery
 } from 'modules/queries'
-import useDocument from 'components/useDocument'
 
 const HarvestBanner = ({ folderId }) => {
   const folder = useDocument('io.cozy.files', folderId)

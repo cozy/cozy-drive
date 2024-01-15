@@ -2,8 +2,8 @@
 
 import 'cozy-ui/dist/cozy-ui.min.css'
 import 'cozy-ui/transpiled/react/stylesheet.css'
+
 // eslint-disable-next-line no-unused-vars
-import mainStyles from 'styles/main.styl'
 
 // Uncomment to activate why-did-you-render
 // https://github.com/welldone-software/why-did-you-render
@@ -13,13 +13,15 @@ import 'whatwg-fetch'
 import React from 'react'
 import { render } from 'react-dom'
 import { HashRouter } from 'react-router-dom'
+
 import flag from 'cozy-flags'
 
+import setupApp from './setupAppContext'
+import App from 'components/App/App'
 import AppRoute from 'modules/navigation/AppRoute'
 import AppBarSearch from 'modules/search/AppBarSearch'
 
-import App from 'components/App/App'
-import setupApp from './setupAppContext'
+import mainStyles from 'styles/main.styl'
 
 if (__DEVELOPMENT__) {
   window.flag = flag

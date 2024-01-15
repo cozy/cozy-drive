@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from 'react'
-import { useClient } from 'cozy-client'
 import get from 'lodash/get'
+import { useState, useEffect, useRef } from 'react'
+
+import { useClient } from 'cozy-client'
 
 const statById = async (client, folderId, cursorToUse) => {
   // Most stack routes are off-limit when we have a read-only token, so we use a simple GET to load the folder content.

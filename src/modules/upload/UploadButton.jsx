@@ -1,11 +1,11 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 
 import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
-import Icon from 'cozy-ui/transpiled/react/Icon'
 import FileInput from 'cozy-ui/transpiled/react/FileInput'
+import Icon from 'cozy-ui/transpiled/react/Icon'
 import UploadIcon from 'cozy-ui/transpiled/react/Icons/Upload'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 

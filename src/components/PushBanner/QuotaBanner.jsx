@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react'
 
-import CloudSyncIcon from 'cozy-ui/transpiled/react/Icons/CloudSync'
-import Banner from 'cozy-ui/transpiled/react/Banner'
-import Button from 'cozy-ui/transpiled/react/Buttons'
-import Icon from 'cozy-ui/transpiled/react/Icon'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import { isFlagshipApp } from 'cozy-device-helper'
+import { useInstanceInfo } from 'cozy-client'
 import {
   arePremiumLinksEnabled,
   buildPremiumLink
 } from 'cozy-client/dist/models/instance'
+import { isFlagshipApp } from 'cozy-device-helper'
 import flag from 'cozy-flags'
-import { useInstanceInfo } from 'cozy-client'
 import { useWebviewIntent } from 'cozy-intent'
+import Banner from 'cozy-ui/transpiled/react/Banner'
+import Button from 'cozy-ui/transpiled/react/Buttons'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import CloudSyncIcon from 'cozy-ui/transpiled/react/Icons/CloudSync'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import styles from '../pushClient/pushClient.styl'
 import { usePushBannerContext } from './PushBannerProvider'
+import styles from '../pushClient/pushClient.styl'
 
 /**
  * Banner to inform users that they have reached more than 80% of their disk space

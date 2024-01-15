@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 
 import { useClient } from 'cozy-client'
+import { splitFilename } from 'cozy-client/dist/models/file'
 import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
+import Stack from 'cozy-ui/transpiled/react/Stack'
 import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import Stack from 'cozy-ui/transpiled/react/Stack'
-import { splitFilename } from 'cozy-client/dist/models/file'
 
+import { getEntriesTypeTranslated } from 'lib/entries'
 import { deleteFilesPermanently } from 'modules/actions/utils'
 import { Message } from 'modules/confirm/Message'
-import { getEntriesTypeTranslated } from 'lib/entries'
 
 const DestroyConfirm = ({ files, onCancel, onConfirm }) => {
   const { t } = useI18n()

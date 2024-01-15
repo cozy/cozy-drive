@@ -20,7 +20,7 @@ describe('FileOpenerExternal', () => {
     const wrapper = shallow(
       <FileOpener
         router={routerMock}
-        fileId={'123'}
+        fileId="123"
         routeParams={{
           fileId: '123'
         }}
@@ -43,7 +43,7 @@ describe('FileOpenerExternal', () => {
     const wrapper = shallow(
       <FileOpener
         router={routerMock}
-        fileId={'123'}
+        fileId="123"
         routeParams={{
           fileId: '123'
         }}

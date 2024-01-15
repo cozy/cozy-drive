@@ -1,13 +1,13 @@
 import React, { forwardRef } from 'react'
 
+import { SharedRecipients } from 'cozy-sharing'
 import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
-import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
-import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'
-import { SharedRecipients } from 'cozy-sharing'
+import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
+import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { isEncryptedFileOrFolder } from 'lib/encryption'
 import { navigateToModal } from 'modules/actions/helpers'

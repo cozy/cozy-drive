@@ -1,16 +1,17 @@
 /* global cozy */
 
 import memoize from 'lodash/memoize'
-import { initTranslation } from 'cozy-ui/transpiled/react/providers/I18n'
+import configureStore from 'store/configureStore'
+
 import CozyClient from 'cozy-client'
-import { configureReporter, setCozyUrl } from 'lib/reporter'
-import registerClientPlugins from 'lib/registerClientPlugins'
+import { Document } from 'cozy-doctypes'
+import { initTranslation } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import appMetadata from 'lib/appMetadata'
-import configureStore from 'store/configureStore'
-import { schema } from 'lib/doctypes'
-import { Document } from 'cozy-doctypes'
 import cozyBar from 'lib/cozyBar'
+import { schema } from 'lib/doctypes'
+import registerClientPlugins from 'lib/registerClientPlugins'
+import { configureReporter, setCozyUrl } from 'lib/reporter'
 
 const setupApp = memoize(() => {
   const root = document.querySelector('[role=application]')

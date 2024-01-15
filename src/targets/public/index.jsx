@@ -5,27 +5,30 @@ import React from 'react'
 import { render } from 'react-dom'
 import { HashRouter } from 'react-router-dom'
 
+import CozyClient, { models } from 'cozy-client'
+import { Document } from 'cozy-doctypes'
+import getSharedDocument from 'cozy-sharing/dist/getSharedDocument'
 import 'cozy-ui/dist/cozy-ui.min.css'
+import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
+import { I18n, initTranslation } from 'cozy-ui/transpiled/react/providers/I18n'
 import 'cozy-ui/transpiled/react/stylesheet.css'
 
 import { getQueryParameter } from 'react-cozy-helpers'
-import CozyClient, { models } from 'cozy-client'
-import { Document } from 'cozy-doctypes'
-import { I18n, initTranslation } from 'cozy-ui/transpiled/react/providers/I18n'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
-import getSharedDocument from 'cozy-sharing/dist/getSharedDocument'
 
-import registerClientPlugins from 'lib/registerClientPlugins'
-import { configureReporter, setCozyUrl } from 'lib/reporter'
-import { schema } from 'lib/doctypes'
-import configureStore from 'store/configureStore'
+import AppRouter from './components/AppRouter'
+import App from 'components/App/App'
 import ErrorShare from 'components/Error/ErrorShare'
 import appMetadata from 'lib/appMetadata'
-import logger from 'lib/logger'
-import App from 'components/App/App'
-import StyledApp from 'modules/drive/StyledApp'
 import cozyBar from 'lib/cozyBar'
-import AppRouter from './components/AppRouter'
+import { schema } from 'lib/doctypes'
+import logger from 'lib/logger'
+import registerClientPlugins from 'lib/registerClientPlugins'
+import { configureReporter, setCozyUrl } from 'lib/reporter'
+
+import configureStore from 'store/configureStore'
+
+import StyledApp from 'modules/drive/StyledApp'
+
 import styles from 'styles/main.styl'
 
 const initCozyBar = (data, client) => {
@@ -49,7 +52,7 @@ const renderError = (lang, root) =>
     <I18n lang={lang} dictRequire={lang => require(`locales/${lang}`)}>
       <StyledApp>
         <main className={styles['center-layout']}>
-          <ErrorShare errorType={`public_unshared`} />
+          <ErrorShare errorType="public_unshared" />
         </main>
       </StyledApp>
     </I18n>,

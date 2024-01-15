@@ -1,14 +1,12 @@
-import React from 'react'
 import { render } from '@testing-library/react'
+import React from 'react'
 
 import { createMockClient } from 'cozy-client'
-
 import { shouldBeOpenedByOnlyOffice } from 'cozy-client/dist/models/file'
 
+import FileOpener, { getParentLink } from './FileOpener'
 import AppLike from 'test/components/AppLike'
 import { generateFile } from 'test/generate'
-
-import FileOpener, { getParentLink } from './FileOpener'
 
 jest.mock('cozy-client/dist/models/file', () => ({
   ...jest.requireActual('cozy-client/dist/models/file'),

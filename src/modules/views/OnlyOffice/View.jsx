@@ -1,14 +1,14 @@
-import React, { useEffect, useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
+import React, { useEffect, useCallback, useState } from 'react'
 
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import Error from 'modules/views/OnlyOffice/Error'
 import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
 import ReadOnlyFab from 'modules/views/OnlyOffice/ReadOnlyFab'
-import { isOfficeEditingEnabled } from 'modules/views/OnlyOffice/helpers'
 import { FRAME_EDITOR_NAME } from 'modules/views/OnlyOffice/config'
+import { isOfficeEditingEnabled } from 'modules/views/OnlyOffice/helpers'
 
 const forceIframeHeight = value => {
   const iframe = document.getElementsByName(FRAME_EDITOR_NAME)[0]

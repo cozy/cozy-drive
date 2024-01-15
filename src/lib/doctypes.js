@@ -1,4 +1,5 @@
 import { Contact, Group } from 'models'
+
 import extraDoctypes from 'lib/extraDoctypes'
 
 export const DOCTYPE_FILES = 'io.cozy.files'

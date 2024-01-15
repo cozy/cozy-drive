@@ -1,8 +1,5 @@
-import React from 'react'
 import get from 'lodash/get'
-
-import { isFlagshipApp } from 'cozy-device-helper'
-import { useWebviewIntent } from 'cozy-intent'
+import React from 'react'
 
 import {
   withClient,
@@ -11,11 +8,13 @@ import {
   useAppLinkWithStoreFallback,
   useCapabilities
 } from 'cozy-client'
-import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
+import { isFlagshipApp } from 'cozy-device-helper'
+import { useWebviewIntent } from 'cozy-intent'
 import { generateUniversalLink } from 'cozy-ui/transpiled/react/AppLinker/native'
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconNote from 'cozy-ui/transpiled/react/Icons/FileTypeNote'
+import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 const CreateNoteItem = ({ client, t, displayedFolder }) => {
   const { capabilities } = useCapabilities(client)

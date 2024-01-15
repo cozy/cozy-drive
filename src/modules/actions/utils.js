@@ -1,12 +1,13 @@
 import { isDirectory } from 'cozy-client/dist/models/file'
 import { receiveQueryResult } from 'cozy-client/dist/store'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
+
+import { DOCTYPE_FILES } from 'lib/doctypes'
 import {
   getEncryptionKeyFromDirId,
   downloadEncryptedFile,
   isEncryptedFolder
 } from 'lib/encryption'
-import { DOCTYPE_FILES } from 'lib/doctypes'
 
 const isMissingFileError = error => error.status === 404
 

@@ -1,9 +1,10 @@
-import React from 'react'
-import AppLike from 'test/components/AppLike'
 import { mount } from 'enzyme'
-import { setupStoreAndClient } from 'test/setup'
+import React from 'react'
+
 import { EnhancedDeleteConfirm } from './delete'
 import DeleteConfirm from '../../DeleteConfirm'
+import AppLike from 'test/components/AppLike'
+import { setupStoreAndClient } from 'test/setup'
 
 const mockNavigate = jest.fn()
 

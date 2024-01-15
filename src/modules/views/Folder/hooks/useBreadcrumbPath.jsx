@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
+
 import { useClient } from 'cozy-client'
-import { fetchFolder } from '../queries/fetchFolder'
 import log from 'cozy-logger'
+
+import { fetchFolder } from '../queries/fetchFolder'
 
 export const useBreadcrumbPath = ({
   currentFolderId,

@@ -1,5 +1,5 @@
-import { Contact as DoctypeContact } from 'cozy-doctypes'
 import { getInitials, getDisplayName } from 'cozy-client/dist/models/contact'
+import { Contact as DoctypeContact } from 'cozy-doctypes'
 
 class Contact extends DoctypeContact {
   static getInitials(contactOrRecipient, defaultValue = '') {

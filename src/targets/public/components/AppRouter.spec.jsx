@@ -1,10 +1,15 @@
 // app.test.js
 import { render, screen } from '@testing-library/react'
 import React from 'react'
+
 import AppLike from 'test/components/AppLike'
+
 import '@testing-library/jest-dom'
+
 import AppRouter from './AppRouter'
+
 import { createMockClient } from 'cozy-client'
+
 import { isOfficeEnabled } from 'modules/views/OnlyOffice/helpers'
 
 const client = createMockClient({})

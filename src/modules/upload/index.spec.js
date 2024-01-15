@@ -1,8 +1,6 @@
 import { CozyFile } from 'models'
-import { doMobileUpload, readMobileFile } from 'cozy-client/dist/models/file'
-import { getEncryptionKeyFromDirId } from 'lib/encryption'
 
-import logger from 'lib/logger'
+import { doMobileUpload, readMobileFile } from 'cozy-client/dist/models/file'
 
 import {
   processNextFile,
@@ -13,6 +11,8 @@ import {
   uploadProgress,
   ADD_TO_UPLOAD_QUEUE
 } from './index'
+import { getEncryptionKeyFromDirId } from 'lib/encryption'
+import logger from 'lib/logger'
 
 jest.mock('cozy-doctypes')
 jest.mock('lib/reporter', () => ({

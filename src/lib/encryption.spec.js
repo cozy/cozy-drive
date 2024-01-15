@@ -1,6 +1,7 @@
-import { getEncryptionKeyFromDirId } from './encryption'
 import CozyClient from 'cozy-client'
 import flag from 'cozy-flags'
+
+import { getEncryptionKeyFromDirId } from './encryption'
 
 jest.mock('cozy-flags', () => jest.fn())
 

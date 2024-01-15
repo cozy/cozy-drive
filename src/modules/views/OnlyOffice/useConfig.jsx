@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useClient, isQueryLoading, generateWebLink } from 'cozy-client'
 import useFetchJSON from 'cozy-client/dist/hooks/useFetchJSON'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
+import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
 import {
   shouldBeOpenedOnOtherInstance,
   isOfficeEnabled,
   makeName
 } from 'modules/views/OnlyOffice/helpers'
-import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
 
 const useConfig = () => {
   const {

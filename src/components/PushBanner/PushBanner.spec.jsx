@@ -1,12 +1,12 @@
-import React from 'react'
 import { render, screen } from '@testing-library/react'
+import React from 'react'
 
 import { useInstanceInfo } from 'cozy-client'
 import { makeDiskInfos } from 'cozy-client/dist/models/instance'
 import { isFlagshipApp } from 'cozy-device-helper'
 
-import { usePushBannerContext } from './PushBannerProvider'
 import PushBanner from '.'
+import { usePushBannerContext } from './PushBannerProvider'
 
 jest.mock('./QuotaBanner', () => () => <div>QuotaBanner</div>)
 

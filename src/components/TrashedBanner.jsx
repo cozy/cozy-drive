@@ -1,18 +1,18 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import { useClient, useQuery } from 'cozy-client'
 import Alert from 'cozy-ui/transpiled/react/Alert'
 import Buttons from 'cozy-ui/transpiled/react/Buttons'
-import TrashDuotoneIcon from 'cozy-ui/transpiled/react/Icons/TrashDuotone'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import { useClient, useQuery } from 'cozy-client'
+import TrashDuotoneIcon from 'cozy-ui/transpiled/react/Icons/TrashDuotone'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import DestroyConfirm from 'modules/trash/components/DestroyConfirm'
-import { buildFileByIdQuery } from 'modules/queries'
 import logger from 'lib/logger'
+import { buildFileByIdQuery } from 'modules/queries'
+import DestroyConfirm from 'modules/trash/components/DestroyConfirm'
 
 const TrashedBanner = ({ fileId, isPublic }) => {
   const { t } = useI18n()

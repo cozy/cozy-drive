@@ -1,19 +1,19 @@
+import { useDisplayedFolder } from 'hooks'
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { BarRightWithProvider } from 'components/Bar'
 import { HOME_LINK_HREF } from 'constants/config'
-import AddButton from 'modules/drive/Toolbar/components/AddButton'
 import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
+import AddButton from 'modules/drive/Toolbar/components/AddButton'
 import { DownloadFilesButton } from 'modules/public/DownloadButton'
 import PublicToolbarMoreMenu from 'modules/public/PublicToolbarMoreMenu'
 import { isFilesIsFile, openExternalLink } from 'modules/public/helpers'
-import { useDisplayedFolder } from 'hooks'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 
 const PublicToolbarByLink = ({
@@ -58,7 +58,7 @@ const PublicToolbarByLink = ({
             {isMobile && (
               <ActionMenuItem
                 onClick={() => openExternalLink(HOME_LINK_HREF)}
-                left={<Icon icon={'to-the-cloud'} />}
+                left={<Icon icon="to-the-cloud" />}
               >
                 {t('Share.create-cozy')}
               </ActionMenuItem>

@@ -1,5 +1,5 @@
-import React from 'react'
 import cx from 'classnames'
+import React from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 import { SharedStatus, useSharingContext } from 'cozy-sharing'

@@ -1,5 +1,6 @@
-import React from 'react'
 import { render } from '@testing-library/react'
+import React from 'react'
+
 import InsideRegularFolder from './InsideRegularFolder'
 
 jest.mock('hooks')
@@ -19,7 +20,7 @@ describe('InsideRegularFolder', () => {
     const { container } = render(
       <InsideRegularFolder
         displayedFolder={{ id: 'displayed-folder' }}
-        folderId={'current-folder'}
+        folderId="current-folder"
       >
         <div />
       </InsideRegularFolder>

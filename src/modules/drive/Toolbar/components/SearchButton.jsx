@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react'
 
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import Icon from 'cozy-ui/transpiled/react/Icon'
+import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import Magnifier from 'cozy-ui/transpiled/react/Icons/Magnifier'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 const SearchButton = ({ navigate, pathname }) => {
   const { t } = useI18n()

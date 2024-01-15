@@ -1,5 +1,5 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 
 import { NavItem as UINavItem } from 'cozy-ui/transpiled/react/Nav'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'

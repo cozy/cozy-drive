@@ -1,12 +1,13 @@
-import React from 'react'
-import { render, fireEvent, act } from '@testing-library/react'
 import { waitForElementToBeRemoved } from '@testing-library/dom'
-import { createMockClient } from 'cozy-client'
-import { ModalContextProvider, ModalStack } from 'lib/ModalContext'
+import { render, fireEvent, act } from '@testing-library/react'
+import React from 'react'
 
-import AppLike from 'test/components/AppLike'
-import { Toolbar } from './Toolbar'
+import { createMockClient } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+
+import { Toolbar } from './Toolbar'
+import { ModalContextProvider, ModalStack } from 'lib/ModalContext'
+import AppLike from 'test/components/AppLike'
 
 jest.mock('cozy-ui/transpiled/react/providers/Breakpoints', () => ({
   ...jest.requireActual('cozy-ui/transpiled/react/providers/Breakpoints'),

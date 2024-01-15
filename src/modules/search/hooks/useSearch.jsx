@@ -2,8 +2,8 @@ import { useState, useEffect, useMemo } from 'react'
 
 import { useClient } from 'cozy-client'
 
-import { indexFiles } from 'modules/search/components/helpers'
 import useDebounce from 'hooks/useDebounce'
+import { indexFiles } from 'modules/search/components/helpers'
 
 const useSearch = (searchTerm, { limit = 10 } = {}) => {
   const client = useClient()

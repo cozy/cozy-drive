@@ -6,25 +6,25 @@
  *  - via cozydrive://
  */
 
-import React, { Component } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import { RemoveScroll } from 'react-remove-scroll'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
-import { translate, useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Viewer from 'cozy-ui/transpiled/react/Viewer'
 import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
 import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
 import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
+import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { translate, useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import Fallback from 'modules/viewer/Fallback'
 import {
   isOfficeEnabled,
   makeOnlyOfficeFileRoute
 } from 'modules/views/OnlyOffice/helpers'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 const FileNotFoundError = translate()(({ t }) => (
   <pre className="u-error">{t('FileOpenerExternal.fileNotFoundError')}</pre>

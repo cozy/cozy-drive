@@ -1,6 +1,7 @@
+import { useCurrentFolderId } from 'hooks'
+
 import { useQuery } from 'cozy-client'
 
-import { useCurrentFolderId } from 'hooks'
 import { buildOnlyFolderQuery } from 'modules/queries'
 
 const useDisplayedFolder = () => {

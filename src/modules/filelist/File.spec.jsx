@@ -1,13 +1,13 @@
 'use strict'
 
-import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
+import React from 'react'
 
-import { useSharingContext } from 'cozy-sharing'
 import { createMockClient } from 'cozy-client'
+import { useSharingContext } from 'cozy-sharing'
 
-import AppLike from 'test/components/AppLike'
 import { DumbFile } from './File'
+import AppLike from 'test/components/AppLike'
 import { folder, actionsMenu } from 'test/data'
 
 jest.mock('cozy-sharing', () => ({

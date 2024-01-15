@@ -1,20 +1,21 @@
-import React, { useState, useCallback } from 'react'
 import cx from 'classnames'
+import React, { useState, useCallback } from 'react'
 
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import {
   TableHead,
   TableHeader,
   TableRow
 } from 'cozy-ui/transpiled/react/Table'
+import Button from 'cozy-ui/transpiled/react/deprecated/Button'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import MobileSortMenu from './MobileSortMenu'
-import { DEFAULT_SORT } from 'config/sort'
-import styles from 'styles/filelist.styl'
-import iconList from 'assets/icons/icon-list.svg'
 import iconListMin from 'assets/icons/icon-list-min.svg'
+import iconList from 'assets/icons/icon-list.svg'
+import { DEFAULT_SORT } from 'config/sort'
+
+import styles from 'styles/filelist.styl'
 
 export const MobileFileListHeader = ({
   folderId,
@@ -65,7 +66,7 @@ export const MobileFileListHeader = ({
           )}
         >
           <Button
-            theme={'action'}
+            theme="action"
             onClick={() => {
               toggleThumbnailSize()
             }}

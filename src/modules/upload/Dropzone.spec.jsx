@@ -1,9 +1,10 @@
-import React from 'react'
+import { render } from '@testing-library/react'
 import { mount } from 'enzyme'
-import { setupFolderContent, mockCozyClientRequestQuery } from 'test/setup'
+import React from 'react'
+
 import Dropzone, { Dropzone as DumbDropzone } from './Dropzone'
 import AppLike from 'test/components/AppLike'
-import { render } from '@testing-library/react'
+import { setupFolderContent, mockCozyClientRequestQuery } from 'test/setup'
 
 jest.mock('react-dropzone', () => {
   const Component = ({

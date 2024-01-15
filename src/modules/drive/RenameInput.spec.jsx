@@ -1,14 +1,13 @@
-import React from 'react'
 import { render, fireEvent, screen, waitFor } from '@testing-library/react'
+import React from 'react'
 
 import { createMockClient } from 'cozy-client'
-
-import AppLike from 'test/components/AppLike'
-import { generateFile } from 'test/generate'
-
-import { RenameInput } from './RenameInput'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
+
+import { RenameInput } from './RenameInput'
+import AppLike from 'test/components/AppLike'
+import { generateFile } from 'test/generate'
 
 jest.mock('cozy-ui/transpiled/react/hooks/useBrowserOffline')
 jest.mock('cozy-ui/transpiled/react/deprecated/Alerter', () => ({
