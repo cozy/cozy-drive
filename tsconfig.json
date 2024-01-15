@@ -9,6 +9,12 @@
     "paths": {
       "lib/*": ["./src/lib/*"],
       "modules/*": ["./src/modules/*"],
+      "components/*": ["./src/components/*"],
+      "test/*": ["./test/*"],
+      "hooks/*": ["./src/hooks/*"],
+      "models/*": ["./src/models/*"],
+      "constants/*": ["./src/constants/*"],
+      "config/*": ["./src/config/*"],
     }
   }
 }

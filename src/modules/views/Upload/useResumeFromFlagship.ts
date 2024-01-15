@@ -13,7 +13,6 @@ export const useResumeUploadFromFlagship = (): void => {
   const client = useClient()
   const dispatch = useDispatch()
   const webviewIntent = useWebviewIntent()
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
   const uploadQueue = useSelector(getUploadQueue) as FileFromNative[]
 
   useEffect(() => {
