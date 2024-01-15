@@ -1,9 +1,9 @@
-import React from 'react'
 import cx from 'classnames'
 import PropTypes from 'prop-types'
+import React from 'react'
 
-import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'
+import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 
 import styles from 'styles/filelist.styl'
 

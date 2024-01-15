@@ -1,20 +1,18 @@
 import React, { useCallback, useMemo } from 'react'
-import { useNavigate, useLocation, Outlet } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { useNavigate, useLocation, Outlet } from 'react-router-dom'
 
 import { useClient, hasQueryBeenLoaded } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { useModalContext } from 'lib/ModalContext'
-import Toolbar from 'modules/drive/Toolbar'
-import FolderView from '../Folder/FolderView'
-import FolderViewHeader from '../Folder/FolderViewHeader'
-import FolderViewBody from '../Folder/FolderViewBody'
 import withSharedDocumentIds from './withSharedDocumentIds'
-import { MobileAwareBreadcrumb as Breadcrumb } from 'modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
-import useActions from 'modules/actions/useActions'
+import FolderView from '../Folder/FolderView'
+import FolderViewBody from '../Folder/FolderViewBody'
+import FolderViewHeader from '../Folder/FolderViewHeader'
+import useHead from 'components/useHead'
+import { useModalContext } from 'lib/ModalContext'
 import {
   download,
   rename,
@@ -24,15 +22,17 @@ import {
   share,
   hr
 } from 'modules/actions'
+import useActions from 'modules/actions/useActions'
+import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
+import { useExtraColumns } from 'modules/certifications/useExtraColumns'
+import Toolbar from 'modules/drive/Toolbar'
+import FileListRowsPlaceholder from 'modules/filelist/FileListRowsPlaceholder'
+import { MobileAwareBreadcrumb as Breadcrumb } from 'modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
 import {
   buildSharingsQuery,
   buildSharingsWithMetadataAttributeQuery
 } from 'modules/queries'
 import { useFilesQueryWithPath } from 'modules/views/hooks'
-import { useExtraColumns } from 'modules/certifications/useExtraColumns'
-import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
-import FileListRowsPlaceholder from 'modules/filelist/FileListRowsPlaceholder'
-import useHead from 'components/useHead'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []

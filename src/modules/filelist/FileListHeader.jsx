@@ -1,7 +1,6 @@
-import React from 'react'
 import cx from 'classnames'
+import React from 'react'
 
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Button from 'cozy-ui/transpiled/react/Buttons'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import {
@@ -9,10 +8,11 @@ import {
   TableHeader,
   TableRow
 } from 'cozy-ui/transpiled/react/Table'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import iconList from 'assets/icons/icon-list.svg'
-import iconListMin from 'assets/icons/icon-list-min.svg'
 import HeaderCell from './HeaderCell'
+import iconListMin from 'assets/icons/icon-list-min.svg'
+import iconList from 'assets/icons/icon-list.svg'
 import { SORTABLE_ATTRIBUTES, DEFAULT_SORT } from 'config/sort'
 
 import styles from 'styles/filelist.styl'

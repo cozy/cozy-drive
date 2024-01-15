@@ -7,8 +7,8 @@ import {
   deconstructRedirectLink
 } from 'cozy-client'
 
-import logger from 'lib/logger'
 import { changeLocation } from 'hooks/helpers'
+import logger from 'lib/logger'
 
 /**
  * @typedef {object} ReturnRedirectLink

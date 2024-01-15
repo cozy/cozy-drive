@@ -1,21 +1,20 @@
+import { useCurrentFolderId, useDisplayedFolder } from 'hooks'
 import React, { useCallback, useMemo } from 'react'
-import { useNavigate, Outlet, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { useNavigate, Outlet, useLocation } from 'react-router-dom'
 
 import { useQuery, useClient } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
 import SharedDocuments from 'cozy-sharing/dist/components/SharedDocuments'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import FolderView from '../Folder/FolderView'
+import FolderViewBody from '../Folder/FolderViewBody'
+import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
+import FolderViewHeader from '../Folder/FolderViewHeader'
+import useHead from 'components/useHead'
 import { useModalContext } from 'lib/ModalContext'
-import { useFolderSort } from 'modules/navigation/duck'
-import {
-  buildDriveQuery,
-  buildFileWithSpecificMetadataAttributeQuery
-} from 'modules/queries'
-import { useCurrentFolderId, useDisplayedFolder } from 'hooks'
-import useActions from 'modules/actions/useActions'
 import {
   share,
   download,
@@ -25,14 +24,15 @@ import {
   qualify,
   versions
 } from 'modules/actions'
-import Toolbar from 'modules/drive/Toolbar'
-import FolderView from '../Folder/FolderView'
-import FolderViewHeader from '../Folder/FolderViewHeader'
-import FolderViewBody from '../Folder/FolderViewBody'
-import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
-import { useExtraColumns } from 'modules/certifications/useExtraColumns'
+import useActions from 'modules/actions/useActions'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
-import useHead from 'components/useHead'
+import { useExtraColumns } from 'modules/certifications/useExtraColumns'
+import Toolbar from 'modules/drive/Toolbar'
+import { useFolderSort } from 'modules/navigation/duck'
+import {
+  buildDriveQuery,
+  buildFileWithSpecificMetadataAttributeQuery
+} from 'modules/queries'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []

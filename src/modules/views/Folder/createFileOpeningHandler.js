@@ -1,10 +1,10 @@
 import { models, Q } from 'cozy-client'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import { isFlagshipApp } from 'cozy-device-helper'
+import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
+import { DOCTYPE_FILES_SHORTCUT } from 'lib/doctypes'
 import generateShortcutUrl from 'modules/views/Folder/generateShortcutUrl'
 import { makeOnlyOfficeFileRoute } from 'modules/views/OnlyOffice/helpers'
-import { DOCTYPE_FILES_SHORTCUT } from 'lib/doctypes'
 
 const createFileOpeningHandler =
   ({

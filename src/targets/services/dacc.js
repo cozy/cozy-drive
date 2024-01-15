@@ -1,5 +1,7 @@
-import log from 'cozy-logger'
 import fetch from 'node-fetch'
+
+import log from 'cozy-logger'
+
 import { run } from 'lib/dacc/dacc-run'
 
 global.fetch = fetch

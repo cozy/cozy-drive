@@ -1,15 +1,15 @@
 import React, { useMemo } from 'react'
-import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 
 import { SharingBannerPlugin } from 'cozy-sharing'
 import { DialogTitle } from 'cozy-ui/transpiled/react/Dialog'
 import Divider from 'cozy-ui/transpiled/react/Divider'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 
-import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
-import { showSharingBanner } from 'modules/views/OnlyOffice/helpers'
-import Toolbar from 'modules/views/OnlyOffice/Toolbar'
 import { TrashedBanner } from 'components/TrashedBanner'
+import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
+import Toolbar from 'modules/views/OnlyOffice/Toolbar'
+import { showSharingBanner } from 'modules/views/OnlyOffice/helpers'
 
 const useStyles = makeStyles(theme => ({
   root: {

@@ -5,13 +5,13 @@ import ActionMenu from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { MoreButton } from 'components/Button'
+import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
+import AddMenuItem from 'modules/drive/Toolbar/components/AddMenuItem'
+import DownloadButtonItem from 'modules/drive/Toolbar/components/DownloadButtonItem'
 import InsideRegularFolder from 'modules/drive/Toolbar/components/InsideRegularFolder'
 import DeleteItem from 'modules/drive/Toolbar/delete/DeleteItem'
 import SelectableItem from 'modules/drive/Toolbar/selectable/SelectableItem'
 import ShareItem from 'modules/drive/Toolbar/share/ShareItem'
-import DownloadButtonItem from 'modules/drive/Toolbar/components/DownloadButtonItem'
-import AddMenuItem from 'modules/drive/Toolbar/components/AddMenuItem'
-import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
 
 export const openMenu = setMenuVisible => {
   if (window.StatusBar && isIOSApp()) {

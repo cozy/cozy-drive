@@ -1,10 +1,10 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 
-import { NavIcon, NavText } from 'cozy-ui/transpiled/react/Nav'
 import Badge from 'cozy-ui/transpiled/react/Badge'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import Circle from 'cozy-ui/transpiled/react/Circle'
+import { NavIcon, NavText } from 'cozy-ui/transpiled/react/Nav'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 const NavContent = ({ icon, badgeContent, label }) => {
   const { isDesktop } = useBreakpoints()

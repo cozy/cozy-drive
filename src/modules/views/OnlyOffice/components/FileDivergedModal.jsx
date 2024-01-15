@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
-import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
-import Buttons from 'cozy-ui/transpiled/react/Buttons'
 import { useClient } from 'cozy-client'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import Typography from 'cozy-ui/transpiled/react/Typography'
 import Alert from 'cozy-ui/transpiled/react/Alert'
+import Buttons from 'cozy-ui/transpiled/react/Buttons'
+import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
+import Typography from 'cozy-ui/transpiled/react/Typography'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
 import { makeOnlyOfficeFileRoute } from 'modules/views/OnlyOffice/helpers'

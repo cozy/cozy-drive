@@ -1,11 +1,13 @@
-import React from 'react'
 import classNames from 'classnames'
-import UploadButton from 'modules/upload/UploadButton'
-import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
-import styles from 'styles/toolbar.styl'
+import { useDisplayedFolder } from 'hooks'
+import React from 'react'
 import { compose } from 'redux'
 
-import { useDisplayedFolder } from 'hooks'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
+
+import UploadButton from 'modules/upload/UploadButton'
+
+import styles from 'styles/toolbar.styl'
 
 const UploadButtonItem = ({ t, isDisabled, onUploaded }) => {
   const { displayedFolder } = useDisplayedFolder()

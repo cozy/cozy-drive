@@ -1,13 +1,13 @@
-import React from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
+import React from 'react'
 
+import { useInstanceInfo } from 'cozy-client'
 import { isFlagshipApp } from 'cozy-device-helper'
 import flag from 'cozy-flags'
-import { useInstanceInfo } from 'cozy-client'
 import { useWebviewIntent } from 'cozy-intent'
 
-import QuotaBanner from './QuotaBanner'
 import { usePushBannerContext } from './PushBannerProvider'
+import QuotaBanner from './QuotaBanner'
 import { TestI18n } from 'test/components/AppLike'
 
 jest.mock('./PushBannerProvider', () => ({

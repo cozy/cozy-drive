@@ -1,7 +1,9 @@
-import React from 'react'
 import { render } from '@testing-library/react'
-import MobileAwareBreadcrumb from './MobileAwareBreadcrumb'
+import React from 'react'
+
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+
+import MobileAwareBreadcrumb from './MobileAwareBreadcrumb'
 
 jest.mock('cozy-ui/transpiled/react/providers/Breakpoints')
 // eslint-disable-next-line react/display-name

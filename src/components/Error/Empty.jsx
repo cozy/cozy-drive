@@ -1,15 +1,15 @@
-import React from 'react'
 import cx from 'classnames'
+import React from 'react'
 
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Empty from 'cozy-ui/transpiled/react/Empty'
 import DriveIcon from 'cozy-ui/transpiled/react/Icons/FileTypeFolder'
-import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
 import PhotosIcon from 'cozy-ui/transpiled/react/Icons/FileTypeImage'
-import EncryptedFolderIcon from 'modules/views/Folder/EncryptedFolderIcon'
+import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import styles from './empty.styl'
+import EncryptedFolderIcon from 'modules/views/Folder/EncryptedFolderIcon'
 
 const EmptyIcon = {
   drive: DriveIcon,

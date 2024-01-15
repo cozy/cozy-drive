@@ -1,7 +1,9 @@
 /* global cozy */
-import React from 'react'
 import classNames from 'classnames'
+import React from 'react'
+
 import { Modal, Button } from 'cozy-ui/transpiled/react'
+
 import styles from 'styles/intentbutton.styl'
 
 class IntentButton extends React.Component {

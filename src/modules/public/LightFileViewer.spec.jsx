@@ -1,5 +1,5 @@
-import React from 'react'
 import { render } from '@testing-library/react'
+import React from 'react'
 
 import { createMockClient } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'

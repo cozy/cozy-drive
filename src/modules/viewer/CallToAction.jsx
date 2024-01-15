@@ -1,19 +1,18 @@
+import localforage from 'localforage'
 import React, { Component } from 'react'
 
 import { withClient } from 'cozy-client'
-import localforage from 'localforage'
-import palette from 'cozy-ui/transpiled/react/palette'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import CrossIcon from 'cozy-ui/transpiled/react/Icons/Cross'
+import palette from 'cozy-ui/transpiled/react/palette'
 
+import styles from './styles.styl'
 import {
   isClientAlreadyInstalled,
   isLinux,
   NOVIEWER_DESKTOP_CTA
 } from 'components/pushClient'
 import Config from 'config/config.json'
-
-import styles from './styles.styl'
 
 class CallToAction extends Component {
   state = {

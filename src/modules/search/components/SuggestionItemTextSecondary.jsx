@@ -1,13 +1,14 @@
 import React from 'react'
 
+import { generateWebLink, useClient } from 'cozy-client'
+import { isFlagshipApp } from 'cozy-device-helper'
 import AppLinker, {
   generateUniversalLink
 } from 'cozy-ui/transpiled/react/AppLinker'
-import { generateWebLink, useClient } from 'cozy-client'
-import { isFlagshipApp } from 'cozy-device-helper'
+
+import SuggestionItemTextHighlighted from 'modules/search/components/SuggestionItemTextHighlighted'
 
 import styles from 'modules/search/components/styles.styl'
-import SuggestionItemTextHighlighted from 'modules/search/components/SuggestionItemTextHighlighted'
 
 const SuggestionItemTextSecondary = ({
   text,

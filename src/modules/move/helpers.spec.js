@@ -1,7 +1,8 @@
+import { CozyFile } from 'models'
+
 import CozyClient from 'cozy-client'
 
 import { cancelMove, hasOneOfEntriesShared } from 'modules/move/helpers'
-import { CozyFile } from 'models'
 
 jest.mock('cozy-doctypes')
 jest.mock('cozy-stack-client')

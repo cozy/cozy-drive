@@ -1,12 +1,12 @@
-import React from 'react'
 import cx from 'classnames'
+import { useDisplayedFolder } from 'hooks'
+import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import { ShareButton } from 'cozy-sharing'
 
-import { useDisplayedFolder } from 'hooks'
-import { getPathToShareDisplayedFolder } from 'modules/drive/Toolbar/share/helpers'
 import styles from './styles.styl'
+import { getPathToShareDisplayedFolder } from 'modules/drive/Toolbar/share/helpers'
 
 const ShareButtonWithProps = ({ isDisabled }) => {
   const { displayedFolder } = useDisplayedFolder()

@@ -1,11 +1,14 @@
-import React from 'react'
 import { mount } from 'enzyme'
+import React from 'react'
+
+import flag from 'cozy-flags'
 import { WebVaultClient } from 'cozy-keys-lib'
+
+import AddFolder, { AddFolder as DumbAddFolder } from './AddFolder'
+import { createFolder } from 'modules/navigation/duck/actions'
 import AppLike from 'test/components/AppLike'
 import { setupStoreAndClient } from 'test/setup'
-import AddFolder, { AddFolder as DumbAddFolder } from './AddFolder'
-import flag from 'cozy-flags'
-import { createFolder } from 'modules/navigation/duck/actions'
+
 const originalFlag = jest.requireActual('cozy-flags').default
 
 jest.mock('modules/navigation/duck/actions', () => ({

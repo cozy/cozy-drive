@@ -1,10 +1,10 @@
 import React from 'react'
 
-import InputGroup from 'cozy-ui/transpiled/react/InputGroup'
-import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import Magnifier from 'cozy-ui/transpiled/react/Icons/Magnifier'
+import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import CrossCircleOutlineIcon from 'cozy-ui/transpiled/react/Icons/CrossCircleOutline'
+import Magnifier from 'cozy-ui/transpiled/react/Icons/Magnifier'
+import InputGroup from 'cozy-ui/transpiled/react/InputGroup'
 
 import styles from 'modules/search/components/styles.styl'
 

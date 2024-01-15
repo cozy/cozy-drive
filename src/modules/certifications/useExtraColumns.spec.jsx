@@ -1,11 +1,10 @@
-import React from 'react'
 import { renderHook } from '@testing-library/react-hooks'
+import React from 'react'
 
 import { createMockClient, models } from 'cozy-client'
 
-import AppLike from 'test/components/AppLike'
-
 import { useExtraColumns } from './useExtraColumns'
+import AppLike from 'test/components/AppLike'
 
 const client = createMockClient({})
 client.query = jest.fn()

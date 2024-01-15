@@ -1,17 +1,18 @@
+import cx from 'classnames'
 import React, { useState } from 'react'
 import Autosuggest from 'react-autosuggest'
-import cx from 'classnames'
 
-import List from 'cozy-ui/transpiled/react/List'
+import { models, useClient } from 'cozy-client'
 import { isFlagshipApp } from 'cozy-device-helper'
 import { useWebviewIntent } from 'cozy-intent'
-import { models, useClient } from 'cozy-client'
+import List from 'cozy-ui/transpiled/react/List'
 
-import styles from 'modules/search/components/styles.styl'
 import BarSearchInputGroup from 'modules/search/components/BarSearchInputGroup'
-import useSearch from 'modules/search/hooks/useSearch'
 import SuggestionItem from 'modules/search/components/SuggestionItem'
 import SuggestionListSkeleton from 'modules/search/components/SuggestionListSkeleton'
+import useSearch from 'modules/search/hooks/useSearch'
+
+import styles from 'modules/search/components/styles.styl'
 
 const BarSearchAutosuggest = ({ t }) => {
   const webviewIntent = useWebviewIntent()

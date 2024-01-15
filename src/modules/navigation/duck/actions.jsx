@@ -1,16 +1,16 @@
 import React from 'react'
+import { showModal } from 'react-cozy-helpers'
 
 import { isDirectory } from 'cozy-client/dist/models/file'
-import { showModal } from 'react-cozy-helpers'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
-import { addToUploadQueue } from 'modules/upload'
-import logger from 'lib/logger'
-import QuotaAlert from 'modules/upload/QuotaAlert'
-import { getFolderContent } from 'modules/selectors'
 import { createEncryptedDir } from 'lib/encryption'
-import { logException } from 'lib/reporter'
 import { getEntriesTypeTranslated } from 'lib/entries'
+import logger from 'lib/logger'
+import { logException } from 'lib/reporter'
+import { getFolderContent } from 'modules/selectors'
+import { addToUploadQueue } from 'modules/upload'
+import QuotaAlert from 'modules/upload/QuotaAlert'
 
 export const SORT_FOLDER = 'SORT_FOLDER'
 

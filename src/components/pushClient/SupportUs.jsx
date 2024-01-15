@@ -1,15 +1,15 @@
 import React from 'react'
 
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import Typography from 'cozy-ui/transpiled/react/Typography'
-import Stack from 'cozy-ui/transpiled/react/Stack'
-import { ButtonLink } from 'cozy-ui/transpiled/react/deprecated/Button'
+import { useInstanceInfo } from 'cozy-client'
 import {
   shouldDisplayOffers,
   buildPremiumLink
 } from 'cozy-client/dist/models/instance'
 import { isFlagshipApp } from 'cozy-device-helper'
-import { useInstanceInfo } from 'cozy-client'
+import Stack from 'cozy-ui/transpiled/react/Stack'
+import Typography from 'cozy-ui/transpiled/react/Typography'
+import { ButtonLink } from 'cozy-ui/transpiled/react/deprecated/Button'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import styles from './supportUs.styl'
 

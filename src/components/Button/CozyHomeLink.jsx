@@ -1,8 +1,10 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
+
 import { ButtonLink, useI18n } from 'cozy-ui/transpiled/react'
-import { HOME_LINK_HREF } from 'constants/config'
+
 import CozyHomeLinkIcon from 'components/Button/CozyHomeLinkIcon'
+import { HOME_LINK_HREF } from 'constants/config'
 
 const CozyHomeLink = ({ className }) => {
   const { t } = useI18n()
@@ -12,7 +14,7 @@ const CozyHomeLink = ({ className }) => {
       icon={CozyHomeLinkIcon}
       className={className}
       href={HOME_LINK_HREF}
-      size={'normal'}
+      size="normal"
     />
   )
 }

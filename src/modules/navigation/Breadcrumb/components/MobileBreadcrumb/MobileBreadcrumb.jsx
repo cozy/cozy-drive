@@ -1,8 +1,10 @@
 import React, { useCallback } from 'react'
+
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+
 import Breadcrumb from '../../Breadcrumb'
 import { BarCenter, BarLeft } from 'components/Bar'
 import BackButton from 'components/Button/BackButton'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 const MobileBreadcrumb = ({ onBreadcrumbClick, path, ...props }) => {
   const navigateBack = useCallback(() => {

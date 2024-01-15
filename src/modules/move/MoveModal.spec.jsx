@@ -1,14 +1,14 @@
-import React from 'react'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { CozyFile } from 'models'
+import React from 'react'
 
 import { createMockClient } from 'cozy-client'
-
-import { CozyFile } from 'models'
-import { MoveModal } from './MoveModal'
-import AppLike from 'test/components/AppLike'
-import useDisplayedFolder from 'hooks/useDisplayedFolder'
 import { useSharingContext } from 'cozy-sharing'
+
+import { MoveModal } from './MoveModal'
 import { ROOT_DIR_ID } from 'constants/config'
+import useDisplayedFolder from 'hooks/useDisplayedFolder'
+import AppLike from 'test/components/AppLike'
 
 jest.mock('hooks/useDisplayedFolder')
 jest.mock('cozy-sharing', () => ({

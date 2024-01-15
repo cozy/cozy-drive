@@ -1,19 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react'
 
 import { useClient } from 'cozy-client'
+import { splitFilename } from 'cozy-client/dist/models/file'
+import { SharedDocument, SharedRecipientsList } from 'cozy-sharing'
 import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
-import Button from 'cozy-ui/transpiled/react/deprecated/Button'
-import { Media, Img, Bd } from 'cozy-ui/transpiled/react/deprecated/Media'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import Stack from 'cozy-ui/transpiled/react/Stack'
+import Button from 'cozy-ui/transpiled/react/deprecated/Button'
+import { Media, Img, Bd } from 'cozy-ui/transpiled/react/deprecated/Media'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import { SharedDocument, SharedRecipientsList } from 'cozy-sharing'
-import { splitFilename } from 'cozy-client/dist/models/file'
 
-import { buildAlbumByIdQuery } from 'modules/queries'
-import { trashFiles } from 'modules/actions/utils'
 import { DOCTYPE_ALBUMS } from 'lib/doctypes'
 import { getEntriesTypeTranslated } from 'lib/entries'
+import { trashFiles } from 'modules/actions/utils'
+import { buildAlbumByIdQuery } from 'modules/queries'
 
 const Message = ({ type, fileCount }) => {
   const ico =
@@ -25,7 +25,7 @@ const Message = ({ type, fileCount }) => {
       <Img>
         <Icon icon={ico} color="var(--coolGrey)" />
       </Img>
-      <Bd className={'u-pl-1-half'}>{t(`DeleteConfirm.${type}`, fileCount)}</Bd>
+      <Bd className="u-pl-1-half">{t(`DeleteConfirm.${type}`, fileCount)}</Bd>
     </Media>
   )
 }
@@ -150,7 +150,7 @@ const DeleteConfirmWithSharingContext = ({ files, ...rest }) =>
               <Message type={shareMessageType} fileCount={files.length} />
             ) : null}
             {isSharedByMe && recipients.length > 0 ? (
-              <SharedRecipientsList className={'u-ml-1'} docId={files[0].id} />
+              <SharedRecipientsList className="u-ml-1" docId={files[0].id} />
             ) : null}
           </DeleteConfirm>
         )

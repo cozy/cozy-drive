@@ -1,5 +1,6 @@
-import { isClientAlreadyInstalled, DESKTOP_SOFTWARE_ID } from './index'
 import CozyClient from 'cozy-client'
+
+import { isClientAlreadyInstalled, DESKTOP_SOFTWARE_ID } from './index'
 
 describe('isClientAlreadyInstalled', () => {
   test('isClientAlreadyInstalled is true', async () => {

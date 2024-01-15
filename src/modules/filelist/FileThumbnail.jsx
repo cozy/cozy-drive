@@ -1,14 +1,14 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 
 import { models } from 'cozy-client'
 import { SharedBadge, SharingOwnerAvatar } from 'cozy-sharing'
-import InfosBadge from 'cozy-ui/transpiled/react/InfosBadge'
 import GhostFileBadge from 'cozy-ui/transpiled/react/GhostFileBadge'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import LinkIcon from 'cozy-ui/transpiled/react/Icons/Link'
+import InfosBadge from 'cozy-ui/transpiled/react/InfosBadge'
+import Spinner from 'cozy-ui/transpiled/react/Spinner'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import FileIcon from 'modules/filelist/FileIcon'
 import { SharingShortcutIcon } from 'modules/filelist/SharingShortcutIcon'
@@ -38,7 +38,7 @@ const FileThumbnail = ({ file, size, isInSyncFromSharing, isEncrypted }) => {
         <GhostFileBadge
           badgeContent={<SharingShortcutIcon file={file} size={16} />}
         >
-          <SharingOwnerAvatar docId={file.id} size={'small'} />
+          <SharingOwnerAvatar docId={file.id} size="small" />
         </GhostFileBadge>
       )}
       {isInSyncFromSharing && (

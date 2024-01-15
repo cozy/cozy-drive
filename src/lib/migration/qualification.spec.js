@@ -1,10 +1,11 @@
+import log from 'cozy-logger'
+
 import {
   extractFilesToMigrate,
   getFileRequalification,
   getMostRecentUpdatedDate,
   removeOldQualificationAttributes
 } from 'lib/migration/qualification'
-import log from 'cozy-logger'
 
 jest.mock('cozy-logger', () => jest.fn())
 

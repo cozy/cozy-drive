@@ -1,13 +1,12 @@
-import React from 'react'
 import { render, fireEvent, waitFor } from '@testing-library/react'
+import React from 'react'
 
 import { createMockClient } from 'cozy-client'
 
-import AppLike from 'test/components/AppLike'
-import { generateFile } from 'test/generate'
-
 import { DeleteConfirm } from './DeleteConfirm'
 import { trashFiles } from 'modules/actions/utils'
+import AppLike from 'test/components/AppLike'
+import { generateFile } from 'test/generate'
 
 jest.mock('modules/actions/utils', () => ({
   trashFiles: jest.fn().mockResolvedValue({})

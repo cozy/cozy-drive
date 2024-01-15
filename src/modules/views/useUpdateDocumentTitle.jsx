@@ -1,10 +1,10 @@
 import { useMemo, useEffect } from 'react'
 
 import { useClient, models } from 'cozy-client'
-
-import { useFileWithPath } from 'modules/views/hooks'
-import { TRASH_DIR_PATH } from 'constants/config'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+
+import { TRASH_DIR_PATH } from 'constants/config'
+import { useFileWithPath } from 'modules/views/hooks'
 
 export const makeTitle = (fileWithPath, appFullName, t) => {
   const fileName =

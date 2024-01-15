@@ -1,11 +1,5 @@
-import React from 'react'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-
-import { generateFile } from 'test/generate'
-import {
-  SelectionProvider,
-  useSelectionContext
-} from 'modules/selection/SelectionProvider'
+import React from 'react'
 import {
   MemoryRouter,
   Routes,
@@ -13,6 +7,12 @@ import {
   Link,
   useLocation
 } from 'react-router-dom'
+
+import {
+  SelectionProvider,
+  useSelectionContext
+} from 'modules/selection/SelectionProvider'
+import { generateFile } from 'test/generate'
 
 const SelectionConsumer = ({ items }) => {
   const {
@@ -26,7 +26,7 @@ const SelectionConsumer = ({ items }) => {
 
   return (
     <>
-      {pathname === '/' && <Link to={'/other'}>Change route</Link>}
+      {pathname === '/' && <Link to="/other">Change route</Link>}
       {isSelectionBarVisible && (
         <button onClick={hideSelectionBar}>Hide selection bar</button>
       )}

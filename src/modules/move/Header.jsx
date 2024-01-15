@@ -1,14 +1,15 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 
-import { Media, Img, Bd } from 'cozy-ui/transpiled/react/deprecated/Media'
+import Card from 'cozy-ui/transpiled/react/Card'
 import Circle from 'cozy-ui/transpiled/react/Circle'
 import Counter from 'cozy-ui/transpiled/react/Counter'
-import Typography from 'cozy-ui/transpiled/react/Typography'
-import Card from 'cozy-ui/transpiled/react/Card'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import DriveIcon from 'cozy-ui/transpiled/react/Icons/FileTypeFolder'
+import Typography from 'cozy-ui/transpiled/react/Typography'
+import { Media, Img, Bd } from 'cozy-ui/transpiled/react/deprecated/Media'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+
 import FileThumbnail from '../filelist/FileThumbnail'
 import getMimeTypeIcon from 'lib/getMimeTypeIcon'
 const HeaderIlustration = ({ entries }) => {

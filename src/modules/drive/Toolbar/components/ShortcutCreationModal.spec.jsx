@@ -1,16 +1,16 @@
 /* eslint-env jest */
-import React from 'react'
 import { fireEvent, render, waitFor } from '@testing-library/react'
 import mediaQuery from 'css-mediaquery'
+import React from 'react'
 
 import { createMockClient } from 'cozy-client'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
+import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 
 import ShortcutCreationModal from './ShortcutCreationModal'
-import AppLike from 'test/components/AppLike'
-import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
-import { DOCTYPE_FILES_SHORTCUT } from 'lib/doctypes'
 import useDisplayedFolder from 'hooks/useDisplayedFolder'
+import { DOCTYPE_FILES_SHORTCUT } from 'lib/doctypes'
+import AppLike from 'test/components/AppLike'
 
 const tMock = jest.fn()
 jest.mock('cozy-ui/transpiled/react/hooks/useBrowserOffline')

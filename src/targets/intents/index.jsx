@@ -2,18 +2,18 @@
 
 import 'cozy-ui/dist/cozy-ui.min.css'
 import 'cozy-ui/transpiled/react/stylesheet.css'
-import 'whatwg-fetch'
 
+import 'whatwg-fetch'
 import React from 'react'
+import { getQueryParameter } from 'react-cozy-helpers'
 import { render } from 'react-dom'
 
-import { getQueryParameter } from 'react-cozy-helpers'
 import CozyClient from 'cozy-client'
 
 import DriveProvider from 'lib/DriveProvider'
-import registerClientPlugins from 'lib/registerClientPlugins'
-import { schema } from 'lib/doctypes'
 import appMetadata from 'lib/appMetadata'
+import { schema } from 'lib/doctypes'
+import registerClientPlugins from 'lib/registerClientPlugins'
 import IntentHandler from 'modules/services'
 
 document.addEventListener('DOMContentLoaded', () => {

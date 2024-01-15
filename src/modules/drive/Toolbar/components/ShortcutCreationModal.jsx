@@ -1,18 +1,18 @@
+import { useDisplayedFolder } from 'hooks'
 import React, { useCallback, useEffect, useState } from 'react'
 
 import { useClient } from 'cozy-client'
 import { isIOS } from 'cozy-device-helper'
-
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
-import Button from 'cozy-ui/transpiled/react/deprecated/Button'
-import TextField from 'cozy-ui/transpiled/react/TextField'
 import InputAdornment from 'cozy-ui/transpiled/react/InputAdornment'
 import Stack from 'cozy-ui/transpiled/react/Stack'
+import TextField from 'cozy-ui/transpiled/react/TextField'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
+import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+
 import { DOCTYPE_FILES_SHORTCUT } from 'lib/doctypes'
-import { useDisplayedFolder } from 'hooks'
 
 const ENTER_KEY = 13
 

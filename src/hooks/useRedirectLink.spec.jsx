@@ -3,8 +3,8 @@ import { useSearchParams, useNavigate } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
 
-import { useRedirectLink } from './useRedirectLink'
 import * as helpers from './helpers'
+import { useRedirectLink } from './useRedirectLink'
 
 jest.mock('cozy-client', () => ({
   ...jest.requireActual('cozy-client'),

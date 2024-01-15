@@ -2,17 +2,17 @@ import React from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 
 import { models } from 'cozy-client'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import PublicLayout from 'modules/public/PublicLayout'
-import PublicFolderView from 'modules/views/Public'
-import LightFileViewer from 'modules/public/LightFileViewer'
 import FileHistory from 'components/FileHistory'
-import OnlyOfficePaywallView from 'modules/views/OnlyOffice/OnlyOfficePaywallView'
+import ExternalRedirect from 'modules/navigation/ExternalRedirect'
+import LightFileViewer from 'modules/public/LightFileViewer'
+import PublicLayout from 'modules/public/PublicLayout'
 import OnlyOfficeView from 'modules/views/OnlyOffice'
 import OnlyOfficeCreateView from 'modules/views/OnlyOffice/Create'
+import OnlyOfficePaywallView from 'modules/views/OnlyOffice/OnlyOfficePaywallView'
 import { isOfficeEnabled } from 'modules/views/OnlyOffice/helpers'
-import ExternalRedirect from 'modules/navigation/ExternalRedirect'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import PublicFolderView from 'modules/views/Public'
 
 const AppRouter = ({
   isReadOnly,

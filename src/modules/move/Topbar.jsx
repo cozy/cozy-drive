@@ -1,17 +1,17 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useQuery } from 'cozy-client'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import FolderAddIcon from 'cozy-ui/transpiled/react/Icons/FolderAdd'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import Topbar from 'modules/layout/Topbar'
-import Breadcrumb from 'modules/navigation/Breadcrumb/Breadcrumb'
 import BackButton from 'components/Button/BackButton'
+import Topbar from 'modules/layout/Topbar'
 import { getBreadcrumbPath } from 'modules/move/helpers'
+import Breadcrumb from 'modules/navigation/Breadcrumb/Breadcrumb'
 import { buildOnlyFolderQuery } from 'modules/queries'
 
 const MoveTopbar = ({ navigateTo, folderId, showFolderCreation }) => {

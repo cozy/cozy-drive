@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
+
 import UIUploadQueue from 'cozy-ui/transpiled/react/UploadQueue'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
-import getMimeTypeIcon from 'lib/getMimeTypeIcon'
 
 import {
   getUploadQueue,
@@ -10,6 +10,7 @@ import {
   getSuccessful,
   purgeUploadQueue
 } from '.'
+import getMimeTypeIcon from 'lib/getMimeTypeIcon'
 
 export const DumbUploadQueue = translate()(props => {
   return (

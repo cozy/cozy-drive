@@ -1,10 +1,10 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import CheckSquareIcon from 'cozy-ui/transpiled/react/Icons/CheckSquare'
+import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 /**
  * Action to show the selection bar

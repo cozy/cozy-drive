@@ -1,17 +1,17 @@
 import React, { useState, useCallback, useRef } from 'react'
 
 import { useClient } from 'cozy-client'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import ActionMenu, {
   ActionMenuItem
 } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { MoreButton } from 'components/Button'
-import SelectableItem from 'modules/drive/Toolbar/selectable/SelectableItem'
 import { downloadFiles } from 'modules/actions/utils'
 import AddMenuItem from 'modules/drive/Toolbar/components/AddMenuItem'
+import SelectableItem from 'modules/drive/Toolbar/selectable/SelectableItem'
 
 const PublicToolbarMoreMenu = ({
   files,
@@ -44,7 +44,7 @@ const PublicToolbarMoreMenu = ({
           {isMobile && files.length > 0 && (
             <ActionMenuItem
               onClick={() => downloadFiles(client, files)}
-              left={<Icon icon={'download'} />}
+              left={<Icon icon="download" />}
             >
               {t('toolbar.menu_download')}
             </ActionMenuItem>

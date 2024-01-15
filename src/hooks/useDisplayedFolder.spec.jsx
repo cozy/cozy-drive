@@ -1,7 +1,7 @@
 import { useQuery } from 'cozy-client'
 
-import useDisplayedFolder from './useDisplayedFolder'
 import useCurrentFolderId from './useCurrentFolderId'
+import useDisplayedFolder from './useDisplayedFolder'
 
 jest.mock('cozy-client', () => ({
   ...jest.requireActual('cozy-client'),

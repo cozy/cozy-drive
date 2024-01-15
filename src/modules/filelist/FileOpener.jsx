@@ -1,13 +1,12 @@
-import React, { useEffect, useRef } from 'react'
 import Hammer from '@egjs/hammerjs'
 import propagating from 'propagating-hammerjs'
+import React, { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { models } from 'cozy-client'
 
-import { makeOnlyOfficeFileRoute } from 'modules/views/OnlyOffice/helpers'
-
 import styles from './fileopener.styl'
+import { makeOnlyOfficeFileRoute } from 'modules/views/OnlyOffice/helpers'
 
 const getParentDiv = element => {
   if (element.nodeName.toLowerCase() === 'div') {

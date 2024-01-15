@@ -1,6 +1,5 @@
-import flag from 'cozy-flags'
 import { isMobile } from 'cozy-device-helper'
-
+import flag from 'cozy-flags'
 import FileTypeSheetIcon from 'cozy-ui/transpiled/react/Icons/FileTypeSheet'
 import FileTypeSlideIcon from 'cozy-ui/transpiled/react/Icons/FileTypeSlide'
 import FileTypeTextIcon from 'cozy-ui/transpiled/react/Icons/FileTypeText'

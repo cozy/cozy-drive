@@ -1,11 +1,11 @@
-import React, { forwardRef } from 'react'
 import cx from 'classnames'
+import React, { forwardRef } from 'react'
 
-import { TableCell } from 'cozy-ui/transpiled/react/Table'
 import Button from 'cozy-ui/transpiled/react/Buttons'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import palette from 'cozy-ui/transpiled/react/palette'
 import DotsIcon from 'cozy-ui/transpiled/react/Icons/Dots'
+import { TableCell } from 'cozy-ui/transpiled/react/Table'
+import palette from 'cozy-ui/transpiled/react/palette'
 
 import styles from 'styles/filelist.styl'
 

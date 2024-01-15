@@ -1,10 +1,10 @@
-import React from 'react'
 import { renderHook, act } from '@testing-library/react-hooks'
+import React from 'react'
+
 import { createMockClient } from 'cozy-client'
 
-import AppLike from 'test/components/AppLike'
-
 import usePublicFilesQuery from './usePublicFilesQuery'
+import AppLike from 'test/components/AppLike'
 
 describe('usePublicFilesQuery', () => {
   const mockClient = createMockClient({})

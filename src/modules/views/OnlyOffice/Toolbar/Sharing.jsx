@@ -1,10 +1,10 @@
 import React, { useState, useCallback } from 'react'
 
 import { ShareButton, ShareModal, SharedRecipients } from 'cozy-sharing'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import Icon from 'cozy-ui/transpiled/react/Icon'
+import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 const Sharing = ({ fileWithPath }) => {
   const [showShareModal, setShowShareModal] = useState(false)

@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
 import cx from 'classnames'
-
 import { CozyFile } from 'models'
-import Spinner from 'cozy-ui/transpiled/react/Spinner'
+import React, { Component } from 'react'
+
+import { isDirectory } from 'cozy-client/dist/models/file'
 import { Dialog } from 'cozy-ui/transpiled/react/CozyDialogs'
+import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
-import { isDirectory } from 'cozy-client/dist/models/file'
 
 import styles from 'styles/filenameinput.styl'
 

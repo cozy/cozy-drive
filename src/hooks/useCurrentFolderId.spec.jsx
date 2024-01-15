@@ -1,4 +1,5 @@
 import ReactRouter from 'react-router-dom'
+
 import useCurrentFolderId from './useCurrentFolderId'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'constants/config'
 

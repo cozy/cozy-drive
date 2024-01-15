@@ -1,9 +1,10 @@
-import React from 'react'
 import { render } from '@testing-library/react'
+import React from 'react'
+
 import CozyClient from 'cozy-client'
 
-import AppLike from 'test/components/AppLike'
 import Header from './Header'
+import AppLike from 'test/components/AppLike'
 
 describe('Header', () => {
   const setupComponent = ({ entries = [], title, subTitle }) => {

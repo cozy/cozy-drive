@@ -2,21 +2,21 @@ import React, { useState, useCallback } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import Button from 'cozy-ui/transpiled/react/deprecated/Button'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
 import ActionMenu, {
   ActionMenuItem
 } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
-import Icon from 'cozy-ui/transpiled/react/Icon'
-import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
+import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import EmptyTrashConfirm from './components/EmptyTrashConfirm'
+import SelectableItem from '../drive/Toolbar/selectable/SelectableItem'
 import { BarRightWithProvider } from 'components/Bar'
+import { MoreButton } from 'components/Button'
 import { useModalContext } from 'lib/ModalContext'
 import { emptyTrash } from 'modules/actions/utils'
-import SelectableItem from '../drive/Toolbar/selectable/SelectableItem'
-import { MoreButton } from 'components/Button'
-import EmptyTrashConfirm from './components/EmptyTrashConfirm'
 import SearchButton from 'modules/drive/Toolbar/components/SearchButton'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 

@@ -1,16 +1,16 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 
 import { CozyProvider } from 'cozy-client'
-import SharingProvider from 'cozy-sharing'
-import { I18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import {
   VaultUnlockProvider,
   VaultProvider,
   VaultUnlockPlaceholder
 } from 'cozy-keys-lib'
+import SharingProvider from 'cozy-sharing'
 import AlertProvider from 'cozy-ui/transpiled/react/providers/Alert'
+import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { I18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import FabProvider from 'lib/FabProvider'
 import StyledApp from 'modules/drive/StyledApp'

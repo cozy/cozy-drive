@@ -2,13 +2,13 @@ import React from 'react'
 
 import { useQuery } from 'cozy-client'
 
+import { isEncryptedFolder } from 'lib/encryption'
+import { AddFolderWithoutState } from 'modules/filelist/AddFolder'
 import Explorer from 'modules/move/Explorer'
 import FileList from 'modules/move/FileList'
-import Loader from 'modules/move/Loader'
 import LoadMore from 'modules/move/LoadMore'
+import Loader from 'modules/move/Loader'
 import { buildMoveOrImportQuery, buildOnlyFolderQuery } from 'modules/queries'
-import { AddFolderWithoutState } from 'modules/filelist/AddFolder'
-import { isEncryptedFolder } from 'lib/encryption'
 
 const MoveModalContent = ({
   folderId,

@@ -1,4 +1,5 @@
 import ReactRouter from 'react-router-dom'
+
 import useCurrentFileId from './useCurrentFileId'
 
 jest.mock('react-router-dom', () => ({

@@ -1,14 +1,14 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { Provider } from 'react-redux'
-import PropTypes from 'prop-types'
 
 import { WebviewIntentProvider } from 'cozy-intent'
 
-import DriveProvider from 'lib/DriveProvider'
-import { ThumbnailSizeContextProvider } from 'lib/ThumbnailSizeContext'
-import { ModalContextProvider } from 'lib/ModalContext'
-import { AcceptingSharingProvider } from 'lib/AcceptingSharingContext'
 import PushBannerProvider from 'components/PushBanner/PushBannerProvider'
+import { AcceptingSharingProvider } from 'lib/AcceptingSharingContext'
+import DriveProvider from 'lib/DriveProvider'
+import { ModalContextProvider } from 'lib/ModalContext'
+import { ThumbnailSizeContextProvider } from 'lib/ThumbnailSizeContext'
 import cozyBar from 'lib/cozyBar'
 import { onFileUploaded } from 'modules/views/Upload/UploadUtils'
 

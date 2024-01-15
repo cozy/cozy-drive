@@ -1,14 +1,15 @@
-import React, { useEffect, useMemo, useState } from 'react'
 import classNames from 'classnames'
+import React, { useEffect, useMemo, useState } from 'react'
+
 import BreadcrumbMui from 'cozy-ui/transpiled/react/Breadcrumbs'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import RightIcon from 'cozy-ui/transpiled/react/Icons/Right'
-
-import styles from 'modules/navigation/Breadcrumb/breadcrumb.styl'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import ActionMenu, {
   ActionMenuItem
 } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+
+import styles from 'modules/navigation/Breadcrumb/breadcrumb.styl'
 
 const DesktopBreadcrumb = ({ onBreadcrumbClick, path }) => {
   const { t } = useI18n()

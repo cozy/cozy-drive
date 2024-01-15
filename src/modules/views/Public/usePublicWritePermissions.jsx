@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+
 import { useClient, models } from 'cozy-client'
 
 export const usePublicWritePermissions = currentFolderId => {

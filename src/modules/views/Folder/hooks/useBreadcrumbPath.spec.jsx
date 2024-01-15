@@ -1,8 +1,10 @@
-import { useBreadcrumbPath } from './useBreadcrumbPath'
 import { act, renderHook } from '@testing-library/react-hooks'
+
 import { useClient } from 'cozy-client'
-import { fetchFolder } from '../queries/fetchFolder'
 import log from 'cozy-logger'
+
+import { useBreadcrumbPath } from './useBreadcrumbPath'
+import { fetchFolder } from '../queries/fetchFolder'
 import {
   dummyBreadcrumbPath,
   dummyRootBreadcrumbPath

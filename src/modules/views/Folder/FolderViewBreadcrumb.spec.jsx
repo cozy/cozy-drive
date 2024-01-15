@@ -1,5 +1,6 @@
-import React from 'react'
 import { render } from '@testing-library/react'
+import React from 'react'
+
 import FolderViewBreadcrumb from './FolderViewBreadcrumb'
 import { useBreadcrumbPath } from './hooks/useBreadcrumbPath'
 import {
@@ -52,7 +53,7 @@ describe('FolderViewBreadcrumb', () => {
     // When
     const { getByTestId } = render(
       <FolderViewBreadcrumb
-        currentFolderId={'1234'}
+        currentFolderId="1234"
         navigateToFolder={jest.fn()}
         rootBreadcrumbPath={rootBreadcrumbPath}
       />
@@ -75,7 +76,7 @@ describe('FolderViewBreadcrumb', () => {
     // When
     const { container } = render(
       <FolderViewBreadcrumb
-        currentFolderId={'1234'}
+        currentFolderId="1234"
         navigateToFolder={jest.fn()}
         rootBreadcrumbPath={rootBreadcrumbPath}
       />
@@ -92,7 +93,7 @@ describe('FolderViewBreadcrumb', () => {
     // When
     const { container } = render(
       <FolderViewBreadcrumb
-        currentFolderId={'1234'}
+        currentFolderId="1234"
         navigateToFolder={jest.fn()}
         rootBreadcrumbPath={rootBreadcrumbPath}
       />

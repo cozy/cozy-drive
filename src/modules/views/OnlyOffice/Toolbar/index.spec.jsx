@@ -1,15 +1,14 @@
-import React from 'react'
 import { render, fireEvent, screen } from '@testing-library/react'
+import React from 'react'
 
 import { createMockClient, useQuery } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import AppLike from 'test/components/AppLike'
-import { officeDocParam } from 'test/data'
-
+import * as hookHelpers from 'hooks/helpers'
 import { OnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
 import Toolbar from 'modules/views/OnlyOffice/Toolbar'
-import * as hookHelpers from 'hooks/helpers'
+import AppLike from 'test/components/AppLike'
+import { officeDocParam } from 'test/data'
 
 jest.mock('cozy-ui/transpiled/react/providers/Breakpoints', () => ({
   ...jest.requireActual('cozy-ui/transpiled/react/providers/Breakpoints'),

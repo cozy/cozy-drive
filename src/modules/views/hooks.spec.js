@@ -1,11 +1,11 @@
 import { useQuery } from 'cozy-client'
 
-import { TRASH_DIR_ID } from 'constants/config'
 import {
   isFileNotTrashed,
   useFilesQueryWithPath,
   useFileWithPath
 } from './hooks'
+import { TRASH_DIR_ID } from 'constants/config'
 
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 

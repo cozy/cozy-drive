@@ -1,10 +1,10 @@
-import React from 'react'
-import get from 'lodash/get'
 import cx from 'classnames'
+import get from 'lodash/get'
+import React from 'react'
 
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import { TableCell } from 'cozy-ui/transpiled/react/Table'
 import AppIcon from 'cozy-ui/transpiled/react/AppIcon'
+import { TableCell } from 'cozy-ui/transpiled/react/Table'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import CertificationTooltip from 'modules/certifications/CertificationTooltip'
 

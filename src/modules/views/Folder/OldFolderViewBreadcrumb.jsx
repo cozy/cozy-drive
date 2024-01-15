@@ -1,6 +1,8 @@
-import React, { useCallback } from 'react'
-import { useQuery } from 'cozy-client'
 import get from 'lodash/get'
+import React, { useCallback } from 'react'
+
+import { useQuery } from 'cozy-client'
+
 import { MobileAwareBreadcrumb as Breadcrumb } from 'modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
 import { buildFolderQuery } from 'modules/queries'
 

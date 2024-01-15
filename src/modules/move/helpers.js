@@ -1,11 +1,11 @@
 import get from 'lodash/get'
 import uniqBy from 'lodash/uniqBy'
+import { CozyFile } from 'models'
 
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
-import { CozyFile } from 'models'
-import logger from 'lib/logger'
 import { ROOT_DIR_ID } from 'constants/config'
+import logger from 'lib/logger'
 
 /**
  * Returns whether one of the targeted folders is part of the current folder

@@ -1,13 +1,13 @@
+import { useCurrentFolderId } from 'hooks'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useQuery } from 'cozy-client'
-import { buildDriveQuery } from 'modules/queries'
-import { useFolderSort } from 'modules/navigation/duck'
 
-import { useCurrentFolderId } from 'hooks'
-import FilesViewer, { FilesViewerLoading } from 'modules/viewer/FilesViewer'
+import { useFolderSort } from 'modules/navigation/duck'
+import { buildDriveQuery } from 'modules/queries'
 import { getFolderPath } from 'modules/routeUtils'
+import FilesViewer, { FilesViewerLoading } from 'modules/viewer/FilesViewer'
 
 const FilesViewerWithQuery = props => {
   const navigate = useNavigate()

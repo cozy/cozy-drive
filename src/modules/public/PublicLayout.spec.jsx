@@ -1,9 +1,11 @@
-import React from 'react'
 import { render } from '@testing-library/react'
+import React from 'react'
+
 import { createMockClient } from 'cozy-client'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
-import AppLike from 'test/components/AppLike'
+
 import PublicLayout from './PublicLayout'
+import AppLike from 'test/components/AppLike'
 
 jest.mock('modules/upload/UploadQueue', () => () => {
   return null

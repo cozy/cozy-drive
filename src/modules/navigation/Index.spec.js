@@ -1,9 +1,9 @@
 import { createMockClient } from 'cozy-client'
-const mockFileModels = require('cozy-client/dist/models/file')
-
-import { SHAREDWITHME_DIR_ID } from 'constants/config'
 
 import { fetchSharing } from './Index'
+import { SHAREDWITHME_DIR_ID } from 'constants/config'
+
+const mockFileModels = require('cozy-client/dist/models/file')
 
 jest.mock('cozy-keys-lib', () => ({
   withVaultClient: jest.fn().mockReturnValue({}),

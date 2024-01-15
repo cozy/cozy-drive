@@ -2,8 +2,8 @@ import React from 'react'
 
 import { useQuery } from 'cozy-client'
 
-import { buildNewSharingShortcutQuery } from 'modules/queries'
 import { NavItem } from 'modules/navigation/NavItem'
+import { buildNewSharingShortcutQuery } from 'modules/queries'
 
 const SharingsNavItem = ({ clickState }) => {
   const newSharingShortcutQuery = buildNewSharingShortcutQuery()

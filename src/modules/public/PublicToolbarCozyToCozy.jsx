@@ -1,14 +1,14 @@
 import React from 'react'
 
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { BarRightWithProvider } from 'components/Bar'
 import { DownloadFilesButton } from 'modules/public/DownloadButton'
-import { isFilesIsFile, openExternalLink } from 'modules/public/helpers'
 import PublicToolbarMoreMenu from 'modules/public/PublicToolbarMoreMenu'
+import { isFilesIsFile, openExternalLink } from 'modules/public/helpers'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 
 const PublicToolbarCozyToCozy = ({

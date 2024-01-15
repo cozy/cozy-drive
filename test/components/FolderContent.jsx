@@ -1,5 +1,7 @@
 import React, { useMemo } from 'react'
+
 import { useQuery } from 'cozy-client'
+
 import { buildDriveQuery } from 'modules/queries'
 
 /** A simple component firing the same queries as DriveView */

@@ -1,31 +1,30 @@
 import React, { forwardRef } from 'react'
 
 import { isFile } from 'cozy-client/dist/models/file'
+import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
+import Divider from 'cozy-ui/transpiled/react/Divider'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
-import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
-import RenameIcon from 'cozy-ui/transpiled/react/Icons/Rename'
+import HistoryIcon from 'cozy-ui/transpiled/react/Icons/History'
 import MovetoIcon from 'cozy-ui/transpiled/react/Icons/Moveto'
 import MultiFilesIcon from 'cozy-ui/transpiled/react/Icons/MultiFiles'
 import QualifyIcon from 'cozy-ui/transpiled/react/Icons/Qualify'
-import HistoryIcon from 'cozy-ui/transpiled/react/Icons/History'
+import RenameIcon from 'cozy-ui/transpiled/react/Icons/Rename'
 import RestoreIcon from 'cozy-ui/transpiled/react/Icons/Restore'
-import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
+import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
-import Divider from 'cozy-ui/transpiled/react/Divider'
-
-import { isEncryptedFolder, isEncryptedFile } from 'lib/encryption'
-import DeleteConfirm from 'modules/drive/DeleteConfirm'
-import DestroyConfirm from 'modules/trash/components/DestroyConfirm'
-import { startRenamingAsync } from 'modules/drive/rename'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { downloadFiles, restoreFiles } from './utils'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import { isEncryptedFolder, isEncryptedFile } from 'lib/encryption'
 import {
   navigateToModal,
   navigateToModalWithMultipleFile
 } from 'modules/actions/helpers'
+import DeleteConfirm from 'modules/drive/DeleteConfirm'
+import { startRenamingAsync } from 'modules/drive/rename'
+import DestroyConfirm from 'modules/trash/components/DestroyConfirm'
 
 export { share } from './share'
 

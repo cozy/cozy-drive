@@ -8,8 +8,8 @@ import React, {
 } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useClient, useQuery } from 'cozy-client'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { buildFileByIdQuery } from 'modules/queries'
 import { officeDefaultMode } from 'modules/views/OnlyOffice/helpers'

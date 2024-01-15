@@ -1,18 +1,18 @@
-import React, { useState, useCallback } from 'react'
-import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
-import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 import cx from 'classnames'
+import PropTypes from 'prop-types'
+import React, { useState, useCallback } from 'react'
+import { Link } from 'react-router-dom'
 
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-import Typography from 'cozy-ui/transpiled/react/Typography'
 import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
+import Typography from 'cozy-ui/transpiled/react/Typography'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 
-import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
+import styles from './styles.styl'
 import { RenameInput } from 'modules/drive/RenameInput'
+import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
 
 import filelistStyles from 'styles/filelist.styl'
-import styles from './styles.styl'
 
 const useStyles = makeStyles(theme => ({
   name: {

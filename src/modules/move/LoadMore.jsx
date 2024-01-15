@@ -1,5 +1,6 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
+
 import LoadMoreButton from 'modules/filelist/LoadMore'
 
 const LoadMore = ({ hasMore, fetchMore }) => {

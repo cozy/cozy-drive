@@ -1,11 +1,11 @@
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { EditDocumentQualification } from 'cozy-scanner'
 import { hasQueryBeenLoaded, useQuery } from 'cozy-client'
+import { EditDocumentQualification } from 'cozy-scanner'
 
-import { buildFileByIdQuery } from 'modules/queries'
 import { LoaderModal } from 'components/LoaderModal'
+import { buildFileByIdQuery } from 'modules/queries'
 
 const QualifyFileView = () => {
   const navigate = useNavigate()

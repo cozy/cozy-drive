@@ -1,17 +1,20 @@
+import { useCurrentFolderId, useDisplayedFolder } from 'hooks'
 import React, { useCallback, useContext, useEffect, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate, Outlet, useLocation, useParams } from 'react-router-dom'
 
-import { useSharingContext } from 'cozy-sharing'
 import { useQuery, useClient } from 'cozy-client'
-import { useVaultClient } from 'cozy-keys-lib'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import flag from 'cozy-flags'
+import { useVaultClient } from 'cozy-keys-lib'
+import { useSharingContext } from 'cozy-sharing'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import Dropzone from 'modules/upload/Dropzone'
+import HarvestBanner from './HarvestBanner'
+import useHead from 'components/useHead'
+import { ROOT_DIR_ID } from 'constants/config'
+import { FabContext } from 'lib/FabProvider'
 import { useModalContext } from 'lib/ModalContext'
-import useActions from 'modules/actions/useActions'
 import {
   share,
   download,
@@ -23,29 +26,25 @@ import {
   versions,
   hr
 } from 'modules/actions'
+import useActions from 'modules/actions/useActions'
+import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
+import { useExtraColumns } from 'modules/certifications/useExtraColumns'
+import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
+import FabWithMenuContext from 'modules/drive/FabWithMenuContext'
 import Toolbar from 'modules/drive/Toolbar'
-import { ROOT_DIR_ID } from 'constants/config'
+import { useFolderSort } from 'modules/navigation/duck'
 import {
   buildDriveQuery,
   buildFileWithSpecificMetadataAttributeQuery
 } from 'modules/queries'
-import { useCurrentFolderId, useDisplayedFolder } from 'hooks'
-import { useFolderSort } from 'modules/navigation/duck'
-import { useExtraColumns } from 'modules/certifications/useExtraColumns'
-import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
-import { FabContext } from 'lib/FabProvider'
-
+import { useSelectionContext } from 'modules/selection/SelectionProvider'
+import Dropzone from 'modules/upload/Dropzone'
+import { useTrashRedirect } from 'modules/views/Drive/useTrashRedirect'
 import FolderView from 'modules/views/Folder/FolderView'
-import FolderViewHeader from 'modules/views/Folder/FolderViewHeader'
 import FolderViewBody from 'modules/views/Folder/FolderViewBody'
 import FolderViewBreadcrumb from 'modules/views/Folder/FolderViewBreadcrumb'
-import { useTrashRedirect } from 'modules/views/Drive/useTrashRedirect'
-import FabWithMenuContext from 'modules/drive/FabWithMenuContext'
-import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
-import useHead from 'components/useHead'
-import { useSelectionContext } from 'modules/selection/SelectionProvider'
+import FolderViewHeader from 'modules/views/Folder/FolderViewHeader'
 import { useResumeUploadFromFlagship } from 'modules/views/Upload/useResumeFromFlagship'
-import HarvestBanner from './HarvestBanner'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []

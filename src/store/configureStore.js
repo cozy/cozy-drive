@@ -1,8 +1,10 @@
 /* global __DEVELOPMENT__ */
 import { compose, createStore, applyMiddleware } from 'redux'
-import flag from 'cozy-flags'
 import { createLogger } from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
+
+import flag from 'cozy-flags'
+
 import createRootReducer from './rootReducer'
 
 /**

@@ -1,22 +1,22 @@
 import React from 'react'
-import { CozyProvider } from 'cozy-client'
 import { Provider } from 'react-redux'
+import { HashRouter } from 'react-router-dom'
 import { createStore } from 'redux'
 
-import { I18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
+import { CozyProvider } from 'cozy-client'
 import { SharingContext } from 'cozy-sharing'
 import AlertProvider from 'cozy-ui/transpiled/react/providers/Alert'
-
-import { ThumbnailSizeContextProvider } from 'lib/ThumbnailSizeContext'
 import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoints'
-import { ModalContext } from 'lib/ModalContext'
-import { HashRouter } from 'react-router-dom'
+import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
+import { I18n } from 'cozy-ui/transpiled/react/providers/I18n'
+
+import PushBannerProvider from 'components/PushBanner/PushBannerProvider'
 import { AcceptingSharingProvider } from 'lib/AcceptingSharingContext'
 import FabProvider from 'lib/FabProvider'
-import PushBannerProvider from 'components/PushBanner/PushBannerProvider'
-import { SelectionProvider } from 'modules/selection/SelectionProvider'
+import { ModalContext } from 'lib/ModalContext'
+import { ThumbnailSizeContextProvider } from 'lib/ThumbnailSizeContext'
 import enLocale from 'locales/en.json'
+import { SelectionProvider } from 'modules/selection/SelectionProvider'
 
 const mockStore = createStore(() => ({
   mobile: {
@@ -26,7 +26,7 @@ const mockStore = createStore(() => ({
 
 export const TestI18n = ({ children }) => {
   return (
-    <I18n lang={'en'} dictRequire={() => enLocale}>
+    <I18n lang="en" dictRequire={() => enLocale}>
       {children}
     </I18n>
   )

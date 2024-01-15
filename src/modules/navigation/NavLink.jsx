@@ -1,7 +1,7 @@
-import React from 'react'
 import cx from 'classnames'
-import { useLocation } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import React from 'react'
+import { useLocation } from 'react-router-dom'
 
 import { NavLink as UINavLink } from 'cozy-ui/transpiled/react/Nav'
 

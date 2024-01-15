@@ -1,6 +1,7 @@
 // @ts-check
-import { queryAllDocsWithFields } from 'lib/dacc/query'
 import log from 'cozy-logger'
+
+import { queryAllDocsWithFields } from 'lib/dacc/query'
 
 /**
  * @typedef {object} Measure

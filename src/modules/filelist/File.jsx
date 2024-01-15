@@ -1,20 +1,16 @@
-import React, { useState, useRef } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import cx from 'classnames'
 import filesize from 'filesize'
 import get from 'lodash/get'
+import PropTypes from 'prop-types'
+import React, { useState, useRef } from 'react'
+import { connect } from 'react-redux'
 
 import { isDirectory } from 'cozy-client/dist/models/file'
 import { isIOSApp } from 'cozy-device-helper'
-import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
-import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'
+import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { ActionMenuWithHeader } from 'modules/actionmenu/ActionMenuWithHeader'
-import FileThumbnail from 'modules/filelist/FileThumbnail'
-import { isRenaming, getRenamingFile } from 'modules/drive/rename'
-import FileOpener from 'modules/filelist/FileOpener'
 import {
   SelectBox,
   FileName,
@@ -24,10 +20,14 @@ import {
   FileAction,
   SharingShortcutBadge
 } from './cells'
+import { ActionMenuWithHeader } from 'modules/actionmenu/ActionMenuWithHeader'
 import { extraColumnsPropTypes } from 'modules/certifications'
+import { isRenaming, getRenamingFile } from 'modules/drive/rename'
+import FileOpener from 'modules/filelist/FileOpener'
+import FileThumbnail from 'modules/filelist/FileThumbnail'
+import { useSelectionContext } from 'modules/selection/SelectionProvider'
 
 import styles from 'styles/filelist.styl'
-import { useSelectionContext } from 'modules/selection/SelectionProvider'
 
 const File = ({
   t,
