@@ -1,9 +1,7 @@
 import cx from 'classnames'
-import { useDisplayedFolder } from 'hooks'
-import { useCurrentFolderId } from 'hooks'
+import { useDisplayedFolder, useCurrentFolderId } from 'hooks'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { useNavigate, useLocation, useParams } from 'react-router-dom'
 
 import SharingProvider, { SharedDocument } from 'cozy-sharing'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -27,9 +25,6 @@ const Toolbar = ({
   canCreateFolder,
   hasWriteAccess
 }) => {
-  const navigate = useNavigate()
-  const { pathname } = useLocation()
-  const params = useParams()
   const { displayedFolder } = useDisplayedFolder()
   const { isMobile } = useBreakpoints()
   const { showSelectionBar, isSelectionBarVisible } = useSelectionContext()
@@ -64,8 +59,6 @@ const Toolbar = ({
           canCreateFolder={canCreateFolder}
           canUpload={canUpload}
           disabled={isDisabled}
-          navigate={navigate}
-          params={params}
           displayedFolder={displayedFolder}
           isSelectionBarVisible={isSelectionBarVisible}
         >
@@ -74,20 +67,17 @@ const Toolbar = ({
       )}
 
       <BarRightOnMobile>
-        {isMobile && <SearchButton navigate={navigate} pathname={pathname} />}
+        {isMobile && <SearchButton />}
         <SharingProvider doctype="io.cozy.files" documentType="Files">
           <MoreMenu
             isDisabled={isDisabled}
             hasWriteAccess={hasWriteAccess}
             canCreateFolder={canCreateFolder}
             canUpload={canUpload}
-            navigate={navigate}
-            params={params}
             folderId={folderId}
             displayedFolder={displayedFolder}
             showSelectionBar={showSelectionBar}
             isSelectionBarVisible={isSelectionBarVisible}
-            pathname={pathname}
           />
         </SharingProvider>
       </BarRightOnMobile>

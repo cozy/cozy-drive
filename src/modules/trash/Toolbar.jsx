@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
 
 import { BarRight } from 'cozy-bar'
 import { useClient } from 'cozy-client'
@@ -26,8 +25,6 @@ export const Toolbar = ({ disabled }) => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
   const client = useClient()
-  const navigate = useNavigate()
-  const { pathname } = useLocation()
   const [menuIsVisible, setMenuVisible] = useState(false)
   const anchorRef = React.createRef()
   const openMenu = useCallback(() => setMenuVisible(true), [setMenuVisible])
@@ -55,7 +52,7 @@ export const Toolbar = ({ disabled }) => {
     >
       {isMobile ? (
         <BarRight>
-          <SearchButton navigate={navigate} pathname={pathname} />
+          <SearchButton />
           <div ref={anchorRef}>
             <MoreButton
               onClick={openMenu}
