@@ -27,8 +27,6 @@ const AddMenuProvider = ({
   refreshFolderContent,
   children,
   isPublic,
-  navigate,
-  params,
   displayedFolder,
   isSelectionBarVisible
 }) => {
@@ -92,8 +90,6 @@ const AddMenuProvider = ({
             refreshFolderContent={refreshFolderContent}
             isPublic={isPublic}
             isEncryptedFolder={isEncryptedDir}
-            navigate={navigate}
-            params={params}
             displayedFolder={displayedFolder}
           />
         )}

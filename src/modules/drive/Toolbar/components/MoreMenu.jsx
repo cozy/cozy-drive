@@ -37,13 +37,10 @@ const MoreMenu = ({
   hasWriteAccess,
   canUpload,
   canCreateFolder,
-  navigate,
-  params,
   displayedFolder,
   folderId,
   showSelectionBar,
-  isSelectionBarVisible,
-  pathname
+  isSelectionBarVisible
 }) => {
   const [menuIsVisible, setMenuVisible] = useState(false)
   const anchorRef = React.createRef()
@@ -67,8 +64,6 @@ const MoreMenu = ({
         canCreateFolder={canCreateFolder}
         canUpload={canUpload}
         disabled={isDisabled}
-        navigate={navigate}
-        params={params}
         displayedFolder={displayedFolder}
         isSelectionBarVisible={isSelectionBarVisible}
       >
@@ -86,11 +81,7 @@ const MoreMenu = ({
                 displayedFolder={displayedFolder}
                 folderId={folderId}
               >
-                <ShareItem
-                  displayedFolder={displayedFolder}
-                  navigate={navigate}
-                  pathname={pathname}
-                />
+                <ShareItem displayedFolder={displayedFolder} />
               </InsideRegularFolder>
             )}
             <InsideRegularFolder

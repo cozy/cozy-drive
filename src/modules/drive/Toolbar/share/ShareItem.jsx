@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 import { SharedDocument } from 'cozy-sharing'
 import RecipientsAvatars from 'cozy-sharing/dist/components/Recipient/RecipientsAvatars'
@@ -11,8 +12,10 @@ import { getPathToShareDisplayedFolder } from 'modules/drive/Toolbar/share/helpe
 
 import styles from 'styles/toolbar.styl'
 
-const ShareItem = ({ displayedFolder, navigate, pathname }) => {
+const ShareItem = ({ displayedFolder }) => {
   const { t } = useI18n()
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
 
   const share = () => {
     navigate(getPathToShareDisplayedFolder(pathname))

@@ -23,8 +23,6 @@ export const ActionMenuContent = ({
   refreshFolderContent,
   isPublic,
   isEncryptedFolder,
-  navigate,
-  params,
   displayedFolder
 }) => {
   const { t } = useI18n()
@@ -50,21 +48,9 @@ export const ActionMenuContent = ({
       )}
       {canUpload && isOfficeEditingEnabled(isDesktop) && !isEncryptedFolder && (
         <>
-          <CreateOnlyOfficeItem
-            fileClass="text"
-            navigate={navigate}
-            params={params}
-          />
-          <CreateOnlyOfficeItem
-            fileClass="spreadsheet"
-            navigate={navigate}
-            params={params}
-          />
-          <CreateOnlyOfficeItem
-            fileClass="slide"
-            navigate={navigate}
-            params={params}
-          />
+          <CreateOnlyOfficeItem fileClass="text" />
+          <CreateOnlyOfficeItem fileClass="spreadsheet" />
+          <CreateOnlyOfficeItem fileClass="slide" />
         </>
       )}
       {!isEncryptedFolder && (
@@ -92,8 +78,6 @@ const AddMenu = ({
   refreshFolderContent,
   isPublic,
   isEncryptedFolder,
-  navigate,
-  params,
   displayedFolder,
   ...actionMenuProps
 }) => {
@@ -114,8 +98,6 @@ const AddMenu = ({
         refreshFolderContent={refreshFolderContent}
         isPublic={isPublic}
         isEncryptedFolder={isEncryptedFolder}
-        navigate={navigate}
-        params={params}
         displayedFolder={displayedFolder}
       />
     </ActionMenu>

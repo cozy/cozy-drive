@@ -1,6 +1,5 @@
 import { useDisplayedFolder } from 'hooks'
 import React from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
 
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
@@ -24,8 +23,6 @@ const PublicToolbarByLink = ({
   const isFile = isFilesIsFile(files)
   const { isMobile } = useBreakpoints()
   const { t } = useI18n()
-  const navigate = useNavigate()
-  const params = useParams()
   const { displayedFolder } = useDisplayedFolder()
   const { showSelectionBar, isSelectionBarVisible } = useSelectionContext()
 
@@ -38,8 +35,6 @@ const PublicToolbarByLink = ({
         canUpload={hasWriteAccess}
         refreshFolderContent={refreshFolderContent}
         isPublic={true}
-        navigate={navigate}
-        params={params}
         displayedFolder={displayedFolder}
         isSelectionBarVisible={isSelectionBarVisible}
       >
