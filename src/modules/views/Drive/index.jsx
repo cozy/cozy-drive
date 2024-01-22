@@ -7,6 +7,7 @@ import { useQuery, useClient } from 'cozy-client'
 import flag from 'cozy-flags'
 import { useVaultClient } from 'cozy-keys-lib'
 import { useSharingContext } from 'cozy-sharing'
+import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -26,7 +27,6 @@ import {
   versions,
   hr
 } from 'modules/actions'
-import useActions from 'modules/actions/useActions'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
@@ -56,10 +56,14 @@ const DriveView = () => {
   const currentFolderId = useCurrentFolderId() || ROOT_DIR_ID
   useHead()
   const { isSelectionBarVisible } = useSelectionContext()
-
   const { isMobile } = useBreakpoints()
+  const { t } = useI18n()
   const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)
-
+  const { hasWriteAccess, refresh } = useSharingContext()
+  const client = useClient()
+  const vaultClient = useVaultClient()
+  const { pushModal, popModal } = useModalContext()
+  const dispatch = useDispatch()
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
     isMobile,
     desktopExtraColumnsNames,
@@ -116,15 +120,10 @@ const DriveView = () => {
     [navigate, currentFolderId]
   )
 
-  const { hasWriteAccess, refresh } = useSharingContext()
-  const client = useClient()
-  const vaultClient = useVaultClient()
-
-  const { pushModal, popModal } = useModalContext()
-  const dispatch = useDispatch()
   const canWriteToCurrentFolder = hasWriteAccess(currentFolderId)
   const actionsOptions = {
     client,
+    t,
     vaultClient,
     pushModal,
     popModal,
@@ -136,7 +135,7 @@ const DriveView = () => {
     canMove: true,
     isPublic: false
   }
-  const actions = useActions(
+  const actions = makeActions(
     [
       share,
       download,
@@ -153,7 +152,6 @@ const DriveView = () => {
     actionsOptions
   )
 
-  const { t } = useI18n()
   const rootBreadcrumbPath = useMemo(
     () => ({
       id: ROOT_DIR_ID,

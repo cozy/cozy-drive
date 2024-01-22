@@ -15,6 +15,7 @@ import {
   useSharingInfos
 } from 'cozy-sharing'
 import { Content } from 'cozy-ui/transpiled/react'
+import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
 import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
@@ -31,7 +32,6 @@ import { ROOT_DIR_ID } from 'constants/config'
 import { FabContext } from 'lib/FabProvider'
 import { ModalStack, useModalContext } from 'lib/ModalContext'
 import { download, duplicate, trash, rename, versions } from 'modules/actions'
-import useActions from 'modules/actions/useActions'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
@@ -69,6 +69,7 @@ const PublicFolderView = () => {
   const { pathname } = useLocation()
   const params = useParams()
   const client = useClient()
+  const { t } = useI18n()
   const { isMobile } = useBreakpoints()
   const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)
   const currentFolderId = useCurrentFolderId()
@@ -76,7 +77,10 @@ const PublicFolderView = () => {
   const parentDirId = get(displayedFolder, 'dir_id')
   const parentFolder = useParentFolder(parentDirId)
   const { isSelectionBarVisible } = useSelectionContext()
-
+  const { hasWritePermissions } = usePublicWritePermissions()
+  const { pushModal, popModal } = useModalContext()
+  const { refresh } = useSharingContext()
+  const dispatch = useDispatch()
   const sharingInfos = useSharingInfos()
 
   const [viewerOpened, setViewerOpened] = useState(false)
@@ -144,12 +148,6 @@ const PublicFolderView = () => {
     [setViewerOpened]
   )
 
-  const { hasWritePermissions } = usePublicWritePermissions()
-
-  const { pushModal, popModal } = useModalContext()
-  const { refresh } = useSharingContext()
-  const dispatch = useDispatch()
-
   const refreshAfterChange = () => {
     refresh()
     refreshFolderContent()
@@ -157,6 +155,7 @@ const PublicFolderView = () => {
 
   const actionOptions = {
     client,
+    t,
     pushModal,
     popModal,
     refresh: refreshAfterChange,
@@ -167,12 +166,11 @@ const PublicFolderView = () => {
     canMove: false,
     isPublic: true
   }
-  const actions = useActions(
+  const actions = makeActions(
     [download, duplicate, trash, rename, versions],
     actionOptions
   )
 
-  const { t } = useI18n()
   const geTranslatedBreadcrumbPath = useCallback(
     displayedFolder => getBreadcrumbPath(t, displayedFolder, parentFolder),
     [t, parentFolder]

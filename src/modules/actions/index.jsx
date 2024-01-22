@@ -14,7 +14,6 @@ import RestoreIcon from 'cozy-ui/transpiled/react/Icons/Restore'
 import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { downloadFiles, restoreFiles } from './utils'
 import { isEncryptedFolder, isEncryptedFile } from 'lib/encryption'
@@ -28,10 +27,14 @@ import DestroyConfirm from 'modules/trash/components/DestroyConfirm'
 
 export { share } from './share'
 
-export const download = ({ client, vaultClient }) => {
+export const download = ({ client, t, vaultClient }) => {
+  const label = t('SelectionBar.download')
+  const icon = DownloadIcon
+
   return {
     name: 'download',
-    icon: 'download',
+    label,
+    icon,
     displayCondition: files => {
       // We cannot generate archive for encrypted files, for now.
       // Then, we do not display the download button when the selection
@@ -41,18 +44,14 @@ export const download = ({ client, vaultClient }) => {
         !(files.length > 1 && files.some(file => isEncryptedFile(file)))
       )
     },
-    action: files =>
-      downloadFiles(client, Array.isArray(files) ? files : [files], {
-        vaultClient
-      }),
+    action: files => downloadFiles(client, files, { vaultClient }),
     Component: forwardRef(function Download(props, ref) {
-      const { t } = useI18n()
       return (
         <ActionsMenuItem {...props} ref={ref}>
           <ListItemIcon>
-            <Icon icon={DownloadIcon} />
+            <Icon icon={icon} />
           </ListItemIcon>
-          <ListItemText primary={t('SelectionBar.download')} />
+          <ListItemText primary={label} />
         </ActionsMenuItem>
       )
     })
@@ -70,15 +69,19 @@ export const hr = () => {
   }
 }
 
-export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
+export const trash = ({ t, pushModal, popModal, hasWriteAccess, refresh }) => {
+  const label = t('SelectionBar.trash')
+  const icon = TrashIcon
+
   return {
     name: 'trash',
-    icon: 'trash',
+    label,
+    icon,
     displayCondition: () => hasWriteAccess,
     action: files =>
       pushModal(
         <DeleteConfirm
-          files={Array.isArray(files) ? files : [files]}
+          files={files}
           afterConfirmation={() => {
             refresh()
           }}
@@ -86,44 +89,49 @@ export const trash = ({ pushModal, popModal, hasWriteAccess, refresh }) => {
         />
       ),
     Component: forwardRef(function Trash(props, ref) {
-      const { t } = useI18n()
       return (
         <ActionsMenuItem {...props} ref={ref}>
           <ListItemIcon>
-            <Icon icon={TrashIcon} color="var(--errorColor)" />
+            <Icon icon={icon} color="var(--errorColor)" />
           </ListItemIcon>
-          <ListItemText className="u-error" primary={t('SelectionBar.trash')} />
+          <ListItemText className="u-error" primary={label} />
         </ActionsMenuItem>
       )
     })
   }
 }
 
-export const rename = ({ hasWriteAccess, dispatch }) => {
+export const rename = ({ t, hasWriteAccess, dispatch }) => {
+  const label = t('SelectionBar.rename')
+  const icon = RenameIcon
+
   return {
     name: 'rename',
-    icon: 'rename',
+    label,
+    icon,
     displayCondition: selection => hasWriteAccess && selection.length === 1,
-    action: files =>
-      dispatch(startRenamingAsync(Array.isArray(files) ? files[0] : files)),
+    action: files => dispatch(startRenamingAsync(files[0])),
     Component: forwardRef(function Rename(props, ref) {
-      const { t } = useI18n()
       return (
         <ActionsMenuItem {...props} ref={ref}>
           <ListItemIcon>
-            <Icon icon={RenameIcon} />
+            <Icon icon={icon} />
           </ListItemIcon>
-          <ListItemText primary={t('SelectionBar.rename')} />
+          <ListItemText primary={label} />
         </ActionsMenuItem>
       )
     })
   }
 }
 
-export const move = ({ canMove, pathname, navigate }) => {
+export const move = ({ t, canMove, pathname, navigate }) => {
+  const label = t('SelectionBar.moveto')
+  const icon = MovetoIcon
+
   return {
     name: 'moveto',
-    icon: 'moveto',
+    label,
+    icon,
     displayCondition: () => canMove,
     action: files => {
       navigateToModalWithMultipleFile({
@@ -134,133 +142,145 @@ export const move = ({ canMove, pathname, navigate }) => {
       })
     },
     Component: forwardRef(function MoveTo(props, ref) {
-      const { t } = useI18n()
       return (
         <ActionsMenuItem {...props} ref={ref}>
           <ListItemIcon>
-            <Icon icon={MovetoIcon} />
+            <Icon icon={icon} />
           </ListItemIcon>
-          <ListItemText primary={t('SelectionBar.moveto')} />
+          <ListItemText primary={label} />
         </ActionsMenuItem>
       )
     })
   }
 }
 
-export const duplicate = ({ client, hasWriteAccess, refresh, isPublic }) => {
+export const duplicate = ({ client, t, hasWriteAccess, refresh, isPublic }) => {
+  const label = t('SelectionBar.duplicate')
+  const icon = MultiFilesIcon
+
   return {
     name: 'duplicate',
-    icon: MultiFilesIcon,
-    displayCondition: selection =>
-      selection.length === 1 && isFile(selection[0]) && hasWriteAccess,
+    label,
+    icon,
+    displayCondition: selection => {
+      return selection.length === 1 && isFile(selection[0]) && hasWriteAccess
+    },
     action: async files => {
-      const file = Array.isArray(files) ? files[0] : files
+      const file = files[0]
       await client.collection('io.cozy.files').copy(file.id)
       if (isPublic) refresh()
     },
     Component: forwardRef(function Duplicate(props, ref) {
-      const { t } = useI18n()
       return (
         <ActionsMenuItem {...props} ref={ref}>
           <ListItemIcon>
-            <Icon icon={MultiFilesIcon} />
+            <Icon icon={icon} />
           </ListItemIcon>
-          <ListItemText primary={t('SelectionBar.duplicate')} />
+          <ListItemText primary={label} />
         </ActionsMenuItem>
       )
     })
   }
 }
 
-export const qualify = ({ navigate, pathname }) => {
+export const qualify = ({ t, navigate, pathname }) => {
+  const label = t('SelectionBar.qualify')
+  const icon = QualifyIcon
+
   return {
     name: 'qualify',
-    icon: 'qualify',
+    label,
+    icon,
     displayCondition: selection =>
       selection.length === 1 && isFile(selection[0]),
     action: files =>
       navigateToModal({ navigate, pathname, files, path: 'qualify' }),
     Component: forwardRef(function Qualify(props, ref) {
-      const { t } = useI18n()
       return (
         <ActionsMenuItem {...props} ref={ref}>
           <ListItemIcon>
-            <Icon icon={QualifyIcon} />
+            <Icon icon={icon} />
           </ListItemIcon>
-          <ListItemText primary={t('SelectionBar.qualify')} />
+          <ListItemText primary={label} />
         </ActionsMenuItem>
       )
     })
   }
 }
 
-export const versions = ({ navigate, pathname }) => {
+export const versions = ({ t, navigate, pathname }) => {
+  const label = t('SelectionBar.history')
+  const icon = HistoryIcon
+
   return {
     name: 'history',
-    icon: 'history',
+    label,
+    icon,
     displayCondition: selection =>
       selection.length === 1 && isFile(selection[0]),
     action: files =>
       navigateToModal({ navigate, pathname, files, path: 'revision' }),
     Component: forwardRef(function History(props, ref) {
-      const { t } = useI18n()
       return (
         <ActionsMenuItem {...props} ref={ref}>
           <ListItemIcon>
-            <Icon icon={HistoryIcon} />
+            <Icon icon={icon} />
           </ListItemIcon>
-          <ListItemText primary={t('SelectionBar.history')} />
+          <ListItemText primary={label} />
         </ActionsMenuItem>
       )
     })
   }
 }
 
-export const restore = ({ refresh, client }) => {
+export const restore = ({ t, refresh, client }) => {
+  const label = t('SelectionBar.restore')
+  const icon = RestoreIcon
+
   return {
     name: 'restore',
-    icon: 'restore',
+    label,
+    icon,
     action: async files => {
-      await restoreFiles(client, Array.isArray(files) ? files : [files])
+      await restoreFiles(client, files)
       refresh()
     },
     Component: forwardRef(function Restore(props, ref) {
-      const { t } = useI18n()
       return (
         <ActionsMenuItem {...props} ref={ref}>
           <ListItemIcon>
-            <Icon icon={RestoreIcon} />
+            <Icon icon={icon} />
           </ListItemIcon>
-          <ListItemText primary={t('SelectionBar.restore')} />
+          <ListItemText primary={label} />
         </ActionsMenuItem>
       )
     })
   }
 }
 
-export const destroy = ({ pushModal, popModal }) => {
+export const destroy = ({ t, pushModal, popModal }) => {
+  const label = t('SelectionBar.destroy')
+  const icon = TrashIcon
+
   return {
     name: 'destroy',
-    icon: 'trash',
+    label,
+    icon,
     action: files =>
       pushModal(
         <DestroyConfirm
-          files={Array.isArray(files) ? files : [files]}
+          files={files}
           onConfirm={popModal}
           onCancel={popModal}
         />
       ),
     Component: forwardRef(function Destroy(props, ref) {
-      const { t } = useI18n()
       return (
         <ActionsMenuItem {...props} ref={ref}>
           <ListItemIcon>
-            <Icon icon={TrashIcon} color="var(--errorColor)" />
+            <Icon icon={icon} color="var(--errorColor)" />
           </ListItemIcon>
-          <ListItemText
-            className="u-error"
-            primary={t('SelectionBar.destroy')}
-          />
+          <ListItemText className="u-error" primary={label} />
         </ActionsMenuItem>
       )
     })

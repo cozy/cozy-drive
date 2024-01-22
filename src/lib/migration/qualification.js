@@ -1,9 +1,10 @@
+import { get, has, isEmpty, omit, sortBy } from 'lodash'
+
 import { models, Q } from 'cozy-client'
 import log from 'cozy-logger'
 
 const { Qualification } = models.document
 const { saveFileQualification } = models.file
-import { get, has, isEmpty, omit, sortBy } from 'lodash'
 
 /**
  * Query the files indexed on their updatedAt date.

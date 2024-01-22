@@ -4,6 +4,7 @@ import { useNavigate, Outlet } from 'react-router-dom'
 
 import { useQuery, useClient } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
+import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -15,7 +16,6 @@ import useHead from 'components/useHead'
 import { TRASH_DIR_ID } from 'constants/config'
 import { useModalContext } from 'lib/ModalContext'
 import { restore, destroy } from 'modules/actions'
-import useActions from 'modules/actions/useActions'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import { useFolderSort } from 'modules/navigation/duck'
@@ -32,7 +32,10 @@ export const TrashFolderView = () => {
   const { isMobile } = useBreakpoints()
   const navigate = useNavigate()
   const currentFolderId = useCurrentFolderId()
-
+  const { t } = useI18n()
+  const { refresh } = useSharingContext()
+  const client = useClient()
+  const { pushModal, popModal } = useModalContext()
   useHead()
 
   const { displayedFolder, isNotFound } = useDisplayedFolder()
@@ -82,18 +85,15 @@ export const TrashFolderView = () => {
     [navigate, currentFolderId]
   )
 
-  const { refresh } = useSharingContext()
-  const client = useClient()
-  const { pushModal, popModal } = useModalContext()
   const actionsOptions = {
     client,
+    t,
     refresh,
     pushModal,
     popModal
   }
-  const actions = useActions([restore, destroy], actionsOptions)
+  const actions = makeActions([restore, destroy], actionsOptions)
 
-  const { t } = useI18n()
   const rootBreadcrumbPath = useMemo(
     () => ({
       id: TRASH_DIR_ID,
