@@ -21,6 +21,8 @@ import App from 'components/App/App'
 import AppRoute from 'modules/navigation/AppRoute'
 import AppBarSearch from 'modules/search/AppBarSearch'
 
+// ambient styles
+// eslint-disable-next-line no-unused-vars
 import mainStyles from 'styles/main.styl'
 
 if (__DEVELOPMENT__) {

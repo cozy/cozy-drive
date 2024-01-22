@@ -26,6 +26,9 @@ jest.mock('hooks', () => ({
     }
   })
 }))
+jest.mock('cozy-keys-lib', () => ({
+  useVaultClient: jest.fn()
+}))
 
 useSharingContext.mockReturnValue({ byDocId: [] })
 
