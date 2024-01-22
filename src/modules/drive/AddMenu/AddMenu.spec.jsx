@@ -9,7 +9,9 @@ import AppLike from 'test/components/AppLike'
 import { setupFolderContent, mockCozyClientRequestQuery } from 'test/setup'
 
 jest.mock('cozy-client/dist/hooks/useAppLinkWithStoreFallback', () => jest.fn())
-
+jest.mock('cozy-keys-lib', () => ({
+  useVaultClient: jest.fn()
+}))
 mockCozyClientRequestQuery()
 
 const setup = async (

@@ -37,6 +37,10 @@ jest.mock('modules/navigation/duck', () => ({
     type: 'FAKE_UPLOAD_FILES'
   })
 }))
+jest.mock('cozy-keys-lib', () => ({
+  withVaultClient: jest.fn().mockImplementation(arg => arg),
+  useVaultClient: jest.fn()
+}))
 
 mockCozyClientRequestQuery()
 

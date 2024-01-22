@@ -1828,14 +1828,14 @@ exports[`Dropzone should match snapshot 1`] = `
                               <Memo(AlertProvider)>
                                 <PushBannerProvider>
                                   <FabProvider>
-                                    <withI18n(WithSharingState(withClient(withVaultClient(Connect(Dropzone)))))
+                                    <withI18n(WithSharingState(withClient(Connect(Dropzone))))
                                       displayedFolder={
                                         {
                                           "id": "directory-foobar0",
                                         }
                                       }
                                     >
-                                      <WithSharingState(withClient(withVaultClient(Connect(Dropzone))))
+                                      <WithSharingState(withClient(Connect(Dropzone)))
                                         displayedFolder={
                                           {
                                             "id": "directory-foobar0",
@@ -1845,7 +1845,7 @@ exports[`Dropzone should match snapshot 1`] = `
                                         lang="en"
                                         t={[Function]}
                                       >
-                                        <withClient(withVaultClient(Connect(Dropzone)))
+                                        <withClient(Connect(Dropzone))
                                           displayedFolder={
                                             {
                                               "id": "directory-foobar0",
@@ -1863,7 +1863,7 @@ exports[`Dropzone should match snapshot 1`] = `
                                           }
                                           t={[Function]}
                                         >
-                                          <withVaultClient(Connect(Dropzone))
+                                          <Connect(Dropzone)
                                             client={
                                               CozyClient {
                                                 "uri": undefined,
@@ -1885,10 +1885,54 @@ exports[`Dropzone should match snapshot 1`] = `
                                               }
                                             }
                                             t={[Function]}
-                                          />
-                                        </withClient(withVaultClient(Connect(Dropzone)))>
-                                      </WithSharingState(withClient(withVaultClient(Connect(Dropzone))))>
-                                    </withI18n(WithSharingState(withClient(withVaultClient(Connect(Dropzone)))))>
+                                          >
+                                            <Dropzone
+                                              client={
+                                                CozyClient {
+                                                  "uri": undefined,
+                                                }
+                                              }
+                                              displayedFolder={
+                                                {
+                                                  "id": "directory-foobar0",
+                                                }
+                                              }
+                                              f={[Function]}
+                                              lang="en"
+                                              sharingState={
+                                                {
+                                                  "getRecipients": [MockFunction],
+                                                  "getSharingLink": [MockFunction],
+                                                  "hasWriteAccess": [MockFunction],
+                                                  "refresh": [MockFunction],
+                                                }
+                                              }
+                                              t={[Function]}
+                                              uploadFiles={[Function]}
+                                            >
+                                              <drop-component
+                                                className=""
+                                                disableClick={true}
+                                                onDragEnter={[Function]}
+                                                onDragLeave={[Function]}
+                                                onDrop={[Function]}
+                                                style={{}}
+                                              >
+                                                <button
+                                                  className=""
+                                                  data-disable-click={true}
+                                                  data-testid="drop-button"
+                                                  onClick={[Function]}
+                                                  onDragEnter={[Function]}
+                                                  onDragLeave={[Function]}
+                                                  style={{}}
+                                                />
+                                              </drop-component>
+                                            </Dropzone>
+                                          </Connect(Dropzone)>
+                                        </withClient(Connect(Dropzone))>
+                                      </WithSharingState(withClient(Connect(Dropzone)))>
+                                    </withI18n(WithSharingState(withClient(Connect(Dropzone))))>
                                   </FabProvider>
                                 </PushBannerProvider>
                                 <Snackbar
