@@ -1,21 +1,16 @@
 import React from 'react'
 
-import SelectionBarUI from 'cozy-ui/transpiled/react/SelectionBar'
+import ActionsBar from 'cozy-ui/transpiled/react/ActionsBar'
 
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 
 const driveActionsToSelectionBarActions = driveActions => {
-  let actions = {}
-
-  driveActions.forEach(driveAction => {
+  return driveActions.filter(driveAction => {
     const action = Object.values(driveAction)[0]
-    if (
-      action.displayInSelectionBar === undefined ||
-      action.displayInSelectionBar
+    return (
+      action.displayInSelectionBar === undefined || action.displayInSelectionBar
     )
-      actions[action.name] = action
   })
-  return actions
 }
 
 const SelectionBar = ({ actions }) => {
@@ -25,10 +20,10 @@ const SelectionBar = ({ actions }) => {
 
   if (isSelectionBarVisible) {
     return (
-      <SelectionBarUI
+      <ActionsBar
         actions={convertedActions}
-        selected={selectedItems}
-        hideSelectionBar={hideSelectionBar}
+        docs={selectedItems}
+        onClose={hideSelectionBar}
       />
     )
   }

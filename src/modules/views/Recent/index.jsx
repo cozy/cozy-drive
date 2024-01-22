@@ -4,6 +4,7 @@ import { useNavigate, Outlet, useLocation } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
+import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -23,7 +24,6 @@ import {
   hr,
   share
 } from 'modules/actions'
-import useActions from 'modules/actions/useActions'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import Toolbar from 'modules/drive/Toolbar'
@@ -42,7 +42,10 @@ export const RecentView = () => {
   const { pathname } = useLocation()
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
-
+  const client = useClient()
+  const { pushModal, popModal } = useModalContext()
+  const { refresh } = useSharingContext()
+  const dispatch = useDispatch()
   useHead()
 
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
@@ -73,13 +76,9 @@ export const RecentView = () => {
     [navigate]
   )
 
-  const client = useClient()
-  const { pushModal, popModal } = useModalContext()
-  const { refresh } = useSharingContext()
-  const dispatch = useDispatch()
-
   const actionsOptions = {
     client,
+    t,
     pushModal,
     popModal,
     refresh,
@@ -91,7 +90,7 @@ export const RecentView = () => {
     isPublic: false
   }
 
-  const actions = useActions(
+  const actions = makeActions(
     [
       share,
       download,

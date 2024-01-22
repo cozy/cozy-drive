@@ -14,7 +14,7 @@ describe('download', () => {
         ]
       }
     ]
-    const dl = download({ client: {}, vaultClient: {} })
+    const dl = download({ client: {}, vaultClient: {}, t: () => {} })
     expect(dl.displayCondition(files)).toBe(false)
   })
 
@@ -29,7 +29,7 @@ describe('download', () => {
         encrypted: true
       }
     ]
-    const dl = download({ client: {}, vaultClient: {} })
+    const dl = download({ client: {}, vaultClient: {}, t: () => {} })
     expect(dl.displayCondition(files)).toBe(false)
   })
 
@@ -40,7 +40,7 @@ describe('download', () => {
         encrypted: true
       }
     ]
-    const dl = download({ client: {}, vaultClient: {} })
+    const dl = download({ client: {}, vaultClient: {}, t: () => {} })
     expect(dl.displayCondition(files)).toBe(true)
   })
 
@@ -53,7 +53,7 @@ describe('download', () => {
         type: 'directory'
       }
     ]
-    const dl = download({ client: {}, vaultClient: {} })
+    const dl = download({ client: {}, vaultClient: {}, t: () => {} })
     expect(dl.displayCondition(files)).toBe(true)
   })
 })
@@ -68,7 +68,7 @@ describe('duplicate', () => {
         type: 'file'
       }
     ]
-    const cp = duplicate({ client: {}, hasWriteAccess: true })
+    const cp = duplicate({ client: {}, hasWriteAccess: true, t: () => {} })
     expect(cp.displayCondition(files)).toBe(false)
   })
 
@@ -78,7 +78,7 @@ describe('duplicate', () => {
         type: 'directory'
       }
     ]
-    const cp = duplicate({ client: {}, hasWriteAccess: true })
+    const cp = duplicate({ client: {}, hasWriteAccess: true, t: () => {} })
     expect(cp.displayCondition(files)).toBe(false)
   })
 
@@ -88,7 +88,7 @@ describe('duplicate', () => {
         type: 'file'
       }
     ]
-    const cp = duplicate({ client: {}, hasWriteAccess: true })
+    const cp = duplicate({ client: {}, hasWriteAccess: true, t: () => {} })
     expect(cp.displayCondition(files)).toBe(true)
   })
 
@@ -98,7 +98,7 @@ describe('duplicate', () => {
         type: 'file'
       }
     ]
-    const cp = duplicate({ client: {}, hasWriteAccess: false })
+    const cp = duplicate({ client: {}, hasWriteAccess: false, t: () => {} })
     expect(cp.displayCondition(files)).toBe(false)
   })
 })

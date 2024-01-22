@@ -20,7 +20,7 @@ const FabWithMenuContext = ({ noSidebar }) => {
   } = useContext(AddMenuContext)
 
   const styles = useFabStyles({
-    bottom: noSidebar ? '1rem' : 'calc(var(--sidebarHeight) + 1rem)'
+    bottom: noSidebar ? '1rem' : 'calc(var(--sidebarHeight) + 2rem)'
   })
 
   return (

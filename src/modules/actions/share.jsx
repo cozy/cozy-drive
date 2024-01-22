@@ -7,34 +7,39 @@ import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { isEncryptedFileOrFolder } from 'lib/encryption'
 import { navigateToModal } from 'modules/actions/helpers'
 
-const share = ({ hasWriteAccess, navigate, pathname }) => {
+const share = ({ t, hasWriteAccess, navigate, pathname }) => {
+  const label = t('Files.share.cta')
+  const icon = ShareIcon
+
   return {
     name: 'share',
-    icon: 'share',
-    displayCondition: files =>
-      hasWriteAccess &&
-      files.length === 1 &&
-      !isEncryptedFileOrFolder(files[0]),
+    label,
+    icon,
+    displayCondition: files => {
+      return (
+        hasWriteAccess &&
+        files?.length === 1 &&
+        !isEncryptedFileOrFolder(files[0])
+      )
+    },
     action: files =>
       navigateToModal({ navigate, pathname, files, path: 'share' }),
     Component: forwardRef(function ShareMenuItemInMenu(props, ref) {
-      const { t } = useI18n()
       const { isMobile } = useBreakpoints()
 
       return (
         <ActionsMenuItem {...props} ref={ref}>
           <ListItemIcon>
-            <Icon icon={ShareIcon} />
+            <Icon icon={icon} />
           </ListItemIcon>
-          <ListItemText primary={t('Files.share.cta')} />
-          {isMobile && props.doc ? (
+          <ListItemText primary={label} />
+          {isMobile && props.docs ? (
             <ListItemIcon classes={{ root: 'u-w-auto' }}>
-              <SharedRecipients docId={props.doc.id} size="small" />
+              <SharedRecipients docId={props.docs[0].id} size="small" />
             </ListItemIcon>
           ) : null}
         </ActionsMenuItem>

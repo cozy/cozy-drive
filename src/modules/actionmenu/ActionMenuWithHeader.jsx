@@ -29,7 +29,7 @@ export const ActionMenuWithHeader = ({
       ref={anchorElRef}
       onClose={onClose}
       actions={actions}
-      doc={file}
+      docs={[file]}
       anchorOrigin={{
         strategy: 'fixed',
         vertical: 'bottom',

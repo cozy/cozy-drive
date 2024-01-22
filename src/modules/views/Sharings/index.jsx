@@ -4,6 +4,7 @@ import { useNavigate, useLocation, Outlet } from 'react-router-dom'
 
 import { useClient, hasQueryBeenLoaded } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
+import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -22,7 +23,6 @@ import {
   share,
   hr
 } from 'modules/actions'
-import useActions from 'modules/actions/useActions'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import Toolbar from 'modules/drive/Toolbar'
@@ -42,7 +42,10 @@ export const SharingsView = ({ sharedDocumentIds = [], allLoaded = true }) => {
   const { pathname } = useLocation()
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
-
+  const client = useClient()
+  const { pushModal, popModal } = useModalContext()
+  const { refresh } = useSharingContext()
+  const dispatch = useDispatch()
   useHead()
 
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
@@ -77,12 +80,9 @@ export const SharingsView = ({ sharedDocumentIds = [], allLoaded = true }) => {
     [navigate]
   )
 
-  const client = useClient()
-  const { pushModal, popModal } = useModalContext()
-  const { refresh } = useSharingContext()
-  const dispatch = useDispatch()
   const actionsOptions = {
     client,
+    t,
     pushModal,
     popModal,
     refresh,
@@ -94,7 +94,7 @@ export const SharingsView = ({ sharedDocumentIds = [], allLoaded = true }) => {
     isPublic: false
   }
 
-  const actions = useActions(
+  const actions = makeActions(
     [share, download, hr, qualify, rename, move, hr, versions],
     actionsOptions
   )

@@ -6,6 +6,7 @@ import { useNavigate, Outlet, useLocation } from 'react-router-dom'
 import { useQuery, useClient } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
 import SharedDocuments from 'cozy-sharing/dist/components/SharedDocuments'
+import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -24,7 +25,6 @@ import {
   qualify,
   versions
 } from 'modules/actions'
-import useActions from 'modules/actions/useActions'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import Toolbar from 'modules/drive/Toolbar'
@@ -42,7 +42,11 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
   const { pathname } = useLocation()
   const currentFolderId = useCurrentFolderId()
   const { isMobile } = useBreakpoints()
-
+  const { t } = useI18n()
+  const client = useClient()
+  const { hasWriteAccess, refresh } = useSharingContext()
+  const { pushModal, popModal } = useModalContext()
+  const dispatch = useDispatch()
   const { isNotFound } = useDisplayedFolder()
 
   useHead()
@@ -91,15 +95,11 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
     [navigate, currentFolderId]
   )
 
-  const client = useClient()
-  const { hasWriteAccess, refresh } = useSharingContext()
-  const { pushModal, popModal } = useModalContext()
-  const dispatch = useDispatch()
-
   const hasWrite = hasWriteAccess(currentFolderId)
 
   const actionsOptions = {
     client,
+    t,
     pushModal,
     popModal,
     refresh,
@@ -109,12 +109,10 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
     hasWriteAccess: hasWrite,
     canMove: true
   }
-  const actions = useActions(
+  const actions = makeActions(
     [share, download, trash, rename, move, qualify, versions],
     actionsOptions
   )
-
-  const { t } = useI18n()
 
   const rootBreadcrumbPath = useMemo(
     () => ({
