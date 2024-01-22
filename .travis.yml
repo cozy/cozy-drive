@@ -42,10 +42,12 @@ jobs:
     - name: "Build app"
       stage: "build"
       before_script:
-        - scripts/decrypt.sh
+        - '[ "$TRAVIS_SECURE_ENV_VARS" != "false" ] && openssl aes-256-cbc -K $encrypted_2911d206c096_key -iv $encrypted_2911d206c096_iv -in id_ed25519_downcloud_drive.enc -out id_ed25519_downcloud_drive -d'
+        - '[ "$TRAVIS_SECURE_ENV_VARS" != "false" ] && eval "$(ssh-agent -s)"'
+        - '[ "$TRAVIS_SECURE_ENV_VARS" != "false" ] && chmod 600 id_ed25519_downcloud_drive'
+        - '[ "$TRAVIS_SECURE_ENV_VARS" != "false" ] && ssh-add id_ed25519_downcloud_drive'
       script:
         - yarn build
-        - if [ "$TRAVIS_SECURE_ENV_VARS" != "false" ]; then eval "$(ssh-agent -s)" && chmod 600 /tmp/id_rsa_travis_downcloud && ssh-add /tmp/id_rsa_travis_downcloud; fi # Needs to be inlined and not in a script to work.
         - yarn bundlemon
       before_deploy:
         - yarn add cozy-app-publish # to be sure to have the last version before deploy
