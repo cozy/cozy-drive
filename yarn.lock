@@ -6148,10 +6148,10 @@ cozy-app-publish@^0.27.2:
     request "^2.88.0"
     tar "^4.4.13"
 
-cozy-bar@10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-10.0.0.tgz#74f7b18225f9d7c569bf51442db957a6b3db444c"
-  integrity sha512-eZ5NDACEaiVxFBfxb1cRBsqwMl8+BNF0uyVow75qXzyVWLK/nnB1iPZ3I0SOCPHcTorzdH3L0iy52FAadF0jQg==
+cozy-bar@11.0.0-alpha.3:
+  version "11.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-11.0.0-alpha.3.tgz#def0e3f2c02fec40a2dfc94b3708d54be5dbc0e1"
+  integrity sha512-I5VjU9c//ik/0Fgoglg6TxiF1LnOl3/AQvgrjb9bXA9aBwIJ8B9izh3is9U9pdrmuDn/o7nfC5ui0BDmv6zGTw==
   dependencies:
     hammerjs "2.0.8"
     lodash.debounce "4.0.8"
@@ -6160,6 +6160,7 @@ cozy-bar@10.0.0:
     prop-types "15.7.2"
     react-redux "5.1.1"
     redux "4.1.2"
+    redux-logger "3.0.6"
     redux-persist "5.10.0"
     redux-thunk "2.3.0"
     semver-compare "^1.0.0"
