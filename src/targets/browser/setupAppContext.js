@@ -8,7 +8,6 @@ import { Document } from 'cozy-doctypes'
 import { initTranslation } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import appMetadata from 'lib/appMetadata'
-import cozyBar from 'lib/cozyBar'
 import { schema } from 'lib/doctypes'
 import registerClientPlugins from 'lib/registerClientPlugins'
 import { configureReporter, setCozyUrl } from 'lib/reporter'
@@ -45,17 +44,6 @@ const setupApp = memoize(() => {
   cozy.client.init({
     cozyURL: cozyUrl,
     token: data.token
-  })
-
-  cozyBar.init({
-    appName: data.app.name,
-    appEditor: data.app.editor,
-    cozyClient: client,
-    iconPath: data.app.icon,
-    lang: data.locale,
-    replaceTitleOnMobile: false,
-    appSlug: data.app.slug,
-    appNamePrefix: data.app.prefix
   })
 
   return { locale, polyglot, client, store, root }

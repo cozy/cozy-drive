@@ -5,11 +5,11 @@ import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { BarRightWithProvider } from 'components/Bar'
 import { DownloadFilesButton } from 'modules/public/DownloadButton'
 import PublicToolbarMoreMenu from 'modules/public/PublicToolbarMoreMenu'
 import { isFilesIsFile, openExternalLink } from 'modules/public/helpers'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
+import { BarRightOnMobile } from 'components/Bar'
 
 const PublicToolbarCozyToCozy = ({
   isSharingShortcutCreated,
@@ -24,7 +24,7 @@ const PublicToolbarCozyToCozy = ({
   const shouldDisplayMoreMenu = isMobile || (!isFile && files.length > 0)
 
   return (
-    <BarRightWithProvider>
+    <BarRightOnMobile>
       {!isMobile && files.length > 0 && <DownloadFilesButton files={files} />}
       {shouldDisplayMoreMenu && (
         <PublicToolbarMoreMenu
@@ -43,7 +43,7 @@ const PublicToolbarCozyToCozy = ({
           </ActionMenuItem>
         </PublicToolbarMoreMenu>
       )}
-    </BarRightWithProvider>
+    </BarRightOnMobile>
   )
 }
 

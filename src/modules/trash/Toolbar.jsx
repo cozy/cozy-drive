@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 
+import { BarRight } from 'cozy-bar'
 import { useClient } from 'cozy-client'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
@@ -13,7 +14,6 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import EmptyTrashConfirm from './components/EmptyTrashConfirm'
 import SelectableItem from '../drive/Toolbar/selectable/SelectableItem'
-import { BarRightWithProvider } from 'components/Bar'
 import { MoreButton } from 'components/Button'
 import { useModalContext } from 'lib/ModalContext'
 import { emptyTrash } from 'modules/actions/utils'
@@ -47,47 +47,46 @@ export const Toolbar = ({ disabled }) => {
     )
   }, [pushModal, popModal, client])
 
-  const MoreMenu = (
-    <div>
-      <div ref={anchorRef}>
-        <MoreButton
-          onClick={openMenu}
-          disabled={disabled || isSelectionBarVisible}
-        />
-      </div>
-      {menuIsVisible && (
-        <ActionMenu
-          popperOptions={{
-            placement: 'bottom-end'
-          }}
-          anchorElRef={anchorRef}
-          onClose={closeMenu}
-          autoclose
-        >
-          {isMobile && (
-            <>
-              <ActionMenuItem
-                onClick={onEmptyTrash}
-                left={<Icon icon={TrashIcon} color="var(--errorColor)" />}
-              >
-                <span className="u-error">{t('toolbar.empty_trash')}</span>
-              </ActionMenuItem>
-              <hr />
-            </>
-          )}
-          <SelectableItem showSelectionBar={showSelectionBar} />
-        </ActionMenu>
-      )}
-    </div>
-  )
-
   return (
     <div
       data-testid="empty-trash"
       className={styles['fil-toolbar-trash']}
       role="toolbar"
     >
-      {!isMobile && (
+      {isMobile ? (
+        <BarRight>
+          <SearchButton navigate={navigate} pathname={pathname} />
+          <div ref={anchorRef}>
+            <MoreButton
+              onClick={openMenu}
+              disabled={disabled || isSelectionBarVisible}
+            />
+          </div>
+          {menuIsVisible && (
+            <ActionMenu
+              popperOptions={{
+                placement: 'bottom-end'
+              }}
+              anchorElRef={anchorRef}
+              onClose={closeMenu}
+              autoclose
+            >
+              {isMobile && (
+                <>
+                  <ActionMenuItem
+                    onClick={onEmptyTrash}
+                    left={<Icon icon={TrashIcon} color="var(--errorColor)" />}
+                  >
+                    <span className="u-error">{t('toolbar.empty_trash')}</span>
+                  </ActionMenuItem>
+                  <hr />
+                </>
+              )}
+              <SelectableItem showSelectionBar={showSelectionBar} />
+            </ActionMenu>
+          )}
+        </BarRight>
+      ) : (
         <Button
           theme="danger-outline"
           onClick={onEmptyTrash}
@@ -96,10 +95,6 @@ export const Toolbar = ({ disabled }) => {
           label={t('toolbar.empty_trash')}
         />
       )}
-      <BarRightWithProvider>
-        {isMobile && <SearchButton navigate={navigate} pathname={pathname} />}
-        {MoreMenu}
-      </BarRightWithProvider>
     </div>
   )
 }
