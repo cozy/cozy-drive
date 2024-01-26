@@ -1,5 +1,6 @@
 import React from 'react'
 
+import 'cozy-bar/dist/stylesheet.css'
 import 'cozy-sharing/dist/stylesheet.css'
 // eslint-disable-next-line
 import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'

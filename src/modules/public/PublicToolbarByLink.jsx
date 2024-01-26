@@ -7,7 +7,7 @@ import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { BarRightWithProvider } from 'components/Bar'
+import { BarRightOnMobile } from 'components/Bar'
 import { HOME_LINK_HREF } from 'constants/config'
 import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
 import AddButton from 'modules/drive/Toolbar/components/AddButton'
@@ -32,7 +32,7 @@ const PublicToolbarByLink = ({
   const shouldDisplayMoreMenu = isMobile || (!isFile && files.length > 0)
 
   return (
-    <BarRightWithProvider>
+    <BarRightOnMobile>
       <AddMenuProvider
         canCreateFolder={hasWriteAccess}
         canUpload={hasWriteAccess}
@@ -66,7 +66,7 @@ const PublicToolbarByLink = ({
           </PublicToolbarMoreMenu>
         )}
       </AddMenuProvider>
-    </BarRightWithProvider>
+    </BarRightOnMobile>
   )
 }
 

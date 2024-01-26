@@ -1,9 +1,11 @@
 /* global cozy */
 
-import 'whatwg-fetch'
 import React from 'react'
+import { getQueryParameter } from 'react-cozy-helpers'
 import { render } from 'react-dom'
 import { HashRouter } from 'react-router-dom'
+import configureStore from 'store/configureStore'
+import 'whatwg-fetch'
 
 import CozyClient, { models } from 'cozy-client'
 import { Document } from 'cozy-doctypes'
@@ -13,39 +15,17 @@ import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import { I18n, initTranslation } from 'cozy-ui/transpiled/react/providers/I18n'
 import 'cozy-ui/transpiled/react/stylesheet.css'
 
-import { getQueryParameter } from 'react-cozy-helpers'
-
 import AppRouter from './components/AppRouter'
 import App from 'components/App/App'
 import ErrorShare from 'components/Error/ErrorShare'
 import appMetadata from 'lib/appMetadata'
-import cozyBar from 'lib/cozyBar'
 import { schema } from 'lib/doctypes'
 import logger from 'lib/logger'
 import registerClientPlugins from 'lib/registerClientPlugins'
 import { configureReporter, setCozyUrl } from 'lib/reporter'
-
-import configureStore from 'store/configureStore'
-
 import StyledApp from 'modules/drive/StyledApp'
 
 import styles from 'styles/main.styl'
-
-const initCozyBar = (data, client) => {
-  if (data.app.name && data.app.editor && data.app.icon && data.locale) {
-    cozyBar.init({
-      appName: data.app.name,
-      appEditor: data.app.editor,
-      cozyClient: client,
-      iconPath: data.app.icon,
-      lang: data.locale,
-      replaceTitleOnMobile: true,
-      isPublic: true,
-      appSlug: data.app.slug,
-      appNamePrefix: data.app.prefix
-    })
-  }
-}
 
 const renderError = (lang, root) =>
   render(
@@ -119,7 +99,6 @@ const init = async () => {
         Alerter.error('alert.offline')
       }
     } else {
-      initCozyBar(dataset, client)
       render(
         <App lang={lang} polyglot={polyglot} client={client} store={store}>
           <HashRouter>
@@ -137,7 +116,6 @@ const init = async () => {
     }
   } catch (e) {
     logger.warn(e)
-    initCozyBar(dataset, client)
     renderError(lang, root)
   }
 }

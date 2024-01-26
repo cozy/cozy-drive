@@ -1,6 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 
+import { BarComponent } from 'cozy-bar'
 import CozyDevtools from 'cozy-client/dist/devtools'
 import flag from 'cozy-flags'
 import FlagSwitcher from 'cozy-flags/dist/FlagSwitcher'
@@ -21,8 +22,10 @@ initFlags()
 
 const Layout = () => {
   const { t } = useI18n()
+
   return (
     <LayoutUI>
+      <BarComponent />
       <FlagSwitcher />
       <Sidebar className="u-flex-justify-between">
         <Nav />

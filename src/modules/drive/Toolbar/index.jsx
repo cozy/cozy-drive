@@ -8,7 +8,7 @@ import { useNavigate, useLocation, useParams } from 'react-router-dom'
 import SharingProvider, { SharedDocument } from 'cozy-sharing'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import { BarRightWithProvider } from 'components/Bar'
+import { BarRightOnMobile } from 'components/Bar'
 import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
 import AddButton from 'modules/drive/Toolbar/components/AddButton'
 import InsideRegularFolder from 'modules/drive/Toolbar/components/InsideRegularFolder'
@@ -73,7 +73,7 @@ const Toolbar = ({
         </AddMenuProvider>
       )}
 
-      <BarRightWithProvider>
+      <BarRightOnMobile>
         {isMobile && <SearchButton navigate={navigate} pathname={pathname} />}
         <SharingProvider doctype="io.cozy.files" documentType="Files">
           <MoreMenu
@@ -90,7 +90,7 @@ const Toolbar = ({
             pathname={pathname}
           />
         </SharingProvider>
-      </BarRightWithProvider>
+      </BarRightOnMobile>
     </div>
   )
 }
