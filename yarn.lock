@@ -6144,17 +6144,6 @@ cozy-app-publish@^0.27.2:
     request "^2.88.0"
     tar "^4.4.13"
 
-cozy-authentication@2.10.10:
-  version "2.10.10"
-  resolved "https://registry.yarnpkg.com/cozy-authentication/-/cozy-authentication-2.10.10.tgz#276ce5ef17137dda8b017e05adda87069a7ab4ea"
-  integrity sha512-7x2ODKU9FsbKJmIaTs1rQKrekodwq1+dtURy+buBE+ObCdR0UumhXDgYhP5nGiYTbnC1c1djex8XkgcMALKGZw==
-  dependencies:
-    cozy-device-helper "^2.5.0"
-    localforage "1.7.3"
-    prop-types "15.7.2"
-    snarkdown "1.2.2"
-    url-polyfill "1.1.7"
-
 cozy-bar@10.0.0:
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-10.0.0.tgz#74f7b18225f9d7c569bf51442db957a6b3db444c"
@@ -12170,13 +12159,6 @@ localforage@1.10.0:
   dependencies:
     lie "3.1.1"
 
-localforage@1.7.3:
-  version "1.7.3"
-  resolved "https://registry.yarnpkg.com/localforage/-/localforage-1.7.3.tgz#0082b3ca9734679e1bd534995bdd3b24cf10f204"
-  integrity sha512-1TulyYfc4udS7ECSBT2vwJksWbkwwTX8BzeUIiq8Y07Riy7bDAAnxDaPU/tWyOVmQAcWJIEIFP9lPfBGqVoPgQ==
-  dependencies:
-    lie "3.1.1"
-
 locate-path@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/locate-path/-/locate-path-2.0.0.tgz#2b568b265eec944c6d9c0de9c3dbbbca0354cd8e"
@@ -12890,7 +12872,6 @@ msgpack5@^4.0.2:
 
 "mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
   version "1.0.8"
-  uid "3dc4c2a245ab39079bc2f73546bccf80847be14c"
   resolved "https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
@@ -16223,11 +16204,6 @@ snapdragon@^0.8.1:
     source-map-resolve "^0.5.0"
     use "^3.1.0"
 
-snarkdown@1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/snarkdown/-/snarkdown-1.2.2.tgz#0cfe2f3012b804de120fc0c9f7791e869c59cc74"
-  integrity sha1-DP4vMBK4BN4SD8DJ93kehpxZzHQ=
-
 snarkdown@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/snarkdown/-/snarkdown-2.0.0.tgz#b1feb4db91b9f94a8ebbd7a50f3e99aee18b1e03"
@@ -17668,11 +17644,6 @@ url-parse@^1.4.3, url-parse@^1.4.7, url-parse@^1.5.3:
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
-
-url-polyfill@1.1.7:
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/url-polyfill/-/url-polyfill-1.1.7.tgz#402ee84360eb549bbeb585f4c7971e79a31de9e3"
-  integrity sha512-ZrAxYWCREjmMtL8gSbSiKKLZZticgihCvVBtrFbUVpyoETt8GQJeG2okMWA8XryDAaHMjJfhnc+rnhXRbI4DXA==
 
 url-search-params-polyfill@^8.0.0:
   version "8.1.1"

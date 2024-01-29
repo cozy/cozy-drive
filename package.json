@@ -84,7 +84,6 @@
     "@cozy/minilog": "1.0.0",
     "@egjs/hammerjs": "^2.0.17",
     "classnames": "2.3.1",
-    "cozy-authentication": "2.10.10",
     "cozy-bar": "10.0.0",
     "cozy-ci": "0.5.2",
     "cozy-client": "^45.8.0",
