@@ -54,14 +54,14 @@ Cozy's apps use a standard set of _npm scripts_ to run common tasks, like watch,
 Using a watcher - with Hot Module Replacement:
 ```sh
 $ cd cozy-drive
-$ yarn watch:drive:browser
+$ yarn watch
 $ cozy-stack serve --appdir drive:/<project_absolute_path>/cozy-drive/build/drive --disable-csp
 ```
 
 Or directly build the app (static file generated):
 ```sh
 $ cd cozy-drive
-$ yarn build:drive
+$ yarn build
 $ cozy-stack serve --appdir drive:/<project_absolute_path>/cozy-drive/build/drive
 ```
 
@@ -76,7 +76,7 @@ You can easily view your current running app, you can use the [cozy-stack docker
 ```sh
 # in a terminal, run your app in watch mode
 $ cd cozy-drive
-$ yarn watch:drive:browser
+$ yarn watch
 ```
 
 ```sh
@@ -115,12 +115,6 @@ Then simply run `mailhog` and open http://cozy.tools:8025/.
 #### Retrieve sent emails
 
 With MailHog, **every email** sent by cozy-stack is caught. That means the email address *does not have to be a real one*, ie. `bob@cozy`, `bob@cozy.tools` are perfectly fine. It *could be a real one*, but the email will not reach the real recipient's inbox, say `contact@cozycloud.cc`.
-
-
-### Run on you mobile phone or your tablet :phone:
-
-[See specific documentation](src/drive/targets/mobile/README.md).
-
 
 ### Living on the edge
 
