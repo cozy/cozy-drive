@@ -17,7 +17,7 @@ import {
 
 import styles from 'modules/viewer/barviewer.styl'
 
-const LightFileViewer = ({ files }) => {
+const LightFileViewer = ({ files, isPublic }) => {
   const sharingInfos = useSharingInfos()
   const { isDesktop, isMobile } = useBreakpoints()
   const { pathname } = useLocation()
@@ -46,6 +46,7 @@ const LightFileViewer = ({ files }) => {
       <div className="u-pos-relative u-h-100">
         <PublicViewer
           files={files}
+          isPublic={isPublic}
           currentIndex={0}
           disableModal
           componentsProps={{
@@ -66,7 +67,8 @@ const LightFileViewer = ({ files }) => {
 }
 
 LightFileViewer.propTypes = {
-  files: PropTypes.array.isRequired
+  files: PropTypes.array.isRequired,
+  isPublic: PropTypes.bool
 }
 
 export default LightFileViewer

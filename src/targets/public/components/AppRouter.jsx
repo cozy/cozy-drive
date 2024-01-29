@@ -62,7 +62,10 @@ const AppRouter = ({
         )}
 
         {isFile && (
-          <Route path="/" element={<LightFileViewer files={[data]} />} />
+          <Route
+            path="/"
+            element={<LightFileViewer files={[data]} isPublic={true} />}
+          />
         )}
 
         {!isFile && (
