@@ -1,10 +1,9 @@
 import React from 'react'
 
-import { RealTimeQueries } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
+import FilesRealTimeQueries from 'components/FilesRealTimeQueries'
 import { useRedirectLink } from 'hooks/useRedirectLink'
-import { DOCTYPE_FILES } from 'lib/doctypes'
 import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
 import BackButton from 'modules/views/OnlyOffice/Toolbar/BackButton'
 import FileIcon from 'modules/views/OnlyOffice/Toolbar/FileIcon'
@@ -31,7 +30,7 @@ const Toolbar = () => {
 
   return (
     <>
-      <RealTimeQueries doctype={DOCTYPE_FILES} />
+      <FilesRealTimeQueries />
       <div className="u-flex u-flex-items-center u-flex-grow-1 u-ellipsis">
         {!isMobile && (
           <>
