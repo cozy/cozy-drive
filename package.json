@@ -86,7 +86,7 @@
     "classnames": "2.3.1",
     "cozy-bar": "10.0.0",
     "cozy-ci": "0.5.2",
-    "cozy-client": "^45.8.0",
+    "cozy-client": "^45.8.1",
     "cozy-client-js": "0.20.0",
     "cozy-device-helper": "^2.5.0",
     "cozy-doctypes": "1.85.4",
