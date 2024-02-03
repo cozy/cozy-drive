@@ -6058,11 +6058,6 @@ copy-descriptor@^0.1.0:
   resolved "https://registry.yarnpkg.com/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
   integrity sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
 
-copy-text-to-clipboard@3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/copy-text-to-clipboard/-/copy-text-to-clipboard-3.2.0.tgz#0202b2d9bdae30a49a53f898626dcc3b49ad960b"
-  integrity sha512-RnJFp1XR/LOBDckxTib5Qjr/PMfkatD0MUCQgdpqS8MdKiNUzBjAQBEN6oUy+jW7LI93BBG3DtMB2KOOKpGs2Q==
-
 copy-text-to-clipboard@^2.1.1:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/copy-text-to-clipboard/-/copy-text-to-clipboard-2.2.0.tgz#329dd6daf8c42034c763ace567418401764579ae"
@@ -6596,10 +6591,10 @@ cozy-tsconfig@1.2.0:
   resolved "https://registry.yarnpkg.com/cozy-tsconfig/-/cozy-tsconfig-1.2.0.tgz#17e61f960f139fae4d26cbac2254b9ab632b269e"
   integrity sha512-TRHnY9goF3FzVlUbP7BcHxuN2XAA4AmppT4fHHZmTKaSwYTByVR1Al+riFMDbce94kJZ1wzl9WNLWQuqzGZ6Cw==
 
-cozy-ui@^102.2.0:
-  version "102.2.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-102.2.0.tgz#c12bd1efe923fbfefa4561a47834197a36e08d80"
-  integrity sha512-9k8pS+WoV4pizJOERG0rn01EMYgDOBKlEIXbbD5npW+79mi7RIOZPp6vV5o+LeqRppqb3Q5hYgjWh7z708VBLw==
+cozy-ui@^102.2.1:
+  version "102.2.1"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-102.2.1.tgz#09c4e27147ccb17f7fc498fb0083c16744aee658"
+  integrity sha512-EiPY5SXesa/PwvzpBR24HY8FZ1fNOoPBRGT8YVWs+sX/I/YZmFGbHjxuWmxuy6AUloQIdivEMi5laWpnd6XlEg==
   dependencies:
     "@babel/runtime" "^7.3.4"
     "@material-ui/core" "4.12.3"
@@ -6608,14 +6603,13 @@ cozy-ui@^102.2.0:
     bundlemon "^1.3.2"
     chart.js "3.7.1"
     classnames "^2.2.5"
-    copy-text-to-clipboard "3.2.0"
     cozy-interapp "^0.5.4"
     date-fns "^1.28.5"
     filesize "8.0.7"
     hammerjs "^2.0.8"
     intersection-observer "0.11.0"
     mime-types "2.1.35"
-    mui-bottom-sheet "https://github.com/cozy/mui-bottom-sheet.git#v1.0.9"
+    mui-bottom-sheet "git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.9"
     node-polyglot "^2.2.2"
     normalize.css "^8.0.0"
     pdf-lib "1.17.1"
@@ -12875,9 +12869,10 @@ msgpack5@^4.0.2:
     readable-stream "^2.3.6"
     safe-buffer "^5.1.2"
 
-"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
+"mui-bottom-sheet@git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
   version "1.0.8"
-  resolved "https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
+  uid "3dc4c2a245ab39079bc2f73546bccf80847be14c"
+  resolved "git+https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
     jest-environment-jsdom-sixteen "^1.0.3"
