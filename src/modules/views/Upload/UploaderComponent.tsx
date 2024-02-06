@@ -49,8 +49,8 @@ const _UploaderComponent = (props: {
             )}
             <Topbar
               navigateTo={setFolder}
-              currentDir={folderQuery.data}
-              fetchStatus={folderQuery.fetchStatus}
+              folderId={folder._id}
+              showFolderCreation={false}
             />
           </>
         }
