@@ -20,9 +20,9 @@ export const NOVIEWER_DESKTOP_CTA = 'noviewer_desktop_cta'
 
 export const isClientAlreadyInstalled = async client => {
   const query = {
-    definition: Q('io.cozy.settings').getById('clients'),
+    definition: Q('io.cozy.settings').getById('io.cozy.settings.clients'),
     options: {
-      as: 'io.cozy.settings/clients',
+      as: 'io.cozy.settings/io.cozy.settings.clients',
       fetchPolicy: CozyClient.fetchPolicies.olderThan(30 * 1000),
       singleDocData: true
     }
