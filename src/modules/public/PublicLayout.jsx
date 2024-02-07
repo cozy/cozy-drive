@@ -16,7 +16,7 @@ const PublicLayout = () => {
 
   return (
     <Layout>
-      <BarComponent replaceTitleOnMobile isPublic />
+      <BarComponent replaceTitleOnMobile isPublic disableInternalStore />
       <FlagSwitcher />
       <Alerter t={t} />
       <UploadQueue />
