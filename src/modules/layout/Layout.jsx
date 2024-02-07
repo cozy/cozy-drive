@@ -25,7 +25,7 @@ const Layout = () => {
 
   return (
     <LayoutUI>
-      <BarComponent />
+      <BarComponent disableInternalStore />
       <FlagSwitcher />
       <Sidebar className="u-flex-justify-between">
         <Nav />
