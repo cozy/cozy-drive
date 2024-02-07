@@ -31,17 +31,22 @@ const normalizeDoc = (couchDBDoc, doctype) => {
  * @param {CouchDBDocument} couchDBDoc Document to update
  * @param {Mutation} mutationDefinitionCreator Mutation to apply
  */
-const dispatchChange = (
+const dispatchChange = async (
   client,
   doctype,
   couchDBDoc,
-  mutationDefinitionCreator
+  mutationDefinitionCreator,
+  computeDocBeforeDispatch
 ) => {
-  const data = normalizeDoc(couchDBDoc, doctype)
+  const normDoc = normalizeDoc(couchDBDoc, doctype)
+  const data =
+    typeof computeDocBeforeDispatch === 'function'
+      ? await computeDocBeforeDispatch(normDoc, client)
+      : normDoc
+
   const response = {
     data
   }
-
   const options = {}
   client.dispatch(
     receiveMutationResult(
@@ -57,7 +62,10 @@ const ensureFileHasPath = async (doc, client) => {
   if (doc.path) return doc
 
   const parentQuery = buildFileByIdQuery(doc.dir_id)
-  const parentResult = await client.fetchQueryAndGetFromState(parentQuery)
+  const parentResult = await client.fetchQueryAndGetFromState({
+    definition: parentQuery.definition(),
+    options: parentQuery.options
+  })
 
   return ensureFilePath(doc, parentResult.data)
 }
@@ -91,17 +99,32 @@ const FilesRealTimeQueries = ({
       )
     }
 
-    const dispatchCreate = async couchDBDoc => {
-      const doc = await computeDocBeforeDispatchCreate(couchDBDoc, client)
-      dispatchChange(client, doctype, doc, Mutations.createDocument)
+    const dispatchCreate = couchDBDoc => {
+      dispatchChange(
+        client,
+        doctype,
+        couchDBDoc,
+        Mutations.createDocument,
+        computeDocBeforeDispatchCreate
+      )
     }
-    const dispatchUpdate = async couchDBDoc => {
-      const doc = await computeDocBeforeDispatchUpdate(couchDBDoc, client)
-      dispatchChange(client, doctype, doc, Mutations.updateDocument)
+    const dispatchUpdate = couchDBDoc => {
+      dispatchChange(
+        client,
+        doctype,
+        couchDBDoc,
+        Mutations.updateDocument,
+        computeDocBeforeDispatchUpdate
+      )
     }
-    const dispatchDelete = async couchDBDoc => {
-      const doc = await computeDocBeforeDispatchDelete(couchDBDoc, client)
-      dispatchChange(client, doctype, doc, Mutations.deleteDocument)
+    const dispatchDelete = couchDBDoc => {
+      dispatchChange(
+        client,
+        doctype,
+        couchDBDoc,
+        Mutations.deleteDocument,
+        computeDocBeforeDispatchDelete
+      )
     }
 
     const subscribe = async () => {
