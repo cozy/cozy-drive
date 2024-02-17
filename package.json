@@ -96,7 +96,7 @@
     "cozy-keys-lib": "6.0.0",
     "cozy-logger": "1.9.1",
     "cozy-realtime": "4.6.0",
-    "cozy-scanner": "^7.0.1",
+    "cozy-scanner": "^7.1.4",
     "cozy-scripts": "^8.3.0",
     "cozy-sharing": "10.0.1",
     "cozy-stack-client": "^45.2.0",
