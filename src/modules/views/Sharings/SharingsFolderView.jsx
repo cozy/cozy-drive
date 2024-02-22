@@ -33,6 +33,7 @@ import {
   buildDriveQuery,
   buildFileWithSpecificMetadataAttributeQuery
 } from 'modules/queries'
+import Dropzone from 'modules/upload/Dropzone'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
@@ -47,8 +48,7 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
   const { hasWriteAccess, refresh } = useSharingContext()
   const { pushModal, popModal } = useModalContext()
   const dispatch = useDispatch()
-  const { isNotFound } = useDisplayedFolder()
-
+  const { displayedFolder, isNotFound } = useDisplayedFolder()
   useHead()
 
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
@@ -134,15 +134,23 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
         )}
         <Toolbar canUpload={hasWrite} canCreateFolder={hasWrite} />
       </FolderViewHeader>
-      <FolderViewBody
-        navigateToFolder={navigateToFolder}
-        navigateToFile={navigateToFile}
-        actions={actions}
-        queryResults={[foldersResult, filesResult]}
-        canSort
-        extraColumns={extraColumns}
-        currentFolderId={currentFolderId}
-      />
+
+      <Dropzone
+        role="main"
+        disabled={!hasWrite}
+        displayedFolder={displayedFolder}
+      >
+        <FolderViewBody
+          navigateToFolder={navigateToFolder}
+          navigateToFile={navigateToFile}
+          actions={actions}
+          queryResults={[foldersResult, filesResult]}
+          canSort
+          extraColumns={extraColumns}
+          currentFolderId={currentFolderId}
+        />
+      </Dropzone>
+
       <Outlet />
     </FolderView>
   )
