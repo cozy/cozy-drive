@@ -2,7 +2,7 @@
   "name": "Drive",
   "name_prefix": "Cozy",
   "slug": "drive",
-  "version": "1.31.0",
+  "version": "1.67.0",
   "type": "webapp",
   "licence": "AGPL-3.0",
   "icon": "public/app-icon.svg",
@@ -46,16 +46,6 @@
   "langs": [
     "en",
     "fr"
-  ],
-  "platforms": [
-    {
-      "type": "ios",
-      "url": "https://itunes.apple.com/us/app/cozy-drive/id1224102389?mt=8"
-    },
-    {
-      "type": "android",
-      "url": "https://play.google.com/store/apps/details?id=io.cozy.drive.mobile"
-    }
   ],
   "routes": {
     "/": {
@@ -108,6 +98,11 @@
       "file": "services/qualificationMigration/drive.js",
       "trigger": "@event io.cozy.files:CREATED,UPDATED",
       "debounce": "24h"
+    },
+    "dacc": {
+      "type": "node",
+      "file": "services/dacc/drive.js",
+      "trigger": "@monthly on the 5-7 between 2pm and 7pm"
     }
   },
   "permissions": {
@@ -143,7 +138,8 @@
       "description": "Required to manage photos albums",
       "type": "io.cozy.photos.albums",
       "verbs": [
-        "PUT"
+        "PUT",
+        "GET"
       ]
     },
     "contacts": {
@@ -173,9 +169,9 @@
         "GET"
       ]
     },
-    "reporting": {
+    "errorsreporting": {
       "description": "Allow to report unexpected errors to the support team",
-      "type": "cc.cozycloud.sentry",
+      "type": "cc.cozycloud.errors",
       "verbs": [
         "POST"
       ]
@@ -190,6 +186,56 @@
       "values": [
         "sendmail"
       ]
+    },
+    "konnectors": {
+      "description": "Required to display additional information in the viewer for files automatically retrieved by services",
+      "type": "io.cozy.konnectors",
+      "verbs": [
+        "GET"
+      ]
+    },
+    "accounts": {
+      "description": "Required to display additional information in the viewer for files automatically retrieved by services",
+      "type": "io.cozy.accounts",
+      "verbs": [
+        "ALL"
+      ]
+    },
+    "jobs": {
+      "type": "io.cozy.jobs",
+      "verbs": [
+        "ALL"
+      ]
+    },
+    "triggers": {
+      "description": "Required to display additional information in the viewer for files automatically retrieved by services",
+      "type": "io.cozy.triggers",
+      "verbs": [
+        "ALL"
+      ]
+    },
+    "dacc": {
+      "type": "cc.cozycloud.dacc_v2",
+      "verbs": [
+        "POST"
+      ],
+      "description": "Remote-doctype required to send anonymized measures to the DACC shared among mycozy.cloud's Cozy."
+    },
+    "dacc-eu": {
+      "type": "eu.mycozy.dacc_v2",
+      "verbs": [
+        "POST"
+      ],
+      "description": "Remote-doctype required to send anonymized measures to the DACC shared among mycozy.eu's Cozy."
     }
+  },
+  "accept_from_flagship": true,
+  "accept_documents_from_flagship": {
+    "accepted_mime_types": [
+      "*/*"
+    ],
+    "max_number_of_files": 10,
+    "max_size_per_file_in_MB": 100,
+    "route_to_upload": "/#/upload?fromFlagshipUpload=true"
   }
 }
