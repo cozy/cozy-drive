@@ -5,6 +5,7 @@ import { models } from 'cozy-client'
 import flag from 'cozy-flags'
 
 import UploadQueue from './UploadQueue'
+import { MAX_PAYLOAD_SIZE } from 'constants/config'
 import { DOCTYPE_FILES } from 'lib/doctypes'
 import {
   encryptAndUploadNewFile,
@@ -36,6 +37,7 @@ const FAILED = 'failed'
 const CONFLICT = 'conflict'
 const QUOTA = 'quota'
 const NETWORK = 'network'
+const FILE_TOO_LARGE_ERROR = 'Request Entity Too Large'
 const DONE_STATUSES = [CREATED, UPDATED]
 const ERROR_STATUSES = [CONFLICT, NETWORK, QUOTA]
 
@@ -50,7 +52,8 @@ export const status = {
   QUOTA,
   NETWORK,
   DONE_STATUSES,
-  ERROR_STATUSES
+  ERROR_STATUSES,
+  FILE_TOO_LARGE_ERROR
 }
 
 const CONFLICT_ERROR = 409
@@ -233,19 +236,33 @@ export const processNextFile =
       }
       if (error) {
         logger.warn(error)
+
         logException(
           `Upload module catches an error when executing processNextFile(): ${error}`
         )
+
+        // Define mapping for specific status codes to our constants
         const statusError = {
           409: CONFLICT,
           413: QUOTA
         }
 
-        const status =
-          statusError[error.status] ||
-          (/Failed to fetch$/.exec(error.toString()) && NETWORK) ||
-          FAILED
+        // Determine the status based on the error details
+        let status
+        if (
+          error.title === FILE_TOO_LARGE_ERROR ||
+          error.message === FILE_TOO_LARGE_ERROR
+        ) {
+          status = FILE_TOO_LARGE_ERROR // File size exceeded maximum size allowed by the server
+        } else if (error.status in statusError) {
+          status = statusError[error.status]
+        } else if (/Failed to fetch$/.exec(error.toString())) {
+          status = NETWORK
+        } else {
+          status = FAILED
+        }
 
+        // Dispatch an action to handle the upload error with the determined status
         dispatch({ type: RECEIVE_UPLOAD_ERROR, file, status })
       }
     }
@@ -314,16 +331,30 @@ const uploadFile = async (client, file, dirID, options = {}) => {
    * We don't need to do that work on other browser (window.chrome
    * should be available on new Edge, Chrome, Chromium, Brave, Opera...)
    */
+
+  // Check if running in a Chrome browser
   if (window.chrome) {
+    // Convert file size to integer for comparison
+    const fileSize = parseInt(file.size, 10)
+
+    // Check if the file size exceeds the server's maximum payload size
+    if (fileSize > MAX_PAYLOAD_SIZE) {
+      // Create a new error for exceeding the maximum payload size
+      const error = new Error(FILE_TOO_LARGE_ERROR)
+      throw error
+    }
+
+    // Proceed to check disk usage
     const { data: diskUsage } = await client
       .getStackClient()
       .fetchJSON('GET', '/settings/disk-usage')
     if (diskUsage.attributes.quota) {
-      if (
-        parseInt(diskUsage.attributes.used) + parseInt(file.size) >
-        parseInt(diskUsage.attributes.quota)
-      ) {
-        const error = new Error('Payload Too Large')
+      const usedSpace = parseInt(diskUsage.attributes.used, 10)
+      const totalQuota = parseInt(diskUsage.attributes.quota, 10)
+      const availableSpace = totalQuota - usedSpace
+
+      if (fileSize > availableSpace) {
+        const error = new Error('Insufficient Disk Space')
         error.status = 413
         throw error
       }
@@ -456,8 +487,17 @@ export const onQueueEmpty = callback => (dispatch, getState) => {
   const updated = getUpdated(queue)
   const networkErrors = getNetworkErrors(queue)
   const errors = getErrors(queue)
+  const fileTooLargeErrors = getfileTooLargeErrors(queue)
 
-  return callback(created, quotas, conflicts, networkErrors, errors, updated)
+  return callback(
+    created,
+    quotas,
+    conflicts,
+    networkErrors,
+    errors,
+    updated,
+    fileTooLargeErrors
+  )
 }
 
 // selectors
@@ -468,6 +508,8 @@ const getQuotaErrors = queue => filterByStatus(queue, QUOTA)
 const getNetworkErrors = queue => filterByStatus(queue, NETWORK)
 const getCreated = queue => filterByStatus(queue, CREATED)
 const getUpdated = queue => filterByStatus(queue, UPDATED)
+const getfileTooLargeErrors = queue =>
+  filterByStatus(queue, FILE_TOO_LARGE_ERROR)
 
 export const getUploadQueue = state => state[SLUG].queue
 

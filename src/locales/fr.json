@@ -515,7 +515,8 @@
       "updated": "%{smart_count} %{type} mis à jour. |||| %{smart_count} %{type}s mis à jour.",
       "updated_conflicts": "%{smart_count} %{type} mis à jour avec %{conflictCount} conflit(s). |||| %{smart_count} %{type}s mis à jour avec %{conflictCount} conflit(s).",
       "errors": "Une erreur est survenue lors de l’import du %{type}, merci de réessayer plus tard.",
-      "network": "Vous ne disposez pas d'une connexion internet. Merci de réessayer quand ce sera le cas."
+      "network": "Vous ne disposez pas d'une connexion internet. Merci de réessayer quand ce sera le cas.",
+      "fileTooLargeErrors": "Fichier trop volumineux. Taille maximale autorisée par fichier : %{max_size_value} Go"
     }
   },
   "intents": {

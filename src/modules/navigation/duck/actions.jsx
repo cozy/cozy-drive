@@ -4,6 +4,7 @@ import { showModal } from 'react-cozy-helpers'
 import { isDirectory } from 'cozy-client/dist/models/file'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
+import { MAX_PAYLOAD_SIZE_IN_GB } from 'constants/config'
 import { createEncryptedDir } from 'lib/encryption'
 import { getEntriesTypeTranslated } from 'lib/entries'
 import logger from 'lib/logger'
@@ -48,7 +49,15 @@ export const uploadFiles =
         dirId,
         sharingState, // used to know if files are shared for conflicts management
         fileUploadedCallback,
-        (loaded, quotas, conflicts, networkErrors, errors, updated) =>
+        (
+          loaded,
+          quotas,
+          conflicts,
+          networkErrors,
+          errors,
+          updated,
+          fileTooLargeErrors
+        ) =>
           dispatch(
             uploadQueueProcessed(
               loaded,
@@ -57,7 +66,8 @@ export const uploadFiles =
               networkErrors,
               errors,
               updated,
-              t
+              t,
+              fileTooLargeErrors
             )
           ),
         { client, vaultClient }
@@ -66,7 +76,16 @@ export const uploadFiles =
   }
 
 const uploadQueueProcessed =
-  (created, quotas, conflicts, networkErrors, errors, updated, t) =>
+  (
+    created,
+    quotas,
+    conflicts,
+    networkErrors,
+    errors,
+    updated,
+    t,
+    fileTooLargeErrors
+  ) =>
   dispatch => {
     const conflictCount = conflicts.length
     const createdCount = created.length
@@ -118,6 +137,10 @@ const uploadQueueProcessed =
       Alerter.success('upload.alert.updated', {
         smart_count: updatedCount,
         type
+      })
+    } else if (fileTooLargeErrors.length > 0) {
+      Alerter.error('upload.alert.fileTooLargeErrors', {
+        max_size_value: MAX_PAYLOAD_SIZE_IN_GB
       })
     } else {
       Alerter.success('upload.alert.success', {
