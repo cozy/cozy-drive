@@ -515,7 +515,8 @@
       "updated": "%{smart_count} %{type} updated. |||| %{smart_count} %{type} updated.",
       "updated_conflicts": "%{smart_count} %{type} updated with %{conflictCount} conflict(s). |||| %{smart_count} %{type}s updated with %{conflictCount} conflict(s).",
       "errors": "Errors occurred during the %{type} upload.",
-      "network": "You are currenly offline. Please try again once you're connected."
+      "network": "You are currenly offline. Please try again once you're connected.",
+      "fileTooLargeErrors": "File too large. Maximum file size: %{max_size_value} GB"
     }
   },
   "intents": {
