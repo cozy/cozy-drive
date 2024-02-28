@@ -171,6 +171,7 @@ describe('processNextFile function', () => {
       [],
       [],
       [],
+      [],
       []
     )
   })
