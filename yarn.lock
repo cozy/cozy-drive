@@ -6153,10 +6153,10 @@ cozy-app-publish@^0.27.2:
     request "^2.88.0"
     tar "^4.4.13"
 
-cozy-bar@10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-10.0.0.tgz#74f7b18225f9d7c569bf51442db957a6b3db444c"
-  integrity sha512-eZ5NDACEaiVxFBfxb1cRBsqwMl8+BNF0uyVow75qXzyVWLK/nnB1iPZ3I0SOCPHcTorzdH3L0iy52FAadF0jQg==
+cozy-bar@12.0.0:
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-12.0.0.tgz#d2d5736a44cd2eba70560b6c4202ab56a7cc128f"
+  integrity sha512-1787vcwybooGHtees6h/kw49QCSlpC/z8QcndF64vprU7HTmuZWnBs9R2sdmQKKPJy59rJoNzYB6QNeyFZi2ng==
   dependencies:
     hammerjs "2.0.8"
     lodash.debounce "4.0.8"
@@ -6165,9 +6165,9 @@ cozy-bar@10.0.0:
     prop-types "15.7.2"
     react-redux "5.1.1"
     redux "4.1.2"
+    redux-logger "3.0.6"
     redux-persist "5.10.0"
     redux-thunk "2.3.0"
-    semver-compare "^1.0.0"
 
 cozy-bi-auth@0.0.25:
   version "0.0.25"
@@ -6247,13 +6247,6 @@ cozy-device-helper@^2.1.0, cozy-device-helper@^2.7.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-2.7.0.tgz#573749997f18e5a1f11f720faec8c9bf2406beeb"
   integrity sha512-jMzW7s4IDuMivbsP8fo1IWW1z5l0wJ0u440E0fQmdsi+Zm/L9GXFKthLuuceYqXlH6c/APUCfpozJqjFMMHU1A==
-  dependencies:
-    lodash "^4.17.19"
-
-cozy-device-helper@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-2.5.0.tgz#4a5b18ad07a2c66c468988ae9daee014ba876e5b"
-  integrity sha512-+KKX6obYg8UmdmPvBuZDFMfzdSMOSKbnCf6ZIJTkW3Xs95aDZYhh/6x61Ok5+oTusHBL/khd6A+P1Qx5tL7mrw==
   dependencies:
     lodash "^4.17.19"
 
@@ -6609,7 +6602,7 @@ cozy-ui@^102.2.1:
     hammerjs "^2.0.8"
     intersection-observer "0.11.0"
     mime-types "2.1.35"
-    mui-bottom-sheet "git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.9"
+    mui-bottom-sheet "https://github.com/cozy/mui-bottom-sheet.git#v1.0.9"
     node-polyglot "^2.2.2"
     normalize.css "^8.0.0"
     pdf-lib "1.17.1"
@@ -12871,7 +12864,6 @@ msgpack5@^4.0.2:
 
 "mui-bottom-sheet@git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
   version "1.0.8"
-  uid "3dc4c2a245ab39079bc2f73546bccf80847be14c"
   resolved "git+https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
@@ -15888,11 +15880,6 @@ selfsigned@^1.10.7:
   integrity sha512-2P4PtieJeEwVgTU9QEcwIRDQ/mXJLX8/+I3ur+Pg16nS8oNbrGxEso9NyYWy8NAmXiNl4dlAp5MwoNeCWzON4w==
   dependencies:
     node-forge "^0.10.0"
-
-semver-compare@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/semver-compare/-/semver-compare-1.0.0.tgz#0dee216a1c941ab37e9efb1788f6afc5ff5537fc"
-  integrity sha1-De4hahyUGrN+nvsXiPavxf9VN/w=
 
 "semver@2 || 3 || 4 || 5", semver@^5.3.0, semver@^5.4.1, semver@^5.5.0, semver@^5.5.1, semver@^5.6.0, semver@^5.7.0, semver@^5.7.1:
   version "5.7.1"
