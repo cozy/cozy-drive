@@ -763,7 +763,7 @@
     "error": "An error occurred, please try again."
   },
   "TrashedBanner": {
-    "text": "The item has been trashed",
+    "text": "The item is in your trash",
     "destroy": "Delete permanently",
     "restore": "Restore",
     "restoreSuccess": "The item has been restored",

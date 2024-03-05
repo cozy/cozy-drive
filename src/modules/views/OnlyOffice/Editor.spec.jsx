@@ -158,7 +158,7 @@ describe('Editor', () => {
     setup({ isMobile: false, isTrashed: true })
 
     expect(screen.queryByTestId('onlyoffice-title')).toBeTruthy()
-    expect(screen.queryByText('The item has been trashed')).toBeInTheDocument()
+    expect(screen.queryByText('The item is in your trash')).toBeInTheDocument()
   })
 
   describe('Title', () => {
