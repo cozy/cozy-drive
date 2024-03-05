@@ -763,7 +763,7 @@
     "error": "Une erreur est survenue, merci de réessayer."
   },
   "TrashedBanner": {
-    "text": "L’élément a été mis à la corbeille",
+    "text": "Cet élément est dans la corbeille",
     "destroy": "Supprimer définitivement",
     "restore": "Restaurer",
     "restoreSuccess": "L’élément a bien été restauré",
