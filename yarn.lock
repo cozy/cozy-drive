@@ -6148,10 +6148,10 @@ cozy-app-publish@^0.27.2:
     request "^2.88.0"
     tar "^4.4.13"
 
-cozy-bar@11.0.0-alpha.3:
-  version "11.0.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-11.0.0-alpha.3.tgz#def0e3f2c02fec40a2dfc94b3708d54be5dbc0e1"
-  integrity sha512-I5VjU9c//ik/0Fgoglg6TxiF1LnOl3/AQvgrjb9bXA9aBwIJ8B9izh3is9U9pdrmuDn/o7nfC5ui0BDmv6zGTw==
+cozy-bar@12.0.0:
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-12.0.0.tgz#d2d5736a44cd2eba70560b6c4202ab56a7cc128f"
+  integrity sha512-1787vcwybooGHtees6h/kw49QCSlpC/z8QcndF64vprU7HTmuZWnBs9R2sdmQKKPJy59rJoNzYB6QNeyFZi2ng==
   dependencies:
     hammerjs "2.0.8"
     lodash.debounce "4.0.8"
@@ -6163,7 +6163,6 @@ cozy-bar@11.0.0-alpha.3:
     redux-logger "3.0.6"
     redux-persist "5.10.0"
     redux-thunk "2.3.0"
-    semver-compare "^1.0.0"
 
 cozy-bi-auth@0.0.25:
   version "0.0.25"
@@ -15883,11 +15882,6 @@ selfsigned@^1.10.7:
   integrity sha512-2P4PtieJeEwVgTU9QEcwIRDQ/mXJLX8/+I3ur+Pg16nS8oNbrGxEso9NyYWy8NAmXiNl4dlAp5MwoNeCWzON4w==
   dependencies:
     node-forge "^0.10.0"
-
-semver-compare@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/semver-compare/-/semver-compare-1.0.0.tgz#0dee216a1c941ab37e9efb1788f6afc5ff5537fc"
-  integrity sha1-De4hahyUGrN+nvsXiPavxf9VN/w=
 
 "semver@2 || 3 || 4 || 5", semver@^5.3.0, semver@^5.4.1, semver@^5.5.0, semver@^5.5.1, semver@^5.6.0, semver@^5.7.0, semver@^5.7.1:
   version "5.7.1"
