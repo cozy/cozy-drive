@@ -3,6 +3,7 @@ import React, { useState, useCallback } from 'react'
 import { isIOSApp } from 'cozy-device-helper'
 import ActionMenu from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useSharingContext } from 'cozy-sharing'
 
 import { MoreButton } from 'components/Button'
 import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
@@ -48,6 +49,7 @@ const MoreMenu = ({
   const [menuIsVisible, setMenuVisible] = useState(false)
   const anchorRef = React.createRef()
   const { isMobile } = useBreakpoints()
+  const { allLoaded } = useSharingContext() // We need to wait for the sharing context to be completely loaded to avoid race conditions
 
   const handleToggle = useCallback(
     () => toggleMenu(menuIsVisible, setMenuVisible),
@@ -81,7 +83,7 @@ const MoreMenu = ({
               placement: 'bottom-end'
             }}
           >
-            {isMobile && (
+            {isMobile && allLoaded && (
               <InsideRegularFolder
                 displayedFolder={displayedFolder}
                 folderId={folderId}

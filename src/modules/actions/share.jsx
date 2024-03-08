@@ -11,7 +11,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { isEncryptedFileOrFolder } from 'lib/encryption'
 import { navigateToModal } from 'modules/actions/helpers'
 
-const share = ({ t, hasWriteAccess, navigate, pathname }) => {
+const share = ({ t, hasWriteAccess, navigate, pathname, allLoaded }) => {
   const label = t('Files.share.cta')
   const icon = ShareIcon
 
@@ -21,6 +21,7 @@ const share = ({ t, hasWriteAccess, navigate, pathname }) => {
     icon,
     displayCondition: files => {
       return (
+        allLoaded && // We need to wait for the sharing context to be completely loaded to avoid race conditions
         hasWriteAccess &&
         files?.length === 1 &&
         !isEncryptedFileOrFolder(files[0])

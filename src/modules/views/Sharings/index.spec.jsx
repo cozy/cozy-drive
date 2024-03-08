@@ -1,8 +1,6 @@
 import { render, fireEvent, waitFor } from '@testing-library/react'
 import React from 'react'
 
-import { useSharingContext } from 'cozy-sharing'
-
 import { SharingsView } from './index'
 import {
   generateFileFixtures,
@@ -14,6 +12,7 @@ import AppLike from 'test/components/AppLike'
 import { setupStoreAndClient } from 'test/setup'
 
 const mockNavigate = jest.fn()
+const mockSharingContext = jest.fn()
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -22,7 +21,7 @@ jest.mock('react-router-dom', () => ({
 jest.mock('cozy-sharing', () => ({
   __esModule: true,
   ...jest.requireActual('cozy-sharing'),
-  useSharingContext: jest.fn()
+  useSharingContext: () => mockSharingContext()
 }))
 jest.mock('components/pushClient')
 jest.mock('cozy-client/dist/hooks/useQuery', () =>
@@ -44,9 +43,7 @@ jest.mock('cozy-client/dist/utils', () => ({
 }))
 jest.mock('components/useHead', () => jest.fn())
 
-useSharingContext.mockReturnValue({ byDocId: [] })
-
-const setup = (allLoaded = true) => {
+const setup = () => {
   const { store, client } = setupStoreAndClient()
 
   client.plugins.realtime = {
@@ -60,7 +57,7 @@ const setup = (allLoaded = true) => {
 
   const rendered = render(
     <AppLike client={client} store={store}>
-      <SharingsView allLoaded={allLoaded} />
+      <SharingsView />
     </AppLike>
   )
   return { ...rendered, client }
@@ -89,7 +86,8 @@ describe('Sharings View', () => {
   }
 
   it('should display placeholder when all files are not loaded', async () => {
-    const { container } = setup(false)
+    mockSharingContext.mockReturnValue({ byDocId: [], allLoaded: false })
+    const { container } = setup()
 
     await waitFor(() => {
       expect(
@@ -99,9 +97,10 @@ describe('Sharings View', () => {
   })
 
   it('should not display placeholder when all files are loaded', async () => {
+    mockSharingContext.mockReturnValue({ byDocId: [], allLoaded: true })
     useFilesQueryWithPath.mockReturnValue(filesFixtureWithPath)
 
-    const { container } = setup(true)
+    const { container } = setup()
 
     await waitFor(() => {
       expect(
@@ -113,6 +112,7 @@ describe('Sharings View', () => {
   it('tests the sharings view', async () => {
     // TODO : Fix https://github.com/cozy/cozy-drive/issues/2913
     jest.spyOn(console, 'warn').mockImplementation()
+
     useFilesQueryWithPath.mockReturnValue(filesFixtureWithPath)
 
     const { getByText } = setup()

@@ -37,14 +37,14 @@ import { useFilesQueryWithPath } from 'modules/views/hooks'
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-export const SharingsView = ({ sharedDocumentIds = [], allLoaded = true }) => {
+export const SharingsView = ({ sharedDocumentIds = [] }) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
   const client = useClient()
   const { pushModal, popModal } = useModalContext()
-  const { refresh } = useSharingContext()
+  const { allLoaded, refresh } = useSharingContext()
   const dispatch = useDispatch()
   useHead()
 
@@ -91,7 +91,8 @@ export const SharingsView = ({ sharedDocumentIds = [], allLoaded = true }) => {
     pathname,
     hasWriteAccess: true,
     canMove: true,
-    isPublic: false
+    isPublic: false,
+    allLoaded
   }
 
   const actions = makeActions(
