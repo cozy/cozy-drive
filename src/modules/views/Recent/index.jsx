@@ -44,7 +44,7 @@ export const RecentView = () => {
   const { isMobile } = useBreakpoints()
   const client = useClient()
   const { pushModal, popModal } = useModalContext()
-  const { refresh } = useSharingContext()
+  const { allLoaded, refresh } = useSharingContext()
   const dispatch = useDispatch()
   useHead()
 
@@ -87,7 +87,8 @@ export const RecentView = () => {
     pathname,
     hasWriteAccess: true,
     canMove: true,
-    isPublic: false
+    isPublic: false,
+    allLoaded
   }
 
   const actions = makeActions(

@@ -3,7 +3,10 @@ import { useDisplayedFolder, useCurrentFolderId } from 'hooks'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import SharingProvider, { SharedDocument } from 'cozy-sharing'
+import SharingProvider, {
+  SharedDocument,
+  useSharingContext
+} from 'cozy-sharing'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { BarRightOnMobile } from 'components/Bar'
@@ -28,8 +31,10 @@ const Toolbar = ({
   const { displayedFolder } = useDisplayedFolder()
   const { isMobile } = useBreakpoints()
   const { showSelectionBar, isSelectionBarVisible } = useSelectionContext()
+  const { allLoaded } = useSharingContext() // We need to wait for the sharing context to be completely loaded to avoid race conditions
 
   const isDisabled = disabled || isSelectionBarVisible
+  const isSharingDisabled = isDisabled || !allLoaded
 
   if (disabled) {
     return null
@@ -51,7 +56,7 @@ const Toolbar = ({
         displayedFolder={displayedFolder}
         folderId={folderId}
       >
-        <ShareButton isDisabled={isDisabled} />
+        <ShareButton isDisabled={isSharingDisabled} />
       </InsideRegularFolder>
 
       {hasWriteAccess && (

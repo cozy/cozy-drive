@@ -59,7 +59,7 @@ const DriveView = () => {
   const { isMobile } = useBreakpoints()
   const { t } = useI18n()
   const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)
-  const { hasWriteAccess, refresh } = useSharingContext()
+  const { allLoaded, hasWriteAccess, refresh } = useSharingContext()
   const client = useClient()
   const vaultClient = useVaultClient()
   const { pushModal, popModal } = useModalContext()
@@ -133,7 +133,8 @@ const DriveView = () => {
     pathname,
     hasWriteAccess: canWriteToCurrentFolder,
     canMove: true,
-    isPublic: false
+    isPublic: false,
+    allLoaded
   }
   const actions = makeActions(
     [
