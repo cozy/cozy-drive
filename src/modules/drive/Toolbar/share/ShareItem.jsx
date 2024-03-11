@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 import { SharedDocument } from 'cozy-sharing'
-import RecipientsAvatars from 'cozy-sharing/dist/components/Recipient/RecipientsAvatars'
+import { AvatarList } from 'cozy-sharing/dist/components/Avatar/AvatarList'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
@@ -29,7 +29,7 @@ const ShareItem = ({ displayedFolder }) => {
           left={<Icon icon={ShareIcon} />}
           right={
             <div className={styles['menu-recipients-wrapper']}>
-              <RecipientsAvatars
+              <AvatarList
                 className={styles['menu-recipients']}
                 recipients={recipients}
                 link={link}
