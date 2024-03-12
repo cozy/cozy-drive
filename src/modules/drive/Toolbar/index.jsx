@@ -3,10 +3,7 @@ import { useDisplayedFolder, useCurrentFolderId } from 'hooks'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import SharingProvider, {
-  SharedDocument,
-  useSharingContext
-} from 'cozy-sharing'
+import { SharedDocument, useSharingContext } from 'cozy-sharing'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { BarRightOnMobile } from 'components/Bar'
@@ -73,18 +70,16 @@ const Toolbar = ({
 
       <BarRightOnMobile>
         {isMobile && <SearchButton />}
-        <SharingProvider doctype="io.cozy.files" documentType="Files">
-          <MoreMenu
-            isDisabled={isDisabled}
-            hasWriteAccess={hasWriteAccess}
-            canCreateFolder={canCreateFolder}
-            canUpload={canUpload}
-            folderId={folderId}
-            displayedFolder={displayedFolder}
-            showSelectionBar={showSelectionBar}
-            isSelectionBarVisible={isSelectionBarVisible}
-          />
-        </SharingProvider>
+        <MoreMenu
+          isDisabled={isDisabled}
+          hasWriteAccess={hasWriteAccess}
+          canCreateFolder={canCreateFolder}
+          canUpload={canUpload}
+          folderId={folderId}
+          displayedFolder={displayedFolder}
+          showSelectionBar={showSelectionBar}
+          isSelectionBarVisible={isSelectionBarVisible}
+        />
       </BarRightOnMobile>
     </div>
   )
