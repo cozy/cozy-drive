@@ -169,6 +169,28 @@ export const uploadProgress = (file, event, date) => ({
   date: date || Date.now()
 })
 
+const isErrorFileTooLarge = error => {
+  if (!error) return false
+
+  // Check if the error directly matches FILE_TOO_LARGE_ERROR
+  if (
+    error.title === FILE_TOO_LARGE_ERROR ||
+    error.message === FILE_TOO_LARGE_ERROR
+  ) {
+    return true
+  }
+
+  // Check if the error message is a string and contains FILE_TOO_LARGE_ERROR (can happen in Firefox for example)
+  if (
+    typeof error.message === 'string' &&
+    error.message.includes(FILE_TOO_LARGE_ERROR)
+  ) {
+    return true
+  }
+
+  return false
+}
+
 export const processNextFile =
   (
     fileUploadedCallback,
@@ -249,10 +271,7 @@ export const processNextFile =
 
         // Determine the status based on the error details
         let status
-        if (
-          error.title === FILE_TOO_LARGE_ERROR ||
-          error.message === FILE_TOO_LARGE_ERROR
-        ) {
+        if (isErrorFileTooLarge(error)) {
           status = FILE_TOO_LARGE_ERROR // File size exceeded maximum size allowed by the server
         } else if (error.status in statusError) {
           status = statusError[error.status]
