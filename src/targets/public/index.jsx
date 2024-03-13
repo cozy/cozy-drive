@@ -1,5 +1,12 @@
 /* global cozy */
 
+// cozy-ui css import should be done before any other import
+// otherwise the themes will not be supplied and the app crashes
+// eslint-disable-next-line import/order
+import 'cozy-ui/dist/cozy-ui.min.css'
+// eslint-disable-next-line import/order
+import 'cozy-ui/transpiled/react/stylesheet.css'
+
 import React from 'react'
 import { getQueryParameter } from 'react-cozy-helpers'
 import { render } from 'react-dom'
@@ -10,10 +17,8 @@ import 'whatwg-fetch'
 import CozyClient, { models } from 'cozy-client'
 import { Document } from 'cozy-doctypes'
 import getSharedDocument from 'cozy-sharing/dist/getSharedDocument'
-import 'cozy-ui/dist/cozy-ui.min.css'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import { I18n, initTranslation } from 'cozy-ui/transpiled/react/providers/I18n'
-import 'cozy-ui/transpiled/react/stylesheet.css'
 
 import AppRouter from './components/AppRouter'
 import App from 'components/App/App'
