@@ -31,10 +31,13 @@ const TrashedBanner = ({ fileId, isPublic }) => {
   const restore = async () => {
     try {
       await client.collection('io.cozy.files').restore(fileId)
-      showAlert(t('TrashedBanner.restoreSuccess'), 'secondary')
+      showAlert({
+        message: t('TrashedBanner.restoreSuccess'),
+        severity: 'secondary'
+      })
     } catch (e) {
       logger.warn(`Error while restoring file ${fileId}`, e)
-      showAlert(t('TrashedBanner.restoreError'), 'error')
+      showAlert({ message: t('TrashedBanner.restoreError'), severity: 'error' })
     } finally {
       setBusy(false)
     }
@@ -49,7 +52,10 @@ const TrashedBanner = ({ fileId, isPublic }) => {
   }
 
   const handleDestroyConfirm = () => {
-    showAlert(t('TrashedBanner.destroySuccess'), 'secondary')
+    showAlert({
+      message: t('TrashedBanner.destroySuccess'),
+      severity: 'secondary'
+    })
     navigate(`/trash/${fileResult.data.dir_id}`)
   }
 

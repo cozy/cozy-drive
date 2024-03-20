@@ -1,14 +1,14 @@
-import React from 'react'
 import { render, fireEvent, waitFor } from '@testing-library/react'
+import React from 'react'
 
-import { useWebviewIntent } from 'cozy-intent'
 import { createMockClient } from 'cozy-client'
+import { useWebviewIntent } from 'cozy-intent'
 
+import { ScannerMenuItem } from 'modules/drive/Toolbar/components/Scanner/ScannerMenuItem'
+import { ScannerProvider } from 'modules/drive/Toolbar/components/Scanner/ScannerProvider'
+import { uploadFiles } from 'modules/navigation/duck'
 // @ts-expect-error Component is not typed
 import AppLike from 'test/components/AppLike'
-import { ScannerProvider } from 'modules/drive/Toolbar/components/Scanner/ScannerProvider'
-import { ScannerMenuItem } from 'modules/drive/Toolbar/components/Scanner/ScannerMenuItem'
-import { uploadFiles } from 'modules/navigation/duck'
 
 const MockApp = ({ id = 'test' }): JSX.Element => (
   <AppLike client={createMockClient()}>
