@@ -635,7 +635,7 @@ exports[`Dropzone should match snapshot 1`] = `
                       "&$clickable, &$deletable": {
                         "&:hover, &:focus": {
                           "backgroundColor": "rgba(255, 255, 255, 0.04)",
-                          "borderColor": "rgba(255, 255, 255, 0.16)",
+                          "borderColor": "rgba(255, 255, 255, 0.32)",
                         },
                       },
                       "&$colorPrimary": {
@@ -680,7 +680,7 @@ exports[`Dropzone should match snapshot 1`] = `
                         "borderStyle": "dashed",
                         "borderWidth": "1px",
                       },
-                      "borderColor": "rgba(255, 255, 255, 0.16)",
+                      "borderColor": "rgba(255, 255, 255, 0.32)",
                       "color": "#fff",
                     },
                     "&-info": {
@@ -695,7 +695,7 @@ exports[`Dropzone should match snapshot 1`] = `
                       "&$clickable, &$deletable": {
                         "&:hover, &:focus": {
                           "backgroundColor": "rgba(255, 255, 255, 0.04)",
-                          "borderColor": "rgba(255, 255, 255, 0.16)",
+                          "borderColor": "rgba(255, 255, 255, 0.32)",
                         },
                       },
                       "&$colorPrimary": {
@@ -740,7 +740,7 @@ exports[`Dropzone should match snapshot 1`] = `
                         "borderStyle": "dashed",
                         "borderWidth": "1px",
                       },
-                      "borderColor": "rgba(255, 255, 255, 0.16)",
+                      "borderColor": "rgba(255, 255, 255, 0.32)",
                       "color": "#fff",
                     },
                     "&-primary": {
@@ -815,7 +815,7 @@ exports[`Dropzone should match snapshot 1`] = `
                       "&$clickable, &$deletable": {
                         "&:hover, &:focus": {
                           "backgroundColor": "rgba(255, 255, 255, 0.04)",
-                          "borderColor": "rgba(255, 255, 255, 0.16)",
+                          "borderColor": "rgba(255, 255, 255, 0.32)",
                         },
                       },
                       "&$colorPrimary": {
@@ -860,7 +860,7 @@ exports[`Dropzone should match snapshot 1`] = `
                         "borderStyle": "dashed",
                         "borderWidth": "1px",
                       },
-                      "borderColor": "rgba(255, 255, 255, 0.16)",
+                      "borderColor": "rgba(255, 255, 255, 0.32)",
                       "color": "#fff",
                     },
                     "&-warning": {
@@ -875,7 +875,7 @@ exports[`Dropzone should match snapshot 1`] = `
                       "&$clickable, &$deletable": {
                         "&:hover, &:focus": {
                           "backgroundColor": "rgba(255, 255, 255, 0.04)",
-                          "borderColor": "rgba(255, 255, 255, 0.16)",
+                          "borderColor": "rgba(255, 255, 255, 0.32)",
                         },
                       },
                       "&$colorPrimary": {
@@ -920,7 +920,7 @@ exports[`Dropzone should match snapshot 1`] = `
                         "borderStyle": "dashed",
                         "borderWidth": "1px",
                       },
-                      "borderColor": "rgba(255, 255, 255, 0.16)",
+                      "borderColor": "rgba(255, 255, 255, 0.32)",
                       "color": "#fff",
                     },
                   },
@@ -954,6 +954,10 @@ exports[`Dropzone should match snapshot 1`] = `
                   },
                   "&.small": {
                     "@media (max-width:1022.95px)": {
+                      "& .divider--dialog": {
+                        "marginLeft": "-8px",
+                        "marginRight": "-8px",
+                      },
                       "borderRadius": "6px",
                       "height": "auto",
                       "margin": "16px",
@@ -1306,15 +1310,25 @@ exports[`Dropzone should match snapshot 1`] = `
                 },
                 "notchedOutline": {
                   "borderColor": "#fff",
+                  "transition": "border-color 200ms",
                 },
                 "root": {
                   "&$disabled": {
                     "background": "#fff",
                   },
+                  "&$error $notchedOutline": {
+                    "borderColor": "rgba(255, 255, 255, 0.32)",
+                  },
                   "&$focused $notchedOutline": {
                     "borderWidth": "0.0625rem",
                   },
+                  "&$focused&$error $notchedOutline": {
+                    "borderColor": "#fff",
+                  },
                   "&:hover $notchedOutline": {
+                    "borderColor": "#fff",
+                  },
+                  "&:hover&$error $notchedOutline": {
                     "borderColor": "#fff",
                   },
                   "borderRadius": 4,
@@ -1525,7 +1539,7 @@ exports[`Dropzone should match snapshot 1`] = `
                 "ghostDisabled": "#fff",
                 "ghostOpacity": 0.48,
                 "main": "#fff",
-                "opacity": 0.16,
+                "opacity": 0.32,
               },
               "common": {
                 "black": "#000",
@@ -1944,7 +1958,7 @@ exports[`Dropzone should match snapshot 1`] = `
                                     anchorOrigin={
                                       {
                                         "horizontal": "center",
-                                        "vertical": "top",
+                                        "vertical": "bottom",
                                       }
                                     }
                                     autoHideDuration={2000}
@@ -1955,7 +1969,7 @@ exports[`Dropzone should match snapshot 1`] = `
                                       anchorOrigin={
                                         {
                                           "horizontal": "center",
-                                          "vertical": "top",
+                                          "vertical": "bottom",
                                         }
                                       }
                                       autoHideDuration={2000}

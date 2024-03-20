@@ -7,6 +7,7 @@ import Viewer from 'cozy-ui/transpiled/react/Viewer'
 import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
 import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
 import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
+import ToolbarButtons from 'cozy-ui/transpiled/react/Viewer/components/ToolbarButtons'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import Oops from 'components/Error/Oops'
@@ -38,9 +39,12 @@ const Error = () => {
   return (
     <RemoveScroll>
       <Viewer files={files} currentIndex={0} onCloseRequest={handleOnClose}>
+        <ToolbarButtons>
+          <SharingButton variant="iconButton" />
+        </ToolbarButtons>
         <FooterActionButtons>
           <SharingButton />
-          <ForwardOrDownloadButton />
+          <ForwardOrDownloadButton variant="buttonIcon" />
         </FooterActionButtons>
       </Viewer>
     </RemoveScroll>
