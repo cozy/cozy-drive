@@ -11,6 +11,7 @@ import Viewer from 'cozy-ui/transpiled/react/Viewer'
 import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
 import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
 import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
+import ToolbarButtons from 'cozy-ui/transpiled/react/Viewer/components/ToolbarButtons'
 import Overlay from 'cozy-ui/transpiled/react/deprecated/Overlay'
 import palette from 'cozy-ui/transpiled/react/palette'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -210,9 +211,12 @@ const FilesViewer = ({ filesQuery, files, onClose, onChange }) => {
           }
         }}
       >
+        <ToolbarButtons>
+          <SharingButton variant="iconButton" />
+        </ToolbarButtons>
         <FooterActionButtons>
           <SharingButton />
-          <ForwardOrDownloadButton />
+          <ForwardOrDownloadButton variant="buttonIcon" />
         </FooterActionButtons>
       </Viewer>
     </RemoveScroll>
