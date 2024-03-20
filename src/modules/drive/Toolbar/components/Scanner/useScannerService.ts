@@ -1,18 +1,18 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 
-import logger from 'cozy-logger'
-import { useWebviewIntent } from 'cozy-intent'
 import { useClient } from 'cozy-client'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import { useWebviewIntent } from 'cozy-intent'
+import logger from 'cozy-logger'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { uploadFiles } from 'modules/navigation/duck'
 import {
   getErrorMessage,
   getFileFromBase64,
   getUniqueNameFromPrefix
 } from 'modules/drive/helpers'
+import { uploadFiles } from 'modules/navigation/duck'
 
 /**
  * Custom hook that provides scanner functionality.
@@ -83,7 +83,7 @@ export const useScannerService = (displayedFolder: {
       dispatch(payload)
     } catch (error) {
       logger('error', `startScanner error, ${getErrorMessage(error)}`)
-      showAlert(t('ImportToDrive.error'), 'error')
+      showAlert({ message: t('ImportToDrive.error'), severity: 'error' })
     }
   }, [displayedFolder, scanDocument, dispatch, client, t, showAlert])
 

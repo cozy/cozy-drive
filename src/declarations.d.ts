@@ -39,8 +39,11 @@ declare module 'cozy-ui/transpiled/react/deprecated/Alerter' {
 
 declare module 'cozy-ui/transpiled/react/providers/Alert' {
   export const useAlert: () => {
-    showAlert: (
-      message: string,
+    showAlert: ({
+      message,
+      severity
+    }: {
+      message: string
       severity?:
         | 'primary'
         | 'secondary'
@@ -48,6 +51,6 @@ declare module 'cozy-ui/transpiled/react/providers/Alert' {
         | 'error'
         | 'warning'
         | 'info'
-    ) => void
+    }) => void
   }
 }

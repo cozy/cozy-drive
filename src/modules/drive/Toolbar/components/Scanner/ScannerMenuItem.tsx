@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import CameraIcon from 'cozy-ui/transpiled/react/Icons/Camera'
+import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { useScannerContext } from 'modules/drive/Toolbar/components/Scanner/ScannerProvider'
 
