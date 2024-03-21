@@ -1,12 +1,17 @@
 import { generateWebLink } from 'cozy-client'
 
-const generateShortcutUrl = ({ file, client, isFlatDomain }) => {
+const generateShortcutUrl = ({
+  file,
+  client,
+  isFlatDomain,
+  fromPublicFolder
+}) => {
   const currentURL = new URL(window.location)
   let webLink = ''
-  if (currentURL.pathname === '/public') {
+  if (fromPublicFolder) {
     webLink = generateWebLink({
       cozyUrl: client.getStackClient().uri,
-      pathname: '/public',
+      pathname: currentURL.pathname,
       slug: 'drive',
       hash: `external/${file.id}`,
       searchParams: currentURL.searchParams,
