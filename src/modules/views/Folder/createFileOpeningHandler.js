@@ -35,7 +35,12 @@ const createFileOpeningHandler =
           Alerter.error('alert.could_not_open_file')
         }
       } else {
-        const url = generateShortcutUrl({ file, client, isFlatDomain })
+        const url = generateShortcutUrl({
+          file,
+          client,
+          isFlatDomain,
+          fromPublicFolder
+        })
         openInNewTab(url)
       }
     } else if (isNote) {
