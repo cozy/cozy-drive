@@ -1,6 +1,6 @@
 {
   "name": "cozy-drive",
-  "version": "1.67.0",
+  "version": "1.68.0",
   "main": "src/main.jsx",
   "scripts": {
     "build": "cozy-scripts build --barV7 false --cozyClientJs",
