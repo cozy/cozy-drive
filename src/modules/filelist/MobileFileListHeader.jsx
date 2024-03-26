@@ -2,12 +2,12 @@ import cx from 'classnames'
 import React, { useState, useCallback } from 'react'
 
 import Icon from 'cozy-ui/transpiled/react/Icon'
+import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import {
   TableHead,
   TableHeader,
   TableRow
-} from 'cozy-ui/transpiled/react/Table'
-import Button from 'cozy-ui/transpiled/react/deprecated/Button'
+} from 'cozy-ui/transpiled/react/deprecated/Table'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import MobileSortMenu from './MobileSortMenu'

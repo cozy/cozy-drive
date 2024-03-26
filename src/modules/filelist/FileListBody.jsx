@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import React, { useContext } from 'react'
 
-import { TableBody } from 'cozy-ui/transpiled/react/Table'
+import { TableBody } from 'cozy-ui/transpiled/react/deprecated/Table'
 
 import { FabContext } from 'lib/FabProvider'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'

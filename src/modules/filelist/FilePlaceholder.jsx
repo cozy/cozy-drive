@@ -2,7 +2,7 @@ import cx from 'classnames'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'
+import { TableRow, TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 
 import styles from 'styles/filelist.styl'

@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react'
 
 import { isIOSApp } from 'cozy-device-helper'
+import { useSharingContext } from 'cozy-sharing'
 import ActionMenu from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-import { useSharingContext } from 'cozy-sharing'
 
 import { MoreButton } from 'components/Button'
 import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'

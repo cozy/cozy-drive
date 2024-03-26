@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import React from 'react'
 
-import { TableRow, TableCell } from 'cozy-ui/transpiled/react/Table'
+import { TableRow, TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 

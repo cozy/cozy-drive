@@ -5,7 +5,7 @@ import React from 'react'
 import AppIcon from 'cozy-ui/transpiled/react/AppIcon'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import CheckIcon from 'cozy-ui/transpiled/react/Icons/Check'
-import { TableCell } from 'cozy-ui/transpiled/react/Table'
+import { TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import CertificationTooltip from 'modules/certifications/CertificationTooltip'
