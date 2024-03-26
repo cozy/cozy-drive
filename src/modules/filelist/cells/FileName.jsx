@@ -10,7 +10,7 @@ import AppIcon from 'cozy-ui/transpiled/react/AppIcon'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import CarbonCopyIcon from 'cozy-ui/transpiled/react/Icons/CarbonCopy'
 import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
-import { TableCell } from 'cozy-ui/transpiled/react/Table'
+import { TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
 
 import RenameInput from 'modules/drive/RenameInput'
 

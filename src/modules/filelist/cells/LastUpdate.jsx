@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import React from 'react'
 
-import { TableCell } from 'cozy-ui/transpiled/react/Table'
+import { TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
 
 import styles from 'styles/filelist.styl'
 

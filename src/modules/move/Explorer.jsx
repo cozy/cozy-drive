@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { Table } from 'cozy-ui/transpiled/react/Table'
+import { Table } from 'cozy-ui/transpiled/react/deprecated/Table'
 
 import FileListBody from 'modules/filelist/FileListBody'
 import FileListHeader from 'modules/filelist/FileListHeader'

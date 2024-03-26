@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import React, { useCallback } from 'react'
 
-import { TableHeader } from 'cozy-ui/transpiled/react/Table'
+import { TableHeader } from 'cozy-ui/transpiled/react/deprecated/Table'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import styles from 'styles/filelist.styl'
