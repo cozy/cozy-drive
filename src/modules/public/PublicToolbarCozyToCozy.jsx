@@ -5,11 +5,11 @@ import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import { BarRightOnMobile } from 'components/Bar'
 import { DownloadFilesButton } from 'modules/public/DownloadButton'
 import PublicToolbarMoreMenu from 'modules/public/PublicToolbarMoreMenu'
 import { isFilesIsFile, openExternalLink } from 'modules/public/helpers'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
-import { BarRightOnMobile } from 'components/Bar'
 
 const PublicToolbarCozyToCozy = ({
   isSharingShortcutCreated,

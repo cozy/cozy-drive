@@ -2,7 +2,7 @@ import React from 'react'
 
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import CarbonCopyIcon from 'cozy-ui/transpiled/react/Icons/CarbonCopy'
-import { TableHeader } from 'cozy-ui/transpiled/react/Table'
+import { TableHeader } from 'cozy-ui/transpiled/react/deprecated/Table'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import CertificationTooltip from 'modules/certifications/CertificationTooltip'

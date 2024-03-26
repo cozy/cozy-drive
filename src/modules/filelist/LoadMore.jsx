@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { Button, Spinner } from 'cozy-ui/transpiled/react'
-import { TableRow } from 'cozy-ui/transpiled/react/Table'
+import { TableRow } from 'cozy-ui/transpiled/react/deprecated/Table'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import styles from 'styles/filelist.styl'
