@@ -8,6 +8,7 @@
     "item_trash": "Trash",
     "item_settings": "Settings",
     "item_collect": "Administrative",
+    "item_external_drives": "Shared Drives",
     "btn-client": "Get Cozy Drive for desktop",
     "support-us": "View offers",
     "support-us-description": "Would you like to benefit from more space or simply support cozy?",
@@ -19,7 +20,9 @@
     "link-client-desktop": "https://nuts.cozycloud.cc/download/channel/stable/",
     "link-client-android": "https://play.google.com/store/apps/details?id=io.cozy.drive.mobile",
     "link-client-ios": "https://itunes.apple.com/us/app/cozy-drive/id1224102389?mt=8",
-    "link-client-web": "https://cozy.io/try-it"
+    "link-client-web": "https://cozy.io/try-it",
+    "view_more": "View more",
+    "view_less": "View less"
   },
   "breadcrumb": {
     "title_drive": "Drive",

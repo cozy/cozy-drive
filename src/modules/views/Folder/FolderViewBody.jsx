@@ -25,6 +25,9 @@ import LoadMore from 'modules/filelist/LoadMoreV2'
 import MobileFileListHeader from 'modules/filelist/MobileFileListHeader'
 import { useFolderSort } from 'modules/navigation/duck'
 import SelectionBar from 'modules/selection/SelectionBar'
+import { ExtraDrive } from 'modules/views/Folder/ExtraDrive'
+import { FolderTab } from 'modules/views/Folder/FolderTab'
+import { FolderTabs } from 'modules/views/Folder/FolderTabs'
 import createFileOpeningHandler from 'modules/views/Folder/createFileOpeningHandler'
 import { isReferencedByShareInSharingContext } from 'modules/views/Folder/syncHelpers'
 import { isOfficeEnabled } from 'modules/views/OnlyOffice/helpers'
@@ -81,7 +84,9 @@ const FolderViewBody = ({
   const [sortOrder, setSortOrder] = useFolderSort(currentFolderId)
   const vaultClient = useVaultClient()
   const webviewIntent = useWebviewIntent()
-
+  const { isMobile } = useBreakpoints()
+  const [value, setValue] = React.useState(0)
+  const handleChange = (_event, newValue) => setValue(newValue)
   const changeSortOrder = useCallback(
     (folderId_legacy, attribute, order) =>
       setSortOrder({ sortAttribute: attribute, sortOrder: order }),
@@ -184,8 +189,105 @@ const FolderViewBody = ({
     return (
       <>
         <SelectionBar actions={actions} />
-        <FileList>
-          {hasDataToShow && (
+        <FolderTabs handleChange={handleChange} value={value} />
+        <FolderTab value={isMobile ? value : 0} index={0}>
+          <FileList>
+            {hasDataToShow && (
+              <>
+                <MobileFileListHeader
+                  folderId={null}
+                  canSort={canSort}
+                  sort={sortOrder}
+                  onFolderSort={changeSortOrder}
+                  thumbnailSizeBig={isBigThumbnail}
+                  toggleThumbnailSize={toggleThumbnailSize}
+                />
+                <FileListHeader
+                  folderId={null}
+                  canSort={canSort}
+                  sort={sortOrder}
+                  onFolderSort={changeSortOrder}
+                  thumbnailSizeBig={isBigThumbnail}
+                  toggleThumbnailSize={toggleThumbnailSize}
+                  extraColumns={extraColumns}
+                />
+              </>
+            )}
+            <FileListBody selectionModeActive={false}>
+              <AddFolder
+                vaultClient={vaultClient}
+                refreshFolderContent={refreshFolderContent}
+                extraColumns={extraColumns}
+                currentFolderId={currentFolderId}
+              />
+              {isInError && <Oops />}
+              {(needsToWait || isLoading) && <FileListRowsPlaceholder />}
+              {/* TODO FolderViewBody should not have the responsability to chose
+          which empty component to display. It should be done by the "view" itself.
+          But adding a new prop like <FolderViewBody emptyComponent={}
+          is not good enought too */}
+              {displayedFolder !== null &&
+                isEmpty &&
+                currentFolderId !== TRASH_DIR_ID && (
+                  <EmptyDrive isEncrypted={isEncFolder} canUpload={canUpload} />
+                )}
+              {displayedFolder !== null &&
+                isEmpty &&
+                currentFolderId === TRASH_DIR_ID && (
+                  <EmptyTrash canUpload={canUpload} />
+                )}
+              {hasDataToShow && !needsToWait && (
+                <div className={!isDesktop ? 'u-ov-hidden' : ''}>
+                  <>
+                    {syncingFakeFile && (
+                      <File
+                        attributes={syncingFakeFile}
+                        withSelectionCheckbox={false}
+                        onFolderOpen={() => {}}
+                        onFileOpen={() => {}}
+                        actions={[]}
+                        isInSyncFromSharing={true}
+                        extraColumns={extraColumns}
+                        disableSelection={true}
+                      />
+                    )}
+                    {queryResults.map((query, queryIndex) => (
+                      <React.Fragment key={queryIndex}>
+                        {query.data.map(file => (
+                          <File
+                            key={file._id}
+                            attributes={file}
+                            withSelectionCheckbox
+                            onFolderOpen={navigateToFolder}
+                            onFileOpen={handleFileOpen}
+                            withFilePath={withFilePath}
+                            thumbnailSizeBig={isBigThumbnail}
+                            actions={actions}
+                            refreshFolderContent={refreshFolderContent}
+                            isInSyncFromSharing={
+                              !isSharingContextEmpty &&
+                              isSharingShortcut(file) &&
+                              isReferencedByShareInSharingContext(
+                                file,
+                                sharingsValue
+                              )
+                            }
+                            extraColumns={extraColumns}
+                          />
+                        ))}
+                        {query.hasMore && (
+                          <LoadMore fetchMore={query.fetchMore} />
+                        )}
+                      </React.Fragment>
+                    ))}
+                  </>
+                </div>
+              )}
+            </FileListBody>
+          </FileList>
+        </FolderTab>
+        {isMobile && (
+          <FolderTab value={value} index={1}>
             <>
               <MobileFileListHeader
                 folderId={null}
@@ -205,79 +307,9 @@ const FolderViewBody = ({
                 extraColumns={extraColumns}
               />
             </>
-          )}
-          <FileListBody selectionModeActive={false}>
-            <AddFolder
-              vaultClient={vaultClient}
-              refreshFolderContent={refreshFolderContent}
-              extraColumns={extraColumns}
-              currentFolderId={currentFolderId}
-            />
-            {isInError && <Oops />}
-            {(needsToWait || isLoading) && <FileListRowsPlaceholder />}
-            {/* TODO FolderViewBody should not have the responsability to chose
-          which empty component to display. It should be done by the "view" itself.
-          But adding a new prop like <FolderViewBody emptyComponent={}
-          is not good enought too */}
-            {displayedFolder !== null &&
-              isEmpty &&
-              currentFolderId !== TRASH_DIR_ID && (
-                <EmptyDrive isEncrypted={isEncFolder} canUpload={canUpload} />
-              )}
-            {displayedFolder !== null &&
-              isEmpty &&
-              currentFolderId === TRASH_DIR_ID && (
-                <EmptyTrash canUpload={canUpload} />
-              )}
-            {hasDataToShow && !needsToWait && (
-              <div className={!isDesktop ? 'u-ov-hidden' : ''}>
-                <>
-                  {syncingFakeFile && (
-                    <File
-                      attributes={syncingFakeFile}
-                      withSelectionCheckbox={false}
-                      onFolderOpen={() => {}}
-                      onFileOpen={() => {}}
-                      actions={[]}
-                      isInSyncFromSharing={true}
-                      extraColumns={extraColumns}
-                      disableSelection={true}
-                    />
-                  )}
-                  {queryResults.map((query, queryIndex) => (
-                    <React.Fragment key={queryIndex}>
-                      {query.data.map(file => (
-                        <File
-                          key={file._id}
-                          attributes={file}
-                          withSelectionCheckbox
-                          onFolderOpen={navigateToFolder}
-                          onFileOpen={handleFileOpen}
-                          withFilePath={withFilePath}
-                          thumbnailSizeBig={isBigThumbnail}
-                          actions={actions}
-                          refreshFolderContent={refreshFolderContent}
-                          isInSyncFromSharing={
-                            !isSharingContextEmpty &&
-                            isSharingShortcut(file) &&
-                            isReferencedByShareInSharingContext(
-                              file,
-                              sharingsValue
-                            )
-                          }
-                          extraColumns={extraColumns}
-                        />
-                      ))}
-                      {query.hasMore && (
-                        <LoadMore fetchMore={query.fetchMore} />
-                      )}
-                    </React.Fragment>
-                  ))}
-                </>
-              </div>
-            )}
-          </FileListBody>
-        </FileList>
+            <ExtraDrive />
+          </FolderTab>
+        )}
       </>
     )
   }

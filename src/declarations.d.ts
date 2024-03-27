@@ -54,3 +54,13 @@ declare module 'cozy-ui/transpiled/react/providers/Alert' {
     }) => void
   }
 }
+
+declare module 'cozy-ui/transpiled/react/providers/Breakpoints' {
+  const useBreakpoints: () => {
+    isMobile: boolean
+    isTablet: boolean
+    isDesktop: boolean
+  }
+
+  export default useBreakpoints
+}

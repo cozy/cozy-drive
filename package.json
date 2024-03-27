@@ -10,7 +10,7 @@
     "tx": "tx pull --all || true",
     "lint": "npm-run-all --parallel 'lint:*'",
     "lint:styles": "stylint src --config ./node_modules/cozy-scripts/config/.stylintrc",
-    "lint:js": "eslint '{src,test}/**/*.{js,jsx}'",
+    "lint:js": "eslint '{src,test}/**/*.{js,jsx,ts,tsx}'",
     "test": "env NODE_ENV='test' jest",
     "version": "yarn version:manifest",
     "version:manifest": "replace '\\d+\\.\\d+\\.\\d+' $npm_package_version ./manifest.webapp",

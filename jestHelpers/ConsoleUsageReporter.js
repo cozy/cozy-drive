@@ -44,7 +44,7 @@ module.exports = class ConsoleUsageReporter {
   }
 
   static makeTestsFailWhenConsoleUsed() {
-    let consoleCalls
+    let consoleCalls = []
     let testsRunning = true
 
     const formatConsoleCalls = calls =>
