@@ -3,17 +3,19 @@ import React from 'react'
 
 import Badge from 'cozy-ui/transpiled/react/Badge'
 import Circle from 'cozy-ui/transpiled/react/Circle'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import OpenWithIcon from 'cozy-ui/transpiled/react/Icons/Openwith'
 import { NavIcon, NavText } from 'cozy-ui/transpiled/react/Nav'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-const NavContent = ({ icon, badgeContent, label }) => {
+const NavContent = ({ icon, badgeContent, label, external }) => {
   const { isDesktop } = useBreakpoints()
 
   if (badgeContent) {
     if (isDesktop) {
       return (
         <>
-          <NavIcon icon={icon} />
+          {icon && <NavIcon icon={icon} />}
           <NavText>{label}</NavText>
           <Circle
             size="xsmall"
@@ -29,9 +31,11 @@ const NavContent = ({ icon, badgeContent, label }) => {
     } else {
       return (
         <>
-          <Badge badgeContent={badgeContent} color="error" withBorder={false}>
-            <NavIcon icon={icon} />
-          </Badge>
+          {icon && (
+            <Badge badgeContent={badgeContent} color="error" withBorder={false}>
+              <NavIcon icon={icon} />
+            </Badge>
+          )}
           <NavText>{label}</NavText>
         </>
       )
@@ -40,8 +44,12 @@ const NavContent = ({ icon, badgeContent, label }) => {
 
   return (
     <>
-      <NavIcon icon={icon} />
+      {icon && <NavIcon icon={icon} />}
       <NavText>{label}</NavText>
+
+      {external && (
+        <Icon icon={OpenWithIcon} size={11} style={{ marginLeft: '4px' }} />
+      )}
     </>
   )
 }
