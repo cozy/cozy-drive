@@ -17,7 +17,7 @@ export const ExtraDrive = (): JSX.Element | null => {
   const clickState = useState(null)
   const { t } = useI18n()
 
-  if (!files) return null
+  if (!files || files.length === 0) return null
 
   return isMobile ? (
     <FileList>
@@ -55,7 +55,7 @@ export const ExtraDrive = (): JSX.Element | null => {
             key={file._id}
             secondary
             to={file.path}
-            label={file.attributes.name}
+            label={file.name}
             clickState={clickState}
             external
           />
