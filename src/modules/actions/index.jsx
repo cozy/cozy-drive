@@ -66,7 +66,7 @@ export const hr = () => {
     icon: 'hr',
     displayInSelectionBar: false,
     Component: forwardRef(function hr(props, ref) {
-      return <Divider ref={ref} />
+      return <Divider ref={ref} className="u-mv-half" />
     })
   }
 }
