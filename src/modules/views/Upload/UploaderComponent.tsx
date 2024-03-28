@@ -21,7 +21,6 @@ const _UploaderComponent = (props: {
   const {
     items,
     uploadFilesFromFlagship,
-    folderQuery,
     contentQuery,
     onClose,
     folder,

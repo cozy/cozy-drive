@@ -10,7 +10,7 @@
     "tx": "tx pull --all || true",
     "lint": "npm-run-all --parallel 'lint:*'",
     "lint:styles": "stylint src --config ./node_modules/cozy-scripts/config/.stylintrc",
-    "lint:js": "eslint '{src,test}/**/*.{js,jsx}'",
+    "lint:js": "eslint '{src,test}/**/*.{js,jsx,ts,tsx}'",
     "test": "env NODE_ENV='test' jest",
     "version": "yarn version:manifest",
     "version:manifest": "replace '\\d+\\.\\d+\\.\\d+' $npm_package_version ./manifest.webapp",
@@ -81,7 +81,6 @@
     "worker-loader": "2.0.0"
   },
   "dependencies": {
-    "@cozy/minilog": "1.0.0",
     "@egjs/hammerjs": "2.0.17",
     "classnames": "2.3.1",
     "cozy-bar": "12.2.1",
@@ -95,6 +94,7 @@
     "cozy-intent": "^2.18.0",
     "cozy-keys-lib": "6.0.0",
     "cozy-logger": "1.9.1",
+    "cozy-minilog": "3.3.1",
     "cozy-realtime": "4.6.0",
     "cozy-scanner": "^7.1.4",
     "cozy-scripts": "^8.3.0",
