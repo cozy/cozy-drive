@@ -8,6 +8,7 @@ import Divider from 'cozy-ui/transpiled/react/Divider'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 import HistoryIcon from 'cozy-ui/transpiled/react/Icons/History'
+import UnqualifyIcon from 'cozy-ui/transpiled/react/Icons/LabelOutlined'
 import MovetoIcon from 'cozy-ui/transpiled/react/Icons/Moveto'
 import MultiFilesIcon from 'cozy-ui/transpiled/react/Icons/MultiFiles'
 import QualifyIcon from 'cozy-ui/transpiled/react/Icons/Qualify'
@@ -192,7 +193,7 @@ export const qualify = ({ t, lang, navigate, pathname }) => {
   return {
     name: 'qualify',
     label,
-    icon,
+    icon: QualifyIcon,
     displayCondition: selection =>
       selection.length === 1 && isFile(selection[0]),
     action: files =>
@@ -204,7 +205,7 @@ export const qualify = ({ t, lang, navigate, pathname }) => {
       return (
         <ActionsMenuItem {...props} ref={ref}>
           <ListItemIcon>
-            <Icon icon={icon} />
+            <Icon icon={fileQualif ? QualifyIcon : UnqualifyIcon} />
           </ListItemIcon>
           <ListItemText primary={fileQualif ? t('Scan.requalify') : label} />
           {fileQualif && (
