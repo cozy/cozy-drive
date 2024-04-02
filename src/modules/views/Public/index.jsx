@@ -69,7 +69,7 @@ const PublicFolderView = () => {
   const { pathname } = useLocation()
   const params = useParams()
   const client = useClient()
-  const { t } = useI18n()
+  const { t, lang } = useI18n()
   const { isMobile } = useBreakpoints()
   const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)
   const currentFolderId = useCurrentFolderId()
@@ -156,6 +156,7 @@ const PublicFolderView = () => {
   const actionOptions = {
     client,
     t,
+    lang,
     pushModal,
     popModal,
     refresh: refreshAfterChange,

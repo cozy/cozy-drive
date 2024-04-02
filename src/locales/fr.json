@@ -255,6 +255,7 @@
     "moveto": "Déplacer vers…",
     "duplicate": "Dupliquer",
     "phone-download": "Rendre accessible hors-ligne",
+    "requalify": "Requalifier",
     "qualify": "Qualifier",
     "history": "Versions",
     "more": "Afficher plus d'action"
@@ -645,6 +646,7 @@
     "save": "Sauvegarder",
     "cancel": "Annuler",
     "qualify": "Qualifier",
+    "requalify": "Requalifier",
     "apply": "Appliquer",
     "error": {
       "offline": "Vous êtes actuellement déconnecté, vous ne pouvez donc pas utiliser cette fonctionnalité. Connectez-vous à internet et recommencez. ",
