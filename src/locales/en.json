@@ -645,6 +645,7 @@
     "save": "Save",
     "cancel": "Cancel",
     "qualify": "Categorize",
+    "requalify": "Re-categorize",
     "apply": "Apply",
     "error": {
       "offline": "You are currently offline and you can't use this functionnality. Try it later",

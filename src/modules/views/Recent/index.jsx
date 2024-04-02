@@ -40,7 +40,7 @@ const mobileExtraColumnsNames = []
 export const RecentView = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
-  const { t } = useI18n()
+  const { t, lang } = useI18n()
   const { isMobile } = useBreakpoints()
   const client = useClient()
   const { pushModal, popModal } = useModalContext()
@@ -79,6 +79,7 @@ export const RecentView = () => {
   const actionsOptions = {
     client,
     t,
+    lang,
     pushModal,
     popModal,
     refresh,

@@ -2,15 +2,11 @@ import { CozyFile } from 'models'
 import React from 'react'
 
 import { isDirectory } from 'cozy-client/dist/models/file'
-import { getBoundT } from 'cozy-scanner'
 import ActionsMenu from 'cozy-ui/transpiled/react/ActionsMenu'
 import ActionsMenuMobileHeader from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuMobileHeader'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import QualifyIcon from 'cozy-ui/transpiled/react/Icons/Qualify'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
-import Typography from 'cozy-ui/transpiled/react/Typography'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import getMimeTypeIcon from 'lib/getMimeTypeIcon'
 
@@ -22,7 +18,6 @@ export const ActionMenuWithHeader = ({
   onClose,
   anchorElRef
 }) => {
-  const { lang } = useI18n()
   return (
     <ActionsMenu
       open
@@ -37,16 +32,15 @@ export const ActionMenuWithHeader = ({
       }}
     >
       <ActionsMenuMobileHeader>
-        <MenuHeaderFile file={file} lang={lang} />
+        <MenuHeaderFile file={file} />
       </ActionsMenuMobileHeader>
     </ActionsMenu>
   )
 }
 
-const MenuHeaderFile = ({ file, lang }) => {
+const MenuHeaderFile = ({ file }) => {
   const { filename, extension } = CozyFile.splitFilename(file)
 
-  const scannerT = getBoundT(lang)
   return (
     <>
       <ListItemIcon>
@@ -65,19 +59,6 @@ const MenuHeaderFile = ({ file, lang }) => {
               {extension}
             </span>
           </>
-        }
-        secondary={
-          file.metadata?.qualification?.label ? (
-            <div className="u-coolGrey u-fz-tiny u-fs-normal u-flex u-flex-items-center">
-              <Icon icon={QualifyIcon} size="10" />
-              <Typography
-                variant="caption"
-                className={styles['fil-mobileactionmenu-category']}
-              >
-                {scannerT(`Scan.items.${file.metadata.qualification.label}`)}
-              </Typography>
-            </div>
-          ) : null
         }
         primaryTypographyProps={{ variant: 'h6' }}
       />

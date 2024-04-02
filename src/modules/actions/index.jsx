@@ -1,5 +1,7 @@
 import React, { forwardRef } from 'react'
 
+import { getQualification } from 'cozy-client/dist/models/document'
+import { getBoundT } from 'cozy-client/dist/models/document/locales'
 import { isFile } from 'cozy-client/dist/models/file'
 import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import Divider from 'cozy-ui/transpiled/react/Divider'
@@ -183,9 +185,9 @@ export const duplicate = ({ client, t, hasWriteAccess, refresh, isPublic }) => {
   }
 }
 
-export const qualify = ({ t, navigate, pathname }) => {
+export const qualify = ({ t, lang, navigate, pathname }) => {
   const label = t('SelectionBar.qualify')
-  const icon = QualifyIcon
+  const scannerT = getBoundT(lang || 'en')
 
   return {
     name: 'qualify',
@@ -196,12 +198,22 @@ export const qualify = ({ t, navigate, pathname }) => {
     action: files =>
       navigateToModal({ navigate, pathname, files, path: 'qualify' }),
     Component: forwardRef(function Qualify(props, ref) {
+      const file = props.docs[0]
+      const fileQualif = getQualification(file)
+
       return (
         <ActionsMenuItem {...props} ref={ref}>
           <ListItemIcon>
             <Icon icon={icon} />
           </ListItemIcon>
-          <ListItemText primary={label} />
+          <ListItemText primary={fileQualif ? t('Scan.requalify') : label} />
+          {fileQualif && (
+            <ListItemText
+              secondary={scannerT(`Scan.items.${fileQualif.label}`)}
+              secondaryTypographyProps={{ variant: 'caption' }}
+              className="u-ta-right"
+            />
+          )}
         </ActionsMenuItem>
       )
     })

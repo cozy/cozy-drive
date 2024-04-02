@@ -57,7 +57,7 @@ const DriveView = () => {
   useHead()
   const { isSelectionBarVisible } = useSelectionContext()
   const { isMobile } = useBreakpoints()
-  const { t } = useI18n()
+  const { t, lang } = useI18n()
   const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)
   const { allLoaded, hasWriteAccess, refresh } = useSharingContext()
   const client = useClient()
@@ -124,6 +124,7 @@ const DriveView = () => {
   const actionsOptions = {
     client,
     t,
+    lang,
     vaultClient,
     pushModal,
     popModal,
