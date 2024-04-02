@@ -6213,10 +6213,10 @@ cozy-client@41.2.0, cozy-client@^41.2.0:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
-cozy-client@^46.1.1:
-  version "46.1.1"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-46.1.1.tgz#b7c43015c6345276afcc38b1d9a6191ad5dbed4c"
-  integrity sha512-IaNh3Mpy5B6bc671gCmtWcKqPriHZW7YrNuniwizltoXzq3lU4NV21vvPrL5q+inDhR94pRU14TWDLrjsXy+ZQ==
+cozy-client@^46.2.0:
+  version "46.2.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-46.2.0.tgz#f742972e57e4a6c56dc6673df360e5475a0b9e7f"
+  integrity sha512-NT3K8bcdFhB/QYbEx91uURbpcy21AmoolAJVZFIkllsXXLPVItp8K5+3d+O8hbaEhqmSZYnnnm4Is6s/5/prjg==
   dependencies:
     "@cozy/minilog" "1.0.0"
     "@types/jest" "^26.0.20"
@@ -6572,15 +6572,6 @@ cozy-stack-client@^41.2.0:
     mime "^2.4.0"
     qs "^6.7.0"
 
-cozy-stack-client@^45.2.0:
-  version "45.2.0"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-45.2.0.tgz#c0d20d6e11a57477752cd38f1ca8732c668f5d14"
-  integrity sha512-XpbD568C+gG2ZSkWcdlBQIfXb2kefpQpwjgMISZ0raHk6cA1c626pptfbadXzmNaj9IiDG/gTCztzbnxZ3xBUA==
-  dependencies:
-    detect-node "^2.0.4"
-    mime "^2.4.0"
-    qs "^6.7.0"
-
 cozy-stack-client@^46.1.0:
   version "46.1.0"
   resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-46.1.0.tgz#c2fbe569beed3c89cfd3a666635c02e381e2dbf1"
@@ -6595,10 +6586,10 @@ cozy-tsconfig@1.2.0:
   resolved "https://registry.yarnpkg.com/cozy-tsconfig/-/cozy-tsconfig-1.2.0.tgz#17e61f960f139fae4d26cbac2254b9ab632b269e"
   integrity sha512-TRHnY9goF3FzVlUbP7BcHxuN2XAA4AmppT4fHHZmTKaSwYTByVR1Al+riFMDbce94kJZ1wzl9WNLWQuqzGZ6Cw==
 
-cozy-ui@^105.2.0:
-  version "105.2.1"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-105.2.1.tgz#abcf2735bfaa03fdea687297c97ab81e194842d9"
-  integrity sha512-IJ4pMnz0niSxCbsThHODyfFVoDftxYTzY17bNVgnn0JJfO8v14KinnkOHCw2570lGPBt167msq+wEG0Z46YVHA==
+cozy-ui@^105.4.0:
+  version "105.4.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-105.4.0.tgz#603da5455fb813f8f711f0bd8adc1aa9279f2a6a"
+  integrity sha512-n4eoLPI+F2OV9Gmu6+9wcivul/xsRsZsSE9H5g51KpsF8Nhed+b1Eo9TSCT1FmCZJ69jXANo7S3zfm5de4+XUQ==
   dependencies:
     "@babel/runtime" "^7.3.4"
     "@material-ui/core" "4.12.3"
