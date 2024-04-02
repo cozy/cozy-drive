@@ -46,7 +46,7 @@ describe('qualification migration', () => {
     expect(extractFilesToMigrate([file])).toHaveLength(0)
   })
 
-  it('should get the new qualification for a file qualified by cozy-scanner', () => {
+  it('should get the new qualification for a file qualified by cozy-client', () => {
     const file = {
       metadata: {
         id: '22',
@@ -57,6 +57,7 @@ describe('qualification migration', () => {
     }
     const qualif = getFileRequalification(file)
     expect(qualif).toEqual({
+      icon: 'heart',
       label: 'health_invoice',
       purpose: 'invoice',
       sourceCategory: 'health'
@@ -74,6 +75,7 @@ describe('qualification migration', () => {
     }
     const qualif = getFileRequalification(file)
     expect(qualif).toEqual({
+      icon: 'heart',
       label: 'health_invoice',
       purpose: 'invoice',
       sourceCategory: 'health'

@@ -639,6 +639,7 @@
     }
   },
   "Scan": {
+    "none": "Nothing",
     "scan_a_doc": "Scan a doc",
     "save_doc": "Save the doc",
     "filename": "Filename",

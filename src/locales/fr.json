@@ -640,6 +640,7 @@
     }
   },
   "Scan": {
+    "none": "Aucune",
     "scan_a_doc": "Numériser un doc",
     "save_doc": "Enregistrer le document",
     "filename": "Nom du fichier",
