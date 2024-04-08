@@ -1,5 +1,5 @@
 /* global __APP_SLUG__ */
-import minilog from '@cozy/minilog'
+import minilog from 'cozy-minilog'
 
 const logger = minilog(`cozy-${__APP_SLUG__}`)
 minilog.enable()

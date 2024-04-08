@@ -6,6 +6,7 @@ import { SharedBadge, SharingOwnerAvatar } from 'cozy-sharing'
 import GhostFileBadge from 'cozy-ui/transpiled/react/GhostFileBadge'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import LinkIcon from 'cozy-ui/transpiled/react/Icons/Link'
+import Openwith from 'cozy-ui/transpiled/react/Icons/Openwith'
 import InfosBadge from 'cozy-ui/transpiled/react/InfosBadge'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -15,7 +16,13 @@ import { SharingShortcutIcon } from 'modules/filelist/SharingShortcutIcon'
 
 import styles from 'styles/filelist.styl'
 
-const FileThumbnail = ({ file, size, isInSyncFromSharing, isEncrypted }) => {
+const FileThumbnail = ({
+  file,
+  size,
+  isInSyncFromSharing,
+  isEncrypted,
+  isExternalDrive
+}) => {
   const { isMobile } = useBreakpoints()
   const isSharingShortcut =
     models.file.isSharingShortcut(file) && !isInSyncFromSharing
@@ -29,8 +36,13 @@ const FileThumbnail = ({ file, size, isInSyncFromSharing, isEncrypted }) => {
       {isSimpleFile && (
         <FileIcon file={file} size={size} isEncrypted={isEncrypted} />
       )}
-      {isRegularShortcut && (
+      {!isExternalDrive && isRegularShortcut && (
         <InfosBadge badgeContent={<Icon icon={LinkIcon} size={10} />}>
+          <FileIcon file={file} size={size} />
+        </InfosBadge>
+      )}
+      {isExternalDrive && (
+        <InfosBadge badgeContent={<Icon icon={Openwith} size={10} />}>
           <FileIcon file={file} size={size} />
         </InfosBadge>
       )}
