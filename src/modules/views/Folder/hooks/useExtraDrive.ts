@@ -1,41 +1,30 @@
-import { useMemo } from 'react'
-
 import { useQuery } from 'cozy-client'
 
-import { useFolderSort } from 'modules/navigation/duck'
-import { buildDriveQuery } from 'modules/queries'
+import { buildExternalDriveQuery } from 'modules/views/Folder/queries/fetchExtraDrive'
+import { ExtraDriveFile } from 'modules/views/Folder/types'
 
-interface File {
-  _id: string
-  path: string
-  attributes: {
-    name: string
-  }
-}
+/**
+ * Custom React hook to fetch data from an external drive folder.
+ *
+ * This hook encapsulates the logic for building the query parameters and
+ * executing the query to fetch files from an external drive. It leverages
+ * the 'cozy-client' library's useQuery hook for data fetching.
+ *
+ * @returns An array of ExtraDriveFile objects representing the files fetched
+ * from the external drive. If no data is fetched, an empty array is returned (be careful to handle this case).
+ */
+export const useExtraDrive = (): ExtraDriveFile[] => {
+  // Build the query parameters for fetching external drive data
+  const query = buildExternalDriveQuery()
 
-export const useExtraDrive = (): File[] | undefined => {
-  const folderId = '3130bb7c264db92cf1955f62b600097a'
-  const [sortOrder] = useFolderSort(folderId) as [
-    { attribute: string; order: string }
-  ]
+  // Execute the query using cozy-client's useQuery hook
+  // The result of the query is cast to ensure it's treated as an array of ExtraDriveFile objects
+  const { data } = useQuery(query.definition, query.options) as
+    | {
+        data: ExtraDriveFile[]
+      }
+    | { data: null }
 
-  const buildedFilesQuery = buildDriveQuery({
-    currentFolderId: folderId,
-    type: 'file',
-    sortAttribute: sortOrder.attribute,
-    sortOrder: sortOrder.order
-  })
-
-  const filesQuery = useQuery(
-    buildedFilesQuery.definition(),
-    buildedFilesQuery.options
-  ) as { data: File[] | undefined }
-
-  const files = useMemo(() => {
-    if (filesQuery.data?.length === 0) return undefined
-
-    return filesQuery.data
-  }, [filesQuery.data])
-
-  return files
+  // Return the fetched data
+  return data ?? []
 }

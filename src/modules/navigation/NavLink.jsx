@@ -24,7 +24,10 @@ const NavLink = ({
   return (
     <a
       style={{ outline: 'none' }}
-      onClick={() => setLastClicked(to)}
+      onClick={e => {
+        if (!to) e.preventDefault()
+        setLastClicked(to)
+      }}
       href={`#${to}`}
       className={cx(
         UINavLink.className,
@@ -38,7 +41,7 @@ const NavLink = ({
 
 NavLink.propTypes = {
   children: PropTypes.node.isRequired,
-  to: PropTypes.string.isRequired,
+  to: PropTypes.string,
   rx: PropTypes.shape(RegExp)
 }
 

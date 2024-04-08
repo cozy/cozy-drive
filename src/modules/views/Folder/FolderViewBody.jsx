@@ -253,28 +253,30 @@ const FolderViewBody = ({
                     )}
                     {queryResults.map((query, queryIndex) => (
                       <React.Fragment key={queryIndex}>
-                        {query.data.map(file => (
-                          <File
-                            key={file._id}
-                            attributes={file}
-                            withSelectionCheckbox
-                            onFolderOpen={navigateToFolder}
-                            onFileOpen={handleFileOpen}
-                            withFilePath={withFilePath}
-                            thumbnailSizeBig={isBigThumbnail}
-                            actions={actions}
-                            refreshFolderContent={refreshFolderContent}
-                            isInSyncFromSharing={
-                              !isSharingContextEmpty &&
-                              isSharingShortcut(file) &&
-                              isReferencedByShareInSharingContext(
-                                file,
-                                sharingsValue
-                              )
-                            }
-                            extraColumns={extraColumns}
-                          />
-                        ))}
+                        {query.data.map(file => {
+                          return (
+                            <File
+                              key={file._id}
+                              attributes={file}
+                              withSelectionCheckbox
+                              onFolderOpen={navigateToFolder}
+                              onFileOpen={handleFileOpen}
+                              withFilePath={withFilePath}
+                              thumbnailSizeBig={isBigThumbnail}
+                              actions={actions}
+                              refreshFolderContent={refreshFolderContent}
+                              isInSyncFromSharing={
+                                !isSharingContextEmpty &&
+                                isSharingShortcut(file) &&
+                                isReferencedByShareInSharingContext(
+                                  file,
+                                  sharingsValue
+                                )
+                              }
+                              extraColumns={extraColumns}
+                            />
+                          )
+                        })}
                         {query.hasMore && (
                           <LoadMore fetchMore={query.fetchMore} />
                         )}
@@ -307,7 +309,11 @@ const FolderViewBody = ({
                 extraColumns={extraColumns}
               />
             </>
-            <ExtraDrive />
+            <ExtraDrive
+              handleFileOpen={handleFileOpen}
+              navigateToFolder={navigateToFolder}
+              isFlatDomain={isFlatDomain}
+            />
           </FolderTab>
         )}
       </>
