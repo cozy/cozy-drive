@@ -10,7 +10,7 @@
     "tx": "tx pull --all || true",
     "lint": "npm-run-all --parallel 'lint:*'",
     "lint:styles": "stylint src --config ./node_modules/cozy-scripts/config/.stylintrc",
-    "lint:js": "eslint '{src,test}/**/*.{js,jsx}'",
+    "lint:js": "eslint -c eslint.config.js .",
     "test": "env NODE_ENV='test' jest",
     "version": "yarn version:manifest",
     "version:manifest": "replace '\\d+\\.\\d+\\.\\d+' $npm_package_version ./manifest.webapp",
@@ -55,6 +55,7 @@
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.6",
     "enzyme-to-json": "3.6.2",
+    "eslint-config-cozy-app": "/Users/cballevre/Documents/Lab/cozy-libs/packages/eslint-config-cozy-app/eslint-config-cozy-app-v7.0.1.tgz",
     "husky": "0.14.3",
     "identity-obj-proxy": "3.0.0",
     "jest": "29.7.0",
@@ -114,5 +115,8 @@
     "redux-mock-store": "1.5.4",
     "redux-thunk": "2.4.2",
     "whatwg-fetch": "3.0.0"
+  },
+  "resolutions": {
+    "**/eslint": "^8.0.0"
   }
 }
