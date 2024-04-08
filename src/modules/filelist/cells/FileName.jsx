@@ -13,7 +13,6 @@ import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
 import { TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
 
 import RenameInput from 'modules/drive/RenameInput'
-
 import styles from 'styles/filelist.styl'
 
 export const CertificationsIcons = ({ attributes }) => {

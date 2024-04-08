@@ -3,8 +3,9 @@ import React from 'react'
 
 import { createMockClient } from 'cozy-client'
 
-import { CertificationsIcons } from './FileName'
 import AppLike from 'test/components/AppLike'
+
+import { CertificationsIcons } from './FileName'
 
 const client = new createMockClient({})
 const setup = ({ attributes }) => {

@@ -1,5 +1,6 @@
-import { fetchFolder } from './fetchFolder'
 import { buildFolderQuery } from 'modules/queries'
+
+import { fetchFolder } from './fetchFolder'
 
 jest.mock('modules/queries')
 

@@ -1,5 +1,5 @@
-const { DefinePlugin } = require('webpack')
 const CopyPlugin = require('copy-webpack-plugin')
+const { DefinePlugin } = require('webpack')
 
 module.exports = {
   plugins: [

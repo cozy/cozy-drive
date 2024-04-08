@@ -5,9 +5,10 @@ import React from 'react'
 import { createMockClient } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import { Toolbar } from './Toolbar'
 import { ModalContextProvider, ModalStack } from 'lib/ModalContext'
 import AppLike from 'test/components/AppLike'
+
+import { Toolbar } from './Toolbar'
 
 jest.mock('cozy-ui/transpiled/react/providers/Breakpoints', () => ({
   ...jest.requireActual('cozy-ui/transpiled/react/providers/Breakpoints'),

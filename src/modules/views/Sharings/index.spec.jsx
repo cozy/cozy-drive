@@ -1,15 +1,16 @@
 import { render, fireEvent, waitFor } from '@testing-library/react'
 import React from 'react'
 
+import { useFilesQueryWithPath } from 'modules/views/hooks'
+import AppLike from 'test/components/AppLike'
+import { setupStoreAndClient } from 'test/setup'
+
 import { SharingsView } from './index'
 import {
   generateFileFixtures,
   getByTextWithMarkup,
   removeNonASCII
 } from '../testUtils'
-import { useFilesQueryWithPath } from 'modules/views/hooks'
-import AppLike from 'test/components/AppLike'
-import { setupStoreAndClient } from 'test/setup'
 
 const mockNavigate = jest.fn()
 const mockSharingContext = jest.fn()

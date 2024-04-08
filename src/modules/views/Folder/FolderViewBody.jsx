@@ -8,7 +8,6 @@ import { useWebviewIntent } from 'cozy-intent'
 import { useVaultClient, VaultUnlocker } from 'cozy-keys-lib'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import { useSyncingFakeFile } from './useSyncingFakeFile'
 import { EmptyDrive, EmptyTrash } from 'components/Error/Empty'
 import Oops from 'components/Error/Oops'
 import { TRASH_DIR_ID } from 'constants/config'
@@ -28,6 +27,8 @@ import SelectionBar from 'modules/selection/SelectionBar'
 import createFileOpeningHandler from 'modules/views/Folder/createFileOpeningHandler'
 import { isReferencedByShareInSharingContext } from 'modules/views/Folder/syncHelpers'
 import { isOfficeEnabled } from 'modules/views/OnlyOffice/helpers'
+
+import { useSyncingFakeFile } from './useSyncingFakeFile'
 
 // TODO: extraColumns is then passed to 'FileListHeader', 'AddFolder',
 // and 'File' (this one from a 'syncingFakeFile' and a normal file).

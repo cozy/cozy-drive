@@ -15,7 +15,6 @@ import SearchButton from 'modules/drive/Toolbar/components/SearchButton'
 import ShareButton from 'modules/drive/Toolbar/share/ShareButton'
 import SharedRecipients from 'modules/drive/Toolbar/share/SharedRecipients'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
-
 import styles from 'styles/toolbar.styl'
 
 const Toolbar = ({

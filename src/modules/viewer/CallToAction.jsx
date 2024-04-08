@@ -6,13 +6,14 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import CrossIcon from 'cozy-ui/transpiled/react/Icons/Cross'
 import palette from 'cozy-ui/transpiled/react/palette'
 
-import styles from './styles.styl'
 import {
   isClientAlreadyInstalled,
   isLinux,
   NOVIEWER_DESKTOP_CTA
 } from 'components/pushClient'
 import Config from 'config/config.json'
+
+import styles from './styles.styl'
 
 class CallToAction extends Component {
   state = {

@@ -11,6 +11,14 @@ import { TableRow, TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import { ActionMenuWithHeader } from 'modules/actionmenu/ActionMenuWithHeader'
+import { extraColumnsPropTypes } from 'modules/certifications'
+import { isRenaming, getRenamingFile } from 'modules/drive/rename'
+import FileOpener from 'modules/filelist/FileOpener'
+import FileThumbnail from 'modules/filelist/FileThumbnail'
+import { useSelectionContext } from 'modules/selection/SelectionProvider'
+import styles from 'styles/filelist.styl'
+
 import {
   SelectBox,
   FileName,
@@ -20,14 +28,6 @@ import {
   FileAction,
   SharingShortcutBadge
 } from './cells'
-import { ActionMenuWithHeader } from 'modules/actionmenu/ActionMenuWithHeader'
-import { extraColumnsPropTypes } from 'modules/certifications'
-import { isRenaming, getRenamingFile } from 'modules/drive/rename'
-import FileOpener from 'modules/filelist/FileOpener'
-import FileThumbnail from 'modules/filelist/FileThumbnail'
-import { useSelectionContext } from 'modules/selection/SelectionProvider'
-
-import styles from 'styles/filelist.styl'
 
 const File = ({
   t,

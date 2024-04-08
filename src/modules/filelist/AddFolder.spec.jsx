@@ -4,10 +4,11 @@ import React from 'react'
 import flag from 'cozy-flags'
 import { WebVaultClient } from 'cozy-keys-lib'
 
-import AddFolder, { AddFolder as DumbAddFolder } from './AddFolder'
 import { createFolder } from 'modules/navigation/duck/actions'
 import AppLike from 'test/components/AppLike'
 import { setupStoreAndClient } from 'test/setup'
+
+import AddFolder, { AddFolder as DumbAddFolder } from './AddFolder'
 
 const originalFlag = jest.requireActual('cozy-flags').default
 

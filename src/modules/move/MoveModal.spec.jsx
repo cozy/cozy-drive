@@ -5,10 +5,11 @@ import React from 'react'
 import { createMockClient } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
 
-import { MoveModal } from './MoveModal'
 import { ROOT_DIR_ID } from 'constants/config'
 import useDisplayedFolder from 'hooks/useDisplayedFolder'
 import AppLike from 'test/components/AppLike'
+
+import { MoveModal } from './MoveModal'
 
 jest.mock('hooks/useDisplayedFolder')
 jest.mock('cozy-sharing', () => ({

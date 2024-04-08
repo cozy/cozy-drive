@@ -4,7 +4,6 @@ import React from 'react'
 import { TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
 
 import { ShareContent } from 'modules/filelist/cells/ShareContent'
-
 import styles from 'styles/filelist.styl'
 
 const Status = ({ file, disabled, isInSyncFromSharing }) => {

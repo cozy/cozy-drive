@@ -8,10 +8,6 @@ import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import withSharedDocumentIds from './withSharedDocumentIds'
-import FolderView from '../Folder/FolderView'
-import FolderViewBody from '../Folder/FolderViewBody'
-import FolderViewHeader from '../Folder/FolderViewHeader'
 import useHead from 'components/useHead'
 import { useModalContext } from 'lib/ModalContext'
 import {
@@ -33,6 +29,11 @@ import {
   buildSharingsWithMetadataAttributeQuery
 } from 'modules/queries'
 import { useFilesQueryWithPath } from 'modules/views/hooks'
+
+import withSharedDocumentIds from './withSharedDocumentIds'
+import FolderView from '../Folder/FolderView'
+import FolderViewBody from '../Folder/FolderViewBody'
+import FolderViewHeader from '../Folder/FolderViewHeader'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []

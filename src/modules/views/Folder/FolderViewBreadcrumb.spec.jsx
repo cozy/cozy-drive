@@ -1,12 +1,13 @@
 import { render } from '@testing-library/react'
 import React from 'react'
 
-import FolderViewBreadcrumb from './FolderViewBreadcrumb'
-import { useBreadcrumbPath } from './hooks/useBreadcrumbPath'
 import {
   dummyBreadcrumbPath,
   dummyRootBreadcrumbPath
 } from 'test/dummies/dummyBreadcrumbPath'
+
+import FolderViewBreadcrumb from './FolderViewBreadcrumb'
+import { useBreadcrumbPath } from './hooks/useBreadcrumbPath'
 
 jest.mock('./hooks/useBreadcrumbPath')
 jest.mock('modules/navigation/Breadcrumb/MobileAwareBreadcrumb', () => ({

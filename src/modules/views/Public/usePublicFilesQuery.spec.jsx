@@ -3,8 +3,9 @@ import React from 'react'
 
 import { createMockClient } from 'cozy-client'
 
-import usePublicFilesQuery from './usePublicFilesQuery'
 import AppLike from 'test/components/AppLike'
+
+import usePublicFilesQuery from './usePublicFilesQuery'
 
 describe('usePublicFilesQuery', () => {
   const mockClient = createMockClient({})

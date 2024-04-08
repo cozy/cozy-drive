@@ -8,7 +8,6 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import FileThumbnail from 'modules/filelist/FileThumbnail'
 import FilenameInput from 'modules/filelist/FilenameInput'
 import { Empty as EmptyCell } from 'modules/filelist/cells'
-
 import styles from 'styles/filelist.styl'
 
 const AddFolderRow = ({ isEncrypted, onSubmit, onAbort, extraColumns }) => {

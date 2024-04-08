@@ -20,7 +20,6 @@ import { HashRouter } from 'react-router-dom'
 
 import flag from 'cozy-flags'
 
-import setupApp from './setupAppContext'
 import App from 'components/App/App'
 import AppRoute from 'modules/navigation/AppRoute'
 import AppBarSearch from 'modules/search/AppBarSearch'
@@ -28,6 +27,8 @@ import AppBarSearch from 'modules/search/AppBarSearch'
 // ambient styles
 // eslint-disable-next-line no-unused-vars
 import mainStyles from 'styles/main.styl'
+
+import setupApp from './setupAppContext'
 
 if (__DEVELOPMENT__) {
   window.flag = flag

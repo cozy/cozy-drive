@@ -10,9 +10,8 @@ import List from 'cozy-ui/transpiled/react/List'
 import BarSearchInputGroup from 'modules/search/components/BarSearchInputGroup'
 import SuggestionItem from 'modules/search/components/SuggestionItem'
 import SuggestionListSkeleton from 'modules/search/components/SuggestionListSkeleton'
-import useSearch from 'modules/search/hooks/useSearch'
-
 import styles from 'modules/search/components/styles.styl'
+import useSearch from 'modules/search/hooks/useSearch'
 
 const BarSearchAutosuggest = ({ t }) => {
   const webviewIntent = useWebviewIntent()

@@ -5,8 +5,9 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 import { ShareButton } from 'cozy-sharing'
 
-import styles from './styles.styl'
 import { getPathToShareDisplayedFolder } from 'modules/drive/Toolbar/share/helpers'
+
+import styles from './styles.styl'
 
 const ShareButtonWithProps = ({ isDisabled }) => {
   const { displayedFolder } = useDisplayedFolder()

@@ -5,7 +5,6 @@ import FileImageLoader from 'cozy-ui/transpiled/react/FileImageLoader'
 
 import FileIconMime from 'modules/filelist/FileIconMime'
 import FileIconShortcut from 'modules/filelist/FileIconShortcut'
-
 import styles from 'styles/filelist.styl'
 
 const FileIcon = ({ file, size, isEncrypted }) => {

@@ -1,27 +1,27 @@
-import { useNavigate, useSearchParams } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import { useCallback, useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import { useQuery } from 'cozy-client'
 import { useWebviewIntent } from 'cozy-intent'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import logger from 'cozy-logger'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import { ROOT_DIR_ID } from 'constants/config'
+import { getErrorMessage } from 'modules/drive/helpers'
+import { buildMoveOrImportQuery, buildOnlyFolderQuery } from 'modules/queries'
+import { ADD_TO_UPLOAD_QUEUE, purgeUploadQueue } from 'modules/upload'
 import {
   FileFromNative,
   Folder,
   UploadFromFlagship
 } from 'modules/views/Upload/UploadTypes'
-import { ROOT_DIR_ID } from 'constants/config'
-import { ADD_TO_UPLOAD_QUEUE, purgeUploadQueue } from 'modules/upload'
-import { buildMoveOrImportQuery, buildOnlyFolderQuery } from 'modules/queries'
 import {
   generateForQueue,
   getFilesToHandle,
   sendFilesToHandle
 } from 'modules/views/Upload/UploadUtils'
-import { getErrorMessage } from 'modules/drive/helpers'
 
 export const useUploadFromFlagship = (): UploadFromFlagship => {
   const webviewIntent = useWebviewIntent()

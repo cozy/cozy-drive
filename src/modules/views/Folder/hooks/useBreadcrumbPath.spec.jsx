@@ -3,12 +3,13 @@ import { act, renderHook } from '@testing-library/react-hooks'
 import { useClient } from 'cozy-client'
 import log from 'cozy-logger'
 
-import { useBreadcrumbPath } from './useBreadcrumbPath'
-import { fetchFolder } from '../queries/fetchFolder'
 import {
   dummyBreadcrumbPath,
   dummyRootBreadcrumbPath
 } from 'test/dummies/dummyBreadcrumbPath'
+
+import { useBreadcrumbPath } from './useBreadcrumbPath'
+import { fetchFolder } from '../queries/fetchFolder'
 
 jest.mock('cozy-logger')
 jest.mock('cozy-client')

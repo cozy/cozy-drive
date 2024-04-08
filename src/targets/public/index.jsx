@@ -20,7 +20,6 @@ import getSharedDocument from 'cozy-sharing/dist/getSharedDocument'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import { I18n, initTranslation } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import AppRouter from './components/AppRouter'
 import App from 'components/App/App'
 import ErrorShare from 'components/Error/ErrorShare'
 import appMetadata from 'lib/appMetadata'
@@ -29,8 +28,9 @@ import logger from 'lib/logger'
 import registerClientPlugins from 'lib/registerClientPlugins'
 import { configureReporter, setCozyUrl } from 'lib/reporter'
 import StyledApp from 'modules/drive/StyledApp'
-
 import styles from 'styles/main.styl'
+
+import AppRouter from './components/AppRouter'
 
 const renderError = (lang, root) =>
   render(

@@ -3,15 +3,16 @@ import React from 'react'
 
 import { useSharingContext } from 'cozy-sharing'
 
+import { useFilesQueryWithPath } from 'modules/views/hooks'
+import AppLike from 'test/components/AppLike'
+import { setupStoreAndClient } from 'test/setup'
+
 import RecentViewWithProvider from './index'
 import {
   generateFileFixtures,
   getByTextWithMarkup,
   removeNonASCII
 } from '../testUtils'
-import { useFilesQueryWithPath } from 'modules/views/hooks'
-import AppLike from 'test/components/AppLike'
-import { setupStoreAndClient } from 'test/setup'
 
 const mockNavigate = jest.fn()
 

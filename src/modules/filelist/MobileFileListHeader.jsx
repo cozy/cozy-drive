@@ -10,12 +10,12 @@ import {
 } from 'cozy-ui/transpiled/react/deprecated/Table'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import MobileSortMenu from './MobileSortMenu'
 import iconListMin from 'assets/icons/icon-list-min.svg'
 import iconList from 'assets/icons/icon-list.svg'
 import { DEFAULT_SORT } from 'config/sort'
-
 import styles from 'styles/filelist.styl'
+
+import MobileSortMenu from './MobileSortMenu'
 
 export const MobileFileListHeader = ({
   folderId,

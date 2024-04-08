@@ -7,7 +7,6 @@ import AppLinker, {
 } from 'cozy-ui/transpiled/react/AppLinker'
 
 import SuggestionItemTextHighlighted from 'modules/search/components/SuggestionItemTextHighlighted'
-
 import styles from 'modules/search/components/styles.styl'
 
 const SuggestionItemTextSecondary = ({

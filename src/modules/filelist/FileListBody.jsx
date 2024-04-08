@@ -5,7 +5,6 @@ import { TableBody } from 'cozy-ui/transpiled/react/deprecated/Table'
 
 import { FabContext } from 'lib/FabProvider'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
-
 import styles from 'styles/filelist.styl'
 
 const FileListBody = ({ className, children }) => {

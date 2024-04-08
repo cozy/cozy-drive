@@ -1,17 +1,18 @@
 import React from 'react'
 
-import { withStyles } from 'cozy-ui/transpiled/react/styles'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import { withStyles } from 'cozy-ui/transpiled/react/styles'
 
-import Header from 'modules/move/Header'
 import Explorer from 'modules/move/Explorer'
 import FileList from 'modules/move/FileList'
-import Loader from 'modules/move/Loader'
 import Footer from 'modules/move/Footer'
+import Header from 'modules/move/Header'
+import Loader from 'modules/move/Loader'
 import Topbar from 'modules/move/Topbar'
-import { useUploadFromFlagship } from 'modules/views/Upload/useUploadFromFlagship'
 import { shouldRender } from 'modules/views/Upload/UploadUtils'
+import { useUploadFromFlagship } from 'modules/views/Upload/useUploadFromFlagship'
+
 import { styles } from 'modules/views/Upload/UploaderComponent.styles'
 
 const _UploaderComponent = (props: {

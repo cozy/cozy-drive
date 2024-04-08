@@ -6,7 +6,6 @@ import { compose } from 'redux'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import UploadButton from 'modules/upload/UploadButton'
-
 import styles from 'styles/toolbar.styl'
 
 const UploadButtonItem = ({ t, isDisabled, onUploaded }) => {

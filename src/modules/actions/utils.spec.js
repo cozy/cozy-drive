@@ -2,7 +2,6 @@ import { createMockClient } from 'cozy-client'
 import { initQuery, receiveQueryResult } from 'cozy-client/dist/store'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
-import { trashFiles, downloadFiles } from './utils'
 import { TRASH_DIR_ID } from 'constants/config'
 import { DOCTYPE_FILES_ENCRYPTION } from 'lib/doctypes'
 import {
@@ -10,6 +9,8 @@ import {
   downloadEncryptedFile
 } from 'lib/encryption'
 import { generateFile } from 'test/generate'
+
+import { trashFiles, downloadFiles } from './utils'
 
 jest.mock('modules/navigation/AppRoute', () => ({
   routes: []

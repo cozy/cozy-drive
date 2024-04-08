@@ -10,10 +10,6 @@ import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import FolderView from '../Folder/FolderView'
-import FolderViewBody from '../Folder/FolderViewBody'
-import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
-import FolderViewHeader from '../Folder/FolderViewHeader'
 import useHead from 'components/useHead'
 import { useModalContext } from 'lib/ModalContext'
 import {
@@ -34,6 +30,11 @@ import {
   buildFileWithSpecificMetadataAttributeQuery
 } from 'modules/queries'
 import Dropzone from 'modules/upload/Dropzone'
+
+import FolderView from '../Folder/FolderView'
+import FolderViewBody from '../Folder/FolderViewBody'
+import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
+import FolderViewHeader from '../Folder/FolderViewHeader'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []

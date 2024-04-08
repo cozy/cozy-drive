@@ -9,7 +9,6 @@ import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { getPathToShareDisplayedFolder } from 'modules/drive/Toolbar/share/helpers'
-
 import styles from 'styles/toolbar.styl'
 
 const ShareItem = ({ displayedFolder }) => {

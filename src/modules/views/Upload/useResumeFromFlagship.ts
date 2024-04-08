@@ -5,9 +5,9 @@ import { useClient } from 'cozy-client'
 import { useWebviewIntent } from 'cozy-intent'
 import logger from 'cozy-logger'
 
+import { getErrorMessage } from 'modules/drive/helpers'
 import { getUploadQueue, ADD_TO_UPLOAD_QUEUE } from 'modules/upload'
 import { FileFromNative } from 'modules/views/Upload/UploadTypes'
-import { getErrorMessage } from 'modules/drive/helpers'
 
 export const useResumeUploadFromFlagship = (): void => {
   const client = useClient()

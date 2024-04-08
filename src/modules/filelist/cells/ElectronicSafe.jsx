@@ -7,7 +7,6 @@ import { TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import CertificationTooltip from 'modules/certifications/CertificationTooltip'
-
 import styles from 'styles/filelist.styl'
 
 const ElectronicSafe = ({ file }) => {

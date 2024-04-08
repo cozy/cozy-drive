@@ -11,15 +11,15 @@ import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import EmptyTrashConfirm from './components/EmptyTrashConfirm'
-import SelectableItem from '../drive/Toolbar/selectable/SelectableItem'
 import { MoreButton } from 'components/Button'
 import { useModalContext } from 'lib/ModalContext'
 import { emptyTrash } from 'modules/actions/utils'
 import SearchButton from 'modules/drive/Toolbar/components/SearchButton'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
-
 import styles from 'styles/toolbar.styl'
+
+import EmptyTrashConfirm from './components/EmptyTrashConfirm'
+import SelectableItem from '../drive/Toolbar/selectable/SelectableItem'
 
 export const Toolbar = ({ disabled }) => {
   const { t } = useI18n()

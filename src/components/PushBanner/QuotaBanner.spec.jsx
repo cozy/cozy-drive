@@ -6,9 +6,10 @@ import { isFlagshipApp } from 'cozy-device-helper'
 import flag from 'cozy-flags'
 import { useWebviewIntent } from 'cozy-intent'
 
+import { TestI18n } from 'test/components/AppLike'
+
 import { usePushBannerContext } from './PushBannerProvider'
 import QuotaBanner from './QuotaBanner'
-import { TestI18n } from 'test/components/AppLike'
 
 jest.mock('./PushBannerProvider', () => ({
   usePushBannerContext: jest.fn()

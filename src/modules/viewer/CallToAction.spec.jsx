@@ -2,8 +2,9 @@ import { render } from '@testing-library/react'
 import localforage from 'localforage'
 import React from 'react'
 
-import CallToAction from './CallToAction'
 import { NOVIEWER_DESKTOP_CTA } from 'components/pushClient'
+
+import CallToAction from './CallToAction'
 
 jest.mock('localforage')
 jest.mock('config/config.json', () => ({

@@ -2,8 +2,9 @@ import maxBy from 'lodash/maxBy'
 
 import { getDocumentFromState } from 'cozy-client/dist/store'
 
-import { getMirrorQueryId, parseFolderQueryId } from './queries'
 import { DOCTYPE_FILES } from 'lib/doctypes'
+
+import { getMirrorQueryId, parseFolderQueryId } from './queries'
 
 const getFolderContentQueries = (rootState, folderId) => {
   const queries = rootState.cozy.queries

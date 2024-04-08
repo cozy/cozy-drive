@@ -10,7 +10,6 @@ import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { uploadFiles } from 'modules/navigation/duck'
 import DropzoneTeaser from 'modules/upload/DropzoneTeaser'
-
 import styles from 'styles/dropzone.styl'
 
 export class Dropzone extends Component {

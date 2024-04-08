@@ -4,7 +4,6 @@ import { combineReducers } from 'redux'
 import { models } from 'cozy-client'
 import flag from 'cozy-flags'
 
-import UploadQueue from './UploadQueue'
 import { MAX_PAYLOAD_SIZE } from 'constants/config'
 import { DOCTYPE_FILES } from 'lib/doctypes'
 import {
@@ -13,6 +12,8 @@ import {
 } from 'lib/encryption'
 import logger from 'lib/logger'
 import { logException } from 'lib/reporter'
+
+import UploadQueue from './UploadQueue'
 
 const { doMobileUpload, readMobileFile, uploadFileWithConflictStrategy } =
   models.file

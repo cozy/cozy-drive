@@ -1,7 +1,8 @@
 /* eslint-disable class-methods-use-this */
-const { red, reset } = require('chalk')
 const fs = require('fs')
 const path = require('path')
+
+const { red, reset } = require('chalk')
 
 const TMP_FILE_PATH = path.join(process.cwd(), '.consoleUsageReporter.json')
 
@@ -138,7 +139,8 @@ console as is:
   onRunComplete() {
     const isWatchModeEnabled =
       this.globalConfig.watch || this.globalConfig.watchAll
-    const testFilesThatUsedConsole = ConsoleUsageReporter.getTestFilesThatUsedConsole()
+    const testFilesThatUsedConsole =
+      ConsoleUsageReporter.getTestFilesThatUsedConsole()
 
     ConsoleUsageReporter.deleteTemporaryFile()
 

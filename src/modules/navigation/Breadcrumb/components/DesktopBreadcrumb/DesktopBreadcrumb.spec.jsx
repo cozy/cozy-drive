@@ -4,8 +4,9 @@ import React from 'react'
 import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import DesktopBreadcrumb from './DesktopBreadcrumb'
 import { dummyBreadcrumbPath } from 'test/dummies/dummyBreadcrumbPath'
+
+import DesktopBreadcrumb from './DesktopBreadcrumb'
 
 jest.mock('cozy-ui/transpiled/react/deprecated/ActionMenu', () => ({
   __esModule: true,

@@ -5,7 +5,6 @@ import palette from 'cozy-ui/transpiled/react/palette'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import IconDropZone from 'modules/upload/IconDropZone'
-
 import styles from 'styles/dropzone.styl'
 
 const DropzoneTeaser = translate()(({ t, currentFolder }) => (

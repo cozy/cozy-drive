@@ -5,7 +5,6 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { SharedStatus, useSharingContext } from 'cozy-sharing'
 
 import HammerComponent from 'modules/filelist/HammerComponent'
-
 import styles from 'styles/filelist.styl'
 
 const ShareContent = ({ file, disabled, isInSyncFromSharing }) => {

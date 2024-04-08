@@ -11,7 +11,6 @@ import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import HarvestBanner from './HarvestBanner'
 import useHead from 'components/useHead'
 import { ROOT_DIR_ID } from 'constants/config'
 import { FabContext } from 'lib/FabProvider'
@@ -45,6 +44,8 @@ import FolderViewBody from 'modules/views/Folder/FolderViewBody'
 import FolderViewBreadcrumb from 'modules/views/Folder/FolderViewBreadcrumb'
 import FolderViewHeader from 'modules/views/Folder/FolderViewHeader'
 import { useResumeUploadFromFlagship } from 'modules/views/Upload/useResumeFromFlagship'
+
+import HarvestBanner from './HarvestBanner'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []

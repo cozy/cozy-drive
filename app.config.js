@@ -1,5 +1,7 @@
 const path = require('path')
+
 const { DefinePlugin } = require('webpack')
+
 const { target } = require('cozy-scripts/config/webpack.vars')
 const pkg = require(path.resolve(__dirname, './package.json'))
 

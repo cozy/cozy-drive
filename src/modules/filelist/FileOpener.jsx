@@ -5,8 +5,9 @@ import { useLocation } from 'react-router-dom'
 
 import { models } from 'cozy-client'
 
-import styles from './fileopener.styl'
 import { makeOnlyOfficeFileRoute } from 'modules/views/OnlyOffice/helpers'
+
+import styles from './fileopener.styl'
 
 const getParentDiv = element => {
   if (element.nodeName.toLowerCase() === 'div') {

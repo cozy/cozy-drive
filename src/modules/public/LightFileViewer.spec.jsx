@@ -4,8 +4,9 @@ import React from 'react'
 import { createMockClient } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import LightFileViewer from './LightFileViewer'
 import AppLike from 'test/components/AppLike'
+
+import LightFileViewer from './LightFileViewer'
 
 jest.mock('cozy-intent', () => ({
   WebviewIntentProvider: ({ children }) => children,

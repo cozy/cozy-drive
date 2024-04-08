@@ -6,8 +6,9 @@ import { useClient } from 'cozy-client'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 
-import { abortRenaming } from './rename'
 import FilenameInput from 'modules/filelist/FilenameInput'
+
+import { abortRenaming } from './rename'
 
 // If we set the _rev then CozyClient tries to update. Else
 // it tries to create

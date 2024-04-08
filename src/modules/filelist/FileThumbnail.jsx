@@ -12,7 +12,6 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import FileIcon from 'modules/filelist/FileIcon'
 import { SharingShortcutIcon } from 'modules/filelist/SharingShortcutIcon'
-
 import styles from 'styles/filelist.styl'
 
 const FileThumbnail = ({ file, size, isInSyncFromSharing, isEncrypted }) => {

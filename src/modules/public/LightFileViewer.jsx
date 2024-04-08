@@ -10,12 +10,11 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import PublicToolbar from 'modules/public/PublicToolbar'
 import PublicViewer from 'modules/viewer/PublicViewer'
+import styles from 'modules/viewer/barviewer.styl'
 import {
   isOfficeEnabled,
   makeOnlyOfficeFileRoute
 } from 'modules/views/OnlyOffice/helpers'
-
-import styles from 'modules/viewer/barviewer.styl'
 
 const LightFileViewer = ({ files, isPublic }) => {
   const sharingInfos = useSharingInfos()

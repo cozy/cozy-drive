@@ -1,8 +1,9 @@
 import { useContext, useMemo } from 'react'
 
-import { computeSyncingFakeFile } from './syncHelpers'
 import AcceptingSharingContext from 'lib/AcceptingSharingContext'
 import { getSharingIdFromUrl } from 'modules/navigation/duck'
+
+import { computeSyncingFakeFile } from './syncHelpers'
 
 export const useSyncingFakeFile = ({ isEmpty, queryResults }) => {
   const { sharingsValue, setSharingsValue, fileValue } = useContext(

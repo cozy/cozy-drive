@@ -8,10 +8,6 @@ import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import FolderView from '../Folder/FolderView'
-import FolderViewBody from '../Folder/FolderViewBody'
-import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
-import FolderViewHeader from '../Folder/FolderViewHeader'
 import useHead from 'components/useHead'
 import { TRASH_DIR_ID } from 'constants/config'
 import { useModalContext } from 'lib/ModalContext'
@@ -24,6 +20,11 @@ import {
   buildFileWithSpecificMetadataAttributeQuery
 } from 'modules/queries'
 import TrashToolbar from 'modules/trash/Toolbar'
+
+import FolderView from '../Folder/FolderView'
+import FolderViewBody from '../Folder/FolderViewBody'
+import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
+import FolderViewHeader from '../Folder/FolderViewHeader'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []

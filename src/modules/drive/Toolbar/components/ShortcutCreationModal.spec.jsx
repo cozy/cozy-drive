@@ -7,10 +7,11 @@ import { createMockClient } from 'cozy-client'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 
-import ShortcutCreationModal from './ShortcutCreationModal'
 import useDisplayedFolder from 'hooks/useDisplayedFolder'
 import { DOCTYPE_FILES_SHORTCUT } from 'lib/doctypes'
 import AppLike from 'test/components/AppLike'
+
+import ShortcutCreationModal from './ShortcutCreationModal'
 
 const tMock = jest.fn()
 jest.mock('cozy-ui/transpiled/react/hooks/useBrowserOffline')

@@ -13,7 +13,6 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import getMimeTypeIcon from 'lib/getMimeTypeIcon'
-
 import styles from 'styles/actionmenu.styl'
 
 export const ActionMenuWithHeader = ({

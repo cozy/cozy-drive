@@ -3,8 +3,9 @@ import React from 'react'
 
 import { createMockClient, models } from 'cozy-client'
 
-import { useExtraColumns } from './useExtraColumns'
 import AppLike from 'test/components/AppLike'
+
+import { useExtraColumns } from './useExtraColumns'
 
 const client = createMockClient({})
 client.query = jest.fn()

@@ -3,11 +3,12 @@ import React from 'react'
 
 import { useSharingContext } from 'cozy-sharing'
 
+import AppLike from 'test/components/AppLike'
+import { setupStoreAndClient } from 'test/setup'
+
 import PublicFolderView from './index'
 import usePublicFilesQuery from './usePublicFilesQuery'
 import { generateFileFixtures, getByTextWithMarkup } from '../testUtils'
-import AppLike from 'test/components/AppLike'
-import { setupStoreAndClient } from 'test/setup'
 
 jest.mock('cozy-client/dist/hooks/useCapabilities', () =>
   jest.fn().mockReturnValue({ capabilities: {} })

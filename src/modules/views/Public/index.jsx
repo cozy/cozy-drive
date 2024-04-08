@@ -22,12 +22,6 @@ import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import usePublicFilesQuery from './usePublicFilesQuery'
-import usePublicWritePermissions from './usePublicWritePermissions'
-import FolderViewBody from '../Folder/FolderViewBody'
-import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
-import FolderViewHeader from '../Folder/FolderViewHeader'
-import OldFolderViewBreadcrumb from '../Folder/OldFolderViewBreadcrumb'
 import { ROOT_DIR_ID } from 'constants/config'
 import { FabContext } from 'lib/FabProvider'
 import { ModalStack, useModalContext } from 'lib/ModalContext'
@@ -40,6 +34,13 @@ import Main from 'modules/layout/Main'
 import PublicToolbar from 'modules/public/PublicToolbar'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 import PublicViewer from 'modules/viewer/PublicViewer'
+
+import usePublicFilesQuery from './usePublicFilesQuery'
+import usePublicWritePermissions from './usePublicWritePermissions'
+import FolderViewBody from '../Folder/FolderViewBody'
+import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
+import FolderViewHeader from '../Folder/FolderViewHeader'
+import OldFolderViewBreadcrumb from '../Folder/OldFolderViewBreadcrumb'
 
 const getBreadcrumbPath = (t, displayedFolder, parentFolder) =>
   uniqBy(

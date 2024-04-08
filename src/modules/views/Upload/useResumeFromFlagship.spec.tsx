@@ -1,11 +1,12 @@
-import React from 'react'
 import { render, waitFor } from '@testing-library/react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { useResumeUploadFromFlagship } from 'modules/views/Upload/useResumeFromFlagship'
-import { getProcessed, getSuccessful } from 'modules/upload'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import { WebviewService } from 'cozy-intent'
+import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
+
+import { getProcessed, getSuccessful } from 'modules/upload'
+import { useResumeUploadFromFlagship } from 'modules/views/Upload/useResumeFromFlagship'
 
 global.jasmine = {
   // @ts-expect-error - Test will fail if this is not set

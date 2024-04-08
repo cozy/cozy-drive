@@ -10,8 +10,9 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 import { Media, Img, Bd } from 'cozy-ui/transpiled/react/deprecated/Media'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import FileThumbnail from '../filelist/FileThumbnail'
 import getMimeTypeIcon from 'lib/getMimeTypeIcon'
+
+import FileThumbnail from '../filelist/FileThumbnail'
 const HeaderIlustration = ({ entries }) => {
   if (entries.length === 1) {
     const firstItem = entries[0]

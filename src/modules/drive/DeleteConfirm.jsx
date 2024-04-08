@@ -138,8 +138,8 @@ const DeleteConfirmWithSharingContext = ({ files, ...rest }) =>
         let shareMessageType = !isStatusesEqual
           ? 'share_both'
           : statuses[0] === 'ready'
-          ? 'share_accepted'
-          : 'share_waiting'
+            ? 'share_accepted'
+            : 'share_waiting'
 
         return (
           <DeleteConfirm files={files} {...rest}>

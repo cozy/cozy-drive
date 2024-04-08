@@ -14,6 +14,8 @@ import Button, { ButtonLink } from 'cozy-ui/transpiled/react/deprecated/Button'
 import palette from 'cozy-ui/transpiled/react/palette'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import Config from 'config/config.json'
+
 import {
   isLinux,
   isAndroid,
@@ -22,7 +24,6 @@ import {
   DESKTOP_BANNER
 } from '.'
 import styles from './pushClient.styl'
-import Config from 'config/config.json'
 
 class BannerClient extends Component {
   state = {
@@ -61,10 +62,10 @@ class BannerClient extends Component {
     const link = isIOS()
       ? 'Nav.link-client-ios'
       : isAndroid()
-      ? 'Nav.link-client-android'
-      : isLinux()
-      ? 'Nav.link-client'
-      : 'Nav.link-client-desktop'
+        ? 'Nav.link-client-android'
+        : isLinux()
+          ? 'Nav.link-client'
+          : 'Nav.link-client-desktop'
 
     const text =
       isIOS() || isAndroid() ? 'Nav.btn-client-mobile' : 'Nav.banner-txt-client'
