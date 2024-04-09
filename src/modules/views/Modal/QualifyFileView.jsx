@@ -31,7 +31,7 @@ const OptionIconStack = ({ icon }) => {
   )
 }
 
-const makeOptions = (t, scannerT) => {
+const makeOptions = ({ t, scannerT, focusedId }) => {
   const themesWithNone = [
     {
       id: 'none',
@@ -41,18 +41,18 @@ const makeOptions = (t, scannerT) => {
     ...getThemesList()
   ]
   return {
-    children: themesWithNone.map((theme, index) => {
+    focusedId,
+    children: themesWithNone.map(theme => {
       return {
-        id: index,
+        id: theme.label,
         title:
           theme.id === 'none'
             ? t('Scan.none')
             : scannerT(`Scan.themes.${theme.label}`),
         icon: <OptionIconStack icon={theme.icon} />,
-        children: theme.items.map((item, index) => {
+        children: theme.items.map(item => {
           return {
-            id: index,
-            key: index,
+            id: item.label,
             item,
             title: scannerT(`Scan.items.${item.label}`),
             icon: isQualificationNote(item) ? (
@@ -79,7 +79,12 @@ export const QualifyFileView = () => {
     fileQuery.definition,
     fileQuery.options
   )
-  const defaultOptions = makeOptions(t, scannerT)
+  const qualificationLabel = getQualification(file)?.label
+  const defaultOptions = makeOptions({
+    t,
+    scannerT,
+    focusedId: qualificationLabel
+  })
 
   const onClose = () => {
     navigate('..', { replace: true })
@@ -87,7 +92,6 @@ export const QualifyFileView = () => {
 
   const handleClick = async ({ title, item }) => {
     const fileCollection = client.collection('io.cozy.files')
-    const qualificationLabel = getQualification(file)?.label
     const removeQualification = qualificationLabel && title === t('Scan.none')
 
     if (!qualificationLabel && removeQualification) {
@@ -101,7 +105,6 @@ export const QualifyFileView = () => {
   }
 
   const isSelected = ({ title, item }) => {
-    const qualificationLabel = getQualification(file)?.label
     return qualificationLabel
       ? qualificationLabel === item?.label
       : title === t('Scan.none')
