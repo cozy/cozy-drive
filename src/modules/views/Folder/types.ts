@@ -71,3 +71,7 @@ export interface SortOrder {
   attribute: string
   order: string
 }
+
+export interface UseExtraDriveQuery {
+  data?: { files?: ExtraDriveFile[] }
+}

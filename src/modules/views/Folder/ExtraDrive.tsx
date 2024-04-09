@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
 
-import { useClient } from 'cozy-client'
+import { useClient, useQuery } from 'cozy-client'
 import ListItem from 'cozy-ui/transpiled/react/ListItem'
-import { NavLimiter } from 'cozy-ui/transpiled/react/NavLimiter'
+import { NavLimiter } from 'cozy-ui/transpiled/react/Nav'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import generateShortcutUrl from './generateShortcutUrl'
+import { buildExternalDriveQuery } from './queries/fetchExtraDrive'
 import { FileWithSelection as File } from 'modules/filelist/File'
 import { FileList } from 'modules/filelist/FileList'
 import FileListBody from 'modules/filelist/FileListBody'
 import { NavItem } from 'modules/navigation/NavItem'
-import { useExtraDrive } from 'modules/views/Folder/hooks/useExtraDrive'
+import { UseExtraDriveQuery } from 'modules/views/Folder/types'
 
 interface ExtraDriveProps {
   actions: unknown[]
@@ -26,19 +27,23 @@ export const ExtraDrive = ({
   isFlatDomain
 }: ExtraDriveProps): JSX.Element | null => {
   const { isMobile } = useBreakpoints()
-  const files = useExtraDrive()
+  const externalDriveQuery = buildExternalDriveQuery()
+  const { data } = useQuery(
+    externalDriveQuery.definition,
+    externalDriveQuery.options
+  ) as UseExtraDriveQuery
   const clickState = useState(null)
   const { t } = useI18n()
   const client = useClient()
 
-  if (files.length === 0) return null
+  if (!data ?? data?.files?.length === 0) return null
 
   return isMobile ? (
     <FileList>
       <FileListBody>
         <div className="u-ov-hidden">
           <>
-            {files.map(file => (
+            {data?.files?.map(file => (
               <File
                 key={file.id}
                 attributes={file}
@@ -60,7 +65,7 @@ export const ExtraDrive = ({
         showMoreString={t('Nav.view_more')}
         showLessString={t('Nav.view_less')}
       >
-        {files.map(file => (
+        {data?.files?.map(file => (
           <NavItem
             key={file.id}
             secondary
@@ -68,7 +73,12 @@ export const ExtraDrive = ({
             clickState={clickState}
             external={file.attributes?.class === 'shortcut'}
             onClick={(): void => {
-              const url = generateShortcutUrl({ file, client, isFlatDomain })
+              const url = generateShortcutUrl({
+                file,
+                client,
+                isFlatDomain,
+                fromPublicFolder: false
+              })
               window.open(url, '_blank')
             }}
           />

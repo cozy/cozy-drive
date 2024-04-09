@@ -1,11 +1,13 @@
 import React from 'react'
 
+import { useQuery } from 'cozy-client'
 import Tab from 'cozy-ui/transpiled/react/Tab'
 import Tabs from 'cozy-ui/transpiled/react/Tabs'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { useExtraDrive } from 'modules/views/Folder/hooks/useExtraDrive'
+import { buildExternalDriveQuery } from 'modules/views/Folder/queries/fetchExtraDrive'
+import { UseExtraDriveQuery } from 'modules/views/Folder/types'
 
 interface FolderTabsProps {
   handleChange: (event: React.ChangeEvent<object>, newValue: number) => void
@@ -18,9 +20,13 @@ export const FolderTabs = ({
 }: FolderTabsProps): JSX.Element | null => {
   const { isMobile } = useBreakpoints()
   const { t } = useI18n()
-  const files = useExtraDrive()
+  const externalDriveQuery = buildExternalDriveQuery()
+  const { data } = useQuery(
+    externalDriveQuery.definition,
+    externalDriveQuery.options
+  ) as UseExtraDriveQuery
 
-  if (!files || files.length === 0) return null
+  if (!data ?? data?.files?.length === 0) return null
 
   if (!isMobile) return null
 
