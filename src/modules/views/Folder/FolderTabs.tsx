@@ -26,7 +26,7 @@ export const FolderTabs = ({
     externalDriveQuery.options
   ) as UseExtraDriveQuery
 
-  if (!data ?? data?.files?.length === 0) return null
+  if (!data || data.length === 0) return null
 
   if (!isMobile) return null
 
