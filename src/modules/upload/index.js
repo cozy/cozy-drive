@@ -37,7 +37,9 @@ const FAILED = 'failed'
 const CONFLICT = 'conflict'
 const QUOTA = 'quota'
 const NETWORK = 'network'
-const FILE_TOO_LARGE_ERROR = 'Request Entity Too Large'
+const ERR_MAX_FILE_SIZE =
+  'The file is too big and exceeds the filesystem maximum file size' // ErrMaxFileSize is used when a file is larger than the filesystem's maximum file size
+
 const DONE_STATUSES = [CREATED, UPDATED]
 const ERROR_STATUSES = [CONFLICT, NETWORK, QUOTA]
 
@@ -53,7 +55,7 @@ export const status = {
   NETWORK,
   DONE_STATUSES,
   ERROR_STATUSES,
-  FILE_TOO_LARGE_ERROR
+  ERR_MAX_FILE_SIZE
 }
 
 const CONFLICT_ERROR = 409
@@ -169,28 +171,6 @@ export const uploadProgress = (file, event, date) => ({
   date: date || Date.now()
 })
 
-const isErrorFileTooLarge = error => {
-  if (!error) return false
-
-  // Check if the error directly matches FILE_TOO_LARGE_ERROR
-  if (
-    error.title === FILE_TOO_LARGE_ERROR ||
-    error.message === FILE_TOO_LARGE_ERROR
-  ) {
-    return true
-  }
-
-  // Check if the error message is a string and contains FILE_TOO_LARGE_ERROR (can happen in Firefox for example)
-  if (
-    typeof error.message === 'string' &&
-    error.message.includes(FILE_TOO_LARGE_ERROR)
-  ) {
-    return true
-  }
-
-  return false
-}
-
 export const processNextFile =
   (
     fileUploadedCallback,
@@ -271,8 +251,8 @@ export const processNextFile =
 
         // Determine the status based on the error details
         let status
-        if (isErrorFileTooLarge(error)) {
-          status = FILE_TOO_LARGE_ERROR // File size exceeded maximum size allowed by the server
+        if (error.message?.includes(ERR_MAX_FILE_SIZE)) {
+          status = ERR_MAX_FILE_SIZE // File size exceeded maximum size allowed by the server
         } else if (error.status in statusError) {
           status = statusError[error.status]
         } else if (/Failed to fetch$/.exec(error.toString())) {
@@ -359,8 +339,14 @@ const uploadFile = async (client, file, dirID, options = {}) => {
     // Check if the file size exceeds the server's maximum payload size
     if (fileSize > MAX_PAYLOAD_SIZE) {
       // Create a new error for exceeding the maximum payload size
-      const error = new Error(FILE_TOO_LARGE_ERROR)
-      throw error
+      // Match cozy-stack error format
+      throw new Error(
+        JSON.stringify({
+          status: 413,
+          title: 'Request Entity Too Large',
+          detail: ERR_MAX_FILE_SIZE
+        })
+      )
     }
 
     // Proceed to check disk usage
@@ -527,8 +513,7 @@ const getQuotaErrors = queue => filterByStatus(queue, QUOTA)
 const getNetworkErrors = queue => filterByStatus(queue, NETWORK)
 const getCreated = queue => filterByStatus(queue, CREATED)
 const getUpdated = queue => filterByStatus(queue, UPDATED)
-const getfileTooLargeErrors = queue =>
-  filterByStatus(queue, FILE_TOO_LARGE_ERROR)
+const getfileTooLargeErrors = queue => filterByStatus(queue, ERR_MAX_FILE_SIZE)
 
 export const getUploadQueue = state => state[SLUG].queue
 
