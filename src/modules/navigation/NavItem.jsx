@@ -8,7 +8,7 @@ import { NavContent } from 'modules/navigation/NavContent'
 import { NavLink } from 'modules/navigation/NavLink'
 
 /**
- * Renders a navigation item with optional badge content and support for external links.
+ * Renders a navigation item with optional badge content and support for shared links.
  *
  * @component
  * @param {Object} props - The component props.
@@ -19,7 +19,7 @@ import { NavLink } from 'modules/navigation/NavLink'
  * @param {RegExp} [props.rx] - A RegExp to modify the path dynamically (optional).
  * @param {Object} [props.clickState] - State to be passed to the NavLink on click (optional).
  * @param {number} [props.badgeContent] - Content of the badge to display (optional).
- * @param {boolean} [props.external=false] - Whether the link is an external link (optional).
+ * @param {boolean} [props.sharedDrives=false] - Whether the link is a shared drives link (optional).
  * @param {boolean} [props.secondary=false] - Whether to apply secondary styling to the nav item (optional).
  * @param {Function} [props.onClick] - The function to call when the item is clicked (optional).
  * @returns {JSX.Element} The rendered navigation item component.
@@ -31,7 +31,7 @@ const NavItem = ({
   rx,
   clickState,
   badgeContent,
-  external,
+  sharedDrives,
   secondary,
   forcedLabel,
   onClick
@@ -45,7 +45,7 @@ const NavItem = ({
           icon={icon}
           label={forcedLabel ?? t(`Nav.item_${label}`)}
           badgeContent={badgeContent}
-          external={external}
+          sharedDrives={sharedDrives}
         />
       </NavLink>
     </UINavItem>

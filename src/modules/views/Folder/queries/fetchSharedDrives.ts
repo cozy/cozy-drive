@@ -5,21 +5,21 @@ import { buildDriveQuery } from 'modules/queries'
 import { SortOrder } from 'modules/views/Folder/types'
 
 /**
- * Builds a query for fetching files from an external drive with specified sorting.
+ * Builds a query for fetching files from a shared drive with specified sorting.
  * @param sortOrder - Specifies how the results should be sorted.
- * @param externalDriveId - The unique identifier for the external drive.
+ * @param sharedDrivesId - The unique identifier for the shared drive.
  * @returns An object containing the definition of the query and the options for executing it.
  *
  * Usage:
- * const { definition, options } = buildExternalDriveFilesQuery({ attribute: 'name', order: 'asc' }, 'driveId');
+ * const { definition, options } = buildSharedDrivesFilesQuery({ attribute: 'name', order: 'asc' }, 'driveId');
  */
-export const buildExternalDriveFilesQuery = (
+export const buildSharedDrivesFilesQuery = (
   sortOrder: SortOrder,
-  externalDriveId: string
+  sharedDrivesId: string
 ): { definition: QueryDefinition; options: QueryOptions } => {
   // Builds a drive query with provided parameters
   const buildedFilesQuery = buildDriveQuery({
-    currentFolderId: externalDriveId,
+    currentFolderId: sharedDrivesId,
     type: 'file',
     sortAttribute: sortOrder.attribute,
     sortOrder: sortOrder.order
@@ -33,19 +33,19 @@ export const buildExternalDriveFilesQuery = (
 }
 
 /**
- * Convenience function to build a query for fetching external drive data.
+ * Convenience function to build a query for fetching shared drive data.
  * Preconfigured to sort by name in ascending order and target the shared drives directory.
  * @returns An object with the definition of the query and the options for its execution.
  *
  * Usage:
- * const { definition, options } = buildExternalDriveQuery();
+ * const { definition, options } = buildsharedDrivesQuery();
  */
-export const buildExternalDriveQuery = (): {
+export const buildSharedDrivesQuery = (): {
   definition: QueryDefinition
   options: QueryOptions
 } =>
-  // Utilizes buildExternalDriveFilesQuery with preconfigured parameters
-  buildExternalDriveFilesQuery(
+  // Utilizes buildsharedDrivesFilesQuery with preconfigured parameters
+  buildSharedDrivesFilesQuery(
     {
       attribute: 'name',
       order: 'asc'

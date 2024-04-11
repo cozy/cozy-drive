@@ -81,7 +81,7 @@ const FileName = ({
   formattedUpdatedAt,
   refreshFolderContent,
   isInSyncFromSharing,
-  isExternalDrive
+  isSharedDrives
 }) => {
   const classes = cx(
     styles['fil-content-cell'],
@@ -136,7 +136,7 @@ const FileName = ({
                 <MidEllipsis text={attributes.displayedPath} />
               </Link>
             ))}
-          {!isExternalDrive &&
+          {!isSharedDrives &&
             !withFilePath &&
             (isDirectory(attributes) || (
               <div className={styles['fil-file-infos']}>

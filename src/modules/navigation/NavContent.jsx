@@ -8,7 +8,7 @@ import OpenWithIcon from 'cozy-ui/transpiled/react/Icons/Openwith'
 import { NavIcon, NavText } from 'cozy-ui/transpiled/react/Nav'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-const NavContent = ({ icon, badgeContent, label, external }) => {
+const NavContent = ({ icon, badgeContent, label, sharedDrives }) => {
   const { isDesktop } = useBreakpoints()
 
   if (badgeContent) {
@@ -47,7 +47,7 @@ const NavContent = ({ icon, badgeContent, label, external }) => {
       {icon && <NavIcon icon={icon} />}
       <NavText>{label}</NavText>
 
-      {external && (
+      {sharedDrives && (
         <Icon icon={OpenWithIcon} size={11} style={{ marginLeft: '4px' }} />
       )}
     </>
