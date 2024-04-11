@@ -68,7 +68,7 @@ export const SharedDrives = ({
         <NavItem
           key={file._id}
           secondary
-          forcedLabel={file.name} // We don't want to display the .url extension
+          forcedLabel={file.name.replace(/\.url$/, '')} // We don't want to display the .url extension
           clickState={clickState}
           sharedDrives={true}
           onClick={(): void => {

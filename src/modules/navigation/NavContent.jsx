@@ -6,6 +6,7 @@ import Circle from 'cozy-ui/transpiled/react/Circle'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import OpenWithIcon from 'cozy-ui/transpiled/react/Icons/Openwith'
 import { NavIcon, NavText } from 'cozy-ui/transpiled/react/Nav'
+import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 const NavContent = ({ icon, badgeContent, label, sharedDrives }) => {
@@ -42,14 +43,27 @@ const NavContent = ({ icon, badgeContent, label, sharedDrives }) => {
     }
   }
 
+  // Used for shared drives (eg. NextCloud)
+  if (sharedDrives) {
+    return (
+      <>
+        <Typography color="textSecondary" variant="inherit" noWrap>
+          {label}
+        </Typography>
+
+        <Icon
+          icon={OpenWithIcon}
+          size={11}
+          style={{ marginLeft: '4px', flexShrink: '0' }}
+        />
+      </>
+    )
+  }
+
   return (
     <>
       {icon && <NavIcon icon={icon} />}
       <NavText>{label}</NavText>
-
-      {sharedDrives && (
-        <Icon icon={OpenWithIcon} size={11} style={{ marginLeft: '4px' }} />
-      )}
     </>
   )
 }
