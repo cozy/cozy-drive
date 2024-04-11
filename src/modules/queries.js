@@ -1,6 +1,6 @@
 import CozyClient, { Q } from 'cozy-client'
 
-import { TRASH_DIR_ID } from 'constants/config'
+import { SHARED_DRIVES_DIR_ID, TRASH_DIR_ID } from 'constants/config'
 import { DOCTYPE_FILES_ENCRYPTION, DOCTYPE_ALBUMS } from 'lib/doctypes'
 
 // Needs to be less than 10 minutes, since "thumbnails" links
@@ -47,8 +47,10 @@ const buildDriveQuery = ({
         [sortAttribute]: { $gt: null }
       })
       .partialIndex({
+        // This is to avoid fetching shared drives and trash
+        // They are hidden clientside
         _id: {
-          $ne: TRASH_DIR_ID
+          $nin: [SHARED_DRIVES_DIR_ID, TRASH_DIR_ID]
         }
       })
       .indexFields(['dir_id', 'type', sortAttribute])
@@ -202,8 +204,10 @@ export const buildMoveOrImportQuery = dirId => ({
         name: { $gt: null }
       })
       .partialIndex({
+        // This is to avoid fetching shared drives and trash
+        // They are hidden clientside
         _id: {
-          $ne: TRASH_DIR_ID
+          $nin: [SHARED_DRIVES_DIR_ID, TRASH_DIR_ID]
         }
       })
       .indexFields(['dir_id', 'type', 'name'])

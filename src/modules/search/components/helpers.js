@@ -1,6 +1,6 @@
 import { models } from 'cozy-client'
 
-import { ROOT_DIR_ID } from 'constants/config'
+import { ROOT_DIR_ID, SHARED_DRIVES_DIR_ID } from 'constants/config'
 import FuzzyPathSearch from 'lib/FuzzyPathSearch.js'
 import { isEncryptedFolder } from 'lib/encryption'
 import { makeOnlyOfficeFileRoute } from 'modules/views/OnlyOffice/helpers'
@@ -94,9 +94,16 @@ export const indexFiles = async client => {
   const notOrphans = file =>
     folders.find(folder => folder._id === file.dir_id) !== undefined
   const notRoot = file => file._id !== ROOT_DIR_ID
+  // Shared drives folder to be hidden in search.
+  // The files inside it though must appear. Thus only the file with the folder ID is filtered out.
+  const notSharedDrivesDir = file => file._id !== SHARED_DRIVES_DIR_ID
 
   const normalizedFilesPrevious = files.filter(
-    file => notInTrash(file) && notOrphans(file) && notRoot(file)
+    file =>
+      notInTrash(file) &&
+      notOrphans(file) &&
+      notRoot(file) &&
+      notSharedDrivesDir(file)
   )
 
   const normalizedFiles = normalizedFilesPrevious.map(file =>
