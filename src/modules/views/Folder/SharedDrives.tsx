@@ -61,13 +61,19 @@ export const SharedDrives = ({
       showMoreString={t('Nav.view_more')}
       showLessString={t('Nav.view_less')}
     >
+      <NavItem
+        secondary
+        forcedLabel={t('Nav.item_my_drive')}
+        clickState={clickState}
+        to="/"
+      />
       {data.map(file => (
         <NavItem
           key={file._id}
           secondary
-          forcedLabel={file.name.replace(/\.url$/, '')} // We don't want to display the .url extension
+          forcedLabel={file.name.replace(/\.url$/, '')}
           clickState={clickState}
-          sharedDrives={true}
+          sharedDrives
           to={`/external/${file._id}`}
         />
       ))}
