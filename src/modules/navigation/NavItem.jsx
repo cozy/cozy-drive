@@ -21,7 +21,6 @@ import { NavLink } from 'modules/navigation/NavLink'
  * @param {number} [props.badgeContent] - Content of the badge to display (optional).
  * @param {boolean} [props.sharedDrives=false] - Whether the link is a shared drives link (optional).
  * @param {boolean} [props.secondary=false] - Whether to apply secondary styling to the nav item (optional).
- * @param {Function} [props.onClick] - The function to call when the item is clicked (optional).
  * @returns {JSX.Element} The rendered navigation item component.
  */
 const NavItem = ({
@@ -33,13 +32,12 @@ const NavItem = ({
   badgeContent,
   sharedDrives,
   secondary,
-  forcedLabel,
-  onClick
+  forcedLabel
 }) => {
   const { t } = useI18n()
 
   return (
-    <UINavItem secondary={secondary} onClick={onClick}>
+    <UINavItem secondary={secondary}>
       <NavLink to={to} rx={rx} clickState={clickState}>
         <NavContent
           icon={icon}

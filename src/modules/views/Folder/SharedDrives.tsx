@@ -1,16 +1,15 @@
 import React, { useState } from 'react'
 
-import { useClient, useQuery } from 'cozy-client'
+import { useQuery } from 'cozy-client'
 import { NavDesktopLimiter } from 'cozy-ui/transpiled/react/Nav'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import generateShortcutUrl from './generateShortcutUrl'
-import { buildSharedDrivesQuery } from './queries/fetchSharedDrives'
 import { FileWithSelection as File } from 'modules/filelist/File'
 import { FileList } from 'modules/filelist/FileList'
 import FileListBody from 'modules/filelist/FileListBody'
 import { NavItem } from 'modules/navigation/NavItem'
+import { buildSharedDrivesQuery } from 'modules/views/Folder/queries/fetchSharedDrives'
 import { UseSharedDrivesQuery } from 'modules/views/Folder/types'
 
 interface SharedDrivesProps {
@@ -22,8 +21,7 @@ interface SharedDrivesProps {
 
 export const SharedDrives = ({
   handleFileOpen,
-  navigateToFolder,
-  isFlatDomain
+  navigateToFolder
 }: SharedDrivesProps): JSX.Element | null => {
   const { isMobile } = useBreakpoints()
   const sharedDrivesQuery = buildSharedDrivesQuery()
@@ -33,7 +31,6 @@ export const SharedDrives = ({
   ) as UseSharedDrivesQuery
   const clickState = useState(null)
   const { t } = useI18n()
-  const client = useClient()
 
   if (!data || data.length === 0) return null
 
@@ -71,15 +68,7 @@ export const SharedDrives = ({
           forcedLabel={file.name.replace(/\.url$/, '')} // We don't want to display the .url extension
           clickState={clickState}
           sharedDrives={true}
-          onClick={(): void => {
-            const url = generateShortcutUrl({
-              file,
-              client,
-              isFlatDomain,
-              fromPublicFolder: false
-            })
-            window.open(url, '_blank')
-          }}
+          to={`/external/${file._id}`}
         />
       ))}
     </NavDesktopLimiter>
