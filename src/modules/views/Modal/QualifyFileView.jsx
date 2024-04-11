@@ -98,8 +98,12 @@ export const QualifyFileView = () => {
       return onClose()
     }
 
+    /*
+      In the case where we remove the qualification it's necessary to define the attribute to `null` and not `undefined`, with `undefined` the stack does not return the attribute and today the Redux store is not updated for a missing attribute.
+      As a result, the UI is not updated and continues to display the qualification on the document, even though it has been deleted in CouchDB.
+    */
     await fileCollection.updateMetadataAttribute(file._id, {
-      qualification: removeQualification ? undefined : item
+      qualification: removeQualification ? null : item
     })
     onClose()
   }
