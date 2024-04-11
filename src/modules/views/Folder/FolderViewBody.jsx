@@ -312,7 +312,6 @@ const FolderViewBody = ({
             <SharedDrives
               handleFileOpen={handleFileOpen}
               navigateToFolder={navigateToFolder}
-              isFlatDomain={isFlatDomain}
             />
           </FolderTab>
         )}
