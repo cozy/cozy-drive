@@ -25,9 +25,9 @@ import LoadMore from 'modules/filelist/LoadMoreV2'
 import MobileFileListHeader from 'modules/filelist/MobileFileListHeader'
 import { useFolderSort } from 'modules/navigation/duck'
 import SelectionBar from 'modules/selection/SelectionBar'
-import { ExtraDrive } from 'modules/views/Folder/ExtraDrive'
 import { FolderTab } from 'modules/views/Folder/FolderTab'
 import { FolderTabs } from 'modules/views/Folder/FolderTabs'
+import { SharedDrives } from 'modules/views/Folder/SharedDrives'
 import createFileOpeningHandler from 'modules/views/Folder/createFileOpeningHandler'
 import { isReferencedByShareInSharingContext } from 'modules/views/Folder/syncHelpers'
 import { isOfficeEnabled } from 'modules/views/OnlyOffice/helpers'
@@ -309,7 +309,7 @@ const FolderViewBody = ({
                 extraColumns={extraColumns}
               />
             </>
-            <ExtraDrive
+            <SharedDrives
               handleFileOpen={handleFileOpen}
               navigateToFolder={navigateToFolder}
               isFlatDomain={isFlatDomain}

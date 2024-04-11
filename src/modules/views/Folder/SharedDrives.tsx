@@ -6,31 +6,31 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import generateShortcutUrl from './generateShortcutUrl'
-import { buildExternalDriveQuery } from './queries/fetchExtraDrive'
+import { buildSharedDrivesQuery } from './queries/fetchSharedDrives'
 import { FileWithSelection as File } from 'modules/filelist/File'
 import { FileList } from 'modules/filelist/FileList'
 import FileListBody from 'modules/filelist/FileListBody'
 import { NavItem } from 'modules/navigation/NavItem'
-import { UseExtraDriveQuery } from 'modules/views/Folder/types'
+import { UseSharedDrivesQuery } from 'modules/views/Folder/types'
 
-interface ExtraDriveProps {
+interface SharedDrivesProps {
   actions: unknown[]
   handleFileOpen?: (path: string) => void
   navigateToFolder: (path: string) => void
   isFlatDomain: boolean
 }
 
-export const ExtraDrive = ({
+export const SharedDrives = ({
   handleFileOpen,
   navigateToFolder,
   isFlatDomain
-}: ExtraDriveProps): JSX.Element | null => {
+}: SharedDrivesProps): JSX.Element | null => {
   const { isMobile } = useBreakpoints()
-  const externalDriveQuery = buildExternalDriveQuery()
+  const sharedDrivesQuery = buildSharedDrivesQuery()
   const { data } = useQuery(
-    externalDriveQuery.definition,
-    externalDriveQuery.options
-  ) as UseExtraDriveQuery
+    sharedDrivesQuery.definition,
+    sharedDrivesQuery.options
+  ) as UseSharedDrivesQuery
   const clickState = useState(null)
   const { t } = useI18n()
   const client = useClient()
@@ -51,7 +51,7 @@ export const ExtraDrive = ({
                 onFileOpen={handleFileOpen}
                 isInSyncFromSharing={false}
                 disableSelection={true}
-                isExternalDrive={true}
+                isSharedDrives={true}
               />
             ))}
           </>
@@ -66,11 +66,11 @@ export const ExtraDrive = ({
     >
       {data.map(file => (
         <NavItem
-          key={file.id}
+          key={file._id}
           secondary
-          forcedLabel={file.name}
+          forcedLabel={file.name} // We don't want to display the .url extension
           clickState={clickState}
-          external={file.attributes?.class === 'shortcut'}
+          sharedDrives={true}
           onClick={(): void => {
             const url = generateShortcutUrl({
               file,

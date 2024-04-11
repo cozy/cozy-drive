@@ -6,8 +6,8 @@ import Tabs from 'cozy-ui/transpiled/react/Tabs'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { buildExternalDriveQuery } from 'modules/views/Folder/queries/fetchExtraDrive'
-import { UseExtraDriveQuery } from 'modules/views/Folder/types'
+import { buildSharedDrivesQuery } from 'modules/views/Folder/queries/fetchSharedDrives'
+import { UseSharedDrivesQuery } from 'modules/views/Folder/types'
 
 interface FolderTabsProps {
   handleChange: (event: React.ChangeEvent<object>, newValue: number) => void
@@ -20,11 +20,11 @@ export const FolderTabs = ({
 }: FolderTabsProps): JSX.Element | null => {
   const { isMobile } = useBreakpoints()
   const { t } = useI18n()
-  const externalDriveQuery = buildExternalDriveQuery()
+  const sharedDrivesQuery = buildSharedDrivesQuery()
   const { data } = useQuery(
-    externalDriveQuery.definition,
-    externalDriveQuery.options
-  ) as UseExtraDriveQuery
+    sharedDrivesQuery.definition,
+    sharedDrivesQuery.options
+  ) as UseSharedDrivesQuery
 
   if (!data || data.length === 0) return null
 

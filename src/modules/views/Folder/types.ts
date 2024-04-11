@@ -49,17 +49,21 @@ export interface FileData {
   relationships: FileRelationships
 }
 
-export interface FetchedExtraDriveData {
+export interface FetchedSharedDrivesData {
   data: FileData
 }
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
 
 export interface StackClient {
-  fetchJSON: (method: HttpMethod, url: string) => Promise<FetchedExtraDriveData>
+  fetchJSON: (
+    method: HttpMethod,
+    url: string
+  ) => Promise<FetchedSharedDrivesData>
 }
 
-export interface ExtraDriveFile {
+export interface SharedDrivesFile {
+  _id: string
   id: string
   path: string
   name: string
@@ -72,6 +76,6 @@ export interface SortOrder {
   order: string
 }
 
-export interface UseExtraDriveQuery {
-  data?: ExtraDriveFile[]
+export interface UseSharedDrivesQuery {
+  data?: SharedDrivesFile[]
 }

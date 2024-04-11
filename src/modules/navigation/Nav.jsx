@@ -5,7 +5,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { NavItem } from 'modules/navigation/NavItem'
 import { SharingsNavItem } from 'modules/navigation/SharingsNavItem'
-import { ExtraDrive } from 'modules/views/Folder/ExtraDrive'
+import { SharedDrives } from 'modules/views/Folder/SharedDrives'
 
 export const Nav = () => {
   const clickState = useState(null)
@@ -20,7 +20,7 @@ export const Nav = () => {
         rx={/\/folder(\/.*)?/}
         clickState={clickState}
       />
-      {!isMobile && <ExtraDrive />}
+      {!isMobile && <SharedDrives />}
       <NavItem
         to="/recent"
         icon="clock"
