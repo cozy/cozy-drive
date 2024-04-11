@@ -1,6 +1,7 @@
 import { QueryDefinition } from 'cozy-client'
 import { QueryOptions } from 'cozy-client/types/types'
 
+import { SHARED_DRIVES_DIR_PATH } from 'constants/config'
 import { buildDriveQuery } from 'modules/queries'
 import { SortOrder } from 'modules/views/Folder/types'
 
@@ -50,5 +51,5 @@ export const buildSharedDrivesQuery = (): {
       attribute: 'name',
       order: 'asc'
     },
-    'io.cozy.files.shared-drives-dir'
+    SHARED_DRIVES_DIR_PATH as string
   )
