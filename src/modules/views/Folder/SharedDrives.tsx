@@ -48,7 +48,7 @@ export const SharedDrives = ({
                 onFileOpen={handleFileOpen}
                 isInSyncFromSharing={false}
                 disableSelection={true}
-                isSharedDrives={true}
+                isExternalDrive={file.attributes?.type === 'shortcut'}
               />
             ))}
           </>
@@ -73,7 +73,7 @@ export const SharedDrives = ({
           secondary
           forcedLabel={file.name.replace(/\.url$/, '')}
           clickState={clickState}
-          sharedDrives
+          isExternalDrive={file.attributes?.type === 'shortcut'}
           to={`/external/${file._id}`}
         />
       ))}
