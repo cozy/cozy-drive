@@ -3,16 +3,14 @@ import React from 'react'
 
 import { TableRow, TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import FileThumbnail from 'modules/filelist/FileThumbnail'
 import FilenameInput from 'modules/filelist/FilenameInput'
-import { Empty as EmptyCell } from 'modules/filelist/cells'
+import { Empty as EmptyCell, LastUpdate } from 'modules/filelist/cells'
 
 import styles from 'styles/filelist.styl'
 
 const AddFolderRow = ({ isEncrypted, onSubmit, onAbort, extraColumns }) => {
-  const { f } = useI18n()
   const { isMobile } = useBreakpoints()
 
   return (
@@ -41,14 +39,7 @@ const AddFolderRow = ({ isEncrypted, onSubmit, onAbort, extraColumns }) => {
       </TableCell>
       {!isMobile && (
         <>
-          <TableCell
-            className={cx(
-              styles['fil-content-cell'],
-              styles['fil-content-date']
-            )}
-          >
-            <time dateTime="">{f(Date.now(), 'MMM D, YYYY')}</time>
-          </TableCell>
+          <LastUpdate />
           <EmptyCell className={styles['fil-content-size']} />
           {extraColumns &&
             extraColumns.map(column => (

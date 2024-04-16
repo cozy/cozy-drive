@@ -90,7 +90,8 @@ column-width-thumbnail-bigger = 7rem
 // @stylint off
 .fil-content-cell
     &.fil-content-file
-        flex 0 1 "calc(%s - %s)" % (column-width-large column-width-thumbnail)
+        // When the cell is a filename (or new a directory name input), we don't want flex to shrink it
+        flex 0 0 "calc(%s - %s)" % (column-width-large column-width-thumbnail)
         display flex
         align-items center
         padding   0 2rem 0 0
