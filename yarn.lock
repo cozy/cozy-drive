@@ -6201,10 +6201,10 @@ cozy-app-publish@^0.27.2:
     request "^2.88.0"
     tar "^4.4.13"
 
-cozy-bar@12.2.2:
-  version "12.2.2"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-12.2.2.tgz#e6c58ccf84aa8c9d42cf72be34239a004b4ccc96"
-  integrity sha512-AewIFarXHvbqrz9m0946IOxpRHSV7nEWXrLWljjOltxYwiFrvBLOnnpEhRYcNhh7N9qwHtYmvH2kqIfkvXdFSw==
+cozy-bar@12.2.3:
+  version "12.2.3"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-12.2.3.tgz#43501e2dc82bbad80ff52c9e87e6dfa03b60bdb2"
+  integrity sha512-FH8+bM0haujVy/O9UbW7E34t0InfvZPafoIAVb/KdsDQaO8/Q5JH4hDyCHw+UNt55Mpw6cE+GK3w11RSAeC86g==
   dependencies:
     hammerjs "2.0.8"
     lodash.debounce "4.0.8"
