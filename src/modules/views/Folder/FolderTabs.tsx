@@ -47,7 +47,7 @@ export const FolderTabs = ({
           aria-controls="cozy-tabpanel-0"
         />
         <Tab
-          label={t('Nav.item_external_drives')}
+          label={t('Nav.item_shared_drives')}
           id="cozy-tab-1"
           aria-controls="cozy-tabpanel-1"
         />
