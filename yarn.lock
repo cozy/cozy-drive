@@ -6338,10 +6338,10 @@ cozy-doctypes@^1.89.1:
     lodash "^4.17.19"
     prop-types "^15.7.2"
 
-cozy-doctypes@^1.89.5:
-  version "1.89.5"
-  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.89.5.tgz#9bd2f650e537124aaf634a831320c8b76a965cc2"
-  integrity sha512-oMdITpn8J8k7XEzBOGE+ZZLiEA7RUZTKOF8ZA8r1OrZF6A1FTxCha8EDySGLlVr+QXyMkoYT5GFsqkEUn9LkbA==
+cozy-doctypes@^1.90.0:
+  version "1.90.0"
+  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.90.0.tgz#6ac69043d45be910c27cb0793a3e45e1a96b91de"
+  integrity sha512-H/T+FD6ufD3YC/L22GBcDBd3C5j5POBuwHO860AjcVSWNDaKwFIat/LyDKjqDhPXEzo7ZgXgLEFw3KQzpC7yVw==
   dependencies:
     cozy-logger "^1.10.4"
     date-fns "^1.30.1"
@@ -6602,15 +6602,15 @@ cozy-scripts@^8.3.0:
     webpack-dev-server "3.10.3"
     webpack-merge "4.2.2"
 
-cozy-sharing@13.1.0:
-  version "13.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-13.1.0.tgz#0c359aae411db50650843760f6532d2116744090"
-  integrity sha512-WM86LMt0TbWJjPohsCXi9VPhG5Ml61YRy36pnljpy2OOvmQrJIXFXGqiaSOeB968NUvOLCqXe4c8TgH0nUs6qw==
+cozy-sharing@13.1.2:
+  version "13.1.2"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-13.1.2.tgz#8d76766bceb717df795e9198aaa6af980d544a8c"
+  integrity sha512-7Kd2+WkpZKI5TJraaTxO0BNDL2Dj03Mtuczs6m+YUo5vc6pG9yh3kNyFcB3/Z2ABbXQ/M10fn8nk5V4gv+Ss4w==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     classnames "^2.2.6"
     cozy-device-helper "^3.0.0"
-    cozy-doctypes "^1.89.5"
+    cozy-doctypes "^1.90.0"
     lodash "^4.17.19"
     react-autosuggest "^10.1.0"
     react-tooltip "^3.11.1"
