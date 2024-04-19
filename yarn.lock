@@ -6327,17 +6327,6 @@ cozy-doctypes@^1.83.8:
     lodash "^4.17.19"
     prop-types "^15.7.2"
 
-cozy-doctypes@^1.89.1:
-  version "1.89.1"
-  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.89.1.tgz#676f8759e5ad9e36ad73cf7c74148139dd573322"
-  integrity sha512-gbwWBuAXvUXF/1QZlvTpUsNBb7npbkVBCV+UiSmMDzFJ0bxpPxHSa+b1crLRf3n0LBn2zViKgne9Es1bw2sDsA==
-  dependencies:
-    cozy-logger "^1.10.2"
-    date-fns "^1.30.1"
-    es6-promise-pool "^2.5.0"
-    lodash "^4.17.19"
-    prop-types "^15.7.2"
-
 cozy-doctypes@^1.90.0:
   version "1.90.0"
   resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.90.0.tgz#6ac69043d45be910c27cb0793a3e45e1a96b91de"
@@ -6363,23 +6352,24 @@ cozy-flags@^2.8.7:
   dependencies:
     microee "^0.0.6"
 
-cozy-harvest-lib@^21.0.5:
-  version "21.0.5"
-  resolved "https://registry.yarnpkg.com/cozy-harvest-lib/-/cozy-harvest-lib-21.0.5.tgz#d7cf4c7b9bb0213cc9b6e1a663d3ddc352969c55"
-  integrity sha512-Oszd+lf03Bdgw53X7SQ9xJ184MIOyx+Q36WlFF0GbtubzErNuL9AYzAMpUq1blI27A4LGpwT1HcC+a6JNElEnw==
+cozy-harvest-lib@^22.5.10:
+  version "22.5.10"
+  resolved "https://registry.yarnpkg.com/cozy-harvest-lib/-/cozy-harvest-lib-22.5.10.tgz#f2db2e61bf1f2648979a5d3bc694cf97938b403c"
+  integrity sha512-GEEUpd4rKqGrKMZ2d6/KbsqvhqGEwoPrexmhc04sBIHTvK28wfmNGRZlijwMWGP4eONozPsUULuo/KlJCec/+w==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     "@sentry/browser" "^6.0.1"
     classnames "^2.3.1"
     cozy-bi-auth "0.0.25"
-    cozy-doctypes "^1.89.1"
-    cozy-logger "^1.10.2"
+    cozy-doctypes "^1.90.0"
+    cozy-logger "^1.10.4"
     date-fns "^1.30.1"
     final-form "^4.18.5"
     lodash "^4.17.19"
     microee "^0.0.6"
     node-polyglot "^2.4.0"
     react-final-form "^3.7.0"
+    react-json-print "^0.1.3"
     react-markdown "^4.2.2"
     use-deep-compare-effect "^1.8.1"
     uuid "^3.3.2"
@@ -6492,14 +6482,6 @@ cozy-logger@^1.10.1, cozy-logger@^1.8.0:
   version "1.10.1"
   resolved "https://registry.yarnpkg.com/cozy-logger/-/cozy-logger-1.10.1.tgz#077f2c517ce0d52eb28d19a22389ac0fb9fcc4b7"
   integrity sha512-6/A5Hqd7cLHmCIhUdyaRdssb7wqsl+mcsVWG3ViJZUEKwtT3N/MoMptT/haPCDKR5XLxIlYbvLmQWom3qtJE+A==
-  dependencies:
-    chalk "^2.4.2"
-    json-stringify-safe "5.0.1"
-
-cozy-logger@^1.10.2:
-  version "1.10.2"
-  resolved "https://registry.yarnpkg.com/cozy-logger/-/cozy-logger-1.10.2.tgz#eef29b76a69995e21a5635ed40f74657aa74d1a3"
-  integrity sha512-Z7QFU2bbmNhl02chQLnXgh7LZ+75SISvIdOD9HsmZakBcQj5wgVA8s/KSDPc0MnPbrPH3Ymkv8CPV53Zsyl1HA==
   dependencies:
     chalk "^2.4.2"
     json-stringify-safe "5.0.1"
@@ -15124,6 +15106,11 @@ react-is@^18.0.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
+
+react-json-print@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/react-json-print/-/react-json-print-0.1.3.tgz#a773233d76d7b6d01e764d826ffde9940af1e08a"
+  integrity sha512-PxLI+cuhpZ7AKlcwZWXWxK6UnDjTkA9YcXyFKlwo9rw44vELsXBr0t5jYKTja1mDm6XzI+vdmhAVPyeNUNAUug==
 
 react-layout-effect@^1.0.1:
   version "1.0.5"
