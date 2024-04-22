@@ -73,12 +73,18 @@ const buildRecentQuery = () => ({
       .where({
         type: 'file',
         trashed: false,
+        dir_id: { $ne: SHARED_DRIVES_DIR_ID },
         updated_at: {
           $gt: null
         }
       })
-      .indexFields(['type', 'trashed', 'updated_at'])
-      .sortBy([{ type: 'desc' }, { trashed: 'desc' }, { updated_at: 'desc' }])
+      .indexFields(['type', 'trashed', 'dir_id', 'updated_at'])
+      .sortBy([
+        { type: 'desc' },
+        { trashed: 'desc' },
+        { dir_id: 'desc' },
+        { updated_at: 'desc' }
+      ])
       .limitBy(50),
   options: {
     as: 'recent-view-query',

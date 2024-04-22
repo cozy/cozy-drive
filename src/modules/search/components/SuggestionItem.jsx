@@ -4,6 +4,7 @@ import ListItem from 'cozy-ui/transpiled/react/ListItem'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 
+import { SHARED_DRIVES_DIR_ID } from 'constants/config'
 import FileIconMime from 'modules/filelist/FileIconMime'
 import FileIconShortcut from 'modules/filelist/FileIconShortcut'
 import SuggestionItemTextHighlighted from 'modules/search/components/SuggestionItemTextHighlighted'
@@ -17,16 +18,22 @@ const SuggestionItem = ({
   isMobile = false
 }) => {
   const openSuggestion = useCallback(() => {
+    // Open the shared drive in a new tab
+    if (suggestion.parentUrl?.includes(SHARED_DRIVES_DIR_ID)) {
+      window.open(`/#/external/${suggestion.id}`, '_blank')
+    }
+
     if (typeof onClick == 'function') {
       onClick(suggestion)
     }
-  }, [suggestion, onClick])
+  }, [onClick, suggestion])
 
   const file = {
     class: suggestion.class,
     type: suggestion.type,
     mime: suggestion.mime,
-    name: suggestion.title
+    name: suggestion.title,
+    parentUrl: suggestion.parentUrl
   }
 
   return (
@@ -46,13 +53,15 @@ const SuggestionItem = ({
           />
         }
         secondary={
-          <SuggestionItemTextSecondary
-            text={suggestion.subtitle}
-            url={suggestion.parentUrl}
-            query={query}
-            onOpened={onParentOpened}
-            isMobile={isMobile}
-          />
+          file.parentUrl?.includes(SHARED_DRIVES_DIR_ID) ? null : (
+            <SuggestionItemTextSecondary
+              text={suggestion.subtitle}
+              url={suggestion.parentUrl}
+              query={query}
+              onOpened={onParentOpened}
+              isMobile={isMobile}
+            />
+          )
         }
       />
     </ListItem>
