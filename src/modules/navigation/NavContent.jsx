@@ -9,7 +9,7 @@ import { NavIcon, NavText } from 'cozy-ui/transpiled/react/Nav'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-const NavContent = ({ icon, badgeContent, label, isExternalDrive }) => {
+const NavContent = ({ icon, badgeContent, label, isExternal }) => {
   const { isDesktop } = useBreakpoints()
 
   if (badgeContent) {
@@ -44,7 +44,7 @@ const NavContent = ({ icon, badgeContent, label, isExternalDrive }) => {
   }
 
   // Used for shared drives (eg. NextCloud)
-  if (isExternalDrive) {
+  if (isExternal) {
     return (
       <>
         <Typography color="textSecondary" variant="inherit" noWrap>

@@ -5,6 +5,7 @@ import { NavDesktopLimiter } from 'cozy-ui/transpiled/react/Nav'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import { CozyFile } from 'models/index'
 import { FileWithSelection as File } from 'modules/filelist/File'
 import { FileList } from 'modules/filelist/FileList'
 import FileListBody from 'modules/filelist/FileListBody'
@@ -42,13 +43,16 @@ export const SharedDrives = ({
             {data.map(file => (
               <File
                 key={file.id}
-                attributes={file}
+                attributes={{
+                  ...file,
+                  name: CozyFile.splitFilename(file).filename
+                }}
                 withSelectionCheckbox={false}
                 onFolderOpen={navigateToFolder}
                 onFileOpen={handleFileOpen}
                 isInSyncFromSharing={false}
                 disableSelection={true}
-                isExternalDrive={file.attributes?.type === 'shortcut'}
+                isExternal={file.class === 'shortcut'}
               />
             ))}
           </>
@@ -71,9 +75,9 @@ export const SharedDrives = ({
         <NavItem
           key={file._id}
           secondary
-          forcedLabel={file.name.replace(/\.url$/, '')}
+          forcedLabel={CozyFile.splitFilename(file).filename}
           clickState={clickState}
-          isExternalDrive={file.attributes?.type === 'shortcut'}
+          isExternal={file.class === 'shortcut'}
           to={`/external/${file._id}`}
         />
       ))}

@@ -21,7 +21,7 @@ const FileThumbnail = ({
   size,
   isInSyncFromSharing,
   isEncrypted,
-  isExternalDrive
+  isExternal
 }) => {
   const { isMobile } = useBreakpoints()
   const isSharingShortcut =
@@ -36,12 +36,12 @@ const FileThumbnail = ({
       {isSimpleFile && (
         <FileIcon file={file} size={size} isEncrypted={isEncrypted} />
       )}
-      {!isExternalDrive && isRegularShortcut && (
+      {!isExternal && isRegularShortcut && (
         <InfosBadge badgeContent={<Icon icon={LinkIcon} size={10} />}>
           <FileIcon file={file} size={size} />
         </InfosBadge>
       )}
-      {isExternalDrive && (
+      {isExternal && (
         <InfosBadge badgeContent={<Icon icon={Openwith} size={10} />}>
           <FileIcon file={file} size={size} />
         </InfosBadge>
