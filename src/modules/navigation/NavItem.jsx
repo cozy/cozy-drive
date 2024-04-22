@@ -19,7 +19,7 @@ import { NavLink } from 'modules/navigation/NavLink'
  * @param {RegExp} [props.rx] - A RegExp to modify the path dynamically (optional).
  * @param {Object} [props.clickState] - State to be passed to the NavLink on click (optional).
  * @param {number} [props.badgeContent] - Content of the badge to display (optional).
- * @param {boolean} [props.isExternalDrive=false] - Whether the link is a shared drives link (optional).
+ * @param {boolean} [props.isExternal=false] - Whether the link is a shared drives link (optional).
  * @param {boolean} [props.secondary=false] - Whether to apply secondary styling to the nav item (optional).
  * @returns {JSX.Element} The rendered navigation item component.
  */
@@ -30,7 +30,7 @@ const NavItem = ({
   rx,
   clickState,
   badgeContent,
-  isExternalDrive,
+  isExternal,
   secondary,
   forcedLabel
 }) => {
@@ -38,12 +38,12 @@ const NavItem = ({
 
   return (
     <UINavItem secondary={secondary}>
-      <NavLink to={to} rx={rx} clickState={clickState}>
+      <NavLink to={to} rx={rx} clickState={clickState} isExternal={isExternal}>
         <NavContent
           icon={icon}
           label={forcedLabel ?? t(`Nav.item_${label}`)}
           badgeContent={badgeContent}
-          isExternalDrive={isExternalDrive}
+          isExternal={isExternal}
         />
       </NavLink>
     </UINavItem>
