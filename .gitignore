@@ -33,6 +33,7 @@ desktop.ini
 .floo
 .flooignore
 .brackets.json
+.vscode
 
 # cozy-jobs-cli
 .token.json
