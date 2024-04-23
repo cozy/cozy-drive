@@ -18,11 +18,6 @@ const SuggestionItem = ({
   isMobile = false
 }) => {
   const openSuggestion = useCallback(() => {
-    // Open the shared drive in a new tab
-    if (suggestion.parentUrl?.includes(SHARED_DRIVES_DIR_ID)) {
-      window.open(`/#/external/${suggestion.id}`, '_blank')
-    }
-
     if (typeof onClick == 'function') {
       onClick(suggestion)
     }
@@ -32,7 +27,7 @@ const SuggestionItem = ({
     class: suggestion.class,
     type: suggestion.type,
     mime: suggestion.mime,
-    name: suggestion.title,
+    name: suggestion.title.replace(/\.url$/, ''), // Not using `splitFileName()` because we don't have access to the full file here.
     parentUrl: suggestion.parentUrl
   }
 
@@ -47,10 +42,7 @@ const SuggestionItem = ({
       </ListItemIcon>
       <ListItemText
         primary={
-          <SuggestionItemTextHighlighted
-            text={suggestion.title}
-            query={query}
-          />
+          <SuggestionItemTextHighlighted text={file.name} query={query} />
         }
         secondary={
           file.parentUrl?.includes(SHARED_DRIVES_DIR_ID) ? null : (
