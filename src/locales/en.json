@@ -575,6 +575,7 @@
   },
   "Move": {
     "to": "Move to:",
+    "go_to_dir": "Open directory",
     "action": "Move",
     "cancel": "Cancel",
     "modalTitle": "Move",

@@ -576,6 +576,7 @@
   },
   "Move": {
     "to": "Déplacer vers:",
+    "go_to_dir": "Ouvrir le dossier",
     "action": "Déplacer",
     "cancel": "Annuler",
     "modalTitle": "Déplacer",

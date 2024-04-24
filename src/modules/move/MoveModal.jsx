@@ -2,12 +2,15 @@ import { useDisplayedFolder } from 'hooks'
 import { CozyFile } from 'models'
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { cancelable, Q, useClient } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
 import { useBreakpoints } from 'cozy-ui/transpiled/react'
+import Button from 'cozy-ui/transpiled/react/Buttons'
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { withStyles } from 'cozy-ui/transpiled/react/styles'
 
@@ -53,6 +56,8 @@ const MoveModal = ({ onClose, entries, classes }) => {
     byDocId,
     allLoaded
   } = useSharingContext()
+  const navigate = useNavigate()
+  const { showAlert } = useAlert()
 
   const [folderId, setFolderId] = useState(
     displayedFolder ? displayedFolder._id : ROOT_DIR_ID
@@ -146,19 +151,42 @@ const MoveModal = ({ onClose, entries, classes }) => {
         client.query(Q('io.cozy.files').getById(folderId))
       )
       const targetName = response.data?.name || t('breadcrumb.title_drive')
-      Alerter.info('Move.success', {
-        subject: entries.length === 1 ? entries[0].name : '',
-        target: targetName,
-        smart_count: entries.length,
-        buttonText: t('Move.cancel'),
-        buttonAction: () =>
-          cancelMove({
-            entries,
-            trashedFiles,
-            client,
-            registerCancelable,
-            refreshSharing
-          })
+      const targetDir = response.data?.id
+
+      showAlert({
+        action: (
+          <>
+            <Button
+              color="success"
+              label={t('Move.cancel')}
+              onClick={() =>
+                cancelMove({
+                  entries,
+                  trashedFiles,
+                  client,
+                  registerCancelable,
+                  refreshSharing
+                })
+              }
+              size="small"
+              variant="text"
+            />
+
+            <Button
+              color="success"
+              label={t('Move.go_to_dir')}
+              onClick={() => navigate(`/folder/${targetDir}`)}
+              size="small"
+              variant="text"
+            />
+          </>
+        ),
+        message: t('Move.success', {
+          smart_count: entries.length,
+          subject: entries.length === 1 ? entries[0].name : '',
+          target: targetName
+        }),
+        severity: 'success'
       })
       if (refreshSharing) refreshSharing()
     } catch (e) {
