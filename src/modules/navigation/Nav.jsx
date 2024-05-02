@@ -1,26 +1,17 @@
 import React, { useState } from 'react'
 
 import UINav from 'cozy-ui/transpiled/react/Nav'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
+import { DrivesNavItem } from 'modules/navigation/DrivesNavItem'
 import { NavItem } from 'modules/navigation/NavItem'
 import { SharingsNavItem } from 'modules/navigation/SharingsNavItem'
-import { SharedDrives } from 'modules/views/Folder/SharedDrives'
 
 export const Nav = () => {
   const clickState = useState(null)
-  const { isMobile } = useBreakpoints()
 
   return (
     <UINav>
-      <NavItem
-        to="/folder"
-        icon="folder"
-        label="drive"
-        rx={/\/folder(\/.*)?/}
-        clickState={clickState}
-      />
-      {!isMobile && <SharedDrives />}
+      <DrivesNavItem clickState={clickState} />
       <NavItem
         to="/recent"
         icon="clock"

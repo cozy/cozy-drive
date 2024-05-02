@@ -1,6 +1,7 @@
 {
   "Nav": {
     "item_drive": "Drive",
+    "item_drives": "Drives",
     "item_recent": "Recent",
     "item_sharings": "Sharings",
     "item_shared": "Shared by me",
