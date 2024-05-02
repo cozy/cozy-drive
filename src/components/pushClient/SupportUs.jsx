@@ -9,6 +9,7 @@ import { isFlagshipApp } from 'cozy-device-helper'
 import Stack from 'cozy-ui/transpiled/react/Stack'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import { ButtonLink } from 'cozy-ui/transpiled/react/deprecated/Button'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import styles from './supportUs.styl'
@@ -16,8 +17,9 @@ import styles from './supportUs.styl'
 const SupportUs = () => {
   const { t } = useI18n()
   const instanceInfo = useInstanceInfo()
+  const { isMobile } = useBreakpoints()
 
-  if (!instanceInfo.isLoaded || isFlagshipApp()) return null
+  if (!instanceInfo.isLoaded || isFlagshipApp() || isMobile) return null
 
   if (shouldDisplayOffers(instanceInfo)) {
     return (
