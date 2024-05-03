@@ -20,7 +20,7 @@ const FolderViewBreadcrumb = ({
   const path = currentFolder ? getBreadcrumbPath(currentFolder) : []
 
   const onBreadcrumbClick = useCallback(
-    ({ id }) => navigateToFolder(id),
+    ({ id }) => navigateToFolder({ _id: id }),
     [navigateToFolder]
   )
 

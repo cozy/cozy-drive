@@ -72,8 +72,8 @@ export const TrashFolderView = () => {
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
 
   const navigateToFolder = useCallback(
-    folderId => {
-      navigate(`/trash/${folderId}`)
+    folder => {
+      navigate(`/trash/${folder.id}`)
     },
     [navigate]
   )

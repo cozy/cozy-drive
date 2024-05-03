@@ -81,8 +81,8 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
 
   const navigateToFolder = useCallback(
-    folderId => {
-      if (folderId) navigate(`/sharings/${folderId}`)
+    folder => {
+      if (folder) navigate(`/sharings/${folder._id}`)
       else navigate('/sharings')
     },
     [navigate]

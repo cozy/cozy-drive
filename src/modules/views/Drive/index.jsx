@@ -107,8 +107,8 @@ const DriveView = () => {
   const isPending = allResults.some(result => result.fetchStatus === 'pending')
 
   const navigateToFolder = useCallback(
-    folderId => {
-      navigate(`/folder/${folderId}`)
+    folder => {
+      navigate(`/folder/${folder._id}`)
     },
     [navigate]
   )

@@ -80,7 +80,7 @@ const File = ({
   const open = (event, attributes) => {
     event.stopPropagation()
     if (isDirectory(attributes)) {
-      onFolderOpen(attributes.id)
+      onFolderOpen(attributes)
     } else {
       onFileOpen({
         event,

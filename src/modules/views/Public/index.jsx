@@ -107,8 +107,8 @@ const PublicFolderView = () => {
   const refreshFolderContent = () => filesResult.forceRefetch() // We don't have enough permissions to rely on the realtime notifications or on a cozy-client query to update the view when something changes, so we relaod the view instead
 
   const navigateToFolder = useCallback(
-    folderId => {
-      navigate(`/folder/${folderId}`)
+    folder => {
+      navigate(`/folder/${folder._id}`)
     },
     [navigate]
   )
