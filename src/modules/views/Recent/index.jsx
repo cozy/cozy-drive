@@ -63,8 +63,8 @@ export const RecentView = () => {
   const result = useFilesQueryWithPath(query)
 
   const navigateToFolder = useCallback(
-    folderId => {
-      navigate(`/folder/${folderId}`)
+    folder => {
+      navigate(`/folder/${folder._id}`)
     },
     [navigate]
   )

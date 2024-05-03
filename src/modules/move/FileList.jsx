@@ -39,7 +39,7 @@ const FileList = ({ targets, files, folder, navigateTo }) => {
             displayedFolder={null}
             actions={null}
             isRenaming={false}
-            onFolderOpen={id => navigateTo(files.find(f => f.id === id))}
+            onFolderOpen={({ id }) => navigateTo(files.find(f => f.id === id))}
             onFileOpen={() => {}}
             withSelectionCheckbox={false}
             withFilePath={false}

@@ -67,8 +67,8 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
   const result = useFilesQueryWithPath(query)
 
   const navigateToFolder = useCallback(
-    folderId => {
-      navigate(`/sharings/${folderId}`)
+    folder => {
+      navigate(`/sharings/${folder._id}`)
     },
     [navigate]
   )
