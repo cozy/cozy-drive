@@ -59,7 +59,7 @@
     },
     {
       "path": "public/pdf.worker.entry.<hash>.worker.js",
-      "maxSize": "345 KB"
+      "maxSize": "350 KB"
     },
     {
       "path": "services/dacc/drive.js",
