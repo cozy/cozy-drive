@@ -1,6 +1,8 @@
 import React from 'react'
 import { Routes, Route, useParams, Navigate } from 'react-router-dom'
 
+import flag from 'cozy-flags'
+
 import ExternalRedirect from './ExternalRedirect'
 import Index from './Index'
 import DriveView from '../views/Drive'
@@ -26,6 +28,7 @@ import { MoveFilesView } from 'modules/views/Modal/MoveFilesView'
 import { QualifyFileView } from 'modules/views/Modal/QualifyFileView'
 import { ShareDisplayedFolderView } from 'modules/views/Modal/ShareDisplayedFolderView'
 import { ShareFileView } from 'modules/views/Modal/ShareFileView'
+import { NextcloudFolderView } from 'modules/views/Nextcloud/NextcloudFolderView'
 
 const FilesRedirect = () => {
   const { folderId } = useParams()
@@ -54,6 +57,10 @@ const AppRoute = () => (
         <Route path="move" element={<MoveFilesView />} />
         <Route path="harvest/:konnectorSlug/*" element={<HarvestRoutes />} />
       </Route>
+
+      {flag('drive.show-nextcloud-dev') ? (
+        <Route path="nextcloud/:shorcutId" element={<NextcloudFolderView />} />
+      ) : null}
 
       <Route path="recent" element={<RecentView />}>
         <Route path="file/:fileId" element={<FilesViewerRecent />} />
