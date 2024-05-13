@@ -4,6 +4,7 @@ import { useParams, useSearchParams } from 'react-router-dom'
 import { useQuery } from 'cozy-client'
 
 import { NextcloudBreadcrumb } from 'modules/nextcloud/components/NextcloudBreadcrumb'
+import { NextcloudToolbar } from 'modules/nextcloud/components/NextcloudToolbar'
 import { buildNextcloudFolderQuery } from 'modules/nextcloud/queries'
 import { buildFileByIdQuery } from 'modules/queries'
 import FolderView from 'modules/views/Folder/FolderView'
@@ -38,10 +39,13 @@ const NextcloudFolderView = () => {
     setSearchParams(searchParams)
   }
 
+  const toolbarActions = []
+
   return (
     <FolderView>
       <FolderViewHeader>
         <NextcloudBreadcrumb shortcut={shortcutResult.data} path={path} />
+        <NextcloudToolbar actions={toolbarActions} docs={[]} />
       </FolderViewHeader>
       <FolderViewBody
         queryResults={[nextcloudResult]}
