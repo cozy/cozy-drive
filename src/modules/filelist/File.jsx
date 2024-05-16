@@ -99,9 +99,10 @@ const File = ({
     [styles['fil-content-row-disabled']]: styleDisabled,
     [styles['fil-content-row-bigger']]: isLargeRow
   })
-  const formattedSize = isDirectory(attributes)
-    ? undefined
-    : filesize(attributes.size, { base: 10 })
+  const formattedSize =
+    !isDirectory(attributes) && attributes.size
+      ? filesize(attributes.size, { base: 10 })
+      : undefined
 
   const updatedAt = attributes.updated_at || attributes.created_at
   const formattedUpdatedAt = f(
