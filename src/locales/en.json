@@ -800,5 +800,13 @@
   },
   "FolderPickerContentRoot": {
     "myDrive": "My Drive"
+  },
+  "NextcloudDeleteConfirm": {
+    "title": "Delete %{filename}? |||| Delete %{smart_count} %{type}?",
+    "trash": "This item will be moved to the Nextcloud trash. |||| These items will be moved to the Nextcloud trash.",
+    "restore": "You can always restore it whenever you want from Nextcloud.",
+    "error": "An error occurred, please try again.",
+    "cancel": "Cancel",
+    "delete": "Delete"
   }
 }

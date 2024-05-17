@@ -801,5 +801,13 @@
   },
   "FolderPickerContentRoot": {
     "myDrive": "Mon Drive"
+  },
+  "NextcloudDeleteConfirm": {
+    "title": "Supprimer %{filename} ? |||| Supprimer %{smart_count} %{type} ?",
+    "trash": "Cet élément sera déplacé dans la corbeille de Nextcloud. |||| Ces éléments seront déplacés dans la corbeille de Nextcloud.",
+    "restore": "Vous pouvez toujours le restaurer quand vous voulez depuis Nextcloud.",
+    "error": "Une erreur est survenue, merci de réessayer.",
+    "cancel": "Annuler",
+    "delete": "Supprimer"
   }
 }
