@@ -10,11 +10,11 @@ import { moveNextcloud } from './actions/moveNextcloud'
 import { joinPath } from 'lib/path'
 import { hr } from 'modules/actions'
 import { FolderBody } from 'modules/folder/components/FolderBody'
+import { deleteNextcloudFile } from 'modules/nextcloud/components/actions/deleteNextcloudFile'
 import { downloadNextcloudFile } from 'modules/nextcloud/components/actions/downloadNextcloudFile'
 import { openWithinNextcloud } from 'modules/nextcloud/components/actions/openWithinNextcloud'
 import { rename } from 'modules/nextcloud/components/actions/rename'
 import { shareNextcloudFile } from 'modules/nextcloud/components/actions/shareNextcloudFile'
-import { trash } from 'modules/nextcloud/components/actions/trash'
 
 const NextcloudFolderBody = ({ path, queryResults }) => {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -42,7 +42,7 @@ const NextcloudFolderBody = ({ path, queryResults }) => {
       duplicateNextcloudFile,
       openWithinNextcloud,
       hr,
-      trash
+      deleteNextcloudFile
     ],
     {
       t,
