@@ -5466,9 +5466,9 @@ camelcase@^6.0.0, camelcase@^6.2.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001039, caniuse-lite@^1.0.30001135, caniuse-lite@^1.0.30001286, caniuse-lite@^1.0.30001517:
-  version "1.0.30001553"
-  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001553.tgz"
-  integrity sha512-N0ttd6TrFfuqKNi+pMgWJTb9qrdJu4JSpgPFLe/lrD19ugC6fZgF0pUewRowDwzdDnb9V41mFcdlYgl/PyKf4A==
+  version "1.0.30001620"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001620.tgz"
+  integrity sha512-WJvYsOjd1/BYUY6SNGUosK9DUidBPDTnOARHp3fSmFO1ekdxaY6nKRttEVrfMmYi80ctS0kz1wiWmm14fVc3ew==
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -6639,10 +6639,10 @@ cozy-tsconfig@1.2.0:
   resolved "https://registry.yarnpkg.com/cozy-tsconfig/-/cozy-tsconfig-1.2.0.tgz#17e61f960f139fae4d26cbac2254b9ab632b269e"
   integrity sha512-TRHnY9goF3FzVlUbP7BcHxuN2XAA4AmppT4fHHZmTKaSwYTByVR1Al+riFMDbce94kJZ1wzl9WNLWQuqzGZ6Cw==
 
-cozy-ui@^105.8.0:
-  version "105.8.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-105.8.0.tgz#1081ae850295b931f1ffc8fcdb61f81e2c03d8fb"
-  integrity sha512-NRuOz5S8kWZRXm9M41laAPQ3UFJOZVJPXig44BNIAOJ9CW7unBvOMQvZiq/5aSFCNDLXpOgDYuaj5xbyTyL7qw==
+cozy-ui@^106.1.0:
+  version "106.1.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-106.1.0.tgz#4aca1f4d32e0bd87dc6b580367aaf2b7ee841803"
+  integrity sha512-+bOTY/QnqnUd/uuJ9MFwvXBhLUExnX3reSC7LsRE6S28JNrPGiElMnkQEsc6HlrQDGbZj+b3KxgJp5j6p8k3cQ==
   dependencies:
     "@babel/runtime" "^7.3.4"
     "@material-ui/core" "4.12.3"
