@@ -1277,6 +1277,11 @@ exports[`Dropzone should match snapshot 1`] = `
                   "backgroundColor": "#fff",
                 },
               },
+              "MuiMenu": {
+                "paper": {
+                  "maxWidth": 320,
+                },
+              },
               "MuiMenuItem": {
                 "gutters": {
                   "paddingLeft": 16,
@@ -1293,7 +1298,6 @@ exports[`Dropzone should match snapshot 1`] = `
                   "@media (min-width:480px)": {
                     "minHeight": 40,
                   },
-                  "maxWidth": 320,
                   "overflow": "auto",
                   "paddingBottom": 4,
                   "paddingTop": 4,
@@ -1361,6 +1365,17 @@ exports[`Dropzone should match snapshot 1`] = `
                     "fill": "#fff",
                   },
                   "padding": "12px",
+                },
+              },
+              "MuiSelect": {
+                "iconOutlined": {
+                  "right": 14,
+                  "top": "auto",
+                },
+                "outlined": {
+                  "&&": {
+                    "paddingRight": 39,
+                  },
                 },
               },
               "MuiSnackbarContent": {
