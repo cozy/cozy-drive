@@ -5,7 +5,7 @@ import flag from 'cozy-flags'
 
 import ExternalRedirect from './ExternalRedirect'
 import Index from './Index'
-import DriveView from '../views/Drive'
+import { DriveFolderView } from '../views/Drive/DriveFolderView'
 import FilesViewerDrive from '../views/Drive/FilesViewerDrive'
 import OnlyOfficeView from '../views/OnlyOffice'
 import OnlyOfficeCreateView from '../views/OnlyOffice/Create'
@@ -47,7 +47,7 @@ const AppRoute = () => (
         path="folder"
         element={<Navigate to={ROOT_DIR_ID} replace={true} />}
       />
-      <Route path="folder/:folderId" element={<DriveView />}>
+      <Route path="folder/:folderId" element={<DriveFolderView />}>
         <Route path="file/:fileId" element={<FilesViewerDrive />} />
         <Route path="file/:fileId/revision" element={<FileHistory />} />
         <Route path="file/:fileId/share" element={<ShareFileView />} />

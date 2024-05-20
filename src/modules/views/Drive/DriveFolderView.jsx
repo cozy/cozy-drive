@@ -49,7 +49,7 @@ import { useResumeUploadFromFlagship } from 'modules/views/Upload/useResumeFromF
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
-const DriveView = () => {
+const DriveFolderView = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const params = useParams()
@@ -227,4 +227,4 @@ const DriveView = () => {
   )
 }
 
-export default DriveView
+export { DriveFolderView }
