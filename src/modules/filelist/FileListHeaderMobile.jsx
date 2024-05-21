@@ -17,7 +17,7 @@ import { DEFAULT_SORT } from 'config/sort'
 
 import styles from 'styles/filelist.styl'
 
-export const MobileFileListHeader = ({
+const FileListHeaderMobile = ({
   folderId,
   canSort,
   sort,
@@ -87,4 +87,4 @@ export const MobileFileListHeader = ({
   )
 }
 
-export default MobileFileListHeader
+export { FileListHeaderMobile }

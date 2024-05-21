@@ -18,11 +18,11 @@ jest.mock('modules/views/OnlyOffice/helpers', () => ({
 
 jest.mock('modules/upload/UploadQueue')
 
-jest.mock('modules/views/Public', () => {
-  return jest.fn().mockImplementation(() => {
+jest.mock('modules/views/Public/PublicFolderView', () => ({
+  PublicFolderView: jest.fn().mockImplementation(() => {
     return <div>PublicFolderView</div>
   })
-})
+}))
 
 jest.mock('modules/public/LightFileViewer', () => {
   return jest.fn().mockImplementation(() => {
