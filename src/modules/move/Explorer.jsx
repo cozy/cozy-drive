@@ -4,15 +4,11 @@ import React from 'react'
 import { Table } from 'cozy-ui/transpiled/react/deprecated/Table'
 
 import FileListBody from 'modules/filelist/FileListBody'
-import FileListHeader from 'modules/filelist/FileListHeader'
-import MobileFileListHeader from 'modules/filelist/MobileFileListHeader'
+import { FileListHeader } from 'modules/filelist/FileListHeader'
 
 const Explorer = ({ children }) => (
   <Table role="table">
-    <>
-      <MobileFileListHeader folderId={null} canSort={false} />
-      <FileListHeader folderId={null} canSort={false} />
-    </>
+    <FileListHeader folderId={null} canSort={false} />
     <FileListBody className="u-ov-visible" selectionModeActive={false}>
       {children}
     </FileListBody>

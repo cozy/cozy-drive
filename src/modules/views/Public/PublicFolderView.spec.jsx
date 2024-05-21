@@ -3,7 +3,7 @@ import React from 'react'
 
 import { useSharingContext } from 'cozy-sharing'
 
-import PublicFolderView from './index'
+import { PublicFolderView } from './PublicFolderView'
 import usePublicFilesQuery from './usePublicFilesQuery'
 import { generateFileFixtures, getByTextWithMarkup } from '../testUtils'
 import AppLike from 'test/components/AppLike'

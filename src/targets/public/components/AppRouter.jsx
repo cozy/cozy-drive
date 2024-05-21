@@ -12,7 +12,7 @@ import OnlyOfficeView from 'modules/views/OnlyOffice'
 import OnlyOfficeCreateView from 'modules/views/OnlyOffice/Create'
 import OnlyOfficePaywallView from 'modules/views/OnlyOffice/OnlyOfficePaywallView'
 import { isOfficeEnabled } from 'modules/views/OnlyOffice/helpers'
-import PublicFolderView from 'modules/views/Public'
+import { PublicFolderView } from 'modules/views/Public/PublicFolderView'
 
 const AppRouter = ({
   isReadOnly,

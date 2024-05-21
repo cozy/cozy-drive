@@ -19,10 +19,9 @@ import AddFolder from 'modules/filelist/AddFolder'
 import { FileWithSelection as File } from 'modules/filelist/File'
 import { FileList } from 'modules/filelist/FileList'
 import FileListBody from 'modules/filelist/FileListBody'
-import FileListHeader from 'modules/filelist/FileListHeader'
+import { FileListHeader } from 'modules/filelist/FileListHeader'
 import FileListRowsPlaceholder from 'modules/filelist/FileListRowsPlaceholder'
 import LoadMore from 'modules/filelist/LoadMoreV2'
-import MobileFileListHeader from 'modules/filelist/MobileFileListHeader'
 import { useFolderSort } from 'modules/navigation/duck'
 import SelectionBar from 'modules/selection/SelectionBar'
 import { FolderTab } from 'modules/views/Folder/FolderTab'
@@ -193,25 +192,14 @@ const FolderViewBody = ({
         <FolderTab value={isMobile ? value : 0} index={0}>
           <FileList>
             {hasDataToShow && (
-              <>
-                <MobileFileListHeader
-                  folderId={null}
-                  canSort={canSort}
-                  sort={sortOrder}
-                  onFolderSort={changeSortOrder}
-                  thumbnailSizeBig={isBigThumbnail}
-                  toggleThumbnailSize={toggleThumbnailSize}
-                />
-                <FileListHeader
-                  folderId={null}
-                  canSort={canSort}
-                  sort={sortOrder}
-                  onFolderSort={changeSortOrder}
-                  thumbnailSizeBig={isBigThumbnail}
-                  toggleThumbnailSize={toggleThumbnailSize}
-                  extraColumns={extraColumns}
-                />
-              </>
+              <FileListHeader
+                folderId={null}
+                canSort={canSort}
+                sort={sortOrder}
+                onFolderSort={changeSortOrder}
+                thumbnailSizeBig={isBigThumbnail}
+                toggleThumbnailSize={toggleThumbnailSize}
+              />
             )}
             <FileListBody selectionModeActive={false}>
               <AddFolder
@@ -290,25 +278,14 @@ const FolderViewBody = ({
         </FolderTab>
         {isMobile && (
           <FolderTab value={value} index={1}>
-            <>
-              <MobileFileListHeader
-                folderId={null}
-                canSort={canSort}
-                sort={sortOrder}
-                onFolderSort={changeSortOrder}
-                thumbnailSizeBig={isBigThumbnail}
-                toggleThumbnailSize={toggleThumbnailSize}
-              />
-              <FileListHeader
-                folderId={null}
-                canSort={canSort}
-                sort={sortOrder}
-                onFolderSort={changeSortOrder}
-                thumbnailSizeBig={isBigThumbnail}
-                toggleThumbnailSize={toggleThumbnailSize}
-                extraColumns={extraColumns}
-              />
-            </>
+            <FileListHeader
+              folderId={null}
+              canSort={canSort}
+              sort={sortOrder}
+              onFolderSort={changeSortOrder}
+              thumbnailSizeBig={isBigThumbnail}
+              toggleThumbnailSize={toggleThumbnailSize}
+            />
             <SharedDrives
               handleFileOpen={handleFileOpen}
               navigateToFolder={navigateToFolder}

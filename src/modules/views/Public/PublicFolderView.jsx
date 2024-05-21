@@ -274,4 +274,4 @@ const PublicFolderView = () => {
   )
 }
 
-export default PublicFolderView
+export { PublicFolderView }
