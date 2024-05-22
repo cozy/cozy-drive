@@ -1,55 +1,51 @@
-import { QueryDefinition } from 'cozy-client'
+import CozyClient, { Q, QueryDefinition } from 'cozy-client'
 import { QueryOptions } from 'cozy-client/types/types'
 
-import { SHARED_DRIVES_DIR_PATH } from 'constants/config'
-import { buildDriveQuery } from 'modules/queries'
-import { SortOrder } from 'modules/views/Folder/types'
+import { SHARED_DRIVES_DIR_ID, TRASH_DIR_ID } from 'constants/config'
 
 /**
- * Builds a query for fetching files from a shared drive with specified sorting.
- * @param sortOrder - Specifies how the results should be sorted.
- * @param sharedDrivesId - The unique identifier for the shared drive.
- * @returns An object containing the definition of the query and the options for executing it.
+ * Builds a query to fetch shared drives
+ * This only fetches shortcuts for now as it used to access external drives like Nextcloud
  *
  * Usage:
- * const { definition, options } = buildSharedDrivesFilesQuery({ attribute: 'name', order: 'asc' }, 'driveId');
+ * const { definition, options } = buildsharedDrivesQuery({
+ *  sortAttribute: 'name',
+ *  sortOrder: 'asc'
+ * });
  */
-export const buildSharedDrivesFilesQuery = (
-  sortOrder: SortOrder,
-  sharedDrivesId: string
-): { definition: QueryDefinition; options: QueryOptions } => {
-  // Builds a drive query with provided parameters
-  const buildedFilesQuery = buildDriveQuery({
-    currentFolderId: sharedDrivesId,
-    type: 'file',
-    sortAttribute: sortOrder.attribute,
-    sortOrder: sortOrder.order
-  })
-
-  // Returns the query definition and options for execution
-  return {
-    definition: buildedFilesQuery.definition(),
-    options: buildedFilesQuery.options
-  }
-}
-
-/**
- * Convenience function to build a query for fetching shared drive data.
- * Preconfigured to sort by name in ascending order and target the shared drives directory.
- * @returns An object with the definition of the query and the options for its execution.
- *
- * Usage:
- * const { definition, options } = buildsharedDrivesQuery();
- */
-export const buildSharedDrivesQuery = (): {
-  definition: QueryDefinition
+export const buildSharedDrivesQuery = ({
+  sortAttribute,
+  sortOrder
+}: {
+  sortAttribute: string
+  sortOrder: string
+}): {
+  definition: () => QueryDefinition
   options: QueryOptions
-} =>
-  // Utilizes buildsharedDrivesFilesQuery with preconfigured parameters
-  buildSharedDrivesFilesQuery(
-    {
-      attribute: 'name',
-      order: 'asc'
-    },
-    SHARED_DRIVES_DIR_PATH as string
-  )
+} => ({
+  definition: () =>
+    Q('io.cozy.files')
+      .where({
+        dir_id: SHARED_DRIVES_DIR_ID,
+        class: 'shortcut',
+        [sortAttribute]: { $gt: null }
+      })
+      .partialIndex({
+        // This is to avoid fetching trash
+        // They are hidden clientside
+        _id: {
+          $nin: [TRASH_DIR_ID]
+        }
+      })
+      .indexFields(['dir_id', 'class', sortAttribute])
+      .sortBy([
+        { dir_id: sortOrder },
+        { class: sortOrder },
+        { [sortAttribute]: sortOrder }
+      ])
+      .limitBy(100),
+  options: {
+    as: `${SHARED_DRIVES_DIR_ID}/sortAttribute/${sortAttribute}/sortOrder/${sortOrder}`,
+    fetchPolicy: CozyClient.fetchPolicies.olderThan(1000 * 60 * 10) // 10 minutes
+  }
+})
