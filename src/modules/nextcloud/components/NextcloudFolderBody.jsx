@@ -6,6 +6,7 @@ import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { duplicateNextcloudFile } from './actions/duplicateNextcloudFile'
+import { joinPath } from 'lib/path'
 import { hr } from 'modules/actions'
 import { FolderBody } from 'modules/folder/components/FolderBody'
 import { downloadNextcloudFile } from 'modules/nextcloud/components/actions/downloadNextcloudFile'
@@ -14,7 +15,6 @@ import { openWithinNextcloud } from 'modules/nextcloud/components/actions/openWi
 import { rename } from 'modules/nextcloud/components/actions/rename'
 import { share } from 'modules/nextcloud/components/actions/share'
 import { trash } from 'modules/nextcloud/components/actions/trash'
-import { makePath } from 'modules/nextcloud/utils'
 
 const NextcloudFolderBody = ({ path, queryResults }) => {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -22,7 +22,7 @@ const NextcloudFolderBody = ({ path, queryResults }) => {
   const { t } = useI18n()
 
   const handleFolderOpen = folder => {
-    searchParams.set('path', makePath(path, folder.name))
+    searchParams.set('path', joinPath(path, folder.name))
     setSearchParams(searchParams)
   }
 
