@@ -263,7 +263,8 @@
     "requalify": "Requalifier",
     "qualify": "Qualifier",
     "history": "Versions",
-    "more": "Afficher plus d'action"
+    "more": "Afficher plus d'action",
+    "openWithinNextcloud": "Ouvrir dans Nextcloud"
   },
   "DeleteConfirm": {
     "title": "Supprimer %{filename} ? |||| Supprimer %{smart_count} %{type} ?",
