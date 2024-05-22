@@ -9,6 +9,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { NextcloudBreadcrumb } from 'modules/nextcloud/components/NextcloudBreadcrumb'
 import { NextcloudToolbar } from 'modules/nextcloud/components/NextcloudToolbar'
 import { downloadNextcloudFile } from 'modules/nextcloud/components/actions/downloadNextcloudFile'
+import { openWithinNextcloud } from 'modules/nextcloud/components/actions/openWithinNextcloud'
 import { buildNextcloudFolderQuery } from 'modules/nextcloud/queries'
 import { makePath } from 'modules/nextcloud/utils'
 import { buildFileByIdQuery } from 'modules/queries'
@@ -45,11 +46,18 @@ const NextcloudFolderView = () => {
     setSearchParams(searchParams)
   }
 
-  const toolbarActions = []
-  const fileActions = makeActions([downloadNextcloudFile], {
+  const toolbarActions = makeActions([openWithinNextcloud], {
     t,
     client
   })
+
+  const fileActions = makeActions(
+    [downloadNextcloudFile, openWithinNextcloud],
+    {
+      t,
+      client
+    }
+  )
 
   return (
     <FolderView>

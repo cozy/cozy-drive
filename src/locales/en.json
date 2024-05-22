@@ -262,7 +262,8 @@
     "phone-download": "Make available offline",
     "qualify": "Categorize",
     "history": "History",
-    "more": "More"
+    "more": "More",
+    "openWithinNextcloud": "Open within Nextcloud"
   },
   "DeleteConfirm": {
     "title": "Delete %{filename}? |||| Delete %{smart_count} %{type}?",
