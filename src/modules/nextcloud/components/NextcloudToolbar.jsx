@@ -8,7 +8,7 @@ import { MoreMenu } from 'components/MoreMenu'
 import { selectable } from 'modules/actions/selectable'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 
-const NextcloudToolbar = ({ docs }) => {
+const NextcloudToolbar = () => {
   const { t } = useI18n()
   const { showSelectionBar } = useSelectionContext()
 
@@ -19,7 +19,7 @@ const NextcloudToolbar = ({ docs }) => {
       className={cx('u-flex', 'u-flex-items-center', 'u-ml-auto')}
       role="toolbar"
     >
-      <MoreMenu actions={moreActions} docs={docs} disabled={false} />
+      <MoreMenu actions={moreActions} docs={[]} disabled={false} />
     </div>
   )
 }
