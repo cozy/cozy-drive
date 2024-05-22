@@ -13,7 +13,7 @@ import { EmptyDrive, EmptyTrash } from 'components/Error/Empty'
 import Oops from 'components/Error/Oops'
 import { TRASH_DIR_ID } from 'constants/config'
 import AcceptingSharingContext from 'lib/AcceptingSharingContext'
-import { ThumbnailSizeContext } from 'lib/ThumbnailSizeContext'
+import { useThumbnailSizeContext } from 'lib/ThumbnailSizeContext'
 import { isEncryptedFolder } from 'lib/encryption'
 import AddFolder from 'modules/filelist/AddFolder'
 import { FileWithSelection as File } from 'modules/filelist/File'
@@ -77,8 +77,7 @@ const FolderViewBody = ({
     }
   }, [currentFolderId, isDesktop])
 
-  const { isBigThumbnail, toggleThumbnailSize } =
-    useContext(ThumbnailSizeContext)
+  const { isBigThumbnail, toggleThumbnailSize } = useThumbnailSizeContext()
   const { sharingsValue } = useContext(AcceptingSharingContext)
   const [sortOrder, setSortOrder] = useFolderSort(currentFolderId)
   const vaultClient = useVaultClient()
