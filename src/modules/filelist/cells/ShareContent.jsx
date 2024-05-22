@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 
 import { SharedStatus, useSharingContext } from 'cozy-sharing'
 
+import { joinPath } from 'lib/path'
 import HammerComponent from 'modules/filelist/HammerComponent'
 
 import styles from 'styles/filelist.styl'
@@ -16,9 +17,7 @@ const ShareContent = ({ file, disabled, isInSyncFromSharing }) => {
   const handleClick = () => {
     if (!disabled) {
       // should be only disabled
-      navigate(
-        `${pathname}${pathname.endsWith('/') ? '' : '/'}file/${file._id}/share`
-      )
+      navigate(joinPath(pathname, `file/${file._id}/share`))
     }
   }
 

@@ -26,6 +26,7 @@ import ErrorShare from 'components/Error/ErrorShare'
 import appMetadata from 'lib/appMetadata'
 import { schema } from 'lib/doctypes'
 import logger from 'lib/logger'
+import { joinPath } from 'lib/path'
 import registerClientPlugins from 'lib/registerClientPlugins'
 import { configureReporter, setCozyUrl } from 'lib/reporter'
 import StyledApp from 'modules/drive/StyledApp'
@@ -96,9 +97,7 @@ const init = async () => {
     if (isNote) {
       try {
         window.location.href = await models.note.fetchURL(client, data, {
-          pathname: `${location.pathname}${
-            location.pathname.endsWith('/') ? '' : '/'
-          }`
+          pathname: joinPath(location.pathname, '')
         })
       } catch (e) {
         Alerter.error('alert.offline')
