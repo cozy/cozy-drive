@@ -56,7 +56,8 @@ NavItem.propTypes = {
   label: PropTypes.string,
   forcedLabel: PropTypes.string,
   rx: PropTypes.shape(RegExp),
-  badgeContent: PropTypes.number
+  badgeContent: PropTypes.number,
+  isExternal: PropTypes.bool
 }
 
 export { NavItem }
