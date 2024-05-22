@@ -47,10 +47,9 @@ const NavContent = ({ icon, badgeContent, label, isExternal }) => {
   if (isExternal) {
     return (
       <>
-        <Typography color="textSecondary" variant="inherit" noWrap>
+        <Typography variant="inherit" color="inherit" noWrap>
           {label}
         </Typography>
-
         <Icon
           icon={OpenWithIcon}
           size={11}
@@ -71,7 +70,8 @@ const NavContent = ({ icon, badgeContent, label, isExternal }) => {
 NavContent.propTypes = {
   icon: PropTypes.string,
   badgeContent: PropTypes.number,
-  label: PropTypes.string
+  label: PropTypes.string,
+  isExternal: PropTypes.bool
 }
 
 export { NavContent }
