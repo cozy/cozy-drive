@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { models } from 'cozy-client'
+import flag from 'cozy-flags'
 import { SharedBadge, SharingOwnerAvatar } from 'cozy-sharing'
 import GhostFileBadge from 'cozy-ui/transpiled/react/GhostFileBadge'
 import Icon from 'cozy-ui/transpiled/react/Icon'
@@ -30,6 +31,13 @@ const FileThumbnail = ({
     !isSharingShortcut && file.class === 'shortcut' && !isInSyncFromSharing
   const isSimpleFile =
     !isSharingShortcut && !isRegularShortcut && !isInSyncFromSharing
+  const isNextcloudShortcut =
+    file.cozyMetadata?.createdByApp === 'nextcloud' &&
+    flag('drive.show-nextcloud-dev')
+
+  if (isNextcloudShortcut) {
+    return <FileIcon file={file} size={size} />
+  }
 
   return (
     <>
