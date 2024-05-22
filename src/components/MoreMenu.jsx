@@ -2,6 +2,7 @@ import React, { useState, useCallback, useRef } from 'react'
 
 import ActionsMenu from 'cozy-ui/transpiled/react/ActionsMenu'
 
+import { BarRightOnMobile } from 'components/Bar'
 import MoreButton from 'components/Button/MoreButton'
 
 /**
@@ -19,7 +20,7 @@ const MoreMenu = ({ actions, docs, disabled }) => {
   const closeMenu = useCallback(() => setMenuOpened(false), [setMenuOpened])
 
   return (
-    <>
+    <BarRightOnMobile>
       <div ref={moreButtonRef}>
         <MoreButton onClick={openMenu} disabled={disabled} />
       </div>
@@ -37,7 +38,7 @@ const MoreMenu = ({ actions, docs, disabled }) => {
           }}
         />
       ) : null}
-    </>
+    </BarRightOnMobile>
   )
 }
 

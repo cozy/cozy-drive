@@ -792,5 +792,8 @@
   },
   "NextcloudBreadcrumb": {
     "root": "Drive partagés"
+  },
+  "NextcloudToolbar": {
+    "share": "Partager"
   }
 }
