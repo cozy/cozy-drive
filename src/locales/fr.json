@@ -789,5 +789,8 @@
   "NotFound": {
     "title": "L’élément est introuvable",
     "text": "Nous n’avons trouvé aucun élément à cette adresse. Il s’agit peut-être d’une erreur de frappe."
+  },
+  "NextcloudBreadcrumb": {
+    "root": "Drive partagés"
   }
 }

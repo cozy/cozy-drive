@@ -18,4 +18,10 @@ export default combineReducers({
   sort
 })
 
+/**
+ * Retrieves the sort value from the view object.
+ *
+ * @param {Object} state - The state object containing the view property.
+ * @returns {string} The sort value.
+ */
 export const getSort = ({ view }) => view.sort

@@ -20,7 +20,10 @@ export const FolderTabs = ({
 }: FolderTabsProps): JSX.Element | null => {
   const { isMobile } = useBreakpoints()
   const { t } = useI18n()
-  const sharedDrivesQuery = buildSharedDrivesQuery()
+  const sharedDrivesQuery = buildSharedDrivesQuery({
+    sortAttribute: 'name',
+    sortOrder: 'asc'
+  })
   const { data } = useQuery(
     sharedDrivesQuery.definition,
     sharedDrivesQuery.options
