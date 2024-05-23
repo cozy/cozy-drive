@@ -29,7 +29,7 @@ const MoveTopbar = ({ navigateTo, folderId, showFolderCreation }) => {
   return (
     <Topbar hideOnMobile={false}>
       {showPreviousButton && (
-        <BackButton onClick={() => navigateTo(path[path.length - 2])} t={t} />
+        <BackButton onClick={() => navigateTo(path[path.length - 2])} />
       )}
       <Breadcrumb
         path={path}
