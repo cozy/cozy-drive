@@ -1,18 +1,18 @@
 import React from 'react'
 
-import { withStyles } from 'cozy-ui/transpiled/react/styles'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import { withStyles } from 'cozy-ui/transpiled/react/styles'
 
-import Header from 'modules/move/Header'
+import { FolderPickerHeader } from 'components/FolderPicker/FolderPickerHeader'
+import { FolderPickerTopbar } from 'components/FolderPicker/FolderPickerTopbar'
 import Explorer from 'modules/move/Explorer'
 import FileList from 'modules/move/FileList'
-import Loader from 'modules/move/Loader'
 import Footer from 'modules/move/Footer'
-import Topbar from 'modules/move/Topbar'
-import { useUploadFromFlagship } from 'modules/views/Upload/useUploadFromFlagship'
+import Loader from 'modules/move/Loader'
 import { shouldRender } from 'modules/views/Upload/UploadUtils'
 import { styles } from 'modules/views/Upload/UploaderComponent.styles'
+import { useUploadFromFlagship } from 'modules/views/Upload/useUploadFromFlagship'
 
 const _UploaderComponent = (props: {
   classes: Record<string, unknown>
@@ -40,13 +40,13 @@ const _UploaderComponent = (props: {
         title={
           <>
             {shouldRender(items) && (
-              <Header
+              <FolderPickerHeader
                 entries={items}
                 title={t('ImportToDrive.title', { smart_count: items.length })}
                 subTitle={t('ImportToDrive.to')}
               />
             )}
-            <Topbar
+            <FolderPickerTopbar
               navigateTo={setFolder}
               folderId={folder._id}
               showFolderCreation={false}

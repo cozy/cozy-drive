@@ -14,7 +14,7 @@ import { getBreadcrumbPath } from 'modules/move/helpers'
 import Breadcrumb from 'modules/navigation/Breadcrumb/Breadcrumb'
 import { buildOnlyFolderQuery } from 'modules/queries'
 
-const MoveTopbar = ({ navigateTo, folderId, showFolderCreation }) => {
+const FolderPickerTopbar = ({ navigateTo, folderId, showFolderCreation }) => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
   const folderQuery = buildOnlyFolderQuery(folderId)
@@ -44,9 +44,9 @@ const MoveTopbar = ({ navigateTo, folderId, showFolderCreation }) => {
   )
 }
 
-MoveTopbar.propTypes = {
+FolderPickerTopbar.propTypes = {
   navigateTo: PropTypes.func.isRequired,
   folderId: PropTypes.string.isRequired
 }
 
-export default MoveTopbar
+export { FolderPickerTopbar }

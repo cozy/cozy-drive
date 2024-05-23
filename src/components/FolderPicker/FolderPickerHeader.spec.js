@@ -3,10 +3,10 @@ import React from 'react'
 
 import CozyClient from 'cozy-client'
 
-import Header from './Header'
+import { FolderPickerHeader } from './FolderPickerHeader'
 import AppLike from 'test/components/AppLike'
 
-describe('Header', () => {
+describe('FolderPickerHeader', () => {
   const setupComponent = ({ entries = [], title, subTitle }) => {
     const props = {
       entries,
@@ -18,7 +18,7 @@ describe('Header', () => {
 
     return render(
       <AppLike client={client}>
-        <Header {...props} />
+        <FolderPickerHeader {...props} />
       </AppLike>
     )
   }

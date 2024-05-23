@@ -14,15 +14,15 @@ import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { withStyles } from 'cozy-ui/transpiled/react/styles'
 
+import { FolderPickerHeader } from 'components/FolderPicker/FolderPickerHeader'
+import { FolderPickerTopbar } from 'components/FolderPicker/FolderPickerTopbar'
 import { ROOT_DIR_ID } from 'constants/config'
 import logger from 'lib/logger'
 import Footer from 'modules/move/Footer'
-import Header from 'modules/move/Header'
 import { MoveInsideSharedFolderModal } from 'modules/move/MoveInsideSharedFolderModal'
 import { MoveModalContent } from 'modules/move/MoveModalContent'
 import { MoveOutsideSharedFolderModal } from 'modules/move/MoveOutsideSharedFolderModal'
 import { MoveSharedFolderInsideAnotherModal } from 'modules/move/MoveSharedFolderInsideAnotherModal'
-import Topbar from 'modules/move/Topbar'
 import { cancelMove, hasOneOfEntriesShared } from 'modules/move/helpers'
 
 const styles = () => ({
@@ -253,8 +253,8 @@ const MoveModal = ({ onClose, entries, classes }) => {
         }}
         title={
           <>
-            <Header entries={entries} />
-            <Topbar
+            <FolderPickerHeader entries={entries} />
+            <FolderPickerTopbar
               navigateTo={navigateTo}
               folderId={folderId}
               showFolderCreation={showFolderCreation}
