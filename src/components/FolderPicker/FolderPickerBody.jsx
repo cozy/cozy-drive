@@ -10,7 +10,7 @@ import LoadMore from 'modules/move/LoadMore'
 import Loader from 'modules/move/Loader'
 import { buildMoveOrImportQuery, buildOnlyFolderQuery } from 'modules/queries'
 
-const MoveModalContent = ({
+const FolderPickerBody = ({
   folderId,
   entries,
   navigateTo,
@@ -51,4 +51,4 @@ const MoveModalContent = ({
   )
 }
 
-export { MoveModalContent }
+export { FolderPickerBody }
