@@ -4,11 +4,11 @@ import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { withStyles } from 'cozy-ui/transpiled/react/styles'
 
+import { FolderPickerFooter } from 'components/FolderPicker/FolderPickerFooter'
 import { FolderPickerHeader } from 'components/FolderPicker/FolderPickerHeader'
 import { FolderPickerTopbar } from 'components/FolderPicker/FolderPickerTopbar'
 import Explorer from 'modules/move/Explorer'
 import FileList from 'modules/move/FileList'
-import Footer from 'modules/move/Footer'
 import Loader from 'modules/move/Loader'
 import { shouldRender } from 'modules/views/Upload/UploadUtils'
 import { styles } from 'modules/views/Upload/UploaderComponent.styles'
@@ -79,7 +79,7 @@ const _UploaderComponent = (props: {
         }
         actions={
           shouldRender(items) && (
-            <Footer
+            <FolderPickerFooter
               onConfirm={uploadFilesFromFlagship}
               onClose={onClose}
               targets={items}

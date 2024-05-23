@@ -9,7 +9,7 @@ import { areTargetsInCurrentDir } from 'modules/move/helpers'
 /**
  * List of actions for the move modal
  */
-const Footer = ({
+const FolderPickerFooter = ({
   onConfirm,
   onClose,
   targets,
@@ -40,7 +40,7 @@ const Footer = ({
   )
 }
 
-Footer.propTypes = {
+FolderPickerFooter.propTypes = {
   onConfirm: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   targets: PropTypes.array.isRequired,
@@ -51,9 +51,9 @@ Footer.propTypes = {
   isLoading: PropTypes.bool
 }
 
-Footer.defaultProps = {
+FolderPickerFooter.defaultProps = {
   isMoving: false,
   isLoading: false
 }
 
-export default Footer
+export { FolderPickerFooter }
