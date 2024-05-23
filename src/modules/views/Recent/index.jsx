@@ -17,13 +17,13 @@ import {
   download,
   trash,
   rename,
-  move,
   duplicate,
   qualify,
   versions,
   hr,
   share
 } from 'modules/actions'
+import { moveTo } from 'modules/actions/components/moveTo'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import Toolbar from 'modules/drive/Toolbar'
@@ -99,7 +99,7 @@ export const RecentView = () => {
       hr,
       qualify,
       rename,
-      move,
+      moveTo,
       duplicate,
       hr,
       versions,

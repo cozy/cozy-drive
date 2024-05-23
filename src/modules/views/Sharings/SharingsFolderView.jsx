@@ -21,10 +21,10 @@ import {
   download,
   trash,
   rename,
-  move,
   qualify,
   versions
 } from 'modules/actions'
+import { moveTo } from 'modules/actions/components/moveTo'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import Toolbar from 'modules/drive/Toolbar'
@@ -111,7 +111,7 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
     allLoaded
   }
   const actions = makeActions(
-    [share, download, trash, rename, move, qualify, versions],
+    [share, download, trash, rename, moveTo, qualify, versions],
     actionsOptions
   )
 

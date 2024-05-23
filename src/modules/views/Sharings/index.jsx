@@ -14,15 +14,8 @@ import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewHeader from '../Folder/FolderViewHeader'
 import useHead from 'components/useHead'
 import { useModalContext } from 'lib/ModalContext'
-import {
-  download,
-  rename,
-  move,
-  qualify,
-  versions,
-  share,
-  hr
-} from 'modules/actions'
+import { download, rename, qualify, versions, share, hr } from 'modules/actions'
+import { moveTo } from 'modules/actions/components/moveTo'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import Toolbar from 'modules/drive/Toolbar'
@@ -97,7 +90,7 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
   }
 
   const actions = makeActions(
-    [share, download, hr, qualify, rename, move, hr, versions],
+    [share, download, hr, qualify, rename, moveTo, hr, versions],
     actionsOptions
   )
 
