@@ -90,7 +90,7 @@ const SearchView = () => {
     <>
       {isMobile && (
         <BarLeft>
-          <BackButton onClick={navigateBack} t={t} />
+          <BackButton onClick={navigateBack} />
         </BarLeft>
       )}
       <BarSearch>
