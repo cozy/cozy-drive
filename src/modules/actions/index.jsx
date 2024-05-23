@@ -9,7 +9,6 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 import HistoryIcon from 'cozy-ui/transpiled/react/Icons/History'
 import UnqualifyIcon from 'cozy-ui/transpiled/react/Icons/LabelOutlined'
-import MovetoIcon from 'cozy-ui/transpiled/react/Icons/Moveto'
 import MultiFilesIcon from 'cozy-ui/transpiled/react/Icons/MultiFiles'
 import QualifyIcon from 'cozy-ui/transpiled/react/Icons/Qualify'
 import RenameIcon from 'cozy-ui/transpiled/react/Icons/Rename'
@@ -20,10 +19,7 @@ import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 
 import { downloadFiles, restoreFiles } from './utils'
 import { isEncryptedFolder, isEncryptedFile } from 'lib/encryption'
-import {
-  navigateToModal,
-  navigateToModalWithMultipleFile
-} from 'modules/actions/helpers'
+import { navigateToModal } from 'modules/actions/helpers'
 import DeleteConfirm from 'modules/drive/DeleteConfirm'
 import { startRenamingAsync } from 'modules/drive/rename'
 import DestroyConfirm from 'modules/trash/components/DestroyConfirm'
@@ -118,36 +114,6 @@ export const rename = ({ t, hasWriteAccess, dispatch }) => {
     displayCondition: selection => hasWriteAccess && selection.length === 1,
     action: files => dispatch(startRenamingAsync(files[0])),
     Component: forwardRef(function Rename(props, ref) {
-      return (
-        <ActionsMenuItem {...props} ref={ref}>
-          <ListItemIcon>
-            <Icon icon={icon} />
-          </ListItemIcon>
-          <ListItemText primary={label} />
-        </ActionsMenuItem>
-      )
-    })
-  }
-}
-
-export const move = ({ t, canMove, pathname, navigate }) => {
-  const label = t('SelectionBar.moveto')
-  const icon = MovetoIcon
-
-  return {
-    name: 'moveto',
-    label,
-    icon,
-    displayCondition: () => canMove,
-    action: files => {
-      navigateToModalWithMultipleFile({
-        files,
-        pathname,
-        navigate,
-        path: 'move'
-      })
-    },
-    Component: forwardRef(function MoveTo(props, ref) {
       return (
         <ActionsMenuItem {...props} ref={ref}>
           <ListItemIcon>
