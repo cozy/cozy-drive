@@ -1,4 +1,3 @@
-import { useDisplayedFolder } from 'hooks'
 import { CozyFile } from 'models'
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
@@ -6,45 +5,24 @@ import { useNavigate } from 'react-router-dom'
 
 import { cancelable, Q, useClient } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
-import { useBreakpoints } from 'cozy-ui/transpiled/react'
 import Button from 'cozy-ui/transpiled/react/Buttons'
-import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import { withStyles } from 'cozy-ui/transpiled/react/styles'
 
-import { FolderPickerBody } from 'components/FolderPicker/FolderPickerBody'
-import { FolderPickerFooter } from 'components/FolderPicker/FolderPickerFooter'
-import { FolderPickerHeader } from 'components/FolderPicker/FolderPickerHeader'
-import { FolderPickerTopbar } from 'components/FolderPicker/FolderPickerTopbar'
-import { ROOT_DIR_ID } from 'constants/config'
+import { FolderPicker } from 'components/FolderPicker/FolderPicker'
 import logger from 'lib/logger'
 import { MoveInsideSharedFolderModal } from 'modules/move/MoveInsideSharedFolderModal'
 import { MoveOutsideSharedFolderModal } from 'modules/move/MoveOutsideSharedFolderModal'
 import { MoveSharedFolderInsideAnotherModal } from 'modules/move/MoveSharedFolderInsideAnotherModal'
 import { cancelMove, hasOneOfEntriesShared } from 'modules/move/helpers'
 
-const styles = () => ({
-  paper: {
-    height: '100%',
-    '& .MuiDialogContent-root': {
-      padding: '0'
-    },
-    '& .MuiDialogTitle-root': {
-      padding: '0'
-    }
-  }
-})
-
 /**
  * Modal to move a folder to an other
  */
-const MoveModal = ({ onClose, entries, classes }) => {
+const MoveModal = ({ onClose, entries }) => {
   const { t } = useI18n()
   const client = useClient()
-  const { isMobile } = useBreakpoints()
-  const { displayedFolder } = useDisplayedFolder()
   const {
     sharedPaths,
     refresh: refreshSharing,
@@ -59,9 +37,8 @@ const MoveModal = ({ onClose, entries, classes }) => {
   const navigate = useNavigate()
   const { showAlert } = useAlert()
 
-  const [folderId, setFolderId] = useState(
-    displayedFolder ? displayedFolder._id : ROOT_DIR_ID
-  )
+  const [selectedFolderId, setSelectedFolderId] = useState(null)
+
   const [isMoveInProgress, setMoveInProgress] = useState(false)
   const [promises, setPromises] = useState([])
   const [isMovingOutsideSharedFolder, setMovingOutsideSharedFolder] =
@@ -71,8 +48,6 @@ const MoveModal = ({ onClose, entries, classes }) => {
     setMovingSharedFolderInsideAnother
   ] = useState(false)
   const [isMovingInsideSharedFolder, setMovingInsideSharedFolder] =
-    useState(false)
-  const [isFolderCreationDisplayed, setFolderCreationDisplayed] =
     useState(false)
 
   useEffect(() => {
@@ -84,11 +59,6 @@ const MoveModal = ({ onClose, entries, classes }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const navigateTo = folder => {
-    setFolderId(folder._id)
-    setFolderCreationDisplayed(false)
-  }
-
   const registerCancelable = promise => {
     if (!promises) setPromises([])
     const cancelableP = cancelable(promise)
@@ -96,7 +66,8 @@ const MoveModal = ({ onClose, entries, classes }) => {
     return cancelableP
   }
 
-  const handleConfirmation = async () => {
+  const handleConfirmation = async folderId => {
+    setSelectedFolderId(folderId)
     const sharedParentPath = getSharedParentPath(entries[0].path)
     const targetPath = await CozyFile.getFullpath(folderId, entries[0].name)
 
@@ -106,7 +77,7 @@ const MoveModal = ({ onClose, entries, classes }) => {
     const isInsideSameSharedFolder = targetPath.startsWith(sharedParentPath)
 
     if (isInsideSameSharedFolder) {
-      moveEntries()
+      moveEntries(folderId)
       return
     }
 
@@ -125,10 +96,10 @@ const MoveModal = ({ onClose, entries, classes }) => {
       return
     }
 
-    moveEntries()
+    moveEntries(folderId)
   }
 
-  const moveEntries = async () => {
+  const moveEntries = async folderId => {
     try {
       setMoveInProgress(true)
       const trashedFiles = []
@@ -206,7 +177,7 @@ const MoveModal = ({ onClose, entries, classes }) => {
 
   const handleConfirmMovingOutside = () => {
     setMovingOutsideSharedFolder(false)
-    moveEntries()
+    moveEntries(selectedFolderId)
   }
 
   const handleCancelMovingInside = () => {
@@ -215,7 +186,7 @@ const MoveModal = ({ onClose, entries, classes }) => {
 
   const handleConfirmMovingInside = () => {
     setMovingInsideSharedFolder(false)
-    moveEntries()
+    moveEntries(selectedFolderId)
   }
 
   const handleMovingSharedFolderInsideAnother = async () => {
@@ -230,56 +201,17 @@ const MoveModal = ({ onClose, entries, classes }) => {
       }
     })
     refreshSharing()
-    moveEntries()
+    moveEntries(selectedFolderId)
     setMovingSharedFolderInsideAnother(false)
-  }
-
-  const showFolderCreation = () => {
-    setFolderCreationDisplayed(true)
-  }
-
-  const hideFolderCreation = () => {
-    setFolderCreationDisplayed(false)
   }
 
   return (
     <>
-      <FixedDialog
-        open
-        onClose={isMobile ? undefined : onClose}
-        size="large"
-        classes={{
-          paper: classes.paper
-        }}
-        title={
-          <>
-            <FolderPickerHeader entries={entries} />
-            <FolderPickerTopbar
-              navigateTo={navigateTo}
-              folderId={folderId}
-              showFolderCreation={showFolderCreation}
-            />
-          </>
-        }
-        content={
-          <FolderPickerBody
-            folderId={folderId}
-            navigateTo={navigateTo}
-            entries={entries}
-            isFolderCreationDisplayed={isFolderCreationDisplayed}
-            hideFolderCreation={hideFolderCreation}
-          />
-        }
-        actions={
-          <FolderPickerFooter
-            onConfirm={handleConfirmation}
-            onClose={onClose}
-            targets={entries}
-            currentDirId={folderId}
-            isMoving={isMoveInProgress}
-            isLoading={!allLoaded}
-          />
-        }
+      <FolderPicker
+        entries={entries}
+        onConfirm={handleConfirmation}
+        onClose={onClose}
+        isBusy={isMoveInProgress || !allLoaded}
       />
       {isMovingOutsideSharedFolder ? (
         <MoveOutsideSharedFolderModal
@@ -291,7 +223,7 @@ const MoveModal = ({ onClose, entries, classes }) => {
       {isMovingSharedFolderInsideAnother ? (
         <MoveSharedFolderInsideAnotherModal
           entries={entries}
-          folderId={folderId}
+          folderId={selectedFolderId}
           onCancel={() => setMovingSharedFolderInsideAnother(false)}
           onConfirm={handleMovingSharedFolderInsideAnother}
         />
@@ -301,7 +233,7 @@ const MoveModal = ({ onClose, entries, classes }) => {
           onCancel={handleCancelMovingInside}
           onConfirm={handleConfirmMovingInside}
           entries={entries}
-          folderId={folderId}
+          folderId={selectedFolderId}
         />
       ) : null}
     </>
@@ -315,4 +247,4 @@ MoveModal.propTypes = {
 
 export { MoveModal }
 
-export default withStyles(styles)(MoveModal)
+export default MoveModal
