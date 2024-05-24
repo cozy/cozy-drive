@@ -39,14 +39,14 @@ export const shouldRender = (
 
 export const getFilesToHandle = async (
   webviewIntent: WebviewService
-): Promise<Array<FileFromNative['file'] & { name: string }>> => {
+): Promise<(FileFromNative['file'] & { name: string })[]> => {
   logger('info', 'getFilesToHandle called')
 
-  const files = (await webviewIntent?.call(
+  const files = (await webviewIntent.call(
     'getFilesToHandle'
   )) as unknown as FileFromNative[]
 
-  if (files?.length === 0) throw new Error('No files to upload')
+  if (files.length === 0) throw new Error('No files to upload')
 
   if (files.length > 0) {
     logger('info', 'getFilesToHandle success')
@@ -64,7 +64,7 @@ export const getFilesToHandle = async (
 export const sendFilesToHandle = (
   filesForQueue: FileForQueue[],
   webviewIntent: WebviewService,
-  folder: { _id: string }
+  folderId: string
 ): void => {
   const filesToUpload = filesForQueue.map(file => {
     if (!file.file) throw new Error('No file to upload')
@@ -72,14 +72,14 @@ export const sendFilesToHandle = (
     return {
       fileOptions: {
         name: file.file.name,
-        dirId: folder._id
+        dirId: folderId
       }
     }
   })
 
   logger('info', 'uploadFilesFromFlagship called')
 
-  void webviewIntent?.call('uploadFiles', JSON.stringify(filesToUpload))
+  void webviewIntent.call('uploadFiles', JSON.stringify(filesToUpload))
 
   logger('info', 'uploadFilesFromFlagship success')
 }

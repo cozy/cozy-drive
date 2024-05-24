@@ -23,12 +23,12 @@ const useStyles = makeStyles(() => ({
 }))
 
 const FolderPicker = ({
-  title,
-  subtitle,
   entries,
   onConfirm,
   onClose,
-  isBusy
+  isBusy,
+  canCreateFolder = true,
+  slotProps
 }) => {
   const { displayedFolder } = useDisplayedFolder()
   const [folderId, setFolderId] = useState(
@@ -63,14 +63,11 @@ const FolderPicker = ({
         }}
         title={
           <>
-            <FolderPickerHeader
-              entries={entries}
-              title={title}
-              subTitle={subtitle}
-            />
+            <FolderPickerHeader entries={entries} {...slotProps?.header} />
             <FolderPickerTopbar
               navigateTo={navigateTo}
               folderId={folderId}
+              canCreateFolder={canCreateFolder}
               showFolderCreation={showFolderCreation}
             />
           </>
@@ -92,6 +89,7 @@ const FolderPicker = ({
             currentDirId={folderId}
             isMoving={isBusy}
             isLoading={isBusy}
+            {...slotProps?.footer}
           />
         }
       />

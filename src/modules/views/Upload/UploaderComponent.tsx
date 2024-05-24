@@ -1,99 +1,53 @@
 import React from 'react'
 
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
+import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
-import { withStyles } from 'cozy-ui/transpiled/react/styles'
 
-import { FolderPickerFooter } from 'components/FolderPicker/FolderPickerFooter'
-import { FolderPickerHeader } from 'components/FolderPicker/FolderPickerHeader'
-import { FolderPickerTopbar } from 'components/FolderPicker/FolderPickerTopbar'
-import Explorer from 'modules/move/Explorer'
-import FileList from 'modules/move/FileList'
-import Loader from 'modules/move/Loader'
+import { FolderPicker } from 'components/FolderPicker/FolderPicker'
 import { shouldRender } from 'modules/views/Upload/UploadUtils'
-import { styles } from 'modules/views/Upload/UploaderComponent.styles'
 import { useUploadFromFlagship } from 'modules/views/Upload/useUploadFromFlagship'
 
-const _UploaderComponent = (props: {
-  classes: Record<string, unknown>
-}): JSX.Element => {
+const UploaderComponent = (): JSX.Element | null => {
   const { t } = useI18n()
-  const {
-    items,
-    uploadFilesFromFlagship,
-    contentQuery,
-    onClose,
-    folder,
-    setFolder,
-    uploadInProgress
-  } = useUploadFromFlagship()
+  const { items, uploadFilesFromFlagship, onClose, uploadInProgress } =
+    useUploadFromFlagship()
 
-  return (
-    <React.Fragment>
+  const handleConfirm = (folderId: string): void => {
+    uploadFilesFromFlagship(folderId)
+  }
+
+  // If there are no items to render, we display a spinner with a full screen dialog to hide the UI behind
+  if (!shouldRender(items)) {
+    return (
       <FixedDialog
         className="u-p-0"
         open
         size="large"
-        classes={{
-          paper: props.classes.paper
-        }}
-        title={
-          <>
-            {shouldRender(items) && (
-              <FolderPickerHeader
-                entries={items}
-                title={t('ImportToDrive.title', { smart_count: items.length })}
-                subTitle={t('ImportToDrive.to')}
-              />
-            )}
-            <FolderPickerTopbar
-              navigateTo={setFolder}
-              folderId={folder._id}
-              showFolderCreation={false}
-            />
-          </>
-        }
-        content={
-          <Explorer>
-            <Loader
-              fetchStatus={contentQuery.fetchStatus}
-              hasNoData={
-                !Array.isArray(contentQuery.data) ||
-                contentQuery.data.length === 0
-              }
-            >
-              <div>
-                {shouldRender(items) && (
-                  <FileList
-                    folder={folder}
-                    files={
-                      Array.isArray(contentQuery.data) ? contentQuery.data : []
-                    }
-                    targets={items}
-                    navigateTo={setFolder}
-                  />
-                )}
-              </div>
-            </Loader>
-          </Explorer>
-        }
-        actions={
-          shouldRender(items) && (
-            <FolderPickerFooter
-              onConfirm={uploadFilesFromFlagship}
-              onClose={onClose}
-              targets={items}
-              currentDirId={folder._id}
-              isMoving={uploadInProgress}
-              primaryTextAction={t('ImportToDrive.action')}
-              secondaryTextAction={t('ImportToDrive.cancel')}
-            />
-          )
-        }
+        content={<Spinner size="xxlarge" noMargin middle />}
       />
-    </React.Fragment>
+    )
+  }
+
+  return (
+    <FolderPicker
+      entries={items}
+      canCreateFolder={false}
+      onConfirm={handleConfirm}
+      onClose={onClose}
+      isBusy={uploadInProgress}
+      slotProps={{
+        header: {
+          title: t('ImportToDrive.title', { smart_count: items.length }),
+          subtitle: t('ImportToDrive.to')
+        },
+        footer: {
+          confirmLabel: t('ImportToDrive.action'),
+          cancelLabel: t('ImportToDrive.cancel')
+        }
+      }}
+    />
   )
 }
 
-/* eslint-disable */
-export const UploaderComponent = withStyles(styles)(_UploaderComponent)
+export { UploaderComponent }

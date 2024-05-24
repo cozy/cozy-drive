@@ -1,9 +1,3 @@
-import { UseQueryReturnValue } from 'cozy-client/types/types'
-
-export interface Folder {
-  _id: string
-}
-
 export interface FileForQueue {
   name: string
   file?: { name: string }
@@ -30,16 +24,8 @@ export interface FileFromNative {
 
 export interface UploadFromFlagship {
   items?: FileFromNative['file'][]
-  uploadFilesFromFlagship: (fileOptions: {
-    name: string
-    dirId: string
-    conflictStrategy: string
-  }) => void
+  uploadFilesFromFlagship: (folderId: string) => void
   resetFilesToHandle: () => Promise<void>
   onClose: () => Promise<void>
   uploadInProgress: boolean
-  contentQuery: UseQueryReturnValue
-  folderQuery: UseQueryReturnValue
-  setFolder: React.Dispatch<React.SetStateAction<Folder>>
-  folder: Folder
 }

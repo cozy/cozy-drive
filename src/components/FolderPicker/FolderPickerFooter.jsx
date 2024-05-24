@@ -15,15 +15,13 @@ const FolderPickerFooter = ({
   targets,
   currentDirId,
   isMoving,
-  primaryTextAction,
-  secondaryTextAction,
+  confirmLabel,
+  cancelLabel,
   isLoading
 }) => {
   const { t } = useI18n()
-  const primaryText = primaryTextAction ? primaryTextAction : t('Move.action')
-  const secondaryText = secondaryTextAction
-    ? secondaryTextAction
-    : t('Move.cancel')
+  const primaryText = confirmLabel ? confirmLabel : t('Move.action')
+  const secondaryText = cancelLabel ? cancelLabel : t('Move.cancel')
 
   const handleClick = () => {
     onConfirm(currentDirId)
