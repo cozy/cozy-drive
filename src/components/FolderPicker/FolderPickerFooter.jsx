@@ -25,12 +25,16 @@ const FolderPickerFooter = ({
     ? secondaryTextAction
     : t('Move.cancel')
 
+  const handleClick = () => {
+    onConfirm(currentDirId)
+  }
+
   return (
     <>
       <Buttons variant="secondary" label={secondaryText} onClick={onClose} />
       <Buttons
         label={primaryText}
-        onClick={onConfirm}
+        onClick={handleClick}
         disabled={
           areTargetsInCurrentDir(targets, currentDirId) || isMoving || isLoading
         }
