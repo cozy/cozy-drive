@@ -1,27 +1,23 @@
-import { useNavigate, useSearchParams } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import { useCallback, useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
-import { useQuery } from 'cozy-client'
 import { useWebviewIntent } from 'cozy-intent'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import logger from 'cozy-logger'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import { getErrorMessage } from 'modules/drive/helpers'
+import { ADD_TO_UPLOAD_QUEUE, purgeUploadQueue } from 'modules/upload'
 import {
   FileFromNative,
-  Folder,
   UploadFromFlagship
 } from 'modules/views/Upload/UploadTypes'
-import { ROOT_DIR_ID } from 'constants/config'
-import { ADD_TO_UPLOAD_QUEUE, purgeUploadQueue } from 'modules/upload'
-import { buildMoveOrImportQuery, buildOnlyFolderQuery } from 'modules/queries'
 import {
   generateForQueue,
   getFilesToHandle,
   sendFilesToHandle
 } from 'modules/views/Upload/UploadUtils'
-import { getErrorMessage } from 'modules/drive/helpers'
 
 export const useUploadFromFlagship = (): UploadFromFlagship => {
   const webviewIntent = useWebviewIntent()
@@ -29,17 +25,9 @@ export const useUploadFromFlagship = (): UploadFromFlagship => {
   const [items, setItems] = useState<FileFromNative['file'][]>()
   const fromFlagshipUpload = searchParams.get('fromFlagshipUpload')
   const navigate = useNavigate()
-  const [folder, setFolder] = useState<Folder>({ _id: ROOT_DIR_ID })
   const [uploadInProgress] = useState<boolean>(false)
   const dispatch = useDispatch()
   const { t } = useI18n()
-  const _contentQuery = buildMoveOrImportQuery(folder._id)
-  const _folderQuery = buildOnlyFolderQuery(folder._id)
-  const contentQuery = useQuery(
-    _contentQuery.definition(),
-    _contentQuery.options
-  )
-  const folderQuery = useQuery(_folderQuery.definition(), _folderQuery.options)
 
   useEffect(() => {
     const asyncGetFilesToHandle = async (): Promise<void> => {
@@ -64,25 +52,28 @@ export const useUploadFromFlagship = (): UploadFromFlagship => {
     void asyncGetFilesToHandle()
   }, [fromFlagshipUpload, webviewIntent, navigate])
 
-  const uploadFilesFromFlagship = useCallback(() => {
-    if (!items || items.length === 0 || !webviewIntent) return
+  const uploadFilesFromFlagship = useCallback(
+    (folderId: string) => {
+      if (!items || items.length === 0 || !webviewIntent) return
 
-    const filesForQueue = generateForQueue(items)
+      const filesForQueue = generateForQueue(items)
 
-    dispatch({
-      type: ADD_TO_UPLOAD_QUEUE,
-      files: filesForQueue
-    })
+      dispatch({
+        type: ADD_TO_UPLOAD_QUEUE,
+        files: filesForQueue
+      })
 
-    try {
-      sendFilesToHandle(filesForQueue, webviewIntent, folder)
-      navigate(`/folder/${folder._id}`)
-    } catch (error) {
-      Alerter.error(t('ImportToDrive.error'))
-      logger('info', `uploadFilesFromNative error, ${getErrorMessage(error)}`)
-      navigate('/')
-    }
-  }, [dispatch, folder, items, navigate, t, webviewIntent])
+      try {
+        sendFilesToHandle(filesForQueue, webviewIntent, folderId)
+        navigate(`/folder/${folderId}`)
+      } catch (error) {
+        Alerter.error(t('ImportToDrive.error'))
+        logger('info', `uploadFilesFromNative error, ${getErrorMessage(error)}`)
+        navigate('/')
+      }
+    },
+    [dispatch, items, navigate, t, webviewIntent]
+  )
 
   const onClose = useCallback(async () => {
     await webviewIntent?.call('cancelUploadByCozyApp')
@@ -103,12 +94,8 @@ export const useUploadFromFlagship = (): UploadFromFlagship => {
   }, [navigate, webviewIntent])
 
   return {
-    setFolder,
-    folder,
     onClose,
     uploadInProgress,
-    contentQuery,
-    folderQuery,
     items,
     uploadFilesFromFlagship,
     resetFilesToHandle

@@ -14,7 +14,12 @@ import { getBreadcrumbPath } from 'modules/move/helpers'
 import Breadcrumb from 'modules/navigation/Breadcrumb/Breadcrumb'
 import { buildOnlyFolderQuery } from 'modules/queries'
 
-const FolderPickerTopbar = ({ navigateTo, folderId, showFolderCreation }) => {
+const FolderPickerTopbar = ({
+  navigateTo,
+  folderId,
+  showFolderCreation,
+  canCreateFolder
+}) => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
   const folderQuery = buildOnlyFolderQuery(folderId)
@@ -37,9 +42,14 @@ const FolderPickerTopbar = ({ navigateTo, folderId, showFolderCreation }) => {
         opening={false}
         inlined
       />
-      <IconButton onClick={showFolderCreation} aria-label={t('Move.addFolder')}>
-        <Icon icon={FolderAddIcon} />
-      </IconButton>
+      {canCreateFolder ? (
+        <IconButton
+          onClick={showFolderCreation}
+          aria-label={t('Move.addFolder')}
+        >
+          <Icon icon={FolderAddIcon} />
+        </IconButton>
+      ) : null}
     </Topbar>
   )
 }
