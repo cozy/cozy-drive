@@ -6,7 +6,7 @@ import { Table } from 'cozy-ui/transpiled/react/deprecated/Table'
 import FileListBody from 'modules/filelist/FileListBody'
 import { FileListHeader } from 'modules/filelist/FileListHeader'
 
-const Explorer = ({ children }) => (
+const FolderPickerContentExplorer = ({ children }) => (
   <Table role="table">
     <FileListHeader folderId={null} canSort={false} />
     <FileListBody className="u-ov-visible" selectionModeActive={false}>
@@ -15,8 +15,8 @@ const Explorer = ({ children }) => (
   </Table>
 )
 
-Explorer.propTypes = {
+FolderPickerContentExplorer.propTypes = {
   children: PropTypes.node
 }
 
-export default Explorer
+export { FolderPickerContentExplorer }
