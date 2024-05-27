@@ -2,9 +2,9 @@ import React from 'react'
 
 import { useQuery } from 'cozy-client'
 
+import { FolderPickerContentExplorer } from 'components/FolderPicker/FolderPickerContentExplorer'
 import { isEncryptedFolder } from 'lib/encryption'
 import { AddFolderWithoutState } from 'modules/filelist/AddFolder'
-import Explorer from 'modules/move/Explorer'
 import FileList from 'modules/move/FileList'
 import LoadMore from 'modules/move/LoadMore'
 import Loader from 'modules/move/Loader'
@@ -35,7 +35,7 @@ const FolderPickerBody = ({
   const files = filesData ?? []
 
   return (
-    <Explorer folderId={folderId}>
+    <FolderPickerContentExplorer folderId={folderId}>
       <AddFolderWithoutState
         isEncrypted={isEncrypted}
         currentFolderId={folderId}
@@ -47,7 +47,7 @@ const FolderPickerBody = ({
         <FileList files={files} targets={entries} navigateTo={navigateTo} />
         <LoadMore hasMore={hasMore} fetchMore={fetchMore} />
       </Loader>
-    </Explorer>
+    </FolderPickerContentExplorer>
   )
 }
 
