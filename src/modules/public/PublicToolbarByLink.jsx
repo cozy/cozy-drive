@@ -2,11 +2,13 @@ import { useDisplayedFolder } from 'hooks'
 import React from 'react'
 
 import Icon from 'cozy-ui/transpiled/react/Icon'
+import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
+import Typography from 'cozy-ui/transpiled/react/Typography'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { BarRightOnMobile } from 'components/Bar'
+import { BarCenterOnMobile, BarRightOnMobile } from 'components/Bar'
 import { HOME_LINK_HREF } from 'constants/config'
 import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
 import AddButton from 'modules/drive/Toolbar/components/AddButton'
@@ -29,39 +31,48 @@ const PublicToolbarByLink = ({
   const shouldDisplayMoreMenu = isMobile || (!isFile && files.length > 0)
 
   return (
-    <BarRightOnMobile>
-      <AddMenuProvider
-        canCreateFolder={hasWriteAccess}
-        canUpload={hasWriteAccess}
-        refreshFolderContent={refreshFolderContent}
-        isPublic={true}
-        displayedFolder={displayedFolder}
-        isSelectionBarVisible={isSelectionBarVisible}
-      >
-        {!isMobile && (
-          <>
-            {hasWriteAccess && <AddButton />}
-            {files.length > 0 && <DownloadFilesButton files={files} />}
-          </>
-        )}
-        {shouldDisplayMoreMenu && (
-          <PublicToolbarMoreMenu
-            files={files}
-            hasWriteAccess={hasWriteAccess}
-            showSelectionBar={showSelectionBar}
-          >
-            {isMobile && (
-              <ActionMenuItem
-                onClick={() => openExternalLink(HOME_LINK_HREF)}
-                left={<Icon icon="to-the-cloud" />}
-              >
-                {t('Share.create-cozy')}
-              </ActionMenuItem>
-            )}
-          </PublicToolbarMoreMenu>
-        )}
-      </AddMenuProvider>
-    </BarRightOnMobile>
+    <>
+      {isFile && (
+        <BarCenterOnMobile>
+          <Typography variant="h3" noWrap className="u-ph-1 u-pt-half">
+            <MidEllipsis text={files[0].name} />
+          </Typography>
+        </BarCenterOnMobile>
+      )}
+      <BarRightOnMobile>
+        <AddMenuProvider
+          canCreateFolder={hasWriteAccess}
+          canUpload={hasWriteAccess}
+          refreshFolderContent={refreshFolderContent}
+          isPublic={true}
+          displayedFolder={displayedFolder}
+          isSelectionBarVisible={isSelectionBarVisible}
+        >
+          {!isMobile && (
+            <>
+              {hasWriteAccess && <AddButton />}
+              {files.length > 0 && <DownloadFilesButton files={files} />}
+            </>
+          )}
+          {shouldDisplayMoreMenu && (
+            <PublicToolbarMoreMenu
+              files={files}
+              hasWriteAccess={hasWriteAccess}
+              showSelectionBar={showSelectionBar}
+            >
+              {isMobile && (
+                <ActionMenuItem
+                  onClick={() => openExternalLink(HOME_LINK_HREF)}
+                  left={<Icon icon="to-the-cloud" />}
+                >
+                  {t('Share.create-cozy')}
+                </ActionMenuItem>
+              )}
+            </PublicToolbarMoreMenu>
+          )}
+        </AddMenuProvider>
+      </BarRightOnMobile>
+    </>
   )
 }
 
