@@ -3,7 +3,7 @@ import React from 'react'
 
 import LoadMoreButton from 'modules/filelist/LoadMore'
 
-const LoadMore = ({ hasMore, fetchMore }) => {
+const FolderPickerContentLoadMore = ({ hasMore, fetchMore }) => {
   return hasMore ? (
     <LoadMoreButton onClick={fetchMore} isLoading={false} />
   ) : (
@@ -11,9 +11,9 @@ const LoadMore = ({ hasMore, fetchMore }) => {
   )
 }
 
-LoadMore.propTypes = {
+FolderPickerContentLoadMore.propTypes = {
   hasMore: PropTypes.bool.isRequired,
   fetchMore: PropTypes.func.isRequired
 }
 
-export default LoadMore
+export { FolderPickerContentLoadMore }
