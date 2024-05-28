@@ -3,11 +3,11 @@ import React from 'react'
 import { useQuery } from 'cozy-client'
 
 import { FolderPickerContentExplorer } from 'components/FolderPicker/FolderPickerContentExplorer'
+import { FolderPickerContentLoader } from 'components/FolderPicker/FolderPickerContentLoader'
 import { isEncryptedFolder } from 'lib/encryption'
 import { AddFolderWithoutState } from 'modules/filelist/AddFolder'
 import FileList from 'modules/move/FileList'
 import LoadMore from 'modules/move/LoadMore'
-import Loader from 'modules/move/Loader'
 import { buildMoveOrImportQuery, buildOnlyFolderQuery } from 'modules/queries'
 
 const FolderPickerBody = ({
@@ -43,7 +43,10 @@ const FolderPickerBody = ({
         afterSubmit={hideFolderCreation}
         afterAbort={hideFolderCreation}
       />
-      <Loader fetchStatus={fetchStatus} hasNoData={files.length === 0}>
+      <FolderPickerContentLoader
+        fetchStatus={fetchStatus}
+        hasNoData={files.length === 0}
+      >
         <FileList
           files={files}
           targets={entries}
@@ -51,7 +54,7 @@ const FolderPickerBody = ({
           folder={folderData}
         />
         <LoadMore hasMore={hasMore} fetchMore={fetchMore} />
-      </Loader>
+      </FolderPickerContentLoader>
     </FolderPickerContentExplorer>
   )
 }
