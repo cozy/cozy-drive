@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8" />
     <title><%= htmlWebpackPlugin.options.title %></title>
-    {{.ThemeCSS}}
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link
       rel="icon"
@@ -31,6 +30,7 @@
     <% } %> <% _.forEach(htmlWebpackPlugin.files.css, function(file) { %>
     <link rel="stylesheet" href="<%- file %>" />
     <% }); %>
+    {{.ThemeCSS}}
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
