@@ -9,6 +9,7 @@ import { withClient } from 'cozy-client'
 import Banner from 'cozy-ui/transpiled/react/Banner'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import DeviceLaptopIcon from 'cozy-ui/transpiled/react/Icons/DeviceLaptop'
+import DevicePhoneIcon from 'cozy-ui/transpiled/react/Icons/DevicePhone'
 import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 import Button, { ButtonLink } from 'cozy-ui/transpiled/react/deprecated/Button'
 import palette from 'cozy-ui/transpiled/react/palette'
@@ -66,14 +67,19 @@ class BannerClient extends Component {
       ? 'Nav.link-client'
       : 'Nav.link-client-desktop'
 
-    const text =
-      isIOS() || isAndroid() ? 'Nav.btn-client-mobile' : 'Nav.banner-txt-client'
+    const isMobile = isIOS() || isAndroid()
+    const text = isMobile ? 'Nav.btn-client-mobile' : 'Nav.banner-txt-client'
 
     return (
       <div className={styles['coz-banner-client']}>
         <Banner
           inline
-          icon={<Icon icon={DeviceLaptopIcon} size="100%" />}
+          icon={
+            <Icon
+              icon={isMobile ? DevicePhoneIcon : DeviceLaptopIcon}
+              size="100%"
+            />
+          }
           text={t(text)}
           bgcolor={palette['paleGrey']}
           buttonOne={
