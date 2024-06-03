@@ -13,6 +13,7 @@ import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import FileIcon from 'modules/filelist/FileIcon'
+import FileIconMime from 'modules/filelist/FileIconMime'
 import { SharingShortcutIcon } from 'modules/filelist/SharingShortcutIcon'
 
 import styles from 'styles/filelist.styl'
@@ -37,6 +38,10 @@ const FileThumbnail = ({
 
   if (isNextcloudShortcut) {
     return <FileIcon file={file} size={size} />
+  }
+
+  if (file._type === 'io.cozy.remote.nextcloud.files') {
+    return <FileIconMime file={file} size={size} />
   }
 
   return (
