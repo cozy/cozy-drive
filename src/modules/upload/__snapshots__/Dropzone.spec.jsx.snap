@@ -1217,6 +1217,9 @@ exports[`Dropzone should match snapshot 1`] = `
                   "paddingTop": 8,
                 },
                 "root": {
+                  "&.cozyActionsItem": {
+                    "wordBreak": "break-word",
+                  },
                   "&.large": {
                     "minHeight": 64,
                     "paddingBottom": 16,
@@ -1292,7 +1295,7 @@ exports[`Dropzone should match snapshot 1`] = `
                     "height": 16,
                     "width": 16,
                   },
-                  "&.cozyActionsMenuItem": {
+                  "&.cozyActionsItem": {
                     "minWidth": 256,
                   },
                   "@media (min-width:480px)": {
@@ -1302,11 +1305,13 @@ exports[`Dropzone should match snapshot 1`] = `
                   "paddingBottom": 4,
                   "paddingTop": 4,
                   "whiteSpace": "normal",
+                  "wordBreak": "break-word",
                 },
               },
               "MuiOutlinedInput": {
                 "input": {
                   "padding": "18.5px 16px",
+                  "textAlign": "left",
                 },
                 "inputMarginDense": {
                   "paddingBottom": 15,
