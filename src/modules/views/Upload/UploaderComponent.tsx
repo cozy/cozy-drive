@@ -1,10 +1,14 @@
 import React from 'react'
 
+import { hasQueryBeenLoaded, useQuery } from 'cozy-client'
+import { IOCozyFile } from 'cozy-client/types/types'
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { FolderPicker } from 'components/FolderPicker/FolderPicker'
+import { ROOT_DIR_ID } from 'constants/config'
+import { buildOnlyFolderQuery } from 'modules/queries'
 import { shouldRender } from 'modules/views/Upload/UploadUtils'
 import { useUploadFromFlagship } from 'modules/views/Upload/useUploadFromFlagship'
 
@@ -13,12 +17,18 @@ const UploaderComponent = (): JSX.Element | null => {
   const { items, uploadFilesFromFlagship, onClose, uploadInProgress } =
     useUploadFromFlagship()
 
-  const handleConfirm = (folderId: string): void => {
-    uploadFilesFromFlagship(folderId)
+  const handleConfirm = (folder: IOCozyFile): void => {
+    uploadFilesFromFlagship(folder._id)
   }
 
+  const rootFolderQuery = buildOnlyFolderQuery(ROOT_DIR_ID)
+  const rootFolderResult = useQuery(
+    rootFolderQuery.definition,
+    rootFolderQuery.options
+  )
+
   // If there are no items to render, we display a spinner with a full screen dialog to hide the UI behind
-  if (!shouldRender(items)) {
+  if (!shouldRender(items) && hasQueryBeenLoaded(rootFolderResult)) {
     return (
       <FixedDialog
         className="u-p-0"
@@ -31,6 +41,7 @@ const UploaderComponent = (): JSX.Element | null => {
 
   return (
     <FolderPicker
+      currentFolder={rootFolderResult.data}
       entries={items}
       canCreateFolder={false}
       onConfirm={handleConfirm}
