@@ -5,7 +5,6 @@ import Button from 'cozy-ui/transpiled/react/Buttons'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import DotsIcon from 'cozy-ui/transpiled/react/Icons/Dots'
 import { TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
-import palette from 'cozy-ui/transpiled/react/palette'
 
 import styles from 'styles/filelist.styl'
 
@@ -25,7 +24,9 @@ const FileAction = forwardRef(function FileAction(
         <Button
           {...(!disabled && { onClick })}
           variant="text"
-          label={<Icon icon={DotsIcon} size={17} color={palette.coolGrey} />}
+          label={
+            <Icon icon={DotsIcon} size={17} color="var(--iconTextColor)" />
+          }
           arial-label={t('Toolbar.more')}
         />
       </span>

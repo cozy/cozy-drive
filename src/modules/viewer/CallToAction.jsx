@@ -4,7 +4,6 @@ import React, { Component } from 'react'
 import { withClient } from 'cozy-client'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import CrossIcon from 'cozy-ui/transpiled/react/Icons/Cross'
-import palette from 'cozy-ui/transpiled/react/palette'
 
 import styles from './styles.styl'
 import {
@@ -47,7 +46,7 @@ class CallToAction extends Component {
       <div className={styles['pho-viewer-noviewer-cta']}>
         <Icon
           className={styles['pho-viewer-noviewer-cta-cross']}
-          color={palette.white}
+          color="var(--white)"
           icon={CrossIcon}
           onClick={this.markAsSeen}
         />
