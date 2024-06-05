@@ -13,7 +13,6 @@ import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/Forw
 import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
 import ToolbarButtons from 'cozy-ui/transpiled/react/Viewer/components/ToolbarButtons'
 import Overlay from 'cozy-ui/transpiled/react/deprecated/Overlay'
-import palette from 'cozy-ui/transpiled/react/palette'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -31,7 +30,7 @@ import {
 
 export const FilesViewerLoading = () => (
   <Overlay>
-    <Spinner size="xxlarge" middle noMargin color={palette.white} />
+    <Spinner size="xxlarge" middle noMargin color="var(--white)" />
   </Overlay>
 )
 
