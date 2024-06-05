@@ -2,12 +2,12 @@ import React, { useState, useCallback } from 'react'
 
 import { BarRight } from 'cozy-bar'
 import { useClient } from 'cozy-client'
+import Button from 'cozy-ui/transpiled/react/Buttons'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
 import ActionMenu, {
   ActionMenuItem
 } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
-import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -85,10 +85,11 @@ export const Toolbar = ({ disabled }) => {
         </BarRight>
       ) : (
         <Button
-          theme="danger-outline"
+          variant="secondary"
+          color="error"
           onClick={onEmptyTrash}
           disabled={disabled || isSelectionBarVisible}
-          icon={TrashIcon}
+          startIcon={<Icon icon={TrashIcon} />}
           label={t('toolbar.empty_trash')}
         />
       )}

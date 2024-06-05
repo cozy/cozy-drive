@@ -1,6 +1,8 @@
+import cx from 'classnames'
 import React from 'react'
 
-import { Button } from 'cozy-ui/transpiled/react'
+import Button from 'cozy-ui/transpiled/react/Buttons'
+import Icon from 'cozy-ui/transpiled/react/Icon'
 import DotsIcon from 'cozy-ui/transpiled/react/Icons/Dots'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -11,14 +13,12 @@ const MoreButton = ({ disabled, onClick, ...props }) => {
   return (
     <Button
       data-testid="more-button"
-      className={styles['dri-btn--more']}
-      theme="secondary"
+      className={cx('u-miw-auto', styles['dri-btn--more'])}
+      variant="secondary"
       disabled={disabled}
       onClick={onClick}
-      extension="narrow"
-      icon={DotsIcon}
-      iconOnly
-      label={t('Toolbar.more')}
+      label={<Icon icon={DotsIcon} />}
+      aria-label={t('Toolbar.more')}
       {...props}
     />
   )
