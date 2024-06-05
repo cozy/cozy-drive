@@ -97,7 +97,10 @@ export const trash = ({ t, pushModal, popModal, hasWriteAccess, refresh }) => {
           <ListItemIcon>
             <Icon icon={icon} color="var(--errorColor)" />
           </ListItemIcon>
-          <ListItemText className="u-error" primary={label} />
+          <ListItemText
+            primary={label}
+            primaryTypographyProps={{ color: 'error' }}
+          />
         </ActionsMenuItem>
       )
     })
@@ -293,7 +296,10 @@ export const destroy = ({ t, pushModal, popModal }) => {
           <ListItemIcon>
             <Icon icon={icon} color="var(--errorColor)" />
           </ListItemIcon>
-          <ListItemText className="u-error" primary={label} />
+          <ListItemText
+            primary={label}
+            primaryTypographyProps={{ color: 'error' }}
+          />
         </ActionsMenuItem>
       )
     })

@@ -22,7 +22,10 @@ const trash = ({ t }) => {
           <ListItemIcon>
             <Icon icon={icon} color="var(--errorColor)" />
           </ListItemIcon>
-          <ListItemText className="u-error" primary={label} />
+          <ListItemText
+            primary={label}
+            primaryTypographyProps={{ color: 'error' }}
+          />
         </ActionsMenuItem>
       )
     })
