@@ -7,9 +7,7 @@
     &:hover
         .fil-content-file-select
             opacity 1
-        .fil-content-sharestatus
-            span > div:first-child // targets sharing avatars
-                border-color var(--paleGrey)
+
     &--center
         justify-content center
 
@@ -17,7 +15,7 @@
     @extend $table-row-selected
 
 .fil-content-row-actioned
-    background-color var(--paleGrey)
+    background-color var(--contrastBackgroundColor)
 
 .fil-content-row-disabled
     opacity .4
@@ -30,7 +28,7 @@
     height rem(128)
 
 .fil-content-ext
-    color var(--coolGrey)
+    color var(--secondaryTextColor)
 
 .fil-content-header
     &:first-child
@@ -63,7 +61,7 @@
 
 .fil-content-header-sortdesc
 .fil-content-header-sortasc
-    color var(--charcoalGrey)
+    color var(--primaryTextColor)
 
 .fil-content-header-sortdesc, .fil-content-header-sortasc, .fil-content-header-sortabledesc, .fil-content-header-sortableasc
     cursor pointer
@@ -99,7 +97,7 @@ column-width-thumbnail-bigger = 7rem
         line-height    1.3
         white-space    nowrap
         overflow       hidden
-        color var(--charcoalGrey)
+        color var(--primaryTextColor)
         height 100%
 
     &.fil-content-file-select
@@ -165,7 +163,7 @@ column-width-thumbnail-bigger = 7rem
 .fil-content-header-action
     button
         opacity 1
-        color var(--coolGrey)
+        color var(--actionColorActive)
 
 .fil-content-file-select
     flex       0 0 2rem
@@ -226,7 +224,7 @@ column-width-thumbnail-bigger = 7rem
 
 .fil-file-certifications
     flex-shrink 0
-    color var(--coolGrey)
+    color var(--actionColorActive)
 
     &--separator
         margin-left 0.25rem
@@ -238,7 +236,7 @@ column-width-thumbnail-bigger = 7rem
 .fil-file-path
 .fil-file-infos
 .fil-file-description--path
-    color var(--coolGrey)
+    color var(--actionColorActive)
     font-size .75rem
     text-decoration none
 
@@ -273,10 +271,10 @@ column-width-thumbnail-bigger = 7rem
     animation-name            placeHolderShimmer
     animation-timing-function linear
     background-position -20rem 0
-    background-image linear-gradient(to right, paleGrey 0%, white 50%, paleGrey 100%)
+    background-image linear-gradient(to right, var(--contrastBackgroundColor) 0%, white 50%, var(--contrastBackgroundColor) 100%)
     background-size 20rem 2.5rem
     background-repeat no-repeat
-    background-color var(--paleGrey)
+    background-color var(--contrastBackgroundColor)
     border-radius .15rem
     height   .75rem
     max-width    100%
@@ -325,7 +323,7 @@ column-width-thumbnail-bigger = 7rem
 .fil-content-row-actioned
     .fil-content-file-action
         button
-            background silver
+            background var(--actionColorDisabled)
             opacity 1
 
 .fil-content-body

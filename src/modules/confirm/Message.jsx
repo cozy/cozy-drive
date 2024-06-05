@@ -14,7 +14,7 @@ export const Message = ({ icon, text }) => {
   return (
     <Media>
       <Img>
-        <Icon icon={icon} color="var(--coolGrey)" />
+        <Icon icon={icon} color="var(--iconTextColor)" />
       </Img>
       <Bd className="u-pl-1-half">{text}</Bd>
     </Media>

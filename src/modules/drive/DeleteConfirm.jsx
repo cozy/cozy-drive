@@ -23,7 +23,7 @@ const Message = ({ type, fileCount }) => {
   return (
     <Media>
       <Img>
-        <Icon icon={ico} color="var(--coolGrey)" />
+        <Icon icon={ico} color="var(--iconTextColor)" />
       </Img>
       <Bd className="u-pl-1-half">{t(`DeleteConfirm.${type}`, fileCount)}</Bd>
     </Media>
