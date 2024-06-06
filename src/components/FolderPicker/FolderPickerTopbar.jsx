@@ -1,49 +1,90 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useCallback } from 'react'
 
-import { useQuery } from 'cozy-client'
+import { useClient } from 'cozy-client'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import FolderAddIcon from 'cozy-ui/transpiled/react/Icons/FolderAdd'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import Typography from 'cozy-ui/transpiled/react/Typography'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import { getParentFolderFromPath } from './helpers'
 import BackButton from 'components/Button/BackButton'
+import { ROOT_DIR_ID } from 'constants/config'
 import Topbar from 'modules/layout/Topbar'
-import { getBreadcrumbPath } from 'modules/move/helpers'
-import Breadcrumb from 'modules/navigation/Breadcrumb/Breadcrumb'
 import { buildOnlyFolderQuery } from 'modules/queries'
 
 const FolderPickerTopbar = ({
   navigateTo,
-  folderId,
+  folder,
   showFolderCreation,
+  showNextcloudFolder,
   canCreateFolder
 }) => {
   const { t } = useI18n()
-  const { isMobile } = useBreakpoints()
-  const folderQuery = buildOnlyFolderQuery(folderId)
-  const { fetchStatus, data } = useQuery(
-    folderQuery.definition,
-    folderQuery.options
-  )
+  const client = useClient()
 
-  const path = fetchStatus === 'loaded' ? getBreadcrumbPath(t, data) : []
-  const showPreviousButton = path.length > 1 && isMobile
+  const showBackButton =
+    folder !== undefined && (folder._id !== ROOT_DIR_ID || showNextcloudFolder)
+
+  const handleNavigateTo = useCallback(async () => {
+    if (folder._id === ROOT_DIR_ID) {
+      return navigateTo()
+    }
+
+    if (folder.dir_id) {
+      const parentFolderQuery = buildOnlyFolderQuery(folder.dir_id)
+      const parentFolder = await client.fetchQueryAndGetFromState({
+        definition: parentFolderQuery.definition(),
+        options: parentFolderQuery.options
+      })
+
+      return navigateTo(parentFolder.data)
+    }
+
+    if (
+      folder._type === 'io.cozy.remote.nextcloud.files' &&
+      folder.path == '/' &&
+      showNextcloudFolder
+    ) {
+      return navigateTo()
+    }
+
+    if (
+      folder._type === 'io.cozy.remote.nextcloud.files' &&
+      showNextcloudFolder
+    ) {
+      const parentFolder = {
+        _type: 'io.cozy.remote.nextcloud.files',
+        ...getParentFolderFromPath(folder.path),
+        cozyMetadata: {
+          sourceAccount: folder.cozyMetadata.sourceAccount
+        }
+      }
+
+      return navigateTo(parentFolder)
+    }
+  }, [client, folder, navigateTo, showNextcloudFolder])
+
+  const name =
+    folder === undefined
+      ? t('FolderPickerTopbar.root')
+      : folder._id === ROOT_DIR_ID
+      ? t('breadcrumb.title_drive')
+      : folder.name
+
+  const showCreateFolderButton =
+    canCreateFolder &&
+    folder !== undefined &&
+    folder._type !== 'io.cozy.remote.nextcloud.files'
 
   return (
     <Topbar hideOnMobile={false}>
-      {showPreviousButton && (
-        <BackButton onClick={() => navigateTo(path[path.length - 2])} />
-      )}
-      <Breadcrumb
-        path={path}
-        onBreadcrumbClick={navigateTo}
-        opening={false}
-        inlined
-      />
-      {canCreateFolder ? (
+      {showBackButton ? <BackButton onClick={handleNavigateTo} /> : null}
+      <Typography variant="h4">{name}</Typography>
+      {showCreateFolderButton ? (
         <IconButton
+          className="u-ml-auto"
           onClick={showFolderCreation}
           aria-label={t('Move.addFolder')}
         >
@@ -56,7 +97,10 @@ const FolderPickerTopbar = ({
 
 FolderPickerTopbar.propTypes = {
   navigateTo: PropTypes.func.isRequired,
-  folderId: PropTypes.string.isRequired
+  folder: PropTypes.object,
+  showFolderCreation: PropTypes.func,
+  canCreateFolder: PropTypes.bool,
+  showNextcloudFolder: PropTypes.bool
 }
 
 export { FolderPickerTopbar }

@@ -1,4 +1,3 @@
-import { useDisplayedFolder } from 'hooks'
 import React, { useState } from 'react'
 
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
@@ -8,7 +7,6 @@ import { FolderPickerBody } from 'components/FolderPicker/FolderPickerBody'
 import { FolderPickerFooter } from 'components/FolderPicker/FolderPickerFooter'
 import { FolderPickerHeader } from 'components/FolderPicker/FolderPickerHeader'
 import { FolderPickerTopbar } from 'components/FolderPicker/FolderPickerTopbar'
-import { ROOT_DIR_ID } from 'constants/config'
 
 const useStyles = makeStyles(() => ({
   paper: {
@@ -23,17 +21,17 @@ const useStyles = makeStyles(() => ({
 }))
 
 const FolderPicker = ({
+  currentFolder,
   entries,
   onConfirm,
   onClose,
   isBusy,
   canCreateFolder = true,
-  slotProps
+  slotProps,
+  showNextcloudFolder = false
 }) => {
-  const { displayedFolder } = useDisplayedFolder()
-  const [folderId, setFolderId] = useState(
-    displayedFolder ? displayedFolder._id : ROOT_DIR_ID
-  )
+  const [folder, setFolder] = useState(currentFolder)
+
   const [isFolderCreationDisplayed, setFolderCreationDisplayed] =
     useState(false)
   const classes = useStyles()
@@ -47,7 +45,7 @@ const FolderPicker = ({
   }
 
   const navigateTo = folder => {
-    setFolderId(folder._id)
+    setFolder(folder)
     setFolderCreationDisplayed(false)
   }
 
@@ -66,15 +64,16 @@ const FolderPicker = ({
             <FolderPickerHeader entries={entries} {...slotProps?.header} />
             <FolderPickerTopbar
               navigateTo={navigateTo}
-              folderId={folderId}
+              folder={folder}
               canCreateFolder={canCreateFolder}
               showFolderCreation={showFolderCreation}
+              showNextcloudFolder={showNextcloudFolder}
             />
           </>
         }
         content={
           <FolderPickerBody
-            folderId={folderId}
+            folder={folder}
             navigateTo={navigateTo}
             entries={entries}
             isFolderCreationDisplayed={isFolderCreationDisplayed}
@@ -86,9 +85,8 @@ const FolderPicker = ({
             onConfirm={onConfirm}
             onClose={onClose}
             targets={entries}
-            currentDirId={folderId}
-            isMoving={isBusy}
-            isLoading={isBusy}
+            folder={folder}
+            isBusy={isBusy}
             {...slotProps?.footer}
           />
         }
