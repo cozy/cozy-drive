@@ -1,24 +1,8 @@
-import get from 'lodash/get'
-import uniqBy from 'lodash/uniqBy'
 import { CozyFile } from 'models'
 
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
-import { ROOT_DIR_ID } from 'constants/config'
 import logger from 'lib/logger'
-
-/**
- * Returns whether one of the targeted folders is part of the current folder
- * @param {import('cozy-client/types').IOCozyFile[]} targets - List of folders
- * @param {string} currentDirId - The id of the current folder
- * @returns {boolean} - Whether one of the targeted folders is part of the current folder
- */
-export const areTargetsInCurrentDir = (targets, currentDirId) => {
-  const targetsInCurrentDir = targets.filter(
-    target => target.dir_id === currentDirId
-  )
-  return targetsInCurrentDir.length === targets.length
-}
 
 /**
  * Cancel file movement function
@@ -112,27 +96,3 @@ export const hasOneOfEntriesShared = (entries, byDocId) => {
   })
   return sharedEntries.length > 0
 }
-
-export const getBreadcrumbPath = (t, displayedFolder) =>
-  uniqBy(
-    [
-      {
-        _id: ROOT_DIR_ID
-      },
-      {
-        _id: get(displayedFolder, 'dir_id')
-      },
-      {
-        _id: displayedFolder._id,
-        name: displayedFolder.name
-      }
-    ],
-    '_id'
-  )
-    .filter(({ _id }) => Boolean(_id))
-    .map(breadcrumb => ({
-      _id: breadcrumb._id,
-      name:
-        breadcrumb.name ||
-        (breadcrumb._id === ROOT_DIR_ID ? t('breadcrumb.title_drive') : '…')
-    }))

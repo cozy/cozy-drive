@@ -794,5 +794,11 @@
   },
   "NextcloudToolbar": {
     "share": "Share"
+  },
+  "FolderPickerTopbar": {
+    "root": "Drives"
+  },
+  "FolderPickerContentRoot": {
+    "myDrive": "My Drive"
   }
 }

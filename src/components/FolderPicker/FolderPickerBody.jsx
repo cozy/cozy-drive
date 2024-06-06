@@ -1,62 +1,39 @@
 import React from 'react'
 
-import { useQuery } from 'cozy-client'
-
-import { FolderPickerContentExplorer } from 'components/FolderPicker/FolderPickerContentExplorer'
-import { FolderPickerContentLoadMore } from 'components/FolderPicker/FolderPickerContentLoadMore'
-import { FolderPickerContentLoader } from 'components/FolderPicker/FolderPickerContentLoader'
-import { isEncryptedFolder } from 'lib/encryption'
-import { AddFolderWithoutState } from 'modules/filelist/AddFolder'
-import FileList from 'modules/move/FileList'
-import { buildMoveOrImportQuery, buildOnlyFolderQuery } from 'modules/queries'
+import { FolderPickerContentCozy } from 'components/FolderPicker/FolderPickerContentCozy'
+import { FolderPickerContentNextcloud } from 'components/FolderPicker/FolderPickerContentNextcloud'
+import { FolderPickerContentRoot } from 'components/FolderPicker/FolderPickerContentRoot'
 
 const FolderPickerBody = ({
-  folderId,
+  folder,
   entries,
   navigateTo,
   isFolderCreationDisplayed,
   hideFolderCreation
 }) => {
-  const folderQuery = buildOnlyFolderQuery(folderId)
-  const { data: folderData } = useQuery(
-    folderQuery.definition,
-    folderQuery.options
-  )
-
-  const contentQuery = buildMoveOrImportQuery(folderId)
-  const {
-    fetchStatus,
-    data: filesData,
-    hasMore,
-    fetchMore
-  } = useQuery(contentQuery.definition, contentQuery.options)
-
-  const isEncrypted = folderData ? isEncryptedFolder(folderData) : false
-  const files = filesData ?? []
-
-  return (
-    <FolderPickerContentExplorer folderId={folderId}>
-      <AddFolderWithoutState
-        isEncrypted={isEncrypted}
-        currentFolderId={folderId}
-        visible={isFolderCreationDisplayed}
-        afterSubmit={hideFolderCreation}
-        afterAbort={hideFolderCreation}
+  if (folder?._type === 'io.cozy.files') {
+    return (
+      <FolderPickerContentCozy
+        folder={folder}
+        isFolderCreationDisplayed={isFolderCreationDisplayed}
+        hideFolderCreation={hideFolderCreation}
+        entries={entries}
+        navigateTo={navigateTo}
       />
-      <FolderPickerContentLoader
-        fetchStatus={fetchStatus}
-        hasNoData={files.length === 0}
-      >
-        <FileList
-          files={files}
-          targets={entries}
-          navigateTo={navigateTo}
-          folder={folderData}
-        />
-        <FolderPickerContentLoadMore hasMore={hasMore} fetchMore={fetchMore} />
-      </FolderPickerContentLoader>
-    </FolderPickerContentExplorer>
-  )
+    )
+  }
+
+  if (folder?._type === 'io.cozy.remote.nextcloud.files') {
+    return (
+      <FolderPickerContentNextcloud
+        folder={folder}
+        entries={entries}
+        navigateTo={navigateTo}
+      />
+    )
+  }
+
+  return <FolderPickerContentRoot navigateTo={navigateTo} />
 }
 
 export { FolderPickerBody }
