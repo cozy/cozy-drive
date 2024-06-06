@@ -8,7 +8,7 @@ import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 
 import { navigateToModalWithMultipleFile } from 'modules/actions/helpers'
 
-const moveTo = ({ t, canMove, pathname, navigate }) => {
+const moveTo = ({ t, canMove, pathname, navigate, search }) => {
   const label = t('SelectionBar.moveto')
   const icon = MovetoIcon
 
@@ -22,7 +22,8 @@ const moveTo = ({ t, canMove, pathname, navigate }) => {
         files,
         pathname,
         navigate,
-        path: 'move'
+        path: 'move',
+        search
       })
     },
     Component: forwardRef(function MoveTo(props, ref) {

@@ -29,6 +29,7 @@ import { QualifyFileView } from 'modules/views/Modal/QualifyFileView'
 import { ShareDisplayedFolderView } from 'modules/views/Modal/ShareDisplayedFolderView'
 import { ShareFileView } from 'modules/views/Modal/ShareFileView'
 import { NextcloudFolderView } from 'modules/views/Nextcloud/NextcloudFolderView'
+import { NextcloudMoveView } from 'modules/views/Nextcloud/NextcloudMoveView'
 
 const FilesRedirect = () => {
   const { folderId } = useParams()
@@ -59,7 +60,9 @@ const AppRoute = () => (
       </Route>
 
       {flag('drive.show-nextcloud-dev') ? (
-        <Route path="nextcloud/:shorcutId" element={<NextcloudFolderView />} />
+        <Route path="nextcloud/:shortcutId" element={<NextcloudFolderView />}>
+          <Route path="move" element={<NextcloudMoveView />} />
+        </Route>
       ) : null}
 
       <Route path="recent" element={<RecentView />}>
