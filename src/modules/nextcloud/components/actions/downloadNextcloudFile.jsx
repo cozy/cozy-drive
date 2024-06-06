@@ -16,13 +16,14 @@ export const downloadNextcloudFile = ({ t, client }) => {
     label,
     icon,
     displayCondition: docs => {
-      return docs.length === 1 && isFile(docs[0])
+      return docs.length === 1
     },
     action: docs => {
       return client
         .collection('io.cozy.remote.nextcloud.files')
         .download(docs[0])
     },
+    disabled: docs => docs.some(doc => !isFile(doc)),
     Component: forwardRef(function DownloadNextcloudFile(props, ref) {
       return (
         <ActionsMenuItem {...props} ref={ref}>
