@@ -9,9 +9,13 @@ export const navigateToModalWithMultipleFile = ({
   navigate,
   pathname,
   files,
-  path
+  path,
+  search
 }) => {
-  navigate(joinPath(pathname, path), {
-    state: { fileIds: files.map(file => file.id) }
-  })
+  navigate(
+    { pathname: joinPath(pathname, path), search: search ? `?${search}` : '' },
+    {
+      state: { fileIds: files.map(file => file.id) }
+    }
+  )
 }

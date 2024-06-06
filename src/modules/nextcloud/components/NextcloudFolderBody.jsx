@@ -1,16 +1,16 @@
 import React from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, useLocation, useNavigate } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
 import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { duplicateNextcloudFile } from './actions/duplicateNextcloudFile'
+import { moveNextcloud } from './actions/moveNextcloud'
 import { joinPath } from 'lib/path'
 import { hr } from 'modules/actions'
 import { FolderBody } from 'modules/folder/components/FolderBody'
 import { downloadNextcloudFile } from 'modules/nextcloud/components/actions/downloadNextcloudFile'
-import { move } from 'modules/nextcloud/components/actions/move'
 import { openWithinNextcloud } from 'modules/nextcloud/components/actions/openWithinNextcloud'
 import { rename } from 'modules/nextcloud/components/actions/rename'
 import { shareNextcloudFile } from 'modules/nextcloud/components/actions/shareNextcloudFile'
@@ -20,6 +20,8 @@ const NextcloudFolderBody = ({ path, queryResults }) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const client = useClient()
   const { t } = useI18n()
+  const { pathname } = useLocation()
+  const navigate = useNavigate()
 
   const handleFolderOpen = folder => {
     searchParams.set('path', joinPath(path, folder.name))
@@ -36,7 +38,7 @@ const NextcloudFolderBody = ({ path, queryResults }) => {
       downloadNextcloudFile,
       hr,
       rename,
-      move,
+      moveNextcloud,
       duplicateNextcloudFile,
       openWithinNextcloud,
       hr,
@@ -44,7 +46,10 @@ const NextcloudFolderBody = ({ path, queryResults }) => {
     ],
     {
       t,
-      client
+      client,
+      pathname,
+      navigate,
+      search: searchParams.toString()
     }
   )
 
