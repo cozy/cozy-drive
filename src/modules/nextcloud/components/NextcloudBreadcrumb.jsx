@@ -5,18 +5,16 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { ROOT_DIR_ID } from 'constants/config'
-import { CozyFile } from 'models/index'
 import { MobileAwareBreadcrumb as Breadcrumb } from 'modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
+import { useNextcloudInfos } from 'modules/nextcloud/hooks/useNextcloudInfos'
 
-const NextcloudBreadcrumb = ({ shortcut, path }) => {
+const NextcloudBreadcrumb = ({ sourceAccount, path }) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
 
-  if (!shortcut) {
-    return null
-  }
+  const { rootFolderName } = useNextcloudInfos({ sourceAccount })
 
   const rootPaths = [
     ...(isMobile
@@ -27,7 +25,7 @@ const NextcloudBreadcrumb = ({ shortcut, path }) => {
           }
         ]
       : []),
-    { name: CozyFile.splitFilename(shortcut).filename, id: '/' }
+    { name: rootFolderName, id: '/' }
   ]
 
   const splitPath = path.split('/').filter(Boolean)

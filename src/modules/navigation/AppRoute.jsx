@@ -60,7 +60,10 @@ const AppRoute = () => (
       </Route>
 
       {flag('drive.show-nextcloud-dev') ? (
-        <Route path="nextcloud/:shortcutId" element={<NextcloudFolderView />}>
+        <Route
+          path="nextcloud/:sourceAccount"
+          element={<NextcloudFolderView />}
+        >
           <Route path="move" element={<NextcloudMoveView />} />
         </Route>
       ) : null}

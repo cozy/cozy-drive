@@ -12,6 +12,7 @@ import { getParentFolderFromPath } from './helpers'
 import BackButton from 'components/Button/BackButton'
 import { ROOT_DIR_ID } from 'constants/config'
 import Topbar from 'modules/layout/Topbar'
+import { useNextcloudInfos } from 'modules/nextcloud/hooks/useNextcloudInfos'
 import { buildOnlyFolderQuery } from 'modules/queries'
 
 const FolderPickerTopbar = ({
@@ -26,6 +27,10 @@ const FolderPickerTopbar = ({
 
   const showBackButton =
     folder !== undefined && (folder._id !== ROOT_DIR_ID || showNextcloudFolder)
+
+  const { rootFolderName } = useNextcloudInfos({
+    sourceAccount: folder?.cozyMetadata?.sourceAccount
+  })
 
   const handleNavigateTo = useCallback(async () => {
     if (folder._id === ROOT_DIR_ID) {
@@ -54,17 +59,28 @@ const FolderPickerTopbar = ({
       folder._type === 'io.cozy.remote.nextcloud.files' &&
       showNextcloudFolder
     ) {
-      const parentFolder = {
-        _type: 'io.cozy.remote.nextcloud.files',
-        ...getParentFolderFromPath(folder.path),
-        cozyMetadata: {
-          sourceAccount: folder.cozyMetadata.sourceAccount
-        }
+      const parentFolder = getParentFolderFromPath(folder.path)
+      if (parentFolder.path === '/') {
+        return navigateTo({
+          _id: 'io.cozy.remote.nextcloud.files.root-dir',
+          _type: 'io.cozy.remote.nextcloud.files',
+          name: rootFolderName,
+          path: '/',
+          cozyMetadata: {
+            sourceAccount: folder.cozyMetadata.sourceAccount
+          }
+        })
+      } else {
+        return navigateTo({
+          _type: 'io.cozy.remote.nextcloud.files',
+          ...getParentFolderFromPath(folder.path),
+          cozyMetadata: {
+            sourceAccount: folder.cozyMetadata.sourceAccount
+          }
+        })
       }
-
-      return navigateTo(parentFolder)
     }
-  }, [client, folder, navigateTo, showNextcloudFolder])
+  }, [client, folder, navigateTo, rootFolderName, showNextcloudFolder])
 
   const name =
     folder === undefined
