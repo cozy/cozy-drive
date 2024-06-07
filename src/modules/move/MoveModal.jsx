@@ -137,8 +137,8 @@ const MoveModal = ({
 
       const targetRoute =
         folder._type === 'io.cozy.remote.nextcloud.files'
-          ? `/folder/${folder.id}`
-          : `/nextcloud/${folder.id}`
+          ? `/nextcloud/${folder.cozyMetadata.sourceAccount}?path=${folder.path}`
+          : `/folder/${folder.id}`
 
       showAlert({
         action: (

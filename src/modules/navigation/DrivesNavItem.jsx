@@ -59,9 +59,9 @@ const DrivesNavItem = ({ clickState }) => {
                 <NavItem
                   key={file._id}
                   secondary
-                  forcedLabel={filename}
+                  forcedLabel={`${file.metadata.instanceName} (Nextcloud)`}
                   clickState={clickState}
-                  to={`/nextcloud/${file._id}`}
+                  to={`/nextcloud/${file.cozyMetadata.sourceAccount}`}
                   rx={/\/nextcloud(\/.*)?/}
                 />
               )

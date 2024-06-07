@@ -51,7 +51,7 @@ export const SharedDrives = ({
       file.cozyMetadata?.createdByApp === 'nextcloud' &&
       flag('drive.show-nextcloud-dev')
     ) {
-      navigate(`/nextcloud/${file._id}`)
+      navigate(`/nextcloud/${file.cozyMetadata.sourceAccount}`)
     } else {
       const url = generateShortcutUrl({
         file,
@@ -83,7 +83,10 @@ export const SharedDrives = ({
                 key={file.id}
                 attributes={{
                   ...file,
-                  name: CozyFile.splitFilename(file).filename
+                  name:
+                    file.cozyMetadata?.createdByApp === 'nextcloud'
+                      ? `${file.metadata.instanceName} (Nextcloud)`
+                      : CozyFile.splitFilename(file).filename
                 }}
                 withSelectionCheckbox={false}
                 onFolderOpen={handleFolderOpen}

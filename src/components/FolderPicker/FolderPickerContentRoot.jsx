@@ -1,4 +1,3 @@
-import { CozyFile } from 'models'
 import React from 'react'
 
 import { useQuery } from 'cozy-client'
@@ -58,7 +57,7 @@ const FolderPickerContentRoot = ({ navigateTo }) => {
       navigateTo({
         _type: 'io.cozy.remote.nextcloud.files',
         path: '/',
-        name: CozyFile.splitFilename(file).filename,
+        name: `${file.metadata.instanceName} (Nextcloud)`,
         cozyMetadata: {
           sourceAccount: file.cozyMetadata?.sourceAccount
         }
@@ -80,7 +79,7 @@ const FolderPickerContentRoot = ({ navigateTo }) => {
               name:
                 file.id === ROOT_DIR_ID
                   ? t('FolderPickerContentRoot.myDrive')
-                  : CozyFile.splitFilename(file).filename
+                  : `${file.metadata.instanceName} (Nextcloud)`
             }}
             onFolderOpen={handleFolderOpen}
             onFileOpen={handleFileOpen}

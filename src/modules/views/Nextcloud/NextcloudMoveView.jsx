@@ -11,25 +11,25 @@ import { hasQueryBeenLoaded } from 'cozy-client'
 
 import { LoaderModal } from 'components/LoaderModal'
 import { getParentPath } from 'lib/path'
-import { CozyFile } from 'models/index'
 import MoveModal from 'modules/move/MoveModal'
 import { useNextcloudFolder } from 'modules/nextcloud/hooks/useNextcloudFolder'
+import { useNextcloudInfos } from 'modules/nextcloud/hooks/useNextcloudInfos'
 import { useNextcloudPath } from 'modules/nextcloud/hooks/useNextcloudPath'
 
 const NextcloudMoveView = () => {
   const { state, pathname } = useLocation()
   const [searchParams] = useSearchParams()
-  const { shortcutId } = useParams()
+  const { sourceAccount } = useParams()
   const path = useNextcloudPath()
   const navigate = useNavigate()
 
-  const { nextcloudResult, shortcutResult } = useNextcloudFolder({
-    shortcutId,
+  const { rootFolderName } = useNextcloudInfos({ sourceAccount })
+  const { nextcloudResult } = useNextcloudFolder({
+    sourceAccount,
     path
   })
-
   const { nextcloudResult: nextcloudParentResult } = useNextcloudFolder({
-    shortcutId,
+    sourceAccount,
     path: getParentPath(path)
   })
 
@@ -57,10 +57,10 @@ const NextcloudMoveView = () => {
     var currentFolder = {
       _id: 'io.cozy.remote.nextcloud.files.root-dir',
       _type: 'io.cozy.remote.nextcloud.files',
-      name: CozyFile.splitFilename(shortcutResult.data).filename,
+      name: rootFolderName,
       path: '/',
       cozyMetadata: {
-        sourceAccount: shortcutResult.data.cozyMetadata.sourceAccount
+        sourceAccount: sourceAccount
       }
     }
     if (path !== '/') {

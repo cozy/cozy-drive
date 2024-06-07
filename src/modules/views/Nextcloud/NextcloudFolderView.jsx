@@ -10,18 +10,18 @@ import FolderView from 'modules/views/Folder/FolderView'
 import FolderViewHeader from 'modules/views/Folder/FolderViewHeader'
 
 const NextcloudFolderView = () => {
-  const { shortcutId } = useParams()
+  const { sourceAccount } = useParams()
   const path = useNextcloudPath()
 
-  const { shortcutResult, nextcloudResult } = useNextcloudFolder({
-    shortcutId,
+  const { nextcloudResult } = useNextcloudFolder({
+    sourceAccount,
     path
   })
 
   return (
     <FolderView>
       <FolderViewHeader>
-        <NextcloudBreadcrumb shortcut={shortcutResult.data} path={path} />
+        <NextcloudBreadcrumb sourceAccount={sourceAccount} path={path} />
         <NextcloudToolbar />
       </FolderViewHeader>
       <NextcloudFolderBody path={path} queryResults={[nextcloudResult]} />

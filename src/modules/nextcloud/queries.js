@@ -28,3 +28,20 @@ export const buildNextcloudFolderQuery = ({ sourceAccount, path }) => ({
 export const computeNextcloudFolderQueryId = ({ sourceAccount, path }) => {
   return `io.cozy.remote.nextcloud.files/sourceAccount/${sourceAccount}/path${path}`
 }
+
+export const buildNextcloudShortcutQuery = ({ sourceAccount }) => ({
+  definition: () =>
+    Q('io.cozy.files')
+      .partialIndex({
+        'cozyMetadata.createdByApp': 'nextcloud',
+        'cozyMetadata.sourceAccount': sourceAccount
+      })
+      .indexFields(['cozyMetadata.createdByApp', 'cozyMetadata.sourceAccount'])
+      .limitBy(1),
+  options: {
+    as: `io.cozy.files/createdByApp/nextcloud/sourceAccount/${sourceAccount}`,
+    fetchPolicy: defaultFetchPolicy,
+    enabled: !!sourceAccount,
+    singleDocData: true
+  }
+})
