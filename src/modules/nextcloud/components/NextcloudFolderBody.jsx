@@ -13,7 +13,7 @@ import { downloadNextcloudFile } from 'modules/nextcloud/components/actions/down
 import { move } from 'modules/nextcloud/components/actions/move'
 import { openWithinNextcloud } from 'modules/nextcloud/components/actions/openWithinNextcloud'
 import { rename } from 'modules/nextcloud/components/actions/rename'
-import { share } from 'modules/nextcloud/components/actions/share'
+import { shareNextcloudFile } from 'modules/nextcloud/components/actions/shareNextcloudFile'
 import { trash } from 'modules/nextcloud/components/actions/trash'
 
 const NextcloudFolderBody = ({ path, queryResults }) => {
@@ -32,7 +32,7 @@ const NextcloudFolderBody = ({ path, queryResults }) => {
 
   const fileActions = makeActions(
     [
-      share,
+      shareNextcloudFile,
       downloadNextcloudFile,
       hr,
       rename,
