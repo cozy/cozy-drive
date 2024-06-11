@@ -169,7 +169,7 @@ describe('MoveModal component', () => {
           {
             folderId: 'destinationFolder'
           },
-          true
+          { force: true }
         )
 
         expect(CozyFile.move).toHaveBeenNthCalledWith(
@@ -178,7 +178,7 @@ describe('MoveModal component', () => {
           {
             folderId: 'destinationFolder'
           },
-          true
+          { force: true }
         )
         // don't force a shared file
         expect(CozyFile.move).toHaveBeenNthCalledWith(
@@ -187,7 +187,7 @@ describe('MoveModal component', () => {
           {
             folderId: 'destinationFolder'
           },
-          true
+          { force: true }
         )
         expect(onCloseSpy).toHaveBeenCalled()
         expect(refreshSpy).toHaveBeenCalled()

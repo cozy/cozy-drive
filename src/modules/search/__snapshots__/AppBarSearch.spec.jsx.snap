@@ -3,7 +3,9 @@
 exports[`should display the Searchbar 1`] = `
 {
   "asFragment": [Function],
-  "baseElement": <body>
+  "baseElement": <body
+    class="CozyTheme--light-normal"
+  >
     <div>
       <div
         class="CozyTheme--light-normal u-dc"
