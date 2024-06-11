@@ -110,7 +110,7 @@ const MoveModal = ({ onClose, entries }) => {
           )
           const force = !sharedPaths.includes(targetPath)
           const moveResponse = await registerCancelable(
-            CozyFile.move(entry._id, { folderId }, force)
+            CozyFile.move(entry._id, { folderId }, { force })
           )
           if (moveResponse.deleted) {
             trashedFiles.push(moveResponse.deleted)
