@@ -10,10 +10,10 @@ import {
 import SharingProvider from 'cozy-sharing'
 import AlertProvider from 'cozy-ui/transpiled/react/providers/Alert'
 import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
 import { I18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import FabProvider from 'lib/FabProvider'
-import StyledApp from 'modules/drive/StyledApp'
 
 const DriveProvider = ({ client, lang, polyglot, dictRequire, children }) => {
   return (
@@ -22,14 +22,14 @@ const DriveProvider = ({ client, lang, polyglot, dictRequire, children }) => {
         <VaultProvider cozyClient={client}>
           <VaultUnlockProvider>
             <SharingProvider doctype="io.cozy.files" documentType="Files">
-              <BreakpointsProvider>
-                <AlertProvider>
-                  <VaultUnlockPlaceholder />
-                  <FabProvider>
-                    <StyledApp>{children}</StyledApp>
-                  </FabProvider>
-                </AlertProvider>
-              </BreakpointsProvider>
+              <CozyTheme className="u-w-100">
+                <BreakpointsProvider>
+                  <AlertProvider>
+                    <VaultUnlockPlaceholder />
+                    <FabProvider>{children}</FabProvider>
+                  </AlertProvider>
+                </BreakpointsProvider>
+              </CozyTheme>
             </SharingProvider>
           </VaultUnlockProvider>
         </VaultProvider>

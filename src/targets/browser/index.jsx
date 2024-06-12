@@ -1,13 +1,12 @@
 /* global __DEVELOPMENT__ */
+/* eslint-disable import/order */
 
 // cozy-ui css import should be done before any other import
 // otherwise the themes will not be supplied and the app crashes
-// eslint-disable-next-line import/order
 import 'cozy-ui/dist/cozy-ui.min.css'
-// eslint-disable-next-line import/order
 import 'cozy-ui/transpiled/react/stylesheet.css'
-
-// eslint-disable-next-line no-unused-vars
+import 'cozy-bar/dist/stylesheet.css'
+import 'cozy-sharing/dist/stylesheet.css'
 
 // Uncomment to activate why-did-you-render
 // https://github.com/welldone-software/why-did-you-render
@@ -26,8 +25,7 @@ import AppRoute from 'modules/navigation/AppRoute'
 import AppBarSearch from 'modules/search/AppBarSearch'
 
 // ambient styles
-// eslint-disable-next-line no-unused-vars
-import mainStyles from 'styles/main.styl'
+import styles from 'styles/main.styl' // eslint-disable-line no-unused-vars
 
 if (__DEVELOPMENT__) {
   window.flag = flag

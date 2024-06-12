@@ -1,7 +1,9 @@
 /* global cozy */
+/* eslint-disable import/order */
 
 import 'cozy-ui/dist/cozy-ui.min.css'
 import 'cozy-ui/transpiled/react/stylesheet.css'
+import 'cozy-sharing/dist/stylesheet.css'
 
 import 'whatwg-fetch'
 import React from 'react'
@@ -15,6 +17,9 @@ import appMetadata from 'lib/appMetadata'
 import { schema } from 'lib/doctypes'
 import registerClientPlugins from 'lib/registerClientPlugins'
 import IntentHandler from 'modules/services'
+
+// ambient styles
+import styles from 'styles/main.styl' // eslint-disable-line no-unused-vars
 
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.getElementById('main')
