@@ -5,6 +5,15 @@ export interface SortOrder {
   order: string
 }
 
+export type IOCozyFileWithMetadata = IOCozyFile & {
+  cozyMetadata?: {
+    createdByApp: string
+    sourceAccount: string
+  }
+  metadata: {
+    instanceName: string
+  }
+}
 export interface UseSharedDrivesQuery {
-  data?: IOCozyFile[]
+  data?: IOCozyFileWithMetadata[]
 }
