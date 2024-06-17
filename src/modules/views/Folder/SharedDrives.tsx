@@ -2,7 +2,6 @@ import React, { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useQuery, useClient } from 'cozy-client'
-import { IOCozyFile } from 'cozy-client/types/types'
 import flag from 'cozy-flags'
 
 import { SHARED_DRIVES_DIR_ID } from 'constants/config'
@@ -15,7 +14,10 @@ import { FileListHeader } from 'modules/filelist/FileListHeader'
 import { useFolderSort } from 'modules/navigation/duck'
 import generateShortcutUrl from 'modules/views/Folder/generateShortcutUrl'
 import { buildSharedDrivesQuery } from 'modules/views/Folder/queries/fetchSharedDrives'
-import { UseSharedDrivesQuery } from 'modules/views/Folder/types'
+import {
+  UseSharedDrivesQuery,
+  IOCozyFileWithMetadata
+} from 'modules/views/Folder/types'
 
 interface SharedDrivesProps {
   canSort: boolean
@@ -46,7 +48,7 @@ export const SharedDrives = ({
   const handleFolderOpen = (): void => {
     // noop because we only display shortcuts
   }
-  const handleFileOpen = ({ file }: { file: IOCozyFile }): void => {
+  const handleFileOpen = ({ file }: { file: IOCozyFileWithMetadata }): void => {
     if (
       file.cozyMetadata?.createdByApp === 'nextcloud' &&
       flag('drive.show-nextcloud-dev')
