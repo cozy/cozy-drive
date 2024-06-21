@@ -6,6 +6,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { FolderPickerContentExplorer } from 'components/FolderPicker/FolderPickerContentExplorer'
 import { FolderPickerContentLoadMore } from 'components/FolderPicker/FolderPickerContentLoadMore'
 import { FolderPickerContentLoader } from 'components/FolderPicker/FolderPickerContentLoader'
+import { computeNextcloudRootFolder } from 'components/FolderPicker/helpers'
 import { ROOT_DIR_ID } from 'constants/config'
 import { DumbFile as File } from 'modules/filelist/File'
 import { buildOnlyFolderQuery } from 'modules/queries'
@@ -81,18 +82,11 @@ const FolderPickerContentRoot: React.FC<Props> = ({ navigateTo }) => {
       file.cozyMetadata?.createdByApp === 'nextcloud' &&
       file.cozyMetadata.sourceAccount
     ) {
-      navigateTo({
-        id: 'io.cozy.remote.nextcloud.files.root-dir',
-        _id: 'io.cozy.remote.nextcloud.files.root-dir',
-        _type: 'io.cozy.remote.nextcloud.files',
-        name: `${file.metadata.instanceName ?? ''} (Nextcloud)`,
-        path: '/',
-        parentPath: '/',
-        cozyMetadata: {
-          sourceAccount: file.cozyMetadata.sourceAccount
-        },
-        type: 'directory'
+      const nextcloudRootFolder = computeNextcloudRootFolder({
+        sourceAccount: file.cozyMetadata.sourceAccount,
+        instanceName: file.metadata.instanceName
       })
+      navigateTo(nextcloudRootFolder)
     }
   }
 

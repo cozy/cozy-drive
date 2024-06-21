@@ -2,6 +2,21 @@ import { hasQueryBeenLoaded, useQuery } from 'cozy-client'
 
 import { buildNextcloudShortcutQuery } from 'modules/nextcloud/queries'
 
+/**
+ * @typedef {Object} NextcloudInfos
+ * @property {boolean} isLoading -  Whether the data is still loading
+ * @property {string} [instanceName] - The name of the Nextcloud instance
+ * @property {string} [instanceUrl] - The URL of the Nextcloud instance
+ * @property {string} [rootFolderName] - The name of the root folder
+ */
+
+/**
+ * Fetches the Nextcloud instance name and URL
+ *
+ * @param {Object} params
+ * @param {string} [params.sourceAccount] - The source account
+ * @returns {NextcloudInfos}
+ */
 const useNextcloudInfos = ({ sourceAccount }) => {
   const nextcloudShortcutsQuery = buildNextcloudShortcutQuery({
     sourceAccount
@@ -22,10 +37,7 @@ const useNextcloudInfos = ({ sourceAccount }) => {
   }
 
   return {
-    isLoading: true,
-    instanceName: null,
-    instanceUrl: null,
-    rootFolderName: null
+    isLoading: true
   }
 }
 
