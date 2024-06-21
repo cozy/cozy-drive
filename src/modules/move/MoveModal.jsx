@@ -1,9 +1,9 @@
 import { CozyFile } from 'models'
 import PropTypes from 'prop-types'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { cancelable, Q, useClient } from 'cozy-client'
+import { useClient } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
 import Button from 'cozy-ui/transpiled/react/Buttons'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
@@ -16,6 +16,7 @@ import { MoveInsideSharedFolderModal } from 'modules/move/MoveInsideSharedFolder
 import { MoveOutsideSharedFolderModal } from 'modules/move/MoveOutsideSharedFolderModal'
 import { MoveSharedFolderInsideAnotherModal } from 'modules/move/MoveSharedFolderInsideAnotherModal'
 import { cancelMove, hasOneOfEntriesShared } from 'modules/move/helpers'
+import { useCancelable } from 'modules/move/hooks/useCancelable'
 
 /**
  * Modal to move a folder to an other
@@ -36,11 +37,11 @@ const MoveModal = ({ onClose, entries }) => {
   } = useSharingContext()
   const navigate = useNavigate()
   const { showAlert } = useAlert()
+  const { registerCancelable } = useCancelable()
 
   const [selectedFolderId, setSelectedFolderId] = useState(null)
 
   const [isMoveInProgress, setMoveInProgress] = useState(false)
-  const [promises, setPromises] = useState([])
   const [isMovingOutsideSharedFolder, setMovingOutsideSharedFolder] =
     useState(false)
   const [
@@ -49,23 +50,6 @@ const MoveModal = ({ onClose, entries }) => {
   ] = useState(false)
   const [isMovingInsideSharedFolder, setMovingInsideSharedFolder] =
     useState(false)
-
-  useEffect(() => {
-    // unregister cancelables when component will unmount
-    return () => {
-      promises.forEach(p => p.cancel())
-      setPromises([])
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const registerCancelable = promise => {
-    if (!promises) setPromises([])
-    const cancelableP = cancelable(promise)
-    setPromises([...promises, cancelableP])
-    return cancelableP
-  }
-
   const handleConfirmation = async folderId => {
     setSelectedFolderId(folderId)
     const sharedParentPath = getSharedParentPath(entries[0].path)
