@@ -1,9 +1,9 @@
-import { CozyFile } from 'models'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
+import { move } from 'cozy-client/dist/models/file'
 import { useSharingContext } from 'cozy-sharing'
 import Button from 'cozy-ui/transpiled/react/Buttons'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
@@ -12,16 +12,23 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { FolderPicker } from 'components/FolderPicker/FolderPicker'
 import logger from 'lib/logger'
+import { joinPath, getParentPath } from 'lib/path'
 import { MoveInsideSharedFolderModal } from 'modules/move/MoveInsideSharedFolderModal'
 import { MoveOutsideSharedFolderModal } from 'modules/move/MoveOutsideSharedFolderModal'
 import { MoveSharedFolderInsideAnotherModal } from 'modules/move/MoveSharedFolderInsideAnotherModal'
 import { cancelMove, hasOneOfEntriesShared } from 'modules/move/helpers'
 import { useCancelable } from 'modules/move/hooks/useCancelable'
+import { computeNextcloudFolderQueryId } from 'modules/nextcloud/queries'
 
 /**
  * Modal to move a folder to an other
  */
-const MoveModal = ({ onClose, entries }) => {
+const MoveModal = ({
+  onClose,
+  currentFolder,
+  entries,
+  showNextcloudFolder
+}) => {
   const { t } = useI18n()
   const client = useClient()
   const {
@@ -39,7 +46,7 @@ const MoveModal = ({ onClose, entries }) => {
   const { showAlert } = useAlert()
   const { registerCancelable } = useCancelable()
 
-  const [selectedFolderId, setSelectedFolderId] = useState(null)
+  const [folderSelected, setFolderSelected] = useState(null)
 
   const [isMoveInProgress, setMoveInProgress] = useState(false)
   const [isMovingOutsideSharedFolder, setMovingOutsideSharedFolder] =
@@ -50,10 +57,12 @@ const MoveModal = ({ onClose, entries }) => {
   ] = useState(false)
   const [isMovingInsideSharedFolder, setMovingInsideSharedFolder] =
     useState(false)
-  const handleConfirmation = async folderId => {
-    setSelectedFolderId(folderId)
+
+  const handleConfirm = async folder => {
+    setFolderSelected(folder)
+
     const sharedParentPath = getSharedParentPath(entries[0].path)
-    const targetPath = await CozyFile.getFullpath(folderId, entries[0].name)
+    const targetPath = joinPath(folder.path, entries[0].name)
 
     const areMovedFilesShared = hasOneOfEntriesShared(entries, byDocId)
     const isOriginParentShared = hasSharedParent(entries[0].path)
@@ -61,7 +70,7 @@ const MoveModal = ({ onClose, entries }) => {
     const isInsideSameSharedFolder = targetPath.startsWith(sharedParentPath)
 
     if (isInsideSameSharedFolder) {
-      moveEntries(folderId)
+      moveEntries(folder)
       return
     }
 
@@ -80,21 +89,20 @@ const MoveModal = ({ onClose, entries }) => {
       return
     }
 
-    moveEntries(folderId)
+    moveEntries(folder)
   }
 
-  const moveEntries = async folderId => {
+  const moveEntries = async folder => {
     try {
       setMoveInProgress(true)
       const trashedFiles = []
       await Promise.all(
         entries.map(async entry => {
-          const targetPath = await registerCancelable(
-            CozyFile.getFullpath(folderId, entry.name)
-          )
-          const force = !sharedPaths.includes(targetPath)
+          const force = !sharedPaths.includes(folder.path)
           const moveResponse = await registerCancelable(
-            CozyFile.move(entry._id, { folderId }, { force })
+            move(client, entry, folder, {
+              force
+            })
           )
           if (moveResponse.deleted) {
             trashedFiles.push(moveResponse.deleted)
@@ -102,35 +110,60 @@ const MoveModal = ({ onClose, entries }) => {
         })
       )
 
-      const response = await registerCancelable(
-        client.query(Q('io.cozy.files').getById(folderId))
-      )
-      const targetName = response.data?.name || t('breadcrumb.title_drive')
-      const targetDir = response.data?.id
+      const isMovingInsideNextcloud =
+        folder._type === 'io.cozy.remote.nextcloud.files'
+      if (isMovingInsideNextcloud) {
+        client.resetQuery(
+          computeNextcloudFolderQueryId({
+            sourceAccount: folder.cozyMetadata.sourceAccount,
+            path: folder.path
+          })
+        )
+      }
+
+      const isMovingOutsideNextcloud =
+        !isMovingInsideNextcloud &&
+        entries[0]._type === 'io.cozy.remote.nextcloud.files'
+      if (isMovingOutsideNextcloud) {
+        client.resetQuery(
+          computeNextcloudFolderQueryId({
+            sourceAccount: entries[0].cozyMetadata.sourceAccount,
+            path: getParentPath(entries[0].path)
+          })
+        )
+      }
+
+      const targetName = folder.name || t('breadcrumb.title_drive')
+
+      const targetRoute =
+        folder._type === 'io.cozy.remote.nextcloud.files'
+          ? `/folder/${folder.id}`
+          : `/nextcloud/${folder.id}`
 
       showAlert({
         action: (
           <>
-            <Button
-              color="success"
-              label={t('Move.cancel')}
-              onClick={() =>
-                cancelMove({
-                  entries,
-                  trashedFiles,
-                  client,
-                  registerCancelable,
-                  refreshSharing
-                })
-              }
-              size="small"
-              variant="text"
-            />
-
+            {!isMovingInsideNextcloud && !isMovingOutsideNextcloud ? (
+              <Button
+                color="success"
+                label={t('Move.cancel')}
+                onClick={() =>
+                  cancelMove({
+                    entries,
+                    trashedFiles,
+                    client,
+                    registerCancelable,
+                    refreshSharing
+                  })
+                }
+                size="small"
+                variant="text"
+              />
+            ) : null}
             <Button
               color="success"
               label={t('Move.go_to_dir')}
-              onClick={() => navigate(`/folder/${targetDir}`)}
+              onClick={() => navigate(targetRoute)}
               size="small"
               variant="text"
             />
@@ -149,9 +182,7 @@ const MoveModal = ({ onClose, entries }) => {
       Alerter.error('Move.error', { smart_count: entries.length })
     } finally {
       setMoveInProgress(false)
-      onClose({
-        cancelSelection: true
-      })
+      onClose()
     }
   }
 
@@ -161,7 +192,7 @@ const MoveModal = ({ onClose, entries }) => {
 
   const handleConfirmMovingOutside = () => {
     setMovingOutsideSharedFolder(false)
-    moveEntries(selectedFolderId)
+    moveEntries(folderSelected)
   }
 
   const handleCancelMovingInside = () => {
@@ -170,7 +201,7 @@ const MoveModal = ({ onClose, entries }) => {
 
   const handleConfirmMovingInside = () => {
     setMovingInsideSharedFolder(false)
-    moveEntries(selectedFolderId)
+    moveEntries(folderSelected)
   }
 
   const handleMovingSharedFolderInsideAnother = async () => {
@@ -185,15 +216,17 @@ const MoveModal = ({ onClose, entries }) => {
       }
     })
     refreshSharing()
-    moveEntries(selectedFolderId)
+    moveEntries(folderSelected)
     setMovingSharedFolderInsideAnother(false)
   }
 
   return (
     <>
       <FolderPicker
+        showNextcloudFolder={showNextcloudFolder}
+        currentFolder={currentFolder}
         entries={entries}
-        onConfirm={handleConfirmation}
+        onConfirm={handleConfirm}
         onClose={onClose}
         isBusy={isMoveInProgress || !allLoaded}
       />
@@ -207,7 +240,7 @@ const MoveModal = ({ onClose, entries }) => {
       {isMovingSharedFolderInsideAnother ? (
         <MoveSharedFolderInsideAnotherModal
           entries={entries}
-          folderId={selectedFolderId}
+          folderId={folderSelected._id}
           onCancel={() => setMovingSharedFolderInsideAnother(false)}
           onConfirm={handleMovingSharedFolderInsideAnother}
         />
@@ -217,7 +250,7 @@ const MoveModal = ({ onClose, entries }) => {
           onCancel={handleCancelMovingInside}
           onConfirm={handleConfirmMovingInside}
           entries={entries}
-          folderId={selectedFolderId}
+          folderId={folderSelected._id}
         />
       ) : null}
     </>

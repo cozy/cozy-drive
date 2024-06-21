@@ -12,17 +12,19 @@ const defaultFetchPolicy = CozyClient.fetchPolicies.olderThan(
  * @param {string} params.path The path of the folder where to fetch the files
  * @returns
  */
-const buildNextcloudFolderQuery = ({ sourceAccount, path }) => ({
+export const buildNextcloudFolderQuery = ({ sourceAccount, path }) => ({
   definition: () =>
     Q('io.cozy.remote.nextcloud.files').where({
       'cozyMetadata.sourceAccount': sourceAccount,
       parentPath: path
     }),
   options: {
-    as: `io.cozy.remote.nextcloud.files/sourceAccount/${sourceAccount}/path${path}`,
+    as: computeNextcloudFolderQueryId({ sourceAccount, path }),
     fetchPolicy: defaultFetchPolicy,
     enabled: !!sourceAccount && !!path
   }
 })
 
-export { buildNextcloudFolderQuery }
+export const computeNextcloudFolderQueryId = ({ sourceAccount, path }) => {
+  return `io.cozy.remote.nextcloud.files/sourceAccount/${sourceAccount}/path${path}`
+}
