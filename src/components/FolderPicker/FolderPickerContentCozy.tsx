@@ -6,13 +6,25 @@ import { FolderPickerContentExplorer } from 'components/FolderPicker/FolderPicke
 import { FolderPickerContentLoadMore } from 'components/FolderPicker/FolderPickerContentLoadMore'
 import { FolderPickerContentLoader } from 'components/FolderPicker/FolderPickerContentLoader'
 import { isInvalidMoveTarget } from 'components/FolderPicker/helpers'
+import {
+  FolderPickerEntry,
+  IOCozyFileWithExtra
+} from 'components/FolderPicker/types'
 import { isEncryptedFolder } from 'lib/encryption'
 import { AddFolderWithoutState } from 'modules/filelist/AddFolder'
 import { DumbFile as File } from 'modules/filelist/File'
 import { FolderUnlocker } from 'modules/folder/components/FolderUnlocker'
 import { buildMoveOrImportQuery, buildOnlyFolderQuery } from 'modules/queries'
 
-const FolderPickerContentCozy = ({
+interface FolderPickerContentCozyProps {
+  folder: IOCozyFileWithExtra
+  isFolderCreationDisplayed: boolean
+  hideFolderCreation: () => void
+  entries: FolderPickerEntry[]
+  navigateTo: (folder?: import('./types').File) => void
+}
+
+const FolderPickerContentCozy: React.FC<FolderPickerContentCozyProps> = ({
   folder,
   isFolderCreationDisplayed,
   hideFolderCreation,
@@ -26,19 +38,33 @@ const FolderPickerContentCozy = ({
     data: filesData,
     hasMore,
     fetchMore
-  } = useQuery(contentQuery.definition, contentQuery.options)
+  } = useQuery(contentQuery.definition, contentQuery.options) as unknown as {
+    fetchStatus: string
+    data?: IOCozyFileWithExtra[]
+    hasMore: boolean
+    fetchMore: () => void
+  }
 
-  const isEncrypted = folder ? isEncryptedFolder(folder) : false
+  const isEncrypted = isEncryptedFolder(folder)
   const files = filesData ?? []
 
-  const handleFolderUnlockerDismiss = async () => {
+  const handleFolderUnlockerDismiss = async (): Promise<void> => {
     const parentFolderQuery = buildOnlyFolderQuery(folder.dir_id)
-    const parentFolder = await client.fetchQueryAndGetFromState({
+    const parentFolder = (await client?.fetchQueryAndGetFromState({
       definition: parentFolderQuery.definition(),
       options: parentFolderQuery.options
-    })
+    })) as {
+      data?: IOCozyFileWithExtra
+    }
+    navigateTo(parentFolder.data)
+  }
 
-    return navigateTo(parentFolder.data)
+  const handleFolderOpen = (folder: IOCozyFileWithExtra): void => {
+    navigateTo(folder)
+  }
+
+  const handleFileOpen = (): void => {
+    // Do nothing
   }
 
   return (
@@ -64,10 +90,8 @@ const FolderPickerContentCozy = ({
               displayedFolder={null}
               actions={null}
               isRenaming={false}
-              onFolderOpen={({ id }) =>
-                navigateTo(files.find(f => f.id === id))
-              }
-              onFileOpen={() => {}}
+              onFolderOpen={handleFolderOpen}
+              onFileOpen={handleFileOpen}
               withSelectionCheckbox={false}
               withFilePath={false}
               withSharedBadge

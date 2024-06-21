@@ -1,12 +1,16 @@
 import React from 'react'
 
 import { hasQueryBeenLoaded, useQuery } from 'cozy-client'
-import { IOCozyFile } from 'cozy-client/types/types'
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { FolderPicker } from 'components/FolderPicker/FolderPicker'
+import {
+  File,
+  FolderPickerEntry,
+  IOCozyFileWithExtra
+} from 'components/FolderPicker/types'
 import { ROOT_DIR_ID } from 'constants/config'
 import { buildOnlyFolderQuery } from 'modules/queries'
 import { shouldRender } from 'modules/views/Upload/UploadUtils'
@@ -17,7 +21,10 @@ const UploaderComponent = (): JSX.Element | null => {
   const { items, uploadFilesFromFlagship, onClose, uploadInProgress } =
     useUploadFromFlagship()
 
-  const handleConfirm = (folder: IOCozyFile): void => {
+  const handleConfirm = (folder?: File): void => {
+    if (!folder?._id) {
+      throw new Error('A folder id is required')
+    }
     uploadFilesFromFlagship(folder._id)
   }
 
@@ -25,7 +32,9 @@ const UploaderComponent = (): JSX.Element | null => {
   const rootFolderResult = useQuery(
     rootFolderQuery.definition,
     rootFolderQuery.options
-  )
+  ) as {
+    data: IOCozyFileWithExtra
+  }
 
   // If there are no items to render, we display a spinner with a full screen dialog to hide the UI behind
   if (!shouldRender(items) && hasQueryBeenLoaded(rootFolderResult)) {
@@ -39,17 +48,25 @@ const UploaderComponent = (): JSX.Element | null => {
     )
   }
 
+  const fakeFiles: FolderPickerEntry[] = (items ?? []).map(item => ({
+    _type: 'io.cozy.files',
+    type: 'file',
+    dir_id: item.dirId,
+    name: item.fileName,
+    mime: item.mimeType
+  }))
+
   return (
     <FolderPicker
       currentFolder={rootFolderResult.data}
-      entries={items}
+      entries={fakeFiles}
       canCreateFolder={false}
       onConfirm={handleConfirm}
       onClose={onClose}
       isBusy={uploadInProgress}
       slotProps={{
         header: {
-          title: t('ImportToDrive.title', { smart_count: items.length }),
+          title: t('ImportToDrive.title', { smart_count: fakeFiles.length }),
           subtitle: t('ImportToDrive.to')
         },
         footer: {

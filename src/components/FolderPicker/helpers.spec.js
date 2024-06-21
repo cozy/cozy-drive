@@ -1,28 +1,4 @@
-import { getParentFolderFromPath, areTargetsInCurrentDir } from './helpers'
-
-describe('getParentFolderFromPath', () => {
-  it('should return path when there are 3 subfolders', () => {
-    expect(getParentFolderFromPath('/a/b/c')).toEqual({
-      name: 'b',
-      path: '/a/b'
-    })
-  })
-  it('should return path when there are 4 subfolders', () => {
-    expect(getParentFolderFromPath('/a/b/c/d')).toEqual({
-      name: 'c',
-      path: '/a/b/c'
-    })
-  })
-  it('should return root as path when there is one subfolder', () => {
-    expect(getParentFolderFromPath('/a')).toEqual({
-      name: 'root',
-      path: '/'
-    })
-  })
-  it('should return undefined with this root path', () => {
-    expect(getParentFolderFromPath('/')).toEqual(undefined)
-  })
-})
+import { areTargetsInCurrentDir } from './helpers'
 
 describe('areTargetsInCurrentDir', () => {
   it('should return false if the current folder is undefined', () => {

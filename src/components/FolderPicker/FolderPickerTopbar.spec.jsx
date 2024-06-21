@@ -26,6 +26,7 @@ describe('FolderPickerTopbar', () => {
     _id: '123',
     _type: 'io.cozy.remote.nextcloud.files',
     path: '/Documents',
+    parentPath: '/',
     name: 'Documents',
     cozyMetadata: {
       sourceAccount: '123'
@@ -36,6 +37,7 @@ describe('FolderPickerTopbar', () => {
     _id: '123',
     _type: 'io.cozy.remote.nextcloud.files',
     path: '/',
+    parentPath: '',
     name: 'Cozycloud (Nextcloud)',
     cozyMetadata: {
       sourceAccount: '123'
@@ -62,6 +64,10 @@ describe('FolderPickerTopbar', () => {
               type: 'directory'
             }
           ]
+        },
+        'io.cozy.remote.nextcloud.files/sourceAccount/123/path/': {
+          doctype: 'io.cozy.remote.nextcloud.files',
+          data: [nextcloudFolder]
         }
       }
     })
@@ -77,16 +83,6 @@ describe('FolderPickerTopbar', () => {
       </AppLike>
     )
   }
-
-  /**
-   * Cas à vérifier
-   * Nom afficher
-   * Affichage de la création de dossier
-   * Affichage du bouton de retour
-   * Tout les temps affiche sauf dans deux cas, si le dossier est undefined ou si le dossier est le dossier racine et showNextcloudFolder est faux
-   *
-   *
-   */
 
   it('should hide back button on root', () => {
     setup({ showNextcloudFolder: true })
@@ -149,6 +145,32 @@ describe('FolderPickerTopbar', () => {
     fireEvent.click(backButton)
     waitFor(() => {
       expect(navigateTo).toHaveBeenCalledWith(rootNextcloudFolder)
+    })
+  })
+
+  it('should show back button inside a deep nextcloud folder', () => {
+    setup({
+      folder: {
+        _id: '123',
+        _type: 'io.cozy.remote.nextcloud.files',
+        path: '/Documents/Invoices',
+        parentPath: '/Documents',
+        name: 'Invoices',
+        cozyMetadata: {
+          sourceAccount: '123'
+        }
+      },
+      showNextcloudFolder: true
+    })
+
+    expect(screen.getByText('Invoices')).toBeInTheDocument()
+
+    const backButton = screen.getByRole('button', {
+      name: 'Back'
+    })
+    fireEvent.click(backButton)
+    waitFor(() => {
+      expect(navigateTo).toHaveBeenCalledWith(nextcloudFolder)
     })
   })
 

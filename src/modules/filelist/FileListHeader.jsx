@@ -5,12 +5,12 @@ import { FileListHeaderMobile } from 'modules/filelist/FileListHeaderMobile'
 
 /**
  * @typedef {Object} Props
- * @property {string} props.folderId - The ID of the folder.
+ * @property {string|null} props.folderId - The ID of the folder.
  * @property {boolean} props.canSort - Indicates whether sorting is allowed.
- * @property {Sort} props.sort - The current sorting option.
- * @property {Function} props.onFolderSort - The function to handle folder sorting.
- * @property {boolean} props.thumbnailSizeBig - Indicates whether the thumbnail size is big.
- * @property {Function} props.toggleThumbnailSize - The function to toggle the thumbnail size.
+ * @property {Sort} [props.sort] - The current sorting option.
+ * @property {Function} [props.onFolderSort] - The function to handle folder sorting.
+ * @property {boolean} [props.thumbnailSizeBig] - Indicates whether the thumbnail size is big.
+ * @property {Function} [props.toggleThumbnailSize] - The function to toggle the thumbnail size.
  * @property {Array} [props.extraColumns] - An array of extra columns.
  */
 

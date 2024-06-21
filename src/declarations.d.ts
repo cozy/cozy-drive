@@ -1,5 +1,9 @@
 declare module 'cozy-ui/*'
 
+declare module 'cozy-ui/transpiled/react/styles' {
+  export function makeStyles<T>(styles: T): () => T
+}
+
 declare module 'cozy-ui/transpiled/react/Icons/*' {
   const Icon: React.ComponentType<{
     className?: string

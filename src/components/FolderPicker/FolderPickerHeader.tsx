@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 
 import Card from 'cozy-ui/transpiled/react/Card'
@@ -7,15 +6,26 @@ import { Media, Img, Bd } from 'cozy-ui/transpiled/react/deprecated/Media'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { FolderPickerHeaderIllustration } from 'components/FolderPicker/FolderPickerHeaderIllustration'
+import { FolderPickerEntry } from 'components/FolderPicker/types'
 
-const specificCardStyle = {
+interface FolderPickerHeaderProps {
+  entries: FolderPickerEntry[]
+  title?: string
+  subTitle?: string
+}
+
+const specificCardStyle: React.CSSProperties = {
   marginLeft: '2rem',
   marginRight: '4rem',
   marginTop: '1rem',
   marginBottom: '1rem'
 }
 
-const FolderPickerHeader = ({ entries, title, subTitle }) => {
+const FolderPickerHeader: React.FC<FolderPickerHeaderProps> = ({
+  entries,
+  title,
+  subTitle
+}) => {
   const { t } = useI18n()
   const titleToUse = title
     ? title
@@ -39,16 +49,6 @@ const FolderPickerHeader = ({ entries, title, subTitle }) => {
       </Media>
     </Card>
   )
-}
-
-FolderPickerHeader.propTypes = {
-  entries: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string
-    })
-  ).isRequired,
-  title: PropTypes.string,
-  subTitle: PropTypes.string
 }
 
 export { FolderPickerHeader }

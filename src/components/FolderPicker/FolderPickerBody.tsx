@@ -3,8 +3,17 @@ import React from 'react'
 import { FolderPickerContentCozy } from 'components/FolderPicker/FolderPickerContentCozy'
 import { FolderPickerContentNextcloud } from 'components/FolderPicker/FolderPickerContentNextcloud'
 import { FolderPickerContentRoot } from 'components/FolderPicker/FolderPickerContentRoot'
+import { File, FolderPickerEntry } from 'components/FolderPicker/types'
 
-const FolderPickerBody = ({
+interface FolderPickerBodyProps {
+  folder?: File
+  entries: FolderPickerEntry[]
+  navigateTo: (folder?: File) => void
+  isFolderCreationDisplayed: boolean
+  hideFolderCreation: () => void
+}
+
+const FolderPickerBody: React.FC<FolderPickerBodyProps> = ({
   folder,
   entries,
   navigateTo,
