@@ -1,22 +1,19 @@
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
 import { move } from 'cozy-client/dist/models/file'
 import { useSharingContext } from 'cozy-sharing'
-import Button from 'cozy-ui/transpiled/react/Buttons'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
-import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import { useMove } from './hooks/useMove'
 import { FolderPicker } from 'components/FolderPicker/FolderPicker'
 import logger from 'lib/logger'
 import { joinPath, getParentPath } from 'lib/path'
 import { MoveInsideSharedFolderModal } from 'modules/move/MoveInsideSharedFolderModal'
 import { MoveOutsideSharedFolderModal } from 'modules/move/MoveOutsideSharedFolderModal'
 import { MoveSharedFolderInsideAnotherModal } from 'modules/move/MoveSharedFolderInsideAnotherModal'
-import { cancelMove, hasOneOfEntriesShared } from 'modules/move/helpers'
+import { hasOneOfEntriesShared } from 'modules/move/helpers'
 import { useCancelable } from 'modules/move/hooks/useCancelable'
 import { computeNextcloudFolderQueryId } from 'modules/nextcloud/queries'
 
@@ -29,7 +26,6 @@ const MoveModal = ({
   entries,
   showNextcloudFolder
 }) => {
-  const { t } = useI18n()
   const client = useClient()
   const {
     sharedPaths,
@@ -42,9 +38,8 @@ const MoveModal = ({
     byDocId,
     allLoaded
   } = useSharingContext()
-  const navigate = useNavigate()
-  const { showAlert } = useAlert()
   const { registerCancelable } = useCancelable()
+  const { showSuccess } = useMove({ entries })
 
   const [folderSelected, setFolderSelected] = useState(null)
 
@@ -112,70 +107,24 @@ const MoveModal = ({
 
       const isMovingInsideNextcloud =
         folder._type === 'io.cozy.remote.nextcloud.files'
-      if (isMovingInsideNextcloud) {
-        client.resetQuery(
-          computeNextcloudFolderQueryId({
-            sourceAccount: folder.cozyMetadata.sourceAccount,
-            path: folder.path
-          })
-        )
-      }
 
       const isMovingOutsideNextcloud =
         !isMovingInsideNextcloud &&
         entries[0]._type === 'io.cozy.remote.nextcloud.files'
-      if (isMovingOutsideNextcloud) {
-        client.resetQuery(
-          computeNextcloudFolderQueryId({
-            sourceAccount: entries[0].cozyMetadata.sourceAccount,
-            path: getParentPath(entries[0].path)
-          })
-        )
-      }
 
-      const targetName = folder.name || t('breadcrumb.title_drive')
-
-      const targetRoute =
-        folder._type === 'io.cozy.remote.nextcloud.files'
-          ? `/nextcloud/${folder.cozyMetadata.sourceAccount}?path=${folder.path}`
-          : `/folder/${folder.id}`
-
-      showAlert({
-        action: (
-          <>
-            {!isMovingInsideNextcloud && !isMovingOutsideNextcloud ? (
-              <Button
-                color="success"
-                label={t('Move.cancel')}
-                onClick={() =>
-                  cancelMove({
-                    entries,
-                    trashedFiles,
-                    client,
-                    registerCancelable,
-                    refreshSharing
-                  })
-                }
-                size="small"
-                variant="text"
-              />
-            ) : null}
-            <Button
-              color="success"
-              label={t('Move.go_to_dir')}
-              onClick={() => navigate(targetRoute)}
-              size="small"
-              variant="text"
-            />
-          </>
-        ),
-        message: t('Move.success', {
-          smart_count: entries.length,
-          subject: entries.length === 1 ? entries[0].name : '',
-          target: targetName
-        }),
-        severity: 'success'
+      refreshNextcloudQueries({
+        isMovingInsideNextcloud,
+        isMovingOutsideNextcloud,
+        folder
       })
+
+      showSuccess({
+        folder,
+        trashedFiles,
+        refreshSharing,
+        canCancel: !isMovingInsideNextcloud && !isMovingOutsideNextcloud
+      })
+
       if (refreshSharing) refreshSharing()
     } catch (e) {
       logger.warn(e)
@@ -183,6 +132,34 @@ const MoveModal = ({
     } finally {
       setMoveInProgress(false)
       onClose()
+    }
+  }
+
+  /**
+   * The content from nextcloud queries must be refreshed when moving files
+   * This is only a proxy to Nextcloud queries so we don't have real-time or mutations updates
+   */
+  const refreshNextcloudQueries = ({
+    isMovingOutsideNextcloud,
+    isMovingInsideNextcloud,
+    folder
+  }) => {
+    if (isMovingInsideNextcloud) {
+      client.resetQuery(
+        computeNextcloudFolderQueryId({
+          sourceAccount: folder.cozyMetadata.sourceAccount,
+          path: folder.path
+        })
+      )
+    }
+
+    if (isMovingOutsideNextcloud) {
+      client.resetQuery(
+        computeNextcloudFolderQueryId({
+          sourceAccount: entries[0].cozyMetadata.sourceAccount,
+          path: getParentPath(entries[0].path)
+        })
+      )
     }
   }
 

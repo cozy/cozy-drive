@@ -45,7 +45,8 @@ declare module 'cozy-ui/transpiled/react/providers/Alert' {
   export const useAlert: () => {
     showAlert: ({
       message,
-      severity
+      severity,
+      action
     }: {
       message: string
       severity?:
@@ -55,6 +56,7 @@ declare module 'cozy-ui/transpiled/react/providers/Alert' {
         | 'error'
         | 'warning'
         | 'info'
+      action: React.ReactNode
     }) => void
   }
 }
