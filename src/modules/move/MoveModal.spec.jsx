@@ -3,21 +3,16 @@ import { CozyFile } from 'models'
 import React from 'react'
 
 import { createMockClient } from 'cozy-client'
+import { move } from 'cozy-client/dist/models/file'
 import { useSharingContext } from 'cozy-sharing'
 
 import { MoveModal } from './MoveModal'
 import { ROOT_DIR_ID } from 'constants/config'
-import useDisplayedFolder from 'hooks/useDisplayedFolder'
 import AppLike from 'test/components/AppLike'
 
-jest.mock('hooks/useDisplayedFolder')
 jest.mock('cozy-sharing', () => ({
   ...jest.requireActual('cozy-sharing'),
   useSharingContext: jest.fn()
-}))
-
-jest.mock('cozy-client/dist/utils', () => ({
-  cancelable: jest.fn().mockImplementation(promise => promise)
 }))
 
 jest.mock('cozy-doctypes')
@@ -25,9 +20,31 @@ CozyFile.doctype = 'io.cozy.files'
 const onCloseSpy = jest.fn()
 const refreshSpy = jest.fn()
 
+jest.mock('cozy-client/dist/models/file', () => ({
+  move: jest.fn()
+}))
+
 CozyFile.splitFilename.mockImplementation(({ name }) => ({
   filename: name,
   extension: ''
+}))
+
+jest.mock('components/FolderPicker/FolderPicker', () => ({
+  FolderPicker: ({ onConfirm, currentFolder, isBusy }) => {
+    const handleClick = () => {
+      onConfirm(currentFolder)
+    }
+
+    return (
+      <div>
+        <h1>{currentFolder.name}</h1>
+        <button onClick={handleClick} disabled={isBusy}>
+          Move
+        </button>
+        <button>Close</button>
+      </div>
+    )
+  }
 }))
 
 describe('MoveModal component', () => {
@@ -53,24 +70,59 @@ describe('MoveModal component', () => {
     }
   ]
 
+  const destinationFolder = {
+    id: 'destinationFolder',
+    _id: 'destinationFolder',
+    _type: 'io.cozy.files',
+    name: 'Destination Folder',
+    path: '/Destination Folder'
+  }
+
+  const mockClient = createMockClient({
+    queries: {
+      'moveOrImport-destinationFolder': {
+        doctype: 'io.cozy.files',
+        data: []
+      },
+      'onlyfolder-destinationFolder': {
+        doctype: 'io.cozy.files',
+        data: [
+          {
+            _id: 'destinationFolder',
+            dir_id: ROOT_DIR_ID,
+            name: 'Destination Folder',
+            type: 'directory'
+          }
+        ]
+      },
+      'io.cozy.files/path/bills': {
+        doctype: 'io.cozy.files',
+        data: [
+          {
+            _id: 'bills',
+            dir_id: ROOT_DIR_ID,
+            name: 'Bills',
+            type: 'directory'
+          }
+        ]
+      }
+    }
+  })
+
   const setup = ({
     entries = defaultEntries,
-    displayedFolderId = 'destinationFolder',
     sharedPaths = ['/sharedFolder'],
     byDocId = {},
     getSharedParentPath = () => null,
     allLoaded = true,
-    sharingContext = {}
+    sharingContext = {},
+    currentFolder = destinationFolder
   } = {}) => {
     const props = {
       entries,
       onClose: onCloseSpy,
       classes: { paper: {} }
     }
-
-    useDisplayedFolder.mockReturnValue({
-      displayedFolder: { _id: displayedFolderId }
-    })
 
     useSharingContext.mockReturnValue({
       sharedPaths,
@@ -83,42 +135,11 @@ describe('MoveModal component', () => {
       ...sharingContext
     })
 
-    const mockClient = createMockClient({
-      queries: {
-        'moveOrImport-destinationFolder': {
-          doctype: 'io.cozy.files',
-          data: []
-        },
-        'onlyfolder-destinationFolder': {
-          doctype: 'io.cozy.files',
-          data: [
-            {
-              _id: 'destinationFolder',
-              dir_id: ROOT_DIR_ID,
-              name: 'Destination Folder',
-              type: 'directory'
-            }
-          ]
-        },
-        'io.cozy.files/path/bills': {
-          doctype: 'io.cozy.files',
-          data: [
-            {
-              _id: 'bills',
-              dir_id: ROOT_DIR_ID,
-              name: 'Bills',
-              type: 'directory'
-            }
-          ]
-        }
-      }
-    })
-
     CozyFile.getFullpath.mockImplementation(
       (destinationFolder, name) => `/${destinationFolder}/${name}`
     )
 
-    CozyFile.move.mockImplementation(id => {
+    move.mockImplementation(id => {
       if (id === 'bill_201902') {
         return Promise.resolve({
           deleted: 'other_bill_201902',
@@ -134,7 +155,7 @@ describe('MoveModal component', () => {
 
     return render(
       <AppLike client={mockClient}>
-        <MoveModal {...props} />
+        <MoveModal {...props} currentFolder={currentFolder} />
       </AppLike>
     )
   }
@@ -163,46 +184,33 @@ describe('MoveModal component', () => {
       fireEvent.click(moveButton)
 
       await waitFor(() => {
-        expect(CozyFile.move).toHaveBeenNthCalledWith(
+        expect(move).toHaveBeenNthCalledWith(
           1,
-          'bill_201901',
-          {
-            folderId: 'destinationFolder'
-          },
+          mockClient,
+          defaultEntries[0],
+          destinationFolder,
           { force: true }
         )
 
-        expect(CozyFile.move).toHaveBeenNthCalledWith(
+        expect(move).toHaveBeenNthCalledWith(
           2,
-          'bill_201902',
-          {
-            folderId: 'destinationFolder'
-          },
+          mockClient,
+          defaultEntries[1],
+          destinationFolder,
           { force: true }
         )
         // don't force a shared file
-        expect(CozyFile.move).toHaveBeenNthCalledWith(
+        expect(move).toHaveBeenNthCalledWith(
           3,
-          'bill_201903',
-          {
-            folderId: 'destinationFolder'
-          },
+          mockClient,
+          defaultEntries[2],
+          destinationFolder,
           { force: true }
         )
         expect(onCloseSpy).toHaveBeenCalled()
         expect(refreshSpy).toHaveBeenCalled()
         // TODO: check that trashedFiles are passed to cancel button
       })
-    })
-
-    it('should display the folder creation input', async () => {
-      setup()
-
-      const addButton = await screen.findByLabelText('Add a folder')
-      fireEvent.click(addButton)
-
-      const filenameInput = await screen.findByTestId('name-input')
-      expect(filenameInput).toBeInTheDocument()
     })
   })
 
@@ -238,7 +246,7 @@ describe('MoveModal component', () => {
       })
 
       await waitFor(() => {
-        expect(CozyFile.move).toHaveBeenCalled()
+        expect(move).toHaveBeenCalled()
         expect(onCloseSpy).toHaveBeenCalled()
         expect(refreshSpy).toHaveBeenCalled()
       })
@@ -248,7 +256,7 @@ describe('MoveModal component', () => {
   describe('move inside shared folder', () => {
     it('should display an alert when moving files inside a shared folder', async () => {
       setup({
-        sharedPaths: ['/destinationFolder'],
+        sharedPaths: ['/Destination Folder'],
         getSharedParentPath: () => '/bills'
       })
 
@@ -261,7 +269,7 @@ describe('MoveModal component', () => {
 
     it('should move files when user confirms', async () => {
       setup({
-        sharedPaths: ['/destinationFolder'],
+        sharedPaths: ['/Destination Folder'],
         getSharedParentPath: () => '/bills'
       })
 
@@ -272,7 +280,7 @@ describe('MoveModal component', () => {
       fireEvent.click(confirmButton)
 
       await waitFor(() => {
-        expect(CozyFile.move).toHaveBeenCalled()
+        expect(move).toHaveBeenCalled()
         expect(onCloseSpy).toHaveBeenCalled()
         expect(refreshSpy).toHaveBeenCalled()
       })
@@ -286,7 +294,7 @@ describe('MoveModal component', () => {
       )
 
       setup({
-        sharedPaths: ['/bills/bill_201903.pdf', '/destinationFolder'],
+        sharedPaths: ['/bills/bill_201903.pdf', '/Destination Folder'],
         byDocId: {
           bill_201903: {
             permissions: [],
@@ -312,7 +320,7 @@ describe('MoveModal component', () => {
       const revokeSelfSpy = jest.fn()
 
       setup({
-        sharedPaths: ['/bills/bill_201903.pdf', '/destinationFolder'],
+        sharedPaths: ['/bills/bill_201903.pdf', '/Destination Folder'],
         byDocId: {
           bill_201903: {
             permissions: [],
@@ -336,7 +344,7 @@ describe('MoveModal component', () => {
       })
 
       await waitFor(() => {
-        expect(CozyFile.move).toHaveBeenCalled()
+        expect(move).toHaveBeenCalled()
         expect(revokeAllSpy).toHaveBeenCalled()
         expect(revokeSelfSpy).not.toHaveBeenCalled()
         expect(onCloseSpy).toHaveBeenCalled()
@@ -352,7 +360,7 @@ describe('MoveModal component', () => {
       const revokeSelfSpy = jest.fn()
 
       setup({
-        sharedPaths: ['/bills/bill_201903.pdf', '/destinationFolder'],
+        sharedPaths: ['/bills/bill_201903.pdf', '/Destination Folder'],
         byDocId: {
           bill_201903: {
             permissions: [],
@@ -376,7 +384,7 @@ describe('MoveModal component', () => {
       })
 
       await waitFor(() => {
-        expect(CozyFile.move).toHaveBeenCalled()
+        expect(move).toHaveBeenCalled()
         expect(revokeSelfSpy).toHaveBeenCalled()
         expect(revokeAllSpy).not.toHaveBeenCalled()
         expect(onCloseSpy).toHaveBeenCalled()
