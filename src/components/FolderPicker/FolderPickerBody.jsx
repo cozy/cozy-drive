@@ -44,7 +44,12 @@ const FolderPickerBody = ({
         afterAbort={hideFolderCreation}
       />
       <Loader fetchStatus={fetchStatus} hasNoData={files.length === 0}>
-        <FileList files={files} targets={entries} navigateTo={navigateTo} />
+        <FileList
+          files={files}
+          targets={entries}
+          navigateTo={navigateTo}
+          folder={folderData}
+        />
         <LoadMore hasMore={hasMore} fetchMore={fetchMore} />
       </Loader>
     </FolderPickerContentExplorer>
