@@ -1,20 +1,30 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 
 import Buttons from 'cozy-ui/transpiled/react/Buttons'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { areTargetsInCurrentDir } from 'components/FolderPicker/helpers'
+import { File, FolderPickerEntry } from 'components/FolderPicker/types'
+
+interface FolderPickerFooterProps {
+  onConfirm: (folder?: File) => void
+  onClose: () => void | Promise<void>
+  entries: FolderPickerEntry[]
+  folder?: File
+  isBusy?: boolean
+  confirmLabel?: string
+  cancelLabel?: string
+}
 
 /**
  * List of actions for the move modal
  */
-const FolderPickerFooter = ({
+const FolderPickerFooter: React.FC<FolderPickerFooterProps> = ({
   onConfirm,
   onClose,
-  targets,
+  entries,
   folder,
-  isBusy,
+  isBusy = false,
   confirmLabel,
   cancelLabel
 }) => {
@@ -22,11 +32,11 @@ const FolderPickerFooter = ({
   const primaryText = confirmLabel ? confirmLabel : t('Move.action')
   const secondaryText = cancelLabel ? cancelLabel : t('Move.cancel')
 
-  const handleClick = () => {
+  const handleClick = (): void => {
     onConfirm(folder)
   }
   const isDisabled =
-    areTargetsInCurrentDir(targets, folder) || isBusy || folder === undefined
+    folder === undefined || isBusy || areTargetsInCurrentDir(entries, folder)
 
   return (
     <>
@@ -39,20 +49,6 @@ const FolderPickerFooter = ({
       />
     </>
   )
-}
-
-FolderPickerFooter.propTypes = {
-  onConfirm: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
-  targets: PropTypes.array.isRequired,
-  folder: PropTypes.object,
-  isBusy: PropTypes.bool,
-  primaryTextAction: PropTypes.string,
-  secondaryTextAction: PropTypes.string
-}
-
-FolderPickerFooter.defaultProps = {
-  isBusy: false
 }
 
 export { FolderPickerFooter }

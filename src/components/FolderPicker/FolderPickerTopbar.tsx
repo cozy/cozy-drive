@@ -1,21 +1,31 @@
-import PropTypes from 'prop-types'
 import React, { useCallback } from 'react'
 
 import { useClient } from 'cozy-client'
+import { NextcloudFile } from 'cozy-client/types/types'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import FolderAddIcon from 'cozy-ui/transpiled/react/Icons/FolderAdd'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { getParentFolderFromPath } from './helpers'
 import BackButton from 'components/Button/BackButton'
+import { File, IOCozyFileWithExtra } from 'components/FolderPicker/types'
 import { ROOT_DIR_ID } from 'constants/config'
+import { getParentPath } from 'lib/path'
 import Topbar from 'modules/layout/Topbar'
 import { useNextcloudInfos } from 'modules/nextcloud/hooks/useNextcloudInfos'
+import { buildNextcloudFolderQuery } from 'modules/nextcloud/queries'
 import { buildOnlyFolderQuery } from 'modules/queries'
 
-const FolderPickerTopbar = ({
+interface FolderPickerTopbarProps {
+  navigateTo: (folder?: import('./types').File) => void
+  folder?: File
+  showFolderCreation?: () => void
+  canCreateFolder?: boolean
+  showNextcloudFolder?: boolean
+}
+
+const FolderPickerTopbar: React.FC<FolderPickerTopbarProps> = ({
   navigateTo,
   folder,
   showFolderCreation,
@@ -33,51 +43,63 @@ const FolderPickerTopbar = ({
   })
 
   const handleNavigateTo = useCallback(async () => {
-    if (folder._id === ROOT_DIR_ID) {
+    if (folder?._id === ROOT_DIR_ID) {
       return navigateTo()
     }
 
-    if (folder.dir_id) {
+    if (folder?._type === 'io.cozy.files' && folder.dir_id) {
       const parentFolderQuery = buildOnlyFolderQuery(folder.dir_id)
-      const parentFolder = await client.fetchQueryAndGetFromState({
+      const parentFolder = (await client?.fetchQueryAndGetFromState({
         definition: parentFolderQuery.definition(),
         options: parentFolderQuery.options
-      })
+      })) as {
+        data?: IOCozyFileWithExtra
+      }
 
       return navigateTo(parentFolder.data)
     }
 
     if (
-      folder._type === 'io.cozy.remote.nextcloud.files' &&
-      folder.path == '/' &&
+      folder?._type === 'io.cozy.remote.nextcloud.files' &&
+      folder.path === '/' &&
       showNextcloudFolder
     ) {
       return navigateTo()
     }
 
     if (
-      folder._type === 'io.cozy.remote.nextcloud.files' &&
+      folder?._type === 'io.cozy.remote.nextcloud.files' &&
       showNextcloudFolder
     ) {
-      const parentFolder = getParentFolderFromPath(folder.path)
-      if (parentFolder.path === '/') {
+      if (folder.parentPath === '/') {
         return navigateTo({
+          id: 'io.cozy.remote.nextcloud.files.root-dir',
           _id: 'io.cozy.remote.nextcloud.files.root-dir',
           _type: 'io.cozy.remote.nextcloud.files',
-          name: rootFolderName,
+          name: rootFolderName ?? '(Nextcloud)',
           path: '/',
+          parentPath: '',
+          type: 'directory',
           cozyMetadata: {
             sourceAccount: folder.cozyMetadata.sourceAccount
           }
         })
       } else {
-        return navigateTo({
-          _type: 'io.cozy.remote.nextcloud.files',
-          ...getParentFolderFromPath(folder.path),
-          cozyMetadata: {
-            sourceAccount: folder.cozyMetadata.sourceAccount
-          }
+        const parentFolderQuery = buildNextcloudFolderQuery({
+          sourceAccount: folder.cozyMetadata.sourceAccount,
+          path: getParentPath(folder.parentPath)
         })
+        const parentFolderResult = (await client?.fetchQueryAndGetFromState({
+          definition: parentFolderQuery.definition(),
+          options: parentFolderQuery.options
+        })) as {
+          data?: NextcloudFile[]
+        }
+        const parentFolder = (parentFolderResult.data ?? []).find(
+          file => file.path === folder.parentPath
+        )
+
+        return navigateTo(parentFolder)
       }
     }
   }, [client, folder, navigateTo, rootFolderName, showNextcloudFolder])
@@ -109,14 +131,6 @@ const FolderPickerTopbar = ({
       ) : null}
     </Topbar>
   )
-}
-
-FolderPickerTopbar.propTypes = {
-  navigateTo: PropTypes.func.isRequired,
-  folder: PropTypes.object,
-  showFolderCreation: PropTypes.func,
-  canCreateFolder: PropTypes.bool,
-  showNextcloudFolder: PropTypes.bool
 }
 
 export { FolderPickerTopbar }

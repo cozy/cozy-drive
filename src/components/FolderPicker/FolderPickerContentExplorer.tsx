@@ -1,22 +1,21 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import { Table } from 'cozy-ui/transpiled/react/deprecated/Table'
 
 import FileListBody from 'modules/filelist/FileListBody'
 import { FileListHeader } from 'modules/filelist/FileListHeader'
 
-const FolderPickerContentExplorer = ({ children }) => (
+interface FolderPickerContentExplorerProps {
+  children: ReactNode
+}
+
+const FolderPickerContentExplorer: React.FC<
+  FolderPickerContentExplorerProps
+> = ({ children }) => (
   <Table role="table">
     <FileListHeader folderId={null} canSort={false} />
-    <FileListBody className="u-ov-visible" selectionModeActive={false}>
-      {children}
-    </FileListBody>
+    <FileListBody className="u-ov-visible">{children}</FileListBody>
   </Table>
 )
-
-FolderPickerContentExplorer.propTypes = {
-  children: PropTypes.node
-}
 
 export { FolderPickerContentExplorer }

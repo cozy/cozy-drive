@@ -8,8 +8,8 @@ const defaultFetchPolicy = CozyClient.fetchPolicies.olderThan(
 /**
  *
  * @param {object} params Parameters
- * @param {string} params.sourceAccount The source account of the nextcloud
- * @param {string} params.path The path of the folder where to fetch the files
+ * @param {string} [params.sourceAccount] The source account of the nextcloud
+ * @param {string} [params.path] The path of the folder where to fetch the files
  * @returns
  */
 export const buildNextcloudFolderQuery = ({ sourceAccount, path }) => ({

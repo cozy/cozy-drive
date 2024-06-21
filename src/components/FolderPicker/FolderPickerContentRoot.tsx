@@ -11,13 +11,21 @@ import { DumbFile as File } from 'modules/filelist/File'
 import { buildOnlyFolderQuery } from 'modules/queries'
 import { buildSharedDrivesQuery } from 'modules/views/Folder/queries/fetchSharedDrives'
 
-const FolderPickerContentRoot = ({ navigateTo }) => {
+interface Props {
+  navigateTo: (folder?: import('./types').File) => void
+}
+
+const FolderPickerContentRoot: React.FC<Props> = ({ navigateTo }) => {
+  const { t } = useI18n()
+
   const rootFolderQuery = buildOnlyFolderQuery(ROOT_DIR_ID)
   const { data: rootData, fetchStatus: rootFetchStatus } = useQuery(
     rootFolderQuery.definition,
     rootFolderQuery.options
-  )
-  const { t } = useI18n()
+  ) as unknown as {
+    data?: import('./types').IOCozyFileWithExtra
+    fetchStatus: string
+  }
 
   const sharedDrivesQuery = buildSharedDrivesQuery({
     sortAttribute: 'name',
@@ -28,7 +36,15 @@ const FolderPickerContentRoot = ({ navigateTo }) => {
     fetchStatus: sharedDrivesFetchStatus,
     hasMore,
     fetchMore
-  } = useQuery(sharedDrivesQuery.definition, sharedDrivesQuery.options)
+  } = useQuery(
+    sharedDrivesQuery.definition,
+    sharedDrivesQuery.options
+  ) as unknown as {
+    data?: import('./types').IOCozyFileWithExtra[]
+    fetchStatus: string
+    hasMore: boolean
+    fetchMore: () => void
+  }
 
   const fetchStatus = [rootFetchStatus, sharedDrivesFetchStatus]
   const currentFetchStatus = fetchStatus.some(status => status === 'loading')
@@ -39,28 +55,43 @@ const FolderPickerContentRoot = ({ navigateTo }) => {
     ? 'loaded'
     : 'pending'
 
-  const files = [rootData, ...sharedDrivesData].filter(file => {
-    return (
-      file?.cozyMetadata?.createdByApp === 'nextcloud' ||
-      file?._id === ROOT_DIR_ID
-    )
-  })
+  const files = [
+    ...(rootData ? [rootData] : []),
+    ...(sharedDrivesData ?? [])
+  ].filter(
+    file =>
+      file.cozyMetadata?.createdByApp === 'nextcloud' ||
+      file._id === ROOT_DIR_ID
+  )
 
-  const handleFolderOpen = async folder => {
+  const handleFolderOpen = (
+    folder: import('./types').IOCozyFileWithExtra
+  ): void => {
     if (folder._id === ROOT_DIR_ID) {
       navigateTo(folder)
     }
   }
 
-  const handleFileOpen = async ({ file }) => {
-    if (file.cozyMetadata?.createdByApp === 'nextcloud') {
+  const handleFileOpen = ({
+    file
+  }: {
+    file: import('./types').IOCozyFileWithExtra
+  }): void => {
+    if (
+      file.cozyMetadata?.createdByApp === 'nextcloud' &&
+      file.cozyMetadata.sourceAccount
+    ) {
       navigateTo({
+        id: 'io.cozy.remote.nextcloud.files.root-dir',
+        _id: 'io.cozy.remote.nextcloud.files.root-dir',
         _type: 'io.cozy.remote.nextcloud.files',
+        name: `${file.metadata.instanceName ?? ''} (Nextcloud)`,
         path: '/',
-        name: `${file.metadata.instanceName} (Nextcloud)`,
+        parentPath: '/',
         cozyMetadata: {
-          sourceAccount: file.cozyMetadata?.sourceAccount
-        }
+          sourceAccount: file.cozyMetadata.sourceAccount
+        },
+        type: 'directory'
       })
     }
   }
@@ -79,7 +110,7 @@ const FolderPickerContentRoot = ({ navigateTo }) => {
               name:
                 file.id === ROOT_DIR_ID
                   ? t('FolderPickerContentRoot.myDrive')
-                  : `${file.metadata.instanceName} (Nextcloud)`
+                  : `${file.metadata.instanceName ?? ''} (Nextcloud)`
             }}
             onFolderOpen={handleFolderOpen}
             onFileOpen={handleFileOpen}
