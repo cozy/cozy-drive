@@ -74,7 +74,6 @@ const FolderPicker: React.FC<FolderPickerProps> = ({
 
   return (
     <FixedDialog
-      className="u-p-0"
       open
       onClose={onClose}
       size="large"

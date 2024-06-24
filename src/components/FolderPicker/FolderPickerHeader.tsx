@@ -18,7 +18,8 @@ const specificCardStyle: React.CSSProperties = {
   marginLeft: '2rem',
   marginRight: '4rem',
   marginTop: '1rem',
-  marginBottom: '1rem'
+  marginBottom: '1rem',
+  background: 'var(--contrastBackgroundColor)'
 }
 
 const FolderPickerHeader: React.FC<FolderPickerHeaderProps> = ({
@@ -33,7 +34,7 @@ const FolderPickerHeader: React.FC<FolderPickerHeaderProps> = ({
   const subTitleToUse = subTitle ? subTitle : t('Move.to')
 
   return (
-    <Card inset className="u-bg-paleGrey" style={specificCardStyle}>
+    <Card inset style={specificCardStyle}>
       <Media>
         <Img className="u-mr-1">
           <FolderPickerHeaderIllustration entries={entries} />
