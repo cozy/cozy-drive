@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { hasQueryBeenLoaded, useQuery } from 'cozy-client'
+import { useQuery } from 'cozy-client'
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
@@ -33,11 +33,11 @@ const UploaderComponent = (): JSX.Element | null => {
     rootFolderQuery.definition,
     rootFolderQuery.options
   ) as {
-    data: IOCozyFileWithExtra
+    data?: IOCozyFileWithExtra
   }
 
   // If there are no items to render, we display a spinner with a full screen dialog to hide the UI behind
-  if (!shouldRender(items) && hasQueryBeenLoaded(rootFolderResult)) {
+  if (!shouldRender(items) && !rootFolderResult.data) {
     return (
       <FixedDialog
         className="u-p-0"
