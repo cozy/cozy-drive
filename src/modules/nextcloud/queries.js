@@ -32,9 +32,11 @@ export const computeNextcloudFolderQueryId = ({ sourceAccount, path }) => {
 export const buildNextcloudShortcutQuery = ({ sourceAccount }) => ({
   definition: () =>
     Q('io.cozy.files')
-      .partialIndex({
-        'cozyMetadata.createdByApp': 'nextcloud',
+      .where({
         'cozyMetadata.sourceAccount': sourceAccount
+      })
+      .partialIndex({
+        'cozyMetadata.createdByApp': 'nextcloud'
       })
       .indexFields(['cozyMetadata.createdByApp', 'cozyMetadata.sourceAccount'])
       .limitBy(1),
