@@ -1,10 +1,7 @@
-import get from 'lodash/get'
 import React, { useCallback, useContext, useState, useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-import { useClient, useCapabilities } from 'cozy-client'
 import { isSharingShortcut } from 'cozy-client/dist/models/file'
-import { useWebviewIntent } from 'cozy-intent'
 import { useVaultClient } from 'cozy-keys-lib'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
@@ -23,11 +20,10 @@ import { FileListHeader } from 'modules/filelist/FileListHeader'
 import FileListRowsPlaceholder from 'modules/filelist/FileListRowsPlaceholder'
 import LoadMore from 'modules/filelist/LoadMoreV2'
 import { FolderUnlocker } from 'modules/folder/components/FolderUnlocker'
+import { useFileOpeningHandler } from 'modules/folder/hooks/useFileOpeningHandler'
 import { useFolderSort } from 'modules/navigation/duck'
 import SelectionBar from 'modules/selection/SelectionBar'
-import createFileOpeningHandler from 'modules/views/Folder/createFileOpeningHandler'
 import { isReferencedByShareInSharingContext } from 'modules/views/Folder/syncHelpers'
-import { isOfficeEnabled } from 'modules/views/OnlyOffice/helpers'
 
 // TODO: extraColumns is then passed to 'FileListHeader', 'AddFolder',
 // and 'File' (this one from a 'syncingFakeFile' and a normal file).
@@ -49,8 +45,7 @@ const FolderViewBody = ({
 }) => {
   const { isDesktop } = useBreakpoints()
   const navigate = useNavigate()
-  const client = useClient()
-  const { pathname } = useLocation()
+
   /**
    *  Since we are not able to restore the scroll correctly,
    * and force the scroll to top every time we change the
@@ -79,43 +74,10 @@ const FolderViewBody = ({
   const { sharingsValue } = useContext(AcceptingSharingContext)
   const [sortOrder, setSortOrder] = useFolderSort(currentFolderId)
   const vaultClient = useVaultClient()
-  const webviewIntent = useWebviewIntent()
+  const { handleFileOpen } = useFileOpeningHandler({ isPublic, navigateToFile })
   const changeSortOrder = useCallback(
     (folderId_legacy, attribute, order) => setSortOrder({ attribute, order }),
     [setSortOrder]
-  )
-
-  const { capabilities } = useCapabilities(client)
-  const isFlatDomain = get(capabilities, 'flat_subdomains')
-
-  const handleFileOpen = useCallback(
-    ({ event, file }) => {
-      return createFileOpeningHandler({
-        client,
-        isFlatDomain,
-        navigateToFile,
-        replaceCurrentUrl: url => (window.location.href = url),
-        openInNewTab: url => window.open(url, '_blank'),
-        routeTo: url => navigate(url),
-        isOfficeEnabled: isOfficeEnabled(isDesktop),
-        webviewIntent,
-        pathname,
-        fromPublicFolder: isPublic
-      })({
-        event,
-        file
-      })
-    },
-    [
-      client,
-      navigateToFile,
-      isFlatDomain,
-      navigate,
-      webviewIntent,
-      isDesktop,
-      isPublic,
-      pathname
-    ]
   )
 
   const isInError = queryResults.some(query => query.fetchStatus === 'failed')
