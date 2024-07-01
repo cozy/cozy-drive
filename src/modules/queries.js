@@ -71,20 +71,17 @@ const buildRecentQuery = () => ({
   definition: () =>
     Q('io.cozy.files')
       .where({
-        type: 'file',
-        trashed: false,
-        dir_id: { $ne: SHARED_DRIVES_DIR_ID },
         updated_at: {
           $gt: null
         }
       })
-      .indexFields(['type', 'trashed', 'dir_id', 'updated_at'])
-      .sortBy([
-        { type: 'desc' },
-        { trashed: 'desc' },
-        { dir_id: 'desc' },
-        { updated_at: 'desc' }
-      ])
+      .partialIndex({
+        type: 'file',
+        trashed: false,
+        dir_id: { $ne: SHARED_DRIVES_DIR_ID }
+      })
+      .indexFields(['updated_at'])
+      .sortBy([{ updated_at: 'desc' }])
       .limitBy(50),
   options: {
     as: 'recent-view-query',
