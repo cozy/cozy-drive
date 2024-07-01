@@ -2,7 +2,7 @@
   "name": "Drive",
   "name_prefix": "Cozy",
   "slug": "drive",
-  "version": "1.44.0",
+  "version": "1.71.0",
   "type": "webapp",
   "licence": "AGPL-3.0",
   "icon": "public/app-icon.svg",
@@ -46,16 +46,6 @@
   "langs": [
     "en",
     "fr"
-  ],
-  "platforms": [
-    {
-      "type": "ios",
-      "url": "https://itunes.apple.com/us/app/cozy-drive/id1224102389?mt=8"
-    },
-    {
-      "type": "android",
-      "url": "https://play.google.com/store/apps/details?id=io.cozy.drive.mobile"
-    }
   ],
   "routes": {
     "/": {
@@ -112,7 +102,7 @@
     "dacc": {
       "type": "node",
       "file": "services/dacc/drive.js",
-      "trigger": "@monthly on the 3-5 between 2pm and 7pm"
+      "trigger": "@monthly on the 5-7 between 2pm and 7pm"
     }
   },
   "permissions": {
@@ -148,7 +138,8 @@
       "description": "Required to manage photos albums",
       "type": "io.cozy.photos.albums",
       "verbs": [
-        "PUT"
+        "PUT",
+        "GET"
       ]
     },
     "contacts": {
@@ -207,14 +198,20 @@
       "description": "Required to display additional information in the viewer for files automatically retrieved by services",
       "type": "io.cozy.accounts",
       "verbs": [
-        "GET"
+        "ALL"
+      ]
+    },
+    "jobs": {
+      "type": "io.cozy.jobs",
+      "verbs": [
+        "ALL"
       ]
     },
     "triggers": {
       "description": "Required to display additional information in the viewer for files automatically retrieved by services",
       "type": "io.cozy.triggers",
       "verbs": [
-        "GET"
+        "ALL"
       ]
     },
     "dacc": {
@@ -231,5 +228,14 @@
       ],
       "description": "Remote-doctype required to send anonymized measures to the DACC shared among mycozy.eu's Cozy."
     }
+  },
+  "accept_from_flagship": true,
+  "accept_documents_from_flagship": {
+    "accepted_mime_types": [
+      "*/*"
+    ],
+    "max_number_of_files": 10,
+    "max_size_per_file_in_MB": 100,
+    "route_to_upload": "/#/upload?fromFlagshipUpload=true"
   }
 }

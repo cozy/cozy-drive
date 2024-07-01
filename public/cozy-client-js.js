@@ -5193,14 +5193,14 @@ function findMany(cozy, doctype, ids) {
 }
 
 function findAll(cozy, doctype) {
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : { include_docs: true };
+
   return cozy.isV2().then(function (isV2) {
     if (isV2) {
       return Promise.reject(new Error('findAll is not available on v2'));
     }
 
-    var path = (0, _utils.createPath)(cozy, isV2, doctype, '_all_docs', {
-      include_docs: true
-    });
+    var path = (0, _utils.createPath)(cozy, isV2, doctype, '_all_docs', options);
 
     return (0, _fetch.cozyFetchJSON)(cozy, 'POST', path, {}).then(function (resp) {
       var docs = [];
