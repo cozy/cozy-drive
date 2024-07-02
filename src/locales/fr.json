@@ -32,7 +32,8 @@
     "title_shared": "Mes fichiers partagés",
     "title_activity": "Activité",
     "title_trash": "Corbeille",
-    "label": "Voir le chemin"
+    "label": "Voir le chemin",
+    "title_shared_drives": "Drives"
   },
   "Toolbar": {
     "more": "Plus"

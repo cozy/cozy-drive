@@ -1,13 +1,17 @@
-import classNames from 'classnames'
 import React, { useEffect, useMemo, useState } from 'react'
 
 import BreadcrumbMui from 'cozy-ui/transpiled/react/Breadcrumbs'
 import Icon from 'cozy-ui/transpiled/react/Icon'
+import FolderIcon from 'cozy-ui/transpiled/react/Icons/Folder'
 import RightIcon from 'cozy-ui/transpiled/react/Icons/Right'
 import ActionMenu, {
   ActionMenuItem
 } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+
+import IconServer from 'assets/icons/icon-server.svg'
+import { ROOT_DIR_ID } from 'constants/config'
+import { DesktopBreadcrumbItem } from 'modules/navigation/Breadcrumb/components/DesktopBreadcrumb/DesktopBreadcrumbItem'
 
 import styles from 'modules/navigation/Breadcrumb/breadcrumb.styl'
 
@@ -49,6 +53,19 @@ const DesktopBreadcrumb = ({ onBreadcrumbClick, path }) => {
     <Icon icon={RightIcon} className={styles['fil-path-separator']} />
   )
 
+  // When we are in a shared drive, we want to display the shared drive icon
+  // in first position to reduce the number of displayed path elements
+  const pathToDisplay = useMemo(() => {
+    const sharedDriveIndex = path.findIndex(
+      item => item.id === 'io.cozy.files.shared-drives-dir'
+    )
+    if (sharedDriveIndex !== -1 && path.length > 2) {
+      return path.slice(sharedDriveIndex)
+    }
+
+    return path
+  }, [path])
+
   return (
     <>
       <BreadcrumbMui
@@ -58,23 +75,43 @@ const DesktopBreadcrumb = ({ onBreadcrumbClick, path }) => {
         itemsAfterCollapse={2}
         expandText={expandText}
       >
-        {path.map((breadcrumbPath, index) => (
-          <span
-            className={classNames(
-              index === path.length - 1
-                ? styles['fil-path-current-name']
-                : styles['fil-path-link'],
-              styles['fil-path-title']
-            )}
-            key={breadcrumbPath.name}
-            onClick={e => {
-              e.stopPropagation()
-              onBreadcrumbClick(breadcrumbPath)
-            }}
-          >
-            {breadcrumbPath.name}
-          </span>
-        ))}
+        {pathToDisplay.map((breadcrumbPath, index) => {
+          if (pathToDisplay.length > 1 && breadcrumbPath.id === ROOT_DIR_ID) {
+            return (
+              <DesktopBreadcrumbItem
+                key={breadcrumbPath.name}
+                onClick={onBreadcrumbClick}
+                item={breadcrumbPath}
+                isCurrent={index === pathToDisplay.length - 1}
+                icon={FolderIcon}
+              />
+            )
+          }
+
+          if (
+            index === 0 &&
+            breadcrumbPath.id === 'io.cozy.files.shared-drives-dir'
+          ) {
+            return (
+              <DesktopBreadcrumbItem
+                key={breadcrumbPath.name}
+                onClick={onBreadcrumbClick}
+                item={breadcrumbPath}
+                isCurrent={index === pathToDisplay.length - 1}
+                icon={IconServer}
+              />
+            )
+          }
+
+          return (
+            <DesktopBreadcrumbItem
+              key={breadcrumbPath.name}
+              onClick={onBreadcrumbClick}
+              item={breadcrumbPath}
+              isCurrent={index === pathToDisplay.length - 1}
+            />
+          )
+        })}
       </BreadcrumbMui>
 
       {menuDisplayed && (
