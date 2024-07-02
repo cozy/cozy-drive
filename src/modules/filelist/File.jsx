@@ -175,7 +175,7 @@ const File = ({
         />
         <SharingShortcutBadge file={attributes} />
       </FileOpener>
-      {actions && (
+      {actions && attributes._id !== 'io.cozy.files.shared-drives-dir' && (
         <FileAction
           t={t}
           ref={filerowMenuToggleRef}
