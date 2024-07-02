@@ -1,6 +1,7 @@
 import React from 'react'
 import { Outlet, useParams } from 'react-router-dom'
 
+import { NextcloudBanner } from 'modules/nextcloud/components/NextcloudBanner'
 import { NextcloudBreadcrumb } from 'modules/nextcloud/components/NextcloudBreadcrumb'
 import { NextcloudFolderBody } from 'modules/nextcloud/components/NextcloudFolderBody'
 import { NextcloudToolbar } from 'modules/nextcloud/components/NextcloudToolbar'
@@ -24,6 +25,7 @@ const NextcloudFolderView = () => {
         <NextcloudBreadcrumb sourceAccount={sourceAccount} path={path} />
         <NextcloudToolbar />
       </FolderViewHeader>
+      <NextcloudBanner />
       <NextcloudFolderBody path={path} queryResults={[nextcloudResult]} />
       <Outlet />
     </FolderView>
