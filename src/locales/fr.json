@@ -1,7 +1,6 @@
 {
   "Nav": {
-    "item_drive": "Drive",
-    "item_drives": "Drives",
+    "item_drive": "Fichiers",
     "item_recent": "Récents",
     "item_sharings": "Partages",
     "item_shared": "Partagés",
@@ -27,13 +26,14 @@
     "view_less": "Voir moins"
   },
   "breadcrumb": {
-    "title_drive": "Drive",
+    "title_drive": "Fichiers",
     "title_recent": "Récents",
     "title_sharings": "Partages",
     "title_shared": "Mes fichiers partagés",
     "title_activity": "Activité",
     "title_trash": "Corbeille",
-    "label": "Voir le chemin"
+    "label": "Voir le chemin",
+    "title_shared_drives": "Drives"
   },
   "Toolbar": {
     "more": "Plus"
@@ -809,5 +809,11 @@
     "error": "Une erreur est survenue, merci de réessayer.",
     "cancel": "Annuler",
     "delete": "Supprimer"
+  },
+  "FileName": {
+    "sharedDrive": "Drives"
+  },
+  "NextcloudBanner": {
+    "title": "Les éléments ci-dessous sont affichés depuis un drive NextCloud et ne sont pas stockés dans votre Cozy."
   }
 }

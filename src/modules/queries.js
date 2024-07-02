@@ -47,10 +47,10 @@ const buildDriveQuery = ({
         [sortAttribute]: { $gt: null }
       })
       .partialIndex({
-        // This is to avoid fetching shared drives and trash
+        // This is to avoid fetching shared drives
         // They are hidden clientside
         _id: {
-          $nin: [SHARED_DRIVES_DIR_ID, TRASH_DIR_ID]
+          $nin: [TRASH_DIR_ID]
         }
       })
       .indexFields(['dir_id', 'type', sortAttribute])
@@ -270,7 +270,7 @@ export const buildOnlyFolderQuery = folderId => ({
  * Only one file is necessary because it allows us to know whether or not to display
  * the column for this specific metadata (like carbonCopy or electronicSafe).
  * @param {string} currentFolderId - Id of the current folder
- * @param {string} attribute - Metadata attribute
+ * @param {string} attribute - Metadata
  */
 export const buildFileWithSpecificMetadataAttributeQuery = ({
   currentFolderId,

@@ -5,7 +5,7 @@ import styles from 'styles/topbar.styl'
 
 const Topbar = ({ children, hideOnMobile = true }) => (
   <div
-    className={classNames(styles['fil-topbar'], {
+    className={classNames('u-mb-1-half', styles['fil-topbar'], {
       [styles['hidden-mobile']]: hideOnMobile
     })}
   >

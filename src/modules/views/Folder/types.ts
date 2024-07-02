@@ -1,10 +1,5 @@
 import { IOCozyFile } from 'cozy-client/types/types'
 
-export interface SortOrder {
-  attribute: string
-  order: string
-}
-
 export type IOCozyFileWithMetadata = IOCozyFile & {
   cozyMetadata?: {
     createdByApp: string
@@ -13,7 +8,4 @@ export type IOCozyFileWithMetadata = IOCozyFile & {
   metadata: {
     instanceName: string
   }
-}
-export interface UseSharedDrivesQuery {
-  data?: IOCozyFileWithMetadata[]
 }

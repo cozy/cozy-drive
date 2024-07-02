@@ -1,7 +1,6 @@
 import React from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { ROOT_DIR_ID } from 'constants/config'
@@ -12,19 +11,18 @@ const NextcloudBreadcrumb = ({ sourceAccount, path }) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
   const { t } = useI18n()
-  const { isMobile } = useBreakpoints()
 
   const { rootFolderName } = useNextcloudInfos({ sourceAccount })
 
   const rootPaths = [
-    ...(isMobile
-      ? [
-          {
-            name: t('NextcloudBreadcrumb.root'),
-            id: 'root'
-          }
-        ]
-      : []),
+    {
+      name: t('breadcrumb.title_drive'),
+      id: ROOT_DIR_ID
+    },
+    {
+      name: t('breadcrumb.title_shared_drives'),
+      id: 'io.cozy.files.shared-drives-dir'
+    },
     { name: rootFolderName, id: '/' }
   ]
 
@@ -35,8 +33,11 @@ const NextcloudBreadcrumb = ({ sourceAccount, path }) => {
   }))
 
   const handleBreadcrumbClick = item => {
-    if (item.id === 'root') {
-      navigate(`/folder/${ROOT_DIR_ID}?tab=shared_drives`)
+    if (
+      item.id === 'io.cozy.files.shared-drives-dir' ||
+      item.id === ROOT_DIR_ID
+    ) {
+      navigate(`/folder/${item.id}`)
     } else {
       searchParams.set('path', item.id)
       setSearchParams(searchParams)

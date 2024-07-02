@@ -112,7 +112,7 @@ describe('FolderPickerTopbar', () => {
   it('should hide back button for the root cozy folder', () => {
     setup({ folder: rootCozyFolder })
 
-    expect(screen.getByText('Drive')).toBeInTheDocument()
+    expect(screen.getByText('Files')).toBeInTheDocument()
 
     const backButton = screen.queryByRole('button', {
       name: 'Back'
@@ -123,7 +123,7 @@ describe('FolderPickerTopbar', () => {
   it('should show back button for the root cozy folder when Nextcloud is displayed', () => {
     setup({ folder: rootCozyFolder, showNextcloudFolder: true })
 
-    expect(screen.getByText('Drive')).toBeInTheDocument()
+    expect(screen.getByText('Files')).toBeInTheDocument()
 
     const backButton = screen.getByRole('button', {
       name: 'Back'

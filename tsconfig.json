@@ -15,6 +15,7 @@
       "models/*": ["./src/models/*"],
       "constants/*": ["./src/constants/*"],
       "config/*": ["./src/config/*"],
+      "assets/*": ["./src/assets/*"],
     }
   }
 }

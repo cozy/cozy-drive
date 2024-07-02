@@ -16,6 +16,23 @@ import { useScrollToTop } from 'modules/folder/hooks/useScrollToTop'
 import { useFolderSort } from 'modules/navigation/duck'
 import SelectionBar from 'modules/selection/SelectionBar'
 
+/**
+ * Renders the body of a folder, displaying the list of files and folders within it.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.folderId - The ID of the folder.
+ * @param {Array} props.queryResults - The results of the queries for the folder content.
+ * @param {Object} [props.actions] - The actions available for the folder.
+ * @param {Function} props.onFolderOpen - The callback function to handle folder opening.
+ * @param {Function} props.onFileOpen - The callback function to handle file opening.
+ * @param {import('modules/certifications/useExtraColumns').ExtraColumn[]} props.extraColumns - The extra columns to display in the file list.
+ * @param {boolean} [props.canSort] - Indicates whether sorting is enabled for the file list.
+ * @param {Function} [props.refreshFolderContent] - The function to refresh the folder content.
+ * @param {boolean} [props.withFilePath] - Indicates whether to display the file path.
+ * @param {boolean} [props.isInSyncFromSharing] - Indicates whether the folder is in sync from sharing.
+ * @param {Function} [props.renderEmptyComponent] - The function to render the empty component.
+ */
 const FolderBody = ({
   folderId,
   queryResults,

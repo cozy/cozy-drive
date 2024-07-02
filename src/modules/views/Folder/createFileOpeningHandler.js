@@ -1,5 +1,6 @@
 import { models, Q } from 'cozy-client'
 import { isFlagshipApp } from 'cozy-device-helper'
+import flag from 'cozy-flags'
 import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
 import { DOCTYPE_FILES_SHORTCUT } from 'lib/doctypes'
@@ -25,7 +26,12 @@ const createFileOpeningHandler =
     const isOnlyOffice = models.file.shouldBeOpenedByOnlyOffice(file)
 
     if (isShortcut) {
-      if (isFlagshipApp()) {
+      if (
+        file.cozyMetadata?.createdByApp === 'nextcloud' &&
+        flag('drive.show-nextcloud-dev')
+      ) {
+        routeTo(`/nextcloud/${file.cozyMetadata.sourceAccount}`)
+      } else if (isFlagshipApp()) {
         try {
           const resp = await client.query(
             Q(DOCTYPE_FILES_SHORTCUT).getById(file.id)

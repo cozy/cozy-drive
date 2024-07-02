@@ -76,3 +76,9 @@ declare module 'models/index' {
     splitFilename: (file: IOCozyFile) => { filename: string; extension: string }
   }
 }
+
+declare module '*.svg' {
+  import { FC, SVGProps } from 'react'
+  const content: FC<SVGProps<SVGElement>>
+  export default content
+}

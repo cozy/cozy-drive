@@ -4,6 +4,12 @@ import FileTypeSheetIcon from 'cozy-ui/transpiled/react/Icons/FileTypeSheet'
 import FileTypeSlideIcon from 'cozy-ui/transpiled/react/Icons/FileTypeSlide'
 import FileTypeTextIcon from 'cozy-ui/transpiled/react/Icons/FileTypeText'
 
+/**
+ * Checks if the Office feature is enabled.
+ *
+ * @param {boolean} isDesktop - Indicates whether the application is running on a desktop platform.
+ * @returns {boolean} - Returns true if the Office feature is enabled, false otherwise.
+ */
 export const isOfficeEnabled = isDesktop => {
   const officeEnabled = flag(
     `drive.office.${!isDesktop || isMobile() ? 'touchScreen.' : ''}enabled`

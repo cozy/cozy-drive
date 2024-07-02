@@ -12,6 +12,7 @@ import InfosBadge from 'cozy-ui/transpiled/react/InfosBadge'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
+import IconServer from 'assets/icons/icon-type-server.svg'
 import FileIcon from 'modules/filelist/FileIcon'
 import FileIconMime from 'modules/filelist/FileIconMime'
 import { SharingShortcutIcon } from 'modules/filelist/SharingShortcutIcon'
@@ -36,8 +37,8 @@ const FileThumbnail = ({
     file.cozyMetadata?.createdByApp === 'nextcloud' &&
     flag('drive.show-nextcloud-dev')
 
-  if (isNextcloudShortcut) {
-    return <FileIcon file={file} size={size} />
+  if (file._id === 'io.cozy.files.shared-drives-dir' || isNextcloudShortcut) {
+    return <Icon icon={IconServer} size={size ?? 32} />
   }
 
   if (file._type === 'io.cozy.remote.nextcloud.files') {
