@@ -32,7 +32,6 @@ import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
 import FabWithMenuContext from 'modules/drive/FabWithMenuContext'
 import Toolbar from 'modules/drive/Toolbar'
-import { FolderWithSharedDrivesTab } from 'modules/folder/FolderWithSharedDrivesTab'
 import { useFolderSort } from 'modules/navigation/duck'
 import {
   buildDriveQuery,
@@ -191,41 +190,39 @@ const DriveFolderView = () => {
           disabled={isLoading || isInError || isPending}
         />
       </FolderViewHeader>
-      <FolderWithSharedDrivesTab folderId={currentFolderId} canSort>
-        <Dropzone
-          role="main"
-          disabled={!canWriteToCurrentFolder}
+      <Dropzone
+        role="main"
+        disabled={!canWriteToCurrentFolder}
+        displayedFolder={displayedFolder}
+      >
+        {flag('drive.show.harvest-banner') && (
+          <HarvestBanner folderId={currentFolderId} />
+        )}
+        <FolderViewBody
+          navigateToFolder={navigateToFolder}
+          navigateToFile={navigateToFile}
+          actions={actions}
+          queryResults={[foldersResult, filesResult]}
+          canSort
+          currentFolderId={currentFolderId}
           displayedFolder={displayedFolder}
-        >
-          {flag('drive.show.harvest-banner') && (
-            <HarvestBanner folderId={currentFolderId} />
-          )}
-          <FolderViewBody
-            navigateToFolder={navigateToFolder}
-            navigateToFile={navigateToFile}
-            actions={actions}
-            queryResults={[foldersResult, filesResult]}
-            canSort
-            currentFolderId={currentFolderId}
+          extraColumns={extraColumns}
+        />
+        {isFabDisplayed && (
+          <AddMenuProvider
+            canCreateFolder={true}
+            canUpload={true}
+            disabled={isLoading || isInError || isPending}
+            navigate={navigate}
+            params={params}
             displayedFolder={displayedFolder}
-            extraColumns={extraColumns}
-          />
-          {isFabDisplayed && (
-            <AddMenuProvider
-              canCreateFolder={true}
-              canUpload={true}
-              disabled={isLoading || isInError || isPending}
-              navigate={navigate}
-              params={params}
-              displayedFolder={displayedFolder}
-              isSelectionBarVisible={isSelectionBarVisible}
-            >
-              <FabWithMenuContext />
-            </AddMenuProvider>
-          )}
-          <Outlet />
-        </Dropzone>
-      </FolderWithSharedDrivesTab>
+            isSelectionBarVisible={isSelectionBarVisible}
+          >
+            <FabWithMenuContext />
+          </AddMenuProvider>
+        )}
+        <Outlet />
+      </Dropzone>
     </FolderView>
   )
 }
