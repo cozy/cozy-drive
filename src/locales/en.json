@@ -26,7 +26,7 @@
     "view_less": "View less"
   },
   "breadcrumb": {
-    "title_drive": "Drive",
+    "title_drive": "Files",
     "title_recent": "Recent",
     "title_sharings": "Sharings",
     "title_shared": "Shared by me",
@@ -807,5 +807,8 @@
     "error": "An error occurred, please try again.",
     "cancel": "Cancel",
     "delete": "Delete"
+  },
+  "FileName": {
+    "sharedDrive": "Drives"
   }
 }

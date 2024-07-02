@@ -43,10 +43,10 @@ export const extraColumnsPropTypes = PropTypes.arrayOf(extraColumnPropTypes)
 /**
  * Returns the columns names according to the media
  * @param {object} params - Params
- * @param {bool} params.isMobile - Whether the breakpoint is mobile
- * @param {array} params.mobileExtraColumnsNames - Names of the columns to be shown in mobile
- * @param {array} params.desktopExtraColumnsNames - Names of the columns to be shown in desktop
- * @returns {array} Names of the columns
+ * @param {boolean} params.isMobile - Whether the breakpoint is mobile
+ * @param {string[]} params.mobileExtraColumnsNames - Names of the columns to be shown in mobile
+ * @param {string[]} params.desktopExtraColumnsNames - Names of the columns to be shown in desktop
+ * @returns {string[]} Names of the columns
  */
 export const makeExtraColumnsNamesFromMedia = ({
   isMobile,

@@ -1,16 +1,18 @@
 import cx from 'classnames'
 import get from 'lodash/get'
 import { CozyFile } from 'models'
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
 import { isDirectory } from 'cozy-client/dist/models/file'
+import flag from 'cozy-flags'
 import AppIcon from 'cozy-ui/transpiled/react/AppIcon'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import CarbonCopyIcon from 'cozy-ui/transpiled/react/Icons/CarbonCopy'
 import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
 import { TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import RenameInput from 'modules/drive/RenameInput'
 
@@ -83,13 +85,40 @@ const FileName = ({
   isInSyncFromSharing,
   isExternal
 }) => {
+  const { t } = useI18n()
   const classes = cx(
     styles['fil-content-cell'],
     styles['fil-content-file'],
     { [styles['fil-content-file-openable']]: !isRenaming && interactive },
     { [styles['fil-content-row-disabled']]: isInSyncFromSharing }
   )
-  const { filename, extension } = CozyFile.splitFilename(attributes)
+
+  const { title, filename, extension } = useMemo(() => {
+    const { filename, extension } = CozyFile.splitFilename(attributes)
+
+    if (attributes._id === 'io.cozy.files.shared-drives-dir') {
+      return {
+        title: t('FileName.sharedDrive'),
+        filename: t('FileName.sharedDrive')
+      }
+    }
+
+    if (
+      attributes.cozyMetadata?.createdByApp === 'nextcloud' &&
+      flag('drive.show-nextcloud-dev')
+    ) {
+      return {
+        title: filename,
+        filename: filename
+      }
+    }
+
+    return {
+      title: attributes.name,
+      filename,
+      extension
+    }
+  }, [attributes, t])
 
   return (
     <TableCell className={classes}>
@@ -105,7 +134,7 @@ const FileName = ({
               <div
                 data-testid="fil-file-filename-and-ext"
                 className={styles['fil-file-filename-and-ext']}
-                title={filename + extension}
+                title={title}
               >
                 {filename}
                 {extension && (

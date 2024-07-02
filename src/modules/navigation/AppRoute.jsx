@@ -24,6 +24,7 @@ import { UploaderComponent } from 'modules//views/Upload/UploaderComponent'
 import Layout from 'modules/layout/Layout'
 import FileOpenerExternal from 'modules/viewer/FileOpenerExternal'
 import HarvestRoutes from 'modules/views/Drive/HarvestRoutes'
+import { SharedDrivesFolderView } from 'modules/views/Drive/SharedDrivesFolderView'
 import { MoveFilesView } from 'modules/views/Modal/MoveFilesView'
 import { QualifyFileView } from 'modules/views/Modal/QualifyFileView'
 import { ShareDisplayedFolderView } from 'modules/views/Modal/ShareDisplayedFolderView'
@@ -58,6 +59,13 @@ const AppRoute = () => (
         <Route path="share" element={<ShareDisplayedFolderView />} />
         <Route path="move" element={<MoveFilesView />} />
         <Route path="harvest/:konnectorSlug/*" element={<HarvestRoutes />} />
+      </Route>
+
+      <Route
+        path="folder/io.cozy.files.shared-drives-dir"
+        element={<SharedDrivesFolderView />}
+      >
+        <Route path="file/:fileId" element={<FilesViewerDrive />} />
       </Route>
 
       {flag('drive.show-nextcloud-dev') ? (
