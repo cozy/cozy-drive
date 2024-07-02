@@ -811,5 +811,8 @@
   },
   "FileName": {
     "sharedDrive": "Drives"
+  },
+  "NextcloudBanner": {
+    "title": "The items below are displayed from a NextCloud drive and are not stored in your Cozy."
   }
 }
