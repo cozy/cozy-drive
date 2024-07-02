@@ -32,7 +32,8 @@
     "title_shared": "Shared by me",
     "title_activity": "Activity",
     "title_trash": "Trash",
-    "label": "Show path"
+    "label": "Show path",
+    "title_shared_drives": "Drives"
   },
   "Toolbar": {
     "more": "More"
