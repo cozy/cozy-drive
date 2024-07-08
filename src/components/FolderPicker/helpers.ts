@@ -8,8 +8,7 @@ import {
 } from 'components/FolderPicker/types'
 import { ROOT_DIR_ID } from 'constants/config'
 import { getParentPath } from 'lib/path'
-import { buildNextcloudFolderQuery } from 'modules/nextcloud/queries'
-import { buildOnlyFolderQuery } from 'queries'
+import { buildOnlyFolderQuery, buildNextcloudFolderQuery } from 'queries'
 
 /**
  * Checks if the target is an invalid move target based on the subjects and target provided.
