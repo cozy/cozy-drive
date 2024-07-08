@@ -1,6 +1,6 @@
 import get from 'lodash/get'
 
-import { buildFolderQuery } from 'modules/queries'
+import { buildFolderQuery } from 'queries'
 
 export const fetchFolder = async ({ client, folderId }) => {
   const folderQuery = buildFolderQuery(folderId)

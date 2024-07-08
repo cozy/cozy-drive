@@ -5,7 +5,7 @@ import uniq from 'lodash/uniq'
 import { useQuery } from 'cozy-client'
 
 import { TRASH_DIR_ID } from 'constants/config'
-import { buildParentsByIdsQuery, buildFileByIdQuery } from 'modules/queries'
+import { buildParentsByIdsQuery, buildFileByIdQuery } from 'queries'
 
 export const isFileNotTrashed = file =>
   file.dir_id !== TRASH_DIR_ID && file.trashed !== true

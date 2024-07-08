@@ -29,11 +29,11 @@ import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import Toolbar from 'modules/drive/Toolbar'
 import { useFolderSort } from 'modules/navigation/duck'
+import Dropzone from 'modules/upload/Dropzone'
 import {
   buildDriveQuery,
   buildFileWithSpecificMetadataAttributeQuery
-} from 'modules/queries'
-import Dropzone from 'modules/upload/Dropzone'
+} from 'queries'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []

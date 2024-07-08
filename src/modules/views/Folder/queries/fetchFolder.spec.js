@@ -1,7 +1,7 @@
 import { fetchFolder } from './fetchFolder'
-import { buildFolderQuery } from 'modules/queries'
+import { buildFolderQuery } from 'queries'
 
-jest.mock('modules/queries')
+jest.mock('queries')
 
 describe('fetchFolder', () => {
   const folderReturnedByCozyClient = 'folder'

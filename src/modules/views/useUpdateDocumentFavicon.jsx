@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useClient } from 'cozy-client'
 
 import useDocument from 'components/useDocument'
-import { buildFileByIdQuery } from 'modules/queries'
+import { buildFileByIdQuery } from 'queries'
 
 const acceptedTypes = [
   'text',
@@ -42,7 +42,7 @@ const useUpdateDocumentFavicon = docId => {
     const fetchDocumentIfNotStore = async () => {
       if (docId && !doc) {
         const query = buildFileByIdQuery(docId)
-        await client.query(query.definition, {
+        await client.query(query.definition(), {
           ...query.options,
           enabled: !doc
         })

@@ -9,8 +9,8 @@ import {
 import AppLinker from 'cozy-ui/transpiled/react/AppLinker'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { buildAppsQuery, buildSettingsByIdQuery } from 'modules/queries'
 import { computeHomeApp } from 'modules/views/OnlyOffice/Toolbar/helpers'
+import { buildAppsQuery, buildSettingsByIdQuery } from 'queries'
 
 const HomeLinker = ({ children }) => {
   const { t } = useI18n()

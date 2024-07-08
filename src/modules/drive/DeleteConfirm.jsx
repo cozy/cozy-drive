@@ -13,7 +13,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { DOCTYPE_ALBUMS } from 'lib/doctypes'
 import { getEntriesTypeTranslated } from 'lib/entries'
 import { trashFiles } from 'modules/actions/utils'
-import { buildAlbumByIdQuery } from 'modules/queries'
+import { buildAlbumByIdQuery } from 'queries'
 
 const Message = ({ type, fileCount }) => {
   const ico =
@@ -61,7 +61,7 @@ export const DeleteConfirm = ({
         albumIdsFromFiles.map(albumId => {
           const albumByIdQuery = buildAlbumByIdQuery(albumId)
           return client.fetchQueryAndGetFromState({
-            definition: albumByIdQuery.definition,
+            definition: albumByIdQuery.definition(),
             options: albumByIdQuery.options
           })
         })

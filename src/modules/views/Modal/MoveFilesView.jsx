@@ -7,7 +7,7 @@ import flag from 'cozy-flags'
 import { LoaderModal } from 'components/LoaderModal'
 import useDisplayedFolder from 'hooks/useDisplayedFolder'
 import MoveModal from 'modules/move/MoveModal'
-import { buildParentsByIdsQuery } from 'modules/queries'
+import { buildParentsByIdsQuery } from 'queries'
 
 const MoveFilesView = () => {
   const navigate = useNavigate()

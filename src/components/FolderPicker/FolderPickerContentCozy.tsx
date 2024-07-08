@@ -14,7 +14,7 @@ import { isEncryptedFolder } from 'lib/encryption'
 import { AddFolderWithoutState } from 'modules/filelist/AddFolder'
 import { DumbFile as File } from 'modules/filelist/File'
 import { FolderUnlocker } from 'modules/folder/components/FolderUnlocker'
-import { buildMoveOrImportQuery, buildOnlyFolderQuery } from 'modules/queries'
+import { buildMoveOrImportQuery, buildOnlyFolderQuery } from 'queries'
 
 interface FolderPickerContentCozyProps {
   folder: IOCozyFileWithExtra

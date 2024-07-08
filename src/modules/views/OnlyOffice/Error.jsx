@@ -11,8 +11,8 @@ import ToolbarButtons from 'cozy-ui/transpiled/react/Viewer/components/ToolbarBu
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import Oops from 'components/Error/Oops'
-import { buildFileByIdQuery } from 'modules/queries'
 import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
+import { buildFileByIdQuery } from 'queries'
 
 const Error = () => {
   const { t } = useI18n()

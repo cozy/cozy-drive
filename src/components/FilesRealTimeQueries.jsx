@@ -4,7 +4,7 @@ import { useClient, Mutations } from 'cozy-client'
 import { ensureFilePath } from 'cozy-client/dist/models/file'
 import { receiveMutationResult } from 'cozy-client/dist/store'
 
-import { buildFileByIdQuery } from 'modules/queries'
+import { buildFileByIdQuery } from 'queries'
 
 /**
  * Normalizes an object representing a CouchDB document

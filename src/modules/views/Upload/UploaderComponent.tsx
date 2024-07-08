@@ -12,9 +12,9 @@ import {
   IOCozyFileWithExtra
 } from 'components/FolderPicker/types'
 import { ROOT_DIR_ID } from 'constants/config'
-import { buildOnlyFolderQuery } from 'modules/queries'
 import { shouldRender } from 'modules/views/Upload/UploadUtils'
 import { useUploadFromFlagship } from 'modules/views/Upload/useUploadFromFlagship'
+import { buildOnlyFolderQuery } from 'queries'
 
 const UploaderComponent = (): JSX.Element | null => {
   const { t } = useI18n()
