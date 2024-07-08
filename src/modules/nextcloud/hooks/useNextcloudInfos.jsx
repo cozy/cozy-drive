@@ -1,6 +1,6 @@
 import { hasQueryBeenLoaded, useQuery } from 'cozy-client'
 
-import { buildNextcloudShortcutQuery } from 'modules/nextcloud/queries'
+import { buildNextcloudShortcutQuery } from 'queries'
 
 /**
  * @typedef {Object} NextcloudInfos

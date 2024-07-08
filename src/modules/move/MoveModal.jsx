@@ -15,7 +15,7 @@ import { MoveOutsideSharedFolderModal } from 'modules/move/MoveOutsideSharedFold
 import { MoveSharedFolderInsideAnotherModal } from 'modules/move/MoveSharedFolderInsideAnotherModal'
 import { hasOneOfEntriesShared } from 'modules/move/helpers'
 import { useCancelable } from 'modules/move/hooks/useCancelable'
-import { computeNextcloudFolderQueryId } from 'modules/nextcloud/queries'
+import { computeNextcloudFolderQueryId } from 'modules/nextcloud/helpers'
 
 /**
  * Modal to move a folder to an other

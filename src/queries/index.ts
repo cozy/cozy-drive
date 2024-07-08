@@ -5,7 +5,7 @@ import { SHARED_DRIVES_DIR_ID, TRASH_DIR_ID } from 'constants/config'
 import { DOCTYPE_FILES_ENCRYPTION, DOCTYPE_ALBUMS } from 'lib/doctypes'
 import { formatFolderQueryId } from 'lib/queries'
 
-interface QueryConfig {
+export interface QueryConfig {
   definition: () => QueryDefinition
   options: QueryOptions
 }
@@ -412,5 +412,50 @@ export const buildTriggersQueryByKonnectorSlug: QueryBuilder<
     as: `io.cozy.triggers/slug/${slug}`,
     fetchPolicy: defaultFetchPolicy,
     enabled: Boolean(slug)
+  }
+})
+
+interface buildNextcloudFolderQueryParams {
+  sourceAccount: string
+  path: string
+}
+
+export const buildNextcloudFolderQuery: QueryBuilder<
+  buildNextcloudFolderQueryParams
+> = ({ sourceAccount, path }) => ({
+  definition: () =>
+    Q('io.cozy.remote.nextcloud.files').where({
+      'cozyMetadata.sourceAccount': sourceAccount,
+      parentPath: path
+    }),
+  options: {
+    as: `io.cozy.remote.nextcloud.files/sourceAccount/${sourceAccount}/path${path}`,
+    fetchPolicy: defaultFetchPolicy,
+    enabled: !!sourceAccount && !!path
+  }
+})
+
+interface buildNextcloudShortcutQueryParams {
+  sourceAccount: string
+}
+
+export const buildNextcloudShortcutQuery: QueryBuilder<
+  buildNextcloudShortcutQueryParams
+> = ({ sourceAccount }) => ({
+  definition: () =>
+    Q('io.cozy.files')
+      .where({
+        'cozyMetadata.sourceAccount': sourceAccount
+      })
+      .partialIndex({
+        'cozyMetadata.createdByApp': 'nextcloud'
+      })
+      .indexFields(['cozyMetadata.createdByApp', 'cozyMetadata.sourceAccount'])
+      .limitBy(1),
+  options: {
+    as: `io.cozy.files/createdByApp/nextcloud/sourceAccount/${sourceAccount}`,
+    fetchPolicy: defaultFetchPolicy,
+    enabled: !!sourceAccount,
+    singleDocData: true
   }
 })

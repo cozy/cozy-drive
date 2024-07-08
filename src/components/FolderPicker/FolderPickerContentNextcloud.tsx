@@ -7,7 +7,7 @@ import { FolderPickerContentExplorer } from 'components/FolderPicker/FolderPicke
 import { FolderPickerContentLoader } from 'components/FolderPicker/FolderPickerContentLoader'
 import { isInvalidMoveTarget } from 'components/FolderPicker/helpers'
 import { DumbFile as File } from 'modules/filelist/File'
-import { buildNextcloudFolderQuery } from 'modules/nextcloud/queries'
+import { buildNextcloudFolderQuery } from 'queries'
 
 interface Props {
   folder: NextcloudFile

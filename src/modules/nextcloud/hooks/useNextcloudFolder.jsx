@@ -1,6 +1,6 @@
 import { useQuery } from 'cozy-client'
 
-import { buildNextcloudFolderQuery } from 'modules/nextcloud/queries'
+import { buildNextcloudFolderQuery } from 'queries'
 
 const useNextcloudFolder = ({ sourceAccount, path }) => {
   const nextcloudQuery = buildNextcloudFolderQuery({
