@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom'
 import { useQuery } from 'cozy-client'
 
 import { useFolderSort } from 'modules/navigation/duck'
-import { buildDriveQuery } from 'modules/queries'
 import { getFolderPath } from 'modules/routeUtils'
 import FilesViewer, { FilesViewerLoading } from 'modules/viewer/FilesViewer'
+import { buildDriveQuery } from 'queries'
 
 const FilesViewerWithQuery = props => {
   const navigate = useNavigate()

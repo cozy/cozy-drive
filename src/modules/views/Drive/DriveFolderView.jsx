@@ -33,10 +33,6 @@ import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
 import FabWithMenuContext from 'modules/drive/FabWithMenuContext'
 import Toolbar from 'modules/drive/Toolbar'
 import { useFolderSort } from 'modules/navigation/duck'
-import {
-  buildDriveQuery,
-  buildFileWithSpecificMetadataAttributeQuery
-} from 'modules/queries'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 import Dropzone from 'modules/upload/Dropzone'
 import { useTrashRedirect } from 'modules/views/Drive/useTrashRedirect'
@@ -45,6 +41,10 @@ import FolderViewBody from 'modules/views/Folder/FolderViewBody'
 import FolderViewBreadcrumb from 'modules/views/Folder/FolderViewBreadcrumb'
 import FolderViewHeader from 'modules/views/Folder/FolderViewHeader'
 import { useResumeUploadFromFlagship } from 'modules/views/Upload/useResumeFromFlagship'
+import {
+  buildDriveQuery,
+  buildFileWithSpecificMetadataAttributeQuery
+} from 'queries'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []

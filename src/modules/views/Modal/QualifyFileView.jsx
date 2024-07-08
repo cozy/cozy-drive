@@ -13,7 +13,7 @@ import NestedSelectResponsive from 'cozy-ui/transpiled/react/NestedSelect/Nested
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { LoaderModal } from 'components/LoaderModal'
-import { buildFileByIdQuery } from 'modules/queries'
+import { buildFileByIdQuery } from 'queries'
 
 const getThemesList = () =>
   flag('hide.healthTheme.enabled')

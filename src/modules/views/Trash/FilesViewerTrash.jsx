@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom'
 import { useQuery } from 'cozy-client'
 
 import { useFolderSort } from 'modules/navigation/duck'
-import { buildTrashQuery } from 'modules/queries'
 import FilesViewer, { FilesViewerLoading } from 'modules/viewer/FilesViewer'
+import { buildTrashQuery } from 'queries'
 
 const FilesViewerWithQuery = props => {
   const currentFolderId = useCurrentFolderId()

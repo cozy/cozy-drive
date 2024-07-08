@@ -16,6 +16,7 @@
       "constants/*": ["./src/constants/*"],
       "config/*": ["./src/config/*"],
       "assets/*": ["./src/assets/*"],
+      "queries": ["./src/queries/index.ts"],
     }
   }
 }

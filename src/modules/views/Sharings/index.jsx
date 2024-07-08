@@ -21,11 +21,11 @@ import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import Toolbar from 'modules/drive/Toolbar'
 import FileListRowsPlaceholder from 'modules/filelist/FileListRowsPlaceholder'
 import { MobileAwareBreadcrumb as Breadcrumb } from 'modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
+import { useFilesQueryWithPath } from 'modules/views/hooks'
 import {
   buildSharingsQuery,
   buildSharingsWithMetadataAttributeQuery
-} from 'modules/queries'
-import { useFilesQueryWithPath } from 'modules/views/hooks'
+} from 'queries'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []

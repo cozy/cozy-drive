@@ -6,10 +6,7 @@ import { LaunchTriggerCard } from 'cozy-harvest-lib'
 import Divider from 'cozy-ui/transpiled/react/Divider'
 
 import useDocument from 'components/useDocument'
-import {
-  buildTriggersQueryByAccountId,
-  buildFileByIdQuery
-} from 'modules/queries'
+import { buildTriggersQueryByAccountId, buildFileByIdQuery } from 'queries'
 
 const HarvestBanner = ({ folderId }) => {
   const folder = useDocument('io.cozy.files', folderId)
@@ -27,10 +24,7 @@ const HarvestBanner = ({ folderId }) => {
     konnectorSlug = file.data.cozyMetadata?.createdByApp
     accountId = file.data.cozyMetadata?.sourceAccount
   }
-  const queryTriggers = buildTriggersQueryByAccountId(
-    accountId,
-    Boolean(accountId)
-  )
+  const queryTriggers = buildTriggersQueryByAccountId(accountId)
   const { data: triggers, ...triggersQueryLeft } = useQuery(
     queryTriggers.definition,
     queryTriggers.options

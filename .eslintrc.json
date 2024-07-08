@@ -68,6 +68,10 @@
           {
             "pattern": "locales/**/*",
             "group": "index"
+          },
+          {
+            "pattern": "queries",
+            "group": "index"
           }
         ],
         "distinctGroup": true,

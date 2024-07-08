@@ -19,11 +19,11 @@ import { restore, destroy } from 'modules/actions'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import { useFolderSort } from 'modules/navigation/duck'
+import TrashToolbar from 'modules/trash/Toolbar'
 import {
   buildTrashQuery,
   buildFileWithSpecificMetadataAttributeQuery
-} from 'modules/queries'
-import TrashToolbar from 'modules/trash/Toolbar'
+} from 'queries'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []

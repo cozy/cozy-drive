@@ -8,26 +8,23 @@ import datacardOptions from 'cozy-harvest-lib/dist/datacards/datacardOptions'
 import {
   buildTriggersQueryByKonnectorSlug,
   buildKonnectorsQueryById
-} from 'modules/queries'
+} from 'queries'
 
 const HarvestRoutes = () => {
   const { konnectorSlug } = useParams()
   const navigate = useNavigate()
 
-  const queryTriggers = buildTriggersQueryByKonnectorSlug(
-    konnectorSlug,
-    Boolean(konnectorSlug)
-  )
+  const queryTriggers = buildTriggersQueryByKonnectorSlug(konnectorSlug)
   const { data: triggers } = useQuery(
     queryTriggers.definition,
     queryTriggers.options
   )
   const trigger = triggers?.[0]
 
-  const queryKonnector = buildKonnectorsQueryById(
-    `io.cozy.konnectors/${konnectorSlug}`,
-    Boolean(trigger)
-  )
+  const queryKonnector = buildKonnectorsQueryById({
+    id: `io.cozy.konnectors/${konnectorSlug}`,
+    enabled: Boolean(trigger)
+  })
   const { data: konnectors } = useQuery(
     queryKonnector.definition,
     queryKonnector.options

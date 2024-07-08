@@ -11,8 +11,8 @@ import { useSearchParams } from 'react-router-dom'
 import { useClient, useQuery } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import { buildFileByIdQuery } from 'modules/queries'
 import { officeDefaultMode } from 'modules/views/OnlyOffice/helpers'
+import { buildFileByIdQuery } from 'queries'
 
 const OnlyOfficeContext = createContext()
 

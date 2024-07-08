@@ -28,11 +28,11 @@ import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import Toolbar from 'modules/drive/Toolbar'
 import { MobileAwareBreadcrumb as Breadcrumb } from 'modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
+import { useFilesQueryWithPath } from 'modules/views/hooks'
 import {
   buildRecentQuery,
   buildRecentWithMetadataAttributeQuery
-} from 'modules/queries'
-import { useFilesQueryWithPath } from 'modules/views/hooks'
+} from 'queries'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []

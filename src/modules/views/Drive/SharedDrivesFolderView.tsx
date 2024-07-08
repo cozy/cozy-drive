@@ -16,13 +16,13 @@ import {
 import { FolderBody } from 'modules/folder/components/FolderBody'
 import { useFileOpeningHandler } from 'modules/folder/hooks/useFileOpeningHandler'
 import { useFolderSort } from 'modules/navigation/duck'
-import {
-  buildDriveQuery,
-  buildFileWithSpecificMetadataAttributeQuery
-} from 'modules/queries'
 import FolderView from 'modules/views/Folder/FolderView'
 import FolderViewBreadcrumb from 'modules/views/Folder/FolderViewBreadcrumb'
 import FolderViewHeader from 'modules/views/Folder/FolderViewHeader'
+import {
+  buildDriveQuery,
+  buildFileWithSpecificMetadataAttributeQuery
+} from 'queries'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames: string[] = []

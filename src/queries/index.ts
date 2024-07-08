@@ -1,7 +1,23 @@
-import CozyClient, { Q } from 'cozy-client'
+import CozyClient, { Q, QueryDefinition } from 'cozy-client'
+import { QueryOptions } from 'cozy-client/types/types'
 
 import { SHARED_DRIVES_DIR_ID, TRASH_DIR_ID } from 'constants/config'
 import { DOCTYPE_FILES_ENCRYPTION, DOCTYPE_ALBUMS } from 'lib/doctypes'
+import { formatFolderQueryId } from 'lib/queries'
+
+interface QueryConfig {
+  definition: () => QueryDefinition
+  options: QueryOptions
+}
+
+type QueryBuilder<T = void> = (params: T) => QueryConfig
+
+interface buildDriveQueryParams {
+  currentFolderId: string
+  type: string
+  sortAttribute: string
+  sortOrder: string
+}
 
 // Needs to be less than 10 minutes, since "thumbnails" links
 // are only valid for 10 minutes.
@@ -11,29 +27,7 @@ const defaultFetchPolicy = CozyClient.fetchPolicies.olderThan(
   DEFAULT_CACHE_TIMEOUT_QUERIES
 )
 
-export const parseFolderQueryId = maybeFolderQueryId => {
-  const splitted = maybeFolderQueryId.split(' ')
-  if (splitted.length !== 4) {
-    return null
-  }
-  return {
-    type: splitted[0],
-    folderId: splitted[1],
-    sortAttribute: splitted[2],
-    sortOrder: splitted[3]
-  }
-}
-
-export const formatFolderQueryId = (
-  type,
-  folderId,
-  sortAttribute,
-  sortOrder
-) => {
-  return `${type} ${folderId} ${sortAttribute} ${sortOrder}`
-}
-
-const buildDriveQuery = ({
+export const buildDriveQuery: QueryBuilder<buildDriveQueryParams> = ({
   currentFolderId,
   type,
   sortAttribute,
@@ -67,7 +61,7 @@ const buildDriveQuery = ({
   }
 })
 
-const buildRecentQuery = () => ({
+export const buildRecentQuery: QueryBuilder = () => ({
   definition: () =>
     Q('io.cozy.files')
       .where({
@@ -89,6 +83,10 @@ const buildRecentQuery = () => ({
   }
 })
 
+interface buildRecentWithMetadataAttributeQueryParams {
+  attribute: string
+}
+
 // TODO: since this query is almost the same as buildRecentQuery
 // we can probably refactor a bit
 // see https://github.com/cozy/cozy-drive/pull/2193#pullrequestreview-553766674
@@ -99,7 +97,9 @@ const buildRecentQuery = () => ({
  * @param {object} params - Params
  * @param {string} params.attribute - Metadata attribute
  */
-export const buildRecentWithMetadataAttributeQuery = ({ attribute }) => ({
+export const buildRecentWithMetadataAttributeQuery: QueryBuilder<
+  buildRecentWithMetadataAttributeQueryParams
+> = ({ attribute }) => ({
   definition: () =>
     Q('io.cozy.files')
       .where({
@@ -118,7 +118,7 @@ export const buildRecentWithMetadataAttributeQuery = ({ attribute }) => ({
   }
 })
 
-const buildParentsByIdsQuery = ids => ({
+export const buildParentsByIdsQuery: QueryBuilder<string[]> = ids => ({
   definition: () => Q('io.cozy.files').getByIds(ids),
   options: {
     as: `parents-by-ids-${ids.join('')}`,
@@ -126,7 +126,15 @@ const buildParentsByIdsQuery = ids => ({
   }
 })
 
-const buildSharingsQuery = ({ ids, enabled = true }) => ({
+interface buildSharingsQueryParams {
+  ids: string[]
+  enabled?: boolean
+}
+
+export const buildSharingsQuery: QueryBuilder<buildSharingsQueryParams> = ({
+  ids,
+  enabled = true
+}) => ({
   definition: () =>
     Q('io.cozy.files')
       .getByIds(ids)
@@ -137,6 +145,11 @@ const buildSharingsQuery = ({ ids, enabled = true }) => ({
     fetchPolicy: defaultFetchPolicy
   }
 })
+
+interface buildSharingsWithMetadataAttributeQueryParams {
+  sharedDocumentIds: string[]
+  attribute: string
+}
 
 // TODO: since this query is almost the same as buildSharingsQuery
 // we can probably refactor a bit
@@ -149,10 +162,9 @@ const buildSharingsQuery = ({ ids, enabled = true }) => ({
  * @param {array} params.sharedDocumentsIds - Ids of shared documents
  * @param {string} params.attribute - Metadata attribute
  */
-export const buildSharingsWithMetadataAttributeQuery = ({
-  sharedDocumentIds,
-  attribute
-}) => ({
+export const buildSharingsWithMetadataAttributeQuery: QueryBuilder<
+  buildSharingsWithMetadataAttributeQueryParams
+> = ({ sharedDocumentIds, attribute }) => ({
   definition: () =>
     Q('io.cozy.files')
       .getByIds(sharedDocumentIds)
@@ -164,7 +176,15 @@ export const buildSharingsWithMetadataAttributeQuery = ({
   }
 })
 
-const buildTrashQuery = ({
+interface buildTrashQueryParams {
+  currentFolderId: string
+  sortAttribute: string
+  sortOrder: string
+  type: string
+  limit?: number
+}
+
+export const buildTrashQuery: QueryBuilder<buildTrashQueryParams> = ({
   currentFolderId,
   sortAttribute,
   sortOrder,
@@ -198,7 +218,7 @@ const buildTrashQuery = ({
   }
 })
 
-export const buildMoveOrImportQuery = dirId => ({
+export const buildMoveOrImportQuery: QueryBuilder<string> = dirId => ({
   definition: () =>
     Q('io.cozy.files')
       .where({
@@ -224,27 +244,7 @@ export const buildMoveOrImportQuery = dirId => ({
   }
 })
 
-/**
- * Get the query for folder if given the query for files
- * and vice versa.
- *
- * If given the queryId `directory id123 name desc`, will return
- * the query `files id123 name desc`.
- */
-export const getMirrorQueryId = queryId => {
-  const { type, folderId, sortAttribute, sortOrder } =
-    parseFolderQueryId(queryId)
-  const otherType = type === 'directory' ? 'file' : 'directory'
-  const otherQueryId = formatFolderQueryId(
-    otherType,
-    folderId,
-    sortAttribute,
-    sortOrder
-  )
-  return otherQueryId
-}
-
-export const buildFolderQuery = folderId => ({
+export const buildFolderQuery: QueryBuilder<string> = folderId => ({
   definition: () =>
     Q('io.cozy.files').getById(folderId).include(['encryption', 'parent']),
   options: {
@@ -253,7 +253,7 @@ export const buildFolderQuery = folderId => ({
   }
 })
 
-export const buildOnlyFolderQuery = folderId => ({
+export const buildOnlyFolderQuery: QueryBuilder<string> = folderId => ({
   definition: () => Q('io.cozy.files').getById(folderId),
   options: {
     as: 'onlyfolder-' + folderId,
@@ -261,6 +261,11 @@ export const buildOnlyFolderQuery = folderId => ({
     singleDocData: true
   }
 })
+
+interface buildFileWithSpecificMetadataAttributeQueryParams {
+  currentFolderId: string
+  attribute: string
+}
 
 // TODO: since this query is almost the same as buildDriveQuery
 // we can probably refactor a bit
@@ -272,10 +277,9 @@ export const buildOnlyFolderQuery = folderId => ({
  * @param {string} currentFolderId - Id of the current folder
  * @param {string} attribute - Metadata
  */
-export const buildFileWithSpecificMetadataAttributeQuery = ({
-  currentFolderId,
-  attribute
-}) => ({
+export const buildFileWithSpecificMetadataAttributeQuery: QueryBuilder<
+  buildFileWithSpecificMetadataAttributeQueryParams
+> = ({ currentFolderId, attribute }) => ({
   definition: () =>
     Q('io.cozy.files')
       .where({
@@ -291,15 +295,7 @@ export const buildFileWithSpecificMetadataAttributeQuery = ({
   }
 })
 
-export const buildSharingsByIdQuery = sharingId => ({
-  definition: Q('io.cozy.sharings').getById(sharingId),
-  options: {
-    as: `io.cozy.sharings/${sharingId}`,
-    fetchPolicy: defaultFetchPolicy
-  }
-})
-
-export const buildFileByIdQuery = fileId => ({
+export const buildFileByIdQuery: QueryBuilder<string> = fileId => ({
   definition: () => Q('io.cozy.files').getById(fileId),
   options: {
     as: `io.cozy.files/${fileId}`,
@@ -308,16 +304,16 @@ export const buildFileByIdQuery = fileId => ({
   }
 })
 
-export const buildAppsQuery = () => ({
-  definition: Q('io.cozy.apps'),
+export const buildAppsQuery: QueryBuilder = () => ({
+  definition: () => Q('io.cozy.apps'),
   options: {
     as: `io.cozy.apps`,
     fetchPolicy: defaultFetchPolicy
   }
 })
 
-export const buildSettingsByIdQuery = id => ({
-  definition: Q('io.cozy.settings').getById(id),
+export const buildSettingsByIdQuery: QueryBuilder<string> = id => ({
+  definition: () => Q('io.cozy.settings').getById(id),
   options: {
     as: `io.cozy.settings/${id}`,
     fetchPolicy: defaultFetchPolicy,
@@ -325,16 +321,16 @@ export const buildSettingsByIdQuery = id => ({
   }
 })
 
-export const buildEncryptionByIdQuery = id => ({
-  definition: Q(DOCTYPE_FILES_ENCRYPTION).getById(id),
+export const buildEncryptionByIdQuery: QueryBuilder<string> = id => ({
+  definition: () => Q(DOCTYPE_FILES_ENCRYPTION).getById(id),
   options: {
     as: id,
     fetchPolicy: defaultFetchPolicy
   }
 })
 
-export const buildAlbumByIdQuery = id => ({
-  definition: Q(DOCTYPE_ALBUMS).getById(id),
+export const buildAlbumByIdQuery: QueryBuilder<string> = id => ({
+  definition: () => Q(DOCTYPE_ALBUMS).getById(id),
   options: {
     as: `io.cozy.photos.albums/${id}`,
     fetchPolicy: defaultFetchPolicy,
@@ -342,15 +338,7 @@ export const buildAlbumByIdQuery = id => ({
   }
 })
 
-export {
-  buildDriveQuery,
-  buildRecentQuery,
-  buildParentsByIdsQuery,
-  buildSharingsQuery,
-  buildTrashQuery
-}
-
-export const buildFolderByPathQuery = path => ({
+export const buildFolderByPathQuery: QueryBuilder<string> = path => ({
   definition: () =>
     Q('io.cozy.files')
       .where({
@@ -364,7 +352,7 @@ export const buildFolderByPathQuery = path => ({
   }
 })
 
-export const buildNewSharingShortcutQuery = () => ({
+export const buildNewSharingShortcutQuery: QueryBuilder = () => ({
   definition: () =>
     Q('io.cozy.files')
       .where({
@@ -379,7 +367,9 @@ export const buildNewSharingShortcutQuery = () => ({
   }
 })
 
-export const buildTriggersQueryByAccountId = (accountId, enabled) => ({
+export const buildTriggersQueryByAccountId: QueryBuilder<
+  string
+> = accountId => ({
   definition: () =>
     Q('io.cozy.triggers')
       .where({
@@ -388,12 +378,19 @@ export const buildTriggersQueryByAccountId = (accountId, enabled) => ({
       .indexFields(['message.account']),
   options: {
     as: `${'io.cozy.triggers'}/accounts/${accountId}`,
-    enabled: enabled,
+    enabled: Boolean(accountId),
     fetchPolicy: defaultFetchPolicy
   }
 })
 
-export const buildKonnectorsQueryById = (id, enabled = true) => ({
+interface buildKonnectorsQueryByIdParams {
+  id: string
+  enabled?: boolean
+}
+
+export const buildKonnectorsQueryById: QueryBuilder<
+  buildKonnectorsQueryByIdParams
+> = ({ id, enabled = true }) => ({
   definition: () => Q('io.cozy.konnectors').getById(id),
   options: {
     as: `io.cozy.konnectors/${id}`,
@@ -402,7 +399,9 @@ export const buildKonnectorsQueryById = (id, enabled = true) => ({
   }
 })
 
-export const buildTriggersQueryByKonnectorSlug = (slug, enabled) => ({
+export const buildTriggersQueryByKonnectorSlug: QueryBuilder<
+  string
+> = slug => ({
   definition: () =>
     Q('io.cozy.triggers')
       .where({
@@ -412,6 +411,6 @@ export const buildTriggersQueryByKonnectorSlug = (slug, enabled) => ({
   options: {
     as: `io.cozy.triggers/slug/${slug}`,
     fetchPolicy: defaultFetchPolicy,
-    enabled
+    enabled: Boolean(slug)
   }
 })

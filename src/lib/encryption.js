@@ -4,7 +4,7 @@ import { models } from 'cozy-client'
 import flag from 'cozy-flags'
 
 import { DOCTYPE_FILES, DOCTYPE_FILES_ENCRYPTION } from 'lib/doctypes'
-import { buildEncryptionByIdQuery } from 'modules/queries'
+import { buildEncryptionByIdQuery } from 'queries'
 const { isEncrypted } = models.file
 
 export const isEncryptedFileOrFolder = fileOrdir => {
@@ -30,7 +30,7 @@ export const getEncryptionKeyFromDirId = async (client, dirId) => {
   }
   const docId = `${DOCTYPE_FILES}/${dirId}`
   const query = buildEncryptionByIdQuery(docId)
-  const res = await client.query(query.definition, { options: query.options })
+  const res = await client.query(query.definition(), { options: query.options })
   return res && res.data ? res.data.key : null
 }
 
