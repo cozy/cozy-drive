@@ -1,19 +1,6 @@
 import { IOCozyFile, NextcloudFile } from 'cozy-client/types/types'
 
-export type IOCozyFileWithExtra = IOCozyFile & {
-  dir_id: string
-  path: string
-  cozyMetadata?: {
-    createdByApp?: string
-    sourceAccount?: string
-    favorite?: boolean
-  }
-  metadata?: {
-    instanceName?: string
-  }
-}
-
-export type File = IOCozyFileWithExtra | NextcloudFile
+export type File = IOCozyFile | NextcloudFile
 
 export interface FolderPickerEntry {
   _id?: string

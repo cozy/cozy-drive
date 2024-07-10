@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { useQuery } from 'cozy-client'
+import { IOCozyFile } from 'cozy-client/types/types'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { FolderPickerContentExplorer } from 'components/FolderPicker/FolderPickerContentExplorer'
@@ -24,7 +25,7 @@ const FolderPickerContentRoot: React.FC<Props> = ({ navigateTo }) => {
     rootFolderQuery.definition,
     rootFolderQuery.options
   ) as unknown as {
-    data?: import('./types').IOCozyFileWithExtra
+    data?: IOCozyFile
     fetchStatus: string
   }
 
@@ -41,7 +42,7 @@ const FolderPickerContentRoot: React.FC<Props> = ({ navigateTo }) => {
     sharedDrivesQuery.definition,
     sharedDrivesQuery.options
   ) as unknown as {
-    data?: import('./types').IOCozyFileWithExtra[]
+    data?: IOCozyFile[]
     fetchStatus: string
     hasMore: boolean
     fetchMore: () => void
@@ -65,19 +66,13 @@ const FolderPickerContentRoot: React.FC<Props> = ({ navigateTo }) => {
       file._id === ROOT_DIR_ID
   )
 
-  const handleFolderOpen = (
-    folder: import('./types').IOCozyFileWithExtra
-  ): void => {
+  const handleFolderOpen = (folder: IOCozyFile): void => {
     if (folder._id === ROOT_DIR_ID) {
       navigateTo(folder)
     }
   }
 
-  const handleFileOpen = ({
-    file
-  }: {
-    file: import('./types').IOCozyFileWithExtra
-  }): void => {
+  const handleFileOpen = ({ file }: { file: IOCozyFile }): void => {
     if (
       file.cozyMetadata?.createdByApp === 'nextcloud' &&
       file.cozyMetadata.sourceAccount
