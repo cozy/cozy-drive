@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 
 import Badge from 'cozy-ui/transpiled/react/Badge'
@@ -9,7 +8,19 @@ import { NavIcon, NavText } from 'cozy-ui/transpiled/react/Nav'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-const NavContent = ({ icon, badgeContent, label, isExternal }) => {
+interface NavContentProps {
+  icon?: string
+  badgeContent?: number
+  label?: string
+  isExternal?: boolean
+}
+
+const NavContent: React.FC<NavContentProps> = ({
+  icon,
+  badgeContent,
+  label,
+  isExternal
+}) => {
   const { isDesktop } = useBreakpoints()
 
   if (badgeContent) {
@@ -65,13 +76,6 @@ const NavContent = ({ icon, badgeContent, label, isExternal }) => {
       <NavText>{label}</NavText>
     </>
   )
-}
-
-NavContent.propTypes = {
-  icon: PropTypes.string,
-  badgeContent: PropTypes.number,
-  label: PropTypes.string,
-  isExternal: PropTypes.bool
 }
 
 export { NavContent }
