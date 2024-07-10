@@ -98,10 +98,10 @@ declare module 'cozy-ui/transpiled/react/ActionsMenu/Actions' {
     icon: React.ComponentType | string
     displayInSelectionBar?: boolean
     displayCondition?: (
-      docs: import('components/FolderPicker/types').IOCozyFileWithExtra[]
+      docs: import('cozy-client/types/types').IOCozyFile[]
     ) => boolean
     action?: (
-      docs: import('components/FolderPicker/types').IOCozyFileWithExtra[],
+      docs: import('cozy-client/types/types').IOCozyFile[],
       opts: { handleAction: HandleActionCallback }
     ) => Promise<void>
     Component: ForwardRefExoticComponent<RefAttributes<React.ComponentType>>

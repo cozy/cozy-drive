@@ -1,11 +1,7 @@
 import CozyClient from 'cozy-client/types/CozyClient'
-import { NextcloudFile } from 'cozy-client/types/types'
+import { IOCozyFile, NextcloudFile } from 'cozy-client/types/types'
 
-import {
-  FolderPickerEntry,
-  File,
-  IOCozyFileWithExtra
-} from 'components/FolderPicker/types'
+import { FolderPickerEntry, File } from 'components/FolderPicker/types'
 import { ROOT_DIR_ID } from 'constants/config'
 import { getParentPath } from 'lib/path'
 import { buildOnlyFolderQuery, buildNextcloudFolderQuery } from 'queries'
@@ -59,14 +55,14 @@ export const areTargetsInCurrentDir = (
  */
 const getCozyParentFolder = async (
   client: CozyClient | null,
-  folder: IOCozyFileWithExtra
-): Promise<IOCozyFileWithExtra | undefined> => {
+  folder: IOCozyFile
+): Promise<IOCozyFile | undefined> => {
   const parentFolderQuery = buildOnlyFolderQuery(folder.dir_id)
   const parentFolder = (await client?.fetchQueryAndGetFromState({
     definition: parentFolderQuery.definition(),
     options: parentFolderQuery.options
   })) as {
-    data?: IOCozyFileWithExtra
+    data?: IOCozyFile
   }
 
   return parentFolder.data
