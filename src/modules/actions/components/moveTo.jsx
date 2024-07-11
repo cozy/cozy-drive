@@ -17,7 +17,7 @@ const moveTo = ({ t, canMove, pathname, navigate, search }) => {
     label,
     icon,
     displayCondition: docs => docs.length > 0 && canMove,
-    action: files => {
+    action: async files => {
       navigateToModalWithMultipleFile({
         files,
         pathname,

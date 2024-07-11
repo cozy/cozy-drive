@@ -25,6 +25,7 @@ import Layout from 'modules/layout/Layout'
 import FileOpenerExternal from 'modules/viewer/FileOpenerExternal'
 import HarvestRoutes from 'modules/views/Drive/HarvestRoutes'
 import { SharedDrivesFolderView } from 'modules/views/Drive/SharedDrivesFolderView'
+import { FavoritesView } from 'modules/views/Favorites/FavoritesView'
 import { MoveFilesView } from 'modules/views/Modal/MoveFilesView'
 import { QualifyFileView } from 'modules/views/Modal/QualifyFileView'
 import { ShareDisplayedFolderView } from 'modules/views/Modal/ShareDisplayedFolderView'
@@ -126,6 +127,16 @@ const AppRoute = () => (
 
       <Route path="file/:fileId" element={<FileOpenerExternal />} />
       <Route path="search" element={<SearchView />} />
+
+      {flag('drive.show-favorites-dev') ? (
+        <Route path="favorites" element={<FavoritesView />}>
+          <Route path="file/:fileId/revision" element={<FileHistory />} />
+          <Route path="file/:fileId/share" element={<ShareFileView />} />
+          <Route path="file/:fileId/qualify" element={<QualifyFileView />} />
+          <Route path="share" element={<ShareDisplayedFolderView />} />
+          <Route path="move" element={<MoveFilesView />} />
+        </Route>
+      ) : null}
     </Route>
   </Routes>
 )

@@ -29,6 +29,7 @@ declare module 'cozy-ui/transpiled/react' {
 declare module 'cozy-ui/transpiled/react/providers/I18n' {
   export const useI18n: () => {
     t: (key: string, options?: Record<string, unknown>) => string
+    lang: string
   }
 }
 
@@ -93,9 +94,9 @@ declare module '*.svg' {
 declare module 'cozy-ui/transpiled/react/ActionsMenu/Actions' {
   export interface Action {
     name: string
-    label: string
-    icon: React.ComponentType
-    displayInSelectionBar: boolean
+    label?: string
+    icon: React.ComponentType | string
+    displayInSelectionBar?: boolean
     displayCondition?: (
       docs: import('components/FolderPicker/types').IOCozyFileWithExtra[]
     ) => boolean
@@ -109,7 +110,23 @@ declare module 'cozy-ui/transpiled/react/ActionsMenu/Actions' {
   export function divider(): Action
 
   export function makeActions(
-    arg1: ((T) => Action)[],
+    arg1: ((props?: T) => Action)[],
     T
   ): Record<string, () => Action>
+}
+
+declare module 'cozy-sharing' {
+  export const useSharingContext: () => {
+    allLoaded: boolean
+    refresh: () => void
+  }
+}
+
+declare module 'cozy-ui/transpiled/react/Nav' {
+  export const NavIcon: React.ComponentType<{
+    icon: string | React.ComponentType
+  }>
+  export const NavText: React.ComponentType
+  export const NavItem: React.ComponentType
+  export const NavLink: { className: string; activeClassName: string }
 }
