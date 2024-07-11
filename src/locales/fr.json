@@ -9,6 +9,7 @@
     "item_settings": "Paramètres",
     "item_collect": "Administratif",
     "item_shared_drives": "Drives partagés",
+    "item_favorites": "Favoris",
     "item_my_drive": "Mon Drive",
     "btn-client": "Télécharger Cozy Drive ",
     "support-us": "Voir les offres",
@@ -33,7 +34,8 @@
     "title_activity": "Activité",
     "title_trash": "Corbeille",
     "label": "Voir le chemin",
-    "title_shared_drives": "Drives"
+    "title_shared_drives": "Drives",
+    "title_favorites": "Favoris"
   },
   "Toolbar": {
     "more": "Plus"

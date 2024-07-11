@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 
 import UINav from 'cozy-ui/transpiled/react/Nav'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
+import { FavoriteItems } from 'modules/navigation/FavoriteItems'
 import { NavItem } from 'modules/navigation/NavItem'
 import { SharingsNavItem } from 'modules/navigation/SharingsNavItem'
 
 export const Nav = () => {
   const clickState = useState(null)
+  const { isDesktop } = useBreakpoints()
 
   return (
     <UINav>
@@ -17,6 +20,15 @@ export const Nav = () => {
         rx={/\/(folder|nextcloud)(\/.*)?/}
         clickState={clickState}
       />
+      {!isDesktop ? (
+        <NavItem
+          to="/favorites"
+          icon="star"
+          label="favorites"
+          rx={/\/favorites(\/.*)?/}
+          clickState={clickState}
+        />
+      ) : null}
       <NavItem
         to="/recent"
         icon="clock"
@@ -32,6 +44,9 @@ export const Nav = () => {
         rx={/\/trash(\/.*)?/}
         clickState={clickState}
       />
+      {isDesktop ? (
+        <FavoriteItems clickState={clickState} className="u-mt-half" />
+      ) : null}
     </UINav>
   )
 }

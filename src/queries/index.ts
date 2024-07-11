@@ -459,3 +459,28 @@ export const buildNextcloudShortcutQuery: QueryBuilder<
     singleDocData: true
   }
 })
+
+interface buildFavoritesQueryParams {
+  sortAttribute: string
+  sortOrder: string
+}
+
+export const buildFavoritesQuery: QueryBuilder<buildFavoritesQueryParams> = ({
+  sortAttribute,
+  sortOrder
+}) => ({
+  definition: () =>
+    Q('io.cozy.files')
+      .where({
+        [sortAttribute]: { $gt: null }
+      })
+      .partialIndex({
+        'cozyMetadata.favorite': true
+      })
+      .indexFields([sortAttribute])
+      .sortBy([{ [sortAttribute]: sortOrder }]),
+  options: {
+    as: 'io.cozy.files/metadata.favorite/true',
+    fetchPolicy: defaultFetchPolicy
+  }
+})
