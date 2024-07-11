@@ -42,22 +42,22 @@ declare module 'cozy-ui/transpiled/react/deprecated/Alerter' {
 }
 
 declare module 'cozy-ui/transpiled/react/providers/Alert' {
+  export interface showAlertProps {
+    message: string
+    severity?:
+      | 'primary'
+      | 'secondary'
+      | 'success'
+      | 'error'
+      | 'warning'
+      | 'info'
+    action?: React.ReactNode
+  }
+
+  export type showAlertFunction = (props: showAlertProps) => void
+
   export const useAlert: () => {
-    showAlert: ({
-      message,
-      severity,
-      action
-    }: {
-      message: string
-      severity?:
-        | 'primary'
-        | 'secondary'
-        | 'success'
-        | 'error'
-        | 'warning'
-        | 'info'
-      action: React.ReactNode
-    }) => void
+    showAlert: showAlertFunction
   }
 }
 
@@ -77,8 +77,39 @@ declare module 'models/index' {
   }
 }
 
+declare module 'cozy-client/dist/models/file' {
+  export const splitFilename: (file: IOCozyFile) => {
+    filename: string
+    extension: string
+  }
+}
+
 declare module '*.svg' {
   import { FC, SVGProps } from 'react'
   const content: FC<SVGProps<SVGElement>>
   export default content
+}
+
+declare module 'cozy-ui/transpiled/react/ActionsMenu/Actions' {
+  export interface Action {
+    name: string
+    label: string
+    icon: React.ComponentType
+    displayInSelectionBar: boolean
+    displayCondition?: (
+      docs: import('components/FolderPicker/types').IOCozyFileWithExtra[]
+    ) => boolean
+    action?: (
+      docs: import('components/FolderPicker/types').IOCozyFileWithExtra[],
+      opts: { handleAction: HandleActionCallback }
+    ) => Promise<void>
+    Component: ForwardRefExoticComponent<RefAttributes<React.ComponentType>>
+  }
+
+  export function divider(): Action
+
+  export function makeActions(
+    arg1: ((T) => Action)[],
+    T
+  ): Record<string, () => Action>
 }

@@ -5,6 +5,7 @@ import { useNavigate, Outlet, useLocation } from 'react-router-dom'
 import { useClient } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
 import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -23,7 +24,9 @@ import {
   hr,
   share
 } from 'modules/actions'
+import { addToFavorites } from 'modules/actions/components/addToFavorites'
 import { moveTo } from 'modules/actions/components/moveTo'
+import { removeFromFavorites } from 'modules/actions/components/removeFromFavorites'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import Toolbar from 'modules/drive/Toolbar'
@@ -47,6 +50,7 @@ export const RecentView = () => {
   const { allLoaded, refresh } = useSharingContext()
   const dispatch = useDispatch()
   useHead()
+  const { showAlert } = useAlert()
 
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
     isMobile,
@@ -89,7 +93,8 @@ export const RecentView = () => {
     hasWriteAccess: true,
     canMove: true,
     isPublic: false,
-    allLoaded
+    allLoaded,
+    showAlert
   }
 
   const actions = makeActions(
@@ -101,6 +106,8 @@ export const RecentView = () => {
       rename,
       moveTo,
       duplicate,
+      addToFavorites,
+      removeFromFavorites,
       hr,
       versions,
       hr,

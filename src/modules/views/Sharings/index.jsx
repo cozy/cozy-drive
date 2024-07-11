@@ -5,6 +5,7 @@ import { useNavigate, useLocation, Outlet } from 'react-router-dom'
 import { useClient, hasQueryBeenLoaded } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
 import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -15,7 +16,9 @@ import FolderViewHeader from '../Folder/FolderViewHeader'
 import useHead from 'components/useHead'
 import { useModalContext } from 'lib/ModalContext'
 import { download, rename, qualify, versions, share, hr } from 'modules/actions'
+import { addToFavorites } from 'modules/actions/components/addToFavorites'
 import { moveTo } from 'modules/actions/components/moveTo'
+import { removeFromFavorites } from 'modules/actions/components/removeFromFavorites'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import Toolbar from 'modules/drive/Toolbar'
@@ -40,6 +43,7 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
   const { allLoaded, refresh } = useSharingContext()
   const dispatch = useDispatch()
   useHead()
+  const { showAlert } = useAlert()
 
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
     isMobile,
@@ -86,11 +90,23 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
     hasWriteAccess: true,
     canMove: true,
     isPublic: false,
-    allLoaded
+    allLoaded,
+    showAlert
   }
 
   const actions = makeActions(
-    [share, download, hr, qualify, rename, moveTo, hr, versions],
+    [
+      share,
+      download,
+      hr,
+      qualify,
+      rename,
+      moveTo,
+      addToFavorites,
+      removeFromFavorites,
+      hr,
+      versions
+    ],
     actionsOptions
   )
 
