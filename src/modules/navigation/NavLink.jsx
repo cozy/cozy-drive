@@ -16,8 +16,7 @@ const NavLink = ({
   children,
   to,
   rx,
-  clickState: [lastClicked, setLastClicked],
-  isExternal
+  clickState: [lastClicked, setLastClicked]
 }) => {
   const location = useLocation()
   const pathname = lastClicked ? lastClicked : location.pathname
@@ -34,7 +33,6 @@ const NavLink = ({
         UINavLink.className,
         isActive ? UINavLink.activeClassName : null
       )}
-      {...(isExternal ? { target: '_blank', rel: 'noreferrer' } : {})}
     >
       {children}
     </a>

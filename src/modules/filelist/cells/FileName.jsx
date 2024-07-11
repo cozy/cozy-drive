@@ -82,8 +82,7 @@ const FileName = ({
   formattedSize,
   formattedUpdatedAt,
   refreshFolderContent,
-  isInSyncFromSharing,
-  isExternal
+  isInSyncFromSharing
 }) => {
   const { t } = useI18n()
   const classes = cx(
@@ -165,8 +164,7 @@ const FileName = ({
                 <MidEllipsis text={attributes.displayedPath} />
               </Link>
             ))}
-          {!isExternal &&
-            !withFilePath &&
+          {!withFilePath &&
             (isDirectory(attributes) || (
               <div className={styles['fil-file-infos']}>
                 {`${formattedUpdatedAt}${

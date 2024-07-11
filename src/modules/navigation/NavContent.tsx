@@ -2,24 +2,19 @@ import React from 'react'
 
 import Badge from 'cozy-ui/transpiled/react/Badge'
 import Circle from 'cozy-ui/transpiled/react/Circle'
-import Icon from 'cozy-ui/transpiled/react/Icon'
-import OpenWithIcon from 'cozy-ui/transpiled/react/Icons/Openwith'
 import { NavIcon, NavText } from 'cozy-ui/transpiled/react/Nav'
-import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 interface NavContentProps {
   icon?: string
   badgeContent?: number
   label?: string
-  isExternal?: boolean
 }
 
 const NavContent: React.FC<NavContentProps> = ({
   icon,
   badgeContent,
-  label,
-  isExternal
+  label
 }) => {
   const { isDesktop } = useBreakpoints()
 
@@ -52,22 +47,6 @@ const NavContent: React.FC<NavContentProps> = ({
         </>
       )
     }
-  }
-
-  // Used for shared drives (eg. NextCloud)
-  if (isExternal) {
-    return (
-      <>
-        <Typography variant="inherit" color="inherit" noWrap>
-          {label}
-        </Typography>
-        <Icon
-          icon={OpenWithIcon}
-          size={11}
-          style={{ marginLeft: '4px', flexShrink: '0' }}
-        />
-      </>
-    )
   }
 
   return (

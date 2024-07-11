@@ -26,7 +26,6 @@ const FolderPickerHeaderIllustration: React.FC<
           file={firstItem}
           isEncrypted={false}
           isInSyncFromSharing={false}
-          isExternal={false}
         />
       )
     }
