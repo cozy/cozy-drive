@@ -46,8 +46,7 @@ const File = ({
   breakpoints: { isExtraLarge, isMobile },
   onFolderOpen,
   onFileOpen,
-  disableSelection = false,
-  isExternal
+  disableSelection = false
 }) => {
   const [actionMenuVisible, setActionMenuVisible] = useState(false)
   const filerowMenuToggleRef = useRef()
@@ -144,7 +143,6 @@ const File = ({
             file={attributes}
             size={isLargeRow ? 96 : undefined}
             isInSyncFromSharing={isInSyncFromSharing}
-            isExternal={isExternal}
           />
         </TableCell>
         <FileName
@@ -157,7 +155,6 @@ const File = ({
           formattedUpdatedAt={formattedUpdatedAt}
           refreshFolderContent={refreshFolderContent}
           isInSyncFromSharing={isInSyncFromSharing}
-          isExternal={isExternal}
         />
         <LastUpdate
           date={updatedAt}
