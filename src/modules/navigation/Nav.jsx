@@ -37,13 +37,6 @@ export const Nav = () => {
         clickState={clickState}
       />
       <SharingsNavItem clickState={clickState} />
-      <NavItem
-        to="/trash"
-        icon="trash"
-        label="trash"
-        rx={/\/trash(\/.*)?/}
-        clickState={clickState}
-      />
       {isDesktop ? (
         <FavoriteItems clickState={clickState} className="u-mt-half" />
       ) : null}
