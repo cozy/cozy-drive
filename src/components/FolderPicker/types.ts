@@ -6,6 +6,7 @@ export type IOCozyFileWithExtra = IOCozyFile & {
   cozyMetadata?: {
     createdByApp?: string
     sourceAccount?: string
+    favorite?: boolean
   }
   metadata?: {
     instanceName?: string

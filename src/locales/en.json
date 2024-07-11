@@ -814,5 +814,16 @@
   },
   "NextcloudBanner": {
     "title": "The items below are displayed from a NextCloud drive and are not stored in your Cozy."
+  },
+  "favorites": {
+    "label": {
+      "add": "Add to favorites",
+      "remove": "Remove from favorites"
+    },
+    "error": "An error occurred, please try again.",
+    "success": {
+      "add": "%{filename} has been added to favorites |||| These items have been added to favorites",
+      "remove": "%{filename} has been removed from favorites |||| These items have been removed from favorites"
+    }
   }
 }

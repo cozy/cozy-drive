@@ -8,6 +8,7 @@ import flag from 'cozy-flags'
 import { useVaultClient } from 'cozy-keys-lib'
 import { useSharingContext } from 'cozy-sharing'
 import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -26,7 +27,9 @@ import {
   versions,
   hr
 } from 'modules/actions'
+import { addToFavorites } from 'modules/actions/components/addToFavorites'
 import { moveTo } from 'modules/actions/components/moveTo'
+import { removeFromFavorites } from 'modules/actions/components/removeFromFavorites'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
@@ -69,6 +72,7 @@ const DriveFolderView = () => {
     desktopExtraColumnsNames,
     mobileExtraColumnsNames
   })
+  const { showAlert } = useAlert()
 
   const extraColumns = useExtraColumns({
     columnsNames: extraColumnsNames,
@@ -135,7 +139,8 @@ const DriveFolderView = () => {
     hasWriteAccess: canWriteToCurrentFolder,
     canMove: true,
     isPublic: false,
-    allLoaded
+    allLoaded,
+    showAlert
   }
   const actions = makeActions(
     [
@@ -146,6 +151,8 @@ const DriveFolderView = () => {
       rename,
       moveTo,
       duplicate,
+      addToFavorites,
+      removeFromFavorites,
       hr,
       versions,
       hr,
