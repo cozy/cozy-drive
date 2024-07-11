@@ -38,7 +38,7 @@ const FolderPickerTopbar: React.FC<FolderPickerTopbarProps> = ({
 
   const { instanceName } = useNextcloudInfos({
     sourceAccount: folder?.cozyMetadata?.sourceAccount
-  }) as { instanceName?: string }
+  })
 
   const handleNavigateTo = useCallback(async () => {
     if (!folder) {
