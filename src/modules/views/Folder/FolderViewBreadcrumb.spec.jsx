@@ -9,7 +9,7 @@ import {
 } from 'test/dummies/dummyBreadcrumbPath'
 
 jest.mock('./hooks/useBreadcrumbPath')
-jest.mock('modules/navigation/Breadcrumb/MobileAwareBreadcrumb', () => ({
+jest.mock('modules/breadcrumb/components/MobileAwareBreadcrumb', () => ({
   // eslint-disable-next-line react/display-name
   MobileAwareBreadcrumb: ({ path, opening }) => (
     <div

@@ -11,9 +11,9 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import IconServer from 'assets/icons/icon-server.svg'
 import { ROOT_DIR_ID } from 'constants/config'
-import { DesktopBreadcrumbItem } from 'modules/navigation/Breadcrumb/components/DesktopBreadcrumb/DesktopBreadcrumbItem'
+import { DesktopBreadcrumbItem } from 'modules/breadcrumb/components/DesktopBreadcrumbItem'
 
-import styles from 'modules/navigation/Breadcrumb/breadcrumb.styl'
+import styles from 'modules/breadcrumb/styles/breadcrumb.styl'
 
 const DesktopBreadcrumb = ({ onBreadcrumbClick, path }) => {
   const { t } = useI18n()

@@ -7,11 +7,11 @@ import MobileAwareBreadcrumb from './MobileAwareBreadcrumb'
 
 jest.mock('cozy-ui/transpiled/react/providers/Breakpoints')
 // eslint-disable-next-line react/display-name
-jest.mock('./components/DesktopBreadcrumb/DesktopBreadcrumb', () => () => (
+jest.mock('modules/breadcrumb/components/DesktopBreadcrumb', () => () => (
   <div data-testid="desktop-breadcrumb" />
 ))
 // eslint-disable-next-line react/display-name
-jest.mock('./components/MobileBreadcrumb/MobileBreadcrumb', () => () => (
+jest.mock('modules/breadcrumb/components/MobileBreadcrumb', () => () => (
   <div data-testid="mobile-breadcrumb" />
 ))
 

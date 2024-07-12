@@ -23,6 +23,7 @@ import {
 import { addToFavorites } from 'modules/actions/components/addToFavorites'
 import { moveTo } from 'modules/actions/components/moveTo'
 import { removeFromFavorites } from 'modules/actions/components/removeFromFavorites'
+import { MobileAwareBreadcrumb as Breadcrumb } from 'modules/breadcrumb/components/MobileAwareBreadcrumb'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import {
   useExtraColumns,
@@ -31,7 +32,6 @@ import {
 import Toolbar from 'modules/drive/Toolbar'
 import { FolderBody } from 'modules/folder/components/FolderBody'
 import { useFileOpeningHandler } from 'modules/folder/hooks/useFileOpeningHandler'
-import { MobileAwareBreadcrumb as Breadcrumb } from 'modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
 import { useFolderSort } from 'modules/navigation/duck'
 import FolderView from 'modules/views/Folder/FolderView'
 import FolderViewHeader from 'modules/views/Folder/FolderViewHeader'

@@ -19,11 +19,11 @@ import { download, rename, qualify, versions, share, hr } from 'modules/actions'
 import { addToFavorites } from 'modules/actions/components/addToFavorites'
 import { moveTo } from 'modules/actions/components/moveTo'
 import { removeFromFavorites } from 'modules/actions/components/removeFromFavorites'
+import { MobileAwareBreadcrumb as Breadcrumb } from 'modules/breadcrumb/components/MobileAwareBreadcrumb'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import Toolbar from 'modules/drive/Toolbar'
 import FileListRowsPlaceholder from 'modules/filelist/FileListRowsPlaceholder'
-import { MobileAwareBreadcrumb as Breadcrumb } from 'modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
 import { useFilesQueryWithPath } from 'modules/views/hooks'
 import {
   buildSharingsQuery,
