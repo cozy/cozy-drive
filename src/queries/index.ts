@@ -44,7 +44,7 @@ export const buildDriveQuery: QueryBuilder<buildDriveQueryParams> = ({
         // This is to avoid fetching shared drives
         // They are hidden clientside
         _id: {
-          $nin: [TRASH_DIR_ID]
+          $nin: [TRASH_DIR_ID, 'io.cozy.files.shared-drives-dir']
         }
       })
       .indexFields(['dir_id', 'type', sortAttribute])
