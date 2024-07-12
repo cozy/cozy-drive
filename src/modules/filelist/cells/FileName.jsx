@@ -14,6 +14,7 @@ import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
 import { TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import { TRASH_DIR_ID } from 'constants/config'
 import RenameInput from 'modules/drive/RenameInput'
 
 import styles from 'styles/filelist.styl'
@@ -94,6 +95,13 @@ const FileName = ({
 
   const { title, filename, extension } = useMemo(() => {
     const { filename, extension } = CozyFile.splitFilename(attributes)
+
+    if (attributes._id === TRASH_DIR_ID) {
+      return {
+        title: t('FileName.trash'),
+        filename: t('FileName.trash')
+      }
+    }
 
     if (attributes._id === 'io.cozy.files.shared-drives-dir') {
       return {

@@ -14,7 +14,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import HarvestBanner from './HarvestBanner'
 import useHead from 'components/useHead'
-import { ROOT_DIR_ID } from 'constants/config'
+import { ROOT_DIR_ID, TRASH_DIR_ID } from 'constants/config'
 import { FabContext } from 'lib/FabProvider'
 import { useModalContext } from 'lib/ModalContext'
 import {
@@ -46,7 +46,8 @@ import FolderViewHeader from 'modules/views/Folder/FolderViewHeader'
 import { useResumeUploadFromFlagship } from 'modules/views/Upload/useResumeFromFlagship'
 import {
   buildDriveQuery,
-  buildFileWithSpecificMetadataAttributeQuery
+  buildFileWithSpecificMetadataAttributeQuery,
+  buildMagicFolderQuery
 } from 'queries'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
@@ -56,7 +57,7 @@ const DriveFolderView = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const params = useParams()
-  const currentFolderId = useCurrentFolderId() || ROOT_DIR_ID
+  const currentFolderId = useCurrentFolderId()
   useHead()
   const { isSelectionBarVisible } = useSelectionContext()
   const { isMobile } = useBreakpoints()
@@ -98,11 +99,22 @@ const DriveFolderView = () => {
     sortAttribute: sortOrder.attribute,
     sortOrder: sortOrder.order
   })
+  const trashFolderQuery = buildMagicFolderQuery({
+    id: TRASH_DIR_ID,
+    enabled: currentFolderId === ROOT_DIR_ID
+  })
 
   const foldersResult = useQuery(folderQuery.definition, folderQuery.options)
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
+  const trashFolderResult = useQuery(
+    trashFolderQuery.definition,
+    trashFolderQuery.options
+  )
 
-  const allResults = [foldersResult, filesResult]
+  let allResults = [foldersResult, filesResult]
+  if (currentFolderId === ROOT_DIR_ID) {
+    allResults = [foldersResult, trashFolderResult, filesResult]
+  }
 
   const isInError = allResults.some(result => result.fetchStatus === 'failed')
   const isLoading = allResults.some(
@@ -112,7 +124,11 @@ const DriveFolderView = () => {
 
   const navigateToFolder = useCallback(
     folder => {
-      navigate(`/folder/${folder._id}`)
+      if (folder._id === TRASH_DIR_ID) {
+        navigate('/trash')
+      } else {
+        navigate(`/folder/${folder._id}`)
+      }
     },
     [navigate]
   )
@@ -209,7 +225,7 @@ const DriveFolderView = () => {
           navigateToFolder={navigateToFolder}
           navigateToFile={navigateToFile}
           actions={actions}
-          queryResults={[foldersResult, filesResult]}
+          queryResults={allResults}
           canSort
           currentFolderId={currentFolderId}
           displayedFolder={displayedFolder}

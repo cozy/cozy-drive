@@ -5,6 +5,21 @@ import log from 'cozy-logger'
 
 import { fetchFolder } from 'modules/breadcrumb/utils/fetchFolder'
 
+/**
+ * @typedef {Object} BreadcrumbPath
+ * @property {string} name - The name of the folder.
+ * @property {string} id - The ID of the folder.
+ */
+
+/**
+ * Custom hook that retrieves the breadcrumb path for a given folder.
+ *
+ * @param {Object} options - The options for retrieving the breadcrumb path.
+ * @param {string} options.currentFolderId - The ID of the current folder.
+ * @param {BreadcrumbPath} options.rootBreadcrumbPath - The root breadcrumb path object.
+ * @param {string[]} [options.sharedDocumentIds] - The IDs of shared documents.
+ * @returns {BreadcrumbPath[]} - The breadcrumb path as an array of objects.
+ */
 export const useBreadcrumbPath = ({
   currentFolderId,
   rootBreadcrumbPath,

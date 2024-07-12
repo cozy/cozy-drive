@@ -20,6 +20,7 @@ import {
   FileAction,
   SharingShortcutBadge
 } from './cells'
+import { TRASH_DIR_ID } from 'constants/config'
 import { ActionMenuWithHeader } from 'modules/actionmenu/ActionMenuWithHeader'
 import { extraColumnsPropTypes } from 'modules/certifications'
 import { isRenaming, getRenamingFile } from 'modules/drive/rename'
@@ -113,13 +114,23 @@ const File = ({
 
   const selected = isItemSelected(attributes.id)
 
+  // We don't allow any action on shared drives and trash
+  // because they are magic folder created by the stack
+  const canInteractWithFile =
+    attributes._id !== 'io.cozy.files.shared-drives-dir' &&
+    attributes._id !== TRASH_DIR_ID
+
   return (
     <TableRow className={filContentRowSelected}>
       <SelectBox
         withSelectionCheckbox={withSelectionCheckbox}
         selected={selected}
         onClick={e => toggle(e)}
-        disabled={isRowDisabledOrInSyncFromSharing || disableSelection}
+        disabled={
+          !canInteractWithFile ||
+          isRowDisabledOrInSyncFromSharing ||
+          disableSelection
+        }
       />
       <FileOpener
         file={attributes}
@@ -172,7 +183,7 @@ const File = ({
         />
         <SharingShortcutBadge file={attributes} />
       </FileOpener>
-      {actions && attributes._id !== 'io.cozy.files.shared-drives-dir' && (
+      {actions && canInteractWithFile && (
         <FileAction
           t={t}
           ref={filerowMenuToggleRef}
