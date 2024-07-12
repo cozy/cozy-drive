@@ -4,7 +4,7 @@ import React, { useCallback } from 'react'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconButton from 'cozy-ui/transpiled/react/IconButton'
 
-import styles from 'modules/navigation/Breadcrumb/breadcrumb.styl'
+import styles from 'modules/breadcrumb/styles/breadcrumb.styl'
 
 const DesktopBreadcrumbItem = ({ item, isCurrent, onClick, icon }) => {
   const handleClick = useCallback(

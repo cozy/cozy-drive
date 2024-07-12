@@ -3,7 +3,7 @@ import React, { useCallback } from 'react'
 
 import { useQuery } from 'cozy-client'
 
-import { MobileAwareBreadcrumb as Breadcrumb } from 'modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
+import { MobileAwareBreadcrumb as Breadcrumb } from 'modules/breadcrumb/components/MobileAwareBreadcrumb'
 import { buildFolderQuery } from 'queries'
 
 const FolderViewBreadcrumb = ({

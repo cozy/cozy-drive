@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { ROOT_DIR_ID } from 'constants/config'
-import { MobileAwareBreadcrumb as Breadcrumb } from 'modules/navigation/Breadcrumb/MobileAwareBreadcrumb'
+import { MobileAwareBreadcrumb as Breadcrumb } from 'modules/breadcrumb/components/MobileAwareBreadcrumb'
 import { useNextcloudInfos } from 'modules/nextcloud/hooks/useNextcloudInfos'
 
 const NextcloudBreadcrumb = ({ sourceAccount, path }) => {
