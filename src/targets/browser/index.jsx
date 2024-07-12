@@ -22,7 +22,7 @@ import flag from 'cozy-flags'
 import setupApp from './setupAppContext'
 import App from 'components/App/App'
 import AppRoute from 'modules/navigation/AppRoute'
-import AppBarSearch from 'modules/search/AppBarSearch'
+import AppBarSearch from 'modules/search/components/AppBarSearch'
 
 // ambient styles
 import styles from 'styles/main.styl' // eslint-disable-line no-unused-vars
