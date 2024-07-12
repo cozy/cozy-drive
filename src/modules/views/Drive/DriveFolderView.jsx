@@ -103,6 +103,10 @@ const DriveFolderView = () => {
     id: TRASH_DIR_ID,
     enabled: currentFolderId === ROOT_DIR_ID
   })
+  const sharedFolderQuery = buildMagicFolderQuery({
+    id: 'io.cozy.files.shared-drives-dir',
+    enabled: currentFolderId === ROOT_DIR_ID
+  })
 
   const foldersResult = useQuery(folderQuery.definition, folderQuery.options)
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
@@ -110,10 +114,24 @@ const DriveFolderView = () => {
     trashFolderQuery.definition,
     trashFolderQuery.options
   )
+  const sharedFolderResult = useQuery(
+    sharedFolderQuery.definition,
+    sharedFolderQuery.options
+  )
 
   let allResults = [foldersResult, filesResult]
   if (currentFolderId === ROOT_DIR_ID) {
-    allResults = [foldersResult, trashFolderResult, filesResult]
+    // The folder may not be found if the user has not configured shared drives
+    if (sharedFolderResult.fetchStatus === 'loaded') {
+      allResults = [
+        sharedFolderResult,
+        foldersResult,
+        trashFolderResult,
+        filesResult
+      ]
+    } else {
+      allResults = [foldersResult, trashFolderResult, filesResult]
+    }
   }
 
   const isInError = allResults.some(result => result.fetchStatus === 'failed')
