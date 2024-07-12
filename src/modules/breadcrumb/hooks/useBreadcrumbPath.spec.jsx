@@ -4,7 +4,7 @@ import { useClient } from 'cozy-client'
 import log from 'cozy-logger'
 
 import { useBreadcrumbPath } from './useBreadcrumbPath'
-import { fetchFolder } from '../queries/fetchFolder'
+import { fetchFolder } from 'modules/breadcrumb/utils/fetchFolder'
 import {
   dummyBreadcrumbPath,
   dummyRootBreadcrumbPath
@@ -12,7 +12,7 @@ import {
 
 jest.mock('cozy-logger')
 jest.mock('cozy-client')
-jest.mock('../queries/fetchFolder')
+jest.mock('modules/breadcrumb/utils/fetchFolder')
 
 describe('useBreadcrumbPath', () => {
   const rootBreadcrumbPath = dummyRootBreadcrumbPath()
