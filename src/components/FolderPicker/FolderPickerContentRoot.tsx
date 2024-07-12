@@ -10,8 +10,7 @@ import { FolderPickerContentLoader } from 'components/FolderPicker/FolderPickerC
 import { computeNextcloudRootFolder } from 'components/FolderPicker/helpers'
 import { ROOT_DIR_ID } from 'constants/config'
 import { DumbFile as File } from 'modules/filelist/File'
-import { buildSharedDrivesQuery } from 'modules/views/Folder/queries/fetchSharedDrives'
-import { buildOnlyFolderQuery } from 'queries'
+import { buildOnlyFolderQuery, buildSharedDrivesQuery } from 'queries'
 
 interface Props {
   navigateTo: (folder?: import('./types').File) => void

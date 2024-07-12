@@ -501,3 +501,42 @@ export const buildMagicFolderQuery: QueryBuilder<
     enabled
   }
 })
+
+interface buildSharedDrivesQueryParams {
+  sortAttribute: string
+  sortOrder: string
+}
+
+/**
+ * Builds a query to fetch shared drives
+ * This only fetches shortcuts for now as it used to access external drives like Nextcloud
+ */
+export const buildSharedDrivesQuery: QueryBuilder<
+  buildSharedDrivesQueryParams
+> = ({ sortAttribute, sortOrder }) => ({
+  definition: () =>
+    Q('io.cozy.files')
+      .where({
+        dir_id: SHARED_DRIVES_DIR_ID,
+        class: 'shortcut',
+        [sortAttribute]: { $gt: null }
+      })
+      .partialIndex({
+        // This is to avoid fetching trash
+        // They are hidden clientside
+        _id: {
+          $nin: [TRASH_DIR_ID]
+        }
+      })
+      .indexFields(['dir_id', 'class', sortAttribute])
+      .sortBy([
+        { dir_id: sortOrder },
+        { class: sortOrder },
+        { [sortAttribute]: sortOrder }
+      ])
+      .limitBy(100),
+  options: {
+    as: `${SHARED_DRIVES_DIR_ID}/sortAttribute/${sortAttribute}/sortOrder/${sortOrder}`,
+    fetchPolicy: CozyClient.fetchPolicies.olderThan(1000 * 60 * 10) // 10 minutes
+  }
+})
