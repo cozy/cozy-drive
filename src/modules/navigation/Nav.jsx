@@ -17,7 +17,7 @@ export const Nav = () => {
         to="/folder"
         icon="folder"
         label="drive"
-        rx={/\/(folder|nextcloud)(\/.*)?/}
+        rx={/\/(folder|nextcloud|trash)(\/.*)?/}
         clickState={clickState}
       />
       {!isDesktop ? (

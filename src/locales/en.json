@@ -812,7 +812,8 @@
     "delete": "Delete"
   },
   "FileName": {
-    "sharedDrive": "Drives"
+    "sharedDrive": "Drives",
+    "trash": "Trash"
   },
   "NextcloudBanner": {
     "title": "The items below are displayed from a NextCloud drive and are not stored in your Cozy."

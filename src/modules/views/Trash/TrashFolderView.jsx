@@ -1,5 +1,5 @@
 import { useCurrentFolderId, useDisplayedFolder } from 'hooks'
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback } from 'react'
 import { useNavigate, Outlet } from 'react-router-dom'
 
 import { useQuery, useClient } from 'cozy-client'
@@ -10,16 +10,16 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import FolderView from '../Folder/FolderView'
 import FolderViewBody from '../Folder/FolderViewBody'
-import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
 import FolderViewHeader from '../Folder/FolderViewHeader'
 import useHead from 'components/useHead'
-import { TRASH_DIR_ID } from 'constants/config'
+import { ROOT_DIR_ID } from 'constants/config'
 import { useModalContext } from 'lib/ModalContext'
 import { restore, destroy } from 'modules/actions'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import { useFolderSort } from 'modules/navigation/duck'
 import TrashToolbar from 'modules/trash/Toolbar'
+import { TrashBreadcrumb } from 'modules/trash/components/TrashBreadcrumb'
 import {
   buildTrashQuery,
   buildFileWithSpecificMetadataAttributeQuery
@@ -72,8 +72,13 @@ export const TrashFolderView = () => {
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
 
   const navigateToFolder = useCallback(
-    folder => {
-      navigate(`/trash/${folder.id}`)
+    ({ id }) => {
+      // We can navigate to the root folder inside the breadcrumb
+      if (id === ROOT_DIR_ID) {
+        navigate(`/folder/${ROOT_DIR_ID}`)
+      } else {
+        navigate(`/trash/${id}`)
+      }
     },
     [navigate]
   )
@@ -94,24 +99,13 @@ export const TrashFolderView = () => {
   }
   const actions = makeActions([restore, destroy], actionsOptions)
 
-  const rootBreadcrumbPath = useMemo(
-    () => ({
-      id: TRASH_DIR_ID,
-      name: t('breadcrumb.title_trash')
-    }),
-    [t]
-  )
-
   return (
     <FolderView isNotFound={isNotFound}>
       <FolderViewHeader>
-        {currentFolderId && (
-          <FolderViewBreadcrumb
-            rootBreadcrumbPath={rootBreadcrumbPath}
-            currentFolderId={currentFolderId}
-            navigateToFolder={navigateToFolder}
-          />
-        )}
+        <TrashBreadcrumb
+          currentFolderId={currentFolderId}
+          navigateToFolder={navigateToFolder}
+        />
         <TrashToolbar />
       </FolderViewHeader>
       <FolderViewBody

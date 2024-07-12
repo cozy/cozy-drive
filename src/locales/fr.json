@@ -813,7 +813,8 @@
     "delete": "Supprimer"
   },
   "FileName": {
-    "sharedDrive": "Drives"
+    "sharedDrive": "Drives",
+    "trash": "Corbeille"
   },
   "NextcloudBanner": {
     "title": "Les éléments ci-dessous sont affichés depuis un drive NextCloud et ne sont pas stockés dans votre Cozy."

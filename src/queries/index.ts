@@ -484,3 +484,20 @@ export const buildFavoritesQuery: QueryBuilder<buildFavoritesQueryParams> = ({
     fetchPolicy: defaultFetchPolicy
   }
 })
+
+interface buildMagicFolderQueryParams {
+  id: string
+  enabled?: boolean
+}
+
+export const buildMagicFolderQuery: QueryBuilder<
+  buildMagicFolderQueryParams
+> = ({ id, enabled = false }) => ({
+  definition: () => Q('io.cozy.files').getById(id),
+  options: {
+    as: 'io.cozy.files/' + id,
+    fetchPolicy: defaultFetchPolicy,
+    singleDocData: false,
+    enabled
+  }
+})
