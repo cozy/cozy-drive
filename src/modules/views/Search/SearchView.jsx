@@ -8,6 +8,7 @@ import { models, useClient } from 'cozy-client'
 import { isFlagshipApp } from 'cozy-device-helper'
 import { useWebviewIntent } from 'cozy-intent'
 import Input from 'cozy-ui/transpiled/react/Input'
+import { Main } from 'cozy-ui/transpiled/react/Layout'
 import List from 'cozy-ui/transpiled/react/List'
 import LoadMore from 'cozy-ui/transpiled/react/LoadMore'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -87,7 +88,7 @@ const SearchView = () => {
   const hasNoSearchResult = searchTerm !== '' && !hasSuggestions
 
   return (
-    <>
+    <Main>
       {isMobile && (
         <BarLeft>
           <BackButton onClick={navigateBack} />
@@ -116,29 +117,27 @@ const SearchView = () => {
           </BarSearchInputGroup>
         </div>
       </BarSearch>
-      <div className="u-flex u-flex-column u-w-100 u-ov-auto">
-        {hasSuggestions && (
-          <List>
-            {suggestions.map(suggestion => (
-              <SuggestionItem
-                suggestion={suggestion}
-                query={query}
-                key={suggestion.id}
-                onClick={openSuggestion}
-                isMobile={isMobile}
-              />
-            ))}
-          </List>
-        )}
-        {hasMore && (
-          <div className="u-flex u-flex-justify-center">
-            <LoadMore label={t('table.load_more')} fetchMore={fetchMore} />
-          </div>
-        )}
-        {hasNoSearchResult && !isBusy && <SearchEmpty query={query} />}
-        {hasNoSearchResult && isBusy && <SuggestionListSkeleton count={10} />}
-      </div>
-    </>
+      {hasSuggestions && (
+        <List>
+          {suggestions.map(suggestion => (
+            <SuggestionItem
+              suggestion={suggestion}
+              query={query}
+              key={suggestion.id}
+              onClick={openSuggestion}
+              isMobile={isMobile}
+            />
+          ))}
+        </List>
+      )}
+      {hasMore && (
+        <div className="u-flex u-flex-justify-center">
+          <LoadMore label={t('table.load_more')} fetchMore={fetchMore} />
+        </div>
+      )}
+      {hasNoSearchResult && !isBusy && <SearchEmpty query={query} />}
+      {hasNoSearchResult && isBusy && <SuggestionListSkeleton count={10} />}
+    </Main>
   )
 }
 
