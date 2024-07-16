@@ -14,7 +14,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { BarRightOnMobile } from 'components/Bar'
 import { MoreMenu } from 'components/MoreMenu'
-import { selectable } from 'modules/actions/selectable'
+import { selectable } from 'modules/actions/components/selectable'
 import { addFolder } from 'modules/nextcloud/components/actions/addFolder'
 import { downloadNextcloudFolder } from 'modules/nextcloud/components/actions/downloadNextcloudFolder'
 import { openWithinNextcloud } from 'modules/nextcloud/components/actions/openWithinNextcloud'
