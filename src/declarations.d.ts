@@ -90,7 +90,7 @@ declare module 'cozy-ui/transpiled/react/ActionsMenu/Actions' {
     action?: (
       docs: import('cozy-client/types/types').IOCozyFile[],
       opts: { handleAction: HandleActionCallback }
-    ) => Promise<void>
+    ) => Promise<void> | void
     Component: ForwardRefExoticComponent<RefAttributes<React.ComponentType>>
   }
 
