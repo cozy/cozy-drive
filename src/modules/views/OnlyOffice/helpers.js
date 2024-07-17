@@ -1,3 +1,4 @@
+import { generateWebLink } from 'cozy-client'
 import { isMobile } from 'cozy-device-helper'
 import flag from 'cozy-flags'
 import FileTypeSheetIcon from 'cozy-ui/transpiled/react/Icons/FileTypeSheet'
@@ -69,21 +70,24 @@ export const isOfficeEditingEnabled = isDesktop => {
 }
 
 /**
+ * @typedef {Object} OnlyOfficeFileRouteOptions
+ * @property {boolean} [fromCreate] The document will be opened in edit mode
+ * @property {boolean} [fromPathname] Hash to redirect the user when he back
+ * @property {boolean} [fromRedirect] To forward existing redirectLink
+ * @property {boolean} [fromEdit] The document will be opened in edit mode
+ * @property {boolean} [fromPublicFolder] The document is opened from a public folder
+ */
+
+/**
  * Make hash to redirect user to an OnlyOffice file
  * @param {string} fileId Id of the OnlyOffice file
- * @param {object} options
- * @param {boolean} options.withoutRouter To return an path without the hash prefix
- * @param {boolean} options.fromCreate The document will be opened in edit mode
- * @param {boolean} options.fromPathname Hash to redirect the user when he back
- * @param {boolean} options.fromRedirect To forward existing redirectLink
- * @param {boolean} options.fromEdit The document will be opened in edit mode
- * @param {boolean} options.fromPublicFolder The document is opened from a public folder
+ * @param {OnlyOfficeFileRouteOptions} [options] Options
+
  * @returns {string} Path to OnlyOffice
  */
 export const makeOnlyOfficeFileRoute = (
   fileId,
   {
-    withoutRouter = false,
     fromCreate = false,
     fromPathname,
     fromRedirect,
@@ -107,10 +111,30 @@ export const makeOnlyOfficeFileRoute = (
   if (fromPublicFolder) {
     params.append('fromPublicFolder', fromPublicFolder)
   }
+
   const searchParam = params.size > 0 ? `?${params.toString()}` : ''
-  return withoutRouter
-    ? `/#/onlyoffice/${fileId}${searchParam}`
-    : `/onlyoffice/${fileId}${searchParam}`
+  return `/onlyoffice/${fileId}${searchParam}`
+}
+
+/**
+ * Generates the OnlyOffice URL for a given file.
+ *
+ * @param {import('cozy-client/types/types').IOCozyFile} file - The file object.
+ * @param {import('cozy-client/types').CozyClient} client - The client object.
+ * @param {OnlyOfficeFileRouteOptions} routeOptions - The route options object (optional).
+ * @returns {string} The OnlyOffice URL.
+ */
+export const makeOnlyOfficeURL = (file, client, routeOptions = {}) => {
+  const onlyOfficeRoute = makeOnlyOfficeFileRoute(file.id, routeOptions)
+  const currentURL = new URL(window.location)
+  return generateWebLink({
+    slug: 'drive',
+    cozyUrl: client.getStackClient().uri,
+    subDomainType: client.getInstanceOptions().subdomain,
+    pathname: currentURL.pathname,
+    searchParams: currentURL.searchParams,
+    hash: onlyOfficeRoute
+  })
 }
 
 /**
