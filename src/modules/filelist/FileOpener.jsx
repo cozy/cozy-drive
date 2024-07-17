@@ -3,10 +3,10 @@ import propagating from 'propagating-hammerjs'
 import React, { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import { models } from 'cozy-client'
+import { models, useClient } from 'cozy-client'
 
 import styles from './fileopener.styl'
-import { makeOnlyOfficeFileRoute } from 'modules/views/OnlyOffice/helpers'
+import { makeOnlyOfficeURL } from 'modules/views/OnlyOffice/helpers'
 
 const getParentDiv = element => {
   if (element.nodeName.toLowerCase() === 'div') {
@@ -60,6 +60,7 @@ const FileOpener = ({
 }) => {
   const rowRef = useRef()
   const { pathname } = useLocation()
+  const client = useClient()
 
   useEffect(() => {
     if (!rowRef || !rowRef.current) return
@@ -95,16 +96,16 @@ const FileOpener = ({
   ])
 
   if (models.file.shouldBeOpenedByOnlyOffice(file)) {
+    const onlyOfficeURL = makeOnlyOfficeURL(file, client, {
+      fromPathname: pathname
+    })
     return (
       <a
         data-testid="onlyoffice-link"
         className={`${styles['file-opener']} ${styles['file-opener__a']}`}
         ref={rowRef}
         id={file.id}
-        href={makeOnlyOfficeFileRoute(file.id, {
-          withoutRouter: true,
-          fromPathname: pathname
-        })}
+        href={onlyOfficeURL}
         onClick={ev => {
           ev.preventDefault()
         }}

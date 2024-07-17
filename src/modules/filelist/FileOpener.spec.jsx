@@ -13,7 +13,11 @@ jest.mock('cozy-client/dist/models/file', () => ({
   shouldBeOpenedByOnlyOffice: jest.fn()
 }))
 
-const client = createMockClient({})
+const client = createMockClient({
+  clientOptions: {
+    uri: 'http://cozy.tools:8080'
+  }
+})
 const file = generateFile({ i: 0 })
 
 const setup = ({ file }) => {

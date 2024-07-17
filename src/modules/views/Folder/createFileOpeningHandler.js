@@ -5,7 +5,10 @@ import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
 import { DOCTYPE_FILES_SHORTCUT } from 'lib/doctypes'
 import generateShortcutUrl from 'modules/views/Folder/generateShortcutUrl'
-import { makeOnlyOfficeFileRoute } from 'modules/views/OnlyOffice/helpers'
+import {
+  makeOnlyOfficeFileRoute,
+  makeOnlyOfficeURL
+} from 'modules/views/OnlyOffice/helpers'
 
 const createFileOpeningHandler =
   ({
@@ -66,13 +69,11 @@ const createFileOpeningHandler =
       }
     } else if (isOnlyOffice && isOfficeEnabled) {
       if (event.ctrlKey || event.metaKey || event.shiftKey) {
-        openInNewTab(
-          makeOnlyOfficeFileRoute(file.id, {
-            withoutRouter: true,
-            fromPathname: pathname,
-            fromPublicFolder
-          })
-        )
+        const onlyOfficeURL = makeOnlyOfficeURL(file, client, {
+          fromPathname: pathname,
+          fromPublicFolder
+        })
+        openInNewTab(onlyOfficeURL)
       } else {
         routeTo(
           makeOnlyOfficeFileRoute(file.id, {
