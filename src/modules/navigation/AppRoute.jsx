@@ -31,6 +31,7 @@ import { QualifyFileView } from 'modules/views/Modal/QualifyFileView'
 import { ShareDisplayedFolderView } from 'modules/views/Modal/ShareDisplayedFolderView'
 import { ShareFileView } from 'modules/views/Modal/ShareFileView'
 import { NextcloudDeleteView } from 'modules/views/Nextcloud/NextcloudDeleteView'
+import { NextcloudDestroyView } from 'modules/views/Nextcloud/NextcloudDestroyView'
 import { NextcloudFolderView } from 'modules/views/Nextcloud/NextcloudFolderView'
 import { NextcloudMoveView } from 'modules/views/Nextcloud/NextcloudMoveView'
 import { NextcloudTrashEmptyView } from 'modules/views/Nextcloud/NextcloudTrashEmptyView'
@@ -88,6 +89,7 @@ const AppRoute = () => (
               element={<NextcloudTrashView />}
             >
               <Route path="empty" element={<NextcloudTrashEmptyView />} />
+              <Route path="destroy" element={<NextcloudDestroyView />} />
             </Route>
           ) : null}
         </>

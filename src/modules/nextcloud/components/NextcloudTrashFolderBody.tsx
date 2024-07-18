@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, useLocation, useNavigate } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
 import { NextcloudFile, UseQueryReturnValue } from 'cozy-client/types/types'
@@ -9,6 +9,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { FolderBody } from 'modules/folder/components/FolderBody'
 import { restoreNextcloudFile } from 'modules/nextcloud/components/actions/restoreNextcloudFile'
+import { destroy } from 'modules/trash/components/actions/destroy'
 
 interface NextcloudTrashFolderBodyProps {
   path: string
@@ -23,6 +24,8 @@ const NextcloudTrashFolderBody: FC<NextcloudTrashFolderBodyProps> = ({
   const client = useClient()
   const { t } = useI18n()
   const { showAlert } = useAlert()
+  const { pathname } = useLocation()
+  const navigate = useNavigate()
 
   const handleFolderOpen = (folder: NextcloudFile): void => {
     searchParams.set('path', folder.path)
@@ -33,10 +36,13 @@ const NextcloudTrashFolderBody: FC<NextcloudTrashFolderBodyProps> = ({
     window.open(file.links.self, '_blank')
   }
 
-  const fileActions = makeActions([restoreNextcloudFile], {
+  const fileActions = makeActions([restoreNextcloudFile, destroy], {
     t,
     client,
-    showAlert
+    showAlert,
+    pathname,
+    navigate,
+    search: searchParams.toString()
   })
 
   return (
