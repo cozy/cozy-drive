@@ -26,7 +26,7 @@ import DestroyConfirm from 'modules/trash/components/DestroyConfirm'
 
 export { share } from './share'
 
-export const download = ({ client, t, vaultClient }) => {
+export const download = ({ client, t, vaultClient, showAlert }) => {
   const label = t('SelectionBar.download')
   const icon = DownloadIcon
 
@@ -43,7 +43,8 @@ export const download = ({ client, t, vaultClient }) => {
         !(files.length > 1 && files.some(file => isEncryptedFile(file)))
       )
     },
-    action: files => downloadFiles(client, files, { vaultClient }),
+    action: files =>
+      downloadFiles(client, files, { vaultClient, showAlert, t }),
     Component: forwardRef(function Download(props, ref) {
       return (
         <ActionsMenuItem {...props} ref={ref}>

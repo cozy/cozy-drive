@@ -17,7 +17,7 @@ import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterAc
 import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
 import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
 import ToolbarButtons from 'cozy-ui/transpiled/react/Viewer/components/ToolbarButtons'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { translate, useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -47,7 +47,9 @@ export class FileOpener extends Component {
       return this.loadFileInfo(this.props.fileId)
     }
   }
+
   async loadFileInfo(id) {
+    const { showAlert, t } = this.props
     try {
       this.setState({ fileNotFound: false })
       const resp = await cozy.client.files.statById(id, false)
@@ -55,7 +57,9 @@ export class FileOpener extends Component {
       this.setState({ file, loading: false })
     } catch (e) {
       this.setState({ fileNotFound: true, loading: false })
-      Alerter.error('alert.could_not_open_file')
+      showAlert({
+        message: t('alert.could_not_open_file')
+      })
     }
   }
 
@@ -114,6 +118,7 @@ const FileOpenerWrapper = props => {
   const breakpoints = useBreakpoints()
   const { t } = useI18n()
   const { fileId } = useParams()
+  const { showAlert } = useAlert()
 
   return (
     <FileOpener
@@ -121,6 +126,7 @@ const FileOpenerWrapper = props => {
       t={t}
       fileId={fileId}
       navigate={navigate}
+      showAlert={showAlert}
       {...props}
     />
   )

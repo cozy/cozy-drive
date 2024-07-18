@@ -954,6 +954,9 @@ exports[`Dropzone should match snapshot 1`] = `
                       },
                     },
                     "&.overflow": {
+                      "& .cozyDialogContent": {
+                        "overflowY": "visible !important",
+                      },
                       "overflowY": "visible !important",
                     },
                     "&.small": {
@@ -1866,14 +1869,14 @@ exports[`Dropzone should match snapshot 1`] = `
                                 <Memo(AlertProvider)>
                                   <PushBannerProvider>
                                     <FabProvider>
-                                      <withI18n(WithSharingState(withClient(Connect(Dropzone))))
+                                      <withI18n(WithSharingState(withClient(Connect(DropzoneWrapper))))
                                         displayedFolder={
                                           {
                                             "id": "directory-foobar0",
                                           }
                                         }
                                       >
-                                        <WithSharingState(withClient(Connect(Dropzone)))
+                                        <WithSharingState(withClient(Connect(DropzoneWrapper)))
                                           displayedFolder={
                                             {
                                               "id": "directory-foobar0",
@@ -1883,7 +1886,7 @@ exports[`Dropzone should match snapshot 1`] = `
                                           lang="en"
                                           t={[Function]}
                                         >
-                                          <withClient(Connect(Dropzone))
+                                          <withClient(Connect(DropzoneWrapper))
                                             displayedFolder={
                                               {
                                                 "id": "directory-foobar0",
@@ -1901,7 +1904,7 @@ exports[`Dropzone should match snapshot 1`] = `
                                             }
                                             t={[Function]}
                                           >
-                                            <Connect(Dropzone)
+                                            <Connect(DropzoneWrapper)
                                               client={
                                                 CozyClient {
                                                   "uri": undefined,
@@ -1924,7 +1927,7 @@ exports[`Dropzone should match snapshot 1`] = `
                                               }
                                               t={[Function]}
                                             >
-                                              <Dropzone
+                                              <DropzoneWrapper
                                                 client={
                                                   CozyClient {
                                                     "uri": undefined,
@@ -1948,33 +1951,59 @@ exports[`Dropzone should match snapshot 1`] = `
                                                 t={[Function]}
                                                 uploadFiles={[Function]}
                                               >
-                                                <drop-component
-                                                  className=""
-                                                  disableClick={true}
-                                                  onDragEnter={[Function]}
-                                                  onDragLeave={[Function]}
-                                                  onDrop={[Function]}
-                                                  style={{}}
+                                                <Dropzone
+                                                  client={
+                                                    CozyClient {
+                                                      "uri": undefined,
+                                                    }
+                                                  }
+                                                  displayedFolder={
+                                                    {
+                                                      "id": "directory-foobar0",
+                                                    }
+                                                  }
+                                                  f={[Function]}
+                                                  lang="en"
+                                                  sharingState={
+                                                    {
+                                                      "getRecipients": [MockFunction],
+                                                      "getSharingLink": [MockFunction],
+                                                      "hasWriteAccess": [MockFunction],
+                                                      "refresh": [MockFunction],
+                                                    }
+                                                  }
+                                                  showAlert={[Function]}
+                                                  t={[Function]}
+                                                  uploadFiles={[Function]}
                                                 >
-                                                  <button
+                                                  <drop-component
                                                     className=""
-                                                    data-disable-click={true}
-                                                    data-testid="drop-button"
-                                                    onClick={[Function]}
+                                                    disableClick={true}
                                                     onDragEnter={[Function]}
                                                     onDragLeave={[Function]}
+                                                    onDrop={[Function]}
                                                     style={{}}
-                                                  />
-                                                </drop-component>
-                                              </Dropzone>
-                                            </Connect(Dropzone)>
-                                          </withClient(Connect(Dropzone))>
-                                        </WithSharingState(withClient(Connect(Dropzone)))>
-                                      </withI18n(WithSharingState(withClient(Connect(Dropzone))))>
+                                                  >
+                                                    <button
+                                                      className=""
+                                                      data-disable-click={true}
+                                                      data-testid="drop-button"
+                                                      onClick={[Function]}
+                                                      onDragEnter={[Function]}
+                                                      onDragLeave={[Function]}
+                                                      style={{}}
+                                                    />
+                                                  </drop-component>
+                                                </Dropzone>
+                                              </DropzoneWrapper>
+                                            </Connect(DropzoneWrapper)>
+                                          </withClient(Connect(DropzoneWrapper))>
+                                        </WithSharingState(withClient(Connect(DropzoneWrapper)))>
+                                      </withI18n(WithSharingState(withClient(Connect(DropzoneWrapper))))>
                                     </FabProvider>
                                   </PushBannerProvider>
                                   <Snackbar
-                                    autoHideDuration={2000}
+                                    autoHideDuration={null}
                                     onClose={[Function]}
                                     open={false}
                                   >
@@ -1985,7 +2014,7 @@ exports[`Dropzone should match snapshot 1`] = `
                                           "vertical": "bottom",
                                         }
                                       }
-                                      autoHideDuration={2000}
+                                      autoHideDuration={null}
                                       onClose={[Function]}
                                       open={false}
                                     >
@@ -1996,7 +2025,7 @@ exports[`Dropzone should match snapshot 1`] = `
                                             "vertical": "bottom",
                                           }
                                         }
-                                        autoHideDuration={2000}
+                                        autoHideDuration={null}
                                         classes={
                                           {
                                             "anchorOriginBottomCenter": "MuiSnackbar-anchorOriginBottomCenter",

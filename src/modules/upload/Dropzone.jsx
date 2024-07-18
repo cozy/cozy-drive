@@ -6,6 +6,7 @@ import { compose } from 'redux'
 import { withClient } from 'cozy-client'
 import { withVaultClient } from 'cozy-keys-lib'
 import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { uploadFiles } from 'modules/navigation/duck'
@@ -27,11 +28,11 @@ export class Dropzone extends Component {
     this.setState(state => ({ ...state, dropzoneActive: false }))
 
   onDrop = async (files, _, evt) => {
-    const { uploadFiles, client, vaultClient, t } = this.props
+    const { uploadFiles, client, vaultClient, showAlert, t } = this.props
     this.setState(state => ({ ...state, dropzoneActive: false }))
     if (!canDrop(evt)) return
     const filesToUpload = canHandleFolders(evt) ? evt.dataTransfer.items : files
-    uploadFiles(filesToUpload, { client, vaultClient, t })
+    uploadFiles(filesToUpload, { client, vaultClient, showAlert, t })
   }
 
   render() {
@@ -71,15 +72,22 @@ const canDrop = evt => {
 }
 
 const mapDispatchToProps = (dispatch, { displayedFolder, sharingState }) => ({
-  uploadFiles: (files, { client, vaultClient, t }) =>
+  uploadFiles: (files, { client, vaultClient, showAlert, t }) =>
     dispatch(
       uploadFiles(files, displayedFolder.id, sharingState, () => null, {
         client,
         vaultClient,
+        showAlert,
         t
       })
     )
 })
+
+const DropzoneWrapper = props => {
+  const { showAlert } = useAlert()
+
+  return <Dropzone {...props} showAlert={showAlert} />
+}
 
 export default compose(
   translate(),
@@ -87,4 +95,4 @@ export default compose(
   withClient,
   withVaultClient,
   connect(null, mapDispatchToProps)
-)(Dropzone)
+)(DropzoneWrapper)

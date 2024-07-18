@@ -7,26 +7,31 @@ import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
 import FileInput from 'cozy-ui/transpiled/react/FileInput'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import UploadIcon from 'cozy-ui/transpiled/react/Icons/Upload'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { uploadFiles } from 'modules/navigation/duck'
 
-const UploadButton = ({ label, disabled, onUpload, className }) => (
-  <FileInput
-    className={className}
-    label={label}
-    disabled={disabled}
-    multiple
-    onChange={onUpload}
-    data-testid="upload-btn"
-    value={[]} // always erase the value to be able to re-upload the same file
-  >
-    <span>
-      <Icon icon={UploadIcon} />
-      <span>{label}</span>
-    </span>
-  </FileInput>
-)
+const UploadButton = ({ label, disabled, onUpload, className }) => {
+  const { showAlert } = useAlert()
+
+  return (
+    <FileInput
+      className={className}
+      label={label}
+      disabled={disabled}
+      multiple
+      onChange={files => onUpload(files, showAlert)}
+      data-testid="upload-btn"
+      value={[]} // always erase the value to be able to re-upload the same file
+    >
+      <span>
+        <Icon icon={UploadIcon} />
+        <span>{label}</span>
+      </span>
+    </FileInput>
+  )
+}
 
 UploadButton.propTypes = {
   label: PropTypes.string.isRequired,
@@ -46,9 +51,12 @@ const mapDispatchToProps = (
   dispatch,
   { displayedFolder, sharingState, onUploaded, t }
 ) => ({
-  onUpload: files => {
+  onUpload: (files, showAlert) => {
     dispatch(
-      uploadFiles(files, displayedFolder.id, sharingState, onUploaded, { t })
+      uploadFiles(files, displayedFolder.id, sharingState, onUploaded, {
+        showAlert,
+        t
+      })
     )
   }
 })

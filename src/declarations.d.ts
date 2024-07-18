@@ -14,10 +14,6 @@ declare module 'cozy-ui/transpiled/react/Icons/*' {
 }
 
 declare module 'cozy-ui/transpiled/react' {
-  export const Alerter: {
-    error: (message: string) => void
-  }
-
   export const logger: {
     info: (message: string, ...rest: unknown[]) => void
   }
@@ -31,15 +27,6 @@ declare module 'cozy-ui/transpiled/react/providers/I18n' {
     t: (key: string, options?: Record<string, unknown>) => string
     lang: string
   }
-}
-
-declare module 'cozy-ui/transpiled/react/deprecated/Alerter' {
-  const Alerter: {
-    error: (message: string, options?: Record<string, unknown>) => void
-    success: (message: string, options?: Record<string, unknown>) => void
-  }
-
-  export default Alerter
 }
 
 declare module 'cozy-ui/transpiled/react/providers/Alert' {

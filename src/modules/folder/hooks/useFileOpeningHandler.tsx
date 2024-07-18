@@ -5,7 +5,9 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useClient, useCapabilities } from 'cozy-client'
 import { IOCozyFile } from 'cozy-client/types/types'
 import { useWebviewIntent } from 'cozy-intent'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import createFileOpeningHandler from 'modules/views/Folder/createFileOpeningHandler'
 import { isOfficeEnabled as computeOfficeEnabled } from 'modules/views/OnlyOffice/helpers'
@@ -33,6 +35,8 @@ const useFileOpeningHandler = ({
   const navigate = useNavigate()
   const { isDesktop } = useBreakpoints()
   const webviewIntent = useWebviewIntent()
+  const { t } = useI18n()
+  const { showAlert } = useAlert()
 
   const isOfficeEnabled = computeOfficeEnabled(isDesktop)
 
@@ -54,18 +58,22 @@ const useFileOpeningHandler = ({
         isOfficeEnabled,
         webviewIntent,
         pathname,
+        showAlert,
+        t,
         fromPublicFolder: isPublic
       })({ event, file })
     },
     [
       client,
-      navigateToFile,
       isFlatDomain,
-      navigate,
+      navigateToFile,
+      isOfficeEnabled,
       webviewIntent,
-      isPublic,
       pathname,
-      isOfficeEnabled
+      showAlert,
+      t,
+      isPublic,
+      navigate
     ]
   )
 

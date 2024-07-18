@@ -9,12 +9,16 @@ global.cozy = {
     }
   }
 }
+
 const routerMock = {
   push: () => {},
   params: {
     fileId: '1'
   }
 }
+const showAlert = jest.fn()
+const t = x => x
+
 describe('FileOpenerExternal', () => {
   it('should set the id in state', async () => {
     const wrapper = shallow(
@@ -24,6 +28,8 @@ describe('FileOpenerExternal', () => {
         routeParams={{
           fileId: '123'
         }}
+        t={t}
+        showAlert={showAlert}
         breakpoints={{
           isDesktop: true
         }}
@@ -32,10 +38,13 @@ describe('FileOpenerExternal', () => {
         disableLifecycleMethods: true
       }
     )
+
     global.cozy.client.files.statById.mockResolvedValue({
       _id: '123'
     })
+
     await wrapper.instance().loadFileInfo('123')
+
     expect(wrapper.state().file.id).toBe('123')
   })
 
@@ -47,6 +56,8 @@ describe('FileOpenerExternal', () => {
         routeParams={{
           fileId: '123'
         }}
+        t={t}
+        showAlert={showAlert}
         breakpoints={{
           isDesktop: true
         }}
@@ -55,11 +66,15 @@ describe('FileOpenerExternal', () => {
         disableLifecycleMethods: true
       }
     )
+
     global.cozy.client.files.statById.mockResolvedValue({
       _id: '123'
     })
+
     await wrapper.instance().loadFileInfo('123')
+
     expect(wrapper.state().file.id).toBe('123')
+
     wrapper.setProps({
       routeParams: {
         fileId: '456'
@@ -68,7 +83,9 @@ describe('FileOpenerExternal', () => {
     global.cozy.client.files.statById.mockResolvedValue({
       _id: '456'
     })
+
     await wrapper.instance().loadFileInfo('456')
+
     expect(wrapper.state().file.id).toBe('456')
   })
 })

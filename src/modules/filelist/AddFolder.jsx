@@ -3,7 +3,8 @@ import React from 'react'
 import { connect, useDispatch } from 'react-redux'
 
 import { withClient } from 'cozy-client'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { AddFolderRow } from 'modules/filelist/AddFolderRow'
 import {
@@ -20,6 +21,9 @@ const AddFolder = ({
   onAbort,
   extraColumns
 }) => {
+  const { t } = useI18n()
+  const { showAlert } = useAlert()
+
   if (!visible) {
     return null
   }
@@ -27,8 +31,8 @@ const AddFolder = ({
   return (
     <AddFolderRow
       isEncrypted={isEncrypted}
-      onSubmit={onSubmit}
-      onAbort={onAbort}
+      onSubmit={name => onSubmit(name, showAlert, t)}
+      onAbort={accidental => onAbort(accidental, showAlert, t)}
       extraColumns={extraColumns}
     />
   )
@@ -40,7 +44,8 @@ const mapStateToProps = state => ({
 })
 
 const createFolderAfterSubmit =
-  (ownProps, name) => async (dispatch, getState) => {
+  (ownProps, name, { showAlert, t }) =>
+  async (dispatch, getState) => {
     return dispatch(
       createFolder(
         ownProps.client,
@@ -48,7 +53,9 @@ const createFolderAfterSubmit =
         name,
         ownProps.currentFolderId,
         {
-          isEncryptedFolder: isEncryptedFolder(getState())
+          isEncryptedFolder: isEncryptedFolder(getState()),
+          showAlert,
+          t
         }
       )
     ).then(() => {
@@ -60,10 +67,14 @@ const createFolderAfterSubmit =
   }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onSubmit: name => dispatch(createFolderAfterSubmit(ownProps, name)),
-  onAbort: accidental => {
+  onSubmit: (name, showAlert, t) =>
+    dispatch(createFolderAfterSubmit(ownProps, name, { showAlert, t })),
+  onAbort: (accidental, showAlert, t) => {
     if (accidental) {
-      Alerter.info('alert.folder_abort')
+      showAlert({
+        message: t('alert.folder_abort'), //
+        severity: 'secondary'
+      })
     }
     if (ownProps.afterAbort) {
       ownProps.afterAbort()

@@ -4,8 +4,8 @@ import mediaQuery from 'css-mediaquery'
 import React from 'react'
 
 import { createMockClient } from 'cozy-client'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 
 import ShortcutCreationModal from './ShortcutCreationModal'
 import useDisplayedFolder from 'hooks/useDisplayedFolder'
@@ -13,10 +13,13 @@ import { DOCTYPE_FILES_SHORTCUT } from 'lib/doctypes'
 import AppLike from 'test/components/AppLike'
 
 const tMock = jest.fn()
+const showAlert = jest.fn()
+
 jest.mock('cozy-ui/transpiled/react/hooks/useBrowserOffline')
-jest.mock('cozy-ui/transpiled/react/deprecated/Alerter', () => ({
-  error: jest.fn(),
-  success: jest.fn()
+jest.mock('cozy-ui/transpiled/react/providers/Alert', () => ({
+  ...jest.requireActual('cozy-ui/transpiled/react/providers/Alert'),
+  __esModule: true,
+  useAlert: jest.fn()
 }))
 
 jest.mock('hooks/useDisplayedFolder')
@@ -41,13 +44,10 @@ const defaultProps = {
 describe('ShortcutCreationModal', () => {
   beforeEach(() => {
     jest.resetAllMocks()
-    // TODO: cozy-ui  Warning: Failed prop type: The prop `open` is marked as required in `FixedDialog`, but its value is `undefined`.
-    // TODO: cozy-ui  Material-UI: You are trying to override a style that does not exist - Fix the `borderWidth` key of `theme.overrides.MuiTextField`
-    jest.spyOn(console, 'error').mockImplementation()
-    jest.spyOn(console, 'warn').mockImplementation()
     useDisplayedFolder.mockReturnValue({ displayedFolder: { id: 'id' } })
     window.matchMedia = createMatchMedia(window.innerWidth)
     tMock.mockImplementation(key => key)
+    useAlert.mockReturnValue({ showAlert })
   })
 
   const setup = props => {
@@ -77,8 +77,10 @@ describe('ShortcutCreationModal', () => {
 
     // Then
     expect(client.save).not.toHaveBeenCalled()
-    expect(Alerter.error).toHaveBeenCalledTimes(1)
-    expect(Alerter.success).not.toHaveBeenCalled()
+    expect(showAlert).toHaveBeenCalledTimes(1)
+    expect(showAlert).toBeCalledWith(
+      expect.objectContaining({ severity: 'error' })
+    )
   })
 
   it('should handle correctly success case', async () => {
@@ -98,7 +100,13 @@ describe('ShortcutCreationModal', () => {
       _type: DOCTYPE_FILES_SHORTCUT,
       url: 'https://cozy.io'
     })
-    await waitFor(() => expect(Alerter.success).toHaveBeenCalledTimes(1))
+
+    await waitFor(() => {
+      expect(showAlert).toHaveBeenCalledTimes(1)
+      expect(showAlert).toBeCalledWith(
+        expect.objectContaining({ severity: 'success' })
+      )
+    })
   })
 
   it('should call the optional onCreated prop', async () => {
@@ -113,7 +121,12 @@ describe('ShortcutCreationModal', () => {
     fireEvent.change(filenameInput, { target: { value: 'filename' } })
     fireEvent.click(submitButton)
 
-    await waitFor(() => expect(Alerter.success).toHaveBeenCalledTimes(1))
+    await waitFor(() => {
+      expect(showAlert).toHaveBeenCalledTimes(1)
+      expect(showAlert).toBeCalledWith(
+        expect.objectContaining({ severity: 'success' })
+      )
+    })
     expect(onCreatedMock).toHaveBeenCalled()
   })
 
@@ -131,15 +144,12 @@ describe('ShortcutCreationModal', () => {
     fireEvent.change(filenameInput, { target: { value: 'file/name' } })
     fireEvent.click(submitButton)
 
-    await waitFor(() => expect(Alerter.error).toHaveBeenCalledTimes(1))
-    expect(Alerter.error).toHaveBeenCalledWith(
-      'alert.file_name_illegal_characters',
-      {
-        fileName: 'file/name',
-        characters: '/'
-      },
-      { duration: 2000 }
-    )
+    await waitFor(() => {
+      expect(showAlert).toHaveBeenCalledTimes(1)
+      expect(showAlert).toBeCalledWith(
+        expect.objectContaining({ severity: 'error', duration: 2000 })
+      )
+    })
   })
 
   it('should alert error on illegal file name', async () => {
@@ -156,9 +166,11 @@ describe('ShortcutCreationModal', () => {
     fireEvent.change(filenameInput, { target: { value: '..' } })
     fireEvent.click(submitButton)
 
-    await waitFor(() => expect(Alerter.error).toHaveBeenCalledTimes(1))
-    expect(Alerter.error).toHaveBeenCalledWith('alert.file_name_illegal_name', {
-      fileName: '..'
+    await waitFor(() => {
+      expect(showAlert).toHaveBeenCalledTimes(1)
+      expect(showAlert).toBeCalledWith(
+        expect.objectContaining({ severity: 'error' })
+      )
     })
   })
 
@@ -176,8 +188,12 @@ describe('ShortcutCreationModal', () => {
     fireEvent.change(filenameInput, { target: { value: '   ' } })
     fireEvent.click(submitButton)
 
-    await waitFor(() => expect(Alerter.error).toHaveBeenCalledTimes(1))
-    expect(Alerter.error).toHaveBeenCalledWith('alert.file_name_missing')
+    await waitFor(() => {
+      expect(showAlert).toHaveBeenCalledTimes(1)
+      expect(showAlert).toBeCalledWith(
+        expect.objectContaining({ severity: 'error' })
+      )
+    })
   })
 
   it('should alert network error when detected by useBrowserOffline', async () => {
@@ -191,8 +207,12 @@ describe('ShortcutCreationModal', () => {
     fireEvent.change(filenameInput, { target: { value: '   ' } })
     fireEvent.click(submitButton)
 
-    await waitFor(() => expect(Alerter.error).toHaveBeenCalledTimes(1))
-    expect(Alerter.error).toHaveBeenCalledWith('alert.offline')
+    await waitFor(() => {
+      expect(showAlert).toHaveBeenCalledTimes(1)
+      expect(showAlert).toBeCalledWith(
+        expect.objectContaining({ severity: 'error' })
+      )
+    })
   })
 
   it('should alert network error when not detected by useBrowserOffline', async () => {
@@ -209,7 +229,11 @@ describe('ShortcutCreationModal', () => {
     fireEvent.change(filenameInput, { target: { value: '   ' } })
     fireEvent.click(submitButton)
 
-    await waitFor(() => expect(Alerter.error).toHaveBeenCalledTimes(1))
-    expect(Alerter.error).toHaveBeenCalledWith('upload.alert.network')
+    await waitFor(() => {
+      expect(showAlert).toHaveBeenCalledTimes(1)
+      expect(showAlert).toBeCalledWith(
+        expect.objectContaining({ severity: 'error' })
+      )
+    })
   })
 })

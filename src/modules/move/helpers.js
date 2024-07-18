@@ -1,7 +1,5 @@
 import { CozyFile } from 'models'
 
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
-
 import logger from 'lib/logger'
 
 /**
@@ -17,6 +15,8 @@ export const cancelMove = async ({
   entries,
   trashedFiles,
   registerCancelable,
+  showAlert,
+  t,
   refreshSharing
 }) => {
   try {
@@ -37,20 +37,29 @@ export const cancelMove = async ({
       })
     )
     if (restoreErrorsCount) {
-      Alerter.info('Move.cancelledWithRestoreErrors', {
-        subject: entries.length === 1 ? entries[0].name : '',
-        smart_count: entries.length,
-        restoreErrorsCount
+      showAlert({
+        message: t('Move.cancelledWithRestoreErrors', {
+          subject: entries.length === 1 ? entries[0].name : '',
+          smart_count: entries.length,
+          restoreErrorsCount
+        }),
+        severity: 'secondary'
       })
     } else {
-      Alerter.info('Move.cancelled', {
-        subject: entries.length === 1 ? entries[0].name : '',
-        smart_count: entries.length
+      showAlert({
+        message: t('Move.cancelled', {
+          subject: entries.length === 1 ? entries[0].name : '',
+          smart_count: entries.length
+        }),
+        severity: 'secondary'
       })
     }
   } catch (e) {
     logger.warn(e)
-    Alerter.error('Move.cancelled_error', { smart_count: entries.length })
+    showAlert({
+      message: t('Move.cancelled_error', { smart_count: entries.length }),
+      severity: 'error'
+    })
   } finally {
     if (refreshSharing) refreshSharing()
   }

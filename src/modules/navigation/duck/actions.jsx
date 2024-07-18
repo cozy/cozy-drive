@@ -2,7 +2,6 @@ import React from 'react'
 import { showModal } from 'react-cozy-helpers'
 
 import { isDirectory } from 'cozy-client/dist/models/file'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
 import { MAX_PAYLOAD_SIZE_IN_GB } from 'constants/config'
 import { createEncryptedDir } from 'lib/encryption'
@@ -40,7 +39,7 @@ export const uploadFiles =
     dirId,
     sharingState,
     fileUploadedCallback = () => null,
-    { client, vaultClient, t }
+    { client, vaultClient, showAlert, t }
   ) =>
   dispatch => {
     dispatch(
@@ -66,6 +65,7 @@ export const uploadFiles =
               networkErrors,
               errors,
               updated,
+              showAlert,
               t,
               fileTooLargeErrors
             )
@@ -83,6 +83,7 @@ const uploadQueueProcessed =
     networkErrors,
     errors,
     updated,
+    showAlert,
     t,
     fileTooLargeErrors
   ) =>
@@ -102,50 +103,77 @@ const uploadQueueProcessed =
       dispatch(showModal(<QuotaAlert />))
     } else if (networkErrors.length > 0) {
       logger.warn(`Upload module triggers a network error: ${networkErrors}`)
-      Alerter.info('upload.alert.network')
+      showAlert({
+        message: t('upload.alert.network'),
+        severity: 'secondary'
+      })
     } else if (errors.length > 0) {
       logException(`Upload module triggers an error: ${errors}`)
-      Alerter.info('upload.alert.errors', {
-        type
+      showAlert({
+        message: t('upload.alert.errors', {
+          type
+        }),
+        severity: 'secondary'
       })
     } else if (updatedCount > 0 && createdCount > 0 && conflictCount > 0) {
-      Alerter.success('upload.alert.success_updated_conflicts', {
-        smart_count: createdCount,
-        updatedCount,
-        conflictCount,
-        type
+      showAlert({
+        message: t('upload.alert.success_updated_conflicts', {
+          smart_count: createdCount,
+          updatedCount,
+          conflictCount,
+          type
+        }),
+        severity: 'success'
       })
     } else if (updatedCount > 0 && createdCount > 0) {
-      Alerter.success('upload.alert.success_updated', {
-        smart_count: createdCount,
-        updatedCount,
-        type
+      showAlert({
+        message: t('upload.alert.success_updated', {
+          smart_count: createdCount,
+          updatedCount,
+          type
+        }),
+        severity: 'success'
       })
     } else if (updatedCount > 0 && conflictCount > 0) {
-      Alerter.success('upload.alert.updated_conflicts', {
-        smart_count: updatedCount,
-        conflictCount,
-        type
+      showAlert({
+        message: t('upload.alert.updated_conflicts', {
+          smart_count: updatedCount,
+          conflictCount,
+          type
+        }),
+        severity: 'success'
       })
     } else if (conflictCount > 0) {
-      Alerter.info('upload.alert.success_conflicts', {
-        smart_count: createdCount,
-        conflictNumber: conflictCount,
-        type
+      showAlert({
+        message: t('upload.alert.success_conflicts', {
+          smart_count: createdCount,
+          conflictNumber: conflictCount,
+          type
+        }),
+        severity: 'secondary'
       })
     } else if (updatedCount > 0 && createdCount === 0) {
-      Alerter.success('upload.alert.updated', {
-        smart_count: updatedCount,
-        type
+      showAlert({
+        message: t('upload.alert.updated', {
+          smart_count: updatedCount,
+          type
+        }),
+        severity: 'success'
       })
     } else if (fileTooLargeErrors.length > 0) {
-      Alerter.error('upload.alert.fileTooLargeErrors', {
-        max_size_value: MAX_PAYLOAD_SIZE_IN_GB
+      showAlert({
+        message: t('upload.alert.fileTooLargeErrors', {
+          max_size_value: MAX_PAYLOAD_SIZE_IN_GB
+        }),
+        severity: 'error'
       })
     } else {
-      Alerter.success('upload.alert.success', {
-        smart_count: createdCount,
-        type
+      showAlert({
+        message: t('upload.alert.success', {
+          smart_count: createdCount,
+          type
+        }),
+        severity: 'success'
       })
     }
   }
@@ -175,7 +203,7 @@ export const createFolder = (
   vaultClient,
   name,
   currentFolderId,
-  { isEncryptedFolder = false } = {}
+  { isEncryptedFolder = false, showAlert, t } = {}
 ) => {
   return async (dispatch, getState) => {
     const state = getState()
@@ -183,7 +211,10 @@ export const createFolder = (
     const existingFolder = doesFolderExistByName(state, currentFolderId, name)
 
     if (existingFolder) {
-      Alerter.error('alert.folder_name', { folderName: name })
+      showAlert({
+        message: t('alert.folder_name', { folderName: name }),
+        severity: 'error'
+      })
       throw new Error('alert.folder_name')
     }
 
@@ -202,9 +233,12 @@ export const createFolder = (
       }
     } catch (err) {
       if (err.response && err.response.status === HTTP_CODE_CONFLICT) {
-        Alerter.error('alert.folder_name', { folderName: name })
+        showAlert({
+          message: t('alert.folder_name', { folderName: name }),
+          severity: 'error'
+        })
       } else {
-        Alerter.error('alert.folder_generic')
+        showAlert({ message: t('alert.folder_generic'), severity: 'error' })
       }
       throw err
     }

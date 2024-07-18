@@ -1,7 +1,6 @@
 import { models, Q } from 'cozy-client'
 import { isFlagshipApp } from 'cozy-device-helper'
 import flag from 'cozy-flags'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
 import { DOCTYPE_FILES_SHORTCUT } from 'lib/doctypes'
 import generateShortcutUrl from 'modules/views/Folder/generateShortcutUrl'
@@ -18,6 +17,8 @@ const createFileOpeningHandler =
     isOfficeEnabled,
     webviewIntent,
     pathname,
+    showAlert,
+    t,
     fromPublicFolder = false
   }) =>
   async ({ event, file }) => {
@@ -38,7 +39,10 @@ const createFileOpeningHandler =
           )
           replaceCurrentUrl(resp.data.attributes.url)
         } catch (error) {
-          Alerter.error('alert.could_not_open_file')
+          showAlert({
+            message: t('alert.could_not_open_file'),
+            severity: 'error'
+          })
         }
       } else {
         const url = generateShortcutUrl({
@@ -62,7 +66,7 @@ const createFileOpeningHandler =
 
         replaceCurrentUrl(fetchedURL)
       } catch (e) {
-        Alerter.error('alert.offline')
+        showAlert({ message: t('alert.offline'), severity: 'error' })
       }
     } else if (isOnlyOffice && isOfficeEnabled) {
       if (event.ctrlKey || event.metaKey || event.shiftKey) {

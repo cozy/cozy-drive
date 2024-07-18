@@ -3,6 +3,7 @@ import { NavigateFunction } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
 import Button from 'cozy-ui/transpiled/react/Buttons'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { File, FolderPickerEntry } from 'components/FolderPicker/types'
@@ -30,6 +31,7 @@ const MoveModalSuccessAction: React.FC<MoveModalSuccessActionProps> = ({
   const client = useClient()
   const { registerCancelable } = useCancelable()
   const [isCancelling, setCancelling] = useState(false)
+  const { showAlert } = useAlert()
 
   const handleCancel = async (): Promise<void> => {
     setCancelling(true)
@@ -38,6 +40,8 @@ const MoveModalSuccessAction: React.FC<MoveModalSuccessActionProps> = ({
       trashedFiles,
       client,
       registerCancelable,
+      showAlert,
+      t,
       refreshSharing
     })
   }
