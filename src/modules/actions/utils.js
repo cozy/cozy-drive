@@ -120,9 +120,3 @@ export const restoreFiles = async (client, files) => {
     await client.collection(DOCTYPE_FILES).restore(file.id)
   }
 }
-
-export const deleteFilesPermanently = async (client, files) => {
-  for (const file of files) {
-    await client.collection(DOCTYPE_FILES).deleteFilePermanently(file.id)
-  }
-}

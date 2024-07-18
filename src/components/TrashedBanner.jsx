@@ -51,7 +51,8 @@ const TrashedBanner = ({ fileId, isPublic }) => {
     setDestroyConfirmationDisplayed(false)
   }
 
-  const handleDestroyConfirm = () => {
+  const handleDestroyConfirm = async () => {
+    await client?.collection('io.cozy.files').deleteFilePermanently(fileId)
     showAlert({
       message: t('TrashedBanner.destroySuccess'),
       severity: 'secondary'

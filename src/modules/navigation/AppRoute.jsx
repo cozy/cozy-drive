@@ -33,6 +33,7 @@ import { ShareFileView } from 'modules/views/Modal/ShareFileView'
 import { NextcloudDeleteView } from 'modules/views/Nextcloud/NextcloudDeleteView'
 import { NextcloudFolderView } from 'modules/views/Nextcloud/NextcloudFolderView'
 import { NextcloudMoveView } from 'modules/views/Nextcloud/NextcloudMoveView'
+import { TrashDestroyView } from 'modules/views/Trash/TrashDestroyView'
 import { TrashEmptyView } from 'modules/views/Trash/TrashEmptyView'
 
 const FilesRedirect = () => {
@@ -97,6 +98,7 @@ const AppRoute = () => (
         <Route path="file/:fileId" element={<FilesViewerTrash />} />
         <Route path="file/:fileId/revision" element={<FileHistory />} />
         <Route path="empty" element={<TrashEmptyView />} />
+        <Route path="destroy" element={<TrashDestroyView />} />
       </Route>
 
       <Route path="sharings">
