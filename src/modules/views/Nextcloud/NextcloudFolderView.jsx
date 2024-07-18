@@ -1,6 +1,8 @@
 import React from 'react'
 import { Outlet, useParams } from 'react-router-dom'
 
+import flag from 'cozy-flags'
+
 import { NextcloudBanner } from 'modules/nextcloud/components/NextcloudBanner'
 import { NextcloudBreadcrumb } from 'modules/nextcloud/components/NextcloudBreadcrumb'
 import { NextcloudFolderBody } from 'modules/nextcloud/components/NextcloudFolderBody'
@@ -19,6 +21,27 @@ const NextcloudFolderView = () => {
     path
   })
 
+  var queryResults = [nextcloudResult]
+  if (path === '/' && flag('drive.show-nextcloud-trash-dev')) {
+    queryResults = [
+      nextcloudResult,
+      {
+        id: 'io.cozy.remote.nextcloud.files.trash-dir',
+        fetchStatus: nextcloudResult.fetchStatus,
+        data:
+          nextcloudResult.fetchStatus === 'loaded'
+            ? [
+                {
+                  _id: 'io.cozy.remote.nextcloud.files.trash-dir',
+                  type: 'directory',
+                  name: 'Trash'
+                }
+              ]
+            : []
+      }
+    ]
+  }
+
   return (
     <FolderView>
       <FolderViewHeader>
@@ -26,7 +49,7 @@ const NextcloudFolderView = () => {
         <NextcloudToolbar />
       </FolderViewHeader>
       <NextcloudBanner />
-      <NextcloudFolderBody path={path} queryResults={[nextcloudResult]} />
+      <NextcloudFolderBody path={path} queryResults={queryResults} />
       <Outlet />
     </FolderView>
   )

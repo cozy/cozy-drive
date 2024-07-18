@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -9,6 +9,7 @@ import { useNextcloudInfos } from 'modules/nextcloud/hooks/useNextcloudInfos'
 
 const NextcloudBreadcrumb = ({ sourceAccount, path }) => {
   const [searchParams, setSearchParams] = useSearchParams()
+  const { pathname } = useLocation()
   const navigate = useNavigate()
   const { t } = useI18n()
 
@@ -27,10 +28,19 @@ const NextcloudBreadcrumb = ({ sourceAccount, path }) => {
   ]
 
   const splitPath = path.split('/').filter(Boolean)
-  const pathList = splitPath.map((folder, index) => ({
-    name: folder,
-    id: '/' + splitPath.slice(0, index + 1).join('/')
-  }))
+  const pathList = splitPath.map((folder, index) => {
+    if (folder === 'trash') {
+      return {
+        name: t('NextcloudBreadcrumb.trash'),
+        id: '/trash/'
+      }
+    }
+
+    return {
+      name: folder,
+      id: '/' + splitPath.slice(0, index + 1).join('/')
+    }
+  })
 
   const handleBreadcrumbClick = item => {
     if (
@@ -38,6 +48,8 @@ const NextcloudBreadcrumb = ({ sourceAccount, path }) => {
       item.id === ROOT_DIR_ID
     ) {
       navigate(`/folder/${item.id}`)
+    } else if (pathname.endsWith('trash') && item.id === '/') {
+      navigate('..', { relative: 'path' })
     } else {
       searchParams.set('path', item.id)
       setSearchParams(searchParams)

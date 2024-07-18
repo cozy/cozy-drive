@@ -794,7 +794,8 @@
     "text": "We have not found anything at this address. This may be a typing error."
   },
   "NextcloudBreadcrumb": {
-    "root": "Shared Drives"
+    "root": "Shared Drives",
+    "trash": "Trash"
   },
   "NextcloudToolbar": {
     "share": "Share"
