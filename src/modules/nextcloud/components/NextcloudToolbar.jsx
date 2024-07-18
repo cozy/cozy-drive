@@ -12,6 +12,7 @@ import PlusIcon from 'cozy-ui/transpiled/react/Icons/Plus'
 import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import { BarRightOnMobile } from 'components/Bar'
 import { MoreMenu } from 'components/MoreMenu'
 import { selectable } from 'modules/actions/selectable'
 import { addFolder } from 'modules/nextcloud/components/actions/addFolder'
@@ -80,7 +81,9 @@ const NextcloudToolbar = () => {
           }}
         />
       ) : null}
-      <MoreMenu actions={moreActions} docs={[]} disabled={false} />
+      <BarRightOnMobile>
+        <MoreMenu actions={moreActions} docs={[]} disabled={false} />
+      </BarRightOnMobile>
     </div>
   )
 }

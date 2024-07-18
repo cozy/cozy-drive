@@ -1,9 +1,16 @@
-import React, { useState, useCallback, useRef } from 'react'
+import React, { useState, useCallback, useRef, RefObject, FC } from 'react'
 
 import ActionsMenu from 'cozy-ui/transpiled/react/ActionsMenu'
+import { Action } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 
-import { BarRightOnMobile } from 'components/Bar'
+import { File } from './FolderPicker/types'
 import MoreButton from 'components/Button/MoreButton'
+
+interface MoreMenuProps {
+  actions: Record<string, Action>[]
+  docs?: File[]
+  disabled?: boolean
+}
 
 /**
  * Renders a MoreMenu component.
@@ -13,14 +20,14 @@ import MoreButton from 'components/Button/MoreButton'
  * @param disabled - Indicates whether the menu is disabled.
  * @returns The rendered MoreMenu component.
  */
-const MoreMenu = ({ actions, docs, disabled }) => {
+const MoreMenu: FC<MoreMenuProps> = ({ actions, docs = [], disabled }) => {
   const [isMenuOpened, setMenuOpened] = useState(false)
-  const moreButtonRef = useRef(null)
+  const moreButtonRef: RefObject<HTMLDivElement> = useRef(null)
   const openMenu = useCallback(() => setMenuOpened(true), [setMenuOpened])
   const closeMenu = useCallback(() => setMenuOpened(false), [setMenuOpened])
 
   return (
-    <BarRightOnMobile>
+    <>
       <div ref={moreButtonRef}>
         <MoreButton onClick={openMenu} disabled={disabled} />
       </div>
@@ -38,7 +45,7 @@ const MoreMenu = ({ actions, docs, disabled }) => {
           }}
         />
       ) : null}
-    </BarRightOnMobile>
+    </>
   )
 }
 
