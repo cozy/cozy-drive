@@ -36,6 +36,12 @@ const NextcloudDeleteConfirm = ({ files, onClose }) => {
           path: files[0].parentPath
         })
       )
+      client.resetQuery(
+        computeNextcloudFolderQueryId({
+          sourceAccount: files[0].cozyMetadata.sourceAccount,
+          path: '/trash/'
+        }) + '/trashed'
+      )
     } catch (e) {
       showAlert({
         message: t('NextcloudDeleteConfirm.error'),

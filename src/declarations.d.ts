@@ -87,6 +87,7 @@ declare module 'cozy-ui/transpiled/react/ActionsMenu/Actions' {
     displayCondition?: (
       docs: import('cozy-client/types/types').IOCozyFile[]
     ) => boolean
+    disabled?: (docs: import('cozy-client/types/types').IOCozyFile[]) => boolean
     action?: (
       docs: import('cozy-client/types/types').IOCozyFile[],
       opts: { handleAction: HandleActionCallback }
