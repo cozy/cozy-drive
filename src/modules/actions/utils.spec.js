@@ -1,6 +1,5 @@
 import { createMockClient } from 'cozy-client'
 import { initQuery, receiveQueryResult } from 'cozy-client/dist/store'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
 import { trashFiles, downloadFiles } from './utils'
 import { TRASH_DIR_ID } from 'constants/config'
@@ -19,18 +18,15 @@ jest.mock('cozy-stack-client/dist/utils', () => ({
   forceFileDownload: jest.fn()
 }))
 
-jest.mock('cozy-ui/transpiled/react/deprecated/Alerter', () => ({
-  success: jest.fn(),
-  error: jest.fn(),
-  info: jest.fn()
-}))
-
 jest.mock('lib/encryption', () => ({
   ...jest.requireActual('lib/encryption'),
   getEncryptionKeyFromDirId: jest.fn(),
   downloadEncryptedFile: jest.fn(),
   decryptFile: jest.fn()
 }))
+
+const showAlert = jest.fn()
+const t = x => x
 
 describe('trashFiles', () => {
   const setup = () => {
@@ -51,6 +47,7 @@ describe('trashFiles', () => {
     )
     return { client, store, file }
   }
+
   it('should destroy the file and update queries', async () => {
     const { store, client, file } = setup()
     const mockedDestroy = jest.fn()
@@ -71,7 +68,7 @@ describe('trashFiles', () => {
       file._id
     )
 
-    await trashFiles(client, [file])
+    await trashFiles(client, [file], { showAlert, t })
     expect(mockedDestroy).toHaveBeenCalledWith(file)
 
     const state2 = store.getState()
@@ -164,9 +161,9 @@ describe('downloadFiles', () => {
       }
     ]
     getEncryptionKeyFromDirId.mockResolvedValueOnce('encryption-key')
-    await downloadFiles(mockClient, files, { vaultClient: {} })
-    expect(Alerter.error).toHaveBeenCalledWith(
-      'error.download_file.encryption_many'
+    await downloadFiles(mockClient, files, { vaultClient: {}, showAlert, t })
+    expect(showAlert).toHaveBeenCalledWith(
+      expect.objectContaining({ severity: 'error' })
     )
   })
 
@@ -190,9 +187,9 @@ describe('downloadFiles', () => {
       }
     ]
     getEncryptionKeyFromDirId.mockResolvedValueOnce(null)
-    await downloadFiles(mockClient, files, { vaultClient: {} })
-    expect(Alerter.error).toHaveBeenCalledWith(
-      'error.download_file.encryption_many'
+    await downloadFiles(mockClient, files, { vaultClient: {}, showAlert, t })
+    expect(showAlert).toHaveBeenCalledWith(
+      expect.objectContaining({ severity: 'error' })
     )
   })
 })

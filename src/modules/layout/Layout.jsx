@@ -8,8 +8,6 @@ import FlagSwitcher from 'cozy-flags/dist/FlagSwitcher'
 import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { Layout as LayoutUI } from 'cozy-ui/transpiled/react/Layout'
 import Sidebar from 'cozy-ui/transpiled/react/Sidebar'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import ButtonClient from 'components/pushClient/Button'
 import SupportUs from 'components/pushClient/SupportUs'
@@ -21,8 +19,6 @@ import { UploadQueue } from 'modules/upload'
 initFlags()
 
 const Layout = () => {
-  const { t } = useI18n()
-
   return (
     <LayoutUI>
       <BarComponent disableInternalStore />
@@ -34,7 +30,6 @@ const Layout = () => {
           <ButtonClient />
         </div>
       </Sidebar>
-      <Alerter t={t} />
       <UploadQueue />
       <SelectionProvider>
         <Outlet />

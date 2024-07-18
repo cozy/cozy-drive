@@ -8,6 +8,7 @@ import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
 import ActionMenu, {
   ActionMenuItem
 } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -23,6 +24,7 @@ import styles from 'styles/toolbar.styl'
 
 export const Toolbar = ({ disabled }) => {
   const { t } = useI18n()
+  const { showAlert } = useAlert()
   const { isMobile } = useBreakpoints()
   const client = useClient()
   const [menuIsVisible, setMenuVisible] = useState(false)
@@ -38,11 +40,11 @@ export const Toolbar = ({ disabled }) => {
       <EmptyTrashConfirm
         onClose={popModal}
         onConfirm={() => {
-          emptyTrash(client)
+          emptyTrash(client, { showAlert, t })
         }}
       />
     )
-  }, [pushModal, popModal, client])
+  }, [pushModal, popModal, client, showAlert, t])
 
   return (
     <div

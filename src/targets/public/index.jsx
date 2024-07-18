@@ -18,7 +18,6 @@ import 'whatwg-fetch'
 import CozyClient, { models } from 'cozy-client'
 import { Document } from 'cozy-doctypes'
 import getSharedDocument from 'cozy-sharing/dist/getSharedDocument'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
 import { I18n, initTranslation } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -96,13 +95,9 @@ const init = async () => {
     const isNote = models.file.isNote(data)
 
     if (isNote) {
-      try {
-        window.location.href = await models.note.fetchURL(client, data, {
-          pathname: joinPath(location.pathname, '')
-        })
-      } catch (e) {
-        Alerter.error('alert.offline')
-      }
+      window.location.href = await models.note.fetchURL(client, data, {
+        pathname: joinPath(location.pathname, '')
+      })
     } else {
       render(
         <App lang={lang} polyglot={polyglot} client={client} store={store}>

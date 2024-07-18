@@ -1,6 +1,5 @@
 import { isDirectory } from 'cozy-client/dist/models/file'
 import { receiveQueryResult } from 'cozy-client/dist/store'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 
 import { DOCTYPE_FILES } from 'lib/doctypes'
 import {
@@ -28,7 +27,11 @@ const downloadFileError = error => {
  * @param {CozyClient} client
  * @param {array} files  One or more files to download
  */
-export const downloadFiles = async (client, files, { vaultClient } = {}) => {
+export const downloadFiles = async (
+  client,
+  files,
+  { vaultClient, showAlert, t } = {}
+) => {
   const encryptionKey = await getEncryptionKeyFromDirId(client, files[0].dir_id)
 
   if (files.length === 1 && !isDirectory(files[0])) {
@@ -44,19 +47,25 @@ export const downloadFiles = async (client, files, { vaultClient } = {}) => {
         return client.collection(DOCTYPE_FILES).download(file, null, filename)
       }
     } catch (error) {
-      Alerter.error(downloadFileError(error))
+      showAlert({ message: t(downloadFileError(error)), severity: 'error' })
     }
   } else {
     if (encryptionKey) {
       // Multiple download is forbidden for encrypted files because we cannot generate client archive for now.
-      return Alerter.error('error.download_file.encryption_many')
+      return showAlert({
+        message: t('error.download_file.encryption_many'),
+        severity: 'error'
+      })
     }
     const hasEncryptedDirs = files.find(
       file => isDirectory(file) && isEncryptedFolder(file)
     )
     if (hasEncryptedDirs) {
       // We cannot download encrypted folder because we cannot generate client archive for now.
-      return Alerter.error('error.download_file.encryption_many')
+      return showAlert({
+        message: t('error.download_file.encryption_many'),
+        severity: 'error'
+      })
     }
     const ids = files.map(f => f.id)
     return client.collection(DOCTYPE_FILES).downloadArchive(ids)
@@ -81,7 +90,7 @@ const isAlreadyInTrash = err => {
  * @param {CozyClient} client
  * @param {array} files  One or more files to trash
  */
-export const trashFiles = async (client, files) => {
+export const trashFiles = async (client, files, { showAlert, t }) => {
   try {
     for (const file of files) {
       // TODO we should not go through a FileCollection to destroy the file, but
@@ -98,10 +107,10 @@ export const trashFiles = async (client, files) => {
       client.collection('io.cozy.permissions').revokeSharingLink(file)
     }
 
-    Alerter.success('alert.trash_file_success')
+    showAlert({ message: t('alert.trash_file_success'), severity: 'success' })
   } catch (err) {
     if (!isAlreadyInTrash(err)) {
-      Alerter.error('alert.try_again')
+      showAlert({ message: t('alert.try_again'), severity: 'error' })
     }
   }
 }
@@ -118,12 +127,18 @@ export const deleteFilesPermanently = async (client, files) => {
   }
 }
 
-export const emptyTrash = async client => {
-  Alerter.info('alert.empty_trash_progress')
+export const emptyTrash = async (client, { showAlert, t }) => {
+  showAlert({
+    message: t('alert.empty_trash_progress'),
+    severity: 'secondary'
+  })
   try {
     await client.collection(DOCTYPE_FILES).emptyTrash()
   } catch (err) {
-    Alerter.error('alert.try_again')
+    showAlert({ message: t('alert.try_again'), severity: 'error' })
   }
-  Alerter.info('alert.empty_trash_success')
+  showAlert({
+    message: t('alert.empty_trash_success'),
+    severity: 'secondary'
+  })
 }

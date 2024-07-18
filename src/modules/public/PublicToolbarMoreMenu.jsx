@@ -5,6 +5,7 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import ActionMenu, {
   ActionMenuItem
 } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -23,6 +24,7 @@ const PublicToolbarMoreMenu = ({
   const { t } = useI18n()
   const client = useClient()
   const { isMobile } = useBreakpoints()
+  const { showAlert } = useAlert()
 
   const [menuIsVisible, setMenuVisible] = useState(false)
 
@@ -43,7 +45,7 @@ const PublicToolbarMoreMenu = ({
           {children}
           {isMobile && files.length > 0 && (
             <ActionMenuItem
-              onClick={() => downloadFiles(client, files)}
+              onClick={() => downloadFiles(client, files, { showAlert, t })}
               left={<Icon icon="download" />}
             >
               {t('toolbar.menu_download')}

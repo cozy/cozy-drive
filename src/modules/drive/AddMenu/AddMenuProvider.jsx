@@ -6,8 +6,9 @@ import React, {
   createContext
 } from 'react'
 
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { isEncryptedFolder } from 'lib/encryption'
 import { logException } from 'lib/reporter'
@@ -33,6 +34,8 @@ const AddMenuProvider = ({
   const [menuIsVisible, setMenuVisible] = useState(false)
   const isOffline = useBrowserOffline()
   const anchorRef = useRef()
+  const { showAlert } = useAlert()
+  const { t } = useI18n()
 
   const handleClose = useCallback(
     () => closeMenu(setMenuVisible),
@@ -54,13 +57,16 @@ const AddMenuProvider = ({
     [displayedFolder]
   )
 
-  const handleOfflineClick = useCallback(e => {
-    e.stopPropagation()
-    Alerter.error('alert.offline')
-    logException(
-      `Offline click on AddMenu button detected. Here is the value of window.navigator.onLine: ${window.navigator.onLine}`
-    )
-  }, [])
+  const handleOfflineClick = useCallback(
+    e => {
+      e.stopPropagation()
+      showAlert({ message: t('alert.offline'), severity: 'error' })
+      logException(
+        `Offline click on AddMenu button detected. Here is the value of window.navigator.onLine: ${window.navigator.onLine}`
+      )
+    },
+    [showAlert, t]
+  )
 
   return (
     <AddMenuContext.Provider

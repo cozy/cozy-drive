@@ -9,6 +9,7 @@ import FileInput from 'cozy-ui/transpiled/react/FileInput'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import UploadIcon from 'cozy-ui/transpiled/react/Icons/Upload'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { uploadFiles } from 'modules/navigation/duck'
@@ -16,12 +17,16 @@ import { uploadFiles } from 'modules/navigation/duck'
 const UploadItem = ({ t, isDisabled, onUpload, displayedFolder }) => {
   const client = useClient()
   const vaultClient = useVaultClient()
+  const { showAlert } = useAlert()
+
   return (
     <FileInput
       label={t('toolbar.menu_upload')}
       disabled={isDisabled}
       multiple
-      onChange={files => onUpload(client, vaultClient, files, displayedFolder)}
+      onChange={files =>
+        onUpload(client, vaultClient, files, displayedFolder, showAlert)
+      }
       data-testid="upload-btn"
       value={[]}
       // FileInput needs to stay rendered until the onChange event, so we prevent the event from bubbling
@@ -38,11 +43,12 @@ const UploadItem = ({ t, isDisabled, onUpload, displayedFolder }) => {
 }
 
 const mapDispatchToProps = (dispatch, { sharingState, onUploaded, t }) => ({
-  onUpload: (client, vaultClient, files, displayedFolder) => {
+  onUpload: (client, vaultClient, files, displayedFolder, showAlert) => {
     dispatch(
       uploadFiles(files, displayedFolder.id, sharingState, onUploaded, {
         client,
         vaultClient,
+        showAlert,
         t
       })
     )

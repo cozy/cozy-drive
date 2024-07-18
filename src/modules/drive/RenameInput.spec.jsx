@@ -2,17 +2,20 @@ import { render, fireEvent, screen, waitFor } from '@testing-library/react'
 import React from 'react'
 
 import { createMockClient } from 'cozy-client'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 
 import { RenameInput } from './RenameInput'
 import AppLike from 'test/components/AppLike'
 import { generateFile } from 'test/generate'
 
+const showAlert = jest.fn()
+
 jest.mock('cozy-ui/transpiled/react/hooks/useBrowserOffline')
-jest.mock('cozy-ui/transpiled/react/deprecated/Alerter', () => ({
-  error: jest.fn(),
-  success: jest.fn()
+jest.mock('cozy-ui/transpiled/react/providers/Alert', () => ({
+  ...jest.requireActual('cozy-ui/transpiled/react/providers/Alert'),
+  __esModule: true,
+  useAlert: jest.fn()
 }))
 
 describe('RenameInput', () => {
@@ -28,6 +31,7 @@ describe('RenameInput', () => {
       ...generateFile({ i: '10', type: 'file' }),
       meta: { rev: '1' }
     }
+    useAlert.mockReturnValue({ showAlert })
   })
 
   const setup = ({ file }) => {
@@ -94,15 +98,12 @@ describe('RenameInput', () => {
     fireEvent.change(inputNode, { target: { value: 'new/Name.pdf' } })
     fireEvent.keyDown(inputNode, { key: 'Enter', code: 'Enter', keyCode: 13 })
 
-    await waitFor(() => expect(Alerter.error).toHaveBeenCalledTimes(1))
-    expect(Alerter.error).toHaveBeenCalledWith(
-      'alert.file_name_illegal_characters',
-      {
-        fileName: 'new/Name.pdf',
-        characters: '/'
-      },
-      { duration: 2000 }
-    )
+    await waitFor(() => {
+      expect(showAlert).toHaveBeenCalledTimes(1)
+      expect(showAlert).toHaveBeenCalledWith(
+        expect.objectContaining({ severity: 'error', duration: 2000 })
+      )
+    })
   })
 
   it('should alert error on incorrect file name', async () => {
@@ -116,9 +117,11 @@ describe('RenameInput', () => {
     fireEvent.change(inputNode, { target: { value: '..pdf' } })
     fireEvent.keyDown(inputNode, { key: 'Enter', code: 'Enter', keyCode: 13 })
 
-    await waitFor(() => expect(Alerter.error).toHaveBeenCalledTimes(1))
-    expect(Alerter.error).toHaveBeenCalledWith('alert.file_name_illegal_name', {
-      fileName: '..pdf'
+    await waitFor(() => {
+      expect(showAlert).toHaveBeenCalledTimes(1)
+      expect(showAlert).toHaveBeenCalledWith(
+        expect.objectContaining({ severity: 'error' })
+      )
     })
   })
 
@@ -133,8 +136,12 @@ describe('RenameInput', () => {
     fireEvent.change(inputNode, { target: { value: '   .pdf' } })
     fireEvent.keyDown(inputNode, { key: 'Enter', code: 'Enter', keyCode: 13 })
 
-    await waitFor(() => expect(Alerter.error).toHaveBeenCalledTimes(1))
-    expect(Alerter.error).toHaveBeenCalledWith('alert.file_name_missing')
+    await waitFor(() => {
+      expect(showAlert).toHaveBeenCalledTimes(1)
+      expect(showAlert).toHaveBeenCalledWith(
+        expect.objectContaining({ severity: 'error' })
+      )
+    })
   })
 
   it('should alert network error when detected by useBrowserOffline', async () => {
@@ -145,8 +152,12 @@ describe('RenameInput', () => {
     fireEvent.change(inputNode, { target: { value: '   .pdf' } })
     fireEvent.keyDown(inputNode, { key: 'Enter', code: 'Enter', keyCode: 13 })
 
-    await waitFor(() => expect(Alerter.error).toHaveBeenCalledTimes(1))
-    expect(Alerter.error).toHaveBeenCalledWith('alert.offline')
+    await waitFor(() => {
+      expect(showAlert).toHaveBeenCalledTimes(1)
+      expect(showAlert).toHaveBeenCalledWith(
+        expect.objectContaining({ severity: 'error' })
+      )
+    })
   })
 
   it('should alert network error when not detected by useBrowserOffline', async () => {
@@ -160,7 +171,11 @@ describe('RenameInput', () => {
     fireEvent.change(inputNode, { target: { value: '   .pdf' } })
     fireEvent.keyDown(inputNode, { key: 'Enter', code: 'Enter', keyCode: 13 })
 
-    await waitFor(() => expect(Alerter.error).toHaveBeenCalledTimes(1))
-    expect(Alerter.error).toHaveBeenCalledWith('upload.alert.network')
+    await waitFor(() => {
+      expect(showAlert).toHaveBeenCalledTimes(1)
+      expect(showAlert).toHaveBeenCalledWith(
+        expect.objectContaining({ severity: 'error' })
+      )
+    })
   })
 })

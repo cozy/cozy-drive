@@ -24,6 +24,8 @@ const mockClient = new CozyClient({
     on: jest.fn()
   }
 })
+const t = x => x
+const showAlert = jest.fn()
 
 describe('cancelMove', () => {
   const defaultEntries = [
@@ -52,6 +54,8 @@ describe('cancelMove', () => {
       client: mockClient,
       entries: entries,
       trashedFiles: trashedFiles,
+      showAlert,
+      t,
       registerCancelable: promise => promise,
       refreshSharing: refreshSpy
     })

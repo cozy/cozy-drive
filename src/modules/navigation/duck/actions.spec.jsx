@@ -10,7 +10,10 @@ jest.mock('cozy-keys-lib', () => ({
   useVaultClient: jest.fn(),
   WebVaultClient: jest.fn().mockReturnValue({})
 }))
+
 const vaultClient = new WebVaultClient('http://alice.cozy.cloud')
+const showAlert = jest.fn()
+const t = x => x
 
 beforeEach(() => {
   const folders = Array(3)
@@ -43,7 +46,9 @@ describe('createFolder', () => {
       folderId
     })
     await expect(
-      store.dispatch(createFolder(client, vaultClient, 'foobar2', folderId))
+      store.dispatch(
+        createFolder(client, vaultClient, 'foobar2', folderId, { showAlert, t })
+      )
     ).rejects.toEqual(new Error('alert.folder_name'))
   })
 
@@ -52,7 +57,11 @@ describe('createFolder', () => {
     const { client, store } = await setupFolderContent({
       folderId
     })
-    await store.dispatch(createFolder(client, vaultClient, 'foobar5', folderId))
+
+    await store.dispatch(
+      createFolder(client, vaultClient, 'foobar5', folderId, { showAlert, t })
+    )
+
     expect(client.create).toHaveBeenCalledWith('io.cozy.files', {
       dirId: 'folder123456',
       name: 'foobar5',

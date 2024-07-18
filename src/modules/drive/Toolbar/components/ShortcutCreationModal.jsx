@@ -7,9 +7,9 @@ import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import InputAdornment from 'cozy-ui/transpiled/react/InputAdornment'
 import Stack from 'cozy-ui/transpiled/react/Stack'
 import TextField from 'cozy-ui/transpiled/react/TextField'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { DOCTYPE_FILES_SHORTCUT } from 'lib/doctypes'
@@ -36,21 +36,22 @@ const ShortcutCreationModal = ({ onClose, onCreated }) => {
   const [fileName, setFilename] = useState('')
   const [url, setUrl] = useState('')
   const client = useClient()
+  const { showAlert } = useAlert()
   const isOffline = useBrowserOffline()
 
   const createShortcut = useCallback(async () => {
     if (!fileName || !url) {
-      Alerter.error(t('Shortcut.needs_info'))
+      showAlert({ message: t('Shortcut.needs_info'), severity: 'error' })
       return
     }
     const makedURL = makeURLValid(url)
     if (!makedURL) {
-      Alerter.error(t('Shortcut.url_badformat'))
+      showAlert({ message: t('Shortcut.url_badformat'), severity: 'error' })
       return
     }
     try {
       if (isOffline) {
-        Alerter.error('alert.offline')
+        showAlert({ message: t('alert.offline'), severity: 'error' })
       } else {
         await client.save({
           _type: DOCTYPE_FILES_SHORTCUT,
@@ -58,7 +59,7 @@ const ShortcutCreationModal = ({ onClose, onCreated }) => {
           name: fileName.endsWith('.url') ? fileName : fileName + '.url',
           url: makedURL
         })
-        Alerter.success(t('Shortcut.created'))
+        showAlert({ message: t('Shortcut.created'), severity: 'success' })
         if (onCreated) onCreated()
       }
       onClose()
@@ -68,31 +69,44 @@ const ShortcutCreationModal = ({ onClose, onCreated }) => {
           'NetworkError when attempting to fetch resource.'
         )
       ) {
-        Alerter.error('upload.alert.network')
+        showAlert({ message: t('upload.alert.network'), severity: 'error' })
       } else if (
         error.message.includes(
           'Invalid filename containing illegal character(s):'
         )
       ) {
-        Alerter.error(
-          'alert.file_name_illegal_characters',
-          {
+        showAlert({
+          message: t('alert.file_name_illegal_characters', {
             fileName,
             characters: error.message.split(
               'Invalid filename containing illegal character(s): '
             )[1]
-          },
-          { duration: 2000 }
-        )
+          }),
+          severity: 'error',
+          duration: 2000
+        })
       } else if (error.message.includes('Invalid filename:')) {
-        Alerter.error('alert.file_name_illegal_name', { fileName })
+        showAlert({
+          message: t('alert.file_name_illegal_name', { fileName }),
+          severity: 'error'
+        })
       } else if (error.message.includes('Missing name argument')) {
-        Alerter.error('alert.file_name_missing')
+        showAlert({ message: t('alert.file_name_missing'), severity: 'error' })
       } else {
-        Alerter.error(t('Shortcut.errored'))
+        showAlert({ message: t('Shortcut.errored'), severity: 'error' })
       }
     }
-  }, [client, fileName, onClose, onCreated, t, url, displayedFolder, isOffline])
+  }, [
+    client,
+    fileName,
+    onClose,
+    onCreated,
+    t,
+    url,
+    displayedFolder,
+    isOffline,
+    showAlert
+  ])
 
   const handleKeyDown = e => {
     if (e.keyCode === ENTER_KEY) {

@@ -7,6 +7,7 @@ import { useQuery, useClient } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
 import SharedDocuments from 'cozy-sharing/dist/components/SharedDocuments'
 import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -44,6 +45,7 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
   const currentFolderId = useCurrentFolderId()
   const { isMobile } = useBreakpoints()
   const { t } = useI18n()
+  const { showAlert } = useAlert()
   const client = useClient()
   const { allLoaded, hasWriteAccess, refresh } = useSharingContext()
   const { pushModal, popModal } = useModalContext()
@@ -105,6 +107,7 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
     refresh,
     dispatch,
     navigate,
+    showAlert,
     pathname,
     hasWriteAccess: hasWrite,
     canMove: true,

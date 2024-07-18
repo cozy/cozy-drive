@@ -3,8 +3,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { useClient } from 'cozy-client'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { abortRenaming } from './rename'
 import FilenameInput from 'modules/filelist/FilenameInput'
@@ -27,6 +28,9 @@ export const RenameInput = ({
   withoutExtension
 }) => {
   const client = useClient()
+  const { showAlert } = useAlert()
+  const { t } = useI18n()
+
   const { filename, extension } = CozyFile.splitFilename(file)
   const name = withoutExtension ? filename : file.name
   const isOffline = useBrowserOffline()
@@ -40,7 +44,7 @@ export const RenameInput = ({
         const newName = withoutExtension ? newValue + extension : newValue
         try {
           if (isOffline) {
-            Alerter.error('alert.offline')
+            showAlert({ message: t('alert.offline'), severity: 'error' })
           } else {
             await updateFileNameQuery(client, file, newName)
             if (refreshFolderContent) refreshFolderContent()
@@ -51,28 +55,37 @@ export const RenameInput = ({
               'NetworkError when attempting to fetch resource.'
             )
           ) {
-            Alerter.error('upload.alert.network')
+            showAlert({ message: t('upload.alert.network'), severity: 'error' })
           } else if (
             error.message.includes(
               'Invalid filename containing illegal character(s):'
             )
           ) {
-            Alerter.error(
-              'alert.file_name_illegal_characters',
-              {
+            showAlert({
+              message: t('alert.file_name_illegal_characters', {
                 fileName: newName,
                 characters: error.message.split(
                   'Invalid filename containing illegal character(s): '
                 )[1]
-              },
-              { duration: 2000 }
-            )
+              }),
+              severity: 'error',
+              duration: 2000
+            })
           } else if (error.message.includes('Invalid filename:')) {
-            Alerter.error('alert.file_name_illegal_name', { fileName: newName })
+            showAlert({
+              message: t('alert.file_name_illegal_name', { fileName: newName }),
+              severity: 'error'
+            })
           } else if (error.message.includes('Missing name argument')) {
-            Alerter.error('alert.file_name_missing')
+            showAlert({
+              message: t('alert.file_name_missing'),
+              severity: 'error'
+            })
           } else {
-            Alerter.error('alert.file_name', { fileName: newName })
+            showAlert({
+              message: t('alert.file_name', { fileName: newName }),
+              severity: 'error'
+            })
           }
         } finally {
           onAbort()

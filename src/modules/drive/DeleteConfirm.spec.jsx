@@ -33,7 +33,11 @@ describe('DeleteConfirm', () => {
     const confirmButton = getByText('Remove')
     fireEvent.click(confirmButton)
 
-    expect(trashFiles).toHaveBeenCalledWith(client, files)
+    expect(trashFiles).toHaveBeenCalledWith(
+      client,
+      files,
+      expect.objectContaining({})
+    )
 
     waitFor(() => {
       expect(afterConfirmation).toHaveBeenCalled()

@@ -4,7 +4,8 @@ import React, { useState } from 'react'
 import { useClient } from 'cozy-client'
 import { move } from 'cozy-client/dist/models/file'
 import { useSharingContext } from 'cozy-sharing'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { useMove } from './hooks/useMove'
 import { FolderPicker } from 'components/FolderPicker/FolderPicker'
@@ -40,9 +41,10 @@ const MoveModal = ({
   } = useSharingContext()
   const { registerCancelable } = useCancelable()
   const { showSuccess } = useMove({ entries })
+  const { t } = useI18n()
+  const { showAlert } = useAlert()
 
   const [folderSelected, setFolderSelected] = useState(null)
-
   const [isMoveInProgress, setMoveInProgress] = useState(false)
   const [isMovingOutsideSharedFolder, setMovingOutsideSharedFolder] =
     useState(false)
@@ -128,7 +130,10 @@ const MoveModal = ({
       if (refreshSharing) refreshSharing()
     } catch (e) {
       logger.warn(e)
-      Alerter.error('Move.error', { smart_count: entries.length })
+      showAlert({
+        message: t('Move.error', { smart_count: entries.length }),
+        severity: 'error'
+      })
     } finally {
       setMoveInProgress(false)
       onClose()

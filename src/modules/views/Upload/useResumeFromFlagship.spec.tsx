@@ -1,11 +1,12 @@
-import React from 'react'
 import { render, waitFor } from '@testing-library/react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { useResumeUploadFromFlagship } from 'modules/views/Upload/useResumeFromFlagship'
-import { getProcessed, getSuccessful } from 'modules/upload'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
 import { WebviewService } from 'cozy-intent'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
+
+import { getProcessed, getSuccessful } from 'modules/upload'
+import { useResumeUploadFromFlagship } from 'modules/views/Upload/useResumeFromFlagship'
 
 global.jasmine = {
   // @ts-expect-error - Test will fail if this is not set
@@ -16,9 +17,15 @@ const mockUseDispatch = useDispatch as jest.Mock
 const mockGetProcessed = getProcessed as jest.Mock
 const mockGetSuccessful = getSuccessful as jest.Mock
 const mockUseSelector = useSelector as jest.Mock
+const mockUseAlert = useAlert as jest.Mock
 
-jest.mock('cozy-ui/transpiled/react/deprecated/Alerter', () => ({
-  success: jest.fn()
+const showAlert = jest.fn()
+
+jest.mock('cozy-ui/transpiled/react/hooks/useBrowserOffline')
+jest.mock('cozy-ui/transpiled/react/providers/Alert', () => ({
+  ...jest.requireActual('cozy-ui/transpiled/react/providers/Alert'),
+  __esModule: true,
+  useAlert: jest.fn()
 }))
 
 jest.mock('cozy-intent', () => ({
@@ -55,6 +62,7 @@ describe('useResumeUploadFromFlagship', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     mockUseDispatch.mockReturnValue(mockDispatch)
+    mockUseAlert.mockReturnValue({ showAlert })
   })
 
   it('should not resume if there is no webview intent', () => {
@@ -64,7 +72,7 @@ describe('useResumeUploadFromFlagship', () => {
 
     render(<TestComponent />)
 
-    expect(Alerter.success).not.toHaveBeenCalled()
+    expect(showAlert).not.toHaveBeenCalled()
   })
 
   it('should not attempt to resume uploads if uploadQueue already has items on initialization', () => {
@@ -95,7 +103,7 @@ describe('useResumeUploadFromFlagship', () => {
     })
   })
 
-  it('should not call the alerter if upload is not finished', async () => {
+  it('should not call the alert if upload is not finished', async () => {
     mockGetProcessed.mockReturnValue([])
     mockGetSuccessful.mockReturnValue([])
     mockUseSelector.mockReturnValue([{ name: 'testFile' }])
@@ -103,7 +111,7 @@ describe('useResumeUploadFromFlagship', () => {
     render(<TestComponent />)
 
     await waitFor(() => {
-      expect(Alerter.success).not.toHaveBeenCalled()
+      expect(showAlert).not.toHaveBeenCalled()
     })
   })
 

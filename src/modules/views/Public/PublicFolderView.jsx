@@ -18,7 +18,7 @@ import { Content } from 'cozy-ui/transpiled/react'
 import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
 import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -82,6 +82,7 @@ const PublicFolderView = () => {
   const { refresh } = useSharingContext()
   const dispatch = useDispatch()
   const sharingInfos = useSharingInfos()
+  const { showAlert } = useAlert()
 
   const [viewerOpened, setViewerOpened] = useState(false)
   const [currentViewerIndex, setCurrentViewerIndex] = useState(null)
@@ -122,7 +123,7 @@ const PublicFolderView = () => {
         url.searchParams.set('returnUrl', window.location.href)
         window.location.href = url.toString()
       } catch (e) {
-        Alerter.error('alert.offline')
+        showAlert({ message: t('alert.offline'), severity: 'error' })
       }
     } else {
       showInViewer(file)
@@ -162,6 +163,7 @@ const PublicFolderView = () => {
     refresh: refreshAfterChange,
     dispatch,
     navigate,
+    showAlert,
     pathname,
     hasWriteAccess: hasWritePermissions,
     canMove: false,

@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import { useWebviewIntent } from 'cozy-intent'
 import logger from 'cozy-logger'
-import Alerter from 'cozy-ui/transpiled/react/deprecated/Alerter'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { getErrorMessage } from 'modules/drive/helpers'
@@ -28,6 +28,7 @@ export const useUploadFromFlagship = (): UploadFromFlagship => {
   const [uploadInProgress] = useState<boolean>(false)
   const dispatch = useDispatch()
   const { t } = useI18n()
+  const { showAlert } = useAlert()
 
   useEffect(() => {
     const asyncGetFilesToHandle = async (): Promise<void> => {
@@ -43,14 +44,14 @@ export const useUploadFromFlagship = (): UploadFromFlagship => {
               error
             )}`
           )
-          Alerter.error('ImportToDrive.error')
+          showAlert({ message: t('ImportToDrive.error'), severity: 'error' })
           navigate('/')
         }
       }
     }
 
     void asyncGetFilesToHandle()
-  }, [fromFlagshipUpload, webviewIntent, navigate])
+  }, [fromFlagshipUpload, webviewIntent, navigate, showAlert, t])
 
   const uploadFilesFromFlagship = useCallback(
     (folderId: string) => {
@@ -67,12 +68,12 @@ export const useUploadFromFlagship = (): UploadFromFlagship => {
         sendFilesToHandle(filesForQueue, webviewIntent, folderId)
         navigate(`/folder/${folderId}`)
       } catch (error) {
-        Alerter.error(t('ImportToDrive.error'))
+        showAlert({ message: t('ImportToDrive.error'), severity: 'error' })
         logger('info', `uploadFilesFromNative error, ${getErrorMessage(error)}`)
         navigate('/')
       }
     },
-    [dispatch, items, navigate, t, webviewIntent]
+    [dispatch, items, navigate, t, webviewIntent, showAlert]
   )
 
   const onClose = useCallback(async () => {

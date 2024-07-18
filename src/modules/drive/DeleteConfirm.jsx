@@ -8,6 +8,7 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import Stack from 'cozy-ui/transpiled/react/Stack'
 import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import { Media, Img, Bd } from 'cozy-ui/transpiled/react/deprecated/Media'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { DOCTYPE_ALBUMS } from 'lib/doctypes'
@@ -37,6 +38,7 @@ export const DeleteConfirm = ({
   children
 }) => {
   const { t } = useI18n()
+  const { showAlert } = useAlert()
   const fileCount = files.length
   const client = useClient()
   const [isDeleting, setDeleting] = useState(false)
@@ -76,10 +78,10 @@ export const DeleteConfirm = ({
 
   const onDelete = useCallback(async () => {
     setDeleting(true)
-    await trashFiles(client, files)
+    await trashFiles(client, files, { showAlert, t })
     afterConfirmation()
     onClose()
-  }, [client, files, afterConfirmation, onClose])
+  }, [client, files, afterConfirmation, onClose, showAlert, t])
 
   const entriesType = getEntriesTypeTranslated(t, files)
 
