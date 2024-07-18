@@ -20,7 +20,6 @@ import {
   FileAction,
   SharingShortcutBadge
 } from './cells'
-import { TRASH_DIR_ID } from 'constants/config'
 import { ActionMenuWithHeader } from 'modules/actionmenu/ActionMenuWithHeader'
 import { extraColumnsPropTypes } from 'modules/certifications'
 import { isRenaming, getRenamingFile } from 'modules/drive/rename'
@@ -118,7 +117,7 @@ const File = ({
   // because they are magic folder created by the stack
   const canInteractWithFile =
     attributes._id !== 'io.cozy.files.shared-drives-dir' &&
-    attributes._id !== TRASH_DIR_ID
+    !attributes._id.endsWith('.trash-dir')
 
   return (
     <TableRow className={filContentRowSelected}>

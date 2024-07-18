@@ -1,8 +1,9 @@
 import { useSearchParams } from 'react-router-dom'
 
-const useNextcloudPath = () => {
+const useNextcloudPath = ({ insideTrash = false } = {}) => {
   const [searchParams] = useSearchParams()
-  return searchParams.get('path') ?? '/'
+  const defaultPath = insideTrash ? '/trash/' : '/'
+  return searchParams.get('path') ?? defaultPath
 }
 
 export { useNextcloudPath }

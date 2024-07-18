@@ -33,6 +33,8 @@ import { ShareFileView } from 'modules/views/Modal/ShareFileView'
 import { NextcloudDeleteView } from 'modules/views/Nextcloud/NextcloudDeleteView'
 import { NextcloudFolderView } from 'modules/views/Nextcloud/NextcloudFolderView'
 import { NextcloudMoveView } from 'modules/views/Nextcloud/NextcloudMoveView'
+import { NextcloudTrashEmptyView } from 'modules/views/Nextcloud/NextcloudTrashEmptyView'
+import { NextcloudTrashView } from 'modules/views/Nextcloud/NextcloudTrashView'
 import { TrashDestroyView } from 'modules/views/Trash/TrashDestroyView'
 import { TrashEmptyView } from 'modules/views/Trash/TrashEmptyView'
 
@@ -72,13 +74,23 @@ const AppRoute = () => (
       </Route>
 
       {flag('drive.show-nextcloud-dev') ? (
-        <Route
-          path="nextcloud/:sourceAccount"
-          element={<NextcloudFolderView />}
-        >
-          <Route path="move" element={<NextcloudMoveView />} />
-          <Route path="delete" element={<NextcloudDeleteView />} />
-        </Route>
+        <>
+          <Route
+            path="nextcloud/:sourceAccount"
+            element={<NextcloudFolderView />}
+          >
+            <Route path="move" element={<NextcloudMoveView />} />
+            <Route path="delete" element={<NextcloudDeleteView />} />
+          </Route>
+          {flag('drive.show-nextcloud-trash-dev') ? (
+            <Route
+              path="nextcloud/:sourceAccount/trash"
+              element={<NextcloudTrashView />}
+            >
+              <Route path="empty" element={<NextcloudTrashEmptyView />} />
+            </Route>
+          ) : null}
+        </>
       ) : null}
 
       <Route path="recent" element={<RecentView />}>

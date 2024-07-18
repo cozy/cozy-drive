@@ -416,7 +416,7 @@ export const buildTriggersQueryByKonnectorSlug: QueryBuilder<
 })
 
 interface buildNextcloudFolderQueryParams {
-  sourceAccount: string
+  sourceAccount?: string
   path: string
 }
 
@@ -429,7 +429,9 @@ export const buildNextcloudFolderQuery: QueryBuilder<
       parentPath: path
     }),
   options: {
-    as: `io.cozy.remote.nextcloud.files/sourceAccount/${sourceAccount}/path${path}`,
+    as: `io.cozy.remote.nextcloud.files/sourceAccount/${
+      sourceAccount ?? 'unknown'
+    }/path${path}`,
     fetchPolicy: defaultFetchPolicy,
     enabled: !!sourceAccount && !!path
   }
@@ -538,5 +540,28 @@ export const buildSharedDrivesQuery: QueryBuilder<
   options: {
     as: `${SHARED_DRIVES_DIR_ID}/sortAttribute/${sortAttribute}/sortOrder/${sortOrder}`,
     fetchPolicy: CozyClient.fetchPolicies.olderThan(1000 * 60 * 10) // 10 minutes
+  }
+})
+
+interface buildNextcloudTrashFolderQueryParams {
+  sourceAccount?: string
+  path: string
+}
+
+export const buildNextcloudTrashFolderQuery: QueryBuilder<
+  buildNextcloudTrashFolderQueryParams
+> = ({ sourceAccount, path }) => ({
+  definition: () =>
+    Q('io.cozy.remote.nextcloud.files').where({
+      'cozyMetadata.sourceAccount': sourceAccount,
+      parentPath: path,
+      trashed: true
+    }),
+  options: {
+    as: `io.cozy.remote.nextcloud.files/sourceAccount/${
+      sourceAccount ?? 'unknown'
+    }/path${path}/trashed`,
+    fetchPolicy: defaultFetchPolicy,
+    enabled: !!sourceAccount && !!path
   }
 })

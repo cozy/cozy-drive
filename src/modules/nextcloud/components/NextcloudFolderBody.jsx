@@ -24,8 +24,12 @@ const NextcloudFolderBody = ({ path, queryResults }) => {
   const navigate = useNavigate()
 
   const handleFolderOpen = folder => {
-    searchParams.set('path', joinPath(path, folder.name))
-    setSearchParams(searchParams)
+    if (folder._id === 'io.cozy.remote.nextcloud.files.trash-dir') {
+      navigate(`${pathname}/trash`)
+    } else {
+      searchParams.set('path', joinPath(path, folder.name))
+      setSearchParams(searchParams)
+    }
   }
 
   const handleFileOpen = ({ file }) => {

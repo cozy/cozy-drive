@@ -13,7 +13,6 @@ import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import IconServer from 'assets/icons/icon-type-server.svg'
-import { TRASH_DIR_ID } from 'constants/config'
 import FileIcon from 'modules/filelist/FileIcon'
 import FileIconMime from 'modules/filelist/FileIconMime'
 import { SharingShortcutIcon } from 'modules/filelist/SharingShortcutIcon'
@@ -32,7 +31,7 @@ const FileThumbnail = ({ file, size, isInSyncFromSharing, isEncrypted }) => {
     file.cozyMetadata?.createdByApp === 'nextcloud' &&
     flag('drive.show-nextcloud-dev')
 
-  if (file._id === TRASH_DIR_ID) {
+  if (file?._id?.endsWith('.trash-dir')) {
     return <Icon icon={TrashDuotoneIcon} size={size ?? 32} />
   }
 
