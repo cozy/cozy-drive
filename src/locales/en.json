@@ -56,7 +56,6 @@
     "menu_open_cozy": "Open in my Cozy",
     "menu_create_note": "Note",
     "menu_create_shortcut": "Shortcut",
-    "empty_trash": "Empty trash",
     "share": "Share",
     "trash": "Remove",
     "leave": "Leave shared folder & delete it",
@@ -279,12 +278,15 @@
     "cancel": "Cancel",
     "delete": "Remove"
   },
-  "emptytrashconfirmation": {
+  "EmptyTrashConfirm": {
     "title": "Permanently delete?",
     "forbidden": "You won't be able to access these files anymore.",
     "restore": "You won't be able to restore these files if you didn't make a backup.",
     "cancel": "Cancel",
-    "delete": "Delete all"
+    "delete": "Delete all",
+    "processing": "Your trash is being emptied. This might take a few moments.",
+    "success": "The trash has been emptied.",
+    "error": "An error occurred, please try again."
   },
   "DestroyConfirm": {
     "title": "Delete %{filename}? |||| Delete %{smart_count} %{type}?",
@@ -332,8 +334,6 @@
     "restore_file_success": "The selection has been successfully restored.",
     "trash_file_success": "The selection has been moved to the Trash.",
     "destroy_file_success": "The selection has been deleted permanently.",
-    "empty_trash_progress": "Your trash is being emptied. This might take a few moments.",
-    "empty_trash_success": "The trash has been emptied.",
     "folder_name": "The element %{folderName} already exists, please choose a new name.",
     "file_name": "The element %{fileName} already exists, please choose a new name.",
     "file_name_missing": "The file name is missing, please choose a new name.",
@@ -828,5 +828,8 @@
       "add": "%{filename} has been added to favorites |||| These items have been added to favorites",
       "remove": "%{filename} has been removed from favorites |||| These items have been removed from favorites"
     }
+  },
+  "TrashToolbar": {
+    "emptyTrash": "Empty trash"
   }
 }

@@ -126,19 +126,3 @@ export const deleteFilesPermanently = async (client, files) => {
     await client.collection(DOCTYPE_FILES).deleteFilePermanently(file.id)
   }
 }
-
-export const emptyTrash = async (client, { showAlert, t }) => {
-  showAlert({
-    message: t('alert.empty_trash_progress'),
-    severity: 'secondary'
-  })
-  try {
-    await client.collection(DOCTYPE_FILES).emptyTrash()
-  } catch (err) {
-    showAlert({ message: t('alert.try_again'), severity: 'error' })
-  }
-  showAlert({
-    message: t('alert.empty_trash_success'),
-    severity: 'secondary'
-  })
-}

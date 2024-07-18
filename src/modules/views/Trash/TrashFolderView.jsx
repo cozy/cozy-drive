@@ -18,8 +18,8 @@ import { restore, destroy } from 'modules/actions'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import { useFolderSort } from 'modules/navigation/duck'
-import TrashToolbar from 'modules/trash/Toolbar'
 import { TrashBreadcrumb } from 'modules/trash/components/TrashBreadcrumb'
+import { TrashToolbar } from 'modules/trash/components/TrashToolbar'
 import {
   buildTrashQuery,
   buildFileWithSpecificMetadataAttributeQuery

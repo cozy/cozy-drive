@@ -99,7 +99,7 @@ declare module 'cozy-ui/transpiled/react/ActionsMenu/Actions' {
   export function makeActions(
     arg1: ((props?: T) => Action)[],
     T
-  ): Record<string, () => Action>
+  ): Record<string, Action>[]
 }
 
 declare module 'cozy-sharing' {

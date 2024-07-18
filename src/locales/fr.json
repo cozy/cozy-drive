@@ -56,7 +56,6 @@
     "menu_open_cozy": "Ouvrir dans mon Cozy",
     "menu_create_note": "Note",
     "menu_create_shortcut": "Raccourci",
-    "empty_trash": "Vider la corbeille",
     "share": "Partager",
     "trash": "Supprimer",
     "leave": "Quitter le dossier partagé et le supprimer",
@@ -280,12 +279,15 @@
     "cancel": "Annuler",
     "delete": "Supprimer"
   },
-  "emptytrashconfirmation": {
+  "EmptyTrashConfirm": {
     "title": "Supprimer définitivement ?",
     "forbidden": "Vous ne pourrez plus accéder à ces fichiers.",
     "restore": "Vous ne pourrez pas restaurer ces fichiers.",
     "cancel": "Annuler",
-    "delete": "Tout supprimer"
+    "delete": "Tout supprimer",
+    "processing": "Votre corbeille est en train de se vider. Cela peut prendre quelques instants.",
+    "success": "La corbeille a été vidée.",
+    "error": "Une erreur est survenue, merci de réessayer."
   },
   "DestroyConfirm": {
     "title": "Supprimer %{filename} ? |||| Supprimer %{smart_count} %{type} ?",
@@ -333,8 +335,6 @@
     "restore_file_success": "La sélection a été restaurée avec succès.",
     "trash_file_success": "La sélection a été déplacée dans la Corbeille.",
     "destroy_file_success": "La sélection a été supprimée définitivement.",
-    "empty_trash_progress": " Votre corbeille est en train de se vider. Cela peut prendre quelques instants.",
-    "empty_trash_success": "La corbeille a été vidée.",
     "folder_name": "L'élément %{folderName} existe déjà, merci de choisir un nouveau nom.",
     "file_name": "L'élément %{fileName} existe déjà, utilisez un nouveau nom",
     "file_name_missing": "Le nom du fichier est manquant, veuillez choisir un nouveau nom.",
@@ -829,5 +829,8 @@
       "add": "%{filename} a été ajouté aux favoris |||| Ces éléments ont été ajoutés aux favoris",
       "remove": "%{filename} a été retiré des favoris |||| Ces éléments ont été retirés des favoris"
     }
+  },
+  "TrashToolbar": {
+    "emptyTrash": "Vider la corbeille"
   }
 }
