@@ -1,0 +1,114 @@
+import React, { useState } from 'react'
+
+import { splitFilename } from 'cozy-client/dist/models/file'
+import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import ForbiddenIcon from 'cozy-ui/transpiled/react/Icons/Forbidden'
+import RestoreIcon from 'cozy-ui/transpiled/react/Icons/Restore'
+import List from 'cozy-ui/transpiled/react/List'
+import ListItem from 'cozy-ui/transpiled/react/ListItem'
+import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
+import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
+import Button from 'cozy-ui/transpiled/react/deprecated/Button'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+
+import { File } from 'components/FolderPicker/types'
+import { getEntriesTypeTranslated } from 'lib/entries'
+
+interface DestroyConfirmProps {
+  files: File[]
+  onClose: () => void
+  onConfirm: () => Promise<void>
+}
+
+const DestroyConfirm: React.FC<DestroyConfirmProps> = ({
+  files,
+  onClose,
+  onConfirm
+}) => {
+  const { t } = useI18n()
+  const [isBusy, setBusy] = useState(false)
+  const { showAlert } = useAlert()
+
+  const entriesType = getEntriesTypeTranslated(t, files)
+
+  const handleDestroy = async (): Promise<void> => {
+    try {
+      setBusy(true)
+      await onConfirm()
+      showAlert({
+        message: t('DestroyConfirm.success', {
+          smart_count: files.length,
+          type: entriesType
+        }),
+        severity: 'success'
+      })
+    } catch {
+      showAlert({
+        message: t('DestroyConfirm.error'),
+        severity: 'error'
+      })
+    } finally {
+      setBusy(false)
+      onClose()
+    }
+  }
+
+  const filename = files.length > 0 ? splitFilename(files[0]).filename : ''
+
+  return (
+    <ConfirmDialog
+      open
+      onClose={onClose}
+      title={t('DestroyConfirm.title', {
+        filename,
+        smart_count: files.length,
+        type: entriesType
+      })}
+      content={
+        <List>
+          <ListItem gutters="disabled" size="small" ellipsis={false}>
+            <ListItemIcon>
+              <Icon icon={ForbiddenIcon} />
+            </ListItemIcon>
+            <ListItemText
+              primary={t('DestroyConfirm.forbidden', {
+                smart_count: files.length,
+                type: entriesType
+              })}
+            />
+          </ListItem>
+          <ListItem gutters="disabled" size="small" ellipsis={false}>
+            <ListItemIcon>
+              <Icon icon={RestoreIcon} />
+            </ListItemIcon>
+            <ListItemText
+              primary={t('DestroyConfirm.restore', {
+                smart_count: files.length,
+                type: entriesType
+              })}
+            />
+          </ListItem>
+        </List>
+      }
+      actions={
+        <>
+          <Button
+            theme="secondary"
+            onClick={onClose}
+            label={t('DestroyConfirm.cancel')}
+          />
+          <Button
+            theme="danger"
+            label={t('DestroyConfirm.delete')}
+            busy={isBusy}
+            onClick={handleDestroy}
+          />
+        </>
+      }
+    />
+  )
+}
+
+export default DestroyConfirm

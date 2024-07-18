@@ -22,7 +22,6 @@ import { isEncryptedFolder, isEncryptedFile } from 'lib/encryption'
 import { navigateToModal } from 'modules/actions/helpers'
 import DeleteConfirm from 'modules/drive/DeleteConfirm'
 import { startRenamingAsync } from 'modules/drive/rename'
-import DestroyConfirm from 'modules/trash/components/DestroyConfirm'
 
 export { share } from './share'
 
@@ -235,38 +234,6 @@ export const restore = ({ t, refresh, client }) => {
             <Icon icon={icon} />
           </ListItemIcon>
           <ListItemText primary={label} />
-        </ActionsMenuItem>
-      )
-    })
-  }
-}
-
-export const destroy = ({ t, pushModal, popModal }) => {
-  const label = t('SelectionBar.destroy')
-  const icon = TrashIcon
-
-  return {
-    name: 'destroy',
-    label,
-    icon,
-    action: files =>
-      pushModal(
-        <DestroyConfirm
-          files={files}
-          onConfirm={popModal}
-          onCancel={popModal}
-        />
-      ),
-    Component: forwardRef(function Destroy(props, ref) {
-      return (
-        <ActionsMenuItem {...props} ref={ref}>
-          <ListItemIcon>
-            <Icon icon={icon} color="var(--errorColor)" />
-          </ListItemIcon>
-          <ListItemText
-            primary={label}
-            primaryTypographyProps={{ color: 'error' }}
-          />
         </ActionsMenuItem>
       )
     })

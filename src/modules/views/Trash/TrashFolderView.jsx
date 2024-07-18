@@ -1,6 +1,6 @@
 import { useCurrentFolderId, useDisplayedFolder } from 'hooks'
 import React, { useCallback } from 'react'
-import { useNavigate, Outlet } from 'react-router-dom'
+import { useNavigate, Outlet, useLocation } from 'react-router-dom'
 
 import { useQuery, useClient } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
@@ -13,13 +13,13 @@ import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewHeader from '../Folder/FolderViewHeader'
 import useHead from 'components/useHead'
 import { ROOT_DIR_ID } from 'constants/config'
-import { useModalContext } from 'lib/ModalContext'
-import { restore, destroy } from 'modules/actions'
+import { restore } from 'modules/actions'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import { useFolderSort } from 'modules/navigation/duck'
 import { TrashBreadcrumb } from 'modules/trash/components/TrashBreadcrumb'
 import { TrashToolbar } from 'modules/trash/components/TrashToolbar'
+import { destroy } from 'modules/trash/components/actions/destroy'
 import {
   buildTrashQuery,
   buildFileWithSpecificMetadataAttributeQuery
@@ -31,11 +31,11 @@ const mobileExtraColumnsNames = []
 export const TrashFolderView = () => {
   const { isMobile } = useBreakpoints()
   const navigate = useNavigate()
+  const { pathname } = useLocation()
   const currentFolderId = useCurrentFolderId()
   const { t } = useI18n()
   const { refresh } = useSharingContext()
   const client = useClient()
-  const { pushModal, popModal } = useModalContext()
   useHead()
 
   const { displayedFolder, isNotFound } = useDisplayedFolder()
@@ -90,14 +90,13 @@ export const TrashFolderView = () => {
     [navigate, currentFolderId]
   )
 
-  const actionsOptions = {
+  const actions = makeActions([restore, destroy], {
     client,
     t,
     refresh,
-    pushModal,
-    popModal
-  }
-  const actions = makeActions([restore, destroy], actionsOptions)
+    navigate,
+    pathname
+  })
 
   return (
     <FolderView isNotFound={isNotFound}>

@@ -293,7 +293,9 @@
     "forbidden": "You won't be able to access this %{type} anymore. |||| You won't be able to access these %{type} anymore.",
     "restore": "You won't be able to restore this %{type} if you didn't make a backup. |||| You won't be able to restore these %{type} if you didn't make a backup.",
     "cancel": "Cancel",
-    "delete": "Delete permanently"
+    "delete": "Delete permanently",
+    "success": "The %{type} has been deleted permanently. |||| %{smart_count} %{type} have been deleted permanently.",
+    "error": "An error occurred, please try again."
   },
   "quotaalert": {
     "title": "Your disk space is full :(",

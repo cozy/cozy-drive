@@ -294,7 +294,9 @@
     "forbidden": "Vous ne pourrez plus accéder à ce %{type}. |||| Vous ne pourrez plus accéder à ces %{type}.",
     "restore": "Vous ne pourrez pas restaurer ce %{type}. |||| Vous ne pourrez pas restaurer ces %{type}.",
     "cancel": "Annuler",
-    "delete": "Supprimer définitivement"
+    "delete": "Supprimer définitivement",
+    "success": "Le %{type} a été supprimé définitivement. |||| %{smart_count} %{type} ont été supprimés définitivement.",
+    "error": "Une erreur est survenue, merci de réessayer."
   },
   "quotaalert": {
     "title": "Votre espace disque est plein :(",
