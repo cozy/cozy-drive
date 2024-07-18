@@ -33,7 +33,7 @@ const EmptyCanvas = ({ type, canUpload, localeKey, hasTextMobileVersion }) => {
         (localeKey && t(`empty.${localeKey}_text`)) ||
         (canUpload && t('empty.text'))
       }
-      className={cx(styles['empty'], 'u-mh-2')}
+      className={cx(styles['empty'])}
     />
   )
 }
