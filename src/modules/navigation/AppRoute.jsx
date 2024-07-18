@@ -19,7 +19,7 @@ import SharingsFolderView from '../views/Sharings/SharingsFolderView'
 import FilesViewerTrash from '../views/Trash/FilesViewerTrash'
 import TrashFolderView from '../views/Trash/TrashFolderView'
 import FileHistory from 'components/FileHistory'
-import { ROOT_DIR_ID } from 'constants/config'
+import { ROOT_DIR_ID, TRASH_DIR_ID } from 'constants/config'
 import { UploaderComponent } from 'modules//views/Upload/UploaderComponent'
 import Layout from 'modules/layout/Layout'
 import FileOpenerExternal from 'modules/viewer/FileOpenerExternal'
@@ -33,6 +33,7 @@ import { ShareFileView } from 'modules/views/Modal/ShareFileView'
 import { NextcloudDeleteView } from 'modules/views/Nextcloud/NextcloudDeleteView'
 import { NextcloudFolderView } from 'modules/views/Nextcloud/NextcloudFolderView'
 import { NextcloudMoveView } from 'modules/views/Nextcloud/NextcloudMoveView'
+import { TrashEmptyView } from 'modules/views/Trash/TrashEmptyView'
 
 const FilesRedirect = () => {
   const { folderId } = useParams()
@@ -88,12 +89,14 @@ const AppRoute = () => (
         <Route path="move" element={<MoveFilesView />} />
       </Route>
 
-      <Route path="trash">
-        <Route index element={<TrashFolderView />} />
-        <Route path=":folderId" element={<TrashFolderView />}>
-          <Route path="file/:fileId" element={<FilesViewerTrash />} />
-          <Route path="file/:fileId/revision" element={<FileHistory />} />
-        </Route>
+      <Route
+        path="trash"
+        element={<Navigate to={TRASH_DIR_ID} replace={true} />}
+      />
+      <Route path="trash/:folderId" element={<TrashFolderView />}>
+        <Route path="file/:fileId" element={<FilesViewerTrash />} />
+        <Route path="file/:fileId/revision" element={<FileHistory />} />
+        <Route path="empty" element={<TrashEmptyView />} />
       </Route>
 
       <Route path="sharings">
