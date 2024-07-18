@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react'
 
-import { NextcloudFile } from 'cozy-client/types/types'
 import flag from 'cozy-flags'
+import { Action } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
@@ -15,15 +15,6 @@ interface DeleteNextcloudFileProps {
   pathname: string
   navigate: (path: string) => void
   search: string
-}
-
-interface ActionsMenuItemProps {
-  name: string
-  label: string
-  icon: React.ReactNode
-  action: (files: never[]) => void
-  disabled: () => boolean
-  Component: React.ReactNode
 }
 
 /**
@@ -40,7 +31,7 @@ export const deleteNextcloudFile = ({
   pathname,
   navigate,
   search
-}: DeleteNextcloudFileProps): ActionsMenuItemProps => {
+}: DeleteNextcloudFileProps): Action => {
   const label = t('SelectionBar.trash')
   const icon = TrashIcon
 
@@ -48,7 +39,7 @@ export const deleteNextcloudFile = ({
     name: 'deleteNextcloudFile',
     label,
     icon,
-    action: (files: NextcloudFile[]): void => {
+    action: (files): void => {
       navigateToModalWithMultipleFile({
         files,
         pathname,
@@ -58,12 +49,7 @@ export const deleteNextcloudFile = ({
       })
     },
     disabled: () => !flag('drive.show-nextcloud-delete-dev'),
-    Component: forwardRef(function DeleteNextcloudFile(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      props: any,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ref: React.Ref<any>
-    ) {
+    Component: forwardRef(function DeleteNextcloudFile(props, ref) {
       return (
         <ActionsMenuItem {...props} ref={ref}>
           <ListItemIcon>
