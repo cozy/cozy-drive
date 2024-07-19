@@ -834,5 +834,10 @@
   },
   "TrashToolbar": {
     "emptyTrash": "Empty trash"
+  },
+  "RestoreNextcloudFile": {
+    "label": "Restore",
+    "success": "The item has been restored",
+    "error": "An error occurred, please try again."
   }
 }
