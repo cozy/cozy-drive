@@ -6363,6 +6363,17 @@ cozy-doctypes@^1.90.0:
     lodash "^4.17.19"
     prop-types "^15.7.2"
 
+cozy-doctypes@^1.91.1:
+  version "1.91.1"
+  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.91.1.tgz#cf22ce27a751228009f662f1166c3deaf479b7d6"
+  integrity sha512-lP1nHZE9JIWtTbeSS3kGvtDGZsoY2wVMY2Smfv7QF9PJG2OFs1EKa02XSeJZhQGYGfXeVnvm6jLN4IIpkMAl0A==
+  dependencies:
+    cozy-logger "^1.10.4"
+    date-fns "^1.30.1"
+    es6-promise-pool "^2.5.0"
+    lodash "^4.17.19"
+    prop-types "^15.7.2"
+
 cozy-flags@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/cozy-flags/-/cozy-flags-4.0.0.tgz#047f9a93f826808bfd23ab206d0bf8235c162237"
@@ -6614,15 +6625,15 @@ cozy-scripts@^8.3.0:
     webpack-dev-server "3.10.3"
     webpack-merge "4.2.2"
 
-cozy-sharing@^15.0.0:
-  version "15.0.0"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-15.0.0.tgz#d21c5557e3275f2945995a972f7b52cb1fd265bb"
-  integrity sha512-FN6FK3WJWjVMYFquKsBItn/0/spZVjtxRBaxFxeG9oiDaGALCY2UXqJBfdq6sC8x2y+PXyNZx2050oz5Uxx7iw==
+cozy-sharing@^15.0.2:
+  version "15.0.2"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-15.0.2.tgz#823561edacc38dc6dfe20ca4a7cd00e9ab74ea1a"
+  integrity sha512-uPpCCP7ddjlGCJtXpfq4UB6X7FZWv8g+1THao87cy5JkQSrK/KsyAese+rQYprLzWJVpMX/zutNXv7zmKB+DAw==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     classnames "^2.2.6"
     cozy-device-helper "^3.0.0"
-    cozy-doctypes "^1.90.0"
+    cozy-doctypes "^1.91.1"
     lodash "^4.17.19"
     react-autosuggest "^10.1.0"
     react-tooltip "^3.11.1"
@@ -13134,9 +13145,10 @@ msgpack5@^4.0.2:
     readable-stream "^2.3.6"
     safe-buffer "^5.1.2"
 
-"mui-bottom-sheet@git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
+"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
   version "1.0.8"
-  resolved "git+https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
+  uid "3dc4c2a245ab39079bc2f73546bccf80847be14c"
+  resolved "https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
     jest-environment-jsdom-sixteen "^1.0.3"
