@@ -6291,10 +6291,10 @@ cozy-client@^45.14.1:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
-cozy-client@^48.9.0:
-  version "48.9.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-48.9.0.tgz#e5b76e727302b7ae4de874852dabf6dd89731933"
-  integrity sha512-trfjFH0AZ17L0/c9EbicEZoawWZrdT9v8TkDso+PMaLIXKQm+TiIC+7vEMQEUWHzRTz7TdVFtkN0ih3FnTcNQA==
+cozy-client@^48.11.0:
+  version "48.11.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-48.11.0.tgz#daffba1c38aeb8ce45d73da30a0596c089c9e68c"
+  integrity sha512-5dME2WBZBYzIfthqiok9DEn8tpmjCuIw4a6CC2eim/4nvJ2QhMvpS4OH7EJPlXEvhdUHhJvq6JzKKY4o8e/wpQ==
   dependencies:
     "@cozy/minilog" "1.0.0"
     "@types/jest" "^26.0.20"
@@ -6347,17 +6347,6 @@ cozy-doctypes@^1.83.8:
   integrity sha512-N2HEQdnFyUyaReLBhIX9f/8o1c+7PNONpcStVqoRdixVhbx4vrr22qMq2dvUWNTGvPKAqo3ZJdVaMHC9ETZTGw==
   dependencies:
     cozy-logger "^1.10.1"
-    date-fns "^1.30.1"
-    es6-promise-pool "^2.5.0"
-    lodash "^4.17.19"
-    prop-types "^15.7.2"
-
-cozy-doctypes@^1.90.0:
-  version "1.90.0"
-  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.90.0.tgz#6ac69043d45be910c27cb0793a3e45e1a96b91de"
-  integrity sha512-H/T+FD6ufD3YC/L22GBcDBd3C5j5POBuwHO860AjcVSWNDaKwFIat/LyDKjqDhPXEzo7ZgXgLEFw3KQzpC7yVw==
-  dependencies:
-    cozy-logger "^1.10.4"
     date-fns "^1.30.1"
     es6-promise-pool "^2.5.0"
     lodash "^4.17.19"
@@ -13147,7 +13136,6 @@ msgpack5@^4.0.2:
 
 "mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
   version "1.0.8"
-  uid "3dc4c2a245ab39079bc2f73546bccf80847be14c"
   resolved "https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
