@@ -33,6 +33,7 @@ import Toolbar from 'modules/drive/Toolbar'
 import { FolderBody } from 'modules/folder/components/FolderBody'
 import { useFileOpeningHandler } from 'modules/folder/hooks/useFileOpeningHandler'
 import { useFolderSort } from 'modules/navigation/duck'
+import { isNextcloudShortcut } from 'modules/nextcloud/helpers'
 import FolderView from 'modules/views/Folder/FolderView'
 import FolderViewHeader from 'modules/views/Folder/FolderViewHeader'
 import {
@@ -77,6 +78,9 @@ const FavoritesView: FC = () => {
   ) as {
     data?: IOCozyFile[] | null
   }
+
+  const handleInteractWith = (file: IOCozyFile): boolean =>
+    !isNextcloudShortcut(file)
 
   const handleFolderOpen = useCallback(
     (folder: IOCozyFile) => {
@@ -145,6 +149,7 @@ const FavoritesView: FC = () => {
         extraColumns={extraColumns}
         actions={actions}
         canSort={true}
+        canInteractWith={handleInteractWith}
       />
       <Outlet />
     </FolderView>
