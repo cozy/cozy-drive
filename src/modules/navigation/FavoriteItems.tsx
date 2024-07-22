@@ -10,6 +10,7 @@ import List from 'cozy-ui/transpiled/react/List'
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
 import { NavIcon, NavLink, NavItem } from 'cozy-ui/transpiled/react/Nav'
 import Typography from 'cozy-ui/transpiled/react/Typography'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import ServerIcon from 'assets/icons/icon-server.svg'
 import { useFileOpeningHandler } from 'modules/folder/hooks/useFileOpeningHandler'
@@ -20,6 +21,7 @@ interface FavoriteItemsProps {
 }
 
 const FavoriteItems: FC<FavoriteItemsProps> = ({ className }) => {
+  const { t } = useI18n()
   const favoritesQuery = buildFavoritesQuery({
     sortAttribute: 'name',
     sortOrder: 'desc'
@@ -50,7 +52,7 @@ const FavoriteItems: FC<FavoriteItemsProps> = ({ className }) => {
   if (favoritesResult.data && favoritesResult.data.length > 0) {
     return (
       <List
-        subheader={<ListSubheader>Favorites</ListSubheader>}
+        subheader={<ListSubheader>{t('Nav.item_favorites')}</ListSubheader>}
         className={className}
       >
         {favoritesResult.data.map(file => {
