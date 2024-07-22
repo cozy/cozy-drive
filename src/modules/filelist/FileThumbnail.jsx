@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { models } from 'cozy-client'
-import flag from 'cozy-flags'
 import { SharedBadge, SharingOwnerAvatar } from 'cozy-sharing'
 import GhostFileBadge from 'cozy-ui/transpiled/react/GhostFileBadge'
 import Icon from 'cozy-ui/transpiled/react/Icon'
@@ -16,6 +15,7 @@ import IconServer from 'assets/icons/icon-type-server.svg'
 import FileIcon from 'modules/filelist/FileIcon'
 import FileIconMime from 'modules/filelist/FileIconMime'
 import { SharingShortcutIcon } from 'modules/filelist/SharingShortcutIcon'
+import { isNextcloudShortcut } from 'modules/nextcloud/helpers'
 
 import styles from 'styles/filelist.styl'
 
@@ -27,15 +27,15 @@ const FileThumbnail = ({ file, size, isInSyncFromSharing, isEncrypted }) => {
     !isSharingShortcut && file.class === 'shortcut' && !isInSyncFromSharing
   const isSimpleFile =
     !isSharingShortcut && !isRegularShortcut && !isInSyncFromSharing
-  const isNextcloudShortcut =
-    file.cozyMetadata?.createdByApp === 'nextcloud' &&
-    flag('drive.show-nextcloud-dev')
 
   if (file?._id?.endsWith('.trash-dir')) {
     return <Icon icon={TrashDuotoneIcon} size={size ?? 32} />
   }
 
-  if (file._id === 'io.cozy.files.shared-drives-dir' || isNextcloudShortcut) {
+  if (
+    file._id === 'io.cozy.files.shared-drives-dir' ||
+    isNextcloudShortcut(file)
+  ) {
     return <Icon icon={IconServer} size={size ?? 32} />
   }
 

@@ -32,6 +32,7 @@ import SelectionBar from 'modules/selection/SelectionBar'
  * @param {boolean} [props.withFilePath] - Indicates whether to display the file path.
  * @param {boolean} [props.isInSyncFromSharing] - Indicates whether the folder is in sync from sharing.
  * @param {Function} [props.renderEmptyComponent] - The function to render the empty component.
+ * @param {Function} [props.canInteractWith] - Indicates whether the user can interact with the file.
  */
 const FolderBody = ({
   folderId,
@@ -46,7 +47,8 @@ const FolderBody = ({
   isInSyncFromSharing,
   renderEmptyComponent = () => {
     return <EmptyDrive />
-  }
+  },
+  canInteractWith
 }) => {
   const { isDesktop } = useBreakpoints()
 
@@ -107,6 +109,7 @@ const FolderBody = ({
                         isInSyncFromSharing={isInSyncFromSharing}
                         extraColumns={extraColumns}
                         withSelectionCheckbox
+                        canInteractWith={canInteractWith}
                       />
                     )
                   })}

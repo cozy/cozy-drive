@@ -46,7 +46,8 @@ const File = ({
   breakpoints: { isExtraLarge, isMobile },
   onFolderOpen,
   onFileOpen,
-  disableSelection = false
+  disableSelection = false,
+  canInteractWith
 }) => {
   const [actionMenuVisible, setActionMenuVisible] = useState(false)
   const filerowMenuToggleRef = useRef()
@@ -115,9 +116,12 @@ const File = ({
 
   // We don't allow any action on shared drives and trash
   // because they are magic folder created by the stack
-  const canInteractWithFile =
+  let canInteractWithFile =
     attributes._id !== 'io.cozy.files.shared-drives-dir' &&
     !attributes._id.endsWith('.trash-dir')
+  if (typeof canInteractWith === 'function') {
+    canInteractWithFile &&= canInteractWith(attributes)
+  }
 
   return (
     <TableRow className={filContentRowSelected}>
