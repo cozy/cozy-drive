@@ -22,7 +22,7 @@ export const restoreNextcloudFile = ({
   t,
   client,
   showAlert
-}: RestoreNextcloudFileProps): Action => {
+}: RestoreNextcloudFileProps): Action<NextcloudFile> => {
   const label = t('RestoreNextcloudFile.label')
   const icon = RestoreIcon
 
@@ -31,8 +31,7 @@ export const restoreNextcloudFile = ({
     label,
     icon,
     displayCondition: (files): boolean => files.length > 0,
-    action: async (docs): Promise<void> => {
-      const files = docs as unknown as NextcloudFile[]
+    action: async (files): Promise<void> => {
       const sourceAccount = files[0].cozyMetadata.sourceAccount
       const parentPath = files[0].parentPath
 
