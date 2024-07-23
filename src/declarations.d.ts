@@ -70,6 +70,12 @@ declare module 'cozy-client/dist/models/file' {
     filename: string
     extension: string
   }
+  export const isFile: (file: IOCozyFile) => boolean
+  export const copy: (
+    client: import('cozy-client/types/CozyClient').CozyClient,
+    file: Partial<import('components/FolderPicker/types').File>,
+    destination: import('components/FolderPicker/types').File
+  ) => Promise<void>
 }
 
 declare module '*.svg' {

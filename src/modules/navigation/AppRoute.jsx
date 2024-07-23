@@ -26,12 +26,14 @@ import FileOpenerExternal from 'modules/viewer/FileOpenerExternal'
 import HarvestRoutes from 'modules/views/Drive/HarvestRoutes'
 import { SharedDrivesFolderView } from 'modules/views/Drive/SharedDrivesFolderView'
 import { FavoritesView } from 'modules/views/Favorites/FavoritesView'
+import { FolderDuplicateView } from 'modules/views/Folder/FolderDuplicateView'
 import { MoveFilesView } from 'modules/views/Modal/MoveFilesView'
 import { QualifyFileView } from 'modules/views/Modal/QualifyFileView'
 import { ShareDisplayedFolderView } from 'modules/views/Modal/ShareDisplayedFolderView'
 import { ShareFileView } from 'modules/views/Modal/ShareFileView'
 import { NextcloudDeleteView } from 'modules/views/Nextcloud/NextcloudDeleteView'
 import { NextcloudDestroyView } from 'modules/views/Nextcloud/NextcloudDestroyView'
+import { NextcloudDuplicateView } from 'modules/views/Nextcloud/NextcloudDuplicateView'
 import { NextcloudFolderView } from 'modules/views/Nextcloud/NextcloudFolderView'
 import { NextcloudMoveView } from 'modules/views/Nextcloud/NextcloudMoveView'
 import { NextcloudTrashEmptyView } from 'modules/views/Nextcloud/NextcloudTrashEmptyView'
@@ -65,6 +67,7 @@ const AppRoute = () => (
         <Route path="share" element={<ShareDisplayedFolderView />} />
         <Route path="move" element={<MoveFilesView />} />
         <Route path="harvest/:konnectorSlug/*" element={<HarvestRoutes />} />
+        <Route path="duplicate" element={<FolderDuplicateView />} />
       </Route>
 
       <Route
@@ -82,6 +85,7 @@ const AppRoute = () => (
           >
             <Route path="move" element={<NextcloudMoveView />} />
             <Route path="delete" element={<NextcloudDeleteView />} />
+            <Route path="duplicate" element={<NextcloudDuplicateView />} />
           </Route>
           {flag('drive.show-nextcloud-trash-dev') ? (
             <Route
@@ -102,6 +106,7 @@ const AppRoute = () => (
         <Route path="file/:fileId/qualify" element={<QualifyFileView />} />
         <Route path="share" element={<ShareDisplayedFolderView />} />
         <Route path="move" element={<MoveFilesView />} />
+        <Route path="duplicate" element={<FolderDuplicateView />} />
       </Route>
 
       <Route

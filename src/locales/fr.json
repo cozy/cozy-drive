@@ -259,7 +259,6 @@
     "forward": "Transférer",
     "forwardTo": "Transférer vers...",
     "moveto": "Déplacer vers…",
-    "duplicate": "Dupliquer",
     "phone-download": "Rendre accessible hors-ligne",
     "requalify": "Requalifier",
     "qualify": "Qualifier",
@@ -833,6 +832,17 @@
   "RestoreNextcloudFile": {
     "label": "Restaurer",
     "success": "L'élément a bien été restauré",
+    "error": "Une erreur est survenue, merci de réessayer."
+  },
+  "actions": {
+    "duplicateTo": {
+      "label": "Dupliquer vers…"
+    }
+  },
+  "DuplicateModal": {
+    "subTitle": "Dupliquer vers :",
+    "confirmLabel": "Dupliquer ici",
+    "success": "%{fileName} a été dupliqué dans %{destinationName}. |||| %{smart_count} éléments ont été dupliqués dans %{destinationName}.",
     "error": "Une erreur est survenue, merci de réessayer."
   }
 }

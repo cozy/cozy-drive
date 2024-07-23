@@ -259,7 +259,6 @@
     "forward": "Forward",
     "forwardTo": "Forward to...",
     "moveto": "Move to…",
-    "duplicate": "Duplicate",
     "phone-download": "Make available offline",
     "qualify": "Categorize",
     "history": "History",
@@ -832,6 +831,17 @@
   "RestoreNextcloudFile": {
     "label": "Restore",
     "success": "The item has been restored",
+    "error": "An error occurred, please try again."
+  },
+  "actions": {
+    "duplicateTo": {
+      "label": "Duplicate to…"
+    }
+  },
+  "DuplicateModal": {
+    "subTitle": "Duplicate to:",
+    "confirmLabel": "Duplicate here",
+    "success": "%{fileName} has been duplicated to %{destinationName}. |||| %{smart_count} elements have been duplicated to %{destinationName}.",
     "error": "An error occurred, please try again."
   }
 }
