@@ -126,7 +126,7 @@ const File = ({
   return (
     <TableRow className={filContentRowSelected}>
       <SelectBox
-        withSelectionCheckbox={withSelectionCheckbox}
+        withSelectionCheckbox={withSelectionCheckbox && actions?.length > 0}
         selected={selected}
         onClick={e => toggle(e)}
         disabled={

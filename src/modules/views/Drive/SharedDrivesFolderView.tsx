@@ -1,17 +1,13 @@
 import React, { FC, useCallback, useMemo } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
-import { useClient, useQuery } from 'cozy-client'
+import { useQuery } from 'cozy-client'
 import { IOCozyFile } from 'cozy-client/types/types'
-import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
-import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { ROOT_DIR_ID } from 'constants/config'
 import useDisplayedFolder from 'hooks/useDisplayedFolder'
-import { addToFavorites } from 'modules/actions/components/addToFavorites'
-import { removeFromFavorites } from 'modules/actions/components/removeFromFavorites'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import {
   useExtraColumns,
@@ -36,8 +32,6 @@ const SharedDrivesFolderView: FC = () => {
   const { isMobile } = useBreakpoints()
   const { t } = useI18n()
   const { isNotFound } = useDisplayedFolder()
-  const client = useClient()
-  const { showAlert } = useAlert()
 
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
     isMobile,
@@ -98,17 +92,6 @@ const SharedDrivesFolderView: FC = () => {
     [t]
   )
 
-  const actionsOptions = {
-    client,
-    t,
-    showAlert
-  }
-
-  const actions = makeActions(
-    [addToFavorites, removeFromFavorites],
-    actionsOptions
-  )
-
   return (
     <FolderView isNotFound={isNotFound}>
       <FolderViewHeader>
@@ -124,7 +107,6 @@ const SharedDrivesFolderView: FC = () => {
         onFolderOpen={handleFolderOpen}
         onFileOpen={handleFileOpen}
         extraColumns={extraColumns}
-        actions={actions}
       />
       <Outlet />
     </FolderView>
