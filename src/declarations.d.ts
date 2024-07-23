@@ -79,7 +79,7 @@ declare module '*.svg' {
 }
 
 declare module 'cozy-ui/transpiled/react/ActionsMenu/Actions' {
-  export interface Action {
+  export interface Action<T = import('cozy-client/types/types').IOCozyFile> {
     name: string
     label?: string
     icon: React.ComponentType | string
@@ -89,7 +89,7 @@ declare module 'cozy-ui/transpiled/react/ActionsMenu/Actions' {
     ) => boolean
     disabled?: (docs: import('cozy-client/types/types').IOCozyFile[]) => boolean
     action?: (
-      docs: import('cozy-client/types/types').IOCozyFile[],
+      docs: T[],
       opts: { handleAction: HandleActionCallback }
     ) => Promise<void> | void
     Component: ForwardRefExoticComponent<RefAttributes<React.ComponentType>>
