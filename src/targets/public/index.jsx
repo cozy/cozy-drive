@@ -18,7 +18,7 @@ import 'whatwg-fetch'
 import CozyClient, { models } from 'cozy-client'
 import { Document } from 'cozy-doctypes'
 import getSharedDocument from 'cozy-sharing/dist/getSharedDocument'
-import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
+import { DumbCozyTheme } from 'cozy-ui/transpiled/react/providers/CozyTheme'
 import { I18n, initTranslation } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import AppRouter from './components/AppRouter'
@@ -36,11 +36,11 @@ import styles from 'styles/main.styl'
 const renderError = (lang, root) =>
   render(
     <I18n lang={lang} dictRequire={lang => require(`locales/${lang}`)}>
-      <CozyTheme className="u-w-100">
+      <DumbCozyTheme variant="normal" className="u-w-100">
         <main className={styles['center-layout']}>
           <ErrorShare errorType="public_unshared" />
         </main>
-      </CozyTheme>
+      </DumbCozyTheme>
     </I18n>,
     root
   )
