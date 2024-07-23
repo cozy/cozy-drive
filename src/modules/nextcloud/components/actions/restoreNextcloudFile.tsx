@@ -33,6 +33,9 @@ export const restoreNextcloudFile = ({
     displayCondition: (files): boolean => files.length > 0,
     action: async (docs): Promise<void> => {
       const files = docs as unknown as NextcloudFile[]
+      const sourceAccount = files[0].cozyMetadata.sourceAccount
+      const parentPath = files[0].parentPath
+
       try {
         for (const file of files) {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
@@ -40,20 +43,37 @@ export const restoreNextcloudFile = ({
             .collection('io.cozy.remote.nextcloud.files')
             .restore(file)
         }
-        const sourceAccount = files[0].cozyMetadata.sourceAccount
+
         const restorePaths = files
           .map(file =>
             file.restore_path ? getParentPath(file.restore_path) : undefined
           )
           .filter(Boolean)
+
         const uniqueRestorePaths = Array.from(new Set(restorePaths))
-        for (const path of uniqueRestorePaths) {
-          const queryId = computeNextcloudFolderQueryId({
-            sourceAccount,
-            path
+
+        const resetResults = await Promise.all(
+          uniqueRestorePaths.map(restorePath => {
+            const queryId = computeNextcloudFolderQueryId({
+              sourceAccount,
+              path: restorePath
+            })
+            return client.resetQuery(queryId)
           })
+        )
+
+        // If the query for the folder containing the restored files does not exist,
+        // we need to reset the query of the current folder to refresh the view.
+        // Since the current folder is the trash folder, its queryId ends with '/trashed'.
+        if (resetResults.some(query => query === null)) {
+          const queryId =
+            computeNextcloudFolderQueryId({
+              sourceAccount,
+              path: parentPath
+            }) + '/trashed'
           await client.resetQuery(queryId)
         }
+
         showAlert({
           message: t('RestoreNextcloudFile.success'),
           severity: 'success'
