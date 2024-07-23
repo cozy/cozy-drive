@@ -2,6 +2,7 @@ import React from 'react'
 import { Outlet, useParams } from 'react-router-dom'
 
 import flag from 'cozy-flags'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { NextcloudBanner } from 'modules/nextcloud/components/NextcloudBanner'
 import { NextcloudBreadcrumb } from 'modules/nextcloud/components/NextcloudBreadcrumb'
@@ -15,6 +16,7 @@ import FolderViewHeader from 'modules/views/Folder/FolderViewHeader'
 const NextcloudFolderView = () => {
   const { sourceAccount } = useParams()
   const path = useNextcloudPath()
+  const { t } = useI18n()
 
   const { nextcloudResult } = useNextcloudFolder({
     sourceAccount,
@@ -34,7 +36,7 @@ const NextcloudFolderView = () => {
                 {
                   _id: 'io.cozy.remote.nextcloud.files.trash-dir',
                   type: 'directory',
-                  name: 'Trash'
+                  name: t('NextcloudBreadcrumb.trash')
                 }
               ]
             : []
