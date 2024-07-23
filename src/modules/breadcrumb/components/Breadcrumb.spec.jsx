@@ -2,15 +2,28 @@ import { fireEvent, render } from '@testing-library/react'
 import React from 'react'
 
 import Breadcrumb from './Breadcrumb'
+import { TestI18n } from 'test/components/AppLike'
 import { dummyBreadcrumbPath } from 'test/dummies/dummyBreadcrumbPath'
 
 describe('Breadcrumbs', () => {
-  const path = dummyBreadcrumbPath()
+  const dummyPath = dummyBreadcrumbPath()
+
+  const setup = ({ path, inlined, onBreadcrumbClick } = {}) => {
+    return render(
+      <TestI18n>
+        <Breadcrumb
+          path={path}
+          inlined={inlined}
+          onBreadcrumbClick={onBreadcrumbClick}
+        />
+      </TestI18n>
+    )
+  }
 
   describe('template', () => {
     it('should match snapshot', () => {
       // When
-      const { container } = render(<Breadcrumb path={path} />)
+      const { container } = setup({ path: dummyPath })
 
       // Then
       expect(container).toMatchSnapshot()
@@ -18,7 +31,7 @@ describe('Breadcrumbs', () => {
 
     it('should be empty while path is undefined', () => {
       // When
-      const { container } = render(<Breadcrumb />)
+      const { container } = setup()
 
       // Then
       expect(container).toBeEmptyDOMElement()
@@ -26,7 +39,7 @@ describe('Breadcrumbs', () => {
 
     it('should add inlined style while inlined prop true', () => {
       // When
-      const { container } = render(<Breadcrumb path={path} inlined />)
+      const { container } = setup({ path: dummyPath, inlined: true })
 
       // Then
       expect(container.querySelector('.inlined')).not.toBeEmptyDOMElement()
@@ -37,9 +50,7 @@ describe('Breadcrumbs', () => {
     it('should fire on breadcrumb click when link is clicked', () => {
       // Given
       const onBreadcrumbClick = jest.fn()
-      const { container } = render(
-        <Breadcrumb path={path} onBreadcrumbClick={onBreadcrumbClick} />
-      )
+      const { container } = setup({ path: dummyPath, onBreadcrumbClick })
 
       // When
       fireEvent.click(container.querySelector('.fil-path-link'))
@@ -53,7 +64,7 @@ describe('Breadcrumbs', () => {
       document.addEventListener = jest.fn()
 
       // Given
-      const { container } = render(<Breadcrumb path={path} />)
+      const { container } = setup({ path: dummyPath })
 
       // When
       fireEvent.click(container.querySelector('.fil-path-current'))
@@ -69,7 +80,7 @@ describe('Breadcrumbs', () => {
     it('should close menu', () => {
       // Given
       document.removeEventListener = jest.fn()
-      const { container } = render(<Breadcrumb path={path} />)
+      const { container } = setup({ path: dummyPath })
       fireEvent.click(container.querySelector('.fil-path-current'))
 
       expect(container.querySelector('.deployed')).toBeInTheDocument()

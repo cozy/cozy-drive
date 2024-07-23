@@ -5,6 +5,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import RightIcon from 'cozy-ui/transpiled/react/Icons/Right'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import styles from 'modules/breadcrumb/styles/breadcrumb.styl'
 
@@ -15,6 +16,7 @@ const Breadcrumb = ({
   inlined,
   className = ''
 }) => {
+  const { t } = useI18n()
   const [deployed, setDeployed] = useState(false)
   const wrapperRef = useRef(null)
 
@@ -58,6 +60,10 @@ const Breadcrumb = ({
         onClick={toggleDeploy}
       >
         {path.map((folder, index) => {
+          const folderName =
+            folder._id === 'io.cozy.files.shared-drives-dir'
+              ? t('breadcrumb.title_shared_drives')
+              : folder.name
           if (index < path.length - 1) {
             return (
               <span
@@ -69,7 +75,7 @@ const Breadcrumb = ({
                 key={index}
               >
                 <span className={styles['fil-path-link-name']}>
-                  {folder.name}
+                  {folderName}
                 </span>
                 <Icon
                   icon={RightIcon}
@@ -88,7 +94,7 @@ const Breadcrumb = ({
                 key={index}
               >
                 <span className={styles['fil-path-current-name']}>
-                  {folder.name}
+                  {folderName}
                 </span>
                 {path.length >= 2 && (
                   <span className={styles['fil-path-down']} />
