@@ -253,12 +253,13 @@ export const buildFolderQuery: QueryBuilder<string> = folderId => ({
   }
 })
 
-export const buildOnlyFolderQuery: QueryBuilder<string> = folderId => ({
-  definition: () => Q('io.cozy.files').getById(folderId),
+export const buildOnlyFolderQuery: QueryBuilder<string | null> = folderId => ({
+  definition: () => Q('io.cozy.files').getById(folderId ?? 'unknown'),
   options: {
-    as: 'onlyfolder-' + folderId,
+    as: 'onlyfolder-' + (folderId ?? 'unknown'),
     fetchPolicy: defaultFetchPolicy,
-    singleDocData: true
+    singleDocData: true,
+    enabled: !!folderId
   }
 })
 
