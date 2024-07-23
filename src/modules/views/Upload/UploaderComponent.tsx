@@ -64,7 +64,7 @@ const UploaderComponent = (): JSX.Element | null => {
       slotProps={{
         header: {
           title: t('ImportToDrive.title', { smart_count: fakeFiles.length }),
-          subtitle: t('ImportToDrive.to')
+          subTitle: t('ImportToDrive.to')
         },
         footer: {
           confirmLabel: t('ImportToDrive.action'),

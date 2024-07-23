@@ -12,7 +12,7 @@ import { File, FolderPickerEntry } from 'components/FolderPicker/types'
 interface FolderPickerSlotProps {
   header?: {
     title?: string
-    subtitle?: string
+    subTitle?: string
   }
   footer?: {
     confirmLabel?: string
