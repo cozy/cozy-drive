@@ -36,8 +36,16 @@ const NextcloudBreadcrumb = ({ sourceAccount, path }) => {
       }
     }
 
+    let name = folder
+    // In Nextcloud, the path to the folder inside the trash ends with a number prefixed by a dot (.d1721754243)
+    // as we don't want to display this number in the breadcrumb, we remove it
+    if (path.startsWith('/trash')) {
+      const lastDotPosition = name.lastIndexOf('.')
+      name = folder.substring(0, lastDotPosition)
+    }
+
     return {
-      name: folder,
+      name,
       id: '/' + splitPath.slice(0, index + 1).join('/')
     }
   })
