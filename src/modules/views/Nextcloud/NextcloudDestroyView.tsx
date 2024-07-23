@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useCallback } from 'react'
 import {
   Navigate,
   useLocation,
@@ -8,13 +8,11 @@ import {
 } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
-import { UseQueryReturnValue } from 'cozy-client/types/types'
 
 import { LoaderModal } from 'components/LoaderModal'
 import { getParentPath } from 'lib/path'
-import { hasDataLoaded } from 'lib/queries'
 import { computeNextcloudFolderQueryId } from 'modules/nextcloud/helpers'
-import { useNextcloudFolder } from 'modules/nextcloud/hooks/useNextcloudFolder'
+import { useNextcloudEntries } from 'modules/nextcloud/hooks/useNextcloudEntries'
 import { useNextcloudPath } from 'modules/nextcloud/hooks/useNextcloudPath'
 import DestroyConfirm from 'modules/trash/components/DestroyConfirm'
 
@@ -26,14 +24,8 @@ const NextcloudDestroyView: FC = () => {
   const path = useNextcloudPath({
     insideTrash: true
   })
-  const { state, pathname } = useLocation() as {
-    state: { fileIds?: string[] }
-    pathname: string
-  }
-
-  const { nextcloudResult } = useNextcloudFolder({
-    sourceAccount,
-    path,
+  const { pathname } = useLocation()
+  const { hasEntries, entries, isLoading } = useNextcloudEntries({
     insideTrash: true
   })
 
@@ -43,19 +35,8 @@ const NextcloudDestroyView: FC = () => {
     navigate(newPath, { replace: true })
   }
 
-  if (!state.fileIds) {
-    return <Navigate to={newPath} replace />
-  }
-
-  if (
-    hasDataLoaded(nextcloudResult as UseQueryReturnValue) &&
-    nextcloudResult.data
-  ) {
-    const entries = nextcloudResult.data.filter(({ _id }) =>
-      state.fileIds?.includes(_id)
-    )
-
-    const handleConfirm = async (): Promise<void> => {
+  const handleConfirm = useCallback(async (): Promise<void> => {
+    if (entries) {
       for (const file of entries) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         await client
@@ -69,7 +50,13 @@ const NextcloudDestroyView: FC = () => {
         }) + '/trashed'
       void client?.resetQuery(queryId)
     }
+  }, [client, entries, path, sourceAccount])
 
+  if (!hasEntries) {
+    return <Navigate to={newPath} replace />
+  }
+
+  if (entries && !isLoading) {
     return (
       <DestroyConfirm
         onConfirm={handleConfirm}
