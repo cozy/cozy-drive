@@ -219,8 +219,7 @@
     "rename": "Rinomina",
     "restore": "Ripristina",
     "close": "Chiudi",
-    "openWith": "Apri con...",
-    "duplicate": "Duplica"
+    "openWith": "Apri con..."
   },
   "DeleteConfirm": {
     "cancel": "Annulla",

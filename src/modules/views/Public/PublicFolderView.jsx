@@ -31,7 +31,7 @@ import OldFolderViewBreadcrumb from '../Folder/OldFolderViewBreadcrumb'
 import { ROOT_DIR_ID } from 'constants/config'
 import { FabContext } from 'lib/FabProvider'
 import { ModalStack, useModalContext } from 'lib/ModalContext'
-import { download, duplicate, trash, rename, versions } from 'modules/actions'
+import { download, trash, rename, versions } from 'modules/actions'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
@@ -170,7 +170,7 @@ const PublicFolderView = () => {
     isPublic: true
   }
   const actions = makeActions(
-    [download, duplicate, trash, rename, versions],
+    [download, trash, rename, versions],
     actionOptions
   )
 

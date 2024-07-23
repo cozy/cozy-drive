@@ -1,4 +1,4 @@
-import { download, duplicate } from './index'
+import { download } from './index'
 import { DOCTYPE_FILES_ENCRYPTION } from 'lib/doctypes'
 
 describe('download', () => {
@@ -55,50 +55,5 @@ describe('download', () => {
     ]
     const dl = download({ client: {}, vaultClient: {}, t: () => {} })
     expect(dl.displayCondition(files)).toBe(true)
-  })
-})
-
-describe('duplicate', () => {
-  it('should not display when several files are selected', () => {
-    const files = [
-      {
-        type: 'file'
-      },
-      {
-        type: 'file'
-      }
-    ]
-    const cp = duplicate({ client: {}, hasWriteAccess: true, t: () => {} })
-    expect(cp.displayCondition(files)).toBe(false)
-  })
-
-  it('should not display when type is directory', () => {
-    const files = [
-      {
-        type: 'directory'
-      }
-    ]
-    const cp = duplicate({ client: {}, hasWriteAccess: true, t: () => {} })
-    expect(cp.displayCondition(files)).toBe(false)
-  })
-
-  it('should display when type is file', () => {
-    const files = [
-      {
-        type: 'file'
-      }
-    ]
-    const cp = duplicate({ client: {}, hasWriteAccess: true, t: () => {} })
-    expect(cp.displayCondition(files)).toBe(true)
-  })
-
-  it('should not display when no write access', () => {
-    const files = [
-      {
-        type: 'file'
-      }
-    ]
-    const cp = duplicate({ client: {}, hasWriteAccess: false, t: () => {} })
-    expect(cp.displayCondition(files)).toBe(false)
   })
 })

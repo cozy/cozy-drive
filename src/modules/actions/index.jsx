@@ -9,7 +9,6 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 import HistoryIcon from 'cozy-ui/transpiled/react/Icons/History'
 import UnqualifyIcon from 'cozy-ui/transpiled/react/Icons/LabelOutlined'
-import MultiFilesIcon from 'cozy-ui/transpiled/react/Icons/MultiFiles'
 import QualifyIcon from 'cozy-ui/transpiled/react/Icons/Qualify'
 import RenameIcon from 'cozy-ui/transpiled/react/Icons/Rename'
 import RestoreIcon from 'cozy-ui/transpiled/react/Icons/Restore'
@@ -114,35 +113,6 @@ export const rename = ({ t, hasWriteAccess, dispatch }) => {
     displayCondition: selection => hasWriteAccess && selection.length === 1,
     action: files => dispatch(startRenamingAsync(files[0])),
     Component: forwardRef(function Rename(props, ref) {
-      return (
-        <ActionsMenuItem {...props} ref={ref}>
-          <ListItemIcon>
-            <Icon icon={icon} />
-          </ListItemIcon>
-          <ListItemText primary={label} />
-        </ActionsMenuItem>
-      )
-    })
-  }
-}
-
-export const duplicate = ({ client, t, hasWriteAccess, refresh, isPublic }) => {
-  const label = t('SelectionBar.duplicate')
-  const icon = MultiFilesIcon
-
-  return {
-    name: 'duplicate',
-    label,
-    icon,
-    displayCondition: selection => {
-      return selection.length === 1 && isFile(selection[0]) && hasWriteAccess
-    },
-    action: async files => {
-      const file = files[0]
-      await client.collection('io.cozy.files').copy(file.id)
-      if (isPublic) refresh()
-    },
-    Component: forwardRef(function Duplicate(props, ref) {
       return (
         <ActionsMenuItem {...props} ref={ref}>
           <ListItemIcon>

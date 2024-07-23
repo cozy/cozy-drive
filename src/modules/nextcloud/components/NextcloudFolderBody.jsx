@@ -5,10 +5,10 @@ import { useClient } from 'cozy-client'
 import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { duplicateNextcloudFile } from './actions/duplicateNextcloudFile'
 import { moveNextcloud } from './actions/moveNextcloud'
 import { joinPath } from 'lib/path'
 import { hr } from 'modules/actions'
+import { duplicateTo } from 'modules/actions/components/duplicateTo'
 import { FolderBody } from 'modules/folder/components/FolderBody'
 import { deleteNextcloudFile } from 'modules/nextcloud/components/actions/deleteNextcloudFile'
 import { downloadNextcloudFile } from 'modules/nextcloud/components/actions/downloadNextcloudFile'
@@ -43,7 +43,7 @@ const NextcloudFolderBody = ({ path, queryResults }) => {
       hr,
       rename,
       moveNextcloud,
-      duplicateNextcloudFile,
+      duplicateTo,
       openWithinNextcloud,
       hr,
       deleteNextcloudFile

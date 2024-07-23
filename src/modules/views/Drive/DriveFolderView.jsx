@@ -22,12 +22,12 @@ import {
   download,
   trash,
   rename,
-  duplicate,
   qualify,
   versions,
   hr
 } from 'modules/actions'
 import { addToFavorites } from 'modules/actions/components/addToFavorites'
+import { duplicateTo } from 'modules/actions/components/duplicateTo'
 import { moveTo } from 'modules/actions/components/moveTo'
 import { removeFromFavorites } from 'modules/actions/components/removeFromFavorites'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
@@ -184,7 +184,7 @@ const DriveFolderView = () => {
       qualify,
       rename,
       moveTo,
-      duplicate,
+      duplicateTo,
       addToFavorites,
       removeFromFavorites,
       hr,
