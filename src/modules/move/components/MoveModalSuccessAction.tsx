@@ -60,12 +60,12 @@ const MoveModalSuccessAction: React.FC<MoveModalSuccessActionProps> = ({
     <>
       {canCancel ? (
         <Button
-          color="success"
           label={t('Move.cancel')}
           onClick={handleCancel}
           size="small"
           variant="text"
           disabled={isCancelling}
+          style={{ color: `var(--successContrastTextColor)` }}
         />
       ) : null}
       <Button
@@ -74,6 +74,7 @@ const MoveModalSuccessAction: React.FC<MoveModalSuccessActionProps> = ({
         onClick={handleNavigateFolder}
         size="small"
         variant="text"
+        style={{ color: `var(--successContrastTextColor)` }}
       />
     </>
   )
