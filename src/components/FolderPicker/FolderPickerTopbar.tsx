@@ -15,36 +15,29 @@ import Topbar from 'modules/layout/Topbar'
 import { useNextcloudInfos } from 'modules/nextcloud/hooks/useNextcloudInfos'
 
 interface FolderPickerTopbarProps {
-  navigateTo: (folder?: import('./types').File) => void
-  folder?: File
+  navigateTo: (folder: import('./types').File) => void
+  folder: File
   showFolderCreation?: () => void
   canCreateFolder?: boolean
-  showNextcloudFolder?: boolean
 }
 
 const FolderPickerTopbar: React.FC<FolderPickerTopbarProps> = ({
   navigateTo,
   folder,
   showFolderCreation,
-  showNextcloudFolder,
   canCreateFolder
 }) => {
   const { t } = useI18n()
   const client = useClient()
   const [isNavigating, setNavigating] = useState(false)
 
-  const showBackButton =
-    folder !== undefined && (folder._id !== ROOT_DIR_ID || showNextcloudFolder)
+  const showBackButton = folder._id !== ROOT_DIR_ID
 
   const { instanceName } = useNextcloudInfos({
-    sourceAccount: folder?.cozyMetadata?.sourceAccount
+    sourceAccount: folder.cozyMetadata?.sourceAccount
   })
 
   const handleNavigateTo = useCallback(async () => {
-    if (!folder) {
-      throw Error('Cannot navigate to the parent of inexistant folder')
-    }
-
     setNavigating(true)
     const parentFolder = await getParentFolder(client, folder, {
       instanceName
@@ -54,16 +47,10 @@ const FolderPickerTopbar: React.FC<FolderPickerTopbarProps> = ({
   }, [client, folder, navigateTo, instanceName])
 
   const name =
-    folder === undefined
-      ? t('FolderPickerTopbar.root')
-      : folder._id === ROOT_DIR_ID
-      ? t('breadcrumb.title_drive')
-      : folder.name
+    folder._id === ROOT_DIR_ID ? t('breadcrumb.title_drive') : folder.name
 
   const showCreateFolderButton =
-    canCreateFolder &&
-    folder !== undefined &&
-    folder._type !== 'io.cozy.remote.nextcloud.files'
+    canCreateFolder && folder._type !== 'io.cozy.remote.nextcloud.files'
 
   return (
     <Topbar hideOnMobile={false}>

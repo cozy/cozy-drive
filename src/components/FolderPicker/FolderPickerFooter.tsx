@@ -7,10 +7,10 @@ import { areTargetsInCurrentDir } from 'components/FolderPicker/helpers'
 import { File, FolderPickerEntry } from 'components/FolderPicker/types'
 
 interface FolderPickerFooterProps {
-  onConfirm: (folder?: File) => void
+  onConfirm: (folder: File) => void
   onClose: () => void | Promise<void>
   entries: FolderPickerEntry[]
-  folder?: File
+  folder: File
   isBusy?: boolean
   confirmLabel?: string
   cancelLabel?: string
@@ -35,8 +35,7 @@ const FolderPickerFooter: React.FC<FolderPickerFooterProps> = ({
   const handleClick = (): void => {
     onConfirm(folder)
   }
-  const isDisabled =
-    folder === undefined || isBusy || areTargetsInCurrentDir(entries, folder)
+  const isDisabled = isBusy || areTargetsInCurrentDir(entries, folder)
 
   return (
     <>

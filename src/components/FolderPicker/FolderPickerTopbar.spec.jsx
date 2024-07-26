@@ -13,13 +13,22 @@ describe('FolderPickerTopbar', () => {
   const cozyFolder = {
     _id: '123',
     _type: 'io.cozy.files',
+    type: 'directory',
     dir_id: 'io.cozy.files.root-dir',
     name: 'Photos'
   }
 
   const rootCozyFolder = {
     _id: 'io.cozy.files.root-dir',
-    _type: 'io.cozy.files'
+    _type: 'io.cozy.files',
+    type: 'directory'
+  }
+
+  const sharedDrivesFolder = {
+    _id: 'io.cozy.files.shared-drives-dir',
+    _type: 'io.cozy.files',
+    type: 'directory',
+    dir_id: 'io.cozy.files.root-dir'
   }
 
   const nextcloudFolder = {
@@ -44,11 +53,7 @@ describe('FolderPickerTopbar', () => {
     }
   }
 
-  const setup = ({
-    canCreateFolder = false,
-    folder,
-    showNextcloudFolder
-  } = {}) => {
+  const setup = ({ canCreateFolder = false, folder } = {}) => {
     const mockClient = createMockClient({
       queries: {
         'onlyfolder-io.cozy.files.root-dir': {
@@ -57,13 +62,15 @@ describe('FolderPickerTopbar', () => {
             doctype: 'io.cozy.files',
             id: 'io.cozy.files.root-dir'
           },
-          data: [
-            {
-              id: 'io.cozy.files.root-dir',
-              _type: 'io.cozy.files',
-              type: 'directory'
-            }
-          ]
+          data: [rootCozyFolder]
+        },
+        'onlyfolder-io.cozy.files.shared-drives-dir': {
+          doctype: 'io.cozy.files',
+          definition: {
+            doctype: 'io.cozy.files',
+            id: 'io.cozy.files.shared-drives-dir'
+          },
+          data: [sharedDrivesFolder]
         },
         'io.cozy.remote.nextcloud.files/sourceAccount/123/path/': {
           doctype: 'io.cozy.remote.nextcloud.files',
@@ -78,16 +85,15 @@ describe('FolderPickerTopbar', () => {
           navigateTo={navigateTo}
           folder={folder}
           canCreateFolder={canCreateFolder}
-          showNextcloudFolder={showNextcloudFolder}
         />
       </AppLike>
     )
   }
 
-  it('should hide back button on root', () => {
-    setup({ showNextcloudFolder: true })
+  it('should hide back button for the root cozy folder', () => {
+    setup({ folder: rootCozyFolder })
 
-    expect(screen.getByText('Drives')).toBeInTheDocument()
+    expect(screen.getByText('Files')).toBeInTheDocument()
 
     const backButton = screen.queryByRole('button', {
       name: 'Back'
@@ -109,33 +115,8 @@ describe('FolderPickerTopbar', () => {
     })
   })
 
-  it('should hide back button for the root cozy folder', () => {
-    setup({ folder: rootCozyFolder })
-
-    expect(screen.getByText('Files')).toBeInTheDocument()
-
-    const backButton = screen.queryByRole('button', {
-      name: 'Back'
-    })
-    expect(backButton).toBeNull()
-  })
-
-  it('should show back button for the root cozy folder when Nextcloud is displayed', () => {
-    setup({ folder: rootCozyFolder, showNextcloudFolder: true })
-
-    expect(screen.getByText('Files')).toBeInTheDocument()
-
-    const backButton = screen.getByRole('button', {
-      name: 'Back'
-    })
-    fireEvent.click(backButton)
-    waitFor(() => {
-      expect(navigateTo).toHaveBeenCalledWith(undefined)
-    })
-  })
-
   it('should show back button for a nextcloud folder', () => {
-    setup({ folder: nextcloudFolder, showNextcloudFolder: true })
+    setup({ folder: nextcloudFolder })
 
     expect(screen.getByText('Documents')).toBeInTheDocument()
 
@@ -159,8 +140,7 @@ describe('FolderPickerTopbar', () => {
         cozyMetadata: {
           sourceAccount: '123'
         }
-      },
-      showNextcloudFolder: true
+      }
     })
 
     expect(screen.getByText('Invoices')).toBeInTheDocument()
@@ -175,7 +155,7 @@ describe('FolderPickerTopbar', () => {
   })
 
   it('should show back button for a root nextcloud folder', () => {
-    setup({ folder: rootNextcloudFolder, showNextcloudFolder: true })
+    setup({ folder: rootNextcloudFolder })
 
     expect(screen.getByText('Cozycloud (Nextcloud)')).toBeInTheDocument()
 
@@ -209,20 +189,10 @@ describe('FolderPickerTopbar', () => {
     expect(addFolderButton).toBeNull()
   })
 
-  it('should hide create folder button when canCreateFolder is true but its inside root folder', () => {
-    setup({ canCreateFolder: true })
-
-    const addFolderButton = screen.queryByRole('button', {
-      name: 'Add a folder'
-    })
-    expect(addFolderButton).toBeNull()
-  })
-
   it('should hide create folder button when canCreateFolder is true but its inside Nextcloud folder', () => {
     setup({
       canCreateFolder: true,
-      folder: nextcloudFolder,
-      showNextcloudFolder: true
+      folder: nextcloudFolder
     })
 
     const addFolderButton = screen.queryByRole('button', {

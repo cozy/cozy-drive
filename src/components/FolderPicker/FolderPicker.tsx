@@ -21,9 +21,9 @@ interface FolderPickerSlotProps {
 }
 
 interface FolderPickerProps {
-  currentFolder?: File
+  currentFolder: File
   entries: FolderPickerEntry[]
-  onConfirm: (folder?: File) => void
+  onConfirm: (folder: File) => void
   onClose: () => void | Promise<void>
   isBusy: boolean
   canCreateFolder?: boolean
@@ -53,7 +53,7 @@ const FolderPicker: React.FC<FolderPickerProps> = ({
   slotProps,
   showNextcloudFolder = false
 }) => {
-  const [folder, setFolder] = useState<File | undefined>(currentFolder)
+  const [folder, setFolder] = useState<File>(currentFolder)
 
   const [isFolderCreationDisplayed, setFolderCreationDisplayed] =
     useState<boolean>(false)
@@ -67,7 +67,7 @@ const FolderPicker: React.FC<FolderPickerProps> = ({
     setFolderCreationDisplayed(false)
   }
 
-  const navigateTo = (folder?: File): void => {
+  const navigateTo = (folder: File): void => {
     setFolder(folder)
     setFolderCreationDisplayed(false)
   }
@@ -88,7 +88,6 @@ const FolderPicker: React.FC<FolderPickerProps> = ({
             folder={folder}
             canCreateFolder={canCreateFolder}
             showFolderCreation={showFolderCreation}
-            showNextcloudFolder={showNextcloudFolder}
           />
         </>
       }
@@ -99,6 +98,7 @@ const FolderPicker: React.FC<FolderPickerProps> = ({
           entries={entries}
           isFolderCreationDisplayed={isFolderCreationDisplayed}
           hideFolderCreation={hideFolderCreation}
+          showNextcloudFolder={showNextcloudFolder}
         />
       }
       actions={

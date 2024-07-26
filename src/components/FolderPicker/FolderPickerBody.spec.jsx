@@ -9,16 +9,8 @@ jest.mock('components/FolderPicker/FolderPickerContentCozy', () => ({
 jest.mock('components/FolderPicker/FolderPickerContentNextcloud', () => ({
   FolderPickerContentNextcloud: () => <div>FolderPickerContentNextcloud</div>
 }))
-jest.mock('components/FolderPicker/FolderPickerContentRoot', () => ({
-  FolderPickerContentRoot: () => <div>FolderPickerContentRoot</div>
-}))
 
 describe('FolderPickerBody', () => {
-  it('should display root when folder undefined', () => {
-    render(<FolderPickerBody />)
-    expect(screen.getByText('FolderPickerContentRoot')).toBeInTheDocument()
-  })
-
   it('return cozy folder', () => {
     const cozyFolder = {
       _type: 'io.cozy.files'
