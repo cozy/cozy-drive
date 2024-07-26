@@ -800,12 +800,6 @@
   "NextcloudToolbar": {
     "share": "Share"
   },
-  "FolderPickerTopbar": {
-    "root": "Drives"
-  },
-  "FolderPickerContentRoot": {
-    "myDrive": "My Drive"
-  },
   "NextcloudDeleteConfirm": {
     "title": "Delete %{filename}? |||| Delete %{smart_count} %{type}?",
     "trash": "This item will be moved to the Nextcloud trash. |||| These items will be moved to the Nextcloud trash.",

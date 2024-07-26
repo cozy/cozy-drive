@@ -801,12 +801,6 @@
   "NextcloudToolbar": {
     "share": "Partager"
   },
-  "FolderPickerTopbar": {
-    "root": "Drives"
-  },
-  "FolderPickerContentRoot": {
-    "myDrive": "Mon Drive"
-  },
   "NextcloudDeleteConfirm": {
     "title": "Supprimer %{filename} ? |||| Supprimer %{smart_count} %{type} ?",
     "trash": "Cet élément sera déplacé dans la corbeille de Nextcloud. |||| Ces éléments seront déplacés dans la corbeille de Nextcloud.",
