@@ -14,6 +14,7 @@ interface FolderPickerFooterProps {
   isBusy?: boolean
   confirmLabel?: string
   cancelLabel?: string
+  canPickEntriesParentFolder?: boolean
 }
 
 /**
@@ -26,7 +27,8 @@ const FolderPickerFooter: React.FC<FolderPickerFooterProps> = ({
   folder,
   isBusy = false,
   confirmLabel,
-  cancelLabel
+  cancelLabel,
+  canPickEntriesParentFolder
 }) => {
   const { t } = useI18n()
   const primaryText = confirmLabel ? confirmLabel : t('Move.action')
@@ -35,7 +37,10 @@ const FolderPickerFooter: React.FC<FolderPickerFooterProps> = ({
   const handleClick = (): void => {
     onConfirm(folder)
   }
-  const isDisabled = isBusy || areTargetsInCurrentDir(entries, folder)
+
+  const isDisabled =
+    isBusy ||
+    (!canPickEntriesParentFolder && areTargetsInCurrentDir(entries, folder))
 
   return (
     <>
