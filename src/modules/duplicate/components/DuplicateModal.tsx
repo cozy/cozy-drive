@@ -9,6 +9,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { OpenFolderButton } from 'components/Button/OpenFolderButton'
 import { FolderPicker } from 'components/FolderPicker/FolderPicker'
 import { File, FolderPickerEntry } from 'components/FolderPicker/types'
+import { ROOT_DIR_ID } from 'constants/config'
 import { useCancelable } from 'modules/move/hooks/useCancelable'
 import { computeNextcloudFolderQueryId } from 'modules/nextcloud/helpers'
 
@@ -53,7 +54,10 @@ const DuplicateModal: FC<DuplicateModalProps> = ({
         message: t('DuplicateModal.success', {
           smart_count: entries.length,
           fileName: entries[0].name,
-          destinationName: folder.name
+          destinationName:
+            folder._id === ROOT_DIR_ID
+              ? t('breadcrumb.title_drive')
+              : folder.name
         }),
         severity: 'success',
         action: <OpenFolderButton folder={folder} navigate={navigate} />
