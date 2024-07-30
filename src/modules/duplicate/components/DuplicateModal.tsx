@@ -16,12 +16,14 @@ interface DuplicateModalProps {
   entries: FolderPickerEntry[]
   currentFolder: File
   onClose: () => void | Promise<void>
+  showNextcloudFolder?: boolean
 }
 
 const DuplicateModal: FC<DuplicateModalProps> = ({
   entries,
   currentFolder,
-  onClose
+  onClose,
+  showNextcloudFolder
 }) => {
   const { t } = useI18n()
   const { showAlert } = useAlert()
@@ -81,6 +83,7 @@ const DuplicateModal: FC<DuplicateModalProps> = ({
 
   return (
     <FolderPicker
+      showNextcloudFolder={showNextcloudFolder}
       currentFolder={currentFolder}
       entries={entries}
       // eslint-disable-next-line @typescript-eslint/no-misused-promises

@@ -33,6 +33,7 @@ const NextcloudDuplicateView: FC = () => {
 
     return (
       <DuplicateModal
+        showNextcloudFolder
         currentFolder={currentFolder}
         entries={entries}
         onClose={onClose}

@@ -3,6 +3,7 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 
 import { hasQueryBeenLoaded, useQuery } from 'cozy-client'
 import { IOCozyFile } from 'cozy-client/types/types'
+import flag from 'cozy-flags'
 
 import { LoaderModal } from 'components/LoaderModal'
 import useDisplayedFolder from 'hooks/useDisplayedFolder'
@@ -37,6 +38,7 @@ const FolderDuplicateView: FC = () => {
 
     return (
       <DuplicateModal
+        showNextcloudFolder={!!flag('drive.show-nextcloud-dev')}
         currentFolder={displayedFolder}
         entries={fileResult.data}
         onClose={onClose}
