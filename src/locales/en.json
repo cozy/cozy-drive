@@ -580,7 +580,6 @@
   },
   "Move": {
     "to": "Move to:",
-    "go_to_dir": "Open directory",
     "action": "Move",
     "cancel": "Cancel",
     "modalTitle": "Move",
@@ -843,5 +842,8 @@
     "confirmLabel": "Duplicate here",
     "success": "%{fileName} has been duplicated to %{destinationName}. |||| %{smart_count} elements have been duplicated to %{destinationName}.",
     "error": "An error occurred, please try again."
+  },
+  "OpenFolderButton": {
+    "label": "Open directory"
   }
 }
