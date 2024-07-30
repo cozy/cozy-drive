@@ -6,6 +6,7 @@ import Button from 'cozy-ui/transpiled/react/Buttons'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import { OpenFolderButton } from 'components/Button/OpenFolderButton'
 import { File, FolderPickerEntry } from 'components/FolderPicker/types'
 import { cancelMove } from 'modules/move/helpers'
 import { useCancelable } from 'modules/move/hooks/useCancelable'
@@ -46,16 +47,6 @@ const MoveModalSuccessAction: React.FC<MoveModalSuccessActionProps> = ({
     })
   }
 
-  const handleNavigateFolder = (): void => {
-    if (folder._type === 'io.cozy.remote.nextcloud.files') {
-      return navigate(
-        `/nextcloud/${folder.cozyMetadata.sourceAccount}?path=${folder.path}`
-      )
-    }
-
-    return navigate(`/folder/${folder._id}`)
-  }
-
   return (
     <>
       {canCancel ? (
@@ -68,14 +59,7 @@ const MoveModalSuccessAction: React.FC<MoveModalSuccessActionProps> = ({
           style={{ color: `var(--successContrastTextColor)` }}
         />
       ) : null}
-      <Button
-        color="success"
-        label={t('Move.go_to_dir')}
-        onClick={handleNavigateFolder}
-        size="small"
-        variant="text"
-        style={{ color: `var(--successContrastTextColor)` }}
-      />
+      <OpenFolderButton folder={folder} navigate={navigate} />
     </>
   )
 }

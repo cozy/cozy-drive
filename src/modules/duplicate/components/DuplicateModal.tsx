@@ -1,10 +1,12 @@
 import React, { FC, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
 import { copy } from 'cozy-client/dist/models/file'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import { OpenFolderButton } from 'components/Button/OpenFolderButton'
 import { FolderPicker } from 'components/FolderPicker/FolderPicker'
 import { File, FolderPickerEntry } from 'components/FolderPicker/types'
 import { useCancelable } from 'modules/move/hooks/useCancelable'
@@ -25,6 +27,7 @@ const DuplicateModal: FC<DuplicateModalProps> = ({
   const { showAlert } = useAlert()
   const { registerCancelable } = useCancelable()
   const client = useClient()
+  const navigate = useNavigate()
 
   const [isBusy, setBusy] = useState(false)
 
@@ -50,7 +53,8 @@ const DuplicateModal: FC<DuplicateModalProps> = ({
           fileName: entries[0].name,
           destinationName: folder.name
         }),
-        severity: 'success'
+        severity: 'success',
+        action: <OpenFolderButton folder={folder} navigate={navigate} />
       })
     } catch (e) {
       showAlert({

@@ -581,7 +581,6 @@
   },
   "Move": {
     "to": "Déplacer vers :",
-    "go_to_dir": "Ouvrir le dossier",
     "action": "Déplacer",
     "cancel": "Annuler",
     "modalTitle": "Déplacer",
@@ -844,5 +843,8 @@
     "confirmLabel": "Dupliquer ici",
     "success": "%{fileName} a été dupliqué dans %{destinationName}. |||| %{smart_count} éléments ont été dupliqués dans %{destinationName}.",
     "error": "Une erreur est survenue, merci de réessayer."
+  },
+  "OpenFolderButton": {
+    "label": "Ouvrir le dossier"
   }
 }
