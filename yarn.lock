@@ -6266,10 +6266,10 @@ cozy-client@45.14.1:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
-cozy-client@48.11.1:
-  version "48.11.1"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-48.11.1.tgz#2223b3f63d64abf608fea82a64caff35a3b8e265"
-  integrity sha512-o2dv7BqLW++It4iLppPxEQAYfGHAHwzx7dXDKnAATW5bbMpEwVQ3D1hfLCiPqlACWPA6cImrU0xSfaDHVuxyWQ==
+cozy-client@48.11.2:
+  version "48.11.2"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-48.11.2.tgz#8fa22e4b7db19fd99886295804f58fb068adfcb6"
+  integrity sha512-deNXOYM2AohzEG2qcAVRvkAMtf5as5DPQmkvLsv203ZGSEeeBOW4rc4rwdchDXN5l25qKFAfmmL63Dus/kpT2Q==
   dependencies:
     "@cozy/minilog" "1.0.0"
     "@types/jest" "^26.0.20"
