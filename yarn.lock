@@ -7706,41 +7706,49 @@ entities@^4.2.0, entities@^4.4.0:
   resolved "https://registry.yarnpkg.com/entities/-/entities-4.5.0.tgz#5d268ea5e7113ec74c4d033b79ea5a35a488fb48"
   integrity sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==
 
-enzyme-adapter-react-16@1.15.6:
-  version "1.15.6"
-  resolved "https://registry.yarnpkg.com/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.15.6.tgz#fd677a658d62661ac5afd7f7f541f141f8085901"
-  integrity sha512-yFlVJCXh8T+mcQo8M6my9sPgeGzj85HSHi6Apgf1Cvq/7EL/J9+1JoJmJsRxZgyTvPMAqOEpRSu/Ii/ZpyOk0g==
+enzyme-adapter-react-16@1.15.8:
+  version "1.15.8"
+  resolved "https://registry.yarnpkg.com/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.15.8.tgz#1aecb5daadaae33d32c5b8b78566d7cf45dc49d8"
+  integrity sha512-uYGC31eGZBp5nGsr4nKhZKvxGQjyHGjS06BJsUlWgE29/hvnpgCsT1BJvnnyny7N3GIIVyxZ4O9GChr6hy2WQA==
   dependencies:
-    enzyme-adapter-utils "^1.14.0"
-    enzyme-shallow-equal "^1.0.4"
-    has "^1.0.3"
-    object.assign "^4.1.2"
-    object.values "^1.1.2"
-    prop-types "^15.7.2"
+    enzyme-adapter-utils "^1.14.2"
+    enzyme-shallow-equal "^1.0.7"
+    hasown "^2.0.0"
+    object.assign "^4.1.5"
+    object.values "^1.1.7"
+    prop-types "^15.8.1"
     react-is "^16.13.1"
     react-test-renderer "^16.0.0-0"
-    semver "^5.7.0"
+    semver "^5.7.2"
 
-enzyme-adapter-utils@^1.14.0:
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/enzyme-adapter-utils/-/enzyme-adapter-utils-1.14.0.tgz#afbb0485e8033aa50c744efb5f5711e64fbf1ad0"
-  integrity sha512-F/z/7SeLt+reKFcb7597IThpDp0bmzcH1E9Oabqv+o01cID2/YInlqHbFl7HzWBl4h3OdZYedtwNDOmSKkk0bg==
+enzyme-adapter-utils@^1.14.2:
+  version "1.14.2"
+  resolved "https://registry.yarnpkg.com/enzyme-adapter-utils/-/enzyme-adapter-utils-1.14.2.tgz#1d012e6261accbe7d406db098bb4d8dfdce8c003"
+  integrity sha512-1ZC++RlsYRaiOWE5NRaF5OgsMt7F5rn/VuaJIgc7eW/fmgg8eS1/Ut7EugSPPi7VMdWMLcymRnMF+mJUJ4B8KA==
   dependencies:
     airbnb-prop-types "^2.16.0"
-    function.prototype.name "^1.1.3"
-    has "^1.0.3"
-    object.assign "^4.1.2"
-    object.fromentries "^2.0.3"
-    prop-types "^15.7.2"
-    semver "^5.7.1"
+    function.prototype.name "^1.1.6"
+    hasown "^2.0.0"
+    object.assign "^4.1.5"
+    object.fromentries "^2.0.7"
+    prop-types "^15.8.1"
+    semver "^6.3.1"
 
-enzyme-shallow-equal@^1.0.1, enzyme-shallow-equal@^1.0.4:
+enzyme-shallow-equal@^1.0.1:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/enzyme-shallow-equal/-/enzyme-shallow-equal-1.0.4.tgz#b9256cb25a5f430f9bfe073a84808c1d74fced2e"
   integrity sha512-MttIwB8kKxypwHvRynuC3ahyNc+cFbR8mjVIltnmzQ0uKGqmsfO4bfBuLxb0beLNPhjblUEYvEbsg+VSygvF1Q==
   dependencies:
     has "^1.0.3"
     object-is "^1.1.2"
+
+enzyme-shallow-equal@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/enzyme-shallow-equal/-/enzyme-shallow-equal-1.0.7.tgz#4e3aa678022387a68e6c47aff200587851885b5e"
+  integrity sha512-/um0GFqUXnpM9SvKtje+9Tjoz3f1fpBC3eXRFrNs8kpYn69JljciYP7KZTqM/YQbUY9KUjvKB4jo/q+L6WGGvg==
+  dependencies:
+    hasown "^2.0.0"
+    object-is "^1.1.5"
 
 enzyme-to-json@3.6.2:
   version "3.6.2"
@@ -9258,7 +9266,7 @@ function-bind@^1.1.2:
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.2.tgz#2c02d864d97f3ea6c8830c464cbd11ab6eab7a1c"
   integrity sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==
 
-function.prototype.name@^1.1.2, function.prototype.name@^1.1.3:
+function.prototype.name@^1.1.2:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/function.prototype.name/-/function.prototype.name-1.1.4.tgz#e4ea839b9d3672ae99d0efd9f38d9191c5eaac83"
   integrity sha512-iqy1pIotY/RmhdFZygSSlW0wko2yxkSCKqsuv4pr8QESohpYyG/Z7B/XXvPRKTJS//960rgguE5mSRUsDdaJrQ==
@@ -13573,6 +13581,14 @@ object-is@^1.0.1, object-is@^1.0.2, object-is@^1.1.2:
     define-properties "^1.1.3"
     es-abstract "^1.18.0-next.1"
 
+object-is@^1.1.5:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/object-is/-/object-is-1.1.6.tgz#1a6a53aed2dd8f7e6775ff870bea58545956ab07"
+  integrity sha512-F8cZ+KfGlSGi09lJT7/Nd6KJZ9ygtvYC0/UYYLI9nmQKLMnydpB9yvbv9K1uSkEu7FU9vYPmVwLg328tX+ot3Q==
+  dependencies:
+    call-bind "^1.0.7"
+    define-properties "^1.2.1"
+
 object-keys@^1.0.12, object-keys@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.1.1.tgz#1c47f272df277f3b1daf061677d9c82e2322c60e"
@@ -13632,7 +13648,7 @@ object.entries@^1.1.6:
     define-properties "^1.2.0"
     es-abstract "^1.22.1"
 
-object.fromentries@^2.0.0, object.fromentries@^2.0.2, object.fromentries@^2.0.3:
+object.fromentries@^2.0.0, object.fromentries@^2.0.2:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/object.fromentries/-/object.fromentries-2.0.4.tgz#26e1ba5c4571c5c6f0890cef4473066456a120b8"
   integrity sha512-EsFBshs5RUUpQEY1D4q/m59kMfz4YJvxuNCJcv/jWwOJr34EaVnG11ZrZa0UHB3wnzV1wx8m58T4hQL8IuNXlQ==
@@ -13692,7 +13708,7 @@ object.pick@^1.3.0:
   dependencies:
     isobject "^3.0.1"
 
-object.values@^1.1.0, object.values@^1.1.1, object.values@^1.1.2:
+object.values@^1.1.0, object.values@^1.1.1:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/object.values/-/object.values-1.1.3.tgz#eaa8b1e17589f02f698db093f7c62ee1699742ee"
   integrity sha512-nkF6PfDB9alkOUxpf1HNm/QlkeW3SReqL5WXeBLpEJJnlPSvRaDQpW3gQTksTN3fgJX4hL42RzKyOin6ff3tyw==
@@ -16219,10 +16235,15 @@ selfsigned@^1.10.7:
   dependencies:
     node-forge "^0.10.0"
 
-"semver@2 || 3 || 4 || 5", semver@^5.3.0, semver@^5.4.1, semver@^5.5.0, semver@^5.5.1, semver@^5.6.0, semver@^5.7.0, semver@^5.7.1:
+"semver@2 || 3 || 4 || 5", semver@^5.3.0, semver@^5.4.1, semver@^5.5.0, semver@^5.5.1, semver@^5.6.0:
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.1.tgz#a954f931aeba508d307bbf069eff0c01c96116f7"
   integrity sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==
+
+semver@^5.7.2:
+  version "5.7.2"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.2.tgz#48d55db737c3287cd4835e17fa13feace1c41ef8"
+  integrity sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==
 
 semver@^6.0.0, semver@^6.3.0:
   version "6.3.0"
