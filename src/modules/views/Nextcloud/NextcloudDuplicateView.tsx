@@ -20,7 +20,8 @@ const NextcloudDuplicateView: FC = () => {
   const currentFolder = useNextcloudCurrentFolder()
   const { entries, hasEntries, isLoading } = useNextcloudEntries()
 
-  const newPath = getParentPath(pathname) ?? '' + `?${searchParams.toString()}`
+  const newPath =
+    (getParentPath(pathname) ?? '') + `?${searchParams.toString()}`
 
   if (!hasEntries && !isLoading) {
     return <Navigate to={newPath} replace />
