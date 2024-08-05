@@ -3,7 +3,10 @@ import PropTypes from 'prop-types'
 import React, { useCallback } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
+import { BarCenter } from 'cozy-bar'
 import { SharingBannerPlugin, useSharingInfos } from 'cozy-sharing'
+import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
+import Typography from 'cozy-ui/transpiled/react/Typography'
 import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
 import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -35,6 +38,13 @@ const LightFileViewer = ({ files, isPublic }) => {
 
   return (
     <div className={styles['viewer-wrapper-with-bar']}>
+      {isMobile && (
+        <BarCenter>
+          <Typography variant="h3" noWrap className="u-ph-1 u-pt-half">
+            <MidEllipsis text={files[0].name} />
+          </Typography>
+        </BarCenter>
+      )}
       <SharingBannerPlugin />
       {!isDesktop && (
         <PublicToolbar
