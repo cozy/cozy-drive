@@ -2,13 +2,11 @@ import { useDisplayedFolder } from 'hooks'
 import React from 'react'
 
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
-import Typography from 'cozy-ui/transpiled/react/Typography'
 import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { BarCenterOnMobile, BarRightOnMobile } from 'components/Bar'
+import { BarRightOnMobile } from 'components/Bar'
 import { HOME_LINK_HREF } from 'constants/config'
 import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
 import AddButton from 'modules/drive/Toolbar/components/AddButton'
@@ -32,13 +30,6 @@ const PublicToolbarByLink = ({
 
   return (
     <>
-      {isFile && (
-        <BarCenterOnMobile>
-          <Typography variant="h3" noWrap className="u-ph-1 u-pt-half">
-            <MidEllipsis text={files[0].name} />
-          </Typography>
-        </BarCenterOnMobile>
-      )}
       <BarRightOnMobile>
         <AddMenuProvider
           canCreateFolder={hasWriteAccess}
