@@ -11,7 +11,7 @@ import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { isEncryptedFolder } from 'lib/encryption'
-import { logException } from 'lib/reporter'
+import logger from 'lib/logger'
 import AddMenu from 'modules/drive/AddMenu/AddMenu'
 import {
   closeMenu,
@@ -61,7 +61,7 @@ const AddMenuProvider = ({
     e => {
       e.stopPropagation()
       showAlert({ message: t('alert.offline'), severity: 'error' })
-      logException(
+      logger.error(
         `Offline click on AddMenu button detected. Here is the value of window.navigator.onLine: ${window.navigator.onLine}`
       )
     },

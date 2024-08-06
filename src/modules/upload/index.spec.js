@@ -15,9 +15,6 @@ import { getEncryptionKeyFromDirId } from 'lib/encryption'
 import logger from 'lib/logger'
 
 jest.mock('cozy-doctypes')
-jest.mock('lib/reporter', () => ({
-  logException: jest.fn()
-}))
 
 jest.mock('lib/encryption', () => ({
   ...jest.requireActual('lib/encryption'),
@@ -277,7 +274,7 @@ describe('processNextFile function', () => {
   })
 
   it('should handle an error during overwrite', async () => {
-    logger.warn = jest.fn()
+    logger.error = jest.fn()
     const getState = () => ({
       upload: {
         queue: [

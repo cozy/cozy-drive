@@ -12,7 +12,6 @@ import {
   getEncryptionKeyFromDirId
 } from 'lib/encryption'
 import logger from 'lib/logger'
-import { logException } from 'lib/reporter'
 
 const { doMobileUpload, readMobileFile, uploadFileWithConflictStrategy } =
   models.file
@@ -237,9 +236,7 @@ export const processNextFile =
         }
       }
       if (error) {
-        logger.warn(error)
-
-        logException(
+        logger.error(
           `Upload module catches an error when executing processNextFile(): ${error}`
         )
 

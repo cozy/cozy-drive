@@ -10,7 +10,6 @@ import { initTranslation } from 'cozy-ui/transpiled/react/providers/I18n'
 import appMetadata from 'lib/appMetadata'
 import { schema } from 'lib/doctypes'
 import registerClientPlugins from 'lib/registerClientPlugins'
-import { configureReporter, setCozyUrl } from 'lib/reporter'
 
 const setupApp = memoize(() => {
   const root = document.querySelector('[role=application]')
@@ -19,8 +18,6 @@ const setupApp = memoize(() => {
   const protocol = window.location ? window.location.protocol : 'https:'
   const cozyUrl = `${protocol}//${data.domain}`
 
-  configureReporter()
-  setCozyUrl(cozyUrl)
   const client = new CozyClient({
     uri: cozyUrl,
     token: data.token,
