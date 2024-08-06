@@ -4,15 +4,15 @@ import React, { useContext } from 'react'
 import { createMockClient } from 'cozy-client'
 
 import AddMenuProvider, { AddMenuContext } from './AddMenuProvider'
-import { logException } from 'lib/reporter'
+import logger from 'lib/logger'
 import AppLike from 'test/components/AppLike'
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: jest.fn()
 }))
-jest.mock('lib/reporter', () => ({
-  logException: jest.fn()
+jest.mock('lib/logger', () => ({
+  error: jest.fn()
 }))
 
 const client = createMockClient({})
@@ -36,7 +36,7 @@ describe('AddMenuContext', () => {
     fireEvent.click(container)
 
     // Then
-    expect(logException).toHaveBeenCalledWith(
+    expect(logger.error).toHaveBeenCalledWith(
       'Offline click on AddMenu button detected. Here is the value of window.navigator.onLine: true'
     )
   })

@@ -7,7 +7,6 @@ import { MAX_PAYLOAD_SIZE_IN_GB } from 'constants/config'
 import { createEncryptedDir } from 'lib/encryption'
 import { getEntriesTypeTranslated } from 'lib/entries'
 import logger from 'lib/logger'
-import { logException } from 'lib/reporter'
 import { getFolderContent } from 'modules/selectors'
 import { addToUploadQueue } from 'modules/upload'
 import QuotaAlert from 'modules/upload/QuotaAlert'
@@ -108,7 +107,7 @@ const uploadQueueProcessed =
         severity: 'secondary'
       })
     } else if (errors.length > 0) {
-      logException(`Upload module triggers an error: ${errors}`)
+      logger.error(`Upload module triggers an error: ${errors}`)
       showAlert({
         message: t('upload.alert.errors', {
           type

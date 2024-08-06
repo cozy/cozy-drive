@@ -41,7 +41,6 @@
   "homepage": "https://github.com/cozy/cozy-drive#readme",
   "devDependencies": {
     "@babel/eslint-parser": "7.23.3",
-    "@sentry/cli": "1.72.1",
     "@testing-library/jest-dom": "5.17.0",
     "@testing-library/react": "11.2.7",
     "@testing-library/react-hooks": "8.0.1",
@@ -111,7 +110,6 @@
     "node-polyglot": "2.4.2",
     "prop-types": "15.8.1",
     "propagating-hammerjs": "2.0.1",
-    "raven-js": "3.27.2",
     "react": "16.14.0",
     "react-autosuggest": "10.1.0",
     "react-dom": "16.14.0",

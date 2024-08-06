@@ -29,7 +29,6 @@ import { schema } from 'lib/doctypes'
 import logger from 'lib/logger'
 import { joinPath } from 'lib/path'
 import registerClientPlugins from 'lib/registerClientPlugins'
-import { configureReporter, setCozyUrl } from 'lib/reporter'
 
 import styles from 'styles/main.styl'
 
@@ -67,8 +66,7 @@ const init = async () => {
   if (!Document.cozyClient) {
     Document.registerClient(client)
   }
-  configureReporter()
-  setCozyUrl(cozyUrl)
+
   // we still need cozy-client-js for opening a folder
   cozy.client.init({
     cozyURL: cozyUrl,
