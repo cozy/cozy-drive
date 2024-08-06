@@ -1,10 +1,11 @@
 import React from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Route, Navigate } from 'react-router-dom'
 
 import { models } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import FileHistory from 'components/FileHistory'
+import { SentryRoutes } from 'lib/sentry'
 import ExternalRedirect from 'modules/navigation/ExternalRedirect'
 import LightFileViewer from 'modules/public/LightFileViewer'
 import PublicLayout from 'modules/public/PublicLayout'
@@ -25,7 +26,7 @@ const AppRouter = ({
   const isFile = data && data.type === 'file'
 
   return (
-    <Routes>
+    <SentryRoutes>
       <Route element={<PublicLayout />}>
         {isOfficeEnabled(isDesktop) ? (
           <>
@@ -97,7 +98,7 @@ const AppRouter = ({
           </>
         )}
       </Route>
-    </Routes>
+    </SentryRoutes>
   )
 }
 

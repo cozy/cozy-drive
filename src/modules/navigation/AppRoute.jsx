@@ -1,5 +1,5 @@
 import React from 'react'
-import { Routes, Route, useParams, Navigate } from 'react-router-dom'
+import { Route, useParams, Navigate } from 'react-router-dom'
 
 import flag from 'cozy-flags'
 
@@ -20,6 +20,7 @@ import FilesViewerTrash from '../views/Trash/FilesViewerTrash'
 import TrashFolderView from '../views/Trash/TrashFolderView'
 import FileHistory from 'components/FileHistory'
 import { ROOT_DIR_ID, TRASH_DIR_ID } from 'constants/config'
+import { SentryRoutes } from 'lib/sentry'
 import { UploaderComponent } from 'modules//views/Upload/UploaderComponent'
 import Layout from 'modules/layout/Layout'
 import FileOpenerExternal from 'modules/viewer/FileOpenerExternal'
@@ -47,7 +48,7 @@ const FilesRedirect = () => {
 }
 
 const AppRoute = () => (
-  <Routes>
+  <SentryRoutes>
     <Route path="external/:fileId" element={<ExternalRedirect />} />
     <Route element={<Layout />}>
       <Route path="upload" element={<UploaderComponent />} />
@@ -162,7 +163,7 @@ const AppRoute = () => (
         </Route>
       ) : null}
     </Route>
-  </Routes>
+  </SentryRoutes>
 )
 
 export default AppRoute
