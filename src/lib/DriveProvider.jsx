@@ -15,14 +15,21 @@ import { I18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import FabProvider from 'lib/FabProvider'
 
-const DriveProvider = ({ client, lang, polyglot, dictRequire, children }) => {
+const DriveProvider = ({
+  isPublic = false,
+  client,
+  lang,
+  polyglot,
+  dictRequire,
+  children
+}) => {
   return (
     <I18n lang={lang} polyglot={polyglot} dictRequire={dictRequire}>
       <CozyProvider client={client}>
         <VaultProvider cozyClient={client}>
           <VaultUnlockProvider>
             <SharingProvider doctype="io.cozy.files" documentType="Files">
-              <CozyTheme className="u-w-100">
+              <CozyTheme ignoreCozySettings={isPublic} className="u-w-100">
                 <BreakpointsProvider>
                   <AlertProvider>
                     <VaultUnlockPlaceholder />
