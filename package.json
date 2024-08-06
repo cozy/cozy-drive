@@ -81,6 +81,7 @@
   },
   "dependencies": {
     "@egjs/hammerjs": "2.0.17",
+    "@sentry/react": "7.118.0",
     "classnames": "2.3.1",
     "cozy-bar": "^12.3.0",
     "cozy-ci": "0.5.2",
