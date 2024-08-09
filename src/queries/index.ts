@@ -425,10 +425,12 @@ export const buildNextcloudFolderQuery: QueryBuilder<
   buildNextcloudFolderQueryParams
 > = ({ sourceAccount, path }) => ({
   definition: () =>
-    Q('io.cozy.remote.nextcloud.files').where({
-      'cozyMetadata.sourceAccount': sourceAccount,
-      parentPath: path
-    }),
+    Q('io.cozy.remote.nextcloud.files')
+      .where({
+        'cozyMetadata.sourceAccount': sourceAccount,
+        parentPath: path
+      })
+      .indexFields(['cozyMetadata.sourceAccount', 'parentPath']),
   options: {
     as: `io.cozy.remote.nextcloud.files/sourceAccount/${
       sourceAccount ?? 'unknown'
@@ -453,7 +455,7 @@ export const buildNextcloudShortcutQuery: QueryBuilder<
       .partialIndex({
         'cozyMetadata.createdByApp': 'nextcloud'
       })
-      .indexFields(['cozyMetadata.createdByApp', 'cozyMetadata.sourceAccount'])
+      .indexFields(['cozyMetadata.sourceAccount'])
       .limitBy(1),
   options: {
     as: `io.cozy.files/createdByApp/nextcloud/sourceAccount/${sourceAccount}`,
@@ -514,11 +516,13 @@ export const buildNextcloudTrashFolderQuery: QueryBuilder<
   buildNextcloudTrashFolderQueryParams
 > = ({ sourceAccount, path }) => ({
   definition: () =>
-    Q('io.cozy.remote.nextcloud.files').where({
-      'cozyMetadata.sourceAccount': sourceAccount,
-      parentPath: path,
-      trashed: true
-    }),
+    Q('io.cozy.remote.nextcloud.files')
+      .where({
+        'cozyMetadata.sourceAccount': sourceAccount,
+        parentPath: path,
+        trashed: true
+      })
+      .indexFields(['cozyMetadata.sourceAccount', 'parentPath', 'trashed']),
   options: {
     as: `io.cozy.remote.nextcloud.files/sourceAccount/${
       sourceAccount ?? 'unknown'
