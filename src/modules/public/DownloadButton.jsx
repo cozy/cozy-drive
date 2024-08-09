@@ -2,7 +2,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { useClient } from 'cozy-client'
-import { Button } from 'cozy-ui/transpiled/react'
+import Button from 'cozy-ui/transpiled/react/Buttons'
+import Icon from 'cozy-ui/transpiled/react/Icon'
 import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
@@ -10,12 +11,16 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { downloadFiles } from 'modules/actions/utils'
 
 const DownloadButton = ({ onDownload, ...props }) => (
-  <Button onClick={() => onDownload()} icon={DownloadIcon} {...props} />
+  <Button
+    onClick={() => onDownload()}
+    startIcon={<Icon icon={DownloadIcon} />}
+    {...props}
+  />
 )
 
 export default DownloadButton
 
-export const DownloadFilesButton = ({ files }) => {
+export const DownloadFilesButton = ({ files, className }) => {
   const { t } = useI18n()
   const client = useClient()
   const { showAlert } = useAlert()
@@ -27,7 +32,8 @@ export const DownloadFilesButton = ({ files }) => {
       onDownload={() => {
         downloadFiles(client, files, { showAlert, t })
       }}
-      theme="secondary"
+      variant="secondary"
+      className={className}
     />
   )
 }
