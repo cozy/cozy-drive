@@ -12,7 +12,7 @@ import { ModalContextProvider } from 'lib/ModalContext'
 import { ThumbnailSizeContextProvider } from 'lib/ThumbnailSizeContext'
 import { onFileUploaded } from 'modules/views/Upload/UploadUtils'
 
-const App = ({ store, client, lang, polyglot, children }) => {
+const App = ({ isPublic = false, store, client, lang, polyglot, children }) => {
   return (
     <WebviewIntentProvider
       methods={{
@@ -22,7 +22,12 @@ const App = ({ store, client, lang, polyglot, children }) => {
     >
       <BarProvider>
         <Provider store={store}>
-          <DriveProvider client={client} lang={lang} polyglot={polyglot}>
+          <DriveProvider
+            isPublic={isPublic}
+            client={client}
+            lang={lang}
+            polyglot={polyglot}
+          >
             <PushBannerProvider>
               <AcceptingSharingProvider>
                 <ThumbnailSizeContextProvider>
