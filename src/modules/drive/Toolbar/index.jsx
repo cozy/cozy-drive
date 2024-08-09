@@ -53,7 +53,7 @@ const Toolbar = ({
         displayedFolder={displayedFolder}
         folderId={folderId}
       >
-        <ShareButton isDisabled={isSharingDisabled} />
+        <ShareButton isDisabled={isSharingDisabled} className="u-mr-half" />
       </InsideRegularFolder>
 
       {hasWriteAccess && (
@@ -64,7 +64,7 @@ const Toolbar = ({
           displayedFolder={displayedFolder}
           isSelectionBarVisible={isSelectionBarVisible}
         >
-          <AddButton />
+          <AddButton className="u-mr-half" />
         </AddMenuProvider>
       )}
 
