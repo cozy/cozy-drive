@@ -41,8 +41,10 @@ const PublicToolbarByLink = ({
         >
           {!isMobile && (
             <>
-              {hasWriteAccess && <AddButton />}
-              {files.length > 0 && <DownloadFilesButton files={files} />}
+              {hasWriteAccess && <AddButton className="u-mr-half" />}
+              {files.length > 0 && (
+                <DownloadFilesButton files={files} className="u-mr-half" />
+              )}
             </>
           )}
           {shouldDisplayMoreMenu && (
