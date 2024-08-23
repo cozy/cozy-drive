@@ -33,44 +33,44 @@ const UploaderComponent = (): JSX.Element | null => {
     data?: IOCozyFile
   }
 
-  // If there are no items to render, we display a spinner with a full screen dialog to hide the UI behind
-  if (!shouldRender(items) && !rootFolderResult.data) {
+  if (shouldRender(items) && rootFolderResult.data) {
+    const fakeFiles: FolderPickerEntry[] = items.map(item => ({
+      _type: 'io.cozy.files',
+      type: 'file',
+      dir_id: item.dirId,
+      name: item.fileName,
+      mime: item.mimeType
+    }))
+
     return (
-      <FixedDialog
-        className="u-p-0"
-        open
-        size="large"
-        content={<Spinner size="xxlarge" noMargin middle />}
+      <FolderPicker
+        currentFolder={rootFolderResult.data}
+        entries={fakeFiles}
+        canCreateFolder={false}
+        onConfirm={handleConfirm}
+        onClose={onClose}
+        isBusy={uploadInProgress}
+        slotProps={{
+          header: {
+            title: t('ImportToDrive.title', { smart_count: fakeFiles.length }),
+            subTitle: t('ImportToDrive.to')
+          },
+          footer: {
+            confirmLabel: t('ImportToDrive.action'),
+            cancelLabel: t('ImportToDrive.cancel')
+          }
+        }}
       />
     )
   }
 
-  const fakeFiles: FolderPickerEntry[] = (items ?? []).map(item => ({
-    _type: 'io.cozy.files',
-    type: 'file',
-    dir_id: item.dirId,
-    name: item.fileName,
-    mime: item.mimeType
-  }))
-
+  // If there are no items to render, we display a spinner with a full screen dialog to hide the UI behind
   return (
-    <FolderPicker
-      currentFolder={rootFolderResult.data}
-      entries={fakeFiles}
-      canCreateFolder={false}
-      onConfirm={handleConfirm}
-      onClose={onClose}
-      isBusy={uploadInProgress}
-      slotProps={{
-        header: {
-          title: t('ImportToDrive.title', { smart_count: fakeFiles.length }),
-          subTitle: t('ImportToDrive.to')
-        },
-        footer: {
-          confirmLabel: t('ImportToDrive.action'),
-          cancelLabel: t('ImportToDrive.cancel')
-        }
-      }}
+    <FixedDialog
+      className="u-p-0"
+      open
+      size="large"
+      content={<Spinner size="xxlarge" noMargin middle />}
     />
   )
 }
