@@ -1,7 +1,7 @@
 /* global cozy */
 /* eslint-disable import/order */
 
-import 'cozy-ui/dist/cozy-ui.min.css'
+import 'cozy-ui/dist/cozy-ui.utils.min.css'
 import 'cozy-ui/transpiled/react/stylesheet.css'
 import 'cozy-sharing/dist/stylesheet.css'
 
