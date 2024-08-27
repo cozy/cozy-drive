@@ -3,8 +3,8 @@
 
 // cozy-ui css import should be done before any other import
 // otherwise the themes will not be supplied and the app crashes
-import 'cozy-ui/dist/cozy-ui.utils.min.css'
 import 'cozy-ui/transpiled/react/stylesheet.css'
+import 'cozy-ui/dist/cozy-ui.utils.min.css'
 import 'cozy-bar/dist/stylesheet.css'
 import 'cozy-sharing/dist/stylesheet.css'
 
