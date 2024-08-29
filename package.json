@@ -1,6 +1,6 @@
 {
   "name": "cozy-drive",
-  "version": "1.73.2",
+  "version": "1.74.0",
   "main": "src/main.jsx",
   "scripts": {
     "build": "cozy-scripts build --barV7 false --cozyClientJs",
@@ -97,7 +97,7 @@
     "cozy-minilog": "3.3.1",
     "cozy-realtime": "4.6.0",
     "cozy-scripts": "^8.3.0",
-    "cozy-sharing": "^15.0.2",
+    "cozy-sharing": "15.0.3",
     "cozy-stack-client": "^48.12.0",
     "cozy-ui": "111.8.1",
     "date-fns": "1.30.1",
