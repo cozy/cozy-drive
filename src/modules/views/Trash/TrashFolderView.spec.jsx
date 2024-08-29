@@ -69,6 +69,14 @@ describe('TrashFolderView', () => {
           doctype: 'io.cozy.files',
           data: isEmpty ? [] : filesFixture
         }
+      },
+      clientOptions: {
+        uri: ' http://cozy.localhost:8080/'
+      },
+      clientFunctions: {
+        getInstanceOptions: () => ({
+          subdomain: 'nested'
+        })
       }
     })
 

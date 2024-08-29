@@ -17,7 +17,16 @@ jest.mock('cozy-sharing', () => ({
 
 useSharingContext.mockReturnValue({ byDocId: [] })
 
-const client = createMockClient({})
+const client = createMockClient({
+  clientOptions: {
+    uri: 'http://cozy.localhost:8080/'
+  },
+  clientFunctions: {
+    getInstanceOptions: () => ({
+      subdomain: 'nested'
+    })
+  }
+})
 
 const setup = ({
   attributes = folder,
