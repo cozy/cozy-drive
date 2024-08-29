@@ -127,7 +127,7 @@ exports[`Dropzone should match snapshot 1`] = `
                 },
                 "MuiAlert": {
                   "action": {
-                    "marginRight": "-6px",
+                    "marginRight": "-8px",
                   },
                   "message": {
                     "alignItems": "center",
@@ -141,9 +141,8 @@ exports[`Dropzone should match snapshot 1`] = `
                     },
                     "&.block": {
                       "& $action": {
-                        "display": "block",
+                        "justifyContent": "end",
                         "paddingLeft": 0,
-                        "textAlign": "right",
                         "width": "100%",
                       },
                       "flexWrap": "wrap",
@@ -1314,6 +1313,24 @@ exports[`Dropzone should match snapshot 1`] = `
                     "paddingTop": 4,
                     "whiteSpace": "normal",
                     "wordBreak": "break-word",
+                  },
+                },
+                "MuiMobileStepper": {
+                  "dot": {
+                    "backgroundColor": "transparent",
+                    "border": "1px solid #fff",
+                    "boxSizing": "border-box",
+                    "height": "10px",
+                    "margin": "0 3px",
+                    "width": "10px",
+                  },
+                  "dotActive": {
+                    "border": "none",
+                  },
+                  "root": {
+                    "background": "transparent",
+                    "height": 40,
+                    "padding": 0,
                   },
                 },
                 "MuiOutlinedInput": {
