@@ -4,12 +4,14 @@ import React from 'react'
 import { useQuery, isQueryLoading, Q } from 'cozy-client'
 import { LaunchTriggerCard } from 'cozy-harvest-lib'
 import Divider from 'cozy-ui/transpiled/react/Divider'
+import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import useDocument from 'components/useDocument'
 import { buildTriggersQueryByAccountId, buildFileByIdQuery } from 'queries'
 
 const HarvestBanner = ({ folderId }) => {
   const folder = useDocument('io.cozy.files', folderId)
+  const { isMobile } = useBreakpoints()
 
   let konnectorSlug = undefined
   let accountId = undefined
@@ -40,11 +42,13 @@ const HarvestBanner = ({ folderId }) => {
       singleDocData: true
     }
   )
+
   if (!konnector.data || konnector.data.length === 0 || isTriggersLoading) {
     return null
   }
+
   return (
-    <>
+    <div className="u-mh-0-s u-mb-0-s u-mh-2 u-mb-1">
       <LaunchTriggerCard
         flowProps={{
           initialTrigger: triggers[0],
@@ -52,8 +56,15 @@ const HarvestBanner = ({ folderId }) => {
         }}
         konnectorRoot={`harvest/${konnectorSlug}`}
       />
-      <Divider />
-    </>
+      {isMobile && (
+        <Divider
+          style={{
+            height: 12,
+            backgroundColor: 'var(--defaultBackgroundColor)'
+          }}
+        />
+      )}
+    </div>
   )
 }
 
