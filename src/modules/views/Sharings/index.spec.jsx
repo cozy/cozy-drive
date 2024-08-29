@@ -110,6 +110,8 @@ describe('Sharings View', () => {
   })
 
   it('tests the sharings view', async () => {
+    // TODO : Remove nested <a> on File when withFilePath is true
+    jest.spyOn(console, 'error').mockImplementation()
     // TODO : Fix https://github.com/cozy/cozy-drive/issues/2913
     jest.spyOn(console, 'warn').mockImplementation()
 
