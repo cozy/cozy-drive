@@ -65,7 +65,7 @@
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-promise": "6.1.1",
     "eslint-plugin-react": "7.33.2",
-    "eslint-plugin-react-hooks": "4.6.0",
+    "eslint-plugin-react-hooks": "4.6.2",
     "husky": "0.14.3",
     "identity-obj-proxy": "3.0.0",
     "jest": "29.7.0",
