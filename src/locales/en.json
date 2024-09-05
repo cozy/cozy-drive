@@ -845,5 +845,8 @@
   },
   "OpenFolderButton": {
     "label": "Open directory"
+  },
+  "LastUpdate": {
+    "titleFormat": "MMMM DD, YYYY, HH:MM"
   }
 }
