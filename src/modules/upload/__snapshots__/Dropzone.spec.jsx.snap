@@ -373,6 +373,20 @@ exports[`Dropzone should match snapshot 1`] = `
                     "boxSizing": "content-box",
                     "padding": 0,
                   },
+                  "colorPrimary": {
+                    "&.colorInfo": {
+                      "backgroundColor": "#fff",
+                      "color": "#fff",
+                    },
+                    "&.colorSuccess": {
+                      "backgroundColor": "#fff",
+                      "color": "#fff",
+                    },
+                    "&.colorWarning": {
+                      "backgroundColor": "#fff",
+                      "color": "#fff",
+                    },
+                  },
                   "dot": {
                     "&.badgeSizeLarge": {
                       "height": ".625rem",
