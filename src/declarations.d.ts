@@ -25,6 +25,7 @@ declare module 'cozy-ui/transpiled/react' {
 declare module 'cozy-ui/transpiled/react/providers/I18n' {
   export const useI18n: () => {
     t: (key: string, options?: Record<string, unknown>) => string
+    f: (date: string, format: string) => string
     lang: string
   }
 }
@@ -76,6 +77,9 @@ declare module 'cozy-client/dist/models/file' {
     file: Partial<import('components/FolderPicker/types').File>,
     destination: import('components/FolderPicker/types').File
   ) => Promise<void>
+  export const isDirectory: (
+    file: import('components/FolderPicker/types').File
+  ) => boolean
 }
 
 declare module '*.svg' {
@@ -123,4 +127,23 @@ declare module 'cozy-ui/transpiled/react/Nav' {
   export const NavText: React.ComponentType
   export const NavItem: React.ComponentType
   export const NavLink: { className: string; activeClassName: string }
+}
+
+declare module 'cozy-ui/transpiled/react/Typography' {
+  const Typography: React.ComponentType<{
+    variant?: string
+    color?: string
+    noWrap?: boolean
+    className?: string
+  }>
+  export default Typography
+}
+
+declare module 'cozy-keys-lib' {
+  export const useVaultClient: () => object
+}
+
+declare module '*.styl' {
+  const content: Record<string, string>
+  export default content
 }

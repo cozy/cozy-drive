@@ -101,7 +101,9 @@ export const computeNextcloudRootFolder = ({
   type: 'directory',
   links: {
     self: 'unknown'
-  }
+  },
+  size: 0,
+  updated_at: new Date().toISOString()
 })
 
 /**
