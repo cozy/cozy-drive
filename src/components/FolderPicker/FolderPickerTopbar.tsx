@@ -1,3 +1,4 @@
+import cx from 'classnames'
 import React, { useCallback, useState } from 'react'
 
 import { useClient } from 'cozy-client'
@@ -5,13 +6,13 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import FolderAddIcon from 'cozy-ui/transpiled/react/Icons/FolderAdd'
 import Typography from 'cozy-ui/transpiled/react/Typography'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { getParentFolder } from './helpers'
 import BackButton from 'components/Button/BackButton'
 import { File } from 'components/FolderPicker/types'
 import { ROOT_DIR_ID } from 'constants/config'
-import Topbar from 'modules/layout/Topbar'
 import { useNextcloudInfos } from 'modules/nextcloud/hooks/useNextcloudInfos'
 
 interface FolderPickerTopbarProps {
@@ -29,6 +30,7 @@ const FolderPickerTopbar: React.FC<FolderPickerTopbarProps> = ({
 }) => {
   const { t } = useI18n()
   const client = useClient()
+  const { isMobile } = useBreakpoints()
   const [isNavigating, setNavigating] = useState(false)
 
   const showBackButton = folder._id !== ROOT_DIR_ID
@@ -53,11 +55,16 @@ const FolderPickerTopbar: React.FC<FolderPickerTopbarProps> = ({
     canCreateFolder && folder._type !== 'io.cozy.remote.nextcloud.files'
 
   return (
-    <Topbar hideOnMobile={false}>
+    <div
+      style={{ height: '3rem' }}
+      className={cx('u-flex u-flex-items-center', !isMobile ? 'u-mh-1' : '')}
+    >
       {showBackButton ? (
         <BackButton onClick={handleNavigateTo} disabled={isNavigating} />
       ) : null}
-      <Typography variant="h4">{name}</Typography>
+      <Typography variant="h4" className={!showBackButton ? 'u-ml-1' : ''}>
+        {name}
+      </Typography>
       {showCreateFolderButton ? (
         <IconButton
           className="u-ml-auto"
@@ -67,7 +74,7 @@ const FolderPickerTopbar: React.FC<FolderPickerTopbarProps> = ({
           <Icon icon={FolderAddIcon} />
         </IconButton>
       ) : null}
-    </Topbar>
+    </div>
   )
 }
 
