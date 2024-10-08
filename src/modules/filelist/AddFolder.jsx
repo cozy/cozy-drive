@@ -66,7 +66,7 @@ const createFolderAfterSubmit =
     })
   }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+export const addFolderDispatch = (dispatch, ownProps) => ({
   onSubmit: (name, showAlert, t) =>
     dispatch(createFolderAfterSubmit(ownProps, name, { showAlert, t })),
   onAbort: (accidental, showAlert, t) => {
@@ -84,12 +84,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 const AddFolderWithoutState = compose(
   withClient,
-  connect(null, mapDispatchToProps)
+  connect(null, addFolderDispatch)
 )(AddFolder)
 
 const AddFolderWithState = compose(
   withClient,
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(mapStateToProps, addFolderDispatch)
 )(AddFolder)
 
 const AddFolderWithAfter = ({ refreshFolderContent, ...props }) => {

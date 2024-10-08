@@ -1,18 +1,20 @@
 import React from 'react'
 
 import { useQuery } from 'cozy-client'
+import { isDirectory } from 'cozy-client/dist/models/file'
 import { NextcloudFile } from 'cozy-client/types/types'
+import List from 'cozy-ui/transpiled/react/List'
 
-import { FolderPickerContentExplorer } from 'components/FolderPicker/FolderPickerContentExplorer'
+import { FolderPickerListItem } from './FolderPickerListItem'
 import { FolderPickerContentLoader } from 'components/FolderPicker/FolderPickerContentLoader'
 import { isInvalidMoveTarget } from 'components/FolderPicker/helpers'
-import { DumbFile as File } from 'modules/filelist/File'
+import type { File, FolderPickerEntry } from 'components/FolderPicker/types'
 import { buildNextcloudFolderQuery } from 'queries'
 
 interface Props {
   folder: NextcloudFile
-  entries: import('./types').File[] // Update with the appropriate type
-  navigateTo: (folder?: import('./types').File) => void // Update with the appropriate type
+  entries: FolderPickerEntry[] // Update with the appropriate type
+  navigateTo: (folder: import('./types').File) => void // Update with the appropriate type
 }
 
 const FolderPickerContentNextcloud: React.FC<Props> = ({
@@ -33,41 +35,31 @@ const FolderPickerContentNextcloud: React.FC<Props> = ({
     data?: NextcloudFile[]
   }
 
-  const handleFolderOpen = (folder: import('./types').File): void => {
-    navigateTo(folder)
-  }
-
-  const handleFileOpen = (): void => {
-    // Do nothing
-  }
-
   const files = data ?? []
 
+  const handleClick = (file: File): void => {
+    if (isDirectory(file)) {
+      navigateTo(file)
+    }
+  }
+
   return (
-    <FolderPickerContentExplorer>
+    <List>
       <FolderPickerContentLoader
         fetchStatus={fetchStatus}
         hasNoData={files.length === 0}
       >
-        {files.map(file => (
-          <File
-            key={file.id}
+        {files.map((file, index) => (
+          <FolderPickerListItem
+            key={file._id}
+            file={file}
             disabled={isInvalidMoveTarget(entries, file)}
-            styleDisabled={isInvalidMoveTarget(entries, file)}
-            attributes={file}
-            displayedFolder={null}
-            actions={null}
-            isRenaming={false}
-            onFolderOpen={handleFolderOpen}
-            onFileOpen={handleFileOpen}
-            withSelectionCheckbox={false}
-            withFilePath={false}
-            withSharedBadge
-            disableSelection={true}
+            onClick={handleClick}
+            showDivider={index !== files.length - 1}
           />
         ))}
       </FolderPickerContentLoader>
-    </FolderPickerContentExplorer>
+    </List>
   )
 }
 
