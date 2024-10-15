@@ -51,15 +51,13 @@ describe('QuotaBanner', () => {
     useInstanceInfo.mockReturnValue({
       context: {
         data: {
-          attributes: {
-            enable_premium_links: enablePremiumLinks,
-            manager_url: 'http://mycozy.cloud'
-          }
+          enable_premium_links: enablePremiumLinks,
+          manager_url: 'http://mycozy.cloud'
         }
       },
       instance: {
         data: {
-          attributes: { uuid: hasUuid ? '123' : null }
+          uuid: hasUuid ? '123' : null
         }
       }
     })
