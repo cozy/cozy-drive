@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import filesize from 'filesize'
+import { filesize } from 'filesize'
 import get from 'lodash/get'
 import PropTypes from 'prop-types'
 import React, { useState, useRef } from 'react'
