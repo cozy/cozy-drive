@@ -3,8 +3,8 @@ import React from 'react'
 import flag from 'cozy-flags'
 import FileImageLoader from 'cozy-ui/transpiled/react/FileImageLoader'
 
-import FileIconMime from 'modules/filelist/FileIconMime'
-import FileIconShortcut from 'modules/filelist/FileIconShortcut'
+import FileIconMime from 'modules/filelist/icons/FileIconMime'
+import FileIconShortcut from 'modules/filelist/icons/FileIconShortcut'
 
 import styles from 'styles/filelist.styl'
 
