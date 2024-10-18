@@ -24,7 +24,7 @@ import { ActionMenuWithHeader } from 'modules/actionmenu/ActionMenuWithHeader'
 import { extraColumnsPropTypes } from 'modules/certifications'
 import { isRenaming, getRenamingFile } from 'modules/drive/rename'
 import FileOpener from 'modules/filelist/FileOpener'
-import FileThumbnail from 'modules/filelist/FileThumbnail'
+import FileThumbnail from 'modules/filelist/icons/FileThumbnail'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 
 import styles from 'styles/filelist.styl'

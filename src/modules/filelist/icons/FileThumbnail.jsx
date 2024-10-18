@@ -12,9 +12,9 @@ import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import IconServer from 'assets/icons/icon-type-server.svg'
-import FileIcon from 'modules/filelist/FileIcon'
-import FileIconMime from 'modules/filelist/FileIconMime'
-import { SharingShortcutIcon } from 'modules/filelist/SharingShortcutIcon'
+import FileIcon from 'modules/filelist/icons/FileIcon'
+import FileIconMime from 'modules/filelist/icons/FileIconMime'
+import { SharingShortcutIcon } from 'modules/filelist/icons/SharingShortcutIcon'
 import { isNextcloudShortcut } from 'modules/nextcloud/helpers'
 
 import styles from 'styles/filelist.styl'
