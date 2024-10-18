@@ -9,7 +9,6 @@ import LinkIcon from 'cozy-ui/transpiled/react/Icons/Link'
 import TrashDuotoneIcon from 'cozy-ui/transpiled/react/Icons/TrashDuotone'
 import InfosBadge from 'cozy-ui/transpiled/react/InfosBadge'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import IconServer from 'assets/icons/icon-type-server.svg'
 import FileIcon from 'modules/filelist/icons/FileIcon'
@@ -19,8 +18,16 @@ import { isNextcloudShortcut } from 'modules/nextcloud/helpers'
 
 import styles from 'styles/filelist.styl'
 
-const FileThumbnail = ({ file, size, isInSyncFromSharing, isEncrypted }) => {
-  const { isMobile } = useBreakpoints()
+const FileThumbnail = ({
+  file,
+  size,
+  isInSyncFromSharing,
+  isEncrypted,
+  showSharedBadge,
+  componentsProps = {
+    sharedBadge: {}
+  }
+}) => {
   const isSharingShortcut =
     models.file.isSharingShortcut(file) && !isInSyncFromSharing
   const isRegularShortcut =
@@ -75,12 +82,8 @@ const FileThumbnail = ({ file, size, isInSyncFromSharing, isEncrypted }) => {
        * The next functionnal's task is to work on sharing and we'll remove
        * this badge from here. In the meantime, we take this workaround
        */}
-      {file.class !== 'shortcut' && isMobile && !isInSyncFromSharing && (
-        <SharedBadge
-          docId={file.id}
-          className={styles['fil-content-shared']}
-          xsmall
-        />
+      {file.class !== 'shortcut' && showSharedBadge && !isInSyncFromSharing && (
+        <SharedBadge docId={file._id} {...componentsProps.sharedBadge} xsmall />
       )}
     </>
   )
@@ -93,6 +96,11 @@ FileThumbnail.propTypes = {
     name: PropTypes.string
   }).isRequired,
   size: PropTypes.number
+}
+
+FileThumbnail.defaultProps = {
+  showSharedBadge: false,
+  componentsProps: {}
 }
 
 export default FileThumbnail
