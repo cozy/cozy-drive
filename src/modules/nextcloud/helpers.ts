@@ -1,5 +1,7 @@
-import type { IOCozyFile } from 'cozy-client/types/types'
+import type { IOCozyFile, NextcloudFile } from 'cozy-client/types/types'
 import flag from 'cozy-flags'
+
+import type { File, FolderPickerEntry } from 'components/FolderPicker/types'
 
 export const computeNextcloudFolderQueryId = ({
   sourceAccount,
@@ -22,4 +24,10 @@ export const isNextcloudShortcut = (file: IOCozyFile): boolean => {
     file.cozyMetadata?.createdByApp === 'nextcloud' &&
     flag('drive.show-nextcloud-dev')
   )
+}
+
+export const isNextcloudFile = (
+  file: File | FolderPickerEntry
+): file is NextcloudFile => {
+  return file._type === 'io.cozy.remote.nextcloud.files'
 }
