@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 
 import { models } from 'cozy-client'
@@ -11,31 +10,40 @@ import InfosBadge from 'cozy-ui/transpiled/react/InfosBadge'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 
 import IconServer from 'assets/icons/icon-type-server.svg'
+import type { File, FolderPickerEntry } from 'components/FolderPicker/types'
 import FileIcon from 'modules/filelist/icons/FileIcon'
 import FileIconMime from 'modules/filelist/icons/FileIconMime'
 import { SharingShortcutIcon } from 'modules/filelist/icons/SharingShortcutIcon'
-import { isNextcloudShortcut } from 'modules/nextcloud/helpers'
+import { isNextcloudShortcut, isNextcloudFile } from 'modules/nextcloud/helpers'
 
 import styles from 'styles/filelist.styl'
 
-const FileThumbnail = ({
+interface FileThumbnailProps {
+  file: File | FolderPickerEntry
+  size?: number
+  isInSyncFromSharing?: boolean
+  isEncrypted?: boolean
+  showSharedBadge?: boolean
+  componentsProps?: {
+    sharedBadge?: object
+  }
+}
+
+const FileThumbnail: React.FC<FileThumbnailProps> = ({
   file,
   size,
   isInSyncFromSharing,
   isEncrypted,
-  showSharedBadge,
+  showSharedBadge = false,
   componentsProps = {
     sharedBadge: {}
   }
 }) => {
-  const isSharingShortcut =
-    models.file.isSharingShortcut(file) && !isInSyncFromSharing
-  const isRegularShortcut =
-    !isSharingShortcut && file.class === 'shortcut' && !isInSyncFromSharing
-  const isSimpleFile =
-    !isSharingShortcut && !isRegularShortcut && !isInSyncFromSharing
+  if (isNextcloudFile(file)) {
+    return <FileIconMime file={file} size={size} />
+  }
 
-  if (file?._id?.endsWith('.trash-dir')) {
+  if (file._id?.endsWith('.trash-dir')) {
     return <Icon icon={TrashDuotoneIcon} size={size ?? 32} />
   }
 
@@ -46,9 +54,12 @@ const FileThumbnail = ({
     return <Icon icon={IconServer} size={size ?? 32} />
   }
 
-  if (file._type === 'io.cozy.remote.nextcloud.files') {
-    return <FileIconMime file={file} size={size} />
-  }
+  const isSharingShortcut =
+    models.file.isSharingShortcut(file) && !isInSyncFromSharing
+  const isRegularShortcut =
+    !isSharingShortcut && file.class === 'shortcut' && !isInSyncFromSharing
+  const isSimpleFile =
+    !isSharingShortcut && !isRegularShortcut && !isInSyncFromSharing
 
   return (
     <>
@@ -57,14 +68,14 @@ const FileThumbnail = ({
       )}
       {isRegularShortcut && (
         <InfosBadge badgeContent={<Icon icon={LinkIcon} size={10} />}>
-          <FileIcon file={file} size={size} />
+          <FileIcon file={file} size={size} isEncrypted={isEncrypted} />
         </InfosBadge>
       )}
       {isSharingShortcut && (
         <GhostFileBadge
           badgeContent={<SharingShortcutIcon file={file} size={16} />}
         >
-          <SharingOwnerAvatar docId={file.id} size="small" />
+          <SharingOwnerAvatar docId={file._id} size="small" />
         </GhostFileBadge>
       )}
       {isInSyncFromSharing && (
@@ -87,20 +98,6 @@ const FileThumbnail = ({
       )}
     </>
   )
-}
-
-FileThumbnail.propTypes = {
-  file: PropTypes.shape({
-    class: PropTypes.string,
-    mime: PropTypes.string,
-    name: PropTypes.string
-  }).isRequired,
-  size: PropTypes.number
-}
-
-FileThumbnail.defaultProps = {
-  showSharedBadge: false,
-  componentsProps: {}
 }
 
 export default FileThumbnail
