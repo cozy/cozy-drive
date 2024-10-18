@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import filesize from 'filesize'
+import { filesize } from 'filesize'
 import get from 'lodash/get'
 import PropTypes from 'prop-types'
 import React, { useState, useRef } from 'react'
@@ -24,7 +24,7 @@ import { ActionMenuWithHeader } from 'modules/actionmenu/ActionMenuWithHeader'
 import { extraColumnsPropTypes } from 'modules/certifications'
 import { isRenaming, getRenamingFile } from 'modules/drive/rename'
 import FileOpener from 'modules/filelist/FileOpener'
-import FileThumbnail from 'modules/filelist/FileThumbnail'
+import FileThumbnail from 'modules/filelist/icons/FileThumbnail'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 
 import styles from 'styles/filelist.styl'
@@ -157,6 +157,12 @@ const File = ({
             file={attributes}
             size={isLargeRow ? 96 : undefined}
             isInSyncFromSharing={isInSyncFromSharing}
+            showSharedBadge={isMobile}
+            componentsProps={{
+              sharedBadge: {
+                className: styles['fil-content-shared']
+              }
+            }}
           />
         </TableCell>
         <FileName

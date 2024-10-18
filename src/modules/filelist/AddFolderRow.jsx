@@ -4,9 +4,9 @@ import React from 'react'
 import { TableRow, TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import FileThumbnail from 'modules/filelist/FileThumbnail'
 import FilenameInput from 'modules/filelist/FilenameInput'
 import { Empty as EmptyCell, LastUpdate } from 'modules/filelist/cells'
+import FileThumbnail from 'modules/filelist/icons/FileThumbnail'
 
 import styles from 'styles/filelist.styl'
 
