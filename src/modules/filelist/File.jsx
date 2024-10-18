@@ -157,6 +157,12 @@ const File = ({
             file={attributes}
             size={isLargeRow ? 96 : undefined}
             isInSyncFromSharing={isInSyncFromSharing}
+            showSharedBadge={isMobile}
+            componentsProps={{
+              sharedBadge: {
+                className: styles['fil-content-shared']
+              }
+            }}
           />
         </TableCell>
         <FileName
