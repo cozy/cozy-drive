@@ -1,5 +1,3 @@
-import get from 'lodash/get'
-
 import { buildFolderQuery } from 'queries'
 
 export const fetchFolder = async ({ client, folderId }) => {
@@ -9,5 +7,5 @@ export const fetchFolder = async ({ client, folderId }) => {
     definition: definition(),
     options
   })
-  return get(folderQueryResults, 'data[0]')
+  return folderQueryResults.data
 }
