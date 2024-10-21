@@ -13,6 +13,7 @@ import OnlyOfficeView from 'modules/views/OnlyOffice'
 import OnlyOfficeCreateView from 'modules/views/OnlyOffice/Create'
 import OnlyOfficePaywallView from 'modules/views/OnlyOffice/OnlyOfficePaywallView'
 import { isOfficeEnabled } from 'modules/views/OnlyOffice/helpers'
+import { PublicFileViewer } from 'modules/views/Public/PublicFileViewer'
 import { PublicFolderView } from 'modules/views/Public/PublicFolderView'
 
 const AppRouter = ({
@@ -83,6 +84,7 @@ const AppRouter = ({
               />
             </Route>
             <Route path="folder/:folderId" element={<PublicFolderView />}>
+              <Route path="file/:fileId" element={<PublicFileViewer />} />
               <Route path="file/:fileId/revision" element={<FileHistory />} />
               <Route
                 path="paywall"
