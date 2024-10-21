@@ -1,5 +1,5 @@
 import { useCurrentFolderId, useDisplayedFolder } from 'hooks'
-import React, { useCallback } from 'react'
+import React from 'react'
 import { useNavigate, Outlet, useLocation } from 'react-router-dom'
 
 import { useQuery, useClient } from 'cozy-client'
@@ -12,7 +12,6 @@ import FolderView from '../Folder/FolderView'
 import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewHeader from '../Folder/FolderViewHeader'
 import useHead from 'components/useHead'
-import { ROOT_DIR_ID } from 'constants/config'
 import { restore } from 'modules/actions'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
@@ -71,18 +70,6 @@ export const TrashFolderView = () => {
   const foldersResult = useQuery(folderQuery.definition, folderQuery.options)
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
 
-  const navigateToFolder = useCallback(
-    ({ id }) => {
-      // We can navigate to the root folder inside the breadcrumb
-      if (id === ROOT_DIR_ID) {
-        navigate(`/folder/${ROOT_DIR_ID}`)
-      } else {
-        navigate(`/trash/${id}`)
-      }
-    },
-    [navigate]
-  )
-
   const actions = makeActions([restore, destroy], {
     client,
     t,
@@ -94,10 +81,7 @@ export const TrashFolderView = () => {
   return (
     <FolderView isNotFound={isNotFound}>
       <FolderViewHeader>
-        <TrashBreadcrumb
-          currentFolderId={currentFolderId}
-          navigateToFolder={navigateToFolder}
-        />
+        <TrashBreadcrumb currentFolderId={currentFolderId} />
         <TrashToolbar />
       </FolderViewHeader>
       <FolderViewBody

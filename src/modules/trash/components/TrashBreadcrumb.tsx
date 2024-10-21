@@ -1,4 +1,5 @@
 import React, { useMemo, FC, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -8,14 +9,11 @@ import { useBreadcrumbPath } from 'modules/breadcrumb/hooks/useBreadcrumbPath.js
 
 interface TrashBreadcrumbProps {
   currentFolderId: string
-  navigateToFolder: (args: { id: string }) => void
 }
 
-const TrashBreadcrumb: FC<TrashBreadcrumbProps> = ({
-  currentFolderId,
-  navigateToFolder
-}) => {
+const TrashBreadcrumb: FC<TrashBreadcrumbProps> = ({ currentFolderId }) => {
   const { t } = useI18n()
+  const navigate = useNavigate()
 
   const rootBreadcrumbPath = useMemo(
     () => ({
@@ -39,8 +37,15 @@ const TrashBreadcrumb: FC<TrashBreadcrumbProps> = ({
   ]
 
   const handleBreadcrumbClick = useCallback(
-    ({ id }: { id: string }) => navigateToFolder({ id }),
-    [navigateToFolder]
+    ({ id }: { id: string }) => {
+      // We can navigate to the root folder inside the breadcrumb
+      if (id === ROOT_DIR_ID) {
+        navigate(`/folder/${ROOT_DIR_ID}`)
+      } else {
+        navigate(`/trash/${id}`)
+      }
+    },
+    [navigate]
   )
 
   return (
