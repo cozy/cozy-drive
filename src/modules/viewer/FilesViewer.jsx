@@ -6,16 +6,15 @@ import { useNavigate } from 'react-router-dom'
 import { Q, useClient } from 'cozy-client'
 import { isIOSApp } from 'cozy-device-helper'
 import { useVaultClient } from 'cozy-keys-lib'
-import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import Viewer from 'cozy-ui/transpiled/react/Viewer'
 import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
 import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
 import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
 import ToolbarButtons from 'cozy-ui/transpiled/react/Viewer/components/ToolbarButtons'
-import Overlay from 'cozy-ui/transpiled/react/deprecated/Overlay'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import { FilesViewerLoading } from 'components/FilesViewerLoading'
 import {
   isEncryptedFile,
   getEncryptionKeyFromDirId,
@@ -27,12 +26,6 @@ import {
   isOfficeEnabled,
   makeOnlyOfficeFileRoute
 } from 'modules/views/OnlyOffice/helpers'
-
-export const FilesViewerLoading = () => (
-  <Overlay>
-    <Spinner size="xxlarge" middle noMargin color="var(--white)" />
-  </Overlay>
-)
 
 const styleStatusBar = switcher => {
   if (window.StatusBar && isIOSApp()) {
