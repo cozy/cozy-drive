@@ -1,5 +1,5 @@
 import { useCurrentFolderId, useDisplayedFolder } from 'hooks'
-import React, { useCallback, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate, Outlet, useLocation } from 'react-router-dom'
 
@@ -82,21 +82,6 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
   const foldersResult = useQuery(folderQuery.definition, folderQuery.options)
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
 
-  const navigateToFolder = useCallback(
-    folder => {
-      if (folder) navigate(`/sharings/${folder._id}`)
-      else navigate('/sharings')
-    },
-    [navigate]
-  )
-
-  const navigateToFile = useCallback(
-    file => {
-      navigate(`/sharings/${currentFolderId}/file/${file.id}`)
-    },
-    [navigate, currentFolderId]
-  )
-
   const hasWrite = hasWriteAccess(currentFolderId)
 
   const actionsOptions = {
@@ -133,7 +118,6 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
             sharedDocumentIds={sharedDocumentIds}
             rootBreadcrumbPath={rootBreadcrumbPath}
             currentFolderId={currentFolderId}
-            navigateToFolder={navigateToFolder}
           />
         )}
         <Toolbar canUpload={hasWrite} canCreateFolder={hasWrite} />
@@ -145,8 +129,6 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
         displayedFolder={displayedFolder}
       >
         <FolderViewBody
-          navigateToFolder={navigateToFolder}
-          navigateToFile={navigateToFile}
           actions={actions}
           queryResults={[foldersResult, filesResult]}
           canSort

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate, Outlet, useLocation } from 'react-router-dom'
 
@@ -65,20 +65,6 @@ export const RecentView = () => {
   const query = buildRecentQuery()
   const result = useFilesQueryWithPath(query)
 
-  const navigateToFolder = useCallback(
-    folder => {
-      navigate(`/folder/${folder._id}`)
-    },
-    [navigate]
-  )
-
-  const navigateToFile = useCallback(
-    file => {
-      navigate(`/recent/file/${file.id}`)
-    },
-    [navigate]
-  )
-
   const actionsOptions = {
     client,
     t,
@@ -121,8 +107,6 @@ export const RecentView = () => {
         <Toolbar canUpload={false} canCreateFolder={false} />
       </FolderViewHeader>
       <FolderViewBody
-        navigateToFolder={navigateToFolder}
-        navigateToFile={navigateToFile}
         actions={actions}
         queryResults={[result]}
         canSort={false}

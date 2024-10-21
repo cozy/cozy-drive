@@ -1,5 +1,5 @@
 import { useCurrentFolderId, useDisplayedFolder } from 'hooks'
-import React, { useCallback, useContext, useEffect, useMemo } from 'react'
+import React, { useContext, useEffect, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate, Outlet, useLocation, useParams } from 'react-router-dom'
 
@@ -140,24 +140,6 @@ const DriveFolderView = () => {
   )
   const isPending = allResults.some(result => result.fetchStatus === 'pending')
 
-  const navigateToFolder = useCallback(
-    folder => {
-      if (folder._id === TRASH_DIR_ID) {
-        navigate('/trash')
-      } else {
-        navigate(`/folder/${folder._id}`)
-      }
-    },
-    [navigate]
-  )
-
-  const navigateToFile = useCallback(
-    file => {
-      navigate(`/folder/${currentFolderId}/file/${file.id}`)
-    },
-    [navigate, currentFolderId]
-  )
-
   const canWriteToCurrentFolder = hasWriteAccess(currentFolderId)
   const actionsOptions = {
     client,
@@ -222,7 +204,6 @@ const DriveFolderView = () => {
           <FolderViewBreadcrumb
             rootBreadcrumbPath={rootBreadcrumbPath}
             currentFolderId={currentFolderId}
-            navigateToFolder={navigateToFolder}
           />
         )}
         <Toolbar
@@ -240,8 +221,6 @@ const DriveFolderView = () => {
           <HarvestBanner folderId={currentFolderId} />
         )}
         <FolderViewBody
-          navigateToFolder={navigateToFolder}
-          navigateToFile={navigateToFile}
           actions={actions}
           queryResults={allResults}
           canSort
