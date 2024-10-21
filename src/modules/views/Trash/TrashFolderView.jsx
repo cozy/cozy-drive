@@ -83,13 +83,6 @@ export const TrashFolderView = () => {
     [navigate]
   )
 
-  const navigateToFile = useCallback(
-    file => {
-      navigate(`/trash/${currentFolderId}/file/${file.id}`)
-    },
-    [navigate, currentFolderId]
-  )
-
   const actions = makeActions([restore, destroy], {
     client,
     t,
@@ -110,8 +103,6 @@ export const TrashFolderView = () => {
       <FolderViewBody
         currentFolderId={currentFolderId}
         displayedFolder={displayedFolder}
-        navigateToFolder={navigateToFolder}
-        navigateToFile={navigateToFile}
         actions={actions}
         queryResults={[foldersResult, filesResult]}
         canSort

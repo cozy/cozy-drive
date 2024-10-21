@@ -44,8 +44,6 @@ const File = ({
   isInSyncFromSharing,
   extraColumns,
   breakpoints: { isExtraLarge, isMobile },
-  onFolderOpen,
-  onFileOpen,
   disableSelection = false,
   canInteractWith
 }) => {
@@ -77,18 +75,6 @@ const File = ({
     toggleSelectedItem(attributes)
   }
 
-  const open = (event, attributes) => {
-    event.stopPropagation()
-    if (isDirectory(attributes)) {
-      onFolderOpen(attributes)
-    } else {
-      onFileOpen({
-        event,
-        file: attributes
-      })
-    }
-  }
-
   const isImage = attributes.class === 'image'
   const isLargeRow = isImage && thumbnailSizeBig
   const isRowDisabledOrInSyncFromSharing = disabled || isInSyncFromSharing
@@ -99,6 +85,7 @@ const File = ({
     [styles['fil-content-row-disabled']]: styleDisabled,
     [styles['fil-content-row-bigger']]: isLargeRow
   })
+
   const formattedSize =
     !isDirectory(attributes) && attributes.size
       ? filesize(attributes.size, { base: 10 })
@@ -140,7 +127,6 @@ const File = ({
         disabled={isRowDisabledOrInSyncFromSharing}
         actionMenuVisible={actionMenuVisible}
         selectionModeActive={isSelectionBarVisible}
-        open={open}
         toggle={toggle}
         isRenaming={isRenaming}
       >
@@ -228,10 +214,6 @@ File.propTypes = {
   /** Apply disabled style on row */
   styleDisabled: PropTypes.bool,
   breakpoints: PropTypes.object.isRequired,
-  /** When a user click on a Folder */
-  onFolderOpen: PropTypes.func.isRequired,
-  /** onFileOpen : When a user click on a File */
-  onFileOpen: PropTypes.func.isRequired,
   refreshFolderContent: PropTypes.func,
   isInSyncFromSharing: PropTypes.bool,
   extraColumns: extraColumnsPropTypes,

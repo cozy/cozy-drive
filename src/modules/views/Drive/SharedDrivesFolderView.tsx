@@ -1,8 +1,7 @@
-import React, { FC, useCallback, useMemo } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import React, { FC, useMemo } from 'react'
+import { Outlet } from 'react-router-dom'
 
 import { useQuery } from 'cozy-client'
-import { IOCozyFile } from 'cozy-client/types/types'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -14,7 +13,6 @@ import {
   ExtraColumn
 } from 'modules/certifications/useExtraColumns'
 import { FolderBody } from 'modules/folder/components/FolderBody'
-import { useFileOpeningHandler } from 'modules/folder/hooks/useFileOpeningHandler'
 import { useFolderSort } from 'modules/navigation/duck'
 import FolderView from 'modules/views/Folder/FolderView'
 import FolderViewBreadcrumb from 'modules/views/Folder/FolderViewBreadcrumb'
@@ -28,7 +26,6 @@ const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames: string[] = []
 
 const SharedDrivesFolderView: FC = () => {
-  const navigate = useNavigate()
   const { isMobile } = useBreakpoints()
   const { t } = useI18n()
   const { isNotFound } = useDisplayedFolder()
@@ -65,25 +62,6 @@ const SharedDrivesFolderView: FC = () => {
 
   const queryResults = [foldersResult, filesResult]
 
-  const handleFolderOpen = useCallback(
-    (folder: IOCozyFile) => {
-      navigate(`/folder/${folder._id}`)
-    },
-    [navigate]
-  )
-
-  const navigateToFile = useCallback(
-    (file: IOCozyFile) => {
-      navigate(`/folder/io.cozy.files.shared-drives-dir/file/${file._id}`)
-    },
-    [navigate]
-  )
-
-  const { handleFileOpen } = useFileOpeningHandler({
-    isPublic: false,
-    navigateToFile
-  })
-
   const rootBreadcrumbPath = useMemo(
     () => ({
       id: ROOT_DIR_ID,
@@ -98,14 +76,11 @@ const SharedDrivesFolderView: FC = () => {
         <FolderViewBreadcrumb
           rootBreadcrumbPath={rootBreadcrumbPath}
           currentFolderId="io.cozy.files.shared-drives-dir"
-          navigateToFolder={handleFolderOpen}
         />
       </FolderViewHeader>
       <FolderBody
         folderId="io.cozy.files.shared-drives-dir"
         queryResults={queryResults}
-        onFolderOpen={handleFolderOpen}
-        onFileOpen={handleFileOpen}
         extraColumns={extraColumns}
       />
       <Outlet />

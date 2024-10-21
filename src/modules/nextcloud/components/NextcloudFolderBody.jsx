@@ -6,7 +6,6 @@ import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { moveNextcloud } from './actions/moveNextcloud'
-import { joinPath } from 'lib/path'
 import { hr } from 'modules/actions'
 import { duplicateTo } from 'modules/actions/components/duplicateTo'
 import { FolderBody } from 'modules/folder/components/FolderBody'
@@ -17,24 +16,11 @@ import { rename } from 'modules/nextcloud/components/actions/rename'
 import { shareNextcloudFile } from 'modules/nextcloud/components/actions/shareNextcloudFile'
 
 const NextcloudFolderBody = ({ path, queryResults }) => {
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const client = useClient()
   const { t } = useI18n()
   const { pathname } = useLocation()
   const navigate = useNavigate()
-
-  const handleFolderOpen = folder => {
-    if (folder._id === 'io.cozy.remote.nextcloud.files.trash-dir') {
-      navigate(`${pathname}/trash`)
-    } else {
-      searchParams.set('path', joinPath(path, folder.name))
-      setSearchParams(searchParams)
-    }
-  }
-
-  const handleFileOpen = ({ file }) => {
-    window.open(file.links.self, '_blank')
-  }
 
   const fileActions = makeActions(
     [
@@ -62,8 +48,6 @@ const NextcloudFolderBody = ({ path, queryResults }) => {
       folderId={path}
       queryResults={queryResults}
       actions={fileActions}
-      onFolderOpen={handleFolderOpen}
-      onFileOpen={handleFileOpen}
       withFilePath={false}
     />
   )
