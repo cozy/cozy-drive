@@ -19,6 +19,9 @@ jest.mock('modules/breadcrumb/components/MobileAwareBreadcrumb', () => ({
     />
   )
 }))
+jest.mock('react-router-dom', () => ({
+  useNavigate: jest.fn()
+}))
 
 describe('FolderViewBreadcrumb', () => {
   const rootBreadcrumbPath = dummyRootBreadcrumbPath()
@@ -32,7 +35,6 @@ describe('FolderViewBreadcrumb', () => {
     render(
       <FolderViewBreadcrumb
         currentFolderId={currentFolderId}
-        navigateToFolder={jest.fn()}
         rootBreadcrumbPath={rootBreadcrumbPath}
         sharedDocumentIds={sharedDocumentIds}
       />
@@ -54,7 +56,6 @@ describe('FolderViewBreadcrumb', () => {
     const { getByTestId } = render(
       <FolderViewBreadcrumb
         currentFolderId="1234"
-        navigateToFolder={jest.fn()}
         rootBreadcrumbPath={rootBreadcrumbPath}
       />
     )
@@ -77,7 +78,6 @@ describe('FolderViewBreadcrumb', () => {
     const { container } = render(
       <FolderViewBreadcrumb
         currentFolderId="1234"
-        navigateToFolder={jest.fn()}
         rootBreadcrumbPath={rootBreadcrumbPath}
       />
     )
@@ -94,7 +94,6 @@ describe('FolderViewBreadcrumb', () => {
     const { container } = render(
       <FolderViewBreadcrumb
         currentFolderId="1234"
-        navigateToFolder={jest.fn()}
         rootBreadcrumbPath={rootBreadcrumbPath}
       />
     )
