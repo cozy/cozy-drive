@@ -8,7 +8,7 @@ import { useFolderSort } from 'modules/navigation/duck'
 import FilesViewer, { FilesViewerLoading } from 'modules/viewer/FilesViewer'
 import { buildTrashQuery } from 'queries'
 
-const FilesViewerWithQuery = props => {
+const FilesViewerTrash = () => {
   const currentFolderId = useCurrentFolderId()
   const [sortOrder] = useFolderSort(currentFolderId)
   const navigate = useNavigate()
@@ -25,7 +25,6 @@ const FilesViewerWithQuery = props => {
     const viewableFiles = filesResult.data
     return (
       <FilesViewer
-        {...props}
         files={viewableFiles}
         filesQuery={filesResult}
         onClose={() => navigate(`/trash/${currentFolderId}`)}
@@ -39,4 +38,4 @@ const FilesViewerWithQuery = props => {
   }
 }
 
-export default FilesViewerWithQuery
+export default FilesViewerTrash

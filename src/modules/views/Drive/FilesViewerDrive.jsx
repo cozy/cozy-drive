@@ -9,7 +9,7 @@ import { getFolderPath } from 'modules/routeUtils'
 import FilesViewer, { FilesViewerLoading } from 'modules/viewer/FilesViewer'
 import { buildDriveQuery } from 'queries'
 
-const FilesViewerWithQuery = props => {
+const FilesViewerDrive = () => {
   const navigate = useNavigate()
   const [sortOrder] = useFolderSort()
   const folderId = useCurrentFolderId()
@@ -29,7 +29,6 @@ const FilesViewerWithQuery = props => {
     const viewableFiles = filesQuery.data
     return (
       <FilesViewer
-        {...props}
         files={viewableFiles}
         filesQuery={filesQuery}
         onClose={() => navigate(getFolderPath(folderId))}
@@ -43,4 +42,4 @@ const FilesViewerWithQuery = props => {
   }
 }
 
-export default FilesViewerWithQuery
+export default FilesViewerDrive
