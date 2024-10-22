@@ -4,7 +4,7 @@ import flag from 'cozy-flags'
 import UINav from 'cozy-ui/transpiled/react/Nav'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import { FavoriteItems } from 'modules/navigation/FavoriteItems'
+import { FavoriteList } from 'modules/navigation/FavoriteList'
 import { NavItem } from 'modules/navigation/NavItem'
 import { SharingsNavItem } from 'modules/navigation/SharingsNavItem'
 
@@ -39,7 +39,7 @@ export const Nav = () => {
       />
       <SharingsNavItem clickState={clickState} />
       {isDesktop && flag('drive.show-favorites-dev') ? (
-        <FavoriteItems clickState={clickState} className="u-mt-half" />
+        <FavoriteList clickState={clickState} className="u-mt-half" />
       ) : null}
     </UINav>
   )
