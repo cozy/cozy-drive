@@ -1,4 +1,3 @@
-import { generateWebLink } from 'cozy-client'
 import { isMobile } from 'cozy-device-helper'
 import flag from 'cozy-flags'
 import FileTypeSheetIcon from 'cozy-ui/transpiled/react/Icons/FileTypeSheet'
@@ -114,27 +113,6 @@ export const makeOnlyOfficeFileRoute = (
 
   const searchParam = params.size > 0 ? `?${params.toString()}` : ''
   return `/onlyoffice/${fileId}${searchParam}`
-}
-
-/**
- * Generates the OnlyOffice URL for a given file.
- *
- * @param {import('cozy-client/types/types').IOCozyFile} file - The file object.
- * @param {import('cozy-client/types').CozyClient} client - The client object.
- * @param {OnlyOfficeFileRouteOptions} routeOptions - The route options object (optional).
- * @returns {string} The OnlyOffice URL.
- */
-export const makeOnlyOfficeURL = (file, client, routeOptions = {}) => {
-  const onlyOfficeRoute = makeOnlyOfficeFileRoute(file.id, routeOptions)
-  const currentURL = new URL(window.location)
-  return generateWebLink({
-    slug: 'drive',
-    cozyUrl: client.getStackClient().uri,
-    subDomainType: client.getInstanceOptions().subdomain,
-    pathname: currentURL.pathname,
-    searchParams: currentURL.searchParams,
-    hash: onlyOfficeRoute
-  })
 }
 
 /**
