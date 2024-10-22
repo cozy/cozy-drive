@@ -16,11 +16,11 @@ import ServerIcon from 'assets/icons/icon-server.svg'
 import { useFileOpeningHandler } from 'modules/folder/hooks/useFileOpeningHandler'
 import { buildFavoritesQuery } from 'queries'
 
-interface FavoriteItemsProps {
+interface FavoriteListProps {
   className?: string
 }
 
-const FavoriteItems: FC<FavoriteItemsProps> = ({ className }) => {
+const FavoriteList: FC<FavoriteListProps> = ({ className }) => {
   const { t } = useI18n()
   const favoritesQuery = buildFavoritesQuery({
     sortAttribute: 'name',
@@ -94,4 +94,4 @@ const FavoriteItems: FC<FavoriteItemsProps> = ({ className }) => {
   return null
 }
 
-export { FavoriteItems }
+export { FavoriteList }
