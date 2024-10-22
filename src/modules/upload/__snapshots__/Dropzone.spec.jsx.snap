@@ -955,6 +955,10 @@ exports[`Dropzone should match snapshot 1`] = `
                 },
                 "MuiDialog": {
                   "paper": {
+                    "&.full": {
+                      "maxWidth": "100%",
+                      "width": "100%",
+                    },
                     "&.large": {
                       "@media (min-width:768px)": {
                         "maxWidth": "800px",
