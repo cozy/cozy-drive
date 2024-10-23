@@ -1,3 +1,4 @@
+import { isShortcut } from 'cozy-client/dist/models/file'
 import type { IOCozyFile, NextcloudFile } from 'cozy-client/types/types'
 import flag from 'cozy-flags'
 
@@ -21,6 +22,7 @@ export const computeNextcloudFolderQueryId = ({
  */
 export const isNextcloudShortcut = (file: IOCozyFile): boolean => {
   return (
+    isShortcut(file) &&
     file.cozyMetadata?.createdByApp === 'nextcloud' &&
     flag('drive.show-nextcloud-dev')
   )
