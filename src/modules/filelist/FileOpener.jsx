@@ -1,12 +1,10 @@
 import Hammer from '@egjs/hammerjs'
 import propagating from 'propagating-hammerjs'
 import React, { useEffect, useRef } from 'react'
-import { useLocation } from 'react-router-dom'
-
-import { models, useClient } from 'cozy-client'
 
 import styles from './fileopener.styl'
-import { makeOnlyOfficeURL } from 'modules/views/OnlyOffice/helpers'
+import { FileLink } from 'modules/navigation/components/FileLink'
+import { useFileLink } from 'modules/navigation/hooks/useFileLink'
 
 const getParentDiv = element => {
   if (element.nodeName.toLowerCase() === 'div') {
@@ -48,82 +46,86 @@ const enableTouchEvents = ev => {
   return true
 }
 
+export function handlePress(
+  ev,
+  {
+    actionMenuVisible,
+    disabled,
+    enableTouchEvents,
+    selectionModeActive,
+    isRenaming,
+    openLink,
+    toggle
+  }
+) {
+  if (actionMenuVisible || disabled) return
+  if (enableTouchEvents(ev)) {
+    ev.preventDefault() // prevent a ghost click
+    if (ev.type === 'press' || selectionModeActive) {
+      ev.srcEvent.stopImmediatePropagation()
+      toggle(ev)
+    } else {
+      ev.srcEvent.stopImmediatePropagation()
+      if (!isRenaming) {
+        openLink(ev.srcEvent)
+      }
+    }
+  }
+}
+
 const FileOpener = ({
   file,
   disabled,
   actionMenuVisible,
   toggle,
-  open,
   selectionModeActive,
   isRenaming,
   children
 }) => {
   const rowRef = useRef()
-  const { pathname } = useLocation()
-  const client = useClient()
+  const { link, openLink } = useFileLink(file)
 
   useEffect(() => {
     if (!rowRef || !rowRef.current) return
 
     const gesturesHandler = propagating(new Hammer(rowRef.current))
-
-    gesturesHandler.on('tap press singletap', ev => {
-      if (actionMenuVisible || disabled) return
-      if (enableTouchEvents(ev)) {
-        ev.preventDefault() // prevent a ghost click
-        if (ev.type === 'press' || selectionModeActive) {
-          ev.srcEvent.stopImmediatePropagation()
-          toggle(ev.srcEvent)
-        } else {
-          ev.srcEvent.stopImmediatePropagation()
-          if (!isRenaming) open(ev.srcEvent, file)
-        }
-      }
-    })
+    gesturesHandler.on('tap press singletap', ev =>
+      handlePress(ev, {
+        actionMenuVisible,
+        disabled,
+        enableTouchEvents,
+        selectionModeActive,
+        isRenaming,
+        openLink,
+        toggle
+      })
+    )
 
     return () => {
       gesturesHandler && gesturesHandler.destroy()
     }
   }, [
-    rowRef,
-    file,
-    disabled,
     actionMenuVisible,
-    toggle,
-    open,
+    disabled,
+    isRenaming,
+    openLink,
     selectionModeActive,
-    isRenaming
+    toggle
   ])
 
-  if (models.file.shouldBeOpenedByOnlyOffice(file)) {
-    const onlyOfficeURL = makeOnlyOfficeURL(file, client, {
-      fromPathname: pathname
-    })
-    return (
-      <a
-        data-testid="onlyoffice-link"
-        className={`${styles['file-opener']} ${styles['file-opener__a']}`}
-        ref={rowRef}
-        id={file.id}
-        href={onlyOfficeURL}
-        onClick={ev => {
-          ev.preventDefault()
-        }}
-      >
-        {children}
-      </a>
-    )
+  const handleClick = ev => {
+    ev.preventDefault()
   }
 
   return (
-    <span
-      data-testid="not-onlyoffice-span"
-      className={styles['file-opener']}
+    <FileLink
       ref={rowRef}
-      id={file.id}
+      onClick={handleClick}
+      link={link}
+      className={`${styles['file-opener']} ${styles['file-opener__a']}`}
     >
       {children}
-    </span>
+    </FileLink>
   )
 }
 

@@ -1,10 +1,10 @@
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import React from 'react'
 
 import { createMockClient } from 'cozy-client'
-import { shouldBeOpenedByOnlyOffice } from 'cozy-client/dist/models/file'
 
-import FileOpener, { getParentLink } from './FileOpener'
+import FileOpener, { getParentLink, handlePress } from './FileOpener'
+import { useFileLink } from 'modules/navigation/hooks/useFileLink'
 import AppLike from 'test/components/AppLike'
 import { generateFile } from 'test/generate'
 
@@ -13,42 +13,128 @@ jest.mock('cozy-client/dist/models/file', () => ({
   shouldBeOpenedByOnlyOffice: jest.fn()
 }))
 
-const client = createMockClient({
-  clientOptions: {
-    uri: 'http://cozy.tools:8080'
+jest.mock('modules/navigation/hooks/useFileLink', () => ({
+  useFileLink: jest.fn()
+}))
+
+describe('FileOpener component', () => {
+  const client = createMockClient({})
+  const file = generateFile({ i: 1 })
+
+  const setup = ({ file, linkApp = 'drive' }) => {
+    useFileLink.mockReturnValue({
+      link: {
+        app: linkApp,
+        to: '/path/to/file',
+        href: 'http://cozy.tools:8080/files/123'
+      }
+    })
+
+    render(
+      <AppLike client={client}>
+        <FileOpener file={file}>{file.name}</FileOpener>
+      </AppLike>
+    )
   }
-})
-const file = generateFile({ i: 0 })
 
-const setup = ({ file }) => {
-  const root = render(
-    <AppLike client={client}>
-      <FileOpener file={file} />
-    </AppLike>
-  )
-
-  return { root }
-}
-
-describe('FileOpener', () => {
-  it('should show a link to onlyoffice document if Only Office is supported', () => {
-    shouldBeOpenedByOnlyOffice.mockReturnValue(true)
-
-    const { root } = setup({ file })
-    const { queryByTestId } = root
-
-    expect(queryByTestId('onlyoffice-link')).toBeTruthy()
-    expect(queryByTestId('not-onlyoffice-span')).toBeFalsy()
+  afterEach(() => {
+    jest.clearAllMocks()
   })
 
-  it('should show a regular span if Only Office is not supported', () => {
-    shouldBeOpenedByOnlyOffice.mockReturnValue(false)
+  it('renders a Link when link.app is drive', async () => {
+    setup({ file, linkApp: 'drive' })
+    const linkElement = await screen.findByText(file.name)
+    expect(linkElement).toBeInTheDocument()
+    expect(linkElement.getAttribute('href')).toBe('#/path/to/file')
+  })
 
-    const { root } = setup({ file })
-    const { queryByTestId } = root
+  it('renders an anchor when link.app is not drive', async () => {
+    setup({ file, linkApp: 'other-app' })
+    const anchorElement = await screen.findByText(file.name)
+    expect(anchorElement).toBeInTheDocument()
+    expect(anchorElement.getAttribute('href')).toBe(
+      'http://cozy.tools:8080/files/123'
+    )
+  })
+})
 
-    expect(queryByTestId('onlyoffice-link')).toBeFalsy()
-    expect(queryByTestId('not-onlyoffice-span')).toBeTruthy()
+describe('handlePress function', () => {
+  const mockToggle = jest.fn()
+  const mockOpenLink = jest.fn()
+  const mockPreventDefault = jest.fn()
+  const mockStopImmediatePropagation = jest.fn()
+
+  const ev = {
+    srcEvent: { stopImmediatePropagation: mockStopImmediatePropagation },
+    preventDefault: mockPreventDefault,
+    type: 'press'
+  }
+
+  const setupTest = ({
+    actionMenuVisible = false,
+    disabled = false,
+    enableTouchEvents = jest.fn(() => true),
+    selectionModeActive = false,
+    isRenaming = false
+  }) => {
+    return {
+      params: {
+        actionMenuVisible,
+        disabled,
+        enableTouchEvents,
+        selectionModeActive,
+        isRenaming,
+        openLink: mockOpenLink,
+        toggle: mockToggle
+      }
+    }
+  }
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  it('should not trigger any action if actionMenuVisible or disabled', () => {
+    const { params } = setupTest({ actionMenuVisible: true })
+    handlePress(ev, params)
+    expect(mockToggle).not.toHaveBeenCalled()
+    expect(mockOpenLink).not.toHaveBeenCalled()
+    expect(mockPreventDefault).not.toHaveBeenCalled()
+    expect(mockStopImmediatePropagation).not.toHaveBeenCalled()
+  })
+
+  it('should toggle if event type is press or selectionModeActive', () => {
+    const { params } = setupTest({ selectionModeActive: true })
+    handlePress(ev, params)
+    expect(mockPreventDefault).toHaveBeenCalled()
+    expect(mockStopImmediatePropagation).toHaveBeenCalled()
+    expect(mockToggle).toHaveBeenCalledWith(ev)
+  })
+
+  it('should open link if not renaming and event type is tap', () => {
+    const { params } = setupTest({ isRenaming: false })
+    ev.type = 'tap'
+    handlePress(ev, params)
+    expect(mockPreventDefault).toHaveBeenCalled()
+    expect(mockStopImmediatePropagation).toHaveBeenCalled()
+    expect(mockOpenLink).toHaveBeenCalledWith(ev.srcEvent)
+  })
+
+  it('should not open link if isRenaming', () => {
+    const { params } = setupTest({ isRenaming: true })
+    ev.type = 'tap'
+    handlePress(ev, params)
+    expect(mockOpenLink).not.toHaveBeenCalled()
+  })
+
+  it('should not trigger actions if enableTouchEvents returns false', () => {
+    const enableTouchEvents = jest.fn(() => false)
+    const { params } = setupTest({ enableTouchEvents })
+    handlePress(ev, params)
+    expect(mockPreventDefault).not.toHaveBeenCalled()
+    expect(mockStopImmediatePropagation).not.toHaveBeenCalled()
+    expect(mockToggle).not.toHaveBeenCalled()
+    expect(mockOpenLink).not.toHaveBeenCalled()
   })
 })
 

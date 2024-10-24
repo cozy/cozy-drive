@@ -20,7 +20,6 @@ import { FileListHeader } from 'modules/filelist/FileListHeader'
 import FileListRowsPlaceholder from 'modules/filelist/FileListRowsPlaceholder'
 import LoadMore from 'modules/filelist/LoadMoreV2'
 import { FolderUnlocker } from 'modules/folder/components/FolderUnlocker'
-import { useFileOpeningHandler } from 'modules/folder/hooks/useFileOpeningHandler'
 import { useFolderSort } from 'modules/navigation/duck'
 import SelectionBar from 'modules/selection/SelectionBar'
 import { isReferencedByShareInSharingContext } from 'modules/views/Folder/syncHelpers'
@@ -37,11 +36,8 @@ const FolderViewBody = ({
   canSort,
   canUpload = true,
   withFilePath = false,
-  navigateToFolder,
-  navigateToFile,
   refreshFolderContent = null,
-  extraColumns,
-  isPublic = false
+  extraColumns
 }) => {
   const { isDesktop } = useBreakpoints()
   const navigate = useNavigate()
@@ -74,7 +70,6 @@ const FolderViewBody = ({
   const { sharingsValue } = useContext(AcceptingSharingContext)
   const [sortOrder, setSortOrder] = useFolderSort(currentFolderId)
   const vaultClient = useVaultClient()
-  const { handleFileOpen } = useFileOpeningHandler({ isPublic, navigateToFile })
   const changeSortOrder = useCallback(
     (folderId_legacy, attribute, order) => setSortOrder({ attribute, order }),
     [setSortOrder]
@@ -171,8 +166,6 @@ const FolderViewBody = ({
                   <File
                     attributes={syncingFakeFile}
                     withSelectionCheckbox={false}
-                    onFolderOpen={() => {}}
-                    onFileOpen={() => {}}
                     actions={[]}
                     isInSyncFromSharing={true}
                     extraColumns={extraColumns}
@@ -189,8 +182,6 @@ const FolderViewBody = ({
                               key={file._id}
                               attributes={file}
                               withSelectionCheckbox
-                              onFolderOpen={navigateToFolder}
-                              onFileOpen={handleFileOpen}
                               withFilePath={withFilePath}
                               thumbnailSizeBig={isBigThumbnail}
                               actions={actions}

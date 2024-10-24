@@ -5,7 +5,7 @@ jest.mock('queries')
 
 describe('fetchFolder', () => {
   const folderReturnedByCozyClient = 'folder'
-  const result = { data: [folderReturnedByCozyClient, 'another data'] }
+  const result = { data: folderReturnedByCozyClient }
   const client = {
     fetchQueryAndGetFromState: jest.fn().mockReturnValue(result)
   }

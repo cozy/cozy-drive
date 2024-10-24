@@ -17,7 +17,16 @@ jest.mock('cozy-sharing', () => ({
 
 useSharingContext.mockReturnValue({ byDocId: [] })
 
-const client = createMockClient({})
+const client = createMockClient({
+  clientOptions: {
+    uri: 'http://cozy.localhost:8080/'
+  },
+  clientFunctions: {
+    getInstanceOptions: () => ({
+      subdomain: 'nested'
+    })
+  }
+})
 
 const setup = ({
   attributes = folder,
@@ -25,7 +34,6 @@ const setup = ({
   selected = false,
   withSelectionCheckbox = true,
   selectionModeActive = false,
-  onFolderOpen = jest.fn(),
   onFileOpen = jest.fn(),
   onCheckboxToggle = jest.fn(),
   isInSyncFromSharing = false,
@@ -39,7 +47,6 @@ const setup = ({
         selected={selected}
         withSelectionCheckbox={withSelectionCheckbox}
         selectionModeActive={selectionModeActive}
-        onFolderOpen={onFolderOpen}
         onFileOpen={onFileOpen}
         onCheckboxToggle={onCheckboxToggle}
         isInSyncFromSharing={isInSyncFromSharing}

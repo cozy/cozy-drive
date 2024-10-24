@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate, useLocation, Outlet } from 'react-router-dom'
 
@@ -63,20 +63,6 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
   )
   const result = useFilesQueryWithPath(query)
 
-  const navigateToFolder = useCallback(
-    folder => {
-      navigate(`/sharings/${folder._id}`)
-    },
-    [navigate]
-  )
-
-  const navigateToFile = useCallback(
-    file => {
-      navigate(`/sharings/file/${file.id}`)
-    },
-    [navigate]
-  )
-
   const actionsOptions = {
     client,
     t,
@@ -121,8 +107,6 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
       ) : (
         <>
           <FolderViewBody
-            navigateToFolder={navigateToFolder}
-            navigateToFile={navigateToFile}
             actions={actions}
             queryResults={[result]}
             canSort={false}

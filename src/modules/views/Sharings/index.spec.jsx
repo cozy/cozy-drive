@@ -85,6 +85,15 @@ describe('Sharings View', () => {
     })
   }
 
+  beforeAll(() => {
+    // TODO : Remove nested <a> on File when withFilePath is true
+    jest.spyOn(console, 'error').mockImplementation()
+  })
+
+  afterAll(() => {
+    jest.clearAllMocks()
+  })
+
   it('should display placeholder when all files are not loaded', async () => {
     mockSharingContext.mockReturnValue({ byDocId: [], allLoaded: false })
     const { container } = setup()

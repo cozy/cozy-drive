@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react'
+import React, { FC } from 'react'
 import { useDispatch } from 'react-redux'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 
@@ -31,7 +31,6 @@ import {
 } from 'modules/certifications/useExtraColumns'
 import Toolbar from 'modules/drive/Toolbar'
 import { FolderBody } from 'modules/folder/components/FolderBody'
-import { useFileOpeningHandler } from 'modules/folder/hooks/useFileOpeningHandler'
 import { useFolderSort } from 'modules/navigation/duck'
 import { isNextcloudShortcut } from 'modules/nextcloud/helpers'
 import FolderView from 'modules/views/Folder/FolderView'
@@ -82,25 +81,6 @@ const FavoritesView: FC = () => {
   const handleInteractWith = (file: IOCozyFile): boolean =>
     !isNextcloudShortcut(file)
 
-  const handleFolderOpen = useCallback(
-    (folder: IOCozyFile) => {
-      navigate(`/folder/${folder._id}`)
-    },
-    [navigate]
-  )
-
-  const navigateToFile = useCallback(
-    (file: IOCozyFile) => {
-      navigate(`/folder/io.cozy.files.shared-drives-dir/file/${file._id}`)
-    },
-    [navigate]
-  )
-
-  const { handleFileOpen } = useFileOpeningHandler({
-    isPublic: false,
-    navigateToFile
-  })
-
   const actionsOptions = {
     client,
     t,
@@ -144,8 +124,6 @@ const FavoritesView: FC = () => {
       <FolderBody
         folderId="io.cozy.files.shared-drives-dir"
         queryResults={[favoritesResult]}
-        onFolderOpen={handleFolderOpen}
-        onFileOpen={handleFileOpen}
         extraColumns={extraColumns}
         actions={actions}
         canSort={true}

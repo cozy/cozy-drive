@@ -249,6 +249,7 @@ export const buildFolderQuery: QueryBuilder<string> = folderId => ({
     Q('io.cozy.files').getById(folderId).include(['encryption', 'parent']),
   options: {
     as: 'folder-' + folderId,
+    singleDocData: true,
     fetchPolicy: defaultFetchPolicy
   }
 })

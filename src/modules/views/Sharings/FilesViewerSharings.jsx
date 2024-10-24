@@ -8,7 +8,7 @@ import withSharedDocumentIds from './withSharedDocumentIds'
 import FilesViewer, { FilesViewerLoading } from 'modules/viewer/FilesViewer'
 import { buildSharingsQuery } from 'queries'
 
-const FilesViewerWithQuery = ({ sharedDocumentIds, ...props }) => {
+const FilesViewerSharing = ({ sharedDocumentIds }) => {
   const currentFolderId = useCurrentFolderId()
   const filesQuery = buildSharingsQuery({ ids: sharedDocumentIds })
   const results = useQuery(filesQuery.definition, filesQuery.options)
@@ -21,7 +21,6 @@ const FilesViewerWithQuery = ({ sharedDocumentIds, ...props }) => {
       : '/sharings'
     return (
       <FilesViewer
-        {...props}
         files={viewableFiles}
         filesQuery={results}
         onClose={() => navigate(basePath)}
@@ -33,4 +32,4 @@ const FilesViewerWithQuery = ({ sharedDocumentIds, ...props }) => {
   }
 }
 
-export default withSharedDocumentIds(FilesViewerWithQuery)
+export default withSharedDocumentIds(FilesViewerSharing)

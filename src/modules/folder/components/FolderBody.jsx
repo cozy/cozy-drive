@@ -24,8 +24,6 @@ import SelectionBar from 'modules/selection/SelectionBar'
  * @param {string} props.folderId - The ID of the folder.
  * @param {Array} props.queryResults - The results of the queries for the folder content.
  * @param {Object} [props.actions] - The actions available for the folder.
- * @param {Function} props.onFolderOpen - The callback function to handle folder opening.
- * @param {Function} props.onFileOpen - The callback function to handle file opening.
  * @param {import('modules/certifications/useExtraColumns').ExtraColumn[]} props.extraColumns - The extra columns to display in the file list.
  * @param {boolean} [props.canSort] - Indicates whether sorting is enabled for the file list.
  * @param {Function} [props.refreshFolderContent] - The function to refresh the folder content.
@@ -38,8 +36,6 @@ const FolderBody = ({
   folderId,
   queryResults,
   actions,
-  onFolderOpen,
-  onFileOpen,
   extraColumns,
   canSort,
   refreshFolderContent,
@@ -100,8 +96,6 @@ const FolderBody = ({
                       <File
                         key={file._id}
                         attributes={file}
-                        onFolderOpen={onFolderOpen}
-                        onFileOpen={onFileOpen}
                         withFilePath={withFilePath}
                         thumbnailSizeBig={isBigThumbnail}
                         actions={actions}

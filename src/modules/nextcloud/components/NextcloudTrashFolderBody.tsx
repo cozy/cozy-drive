@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { useSearchParams, useLocation, useNavigate } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
-import { NextcloudFile, UseQueryReturnValue } from 'cozy-client/types/types'
+import { UseQueryReturnValue } from 'cozy-client/types/types'
 import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
@@ -20,21 +20,12 @@ const NextcloudTrashFolderBody: FC<NextcloudTrashFolderBodyProps> = ({
   path,
   queryResults
 }) => {
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const client = useClient()
   const { t } = useI18n()
   const { showAlert } = useAlert()
   const { pathname } = useLocation()
   const navigate = useNavigate()
-
-  const handleFolderOpen = (folder: NextcloudFile): void => {
-    searchParams.set('path', folder.path)
-    setSearchParams(searchParams)
-  }
-
-  const handleFileOpen = ({ file }: { file: NextcloudFile }): void => {
-    window.open(file.links.self, '_blank')
-  }
 
   const fileActions = makeActions([restoreNextcloudFile, destroy], {
     t,
@@ -50,8 +41,6 @@ const NextcloudTrashFolderBody: FC<NextcloudTrashFolderBodyProps> = ({
       folderId={path}
       queryResults={queryResults}
       actions={fileActions}
-      onFolderOpen={handleFolderOpen}
-      onFileOpen={handleFileOpen}
       withFilePath={false}
       extraColumns={[]}
     />

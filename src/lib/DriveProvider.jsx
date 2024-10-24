@@ -14,15 +14,11 @@ import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
 import { I18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import FabProvider from 'lib/FabProvider'
+import { usePublicContext } from 'modules/public/PublicProvider'
 
-const DriveProvider = ({
-  isPublic = false,
-  client,
-  lang,
-  polyglot,
-  dictRequire,
-  children
-}) => {
+const DriveProvider = ({ client, lang, polyglot, dictRequire, children }) => {
+  const { isPublic } = usePublicContext()
+
   return (
     <I18n lang={lang} polyglot={polyglot} dictRequire={dictRequire}>
       <CozyProvider client={client}>

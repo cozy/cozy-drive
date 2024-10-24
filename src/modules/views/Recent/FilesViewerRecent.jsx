@@ -6,7 +6,7 @@ import { useQuery } from 'cozy-client'
 import FilesViewer, { FilesViewerLoading } from 'modules/viewer/FilesViewer'
 import { buildRecentQuery } from 'queries'
 
-const FilesViewerWithQuery = props => {
+const FilesViewerRecent = () => {
   const filesQuery = buildRecentQuery()
   const results = useQuery(filesQuery.definition, filesQuery.options)
   const navigate = useNavigate()
@@ -15,7 +15,6 @@ const FilesViewerWithQuery = props => {
     const viewableFiles = results.data
     return (
       <FilesViewer
-        {...props}
         files={viewableFiles}
         filesQuery={results}
         onClose={() => navigate('/recent')}
@@ -27,4 +26,4 @@ const FilesViewerWithQuery = props => {
   }
 }
 
-export default FilesViewerWithQuery
+export default FilesViewerRecent

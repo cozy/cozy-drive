@@ -80,6 +80,15 @@ declare module 'cozy-client/dist/models/file' {
   export const isDirectory: (
     file: import('components/FolderPicker/types').File
   ) => boolean
+  export const isShortcut: (
+    file: import('components/FolderPicker/types').File
+  ) => boolean
+  export const isNote: (
+    file: import('components/FolderPicker/types').File
+  ) => boolean
+  export const shouldBeOpenedByOnlyOffice: (
+    file: import('components/FolderPicker/types').File
+  ) => boolean
 }
 
 declare module '*.svg' {

@@ -2,7 +2,7 @@ import cx from 'classnames'
 import { useCurrentFolderId, useDisplayedFolder, useParentFolder } from 'hooks'
 import get from 'lodash/get'
 import uniqBy from 'lodash/uniqBy'
-import React, { useState, useCallback, useContext, useEffect } from 'react'
+import React, { useCallback, useContext, useEffect } from 'react'
 import { ModalManager } from 'react-cozy-helpers'
 import { useDispatch } from 'react-redux'
 import { useNavigate, useLocation, useParams, Outlet } from 'react-router-dom'
@@ -16,8 +16,6 @@ import {
 } from 'cozy-sharing'
 import { Content } from 'cozy-ui/transpiled/react'
 import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
-import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
-import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
@@ -39,7 +37,6 @@ import FabWithMenuContext from 'modules/drive/FabWithMenuContext'
 import Main from 'modules/layout/Main'
 import PublicToolbar from 'modules/public/PublicToolbar'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
-import PublicViewer from 'modules/viewer/PublicViewer'
 
 const getBreadcrumbPath = (t, displayedFolder, parentFolder) =>
   uniqBy(
@@ -84,9 +81,6 @@ const PublicFolderView = () => {
   const sharingInfos = useSharingInfos()
   const { showAlert } = useAlert()
 
-  const [viewerOpened, setViewerOpened] = useState(false)
-  const [currentViewerIndex, setCurrentViewerIndex] = useState(null)
-
   const filesResult = usePublicFilesQuery(currentFolderId)
   const files = filesResult.data
 
@@ -103,51 +97,7 @@ const PublicFolderView = () => {
     files
   })
 
-  const viewableFiles = files.filter(f => f.type !== 'directory')
-
   const refreshFolderContent = () => filesResult.forceRefetch() // We don't have enough permissions to rely on the realtime notifications or on a cozy-client query to update the view when something changes, so we relaod the view instead
-
-  const navigateToFolder = useCallback(
-    folder => {
-      navigate(`/folder/${folder._id}`)
-    },
-    [navigate]
-  )
-
-  const navigateToFile = async file => {
-    const isNote = models.file.isNote(file)
-    if (isNote) {
-      try {
-        const noteUrl = await models.note.fetchURL(client, file)
-        const url = new URL(noteUrl)
-        url.searchParams.set('returnUrl', window.location.href)
-        window.location.href = url.toString()
-      } catch (e) {
-        showAlert({ message: t('alert.offline'), severity: 'error' })
-      }
-    } else {
-      showInViewer(file)
-      setViewerOpened(true)
-    }
-  }
-
-  const showInViewer = useCallback(
-    file => {
-      const currentIndex = viewableFiles.findIndex(f => f.id === file.id)
-      setCurrentViewerIndex(currentIndex)
-
-      const currentIndexInResults = files.findIndex(f => f.id === file.id)
-      if (filesResult.hasMore && files.length - currentIndexInResults <= 5) {
-        filesResult.fetchMore()
-      }
-    },
-    [viewableFiles, files, filesResult]
-  )
-
-  const closeViewer = useCallback(
-    () => setViewerOpened(false),
-    [setViewerOpened]
-  )
 
   const refreshAfterChange = () => {
     refresh()
@@ -213,13 +163,11 @@ const PublicFolderView = () => {
               <OldFolderViewBreadcrumb
                 currentFolderId={currentFolderId}
                 getBreadcrumbPath={geTranslatedBreadcrumbPath}
-                navigateToFolder={navigateToFolder}
               />
             ) : (
               <FolderViewBreadcrumb
                 rootBreadcrumbPath={rootBreadcrumbPath}
                 currentFolderId={currentFolderId}
-                navigateToFolder={navigateToFolder}
               />
             )}
             <PublicToolbar
@@ -233,8 +181,6 @@ const PublicFolderView = () => {
       </FolderViewHeader>
       <Content>
         <FolderViewBody
-          navigateToFolder={navigateToFolder}
-          navigateToFile={navigateToFile}
           actions={actions}
           queryResults={[filesResult]}
           canSort={false}
@@ -257,18 +203,6 @@ const PublicFolderView = () => {
           >
             <FabWithMenuContext noSidebar={true} />
           </AddMenuProvider>
-        )}
-        {viewerOpened && viewableFiles.length > 0 && (
-          <PublicViewer
-            files={viewableFiles}
-            currentIndex={currentViewerIndex}
-            onChangeRequest={showInViewer}
-            onCloseRequest={closeViewer}
-          >
-            <FooterActionButtons>
-              <ForwardOrDownloadButton />
-            </FooterActionButtons>
-          </PublicViewer>
         )}
         <Outlet />
       </Content>
