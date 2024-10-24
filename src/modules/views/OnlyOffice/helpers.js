@@ -72,8 +72,8 @@ export const isOfficeEditingEnabled = isDesktop => {
 /**
  * @typedef {Object} OnlyOfficeFileRouteOptions
  * @property {boolean} [fromCreate] The document will be opened in edit mode
- * @property {boolean} [fromPathname] Hash to redirect the user when he back
- * @property {boolean} [fromRedirect] To forward existing redirectLink
+ * @property {string} [fromPathname] Hash to redirect the user when he back
+ * @property {string} [fromRedirect] To forward existing redirectLink
  * @property {boolean} [fromEdit] The document will be opened in edit mode
  * @property {boolean} [fromPublicFolder] The document is opened from a public folder
  */
