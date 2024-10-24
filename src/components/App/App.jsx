@@ -10,9 +10,10 @@ import { AcceptingSharingProvider } from 'lib/AcceptingSharingContext'
 import DriveProvider from 'lib/DriveProvider'
 import { ModalContextProvider } from 'lib/ModalContext'
 import { ThumbnailSizeContextProvider } from 'lib/ThumbnailSizeContext'
+import { PublicProvider } from 'modules/public/PublicProvider'
 import { onFileUploaded } from 'modules/views/Upload/UploadUtils'
 
-const App = ({ isPublic = false, store, client, lang, polyglot, children }) => {
+const App = ({ isPublic, store, client, lang, polyglot, children }) => {
   return (
     <WebviewIntentProvider
       methods={{
@@ -20,24 +21,21 @@ const App = ({ isPublic = false, store, client, lang, polyglot, children }) => {
           onFileUploaded({ file, isSuccess }, store.dispatch)
       }}
     >
-      <BarProvider>
-        <Provider store={store}>
-          <DriveProvider
-            isPublic={isPublic}
-            client={client}
-            lang={lang}
-            polyglot={polyglot}
-          >
-            <PushBannerProvider>
-              <AcceptingSharingProvider>
-                <ThumbnailSizeContextProvider>
-                  <ModalContextProvider>{children}</ModalContextProvider>
-                </ThumbnailSizeContextProvider>
-              </AcceptingSharingProvider>
-            </PushBannerProvider>
-          </DriveProvider>
-        </Provider>
-      </BarProvider>
+      <PublicProvider isPublic={isPublic}>
+        <BarProvider>
+          <Provider store={store}>
+            <DriveProvider client={client} lang={lang} polyglot={polyglot}>
+              <PushBannerProvider>
+                <AcceptingSharingProvider>
+                  <ThumbnailSizeContextProvider>
+                    <ModalContextProvider>{children}</ModalContextProvider>
+                  </ThumbnailSizeContextProvider>
+                </AcceptingSharingProvider>
+              </PushBannerProvider>
+            </DriveProvider>
+          </Provider>
+        </BarProvider>
+      </PublicProvider>
     </WebviewIntentProvider>
   )
 }
