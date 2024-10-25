@@ -1,5 +1,3 @@
-import flag from 'cozy-flags'
-
 import { computeFileType, computeApp, computePath } from './helpers'
 import { TRASH_DIR_ID } from 'constants/config'
 import { makeOnlyOfficeFileRoute } from 'modules/views/OnlyOffice/helpers'
@@ -85,7 +83,6 @@ describe('computeFileType', () => {
         createdByApp: 'nextcloud'
       }
     }
-    flag.mockReturnValue(true) // mock flag drive.show-nextcloud-dev
     expect(computeFileType(file)).toBe('nextcloud')
   })
 

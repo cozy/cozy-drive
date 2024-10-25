@@ -24,7 +24,7 @@ export const isNextcloudShortcut = (file: IOCozyFile): boolean => {
   return (
     isShortcut(file) &&
     file.cozyMetadata?.createdByApp === 'nextcloud' &&
-    flag('drive.show-nextcloud-dev')
+    !flag('drive.hide-nextcloud-dev')
   )
 }
 
