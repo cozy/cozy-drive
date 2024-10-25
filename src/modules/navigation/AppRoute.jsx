@@ -78,7 +78,7 @@ const AppRoute = () => (
         <Route path="file/:fileId" element={<FilesViewerDrive />} />
       </Route>
 
-      {flag('drive.show-nextcloud-dev') ? (
+      {!flag('drive.hide-nextcloud-dev') ? (
         <>
           <Route
             path="nextcloud/:sourceAccount"

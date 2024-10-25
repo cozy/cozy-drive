@@ -38,7 +38,7 @@ const FolderDuplicateView: FC = () => {
 
     return (
       <DuplicateModal
-        showNextcloudFolder={!!flag('drive.show-nextcloud-dev')}
+        showNextcloudFolder={!flag('drive.hide-nextcloud-dev')}
         currentFolder={displayedFolder}
         entries={fileResult.data}
         onClose={onClose}

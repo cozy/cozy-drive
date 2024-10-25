@@ -112,7 +112,7 @@ const FileName = ({
 
     if (
       attributes.cozyMetadata?.createdByApp === 'nextcloud' &&
-      flag('drive.show-nextcloud-dev')
+      !flag('drive.hide-nextcloud-dev')
     ) {
       return {
         title: filename,
