@@ -2,7 +2,6 @@ import React, { forwardRef } from 'react'
 
 import { splitFilename } from 'cozy-client/dist/models/file'
 import CozyClient from 'cozy-client/types/CozyClient'
-import flag from 'cozy-flags'
 import { Action } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import Icon from 'cozy-ui/transpiled/react/Icon'
@@ -29,9 +28,7 @@ const addToFavorites = ({
     label,
     icon,
     displayCondition: docs =>
-      docs.length > 0 &&
-      docs.every(doc => !doc.cozyMetadata?.favorite) &&
-      flag('drive.show-favorites-dev'),
+      docs.length > 0 && docs.every(doc => !doc.cozyMetadata?.favorite),
     action: async (files): Promise<void> => {
       try {
         for (const file of files) {

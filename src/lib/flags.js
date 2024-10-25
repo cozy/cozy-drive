@@ -28,5 +28,4 @@ const flagsList = () => {
   flag('drive.breadcrumb.showCompleteBreadcrumbOnPublicPage') // flagName should use kebab case
   flag('drive.thumbnails-pdf.enabled')
   flag('drive.show-nextcloud-dev')
-  flag('drive.show-favorites-dev')
 }
