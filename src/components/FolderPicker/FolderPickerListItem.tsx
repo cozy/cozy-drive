@@ -10,6 +10,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import type { File } from 'components/FolderPicker/types'
+import { getFileNameAndExtension } from 'modules/filelist/helpers'
 import FileThumbnail from 'modules/filelist/icons/FileThumbnail'
 
 import styles from 'styles/folder-picker.styl'
@@ -43,6 +44,8 @@ const FolderPickerListItem: FC<FolderPickerListItemProps> = ({
     ? `${formattedUpdatedAt}${formattedSize ? ` - ${formattedSize}` : ''}`
     : undefined
 
+  const { title } = getFileNameAndExtension(file, t)
+
   return (
     <>
       <ListItem
@@ -62,7 +65,7 @@ const FolderPickerListItem: FC<FolderPickerListItemProps> = ({
             }}
           />
         </ListItemIcon>
-        <ListItemText primary={file.name} secondary={secondaryText} />
+        <ListItemText primary={title} secondary={secondaryText} />
       </ListItem>
       {showDivider && <Divider />}
     </>
