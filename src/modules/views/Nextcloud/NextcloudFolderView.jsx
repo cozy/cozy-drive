@@ -1,7 +1,6 @@
 import React from 'react'
 import { Outlet, useParams } from 'react-router-dom'
 
-import flag from 'cozy-flags'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { NextcloudBanner } from 'modules/nextcloud/components/NextcloudBanner'
@@ -24,7 +23,7 @@ const NextcloudFolderView = () => {
   })
 
   var queryResults = [nextcloudResult]
-  if (path === '/' && flag('drive.show-nextcloud-trash-dev')) {
+  if (path === '/') {
     queryResults = [
       nextcloudResult,
       {

@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react'
 
-import flag from 'cozy-flags'
 import { Action } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import Icon from 'cozy-ui/transpiled/react/Icon'
@@ -48,7 +47,6 @@ export const deleteNextcloudFile = ({
         search
       })
     },
-    disabled: () => !flag('drive.show-nextcloud-delete-dev'),
     Component: forwardRef(function DeleteNextcloudFile(props, ref) {
       return (
         <ActionsMenuItem {...props} ref={ref}>

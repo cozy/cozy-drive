@@ -88,15 +88,13 @@ const AppRoute = () => (
             <Route path="delete" element={<NextcloudDeleteView />} />
             <Route path="duplicate" element={<NextcloudDuplicateView />} />
           </Route>
-          {flag('drive.show-nextcloud-trash-dev') ? (
-            <Route
-              path="nextcloud/:sourceAccount/trash"
-              element={<NextcloudTrashView />}
-            >
-              <Route path="empty" element={<NextcloudTrashEmptyView />} />
-              <Route path="destroy" element={<NextcloudDestroyView />} />
-            </Route>
-          ) : null}
+          <Route
+            path="nextcloud/:sourceAccount/trash"
+            element={<NextcloudTrashView />}
+          >
+            <Route path="empty" element={<NextcloudTrashEmptyView />} />
+            <Route path="destroy" element={<NextcloudDestroyView />} />
+          </Route>
         </>
       ) : null}
 

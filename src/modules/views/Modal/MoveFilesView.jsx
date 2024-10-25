@@ -2,7 +2,6 @@ import React from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 
 import { hasQueryBeenLoaded, useQuery } from 'cozy-client'
-import flag from 'cozy-flags'
 
 import { LoaderModal } from 'components/LoaderModal'
 import useDisplayedFolder from 'hooks/useDisplayedFolder'
@@ -31,9 +30,9 @@ const MoveFilesView = () => {
       navigate('..', { replace: true })
     }
 
-    const showNextcloudFolder =
-      flag('drive.show-nextcloud-move-dev') &&
-      !fileResult.data.some(file => file.type === 'directory')
+    const showNextcloudFolder = !fileResult.data.some(
+      file => file.type === 'directory'
+    )
 
     return (
       <MoveModal

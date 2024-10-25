@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react'
 
-import flag from 'cozy-flags'
 import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import MovetoIcon from 'cozy-ui/transpiled/react/Icons/Moveto'
@@ -27,9 +26,7 @@ const moveNextcloud = ({ t, pathname, navigate, search }) => {
         search
       })
     },
-    disabled: docs =>
-      docs.some(doc => doc.type === 'directory') ||
-      !flag('drive.show-nextcloud-move-dev'),
+    disabled: docs => docs.some(doc => doc.type === 'directory'),
     Component: forwardRef(function MoveNextcloud(props, ref) {
       return (
         <ActionsMenuItem {...props} ref={ref}>
