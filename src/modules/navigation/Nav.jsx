@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 
-import flag from 'cozy-flags'
 import UINav from 'cozy-ui/transpiled/react/Nav'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
@@ -21,7 +20,7 @@ export const Nav = () => {
         rx={/\/(folder|nextcloud|trash)(\/.*)?/}
         clickState={clickState}
       />
-      {!isDesktop && flag('drive.show-favorites-dev') ? (
+      {!isDesktop ? (
         <NavItem
           to="/favorites"
           icon="star"
@@ -38,7 +37,7 @@ export const Nav = () => {
         clickState={clickState}
       />
       <SharingsNavItem clickState={clickState} />
-      {isDesktop && flag('drive.show-favorites-dev') ? (
+      {isDesktop ? (
         <FavoriteList clickState={clickState} className="u-mt-half" />
       ) : null}
     </UINav>
