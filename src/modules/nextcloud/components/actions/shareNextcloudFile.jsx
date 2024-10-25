@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react'
 
-import flag from 'cozy-flags'
 import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import LinkOutIcon from 'cozy-ui/transpiled/react/Icons/LinkOut'
@@ -20,7 +19,6 @@ const shareNextcloudFile = ({ t }) => {
     action: docs => {
       window.open(docs[0].links.self, '_blank')
     },
-    disabled: () => !flag('drive.show-nextcloud-share-dev'),
     Component: forwardRef(function Share(props, ref) {
       return (
         <ActionsMenuItem {...props} ref={ref}>
