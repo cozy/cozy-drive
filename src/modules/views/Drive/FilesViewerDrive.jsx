@@ -4,9 +4,10 @@ import { useNavigate } from 'react-router-dom'
 
 import { useQuery } from 'cozy-client'
 
+import { FilesViewerLoading } from 'components/FilesViewerLoading'
 import { useFolderSort } from 'modules/navigation/duck'
 import { getFolderPath } from 'modules/routeUtils'
-import FilesViewer, { FilesViewerLoading } from 'modules/viewer/FilesViewer'
+import FilesViewer from 'modules/viewer/FilesViewer'
 import { buildDriveQuery } from 'queries'
 
 const FilesViewerDrive = () => {
@@ -20,13 +21,15 @@ const FilesViewerDrive = () => {
     sortAttribute: sortOrder.attribute,
     sortOrder: sortOrder.order
   })
+
   const filesQuery = useQuery(
     buildedFilesQuery.definition,
     buildedFilesQuery.options
   )
 
-  if (filesQuery.data) {
-    const viewableFiles = filesQuery.data
+  const viewableFiles = filesQuery.data
+
+  if (viewableFiles) {
     return (
       <FilesViewer
         files={viewableFiles}
@@ -37,9 +40,9 @@ const FilesViewerDrive = () => {
         }
       />
     )
-  } else {
-    return <FilesViewerLoading />
   }
+
+  return <FilesViewerLoading />
 }
 
 export default FilesViewerDrive
