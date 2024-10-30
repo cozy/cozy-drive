@@ -50,7 +50,7 @@
     "@welldone-software/why-did-you-render": "6.1.4",
     "babel-jest": "29.7.0",
     "babel-preset-cozy-app": "2.1.0",
-    "bundlemon": "1.3.1",
+    "bundlemon": "3.1.0",
     "cozy-jobs-cli": "^2.4.3",
     "cozy-tsconfig": "1.2.0",
     "css-mediaquery": "0.1.2",
