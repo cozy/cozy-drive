@@ -1,4 +1,3 @@
-import get from 'lodash/get'
 import React, { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -14,7 +13,7 @@ const FolderViewBreadcrumb = ({ currentFolderId, getBreadcrumbPath }) => {
     currentFolderQuery.definition,
     currentFolderQuery.options
   )
-  const currentFolder = get(currentFolderQueryResults, 'data[0]')
+  const currentFolder = currentFolderQueryResults.data
   const path = currentFolder ? getBreadcrumbPath(currentFolder) : []
 
   const onBreadcrumbClick = useCallback(
