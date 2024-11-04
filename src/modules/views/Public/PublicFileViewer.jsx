@@ -1,5 +1,5 @@
 import { useCurrentFolderId } from 'hooks'
-import React, { useMemo } from 'react'
+import React, { useMemo, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 
 import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
@@ -12,6 +12,8 @@ import usePublicFilesQuery from 'modules/views/Public/usePublicFilesQuery'
 const PublicFileViewer = () => {
   const { fileId } = useParams()
   const navigate = useNavigate()
+
+  const [fetchingMore, setFetchingMore] = useState(false)
 
   const currentFolderId = useCurrentFolderId()
 
@@ -26,6 +28,33 @@ const PublicFileViewer = () => {
     () => (hasCurrentIndex ? currentIndex : 0),
     [hasCurrentIndex, currentIndex]
   )
+
+  useEffect(() => {
+    let isMounted = true
+
+    // If we can found the current file but we know there is more file inside the folder
+    const fetchMoreIfNecessary = async () => {
+      if (fetchingMore) {
+        return
+      }
+
+      setFetchingMore(true)
+      try {
+        const currentIndex = viewableFiles.findIndex(f => f.id === fileId)
+        if (currentIndex === -1 && filesResult.hasMore && isMounted) {
+          await filesResult.fetchMore()
+        }
+      } finally {
+        setFetchingMore(false)
+      }
+    }
+
+    fetchMoreIfNecessary()
+
+    return () => {
+      isMounted = false
+    }
+  }, [fetchingMore, filesResult, fileId, viewableFiles])
 
   const handleChange = ({ _id }) => {
     navigate(`../${_id}`, {
