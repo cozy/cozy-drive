@@ -1,15 +1,12 @@
 import { mount } from 'enzyme'
 import React from 'react'
 
-import flag from 'cozy-flags'
 import { WebVaultClient } from 'cozy-keys-lib'
 
 import AddFolder, { AddFolder as DumbAddFolder } from './AddFolder'
 import { createFolder } from 'modules/navigation/duck/actions'
 import AppLike from 'test/components/AppLike'
 import { setupStoreAndClient } from 'test/setup'
-
-const originalFlag = jest.requireActual('cozy-flags').default
 
 jest.mock('modules/navigation/duck/actions', () => ({
   createFolder: jest.fn(() => async () => {})
@@ -41,31 +38,15 @@ describe('AddFolder', () => {
     return { root, client, component, vaultClient }
   }
 
-  describe('cozy-client migration', () => {
-    beforeEach(() => {
-      flag.mockImplementation(function (name) {
-        if (name === 'drive.client-migration.enabled') {
-          return true
-        } else {
-          return originalFlag.apply(this, arguments)
-        }
-      })
-    })
-
-    afterEach(() => {
-      flag.mockReset()
-    })
-
-    it('should dispatch a createFolder action on submit', () => {
-      const { component, client, vaultClient } = setup()
-      expect(component.props().onSubmit('Mes photos de chat'))
-      expect(createFolder).toHaveBeenCalledWith(
-        client,
-        vaultClient,
-        'Mes photos de chat',
-        CURRENT_FOLDER_ID,
-        { isEncryptedFolder: false }
-      )
-    })
+  it('should dispatch a createFolder action on submit', () => {
+    const { component, client, vaultClient } = setup()
+    expect(component.props().onSubmit('Mes photos de chat'))
+    expect(createFolder).toHaveBeenCalledWith(
+      client,
+      vaultClient,
+      'Mes photos de chat',
+      CURRENT_FOLDER_ID,
+      { isEncryptedFolder: false }
+    )
   })
 })
