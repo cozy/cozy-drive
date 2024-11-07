@@ -1,4 +1,4 @@
-import { mount } from 'enzyme'
+import { render, fireEvent } from '@testing-library/react'
 import React from 'react'
 
 import DeleteItem from './DeleteItem'
@@ -20,7 +20,7 @@ describe('DeleteItem', () => {
 
     jest.spyOn(store, 'dispatch')
     const onLeave = jest.fn()
-    const root = mount(
+    const container = render(
       <AppLike client={client} store={store}>
         <DeleteItem
           isSharedWithMe={false}
@@ -29,13 +29,13 @@ describe('DeleteItem', () => {
         />
       </AppLike>
     )
-    return { root, store, displayedFolder }
+    return { container, store, displayedFolder }
   }
 
-  it('should show a modal', () => {
-    const { root, store, displayedFolder } = setup()
-    const menuItem = root.find('ActionMenuItem')
-    menuItem.simulate('click')
+  it('should show a modal', async () => {
+    const { container, store, displayedFolder } = setup()
+    const confirmButton = container.getByText('Remove')
+    fireEvent.click(confirmButton)
     expect(store.dispatch).toHaveBeenCalledWith(
       expect.objectContaining({
         type: 'SHOW_MODAL',

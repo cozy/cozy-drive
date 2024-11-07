@@ -1,8 +1,7 @@
-import { mount } from 'enzyme'
+import { render, fireEvent, waitFor } from '@testing-library/react'
 import React from 'react'
 
 import { EnhancedDeleteConfirm } from './delete'
-import DeleteConfirm from '../../DeleteConfirm'
 import AppLike from 'test/components/AppLike'
 import { setupStoreAndClient } from 'test/setup'
 
@@ -26,7 +25,7 @@ describe('EnhancedDeleteConfirm', () => {
       getRecipients: () => [],
       getSharingLink: () => null
     }
-    const root = mount(
+    const container = render(
       <AppLike
         client={client}
         store={store}
@@ -35,13 +34,15 @@ describe('EnhancedDeleteConfirm', () => {
         <EnhancedDeleteConfirm folder={folder} onClose={() => null} />
       </AppLike>
     )
-    return { root, folder, client }
+    return { container, folder, client }
   }
 
   it('should trashFiles on confirmation', async () => {
-    const { root } = setup()
-    const confirmProps = root.find(DeleteConfirm).props()
-    await confirmProps.afterConfirmation()
-    expect(mockNavigate).toHaveBeenCalledWith('/folder/parent-folder-id')
+    const { container } = setup()
+    const confirmButton = container.getByText('Remove')
+    fireEvent.click(confirmButton)
+    await waitFor(() =>
+      expect(mockNavigate).toHaveBeenCalledWith('/folder/parent-folder-id')
+    )
   })
 })
