@@ -2,10 +2,8 @@
  * Setup utilities to be used in tests
  */
 
-import { configure } from '@testing-library/react'
-import { mount } from 'enzyme'
+import { configure, render, act } from '@testing-library/react'
 import React from 'react'
-import { act } from 'react-dom/test-utils'
 
 import CozyClient from 'cozy-client'
 
@@ -97,13 +95,11 @@ const setupFolderContent = async ({ folderId, initialStoreState }) => {
   let root
 
   await act(async () => {
-    root = mount(
+    root = render(
       <AppLike store={store} client={client}>
         <FolderContent folderId={folderId} sortOrder={sortOrder} />
       </AppLike>
     )
-
-    await root.update()
   })
 
   return { root, store, client }

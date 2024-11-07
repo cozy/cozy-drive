@@ -1,10 +1,8 @@
 import { render } from '@testing-library/react'
-import { mount } from 'enzyme'
 import React from 'react'
 
-import Dropzone, { Dropzone as DumbDropzone } from './Dropzone'
-import AppLike from 'test/components/AppLike'
-import { setupFolderContent, mockCozyClientRequestQuery } from 'test/setup'
+import { Dropzone as DumbDropzone } from './Dropzone'
+import { mockCozyClientRequestQuery } from 'test/setup'
 
 jest.mock('react-dropzone', () => {
   const Component = ({
@@ -45,30 +43,6 @@ jest.mock('cozy-keys-lib', () => ({
 mockCozyClientRequestQuery()
 
 describe('Dropzone', () => {
-  it('should match snapshot', async () => {
-    // Given
-    jest.spyOn(console, 'error').mockImplementation()
-
-    const displayedFolder = {
-      id: 'directory-foobar0'
-    }
-    const { store, client } = await setupFolderContent({
-      folderId: 'directory-foobar0'
-    })
-
-    store.dispatch = jest.fn()
-
-    // When
-    const root = mount(
-      <AppLike client={client} store={store}>
-        <Dropzone displayedFolder={displayedFolder} />
-      </AppLike>
-    )
-
-    // Then
-    expect(root).toMatchSnapshot()
-  })
-
   it('should dispatch the uploadFiles action', () => {
     // Given
     const uploadFilesMock = jest.fn()

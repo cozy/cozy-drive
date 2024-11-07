@@ -1,7 +1,10 @@
-import { shallow } from 'enzyme'
+import { render } from '@testing-library/react'
 import React from 'react'
 
 import { FileOpener } from './FileOpenerExternal'
+import AppLike from 'test/components/AppLike'
+import { setupStoreAndClient } from 'test/setup'
+
 global.cozy = {
   client: {
     files: {
@@ -19,73 +22,92 @@ const routerMock = {
 const showAlert = jest.fn()
 const t = x => x
 
+jest.mock('cozy-keys-lib', () => ({
+  withVaultClient: jest.fn().mockImplementation(arg => arg),
+  useVaultClient: jest.fn()
+}))
+
 describe('FileOpenerExternal', () => {
   it('should set the id in state', async () => {
-    const wrapper = shallow(
-      <FileOpener
-        router={routerMock}
-        fileId="123"
-        routeParams={{
-          fileId: '123'
-        }}
-        t={t}
-        showAlert={showAlert}
-        breakpoints={{
-          isDesktop: true
-        }}
-      />,
-      {
-        disableLifecycleMethods: true
-      }
-    )
+    const { client, store } = setupStoreAndClient({})
 
     global.cozy.client.files.statById.mockResolvedValue({
-      _id: '123'
+      _id: '123',
+      name: 'file.txt',
+      attributes: {}
     })
 
-    await wrapper.instance().loadFileInfo('123')
+    const container = render(
+      <AppLike client={client} store={store}>
+        <FileOpener
+          router={routerMock}
+          fileId="123"
+          routeParams={{
+            fileId: '123'
+          }}
+          showAlert={showAlert}
+          t={t}
+          breakpoints={{
+            isDesktop: true
+          }}
+        />
+      </AppLike>
+    )
 
-    expect(wrapper.state().file.id).toBe('123')
+    await container.findByText('file.txt')
   })
 
   it('should set the id in state even after a props update', async () => {
-    const wrapper = shallow(
-      <FileOpener
-        router={routerMock}
-        fileId="123"
-        routeParams={{
-          fileId: '123'
-        }}
-        t={t}
-        showAlert={showAlert}
-        breakpoints={{
-          isDesktop: true
-        }}
-      />,
-      {
-        disableLifecycleMethods: true
-      }
+    const { client, store } = setupStoreAndClient({})
+
+    global.cozy.client.files.statById.mockResolvedValue({
+      _id: '123',
+      name: 'file123.txt',
+      attributes: {}
+    })
+
+    const container = render(
+      <AppLike client={client} store={store}>
+        <FileOpener
+          router={routerMock}
+          fileId="123"
+          routeParams={{
+            fileId: '123'
+          }}
+          showAlert={showAlert}
+          t={t}
+          breakpoints={{
+            isDesktop: true
+          }}
+        />
+      </AppLike>
     )
 
+    await container.findByText('file123.txt')
+
     global.cozy.client.files.statById.mockResolvedValue({
-      _id: '123'
+      _id: '456',
+      name: 'file456.txt',
+      attributes: {}
     })
 
-    await wrapper.instance().loadFileInfo('123')
+    container.rerender(
+      <AppLike client={client} store={store}>
+        <FileOpener
+          router={routerMock}
+          fileId="456"
+          routeParams={{
+            fileId: '456'
+          }}
+          showAlert={showAlert}
+          t={t}
+          breakpoints={{
+            isDesktop: true
+          }}
+        />
+      </AppLike>
+    )
 
-    expect(wrapper.state().file.id).toBe('123')
-
-    wrapper.setProps({
-      routeParams: {
-        fileId: '456'
-      }
-    })
-    global.cozy.client.files.statById.mockResolvedValue({
-      _id: '456'
-    })
-
-    await wrapper.instance().loadFileInfo('456')
-
-    expect(wrapper.state().file.id).toBe('456')
+    await container.findByText('file456.txt')
   })
 })

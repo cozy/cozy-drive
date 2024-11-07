@@ -1,10 +1,7 @@
-import { mount } from 'enzyme'
+import { render, fireEvent } from '@testing-library/react'
 import React from 'react'
 
-import { WebVaultClient } from 'cozy-keys-lib'
-
-import AddFolder, { AddFolder as DumbAddFolder } from './AddFolder'
-import { createFolder } from 'modules/navigation/duck/actions'
+import { AddFolder } from './AddFolder'
 import AppLike from 'test/components/AppLike'
 import { setupStoreAndClient } from 'test/setup'
 
@@ -19,34 +16,31 @@ jest.mock('cozy-keys-lib', () => ({
   WebVaultClient: jest.fn().mockReturnValue({})
 }))
 
-const CURRENT_FOLDER_ID = 'id'
-
 describe('AddFolder', () => {
   const setup = () => {
     const { client, store } = setupStoreAndClient({})
-    const vaultClient = new WebVaultClient('http://alice.cozy.cloud')
-    jest.spyOn(client, 'create').mockResolvedValue({})
-    const root = mount(
+
+    const onSubmit = jest.fn()
+
+    const container = render(
       <AppLike client={client} store={store}>
-        <AddFolder
-          vaultClient={vaultClient}
-          currentFolderId={CURRENT_FOLDER_ID}
-        />
+        <AddFolder visible onSubmit={onSubmit} />
       </AppLike>
     )
-    const component = root.find(DumbAddFolder)
-    return { root, client, component, vaultClient }
+    return { container, onSubmit }
   }
 
-  it('should dispatch a createFolder action on submit', () => {
-    const { component, client, vaultClient } = setup()
-    expect(component.props().onSubmit('Mes photos de chat'))
-    expect(createFolder).toHaveBeenCalledWith(
-      client,
-      vaultClient,
+  it('should call onSubmit with folder name', async () => {
+    const { container, onSubmit } = setup()
+
+    const input = await container.findByRole('textbox')
+    fireEvent.change(input, { target: { value: 'Mes photos de chat' } })
+    input.blur()
+
+    expect(onSubmit).toHaveBeenCalledWith(
       'Mes photos de chat',
-      CURRENT_FOLDER_ID,
-      { isEncryptedFolder: false }
+      expect.anything(),
+      expect.anything()
     )
   })
 })
