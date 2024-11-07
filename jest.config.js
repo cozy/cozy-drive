@@ -29,7 +29,6 @@ module.exports = {
     '^queries(.*)': '<rootDir>/src/queries$1'
   },
   clearMocks: true,
-  snapshotSerializers: ['enzyme-to-json/serializer'],
   transform: {
     '\\.[jt]sx?$': 'babel-jest',
     '^.+\\.webapp$': '<rootDir>/test/jestLib/json-transformer.js'
