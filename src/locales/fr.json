@@ -849,5 +849,11 @@
   },
   "LastUpdate": {
     "titleFormat": "DD MMMM YYYY, HH:MM"
+  },
+  "PublicNoteRedirect": {
+    "error": {
+      "title": "Impossible d'accéder au document",
+      "subtitle": "Le lien de partage semble manquant ou invalide. Merci de demander au propriétaire du document de vérifier les accès"
+    }
   }
 }

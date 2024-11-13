@@ -23,6 +23,7 @@ import { ROOT_DIR_ID, TRASH_DIR_ID } from 'constants/config'
 import { SentryRoutes } from 'lib/sentry'
 import { UploaderComponent } from 'modules//views/Upload/UploaderComponent'
 import Layout from 'modules/layout/Layout'
+import { PublicNoteRedirect } from 'modules/navigation/PublicNoteRedirect'
 import FileOpenerExternal from 'modules/viewer/FileOpenerExternal'
 import HarvestRoutes from 'modules/views/Drive/HarvestRoutes'
 import { SharedDrivesFolderView } from 'modules/views/Drive/SharedDrivesFolderView'
@@ -50,6 +51,8 @@ const FilesRedirect = () => {
 const AppRoute = () => (
   <SentryRoutes>
     <Route path="external/:fileId" element={<ExternalRedirect />} />
+    <Route path="note/:fileId" element={<PublicNoteRedirect />} />
+
     <Route element={<Layout />}>
       <Route path="upload" element={<UploaderComponent />} />
       <Route path="/files/:folderId" element={<FilesRedirect />} />
