@@ -91,6 +91,14 @@ declare module 'cozy-client/dist/models/file' {
   ) => boolean
 }
 
+declare module 'cozy-client/dist/models/note' {
+  export const fetchURL: (
+    client: import('cozy-client/types/CozyClient').CozyClient,
+    file: { id: string },
+    options: { pathname: string }
+  ) => Promise<string>
+}
+
 declare module '*.svg' {
   import { FC, SVGProps } from 'react'
   const content: FC<SVGProps<SVGElement>>

@@ -7,6 +7,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import FileHistory from 'components/FileHistory'
 import { SentryRoutes } from 'lib/sentry'
 import ExternalRedirect from 'modules/navigation/ExternalRedirect'
+import { PublicNoteRedirect } from 'modules/navigation/PublicNoteRedirect'
 import LightFileViewer from 'modules/public/LightFileViewer'
 import PublicLayout from 'modules/public/PublicLayout'
 import OnlyOfficeView from 'modules/views/OnlyOffice'
@@ -91,7 +92,7 @@ const AppRouter = ({
                 element={<OnlyOfficePaywallView isPublic={true} />}
               />
             </Route>
-
+            <Route path="note/:fileId" element={<PublicNoteRedirect />} />
             <Route path="external/:fileId" element={<ExternalRedirect />} />
             <Route
               path="/*"
