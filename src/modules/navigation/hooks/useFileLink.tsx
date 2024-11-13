@@ -6,6 +6,7 @@ import { useClient, generateWebLink } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import type { File } from 'components/FolderPicker/types'
+import { joinPath } from 'lib/path'
 import {
   computeFileType,
   computeApp,
@@ -48,8 +49,13 @@ const useFileLink = (file: File): UseFileLinkResult => {
   const isOfficeEnabled = computeOfficeEnabled(isDesktop)
   const { isPublic } = usePublicContext()
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
+  const cozyUrl = client?.getStackClient().uri as string
+
   const type = computeFileType(file, {
-    isOfficeEnabled
+    isOfficeEnabled,
+    isPublic,
+    cozyUrl
   })
   const app = computeApp(type)
   const path = computePath(file, {
@@ -81,11 +87,14 @@ const useFileLink = (file: File): UseFileLinkResult => {
       ? path
       : generateWebLink({
           slug: app,
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
-          cozyUrl: client?.getStackClient().uri,
+          cozyUrl,
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           subDomainType: client?.getInstanceOptions().subdomain,
-          pathname: currentURL.pathname,
+          // Inside notes, we need to add / at the end of /public/ or /preview/ to avoid 409 error
+          pathname:
+            type === 'public-note-same-instance'
+              ? joinPath(currentURL.pathname, '')
+              : currentURL.pathname,
           searchParams: searchParams as unknown as unknown[],
           hash: to.pathname
         })

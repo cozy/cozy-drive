@@ -32,7 +32,7 @@ describe('computeFileType', () => {
     expect(computeFileType(file)).toBe('nextcloud-file')
   })
 
-  it('should return "note" for notes', () => {
+  it('should return "public-note-same-instance" for public notes on the same instance', () => {
     const file = {
       _type: 'io.cozy.files',
       name: 'My journal.cozy-note',
@@ -40,9 +40,68 @@ describe('computeFileType', () => {
       metadata: {
         title: '',
         version: '0'
+      },
+      cozyMetadata: {
+        createdOn: 'https://example.com/'
       }
     }
-    expect(computeFileType(file)).toBe('note')
+    expect(
+      computeFileType(file, { isPublic: true, cozyUrl: 'https://example.com' })
+    ).toBe('public-note-same-instance')
+  })
+
+  it('should return "note" for notes on the same instance', () => {
+    const file = {
+      _type: 'io.cozy.files',
+      name: 'My journal.cozy-note',
+      type: 'file',
+      metadata: {
+        title: '',
+        version: '0'
+      },
+      cozyMetadata: {
+        createdOn: 'https://example.com/'
+      }
+    }
+    expect(computeFileType(file, { cozyUrl: 'https://example.com/' })).toBe(
+      'note'
+    )
+  })
+
+  it('should return "public-note" for notes on an another instance', () => {
+    const file = {
+      _type: 'io.cozy.files',
+      name: 'My journal.cozy-note',
+      type: 'file',
+      metadata: {
+        title: '',
+        version: '0'
+      },
+      cozyMetadata: {
+        createdOn: 'https://example.com/'
+      }
+    }
+    expect(computeFileType(file, { cozyUrl: 'https://another.com/' })).toBe(
+      'public-note'
+    )
+  })
+
+  it('should return "public-note" for public notes', () => {
+    const file = {
+      _type: 'io.cozy.files',
+      name: 'My journal.cozy-note',
+      type: 'file',
+      metadata: {
+        title: '',
+        version: '0'
+      },
+      cozyMetadata: {
+        createdOn: 'https://example.com/'
+      }
+    }
+    expect(
+      computeFileType(file, { isPublic: true, cozyUrl: 'https://another.com' })
+    ).toBe('public-note')
   })
 
   it('should return "onlyoffice" for files opened by OnlyOffice when Office is enabled', () => {
@@ -156,6 +215,23 @@ describe('computePath', () => {
     expect(computePath(file, { type: 'note', pathname: '/any' })).toBe(
       '/n/note123'
     )
+  })
+
+  it('should return correct path for public-note', () => {
+    const file = { _id: 'note123' }
+    expect(
+      computePath(file, { type: 'public-note', pathname: '/public' })
+    ).toBe('/note/note123')
+  })
+
+  it('should return correct path for public-note-same-instance', () => {
+    const file = { _id: 'note123' }
+    expect(
+      computePath(file, {
+        type: 'public-note-same-instance',
+        pathname: '/public'
+      })
+    ).toBe('/?id=note123')
   })
 
   it('should return correct path for shortcut', () => {

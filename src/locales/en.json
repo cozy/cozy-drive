@@ -848,5 +848,11 @@
   },
   "LastUpdate": {
     "titleFormat": "MMMM DD, YYYY, HH:MM"
+  },
+  "PublicNoteRedirect": {
+    "error": {
+      "title": "Unable to access document",
+      "subtitle": "The share link appears to be missing or invalid. Please ask the document owner to check access"
+    }
   }
 }

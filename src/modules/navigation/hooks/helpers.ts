@@ -7,11 +7,14 @@ import {
 
 import type { File } from 'components/FolderPicker/types'
 import { TRASH_DIR_ID } from 'constants/config'
+import { joinPath } from 'lib/path'
 import { isNextcloudShortcut } from 'modules/nextcloud/helpers'
 import { makeOnlyOfficeFileRoute } from 'modules/views/OnlyOffice/helpers'
 
 interface ComputeFileTypeOptions {
   isOfficeEnabled?: boolean
+  isPublic?: boolean
+  cozyUrl?: string
 }
 
 interface ComputePathOptions {
@@ -22,7 +25,11 @@ interface ComputePathOptions {
 
 export const computeFileType = (
   file: File,
-  { isOfficeEnabled = false }: ComputeFileTypeOptions = {}
+  {
+    isOfficeEnabled = false,
+    isPublic = false,
+    cozyUrl = ''
+  }: ComputeFileTypeOptions = {}
 ): string => {
   if (file._id === TRASH_DIR_ID) {
     return 'trash'
@@ -31,7 +38,16 @@ export const computeFileType = (
   } else if (file._type === 'io.cozy.remote.nextcloud.files') {
     return isDirectory(file) ? 'nextcloud-directory' : 'nextcloud-file'
   } else if (isNote(file)) {
-    return 'note'
+    // createdOn url ends with a trailing slash whereas cozyUrl does not joinPath fixes this
+    const isSameInstance =
+      joinPath(cozyUrl, '') === file.cozyMetadata?.createdOn
+    if (isPublic && isSameInstance) {
+      return 'public-note-same-instance'
+    } else if (isSameInstance) {
+      return 'note'
+    } else {
+      return 'public-note'
+    }
   } else if (shouldBeOpenedByOnlyOffice(file) && isOfficeEnabled) {
     return 'onlyoffice'
   } else if (isNextcloudShortcut(file)) {
@@ -46,13 +62,15 @@ export const computeFileType = (
 }
 
 export const computeApp = (type: string): string => {
-  if (type === 'nextcloud-file') {
-    return 'nextcloud'
+  switch (type) {
+    case 'nextcloud-file':
+      return 'nextcloud'
+    case 'note':
+    case 'public-note-same-instance':
+      return 'notes'
+    default:
+      return 'drive'
   }
-  if (type === 'note') {
-    return 'notes'
-  }
-  return 'drive'
 }
 
 export const computePath = (
@@ -75,6 +93,10 @@ export const computePath = (
       return file.links?.self ?? ''
     case 'note':
       return `/n/${file._id}`
+    case 'public-note-same-instance':
+      return `/?id=${file._id}`
+    case 'public-note':
+      return `/note/${file._id}`
     case 'shortcut':
       return `/external/${file._id}`
     case 'directory':
