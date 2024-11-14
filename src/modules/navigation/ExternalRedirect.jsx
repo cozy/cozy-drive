@@ -3,10 +3,10 @@ import { useParams } from 'react-router-dom'
 
 import { useClient, useFetchShortcut } from 'cozy-client'
 import Empty from 'cozy-ui/transpiled/react/Empty'
-import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import EmptyIcon from 'assets/icons/icon-folder-broken.svg'
+import { DummyLayout } from 'modules/layout/DummyLayout'
 
 const ExternalRedirect = ({ t }) => {
   const { fileId } = useParams()
@@ -17,8 +17,7 @@ const ExternalRedirect = ({ t }) => {
   }
 
   return (
-    <>
-      <Sprite />
+    <DummyLayout>
       {fetchStatus === 'failed' && (
         <Empty
           data-testid="empty-share"
@@ -35,7 +34,7 @@ const ExternalRedirect = ({ t }) => {
           text={t('External.redirection.text')}
         />
       )}
-    </>
+    </DummyLayout>
   )
 }
 
