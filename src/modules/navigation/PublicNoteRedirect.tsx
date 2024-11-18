@@ -25,14 +25,20 @@ const PublicNoteRedirect: FC = () => {
   useEffect(() => {
     const fetchNoteUrl = async (fileId: string): Promise<void> => {
       setFetchStatus('loading')
+
       try {
+        // Inside notes, we need to add / at the end of /public/ or /preview/ to avoid 409 error
+        const pathname =
+          location.pathname === '/'
+            ? '/public/'
+            : joinPath(location.pathname, '')
         const url = await fetchURL(
           client,
           {
             id: fileId
           },
           {
-            pathname: joinPath(location.pathname, '')
+            pathname
           }
         )
         setNoteUrl(url)
