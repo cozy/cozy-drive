@@ -64,7 +64,7 @@ const LightFileViewer = ({ files, isPublic }) => {
               isEnabled: isOfficeEnabled(isDesktop),
               opener: onlyOfficeOpener
             },
-            toolbarProps: { showToolbar: isDesktop }
+            toolbarProps: { showToolbar: isDesktop, showClose: false }
           }}
         >
           <FooterActionButtons>
