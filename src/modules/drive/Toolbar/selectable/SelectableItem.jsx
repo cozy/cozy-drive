@@ -9,11 +9,11 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 /**
  * Action to show the selection bar
  */
-const SelectableItem = ({ showSelectionBar }) => {
+const SelectableItem = ({ onClick }) => {
   const { t } = useI18n()
 
   return (
-    <ActionMenuItem
+    <ActionMenuItem left={<Icon icon={CheckSquareIcon} />} onClick={onClick}>
       left={<Icon icon={CheckSquareIcon} />}
       onClick={showSelectionBar}
     >
@@ -23,8 +23,7 @@ const SelectableItem = ({ showSelectionBar }) => {
 }
 
 SelectableItem.propTypes = {
-  /** Function to show the selection bar coming from SelectionBar */
-  showSelectionBar: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired
 }
 
 export default SelectableItem

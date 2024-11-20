@@ -93,7 +93,7 @@ const MoreMenu = ({
               <DownloadButtonItem displayedFolder={displayedFolder} />
             </InsideRegularFolder>
             {isMobile && hasWriteAccess && <AddMenuItem />}
-            <SelectableItem showSelectionBar={showSelectionBar} />
+            <SelectableItem onClick={showSelectionBar} />
             {hasWriteAccess && (
               <InsideRegularFolder
                 displayedFolder={displayedFolder}
