@@ -52,9 +52,7 @@ const PublicToolbarMoreMenu = ({
             </ActionMenuItem>
           )}
           {isMobile && hasWriteAccess && <AddMenuItem />}
-          {files.length > 1 && (
-            <SelectableItem showSelectionBar={showSelectionBar} />
-          )}
+          {files.length > 1 && <SelectableItem onClick={showSelectionBar} />}
         </ActionMenu>
       )}
     </>
