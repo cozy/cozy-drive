@@ -12,7 +12,7 @@ import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
 import AddButton from 'modules/drive/Toolbar/components/AddButton'
 import { DownloadFilesButton } from 'modules/public/DownloadButton'
 import PublicToolbarMoreMenu from 'modules/public/PublicToolbarMoreMenu'
-import { isFilesIsFile, openExternalLink } from 'modules/public/helpers'
+import { openExternalLink } from 'modules/public/helpers'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 
 const PublicToolbarByLink = ({
@@ -20,13 +20,10 @@ const PublicToolbarByLink = ({
   hasWriteAccess,
   refreshFolderContent
 }) => {
-  const isFile = isFilesIsFile(files)
   const { isMobile } = useBreakpoints()
   const { t } = useI18n()
   const { displayedFolder } = useDisplayedFolder()
   const { showSelectionBar, isSelectionBarVisible } = useSelectionContext()
-
-  const shouldDisplayMoreMenu = isMobile || (!isFile && files.length > 0)
 
   return (
     <>
@@ -47,22 +44,20 @@ const PublicToolbarByLink = ({
               )}
             </>
           )}
-          {shouldDisplayMoreMenu && (
-            <PublicToolbarMoreMenu
-              files={files}
-              hasWriteAccess={hasWriteAccess}
-              showSelectionBar={showSelectionBar}
-            >
-              {isMobile && (
-                <ActionMenuItem
-                  onClick={() => openExternalLink(HOME_LINK_HREF)}
-                  left={<Icon icon="to-the-cloud" />}
-                >
-                  {t('Share.create-cozy')}
-                </ActionMenuItem>
-              )}
-            </PublicToolbarMoreMenu>
-          )}
+          <PublicToolbarMoreMenu
+            files={files}
+            hasWriteAccess={hasWriteAccess}
+            showSelectionBar={showSelectionBar}
+          >
+            {isMobile && (
+              <ActionMenuItem
+                onClick={() => openExternalLink(HOME_LINK_HREF)}
+                left={<Icon icon="to-the-cloud" />}
+              >
+                {t('Share.create-cozy')}
+              </ActionMenuItem>
+            )}
+          </PublicToolbarMoreMenu>
         </AddMenuProvider>
       </BarRightOnMobile>
     </>
