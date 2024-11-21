@@ -17,6 +17,7 @@ import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 
 import { downloadFiles, restoreFiles } from './utils'
+import { HOME_LINK_HREF } from 'constants/config'
 import { isEncryptedFolder, isEncryptedFile } from 'lib/encryption'
 import { navigateToModal } from 'modules/actions/helpers'
 import DeleteConfirm from 'modules/drive/DeleteConfirm'
@@ -212,6 +213,38 @@ export const restore = ({ t, refresh, client }) => {
     Component: forwardRef(function Restore(props, ref) {
       return (
         <ActionsMenuItem {...props} ref={ref}>
+          <ListItemIcon>
+            <Icon icon={icon} />
+          </ListItemIcon>
+          <ListItemText primary={label} />
+        </ActionsMenuItem>
+      )
+    })
+  }
+}
+
+export const openExternalLink = ({ t, isSharingShortcutCreated, link }) => {
+  const label =
+    link === HOME_LINK_HREF
+      ? t('Share.create-cozy')
+      : isSharingShortcutCreated
+      ? t('toolbar.menu_sync_cozy')
+      : t('toolbar.add_to_mine')
+  const icon =
+    !isSharingShortcutCreated || link === HOME_LINK_HREF
+      ? 'to-the-cloud'
+      : 'sync'
+
+  return {
+    name: 'openExternalLink',
+    label,
+    icon,
+    action: () => {
+      openExternalLink(link)
+    },
+    Component: forwardRef(function OpenExternalLink(props, ref) {
+      return (
+        <ActionsMenuItem isListItem {...props} ref={ref}>
           <ListItemIcon>
             <Icon icon={icon} />
           </ListItemIcon>
