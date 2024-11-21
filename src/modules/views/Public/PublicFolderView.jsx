@@ -15,7 +15,10 @@ import {
   useSharingInfos
 } from 'cozy-sharing'
 import { Content } from 'cozy-ui/transpiled/react'
-import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
+import {
+  divider,
+  makeActions
+} from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
@@ -120,7 +123,7 @@ const PublicFolderView = () => {
     isPublic: true
   }
   const actions = makeActions(
-    [download, trash, rename, versions],
+    [download, rename, versions, divider, trash],
     actionOptions
   )
 
