@@ -7,15 +7,15 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import DesktopBreadcrumb from './DesktopBreadcrumb'
 import { dummyBreadcrumbPath } from 'test/dummies/dummyBreadcrumbPath'
 
-jest.mock('cozy-ui/transpiled/react/deprecated/ActionMenu', () => ({
-  __esModule: true,
-  // eslint-disable-next-line react/display-name
-  default: ({ children }) => <div data-testid="action-menu">{children}</div>,
-  // eslint-disable-next-line react/display-name
-  ActionMenuItem: ({ children }) => (
-    <div data-testid="action-menu-item">{children}</div>
-  )
-}))
+jest.mock('cozy-ui/transpiled/react/ActionsMenu', () => ({ children }) => (
+  <div data-testid="action-menu">{children}</div>
+))
+jest.mock(
+  'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem',
+  () =>
+    ({ children }) =>
+      <div data-testid="action-menu-item">{children}</div>
+)
 
 jest.mock('cozy-ui/transpiled/react/providers/I18n')
 describe('DesktopBreadcrumb', () => {
@@ -53,6 +53,12 @@ describe('DesktopBreadcrumb', () => {
   })
 
   describe('mount', () => {
+    beforeEach(() => {
+      jest.spyOn(console, 'error').mockImplementation(() => {})
+    })
+    afterEach(() => {
+      console.error.mockRestore()
+    })
     it('should hide menu displayed while navigating', async () => {
       // Given
       const { container, queryByTestId, rerender } = await render(

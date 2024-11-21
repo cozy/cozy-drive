@@ -2,9 +2,11 @@ import compose from 'lodash/flowRight'
 import PropTypes from 'prop-types'
 import React from 'react'
 
+import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
+import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import deleteContainer from './delete'
@@ -17,13 +19,16 @@ const DeleteItem = ({ t, isSharedWithMe, trashFolder, displayedFolder }) => {
   const label = isSharedWithMe ? t('toolbar.leave') : t('toolbar.trash')
 
   return (
-    <ActionMenuItem
+    <ActionsMenuItem
       data-testid="fil-action-delete"
-      left={<Icon icon={TrashIcon} color="var(--errorColor)" />}
+      isListItem
       onClick={handleClick}
     >
-      <span className="u-pomegranate">{label}</span>
-    </ActionMenuItem>
+      <ListItemIcon>
+        <Icon icon={TrashIcon} color="var(--errorColor)" />
+      </ListItemIcon>
+      <ListItemText primary={label} />
+    </ActionsMenuItem>
   )
 }
 

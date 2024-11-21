@@ -1,8 +1,10 @@
 import React, { useCallback, useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 
+import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
+import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { ROOT_DIR_ID } from 'constants/config'
@@ -30,9 +32,12 @@ const CreateOnlyOfficeItem = ({ fileClass }) => {
   )
 
   return (
-    <ActionMenuItem onClick={handleClick} left={<Icon icon={ClassIcon} />}>
-      {t(`toolbar.menu_onlyOffice.${fileClass}`)}
-    </ActionMenuItem>
+    <ActionsMenuItem onClick={handleClick}>
+      <ListItemIcon>
+        <Icon icon={ClassIcon} />
+      </ListItemIcon>
+      <ListItemText primary={t(`toolbar.menu_onlyOffice.${fileClass}`)} />
+    </ActionsMenuItem>
   )
 }
 

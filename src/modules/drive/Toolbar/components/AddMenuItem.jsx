@@ -1,13 +1,15 @@
 import React, { useContext } from 'react'
 
+import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import PlusIcon from 'cozy-ui/transpiled/react/Icons/Plus'
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
+import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { AddMenuContext } from 'modules/drive/AddMenu/AddMenuProvider'
 
-const AddMenuItem = () => {
+const AddMenuItem = ({ onClick }) => {
   const { t } = useI18n()
 
   const {
@@ -19,18 +21,24 @@ const AddMenuItem = () => {
     a11y
   } = useContext(AddMenuContext)
 
+  const handleClick = () => {
+    isOffline ? handleOfflineClick() : handleToggle()
+    onClick()
+  }
+
   return (
-    <div ref={anchorRef} onClick={isOffline ? handleOfflineClick : undefined}>
-      <ActionMenuItem
-        left={<Icon icon={PlusIcon} />}
-        disabled={isDisabled || isOffline}
-        icon={PlusIcon}
-        onClick={handleToggle}
-        {...a11y}
-      >
-        {t('toolbar.menu_add_item')}
-      </ActionMenuItem>
-    </div>
+    <ActionsMenuItem
+      ref={anchorRef}
+      isListItem
+      disabled={isDisabled || isOffline}
+      onClick={handleClick}
+      {...a11y}
+    >
+      <ListItemIcon>
+        <Icon icon={<Icon icon={PlusIcon} />} />
+      </ListItemIcon>
+      <ListItemText primary={t('toolbar.menu_add_item')} />
+    </ActionsMenuItem>
   )
 }
 

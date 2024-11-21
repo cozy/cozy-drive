@@ -10,10 +10,10 @@ import { uploadFiles } from 'modules/navigation/duck'
 // @ts-expect-error Component is not typed
 import AppLike from 'test/components/AppLike'
 
-const MockApp = ({ id = 'test' }): JSX.Element => (
+const MockApp = ({ id = 'test', onClick = jest.fn() }): JSX.Element => (
   <AppLike client={createMockClient()}>
     <ScannerProvider displayedFolder={{ id }}>
-      <ScannerMenuItem />
+      <ScannerMenuItem onClick={onClick} />
     </ScannerProvider>
   </AppLike>
 )
@@ -94,9 +94,10 @@ describe('Scanner', () => {
         return Promise.resolve(false)
       })
     })
+    const onClickMock = jest.fn()
 
     // Render the component under test
-    const { queryByTestId } = render(<MockApp />)
+    const { queryByTestId } = render(<MockApp onClick={onClickMock} />)
 
     // Wait for the scan-doc element to be clickable and then simulate a click event
     await waitFor(() => {
@@ -114,6 +115,7 @@ describe('Scanner', () => {
 
     const calls = mockUploadFiles.mock.calls as unknown[][]
 
+    expect(onClickMock).toBeCalledTimes(1)
     expect(calls[0][0]).toEqual([mockFile]) // File
     expect(calls[0][1]).toBe('test') // Directory ID
     expect(calls[0][2]).toEqual({ isScanned: true }) // Upload options

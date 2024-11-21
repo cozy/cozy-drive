@@ -1,8 +1,10 @@
 import React from 'react'
 
 import flag from 'cozy-flags'
-import Typography from 'cozy-ui/transpiled/react/Typography'
-import ActionMenu from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import ActionsMenu from 'cozy-ui/transpiled/react/ActionsMenu'
+import ActionsMenuMobileHeader from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuMobileHeader'
+import Divider from 'cozy-ui/transpiled/react/Divider'
+import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -23,25 +25,27 @@ export const ActionMenuContent = ({
   refreshFolderContent,
   isPublic,
   isEncryptedFolder,
-  displayedFolder
+  displayedFolder,
+  onClick
 }) => {
   const { t } = useI18n()
-  const { isMobile, isDesktop } = useBreakpoints()
+  const { isDesktop } = useBreakpoints()
   const { hasScanner } = useScannerContext()
 
   return (
     <>
-      {isMobile && (
-        <>
-          <Typography variant="h6" className="u-p-1">
-            {t('toolbar.menu_add')}
-          </Typography>
-          <hr />
-        </>
+      <ActionsMenuMobileHeader>
+        <ListItemText
+          primary={t('toolbar.menu_add')}
+          primaryTypographyProps={{ variant: 'h6' }}
+        />
+      </ActionsMenuMobileHeader>
+
+      {canCreateFolder && !isEncryptedFolder && (
+        <AddFolderItem onClick={onClick} />
       )}
-      {canCreateFolder && !isEncryptedFolder && <AddFolderItem />}
       {canCreateFolder && !isPublic && flag('drive.enable-encryption') && (
-        <AddEncryptedFolderItem />
+        <AddEncryptedFolderItem onClick={onClick} />
       )}
       {!isPublic && !isEncryptedFolder && (
         <CreateNoteItem displayedFolder={displayedFolder} />
@@ -54,17 +58,18 @@ export const ActionMenuContent = ({
         </>
       )}
       {!isEncryptedFolder && (
-        <CreateShortcut onCreated={refreshFolderContent} />
+        <CreateShortcut onCreated={refreshFolderContent} onClick={onClick} />
       )}
-      {canUpload && <hr />}
+      {canUpload && <Divider className="u-mv-half" />}
       {canUpload && (
         <UploadItem
           disabled={isDisabled}
           onUploaded={refreshFolderContent}
           displayedFolder={displayedFolder}
+          onClick={onClick}
         />
       )}
-      {hasScanner && <ScannerMenuItem />}
+      {hasScanner && <ScannerMenuItem onClick={onClick} />}
     </>
   )
 }
@@ -82,13 +87,12 @@ const AddMenu = ({
   ...actionMenuProps
 }) => {
   return (
-    <ActionMenu
-      anchorElRef={anchorRef}
+    <ActionsMenu
+      open
+      ref={anchorRef}
       onClose={handleClose}
-      autoclose={true}
-      popperOptions={{
-        strategy: 'fixed'
-      }}
+      docs={[displayedFolder]}
+      actions={[]}
       {...actionMenuProps}
     >
       <ActionMenuContent
@@ -99,8 +103,9 @@ const AddMenu = ({
         isPublic={isPublic}
         isEncryptedFolder={isEncryptedFolder}
         displayedFolder={displayedFolder}
+        onClick={handleClose}
       />
-    </ActionMenu>
+    </ActionsMenu>
   )
 }
 

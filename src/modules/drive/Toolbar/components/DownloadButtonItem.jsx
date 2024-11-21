@@ -3,9 +3,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { withClient } from 'cozy-client'
+import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
+import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -15,12 +17,15 @@ const DownloadButtonItem = ({ t, downloadAll, displayedFolder }) => {
   const { showAlert } = useAlert()
 
   return (
-    <ActionMenuItem
-      left={<Icon icon={DownloadIcon} />}
+    <ActionsMenuItem
+      isListItem
       onClick={() => downloadAll([displayedFolder], showAlert, t)}
     >
-      {t('toolbar.menu_download_folder')}
-    </ActionMenuItem>
+      <ListItemIcon>
+        <Icon icon={DownloadIcon} />
+      </ListItemIcon>
+      <ListItemText primary={t('toolbar.menu_download_folder')} />
+    </ActionsMenuItem>
   )
 }
 
