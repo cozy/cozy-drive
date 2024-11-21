@@ -22,7 +22,11 @@ jest.mock('lib/encryption', () => ({
 
 jest.mock('hooks')
 
-jest.mock('cozy-ui/transpiled/react/Viewer', () => () => <div>Viewer</div>)
+jest.mock('cozy-viewer', () => ({
+  ...jest.requireActual('cozy-viewer'),
+  __esModule: true,
+  default: () => <div>Viewer</div>
+}))
 
 const sleep = duration => new Promise(resolve => setTimeout(resolve, duration))
 

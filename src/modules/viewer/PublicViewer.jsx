@@ -2,7 +2,7 @@
 import { pdfjs } from 'react-pdf'
 import createWorker from 'react-pdf/dist/esm/pdf.worker.entry'
 
-import Viewer from 'cozy-ui/transpiled/react/Viewer'
+import Viewer from 'cozy-viewer'
 
 pdfjs.GlobalWorkerOptions.workerPort = createWorker()
 

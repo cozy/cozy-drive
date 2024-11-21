@@ -2,8 +2,7 @@ import { useCurrentFolderId } from 'hooks'
 import React, { useMemo, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 
-import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
-import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
+import { FooterActionButtons, ForwardOrDownloadButton } from 'cozy-viewer'
 
 import { FilesViewerLoading } from 'components/FilesViewerLoading'
 import PublicViewer from 'modules/viewer/PublicViewer'

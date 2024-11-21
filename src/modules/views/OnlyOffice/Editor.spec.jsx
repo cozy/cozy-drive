@@ -37,9 +37,11 @@ jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 
 jest.mock('cozy-flags')
 jest.mock('modules/views/OnlyOffice/Toolbar', () => () => <div>Toolbar</div>)
-jest.mock('cozy-ui/transpiled/react/Viewer', () => () => (
-  <div data-testid="ViewerForTest" />
-))
+jest.mock('cozy-viewer', () => ({
+  ...jest.requireActual('cozy-viewer'),
+  __esModule: true,
+  default: () => <div data-testid="ViewerForTest" />
+}))
 
 const client = createMockClient({})
 client.plugins = {
