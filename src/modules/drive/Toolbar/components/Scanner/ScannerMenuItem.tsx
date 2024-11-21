@@ -1,29 +1,46 @@
 import React from 'react'
 
+import logger from 'cozy-logger'
+import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import CameraIcon from 'cozy-ui/transpiled/react/Icons/Camera'
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
+import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { useScannerContext } from 'modules/drive/Toolbar/components/Scanner/ScannerProvider'
+
+const log = logger.namespace('Toolbar/components/Scanner/ScannerMenuItem')
 
 /**
  * Renders a scanner menu item.
  * @returns The JSX element representing the scanner menu item.
  */
-export const ScannerMenuItem = (): JSX.Element | null => {
+interface ScannerMenuItemProps {
+  onClick: () => void
+}
+
+export const ScannerMenuItem = ({
+  onClick
+}: ScannerMenuItemProps): JSX.Element | null => {
   const { t } = useI18n()
   const { hasScanner, startScanner } = useScannerContext()
 
+  const handleClick = (): void => {
+    if (startScanner) {
+      startScanner().catch((error: Error) => {
+        log('error', `Failed to start scanner: ${error.message}`)
+      })
+    }
+    onClick()
+  }
+
   return hasScanner ? (
-    <div data-testid="scan-doc">
-      <ActionMenuItem
-        onClick={startScanner}
-        left={<Icon icon={CameraIcon} />}
-        data-testid="scan-doc"
-      >
-        {t('Scan.scan_a_doc')}
-      </ActionMenuItem>
-    </div>
+    <ActionsMenuItem onClick={handleClick} data-testid="scan-doc">
+      <ListItemIcon>
+        <Icon icon={CameraIcon} />
+      </ListItemIcon>
+      <ListItemText primary={t('Scan.scan_a_doc')} />
+    </ActionsMenuItem>
   ) : null
 }

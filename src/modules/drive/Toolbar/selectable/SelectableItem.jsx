@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
+import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import CheckSquareIcon from 'cozy-ui/transpiled/react/Icons/CheckSquare'
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
+import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 /**
@@ -13,12 +15,12 @@ const SelectableItem = ({ onClick }) => {
   const { t } = useI18n()
 
   return (
-    <ActionMenuItem left={<Icon icon={CheckSquareIcon} />} onClick={onClick}>
-      left={<Icon icon={CheckSquareIcon} />}
-      onClick={showSelectionBar}
-    >
-      {t('toolbar.menu_select')}
-    </ActionMenuItem>
+    <ActionsMenuItem isListItem onClick={onClick}>
+      <ListItemIcon>
+        <Icon icon={CheckSquareIcon} />
+      </ListItemIcon>
+      <ListItemText primary={t('toolbar.menu_select')} />
+    </ActionsMenuItem>
   )
 }
 

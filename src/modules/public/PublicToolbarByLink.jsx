@@ -1,18 +1,21 @@
 import { useDisplayedFolder } from 'hooks'
 import React from 'react'
 
-import Icon from 'cozy-ui/transpiled/react/Icon'
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import { useClient } from 'cozy-client'
+import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { BarRightOnMobile } from 'components/Bar'
 import { HOME_LINK_HREF } from 'constants/config'
+import { download, openExternalLink } from 'modules/actions'
 import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
 import AddButton from 'modules/drive/Toolbar/components/AddButton'
+import AddMenuItem from 'modules/drive/Toolbar/components/AddMenuItem'
+import SelectableItem from 'modules/drive/Toolbar/selectable/SelectableItem'
 import { DownloadFilesButton } from 'modules/public/DownloadButton'
 import PublicToolbarMoreMenu from 'modules/public/PublicToolbarMoreMenu'
-import { openExternalLink } from 'modules/public/helpers'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 
 const PublicToolbarByLink = ({
@@ -21,46 +24,53 @@ const PublicToolbarByLink = ({
   refreshFolderContent
 }) => {
   const { isMobile } = useBreakpoints()
+  const client = useClient()
+  const { showAlert } = useAlert()
   const { t } = useI18n()
   const { displayedFolder } = useDisplayedFolder()
   const { showSelectionBar, isSelectionBarVisible } = useSelectionContext()
 
+  const actionOptions = {
+    client,
+    t,
+    showAlert,
+    isPublic: true,
+    link: HOME_LINK_HREF
+  }
+  const actions = makeActions(
+    [isMobile && files.length > 0 && download, isMobile && openExternalLink],
+    actionOptions
+  )
+
   return (
-    <>
-      <BarRightOnMobile>
-        <AddMenuProvider
-          canCreateFolder={hasWriteAccess}
-          canUpload={hasWriteAccess}
-          refreshFolderContent={refreshFolderContent}
-          isPublic={true}
-          displayedFolder={displayedFolder}
-          isSelectionBarVisible={isSelectionBarVisible}
-        >
-          {!isMobile && (
-            <>
-              {hasWriteAccess && <AddButton className="u-mr-half" />}
-              {files.length > 0 && (
-                <DownloadFilesButton files={files} className="u-mr-half" />
-              )}
-            </>
-          )}
-          <PublicToolbarMoreMenu
-            files={files}
-            hasWriteAccess={hasWriteAccess}
-            showSelectionBar={showSelectionBar}
-          >
-            {isMobile && (
-              <ActionMenuItem
-                onClick={() => openExternalLink(HOME_LINK_HREF)}
-                left={<Icon icon="to-the-cloud" />}
-              >
-                {t('Share.create-cozy')}
-              </ActionMenuItem>
+    <BarRightOnMobile>
+      <AddMenuProvider
+        canCreateFolder={hasWriteAccess}
+        canUpload={hasWriteAccess}
+        refreshFolderContent={refreshFolderContent}
+        isPublic={true}
+        displayedFolder={displayedFolder}
+        isSelectionBarVisible={isSelectionBarVisible}
+      >
+        {!isMobile && (
+          <>
+            {hasWriteAccess && <AddButton className="u-mr-half" />}
+            {files.length > 0 && (
+              <DownloadFilesButton files={files} className="u-mr-half" />
             )}
-          </PublicToolbarMoreMenu>
-        </AddMenuProvider>
-      </BarRightOnMobile>
-    </>
+          </>
+        )}
+        <PublicToolbarMoreMenu
+          files={files}
+          hasWriteAccess={hasWriteAccess}
+          showSelectionBar={showSelectionBar}
+          actions={actions}
+        >
+          {isMobile && hasWriteAccess && <AddMenuItem />}
+          {files.length > 1 && <SelectableItem onClick={showSelectionBar} />}
+        </PublicToolbarMoreMenu>
+      </AddMenuProvider>
+    </BarRightOnMobile>
   )
 }
 

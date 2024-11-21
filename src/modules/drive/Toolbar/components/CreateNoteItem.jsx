@@ -10,10 +10,12 @@ import {
 } from 'cozy-client'
 import { isFlagshipApp } from 'cozy-device-helper'
 import { useWebviewIntent } from 'cozy-intent'
+import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import { generateUniversalLink } from 'cozy-ui/transpiled/react/AppLinker/native'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconNote from 'cozy-ui/transpiled/react/Icons/FileTypeNote'
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
+import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 const CreateNoteItem = ({ client, t, displayedFolder }) => {
@@ -53,38 +55,39 @@ const CreateNoteItem = ({ client, t, displayedFolder }) => {
     }
   }
 
+  const handleClick = async () => {
+    if (notesAppUrl === undefined) return
+    if (notesAppIsInstalled) {
+      const { data: file } = await client.create('io.cozy.notes', {
+        dir_id: displayedFolder.id
+      })
+
+      const privateUrl = await models.note.generatePrivateUrl(
+        notesAppUrl,
+        file,
+        { returnUrl }
+      )
+
+      /**
+       * Not using AppLinker here because it would require too much refactoring and would be risky
+       * Instead we use the webviewIntent programmatically to open the cozy-note app on the note href
+       */
+      if (isFlagshipApp() && webviewIntent)
+        return webviewIntent.call('openApp', privateUrl, { slug: 'notes' })
+
+      window.location.href = privateUrl
+    } else {
+      window.location.href = notesAppUrl
+    }
+  }
+
   return (
-    <ActionMenuItem
-      data-testid="create-a-note"
-      left={<Icon icon={IconNote} />}
-      onClick={async () => {
-        if (notesAppUrl === undefined) return
-        if (notesAppIsInstalled) {
-          const { data: file } = await client.create('io.cozy.notes', {
-            dir_id: displayedFolder.id
-          })
-
-          const privateUrl = await models.note.generatePrivateUrl(
-            notesAppUrl,
-            file,
-            { returnUrl }
-          )
-
-          /**
-           * Not using AppLinker here because it would require too much refactoring and would be risky
-           * Instead we use the webviewIntent programmatically to open the cozy-note app on the note href
-           */
-          if (isFlagshipApp() && webviewIntent)
-            return webviewIntent.call('openApp', privateUrl, { slug: 'notes' })
-
-          window.location.href = privateUrl
-        } else {
-          window.location.href = notesAppUrl
-        }
-      }}
-    >
-      {t('toolbar.menu_create_note')}
-    </ActionMenuItem>
+    <ActionsMenuItem data-testid="create-a-note" onClick={handleClick}>
+      <ListItemIcon>
+        <Icon icon={IconNote} />
+      </ListItemIcon>
+      <ListItemText primary={t('toolbar.menu_create_note')} />
+    </ActionsMenuItem>
   )
 }
 

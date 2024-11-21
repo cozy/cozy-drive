@@ -2,24 +2,30 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { useVaultUnlockContext } from 'cozy-keys-lib'
-import { ActionMenuItem } from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
+import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { showNewFolderInput, encryptedFolder } from 'modules/filelist/duck'
 import EncryptedFolderIcon from 'modules/views/Folder/EncryptedFolderIcon'
 
-const AddEncryptedFolderItem = ({ addEncryptedFolder }) => {
+const AddEncryptedFolderItem = ({ addEncryptedFolder, onClick }) => {
   const { t } = useI18n()
   const { showUnlockForm } = useVaultUnlockContext()
 
+  const handleClick = () => {
+    showUnlockForm({ onUnlock: addEncryptedFolder })
+    onClick()
+  }
+
   return (
-    <ActionMenuItem
+    <ActionsMenuItem
       data-testid="add-encrypted-folder-link"
-      onClick={() => showUnlockForm({ onUnlock: addEncryptedFolder })}
-      left={<EncryptedFolderIcon width={16} height={16} />}
+      onClick={handleClick}
     >
-      {t('toolbar.menu_new_encrypted_folder')}
-    </ActionMenuItem>
+      <EncryptedFolderIcon width={16} height={16} />
+      <ListItemText primary={t('toolbar.menu_new_encrypted_folder')} />
+    </ActionsMenuItem>
   )
 }
 

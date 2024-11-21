@@ -1,8 +1,9 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useRef } from 'react'
 
 import { isIOSApp } from 'cozy-device-helper'
 import { useSharingContext } from 'cozy-sharing'
-import ActionMenu from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import ActionsMenu from 'cozy-ui/transpiled/react/ActionsMenu'
+import Divider from 'cozy-ui/transpiled/react/Divider'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { MoreButton } from 'components/Button'
@@ -45,7 +46,7 @@ const MoreMenu = ({
   isSharedWithMe
 }) => {
   const [menuIsVisible, setMenuVisible] = useState(false)
-  const anchorRef = React.createRef()
+  const anchorRef = useRef()
   const { isMobile } = useBreakpoints()
   const { allLoaded } = useSharingContext() // We need to wait for the sharing context to be completely loaded to avoid race conditions
 
@@ -71,12 +72,15 @@ const MoreMenu = ({
         isSelectionBarVisible={isSelectionBarVisible}
       >
         {menuIsVisible && (
-          <ActionMenu
-            anchorElRef={anchorRef}
+          <ActionsMenu
+            open
+            ref={anchorRef}
             onClose={handleClose}
-            autoclose={true}
-            popperOptions={{
-              placement: 'bottom-end'
+            docs={[displayedFolder]}
+            actions={[]}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right'
             }}
           >
             {isMobile && allLoaded && (
@@ -100,14 +104,14 @@ const MoreMenu = ({
                 displayedFolder={displayedFolder}
                 folderId={folderId}
               >
-                <hr />
+                <Divider className="u-mv-half" />
                 <DeleteItem
                   displayedFolder={displayedFolder}
                   isSharedWithMe={isSharedWithMe}
                 />
               </InsideRegularFolder>
             )}
-          </ActionMenu>
+          </ActionsMenu>
         )}
       </AddMenuProvider>
     </div>

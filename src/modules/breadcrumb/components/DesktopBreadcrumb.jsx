@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react'
 
+import ActionsMenu from 'cozy-ui/transpiled/react/ActionsMenu'
+import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import BreadcrumbMui from 'cozy-ui/transpiled/react/Breadcrumbs'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import FolderIcon from 'cozy-ui/transpiled/react/Icons/Folder'
 import RightIcon from 'cozy-ui/transpiled/react/Icons/Right'
-import ActionMenu, {
-  ActionMenuItem
-} from 'cozy-ui/transpiled/react/deprecated/ActionMenu'
+import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import IconServer from 'assets/icons/icon-server.svg'
@@ -28,13 +28,15 @@ const DesktopBreadcrumb = ({ onBreadcrumbClick, path }) => {
   )
   const [menuDisplayed, setMenuDisplayed] = useState(false)
 
+  const closeMenu = () => setMenuDisplayed(false)
+
   const handleDropdownTriggerClick = e => {
     e.stopPropagation()
     setMenuDisplayed(true)
   }
 
   useEffect(() => {
-    setMenuDisplayed(false)
+    closeMenu()
     setDropdownTrigger(document.querySelector(`[aria-label="${expandText}"]`))
   }, [path]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -43,7 +45,7 @@ const DesktopBreadcrumb = ({ onBreadcrumbClick, path }) => {
     if (trigger) {
       trigger.addEventListener('click', handleDropdownTriggerClick)
       return () => {
-        setMenuDisplayed(false)
+        closeMenu()
         trigger.removeEventListener('click', handleDropdownTriggerClick)
       }
     }
@@ -115,36 +117,29 @@ const DesktopBreadcrumb = ({ onBreadcrumbClick, path }) => {
       </BreadcrumbMui>
 
       {menuDisplayed && (
-        <ActionMenu
-          anchorElRef={anchorElRef}
-          autoclose={true}
-          onClose={() => {
-            setMenuDisplayed(false)
-          }}
-          popperOptions={{
-            placement: 'bottom-end',
-            modifiers: [
-              {
-                name: 'offset',
-                options: {
-                  offset: [0, 10]
-                }
-              }
-            ]
+        <ActionsMenu
+          open
+          ref={anchorElRef}
+          onClose={closeMenu}
+          actions={[]}
+          docs={[]}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left'
           }}
         >
           {path.slice(1, -2).map(breadcrumbPath => (
-            <ActionMenuItem
+            <ActionsMenuItem
               key={breadcrumbPath.name}
               onClick={e => {
                 e.stopPropagation()
                 onBreadcrumbClick(breadcrumbPath)
               }}
             >
-              {breadcrumbPath.name}
-            </ActionMenuItem>
+              <ListItemText primary={breadcrumbPath.name} />
+            </ActionsMenuItem>
           ))}
-        </ActionMenu>
+        </ActionsMenu>
       )}
     </>
   )
