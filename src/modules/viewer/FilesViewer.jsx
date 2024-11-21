@@ -6,13 +6,14 @@ import { useNavigate } from 'react-router-dom'
 import { Q, useClient } from 'cozy-client'
 import { isIOSApp } from 'cozy-device-helper'
 import { useVaultClient } from 'cozy-keys-lib'
-import Viewer from 'cozy-ui/transpiled/react/Viewer'
-import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
-import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
-import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
-import ToolbarButtons from 'cozy-ui/transpiled/react/Viewer/components/ToolbarButtons'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import Viewer, {
+  FooterActionButtons,
+  ForwardOrDownloadButton,
+  ToolbarButtons
+} from 'cozy-viewer'
+import SharingButton from 'cozy-viewer/dist/Footer/Sharing'
 
 import { FilesViewerLoading } from 'components/FilesViewerLoading'
 import {

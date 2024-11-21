@@ -3,12 +3,13 @@ import { RemoveScroll } from 'react-remove-scroll'
 
 import { isQueryLoading, useQuery } from 'cozy-client'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
-import Viewer from 'cozy-ui/transpiled/react/Viewer'
-import FooterActionButtons from 'cozy-ui/transpiled/react/Viewer/Footer/FooterActionButtons'
-import ForwardOrDownloadButton from 'cozy-ui/transpiled/react/Viewer/Footer/ForwardOrDownloadButton'
-import SharingButton from 'cozy-ui/transpiled/react/Viewer/Footer/Sharing'
-import ToolbarButtons from 'cozy-ui/transpiled/react/Viewer/components/ToolbarButtons'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import Viewer, {
+  FooterActionButtons,
+  ForwardOrDownloadButton,
+  ToolbarButtons
+} from 'cozy-viewer'
+import SharingButton from 'cozy-viewer/dist/Footer/Sharing'
 
 import Oops from 'components/Error/Oops'
 import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
