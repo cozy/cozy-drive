@@ -8,7 +8,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { BarRightOnMobile } from 'components/Bar'
 import { DownloadFilesButton } from 'modules/public/DownloadButton'
 import PublicToolbarMoreMenu from 'modules/public/PublicToolbarMoreMenu'
-import { isFilesIsFile, openExternalLink } from 'modules/public/helpers'
+import { openExternalLink } from 'modules/public/helpers'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 
 const PublicToolbarCozyToCozy = ({
@@ -16,33 +16,25 @@ const PublicToolbarCozyToCozy = ({
   discoveryLink,
   files
 }) => {
-  const isFile = isFilesIsFile(files)
   const { isMobile } = useBreakpoints()
   const { t } = useI18n()
   const { showSelectionBar } = useSelectionContext()
 
-  const shouldDisplayMoreMenu = isMobile || (!isFile && files.length > 0)
-
   return (
     <BarRightOnMobile>
       {!isMobile && files.length > 0 && <DownloadFilesButton files={files} />}
-      {shouldDisplayMoreMenu && (
-        <PublicToolbarMoreMenu
-          files={files}
-          showSelectionBar={showSelectionBar}
+      <PublicToolbarMoreMenu files={files} showSelectionBar={showSelectionBar}>
+        <ActionMenuItem
+          onClick={() => openExternalLink(discoveryLink)}
+          left={
+            <Icon icon={isSharingShortcutCreated ? 'sync' : 'to-the-cloud'} />
+          }
         >
-          <ActionMenuItem
-            onClick={() => openExternalLink(discoveryLink)}
-            left={
-              <Icon icon={isSharingShortcutCreated ? 'sync' : 'to-the-cloud'} />
-            }
-          >
-            {isSharingShortcutCreated
-              ? t('toolbar.menu_sync_cozy')
-              : t('toolbar.add_to_mine')}
-          </ActionMenuItem>
-        </PublicToolbarMoreMenu>
-      )}
+          {isSharingShortcutCreated
+            ? t('toolbar.menu_sync_cozy')
+            : t('toolbar.add_to_mine')}
+        </ActionMenuItem>
+      </PublicToolbarMoreMenu>
     </BarRightOnMobile>
   )
 }
