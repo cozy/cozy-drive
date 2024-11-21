@@ -23,7 +23,8 @@ const Toolbar = ({
   disabled,
   canUpload,
   canCreateFolder,
-  hasWriteAccess
+  hasWriteAccess,
+  isSharedWithMe
 }) => {
   const { displayedFolder } = useDisplayedFolder()
   const { isMobile } = useBreakpoints()
@@ -73,6 +74,7 @@ const Toolbar = ({
         <MoreMenu
           isDisabled={isDisabled}
           hasWriteAccess={hasWriteAccess}
+          isSharedWithMe={isSharedWithMe}
           canCreateFolder={canCreateFolder}
           canUpload={canUpload}
           folderId={folderId}
@@ -113,10 +115,11 @@ const ToolbarWithSharingContext = props => {
   ) : (
     <SharedDocument docId={folderId}>
       {sharingProps => {
-        const { hasWriteAccess } = sharingProps
+        const { hasWriteAccess, isSharedWithMe } = sharingProps
         return (
           <Toolbar
             hasWriteAccess={hasWriteAccess}
+            isSharedWithMe={isSharedWithMe}
             folderId={folderId}
             {...props}
           />

@@ -41,7 +41,8 @@ const MoreMenu = ({
   displayedFolder,
   folderId,
   showSelectionBar,
-  isSelectionBarVisible
+  isSelectionBarVisible,
+  isSharedWithMe
 }) => {
   const [menuIsVisible, setMenuVisible] = useState(false)
   const anchorRef = React.createRef()
@@ -100,8 +101,10 @@ const MoreMenu = ({
                 folderId={folderId}
               >
                 <hr />
-                {/* TODO DeleteItem needs props */}
-                <DeleteItem displayedFolder={displayedFolder} />
+                <DeleteItem
+                  displayedFolder={displayedFolder}
+                  isSharedWithMe={isSharedWithMe}
+                />
               </InsideRegularFolder>
             )}
           </ActionMenu>
