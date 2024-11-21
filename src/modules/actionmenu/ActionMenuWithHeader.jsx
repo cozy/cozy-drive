@@ -26,7 +26,6 @@ export const ActionMenuWithHeader = ({
       actions={actions}
       docs={[file]}
       anchorOrigin={{
-        strategy: 'fixed',
         vertical: 'bottom',
         horizontal: 'right'
       }}
