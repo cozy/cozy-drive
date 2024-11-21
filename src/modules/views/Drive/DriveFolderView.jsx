@@ -63,7 +63,8 @@ const DriveFolderView = () => {
   const { isMobile } = useBreakpoints()
   const { t, lang } = useI18n()
   const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)
-  const { allLoaded, hasWriteAccess, refresh } = useSharingContext()
+  const { allLoaded, hasWriteAccess, refresh, isOwner, byDocId } =
+    useSharingContext()
   const client = useClient()
   const vaultClient = useVaultClient()
   const { pushModal, popModal } = useModalContext()
@@ -156,7 +157,9 @@ const DriveFolderView = () => {
     canMove: true,
     isPublic: false,
     allLoaded,
-    showAlert
+    showAlert,
+    isOwner,
+    byDocId
   }
   const actions = makeActions(
     [

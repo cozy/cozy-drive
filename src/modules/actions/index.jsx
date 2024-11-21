@@ -67,13 +67,19 @@ export const hr = () => {
   }
 }
 
-export const trash = ({ t, pushModal, popModal, hasWriteAccess, refresh }) => {
-  const label = t('SelectionBar.trash')
+export const trash = ({
+  t,
+  pushModal,
+  popModal,
+  hasWriteAccess,
+  refresh,
+  byDocId,
+  isOwner
+}) => {
   const icon = TrashIcon
 
   return {
     name: 'trash',
-    label,
     icon,
     displayCondition: () => hasWriteAccess,
     action: files =>
@@ -87,6 +93,12 @@ export const trash = ({ t, pushModal, popModal, hasWriteAccess, refresh }) => {
         />
       ),
     Component: forwardRef(function Trash(props, ref) {
+      const sharedWithMe =
+        byDocId !== undefined &&
+        byDocId[props.docs[0].id] &&
+        !isOwner(props.docs[0].id)
+      const label = sharedWithMe ? t('toolbar.leave') : t('SelectionBar.trash')
+
       return (
         <ActionsMenuItem {...props} ref={ref}>
           <ListItemIcon>
