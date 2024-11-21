@@ -9,32 +9,20 @@ import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import deleteContainer from './delete'
 
-const DeleteItem = ({
-  t,
-  isSharedWithMe,
-  trashFolder,
-  onLeave,
-  displayedFolder
-}) => {
-  return isSharedWithMe ? (
+const DeleteItem = ({ t, isSharedWithMe, trashFolder, displayedFolder }) => {
+  const handleClick = () => {
+    trashFolder(displayedFolder)
+  }
+
+  const label = isSharedWithMe ? t('toolbar.leave') : t('toolbar.trash')
+
+  return (
     <ActionMenuItem
       data-testid="fil-action-delete"
       left={<Icon icon={TrashIcon} color="var(--errorColor)" />}
-      onClick={() =>
-        onLeave(displayedFolder).then(() => trashFolder(displayedFolder))
-      }
+      onClick={handleClick}
     >
-      <span className="u-pomegranate">{t('toolbar.leave')}</span>
-    </ActionMenuItem>
-  ) : (
-    <ActionMenuItem
-      data-testid="fil-action-delete"
-      left={<Icon icon={TrashIcon} color="var(--errorColor)" />}
-      onClick={() => {
-        trashFolder(displayedFolder)
-      }}
-    >
-      <span className="u-pomegranate">{t('toolbar.trash')}</span>
+      <span className="u-pomegranate">{label}</span>
     </ActionMenuItem>
   )
 }
@@ -43,7 +31,6 @@ DeleteItem.propTypes = {
   t: PropTypes.func.isRequired,
   isSharedWithMe: PropTypes.bool.isRequired,
   trashFolder: PropTypes.func.isRequired,
-  onLeave: PropTypes.func.isRequired,
   displayedFolder: PropTypes.object.isRequired
 }
 
