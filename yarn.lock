@@ -2155,12 +2155,19 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.0", "@babel/runtime@^7.12.0", "@babel/runtime@^7.12.5", "@babel/runtime@^7.15.4", "@babel/runtime@^7.2.0", "@babel/runtime@^7.3.1", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.4", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.3", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.10.0", "@babel/runtime@^7.12.0", "@babel/runtime@^7.12.5", "@babel/runtime@^7.15.4", "@babel/runtime@^7.2.0", "@babel/runtime@^7.3.1", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.4", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.3", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7":
   version "7.17.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.17.2.tgz#66f68591605e59da47523c631416b18508779941"
   integrity sha512-hzeyJyMA1YGdJTuWU0e/j4wKXrU4OMFvY2MSlaI9B7VQb0r5cxTE3EAIS2Q7Tn2RIcDkRvTA/v2JsAEhxe99uw==
   dependencies:
     regenerator-runtime "^0.13.4"
+
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.9.2":
+  version "7.26.0"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.26.0.tgz#8600c2f595f277c60815256418b85356a65173c1"
+  integrity sha512-FDSOghenHTiToteC/QRlv2q3DhPZ/oOXTBoirfWNx1Cx3TMVcGWQtMMmQcSvb/JjpNeGzx8Pq/b4fKEJuWm1sw==
+  dependencies:
+    regenerator-runtime "^0.14.0"
 
 "@babel/runtime@^7.10.2":
   version "7.23.2"
@@ -6263,10 +6270,10 @@ cozy-app-publish@^0.27.2:
     request "^2.88.0"
     tar "^4.4.13"
 
-cozy-bar@15.1.0:
-  version "15.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-15.1.0.tgz#f7f624130d1b56539b05e4a02df520b245788b6f"
-  integrity sha512-Nx9B/cD7upmBisFGOu5V7nr5zgJfCiwRA3ChaAnF2ifC6p1HiwhbvJCXMW7VpX0dDZNVmM7VWXGnvDaw+VinTg==
+cozy-bar@^16.0.1:
+  version "16.0.1"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-16.0.1.tgz#1dc75cd4d23384777e6bbe7a068aacad3d1c0318"
+  integrity sha512-2B+bwKy+7WNR51HcXq+M1zie5epj8bdLQux3Ca/zBajAeCVBTfHPStywHh/KM758FpTN2b2z4P65/cjJ7O504Q==
   dependencies:
     hammerjs "2.0.8"
     lodash.debounce "4.0.8"
@@ -6353,16 +6360,16 @@ cozy-client@^45.14.1:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
-cozy-client@^49.8.0:
-  version "49.8.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-49.8.0.tgz#d4f6b3a2fb26dc6bfa561046b075eb6e221af73e"
-  integrity sha512-peb2n+buOihzqqNN3/zULmytQI8wOtQZsIqLWEaw2WfNXha1T23wNBrMuE7SaMOof361f011MrM5+WVYhKj+VA==
+cozy-client@^51.3.0:
+  version "51.3.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-51.3.0.tgz#a0272d6f51bf118773334d6545e88e9ec60a1b97"
+  integrity sha512-YgylGXNTGzOtWcBZA21D6fb8DBkkXqUHfHjJxZUl6wU6Orbf7lpdtZut1FzIynMgicwQG5ZZLoVTLXLCN8eKfg==
   dependencies:
     "@cozy/minilog" "1.0.0"
     "@types/jest" "^26.0.20"
     "@types/lodash" "^4.14.170"
     btoa "^1.2.1"
-    cozy-stack-client "^49.8.0"
+    cozy-stack-client "^51.0.0"
     date-fns "2.29.3"
     json-stable-stringify "^1.0.1"
     lodash "^4.17.13"
@@ -6391,6 +6398,15 @@ cozy-device-helper@^3.1.0:
   integrity sha512-KorbuWN+oZ+v7okbXQTbLuW6nt7IyVnIIsDXB3Ay6zdtl5nV13+fOGKeRsjaecgBDLSXWJ07j0ooT7l6orZpDg==
   dependencies:
     lodash "^4.17.19"
+
+cozy-devtools@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/cozy-devtools/-/cozy-devtools-1.2.1.tgz#680976ab69ebdf2d2727cffc07243705794d1a83"
+  integrity sha512-6hMoeEdT3coU/LMBlwnFWrBNB6dpa6HlzB8ejHbb6pZwQtvtX6Sr4IzvCuqqd2ztjrlTZ/wivWE5sZeu+G7f0Q==
+  dependencies:
+    date-fns "2.29.3"
+    lodash "4.17.13"
+    react-inspector "5.1.1"
 
 cozy-doctypes@1.85.4:
   version "1.85.4"
@@ -6425,17 +6441,17 @@ cozy-doctypes@^1.91.1:
     lodash "^4.17.19"
     prop-types "^15.7.2"
 
-cozy-flags@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/cozy-flags/-/cozy-flags-4.0.0.tgz#047f9a93f826808bfd23ab206d0bf8235c162237"
-  integrity sha512-us+XDoqPCnDflu7gJrZAmE5SDmkIx2QEhs+fItQOf2JjnGpfBvmIhLMv51/P5INPL4bAQSUHE6ddwNFwOruqBw==
-  dependencies:
-    microee "^0.0.6"
-
 cozy-flags@^2.8.7:
   version "2.12.0"
   resolved "https://registry.yarnpkg.com/cozy-flags/-/cozy-flags-2.12.0.tgz#bc3d689db9c91389c28f053223142d4684573ef1"
   integrity sha512-s0et8aWChaqY4rMKkNKDACflU2h5s6s9UVU1guU3Il9GqktSPrhvMo+ntHLnQb2l+yLL6xV1S6/rK0qniR1q0A==
+  dependencies:
+    microee "^0.0.6"
+
+cozy-flags@^4.6.1:
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/cozy-flags/-/cozy-flags-4.6.1.tgz#81eb05c8a77f4cd8f67be404248bed6d2853f2be"
+  integrity sha512-UW0+I78wUnPyDaP/bWEVSQTPh4nSJBFFeFOl8nm79PW76xriN5GncJVvUKRFQTL1FzHo65mOrn/ltFzeaLOlhg==
   dependencies:
     microee "^0.0.6"
 
@@ -6460,12 +6476,12 @@ cozy-harvest-lib@^30.0.0:
     use-deep-compare-effect "^1.8.1"
     uuid "^3.3.2"
 
-cozy-intent@^2.23.0:
-  version "2.23.0"
-  resolved "https://registry.yarnpkg.com/cozy-intent/-/cozy-intent-2.23.0.tgz#b6f3a407413df05c108e848b9dcb074b8780824b"
-  integrity sha512-DFn0ny4B4HpOE+3PYuZTTa074gRnFHqID+XaJ3gY2OrPL2xUQKEZmmFLp2bPVWThi5FvgvsU3EQeWPHZNQPbaQ==
+cozy-intent@^2.29.1:
+  version "2.29.1"
+  resolved "https://registry.yarnpkg.com/cozy-intent/-/cozy-intent-2.29.1.tgz#929d6dfe1e7d619ed5d62447483c5899914b04ed"
+  integrity sha512-Es+7WkPU+mkrMM1RDjuVXZqWeXEYXo0xLZinEBJIYyTrz/gopLLztHcrjfL4bglKqAt9XTdDxrT1KxsenDd1bw==
   dependencies:
-    cozy-minilog "^3.3.1"
+    cozy-minilog "^3.9.1"
     post-me "0.4.5"
 
 cozy-interapp@^0.5.4:
@@ -6593,10 +6609,17 @@ cozy-logger@^1.3.0:
     chalk "^2.4.2"
     json-stringify-safe "5.0.1"
 
-cozy-minilog@3.3.1, cozy-minilog@^3.3.1:
+cozy-minilog@3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/cozy-minilog/-/cozy-minilog-3.3.1.tgz#472dccf4a9391c479120a83d26b435cf9d609c72"
   integrity sha512-NLQNQ1Q/bvJrqNv9w5bLjfAxYKv+pESobJgUKXondxP616kx7k0mpiRrCZBaJRbEbpKryT/eJ0JJwLdVaIP5NA==
+  dependencies:
+    microee "0.0.6"
+
+cozy-minilog@^3.9.1:
+  version "3.9.1"
+  resolved "https://registry.yarnpkg.com/cozy-minilog/-/cozy-minilog-3.9.1.tgz#8a89743664145da7b1808d78cc53daacaa97e758"
+  integrity sha512-UwtNfRWKIWpNA4NK2MovPvUalijmYpFk726r1zxLlMixRTBtHTqVZtEcDF+3PrE5o5UiUAUC8Z+MWiz3ivstbw==
   dependencies:
     microee "0.0.6"
 
@@ -6702,6 +6725,15 @@ cozy-stack-client@^49.8.0:
   version "49.8.0"
   resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-49.8.0.tgz#c57dfefe50e47f228fee7e1921c438d35f4e0877"
   integrity sha512-sYJL2o+DsNs7V5eQghXpWKcMzxc39QAKtM8zAdmWl2MMCyiqO3lBehRomhstcJHtuZrMLXXPQPr1A0ONBlMmZg==
+  dependencies:
+    detect-node "^2.0.4"
+    mime "^2.4.0"
+    qs "^6.7.0"
+
+cozy-stack-client@^51.0.0:
+  version "51.0.0"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-51.0.0.tgz#73fbdb1cf8efc46cb89ad2266d04e1289a9ae355"
+  integrity sha512-ToaheKT0cziulvAxUl+H8mqmSXQmblCp6a5TKNnrEHOS3ExTmzOHmIgNrRDgDKi4G8hK93CZTi8gj49ffk0HYw==
   dependencies:
     detect-node "^2.0.4"
     mime "^2.4.0"
@@ -12593,7 +12625,7 @@ lodash.rest@^4.0.0:
 lodash.set@^4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/lodash.set/-/lodash.set-4.3.2.tgz#d8757b1da807dde24816b0d6a84bea1a76230b23"
-  integrity sha1-2HV7HagH3eJIFrDWqEvqGnYjCyM=
+  integrity sha512-4hNPN5jlm/N/HLMCO43v8BXKq9Z7QdAGc/VGrRD61w8gN9g/6jF9A4L1pbUgBLCffi0w9VsXfTOij5x8iTyFvg==
 
 lodash.sortby@^4.7.0:
   version "4.7.0"
@@ -12608,12 +12640,17 @@ lodash.truncate@^4.4.2:
 lodash.unionwith@4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.unionwith/-/lodash.unionwith-4.6.0.tgz#74d140b5ca8146e6c643c3724f5152538d9ac1f0"
-  integrity sha1-dNFAtcqBRubGQ8NyT1FSU42awfA=
+  integrity sha512-Hk8otPCkVM4UxRoft3E5dAREwExyXci6iVPCibHIEiG7neb9KAdWHYS75MYpVTvxDrnpp7WCJNZ84vAk7j7tVA==
 
 lodash@4, lodash@4.17.21, lodash@^4, lodash@^4.14.2, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.2.1, lodash@^4.7.0:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
+
+lodash@4.17.13:
+  version "4.17.13"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.13.tgz#0bdc3a6adc873d2f4e0c4bac285df91b64fc7b93"
+  integrity sha512-vm3/XWXfWtRua0FkUyEHBZy8kCPjErNBT9fJx8Zvs+U6zjqPbTUOpkaoum3O5uiA8sm+yNMHXfYkTUHFoMxFNA==
 
 lodash@4.17.19:
   version "4.17.19"
@@ -12884,7 +12921,7 @@ methods@~1.1.2:
 microee@0.0.6, microee@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/microee/-/microee-0.0.6.tgz#a12bdb0103681e8b126a9b071eba4c467c78fffe"
-  integrity sha1-oSvbAQNoHosSapsHHrpMRnx4//4=
+  integrity sha512-/LdL3jiBWDJ3oQIRLgRhfeCZNE3patM1LiwCC124+/HHn10sI/G2OAyiMfTNzH5oYWoZBk0tRZADAUOv+0Wt0A==
 
 micromatch@3.1.0:
   version "3.1.0"
@@ -13591,7 +13628,7 @@ object-assign@^3.0.0:
 object-assign@^4, object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
-  integrity sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=
+  integrity sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==
 
 object-copy@^0.1.0:
   version "0.1.0"
@@ -15668,9 +15705,9 @@ regenerator-runtime@^0.12.0:
   integrity sha512-odxIc1/vDlo4iZcfXqRYFj0vpXFNoGdKMAUieAlFYO6m/nl5e9KR/beGf41z4a1FI+aQgtjhuaSlDxQ0hmkrHg==
 
 regenerator-runtime@^0.13.4:
-  version "0.13.7"
-  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.7.tgz#cac2dacc8a1ea675feaabaeb8ae833898ae46f55"
-  integrity sha512-a54FxoJDIr27pgf7IgeQGxmqUNYrcV338lf/6gH456HZ/PhX+5BcwHXG9ajESmwe6WRO0tAzRUrRmNONWgkrew==
+  version "0.13.11"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz#f6dca3e7ceec20590d07ada785636a90cdca17f9"
+  integrity sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==
 
 regenerator-runtime@^0.14.0:
   version "0.14.0"

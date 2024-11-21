@@ -2,7 +2,7 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 
 import { BarComponent } from 'cozy-bar'
-import CozyDevtools from 'cozy-client/dist/devtools'
+import CozyDevtools from 'cozy-devtools'
 import flag from 'cozy-flags'
 import FlagSwitcher from 'cozy-flags/dist/FlagSwitcher'
 import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
