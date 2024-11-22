@@ -47,7 +47,8 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
   const { t } = useI18n()
   const { showAlert } = useAlert()
   const client = useClient()
-  const { allLoaded, hasWriteAccess, refresh } = useSharingContext()
+  const { allLoaded, hasWriteAccess, refresh, isOwner, byDocId } =
+    useSharingContext()
   const { pushModal, popModal } = useModalContext()
   const dispatch = useDispatch()
   const { displayedFolder, isNotFound } = useDisplayedFolder()
@@ -96,7 +97,9 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
     pathname,
     hasWriteAccess: hasWrite,
     canMove: true,
-    allLoaded
+    allLoaded,
+    isOwner,
+    byDocId
   }
   const actions = makeActions(
     [share, download, trash, rename, moveTo, qualify, versions],
