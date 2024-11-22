@@ -38,6 +38,7 @@ export const download = ({ client, t, vaultClient, showAlert }) => {
       // Then, we do not display the download button when the selection
       // includes an encrypted folder or several encrypted files
       return (
+        files.length > 0 &&
         !files.some(file => isEncryptedFolder(file)) &&
         !(files.length > 1 && files.some(file => isEncryptedFile(file)))
       )
@@ -82,7 +83,7 @@ export const trash = ({
   return {
     name: 'trash',
     icon,
-    displayCondition: () => hasWriteAccess,
+    displayCondition: files => files.length > 0 && hasWriteAccess,
     action: files =>
       pushModal(
         <DeleteConfirm
