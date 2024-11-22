@@ -79,7 +79,7 @@ const PublicFolderView = () => {
   const { isSelectionBarVisible } = useSelectionContext()
   const { hasWritePermissions } = usePublicWritePermissions()
   const { pushModal, popModal } = useModalContext()
-  const { refresh } = useSharingContext()
+  const { refresh, isOwner, byDocId } = useSharingContext()
   const dispatch = useDispatch()
   const sharingInfos = useSharingInfos()
   const { showAlert } = useAlert()
@@ -120,7 +120,9 @@ const PublicFolderView = () => {
     pathname,
     hasWriteAccess: hasWritePermissions,
     canMove: false,
-    isPublic: true
+    isPublic: true,
+    isOwner,
+    byDocId
   }
   const actions = makeActions(
     [download, rename, versions, divider, trash],

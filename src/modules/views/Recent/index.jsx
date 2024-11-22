@@ -46,7 +46,7 @@ export const RecentView = () => {
   const { isMobile } = useBreakpoints()
   const client = useClient()
   const { pushModal, popModal } = useModalContext()
-  const { allLoaded, refresh } = useSharingContext()
+  const { allLoaded, refresh, isOwner, byDocId } = useSharingContext()
   const dispatch = useDispatch()
   useHead()
   const { showAlert } = useAlert()
@@ -79,7 +79,9 @@ export const RecentView = () => {
     canMove: true,
     isPublic: false,
     allLoaded,
-    showAlert
+    showAlert,
+    isOwner,
+    byDocId
   }
 
   const actions = makeActions(

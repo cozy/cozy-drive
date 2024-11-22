@@ -11,9 +11,9 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Viewer, {
   FooterActionButtons,
   ForwardOrDownloadButton,
-  ToolbarButtons
+  ToolbarButtons,
+  SharingButton
 } from 'cozy-viewer'
-import SharingButton from 'cozy-viewer/dist/Footer/Sharing'
 
 import { FilesViewerLoading } from 'components/FilesViewerLoading'
 import {
