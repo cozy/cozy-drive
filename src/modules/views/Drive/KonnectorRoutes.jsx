@@ -2,7 +2,7 @@ import React from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 
 import { useQuery } from 'cozy-client'
-import { Routes } from 'cozy-harvest-lib'
+import { HarvestRoutes } from 'cozy-harvest-lib'
 import datacardOptions from 'cozy-harvest-lib/dist/datacards/datacardOptions'
 
 import {
@@ -38,7 +38,7 @@ const KonnectorRoutes = () => {
   const onDismiss = () => navigate('..')
 
   return (
-    <Routes
+    <HarvestRoutes
       konnector={konnectorWithTriggers}
       konnectorSlug={konnectorSlug}
       datacardOptions={datacardOptions}
