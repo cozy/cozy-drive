@@ -25,7 +25,7 @@ import { UploaderComponent } from 'modules//views/Upload/UploaderComponent'
 import Layout from 'modules/layout/Layout'
 import { PublicNoteRedirect } from 'modules/navigation/PublicNoteRedirect'
 import FileOpenerExternal from 'modules/viewer/FileOpenerExternal'
-import HarvestRoutes from 'modules/views/Drive/HarvestRoutes'
+import { KonnectorRoutes } from 'modules/views/Drive/KonnectorRoutes'
 import { SharedDrivesFolderView } from 'modules/views/Drive/SharedDrivesFolderView'
 import { FavoritesView } from 'modules/views/Favorites/FavoritesView'
 import { FolderDuplicateView } from 'modules/views/Folder/FolderDuplicateView'
@@ -70,7 +70,7 @@ const AppRoute = () => (
         <Route path="paywall" element={<OnlyOfficePaywallView />} />
         <Route path="share" element={<ShareDisplayedFolderView />} />
         <Route path="move" element={<MoveFilesView />} />
-        <Route path="harvest/:konnectorSlug/*" element={<HarvestRoutes />} />
+        <Route path="harvest/:konnectorSlug/*" element={<KonnectorRoutes />} />
         <Route path="duplicate" element={<FolderDuplicateView />} />
       </Route>
 

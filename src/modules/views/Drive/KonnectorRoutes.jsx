@@ -10,7 +10,7 @@ import {
   buildKonnectorsQueryById
 } from 'queries'
 
-const HarvestRoutes = () => {
+const KonnectorRoutes = () => {
   const { konnectorSlug } = useParams()
   const navigate = useNavigate()
 
@@ -49,4 +49,4 @@ const HarvestRoutes = () => {
   )
 }
 
-export default HarvestRoutes
+export { KonnectorRoutes }
