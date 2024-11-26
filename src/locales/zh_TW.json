@@ -38,43 +38,7 @@
     "leave": "離開分享資料夾並刪除"
   },
   "Share": {
-    "status": {
-      "owner": "擁有者",
-      "pending": "等待中",
-      "ready": "已同意",
-      "refused": "已拒絕",
-      "error": "錯誤",
-      "unregistered": "錯誤",
-      "mail-not-sent": "等待中",
-      "revoked": "錯誤"
-    },
-    "type": {
-      "one-way": "可以檢視",
-      "two-way": "可以更改"
-    },
-    "recipients": {
-      "you": "您",
-      "accessCount": "%{count} 個人有存取權"
-    },
-    "create-cozy": "建立我的 Cozy",
-    "members": {
-      "others": "和另 1 位… |||| 和 %{smart_count} 個人…",
-      "otherContacts": "其他聯絡人 |||| 其他聯絡人"
-    },
-    "contacts": {
-      "permissionRequired": {
-        "title": "在您的 Cozy 儲存您的聯絡人？",
-        "desc": "允許軟體存取您 Cozy 上的聯絡人：您將可在下次選擇它們",
-        "action": "允許存取",
-        "success": "軟體有權限存取您的聯絡人"
-      }
-    }
-  },
-  "Sharings": {
-    "unavailable": {
-      "title": "切換上線！",
-      "message": "顯示您最近分享的列表需要網路連線"
-    }
+    "create-cozy": "建立我的 Cozy"
   },
   "Files": {
     "share": {

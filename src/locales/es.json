@@ -53,59 +53,7 @@
     "menu_onlyOffice": {}
   },
   "Share": {
-    "status": {
-      "owner": "Propietario",
-      "pending": "Pendiente",
-      "ready": "Aceptado",
-      "refused": "Rechazado",
-      "error": "Error",
-      "unregistered": "Error",
-      "mail-not-sent": "Pendiente",
-      "revoked": "Error"
-    },
-    "type": {
-      "one-way": "Puede consultarlo",
-      "two-way": "Puede cambiarlo",
-      "desc": {
-        "one-way": "\"Les contacts peuvent consulter, télécharger, et ajouter le contenu à leur Cozy. En cas d’ajout à leur Cozy, ils recevront vos modifications sur le contenu mais ils ne pourront pas le modifier.\",",
-        "two-way": "Les contacts peuvent modifier, supprimer et ajouter le contenu à leur Cozy. Les modifications sur le contenu seront répercutées automatiquement entre vos Cozy."
-      }
-    },
-    "locked-type-file": "Bientôt : vous pourrez changer la permission donnée sur le fichier.\",\n \"locked-type-folder\": \"Bientôt : vous pourrez changer la permission donnée sur le dossier.\",\n \"recipients",
-    "locked-type-folder": "Bientôt : vous pourrez changer la permission donnée sur le fichier.\",\n \"locked-type-folder\": \"Bientôt : vous pourrez changer la permission donnée sur le dossier.\",\n \"recipients",
-    "recipients": {
-      "you": "Usted",
-      "accessCount": "%{count} personas tienen acceso"
-    },
-    "create-cozy": "Crear mi cozy",
-    "members": {
-      "count": "1 miembro |||| %{smart_count} miembros",
-      "others": "y 1 persona más… |||| y %{smart_count} personas más…",
-      "otherContacts": "otro contacto |||| otros contactos"
-    },
-    "contacts": {
-      "permissionRequired": {
-        "title": "¿Guardar sus contactos en su Cozy?",
-        "desc": "Autoriza a la aplicación a acceder a sus contactos en Cozy: usted podrá seleccionarlos dentro de poco tiempo.",
-        "action": "Autorizar el acceso",
-        "success": "La aplicación ha accedido a sus contactos"
-      }
-    },
-    "banner": {
-      "shared_from": "Compartido desde ![avatar](%{image}) %{name}'s cozy.",
-      "synchronise": "Sincronice este contenido en su cozy para poder modificarlo o guardarlo en caso de anulación de la compartición.",
-      "whats_cozy": "Cozy es un sitio digital seguro, situado en Francia, para guardar todos sus datos -",
-      "know_more": "Mayor información",
-      "sync_to_mine": "Sincronizar en mi Cozy",
-      "add_to_mine": "Añadir a mi Cozy",
-      "close": "Cerrar"
-    }
-  },
-  "Sharings": {
-    "unavailable": {
-      "title": "Encantado de volver a verle!!",
-      "message": "Conéctese a Internet para que pueda ver la lista de sus recientes elementos compartidos. "
-    }
+    "create-cozy": "Crear mi cozy"
   },
   "Files": {
     "share": {

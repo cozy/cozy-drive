@@ -27,14 +27,6 @@
     "menu_download_folder": "مُجلّد التنزيل",
     "share": "شارك"
   },
-  "Share": {
-    "status": {
-      "pending": "معلق",
-      "error": "خطأ",
-      "unregistered": "خطأ",
-      "revoked": "خطأ"
-    }
-  },
   "Files": {
     "share": {
       "cta": "شارك",

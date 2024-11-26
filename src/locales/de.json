@@ -60,59 +60,7 @@
     }
   },
   "Share": {
-    "status": {
-      "owner": "Eigentümer",
-      "pending": "Ausstehend",
-      "ready": "Akzeptiert",
-      "refused": "Verweigert",
-      "error": "Fehler",
-      "unregistered": "Fehler",
-      "mail-not-sent": "Ausstehend",
-      "revoked": "Fehler"
-    },
-    "type": {
-      "one-way": "Darf sehen",
-      "two-way": "Darf ändern",
-      "desc": {
-        "one-way": "Kontakte können Inhalte sehen, herunterladen und ihrem eigenen Cozy hinzufügen. Wenn sie die Inhalte ihrem Cozy hinzufügen, erhalten sie deine Aktualisierungen, können selbst jedoch keine Änderungen vornehmen.",
-        "two-way": "Kontakte können den Inhalt aktualisieren, löschen und ihrem eigenen Cozy hinzufügen. Aktualisierungen des Inhalts können auf anderen Cozies betrachtet werden."
-      }
-    },
-    "locked-type-file": "Bald verfügbar: du wirst die Berechtigungen auf den Zugriff der Datei ändern können.",
-    "locked-type-folder": "Bald verfügbar: du wirst die Berechtigungen auf den Zugriff des Ordners ändern können.",
-    "recipients": {
-      "you": "Du",
-      "accessCount": "%{count} Personen haben Zugriff"
-    },
-    "create-cozy": "Meinen Cozy erstellen",
-    "members": {
-      "count": "1 Teilnehmer |||| %{smart_count} Teilnehmende",
-      "others": "und 1 Anderer... |||| und %{smart_count} Andere...",
-      "otherContacts": "anderer Kontakt |||| andere Kontakte"
-    },
-    "contacts": {
-      "permissionRequired": {
-        "title": "Deine Kontakte in deinem Cozy speichern?",
-        "desc": "Erlaube der Anwendung auf deine Kontakte auf Cozy zuzugreifen: du wirst sie beim nächsten Mal auswählen können.",
-        "action": "Zugriff gewähren",
-        "success": "Die Anwendung hat Zugriff auf deine Kontakte"
-      }
-    },
-    "banner": {
-      "shared_from": "Geteilt von ![avatar](%{image}) %{name}'s Cozy.",
-      "synchronise": "Synchronisiere diesen Inhalt in dein Cozy, um ihn abändern zu können oder ihn im Falle des Zugriffsverlustes zu behalten.",
-      "whats_cozy": "Cozy ist eine sicheres digitales Zuhause für all deine Daten, gehostet in Frankreich -",
-      "know_more": "Mehr Informationen",
-      "sync_to_mine": "In mein Cozy synchronisieren",
-      "add_to_mine": "Meinem Cozy hinzufügen",
-      "close": "Schließen"
-    }
-  },
-  "Sharings": {
-    "unavailable": {
-      "title": "Gehe online!",
-      "message": "Eine Internetverbindung ist notwendig, um die Liste deiner letzten Teilungen einzusehen."
-    }
+    "create-cozy": "Meinen Cozy erstellen"
   },
   "Files": {
     "share": {
