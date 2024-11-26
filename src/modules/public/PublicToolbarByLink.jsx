@@ -42,6 +42,8 @@ const PublicToolbarByLink = ({
     actionOptions
   )
 
+  const isMoreMenuDisplayed = actions.length > 0 || files.length > 1
+
   return (
     <BarRightOnMobile>
       <AddMenuProvider
@@ -60,15 +62,17 @@ const PublicToolbarByLink = ({
             )}
           </>
         )}
-        <PublicToolbarMoreMenu
-          files={files}
-          hasWriteAccess={hasWriteAccess}
-          showSelectionBar={showSelectionBar}
-          actions={actions}
-        >
-          {isMobile && hasWriteAccess && <AddMenuItem />}
-          {files.length > 1 && <SelectableItem onClick={showSelectionBar} />}
-        </PublicToolbarMoreMenu>
+        {isMoreMenuDisplayed && (
+          <PublicToolbarMoreMenu
+            files={files}
+            hasWriteAccess={hasWriteAccess}
+            showSelectionBar={showSelectionBar}
+            actions={actions}
+          >
+            {isMobile && hasWriteAccess && <AddMenuItem />}
+            {files.length > 1 && <SelectableItem onClick={showSelectionBar} />}
+          </PublicToolbarMoreMenu>
+        )}
       </AddMenuProvider>
     </BarRightOnMobile>
   )
