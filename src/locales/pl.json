@@ -32,18 +32,6 @@
     "share": "Udostępnij",
     "leave": "Opuść udostępniony folder i usuń go"
   },
-  "Share": {
-    "status": {
-      "pending": "Oczekujące",
-      "refused": "Odrzucone",
-      "error": "Błąd",
-      "unregistered": "Błąd",
-      "revoked": "Błąd"
-    },
-    "type": {
-      "two-way": "Może zmieniać"
-    }
-  },
   "Files": {
     "share": {
       "cta": "Udostępnij",

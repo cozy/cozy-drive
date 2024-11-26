@@ -68,59 +68,7 @@
     }
   },
   "Share": {
-    "status": {
-      "owner": "Owner",
-      "pending": "Pending",
-      "ready": "Accepted",
-      "refused": "Refused",
-      "error": "Error",
-      "unregistered": "Error",
-      "mail-not-sent": "Pending",
-      "revoked": "Error"
-    },
-    "type": {
-      "one-way": "Can View",
-      "two-way": "Can Change",
-      "desc": {
-        "one-way": "Contacts can view, download, and add the content to their Cozy. If they add the content to their Cozy, they will get updates you make to the content, but they won't be able to update it.",
-        "two-way": "Contacts can update, delete and add the content to their Cozy. Updates on the content will be seen on other Cozies."
-      }
-    },
-    "locked-type-file": "Coming soon: you will be able to change permissions you grant on the file.",
-    "locked-type-folder": "Coming soon: you will be able to change permissions you grant on the folder.",
-    "recipients": {
-      "you": "You",
-      "accessCount": "%{count} people have access"
-    },
-    "create-cozy": "Create my cozy",
-    "members": {
-      "count": "1 member |||| %{smart_count} members",
-      "others": "and 1 other… |||| and %{smart_count} others…",
-      "otherContacts": "other contact |||| other contacts"
-    },
-    "contacts": {
-      "permissionRequired": {
-        "title": "Save your contacts in your Cozy?",
-        "desc": "Authorize the application to access to your Cozy's contacts: you'll be able to select them next time.",
-        "action": "Authorize access",
-        "success": "The application has access to your contacts"
-      }
-    },
-    "banner": {
-      "shared_from": "Shared from ![avatar](%{image}) %{name}'s cozy.",
-      "synchronise": "Synchronise this content in your cozy to be able to modify it or to keep it in case of cancellation of sharing.",
-      "whats_cozy": "Cozy is a secure digital home for all your data, hosted in France - ",
-      "know_more": "More information",
-      "sync_to_mine": "Synchronise in my Cozy",
-      "add_to_mine": "Add to my Cozy",
-      "close": "Close"
-    }
-  },
-  "Sharings": {
-    "unavailable": {
-      "title": "Switch online!",
-      "message": "An internet connection is needed to display the list of your last sharings."
-    }
+    "create-cozy": "Create my cozy"
   },
   "Files": {
     "share": {

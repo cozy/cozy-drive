@@ -62,59 +62,7 @@
     }
   },
   "Share": {
-    "status": {
-      "owner": "Eigenaar",
-      "pending": "In wachtrij",
-      "ready": "Geaccepteerd",
-      "refused": "Geweigerd",
-      "error": "Fout",
-      "unregistered": "Fout",
-      "mail-not-sent": "In wachtrij",
-      "revoked": "Fout"
-    },
-    "type": {
-      "one-way": "Mag bekijken",
-      "two-way": "Mag bewerken",
-      "desc": {
-        "one-way": "Contactpersonen kunnen de inhoud bekijken, downloaden en toevoegen aan hun Cozy. Als ze dit doen, dan ontvangen ze bijgewerkte versies zodra jij iets aanpast, maar ze kunnen zelf niks aanpassen.",
-        "two-way": "Contactpersonen kunnen de inhoud bijwerken, verwijderen en toevoegen aan hun Cozy. Bijgewerkte versies worden getoond op andere Cozies."
-      }
-    },
-    "locked-type-file": "Binnenkort kun je op een bestand verleende machtigingen wijzigen.",
-    "locked-type-folder": "Binnenkort kun je op een map verleende machtigingen wijzigen.",
-    "recipients": {
-      "you": "Jij",
-      "accessCount": "%{count} personen hebben toegang"
-    },
-    "create-cozy": "Maak mijn cozy",
-    "members": {
-      "count": "1 lid |||| %{smart_count} leden",
-      "others": "en 1 andere… ||| en %{smart_count} anderen…",
-      "otherContacts": "andere contactpersoon |||| andere contactpersonen"
-    },
-    "contacts": {
-      "permissionRequired": {
-        "title": "Wil je je contactpersonen opslaan in je Cozy?",
-        "desc": "Machtig de app om toegang te krijgen tot je Cozy-contactpersonen; volgende keer kun je ze kiezen.",
-        "action": "Machtigen",
-        "success": "De app heeft toegang tot je contactpersonen"
-      }
-    },
-    "banner": {
-      "shared_from": "Gedeeld vanaf ![avatar](%{image}) %{name}'s cozy.",
-      "synchronise": "Synchroniseer deze inhoud naar je cozy om aanpassingen te kunnen maken of het te behouden als de ander stopt met het delen ervan.",
-      "whats_cozy": "Cozy is een veilige digitale omgeving voor al je gegevens en wordt gehost in Frankrijk -",
-      "know_more": "Meer informatie",
-      "sync_to_mine": "Synchroniseren naar mijn Cozy",
-      "add_to_mine": "Toevoegen aan mijn Cozy",
-      "close": "Sluiten"
-    }
-  },
-  "Sharings": {
-    "unavailable": {
-      "title": "Maak verbinding met internet!",
-      "message": "Je moet verbonden zijn met het internet om de lijst met recent gedeelde items te bekijken."
-    }
+    "create-cozy": "Maak mijn cozy"
   },
   "Files": {
     "share": {

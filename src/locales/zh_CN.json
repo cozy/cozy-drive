@@ -54,39 +54,7 @@
     }
   },
   "Share": {
-    "status": {
-      "owner": "所有者",
-      "pending": "等待中",
-      "ready": "已同意",
-      "refused": "已拒绝",
-      "error": "错误",
-      "unregistered": "错误",
-      "mail-not-sent": "等待中",
-      "revoked": "错误"
-    },
-    "type": {
-      "one-way": "可以查看",
-      "two-way": "可以更改",
-      "desc": {
-        "one-way": "联系人可以查看、下载内容并将其添加到他们的 Cozy。 如果他们将内容添加到他们的 Cozy，他们将获得您对内容所做的更新，但他们将无法更新它。",
-        "two-way": "联系人可以更新、删除和添加内容到他们的 Cozy。 内容的更新将在其他 Cozies 上看到。"
-      }
-    },
-    "locked-type-file": "即将推出：您将能够更改对文件授予的权限。",
-    "locked-type-folder": "即将推出：您将能够更改您授予该文件夹的权限。",
-    "recipients": {
-      "you": "您",
-      "accessCount": "%{count} 人可以访问"
-    },
-    "create-cozy": "创建我的 Cozy",
-    "contacts": {
-      "permissionRequired": {
-        "title": "将您的联系人保存在您的 Cozy 中？",
-        "desc": "将您的联系人保存在您的 Cozy 中？",
-        "action": "授权访问",
-        "success": "该应用程序可以访问您的联系人"
-      }
-    }
+    "create-cozy": "创建我的 Cozy"
   },
   "searchbar": {
     "placeholder": "搜索任何内容",

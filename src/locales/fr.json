@@ -68,59 +68,7 @@
     }
   },
   "Share": {
-    "status": {
-      "owner": "Propriétaire",
-      "pending": "En attente",
-      "ready": "Accepté",
-      "refused": "Refusé",
-      "error": "Erreur",
-      "unregistered": "Erreur",
-      "mail-not-sent": "En attente",
-      "revoked": "Erreur"
-    },
-    "type": {
-      "one-way": "Peut consulter",
-      "two-way": "Peut modifier",
-      "desc": {
-        "one-way": "Les contacts peuvent consulter, télécharger, et ajouter le contenu à leur Cozy. En cas d’ajout à leur Cozy, ils recevront vos modifications sur le contenu mais ils ne pourront pas le modifier.",
-        "two-way": "Les contacts peuvent modifier, supprimer et ajouter le contenu à leur Cozy. Les modifications sur le contenu seront répercutées automatiquement entre vos Cozy."
-      }
-    },
-    "locked-type-file": "Bientôt : vous pourrez changer la permission donnée sur le fichier.",
-    "locked-type-folder": "Bientôt : vous pourrez changer la permission donnée sur le dossier.",
-    "recipients": {
-      "you": "Vous",
-      "accessCount": "%{count} personnes y ont accès"
-    },
-    "create-cozy": "Créer mon Cozy",
-    "members": {
-      "count": "1 membre |||| %{smart_count} membres",
-      "others": "et 1 autre… |||| et %{smart_count} autres…",
-      "otherContacts": "autre contact |||| autres contacts"
-    },
-    "contacts": {
-      "permissionRequired": {
-        "title": "Enregistrer vos contacts dans votre Cozy ?",
-        "desc": "Autorisez l'application à accéder aux contacts de votre Cozy : vous pourrez les sélectionner la prochaine fois.",
-        "action": "Autoriser l'accès",
-        "success": "L'application a accès à vos contacts"
-      }
-    },
-    "banner": {
-      "shared_from": "Partagé depuis le cozy de ![avatar](%{image}) %{name}.",
-      "synchronise": "Synchronisez ce contenu dans votre cozy pour pouvoir le modifier ou pour le conserver en cas d'annulation de partage.",
-      "whats_cozy": "Cozy est un domicile numérique sécurisé pour toutes vos données, hébergé en France - ",
-      "know_more": "En savoir plus",
-      "sync_to_mine": "Synchroniser dans mon Cozy",
-      "add_to_mine": "Ajouter à mon Cozy",
-      "close": "Fermer"
-    }
-  },
-  "Sharings": {
-    "unavailable": {
-      "title": "Ravi de vous revoir !",
-      "message": "Connectez-vous à Internet pour faire apparaitre la liste de vos récents partages."
-    }
+    "create-cozy": "Créer mon Cozy"
   },
   "Files": {
     "share": {

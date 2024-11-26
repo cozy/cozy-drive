@@ -46,50 +46,7 @@
     "leave": "共有されたフォルダーから離れて削除する"
   },
   "Share": {
-    "status": {
-      "owner": "所有者",
-      "pending": "保留",
-      "ready": "受付",
-      "refused": "拒否されました",
-      "error": "エラー",
-      "unregistered": "エラー",
-      "mail-not-sent": "保留",
-      "revoked": "エラー"
-    },
-    "type": {
-      "one-way": "表示可能",
-      "two-way": "変更可能",
-      "desc": {
-        "one-way": "連絡先は、コンテンツを表示、ダウンロード、Cozyに追加することができます。 Cozyにコンテンツを追加すると、コンテンツに加えられた更新を取得できますが、更新はできません。",
-        "two-way": "連絡先は、Cozyにコンテンツを更新、削除、追加することができます。 コンテンツの更新は他のCozy利用者も見られます。"
-      }
-    },
-    "locked-type-file": "近日公開予定: ファイルに付与されているアクセス許可を変更することができます。",
-    "locked-type-folder": "近日公開予定: フォルダーに付与されているアクセス許可を変更することができます。",
-    "recipients": {
-      "you": "あなた",
-      "accessCount": "%{count} 人がアクセスできます"
-    },
-    "create-cozy": "自分の Cozy を作成する",
-    "members": {
-      "count": "1 メンバー |||| %{smart_count} メンバー",
-      "others": "と他の 1 人… |||| と他の %{smart_count} 人…",
-      "otherContacts": "他の連絡先 |||| 他の連絡先"
-    },
-    "contacts": {
-      "permissionRequired": {
-        "title": "Cozy に連絡先を保存しますか?",
-        "desc": "アプリケーションがCozyの連絡先にアクセスする権限を付与します: 次回、連絡先を選択することができます。",
-        "action": "アクセスの承認",
-        "success": "アプリケーションは連絡先にアクセスできます"
-      }
-    }
-  },
-  "Sharings": {
-    "unavailable": {
-      "title": "オンラインに切り替え!",
-      "message": "前回の共有リストを表示するには、インターネット接続が必要です。"
-    }
+    "create-cozy": "自分の Cozy を作成する"
   },
   "Files": {
     "share": {
