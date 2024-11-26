@@ -155,11 +155,14 @@ const PublicFolderView = () => {
   const isOldBreadcrumb =
     !showNewBreadcrumbFlag || showNewBreadcrumbFlag !== true
 
+  // Check if the sharing shortcut has already been created (but not synced)
+  const isShareAlreadyAdded = sharingInfos?.isSharingShortcutCreated
+
   return (
     <Main isPublic={true}>
       <ModalStack />
       <ModalManager />
-      <SharingBannerPlugin />
+      {!isShareAlreadyAdded && <SharingBannerPlugin />}
       <span className={cx({ 'u-pt-2': !isMobile })} />
       <FolderViewHeader>
         {currentFolderId && (
