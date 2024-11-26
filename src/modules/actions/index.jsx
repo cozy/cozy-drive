@@ -22,6 +22,7 @@ import { isEncryptedFolder, isEncryptedFile } from 'lib/encryption'
 import { navigateToModal } from 'modules/actions/helpers'
 import DeleteConfirm from 'modules/drive/DeleteConfirm'
 import { startRenamingAsync } from 'modules/drive/rename'
+import { openExternalLink as openExtLink } from 'modules/public/helpers'
 
 export { share } from './share'
 
@@ -241,7 +242,7 @@ export const openExternalLink = ({ t, isSharingShortcutCreated, link }) => {
     label,
     icon,
     action: () => {
-      openExternalLink(link)
+      openExtLink(link)
     },
     Component: forwardRef(function OpenExternalLink(props, ref) {
       return (
