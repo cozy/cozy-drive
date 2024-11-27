@@ -14,7 +14,7 @@ import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
 import AddButton from 'modules/drive/Toolbar/components/AddButton'
 import AddMenuItem from 'modules/drive/Toolbar/components/AddMenuItem'
 import SelectableItem from 'modules/drive/Toolbar/selectable/SelectableItem'
-import { DownloadFilesButton } from 'modules/public/DownloadButton'
+import { DownloadFilesButton } from 'modules/public/DownloadFilesButton'
 import PublicToolbarMoreMenu from 'modules/public/PublicToolbarMoreMenu'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 
