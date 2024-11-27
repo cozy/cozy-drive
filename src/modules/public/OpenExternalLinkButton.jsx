@@ -17,7 +17,7 @@ import { openExternalLink } from 'modules/public/helpers'
  * @param {boolean} isSharingShortcutCreated
  * @returns {React.Component}
  */
-const getIcon = (link, isSharingShortcutCreated) => {
+export const getLabel = (link, isSharingShortcutCreated) => {
   if (link === HOME_LINK_HREF) {
     return ToTheCloudIcon
   }
@@ -27,6 +27,24 @@ const getIcon = (link, isSharingShortcutCreated) => {
   return SyncIcon
 }
 
+/**
+ * Get the icon and label to display in the button
+ * @param {object} params
+ * @param {string} params.link
+ * @param {boolean} params.isSharingShortcutCreated
+ * @param {object} params.t
+ * @returns {{ icon: React.Component, label: string }}
+ */
+export const getIconWithlabel = ({ link, isSharingShortcutCreated, t }) => {
+  if (link === HOME_LINK_HREF) {
+    return { icon: ToTheCloudIcon, label: t('Share.create-cozy') }
+  }
+  if (!isSharingShortcutCreated) {
+    return { icon: CloudPlusOutlinedIcon, label: t('toolbar.add_to_mine') }
+  }
+  return { icon: SyncIcon, label: t('toolbar.menu_sync_cozy') }
+}
+
 export const OpenExternalLinkButton = ({ link, isSharingShortcutCreated }) => {
   const { t } = useI18n()
 
@@ -34,14 +52,11 @@ export const OpenExternalLinkButton = ({ link, isSharingShortcutCreated }) => {
     openExternalLink(link)
   }
 
-  const label =
-    link === HOME_LINK_HREF
-      ? t('Share.create-cozy')
-      : isSharingShortcutCreated
-      ? t('toolbar.menu_sync_cozy')
-      : t('toolbar.add_to_mine')
-
-  const icon = getIcon(link, isSharingShortcutCreated)
+  const { icon, label } = getIconWithlabel({
+    link,
+    isSharingShortcutCreated,
+    t
+  })
 
   return (
     <Button
