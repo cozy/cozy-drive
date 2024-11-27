@@ -95,7 +95,7 @@ const MoreMenu = ({
               displayedFolder={displayedFolder}
               folderId={folderId}
             >
-              <DownloadButtonItem displayedFolder={displayedFolder} />
+              <DownloadButtonItem files={[displayedFolder]} />
             </InsideRegularFolder>
             {isMobile && hasWriteAccess && <AddMenuItem />}
             <SelectableItem onClick={showSelectionBar} />
