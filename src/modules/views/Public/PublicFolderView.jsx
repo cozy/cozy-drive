@@ -36,7 +36,7 @@ import { download, trash, rename, versions } from 'modules/actions'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
-import FabWithMenuContext from 'modules/drive/FabWithMenuContext'
+import FabWithAddMenuContext from 'modules/drive/FabWithAddMenuContext'
 import Main from 'modules/layout/Main'
 import PublicToolbar from 'modules/public/PublicToolbar'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
@@ -158,6 +158,10 @@ const PublicFolderView = () => {
   // Check if the sharing shortcut has already been created (but not synced)
   const isShareAlreadyAdded = sharingInfos?.isSharingShortcutCreated
 
+  console.log('==========')
+  console.log('isFabDisplayed : ', isFabDisplayed)
+  console.log('==========')
+
   return (
     <Main isPublic={true}>
       <ModalStack />
@@ -209,7 +213,7 @@ const PublicFolderView = () => {
             displayedFolder={displayedFolder}
             isSelectionBarVisible={isSelectionBarVisible}
           >
-            <FabWithMenuContext noSidebar={true} />
+            <FabWithAddMenuContext noSidebar={true} />
           </AddMenuProvider>
         )}
         <Outlet />
