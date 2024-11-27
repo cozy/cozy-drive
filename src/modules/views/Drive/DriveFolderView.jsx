@@ -33,7 +33,7 @@ import { removeFromFavorites } from 'modules/actions/components/removeFromFavori
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
-import FabWithMenuContext from 'modules/drive/FabWithMenuContext'
+import FabWithAddMenuContext from 'modules/drive/FabWithAddMenuContext'
 import Toolbar from 'modules/drive/Toolbar'
 import { useFolderSort } from 'modules/navigation/duck'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
@@ -241,7 +241,7 @@ const DriveFolderView = () => {
             displayedFolder={displayedFolder}
             isSelectionBarVisible={isSelectionBarVisible}
           >
-            <FabWithMenuContext />
+            <FabWithAddMenuContext />
           </AddMenuProvider>
         )}
         <Outlet />
