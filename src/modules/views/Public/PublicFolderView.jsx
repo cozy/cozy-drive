@@ -36,7 +36,7 @@ import { download, trash, rename, versions } from 'modules/actions'
 import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
-import FabWithMenuContext from 'modules/drive/FabWithMenuContext'
+import FabWithAddMenuContext from 'modules/drive/FabWithAddMenuContext'
 import Main from 'modules/layout/Main'
 import PublicToolbar from 'modules/public/PublicToolbar'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
@@ -209,7 +209,7 @@ const PublicFolderView = () => {
             displayedFolder={displayedFolder}
             isSelectionBarVisible={isSelectionBarVisible}
           >
-            <FabWithMenuContext noSidebar={true} />
+            <FabWithAddMenuContext noSidebar={true} />
           </AddMenuProvider>
         )}
         <Outlet />

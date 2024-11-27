@@ -7,7 +7,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { AddMenuContext } from 'modules/drive/AddMenu/AddMenuProvider'
 import { useFabStyles } from 'modules/drive/helpers'
 
-const FabWithMenuContext = ({ noSidebar }) => {
+const FabWithAddMenuContext = ({ noSidebar }) => {
   const { t } = useI18n()
 
   const {
@@ -42,4 +42,4 @@ const FabWithMenuContext = ({ noSidebar }) => {
   )
 }
 
-export default React.memo(FabWithMenuContext)
+export default React.memo(FabWithAddMenuContext)
