@@ -9,7 +9,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { BarRightOnMobile } from 'components/Bar'
 import { download, openExternalLink } from 'modules/actions'
 import SelectableItem from 'modules/drive/Toolbar/selectable/SelectableItem'
-import { DownloadFilesButton } from 'modules/public/DownloadButton'
+import { DownloadFilesButton } from 'modules/public/DownloadFilesButton'
 import PublicToolbarMoreMenu from 'modules/public/PublicToolbarMoreMenu'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 

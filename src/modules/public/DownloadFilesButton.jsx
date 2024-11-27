@@ -10,33 +10,32 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { downloadFiles } from 'modules/actions/utils'
 
-const DownloadButton = ({ onDownload, ...props }) => (
-  <Button
-    onClick={() => onDownload()}
-    startIcon={<Icon icon={DownloadIcon} />}
-    {...props}
-  />
-)
-
-export default DownloadButton
-
-export const DownloadFilesButton = ({ files, className }) => {
+export const DownloadFilesButton = ({
+  files,
+  variant = 'secondary',
+  ...props
+}) => {
   const { t } = useI18n()
   const client = useClient()
   const { showAlert } = useAlert()
 
+  const handleClick = () => {
+    downloadFiles(client, files, { showAlert, t })
+  }
+
   return (
-    <DownloadButton
+    <Button
       label={t('toolbar.menu_download')}
       data-testid="fil-public-download"
-      onDownload={() => {
-        downloadFiles(client, files, { showAlert, t })
-      }}
-      variant="secondary"
-      className={className}
+      startIcon={<Icon icon={DownloadIcon} />}
+      onClick={handleClick}
+      variant={variant}
+      {...props}
     />
   )
 }
+
 DownloadFilesButton.propTypes = {
-  files: PropTypes.array.isRequired
+  files: PropTypes.array.isRequired,
+  variant: PropTypes.string
 }
