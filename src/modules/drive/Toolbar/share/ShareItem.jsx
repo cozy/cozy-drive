@@ -24,7 +24,7 @@ const ShareItem = ({ displayedFolder }) => {
   return (
     <SharedDocument docId={displayedFolder.id}>
       {({ isSharedWithMe, recipients, link }) => (
-        <ActionsMenuItem onClick={share} isListItem>
+        <ActionsMenuItem onClick={share}>
           <ListItemIcon>
             <Icon icon={ShareIcon} />
           </ListItemIcon>

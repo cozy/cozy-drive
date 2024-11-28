@@ -21,7 +21,7 @@ const DownloadButtonItem = ({ files }) => {
   }
 
   return (
-    <ActionsMenuItem isListItem onClick={handleClick}>
+    <ActionsMenuItem onClick={handleClick}>
       <ListItemIcon>
         <Icon icon={DownloadIcon} />
       </ListItemIcon>

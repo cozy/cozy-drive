@@ -29,7 +29,6 @@ const AddMenuItem = ({ onClick }) => {
   return (
     <ActionsMenuItem
       ref={anchorRef}
-      isListItem
       disabled={isDisabled || isOffline}
       onClick={handleClick}
       {...a11y}

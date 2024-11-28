@@ -15,7 +15,7 @@ const SelectableItem = ({ onClick }) => {
   const { t } = useI18n()
 
   return (
-    <ActionsMenuItem isListItem onClick={onClick}>
+    <ActionsMenuItem onClick={onClick}>
       <ListItemIcon>
         <Icon icon={CheckSquareIcon} />
       </ListItemIcon>
