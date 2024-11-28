@@ -1,6 +1,7 @@
 import { useDisplayedFolder } from 'hooks'
 import React from 'react'
 
+import Divider from 'cozy-ui/transpiled/react/Divider'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { BarRightOnMobile } from 'components/Bar'
@@ -49,12 +50,15 @@ const PublicToolbarByLink = ({
             showSelectionBar={showSelectionBar}
             actions={[]}
           >
-            {isMobile && <OpenExternalLinkItem link={HOME_LINK_HREF} />}
             {isMobile && files.length > 0 && (
               <DownloadButtonItem files={files} />
             )}
-            {isMobile && hasWriteAccess && <AddMenuItem />}
             {files.length > 1 && <SelectableItem onClick={showSelectionBar} />}
+            {isMobile && hasWriteAccess && <AddMenuItem />}
+            {isMobile && (files.length > 1 || hasWriteAccess) && (
+              <Divider className="u-mv-half" />
+            )}
+            {isMobile && <OpenExternalLinkItem link={HOME_LINK_HREF} />}
           </PublicToolbarMoreMenu>
         )}
       </AddMenuProvider>
