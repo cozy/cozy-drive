@@ -45,7 +45,11 @@ export const getIconWithlabel = ({ link, isSharingShortcutCreated, t }) => {
   return { icon: SyncIcon, label: t('toolbar.menu_sync_cozy') }
 }
 
-export const OpenExternalLinkButton = ({ link, isSharingShortcutCreated }) => {
+export const OpenExternalLinkButton = ({
+  link,
+  isSharingShortcutCreated,
+  ...props
+}) => {
   const { t } = useI18n()
 
   const handleClick = () => {
@@ -63,6 +67,7 @@ export const OpenExternalLinkButton = ({ link, isSharingShortcutCreated }) => {
       onClick={handleClick}
       startIcon={<Icon icon={icon} />}
       label={label}
+      {...props}
     />
   )
 }
