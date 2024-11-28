@@ -24,7 +24,7 @@ const OpenExternalLinkItem = ({ link, isSharingShortcutCreated }) => {
   })
 
   return (
-    <ActionsMenuItem isListItem onClick={handleClick}>
+    <ActionsMenuItem onClick={handleClick}>
       <ListItemIcon>
         <Icon icon={icon} />
       </ListItemIcon>

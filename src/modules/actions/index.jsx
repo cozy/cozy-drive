@@ -246,7 +246,7 @@ export const openExternalLink = ({ t, isSharingShortcutCreated, link }) => {
     },
     Component: forwardRef(function OpenExternalLink(props, ref) {
       return (
-        <ActionsMenuItem isListItem {...props} ref={ref}>
+        <ActionsMenuItem {...props} ref={ref}>
           <ListItemIcon>
             <Icon icon={icon} />
           </ListItemIcon>

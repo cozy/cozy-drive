@@ -19,11 +19,7 @@ const DeleteItem = ({ t, isSharedWithMe, trashFolder, displayedFolder }) => {
   const label = isSharedWithMe ? t('toolbar.leave') : t('toolbar.trash')
 
   return (
-    <ActionsMenuItem
-      data-testid="fil-action-delete"
-      isListItem
-      onClick={handleClick}
-    >
+    <ActionsMenuItem data-testid="fil-action-delete" onClick={handleClick}>
       <ListItemIcon>
         <Icon icon={TrashIcon} color="var(--errorColor)" />
       </ListItemIcon>
