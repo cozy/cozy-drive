@@ -6,7 +6,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { MoreButton } from 'components/Button'
 
-const PublicToolbarMoreMenu = ({ files, actions, children }) => {
+const PublicToolbarMoreMenu = ({ files, actions }) => {
   const moreButtonRef = useRef()
   const { isMobile } = useBreakpoints()
 
@@ -36,18 +36,7 @@ const PublicToolbarMoreMenu = ({ files, actions, children }) => {
           ref={moreButtonRef}
           docs={files}
           actions={actions}
-        >
-          {React.Children.map(children, child => {
-            if (React.isValidElement(child)) {
-              return React.cloneElement(child, {
-                onClick: () => {
-                  child.props.onClick?.()
-                  closeMenu()
-                }
-              })
-            }
-          })}
-        </ActionsMenu>
+        />
       )}
     </>
   )

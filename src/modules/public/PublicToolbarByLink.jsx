@@ -1,18 +1,25 @@
 import { useDisplayedFolder } from 'hooks'
 import React from 'react'
 
-import Divider from 'cozy-ui/transpiled/react/Divider'
+import { useClient } from 'cozy-client'
+import { useVaultClient } from 'cozy-keys-lib'
+import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { BarRightOnMobile } from 'components/Bar'
 import { HOME_LINK_HREF } from 'constants/config'
+import {
+  addItems,
+  download,
+  hr,
+  openExternalLink,
+  select
+} from 'modules/actions'
 import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
 import AddButton from 'modules/drive/Toolbar/components/AddButton'
-import AddMenuItem from 'modules/drive/Toolbar/components/AddMenuItem'
-import DownloadButtonItem from 'modules/drive/Toolbar/components/DownloadButtonItem'
-import SelectableItem from 'modules/drive/Toolbar/selectable/SelectableItem'
 import { DownloadFilesButton } from 'modules/public/DownloadFilesButton'
-import OpenExternalLinkItem from 'modules/public/OpenExternalLinkItem'
 import PublicToolbarMoreMenu from 'modules/public/PublicToolbarMoreMenu'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 
@@ -24,8 +31,31 @@ const PublicToolbarByLink = ({
   const { isMobile } = useBreakpoints()
   const { displayedFolder } = useDisplayedFolder()
   const { showSelectionBar, isSelectionBarVisible } = useSelectionContext()
+  const { t } = useI18n()
+  const { showAlert } = useAlert()
+  const client = useClient()
+  const vaultClient = useVaultClient()
 
   const isMoreMenuDisplayed = files.length > 1
+
+  const actions = makeActions(
+    [
+      isMobile && download,
+      select,
+      addItems,
+      isMobile && (files.length > 1 || hasWriteAccess) && hr,
+      isMobile && openExternalLink
+    ],
+    {
+      t,
+      showAlert,
+      client,
+      vaultClient,
+      showSelectionBar,
+      link: HOME_LINK_HREF,
+      hasWriteAccess
+    }
+  )
 
   return (
     <BarRightOnMobile>
@@ -48,18 +78,8 @@ const PublicToolbarByLink = ({
             files={files}
             hasWriteAccess={hasWriteAccess}
             showSelectionBar={showSelectionBar}
-            actions={[]}
-          >
-            {isMobile && files.length > 0 && (
-              <DownloadButtonItem files={files} />
-            )}
-            {files.length > 1 && <SelectableItem onClick={showSelectionBar} />}
-            {isMobile && hasWriteAccess && <AddMenuItem />}
-            {isMobile && (files.length > 1 || hasWriteAccess) && (
-              <Divider className="u-mv-half" />
-            )}
-            {isMobile && <OpenExternalLinkItem link={HOME_LINK_HREF} />}
-          </PublicToolbarMoreMenu>
+            actions={actions}
+          />
         )}
       </AddMenuProvider>
     </BarRightOnMobile>

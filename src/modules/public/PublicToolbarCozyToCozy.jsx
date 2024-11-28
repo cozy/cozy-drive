@@ -1,14 +1,16 @@
 import React from 'react'
 
-import Divider from 'cozy-ui/transpiled/react/Divider'
+import { useClient } from 'cozy-client'
+import { useVaultClient } from 'cozy-keys-lib'
+import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { BarRightOnMobile } from 'components/Bar'
-import DownloadButtonItem from 'modules/drive/Toolbar/components/DownloadButtonItem'
-import SelectableItem from 'modules/drive/Toolbar/selectable/SelectableItem'
+import { download, hr, openExternalLink, select } from 'modules/actions'
 import { DownloadFilesButton } from 'modules/public/DownloadFilesButton'
 import { OpenExternalLinkButton } from 'modules/public/OpenExternalLinkButton'
-import OpenExternalLinkItem from 'modules/public/OpenExternalLinkItem'
 import PublicToolbarMoreMenu from 'modules/public/PublicToolbarMoreMenu'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 
@@ -18,7 +20,29 @@ const PublicToolbarCozyToCozy = ({
   files
 }) => {
   const { isMobile } = useBreakpoints()
+  const { t } = useI18n()
+  const { showAlert } = useAlert()
+  const client = useClient()
   const { showSelectionBar } = useSelectionContext()
+  const vaultClient = useVaultClient()
+
+  const actions = makeActions(
+    [
+      isMobile && download,
+      select,
+      ((isMobile && files.length > 0) || files.length > 1) && hr,
+      openExternalLink
+    ],
+    {
+      t,
+      showAlert,
+      client,
+      vaultClient,
+      showSelectionBar,
+      isSharingShortcutCreated,
+      link: discoveryLink
+    }
+  )
 
   return (
     <BarRightOnMobile>
@@ -33,18 +57,8 @@ const PublicToolbarCozyToCozy = ({
       <PublicToolbarMoreMenu
         files={files}
         showSelectionBar={showSelectionBar}
-        actions={[]}
-      >
-        {isMobile && files.length > 0 && <DownloadButtonItem files={files} />}
-        {files.length > 1 && <SelectableItem onClick={showSelectionBar} />}
-        {((isMobile && files.length > 0) || files.length > 1) && (
-          <Divider className="u-mv-half" />
-        )}
-        <OpenExternalLinkItem
-          isSharingShortcutCreated={isSharingShortcutCreated}
-          link={discoveryLink}
-        />
-      </PublicToolbarMoreMenu>
+        actions={actions}
+      />
     </BarRightOnMobile>
   )
 }
