@@ -1,5 +1,6 @@
 import React from 'react'
 
+import Divider from 'cozy-ui/transpiled/react/Divider'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { BarRightOnMobile } from 'components/Bar'
@@ -34,12 +35,15 @@ const PublicToolbarCozyToCozy = ({
         showSelectionBar={showSelectionBar}
         actions={[]}
       >
+        {isMobile && files.length > 0 && <DownloadButtonItem files={files} />}
+        {files.length > 1 && <SelectableItem onClick={showSelectionBar} />}
+        {((isMobile && files.length > 0) || files.length > 1) && (
+          <Divider className="u-mv-half" />
+        )}
         <OpenExternalLinkItem
           isSharingShortcutCreated={isSharingShortcutCreated}
           link={discoveryLink}
         />
-        {isMobile && files.length > 0 && <DownloadButtonItem files={files} />}
-        {files.length > 1 && <SelectableItem onClick={showSelectionBar} />}
       </PublicToolbarMoreMenu>
     </BarRightOnMobile>
   )
