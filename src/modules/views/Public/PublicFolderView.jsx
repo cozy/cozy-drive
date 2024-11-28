@@ -5,7 +5,7 @@ import uniqBy from 'lodash/uniqBy'
 import React, { useCallback, useContext, useEffect } from 'react'
 import { ModalManager } from 'react-cozy-helpers'
 import { useDispatch } from 'react-redux'
-import { useNavigate, useLocation, useParams, Outlet } from 'react-router-dom'
+import { useNavigate, useLocation, Outlet } from 'react-router-dom'
 
 import { useClient, models } from 'cozy-client'
 import flag from 'cozy-flags'
@@ -71,7 +71,6 @@ const mobileExtraColumnsNames = []
 const PublicFolderView = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
-  const params = useParams()
   const client = useClient()
   const { t, lang } = useI18n()
   const { isMobile } = useBreakpoints()
@@ -215,8 +214,6 @@ const PublicFolderView = () => {
             canUpload={hasWritePermissions}
             refreshFolderContent={refreshFolderContent}
             isPublic={true}
-            navigate={navigate}
-            params={params}
             displayedFolder={displayedFolder}
             isSelectionBarVisible={isSelectionBarVisible}
           >
