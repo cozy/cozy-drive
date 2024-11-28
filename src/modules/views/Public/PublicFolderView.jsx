@@ -19,6 +19,8 @@ import {
   divider,
   makeActions
 } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
+import { ExtendableFab } from 'cozy-ui/transpiled/react/Fab'
+import CloudPlusOutlinedIcon from 'cozy-ui/transpiled/react/Icons/CloudPlusOutlined'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
@@ -37,8 +39,10 @@ import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
 import FabWithAddMenuContext from 'modules/drive/FabWithAddMenuContext'
+import { useFabStyles } from 'modules/drive/helpers'
 import Main from 'modules/layout/Main'
 import PublicToolbar from 'modules/public/PublicToolbar'
+import { openExternalLink } from 'modules/public/helpers'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 
 const getBreadcrumbPath = (t, displayedFolder, parentFolder) =>
@@ -83,6 +87,7 @@ const PublicFolderView = () => {
   const dispatch = useDispatch()
   const sharingInfos = useSharingInfos()
   const { showAlert } = useAlert()
+  const styles = useFabStyles()
 
   const filesResult = usePublicFilesQuery(currentFolderId)
   const files = filesResult.data
@@ -156,7 +161,13 @@ const PublicFolderView = () => {
     !showNewBreadcrumbFlag || showNewBreadcrumbFlag !== true
 
   // Check if the sharing shortcut has already been created (but not synced)
-  const isShareAlreadyAdded = sharingInfos?.isSharingShortcutCreated
+  const isShareAlreadyAdded =
+    !sharingInfos.loading && sharingInfos.isSharingShortcutCreated
+  // Check if you are sharing Cozy to Cozy (Link sharing is on the `/public` route)
+  const isPreview = window.location.pathname === '/preview'
+
+  const isAddToMyCozyFabDisplayed =
+    isMobile && isPreview && !isShareAlreadyAdded
 
   return (
     <Main isPublic={true}>
@@ -211,6 +222,16 @@ const PublicFolderView = () => {
           >
             <FabWithAddMenuContext noSidebar={true} />
           </AddMenuProvider>
+        )}
+        {isAddToMyCozyFabDisplayed && (
+          <ExtendableFab
+            color="primary"
+            label={t('toolbar.add_to_mine')}
+            className={styles.root}
+            icon={CloudPlusOutlinedIcon}
+            follow={window}
+            onClick={() => openExternalLink(sharingInfos.discoveryLink)}
+          />
         )}
         <Outlet />
       </Content>
