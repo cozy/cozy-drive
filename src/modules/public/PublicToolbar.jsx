@@ -12,8 +12,7 @@ const PublicToolbar = ({
   sharingInfos,
   className
 }) => {
-  const { loading, discoveryLink, sharing, isSharingShortcutCreated } =
-    sharingInfos
+  const { loading, discoveryLink } = sharingInfos
 
   if (loading) return null
   return (
@@ -28,12 +27,7 @@ const PublicToolbar = ({
           refreshFolderContent={refreshFolderContent}
         />
       ) : (
-        <PublicToolbarCozyToCozy
-          discoveryLink={discoveryLink}
-          files={files}
-          isSharingShortcutCreated={isSharingShortcutCreated}
-          sharing={sharing}
-        />
+        <PublicToolbarCozyToCozy files={files} sharingInfos={sharingInfos} />
       )}
     </div>
   )

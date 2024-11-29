@@ -87,6 +87,11 @@ const PublicFolderView = () => {
   const sharingInfos = useSharingInfos()
   const { showAlert } = useAlert()
   const styles = useFabStyles()
+  const isOnSharedFolder =
+    !sharingInfos.loading &&
+    sharingInfos.sharing?.rules?.some(rule =>
+      rule.values.includes(currentFolderId)
+    )
 
   const filesResult = usePublicFilesQuery(currentFolderId)
   const files = filesResult.data
@@ -164,6 +169,9 @@ const PublicFolderView = () => {
     !sharingInfos.loading && sharingInfos.isSharingShortcutCreated
   // Check if you are sharing Cozy to Cozy (Link sharing is on the `/public` route)
   const isPreview = window.location.pathname === '/preview'
+  // Show the sharing banner plugin only on shared links view and cozy to cozy sharing view(not added)
+  const isSharingBannerPluginDisplayed =
+    !isShareAlreadyAdded || (isOnSharedFolder && !isPreview)
 
   const isAddToMyCozyFabDisplayed =
     isMobile && isPreview && !isShareAlreadyAdded
@@ -172,7 +180,7 @@ const PublicFolderView = () => {
     <Main isPublic={true}>
       <ModalStack />
       <ModalManager />
-      {!isShareAlreadyAdded && <SharingBannerPlugin />}
+      {isSharingBannerPluginDisplayed && <SharingBannerPlugin />}
       <span className={cx({ 'u-pt-2': !isMobile })} />
       <FolderViewHeader>
         {currentFolderId && (

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import { useClient } from 'cozy-client'
@@ -8,30 +9,34 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { BarRightOnMobile } from 'components/Bar'
+import useCurrentFolderId from 'hooks/useCurrentFolderId'
 import { download, hr, openExternalLink, select } from 'modules/actions'
 import { DownloadFilesButton } from 'modules/public/DownloadFilesButton'
 import { OpenExternalLinkButton } from 'modules/public/OpenExternalLinkButton'
 import PublicToolbarMoreMenu from 'modules/public/PublicToolbarMoreMenu'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 
-const PublicToolbarCozyToCozy = ({
-  isSharingShortcutCreated,
-  discoveryLink,
-  files
-}) => {
+const PublicToolbarCozyToCozy = ({ sharingInfos, files }) => {
+  const { loading, discoveryLink, sharing, isSharingShortcutCreated } =
+    sharingInfos
   const { isMobile } = useBreakpoints()
   const { t } = useI18n()
   const { showAlert } = useAlert()
   const client = useClient()
   const { showSelectionBar } = useSelectionContext()
   const vaultClient = useVaultClient()
+  const currentFolderId = useCurrentFolderId()
+
+  const isOnSharedFolder =
+    !loading &&
+    sharing?.rules?.some(rule => rule.values.includes(currentFolderId))
 
   const actions = makeActions(
     [
       isMobile && download,
       files.length > 1 && select,
       ((isMobile && files.length > 0) || files.length > 1) && hr,
-      openExternalLink
+      isOnSharedFolder && openExternalLink
     ],
     {
       t,
@@ -47,7 +52,7 @@ const PublicToolbarCozyToCozy = ({
   return (
     <BarRightOnMobile>
       {!isMobile && files.length > 0 && <DownloadFilesButton files={files} />}
-      {!isMobile && !isSharingShortcutCreated && (
+      {!isMobile && !isSharingShortcutCreated && isOnSharedFolder && (
         <OpenExternalLinkButton
           className="u-ml-half"
           link={discoveryLink}
@@ -61,6 +66,11 @@ const PublicToolbarCozyToCozy = ({
       />
     </BarRightOnMobile>
   )
+}
+
+PublicToolbarCozyToCozy.propTypes = {
+  files: PropTypes.array.isRequired,
+  sharingInfos: PropTypes.object.isRequired
 }
 
 export default PublicToolbarCozyToCozy
