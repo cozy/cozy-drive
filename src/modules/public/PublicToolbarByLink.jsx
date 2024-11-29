@@ -41,7 +41,7 @@ const PublicToolbarByLink = ({
   const actions = makeActions(
     [
       isMobile && download,
-      select,
+      files.length > 1 && select,
       addItems,
       isMobile && (files.length > 1 || hasWriteAccess) && hr,
       isMobile && openExternalLink
