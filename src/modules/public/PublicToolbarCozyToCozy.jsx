@@ -29,7 +29,7 @@ const PublicToolbarCozyToCozy = ({
   const actions = makeActions(
     [
       isMobile && download,
-      select,
+      files.length > 1 && select,
       ((isMobile && files.length > 0) || files.length > 1) && hr,
       openExternalLink
     ],

@@ -19,6 +19,8 @@ const PublicToolbarMoreMenu = ({ files, actions }) => {
     openMenu()
   }, [closeMenu, openMenu, menuIsVisible])
 
+  if (actions.length === 0) return null
+
   return (
     <>
       <div
