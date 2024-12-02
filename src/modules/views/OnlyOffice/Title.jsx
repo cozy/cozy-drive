@@ -47,7 +47,7 @@ const Title = () => {
             className="u-ellipsis u-flex u-flex-items-center u-p-0 u-pr-1"
             classes={styles}
           >
-            <Toolbar />
+            <Toolbar sharingInfos={sharingInfos} />
           </DialogTitle>
           <Divider />
         </>
