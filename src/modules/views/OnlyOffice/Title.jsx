@@ -1,6 +1,7 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 
 import { SharingBannerPlugin } from 'cozy-sharing'
+import { useSharingInfos } from 'cozy-sharing'
 import { DialogTitle } from 'cozy-ui/transpiled/react/Dialog'
 import Divider from 'cozy-ui/transpiled/react/Divider'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -9,7 +10,6 @@ import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 import { TrashedBanner } from 'components/TrashedBanner'
 import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
 import Toolbar from 'modules/views/OnlyOffice/Toolbar'
-import { showSharingBanner } from 'modules/views/OnlyOffice/helpers'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,25 +21,19 @@ const useStyles = makeStyles(theme => ({
 
 const Title = () => {
   const { isMobile } = useBreakpoints()
-  const {
-    fileId,
-    isPublic,
-    isFromSharing,
-    isInSharedFolder,
-    isEditorModeView,
-    isTrashed
-  } = useOnlyOfficeContext()
+  const { fileId, isPublic, isEditorModeView, isTrashed } =
+    useOnlyOfficeContext()
+  const sharingInfos = useSharingInfos()
+  const { loading, isSharingShortcutCreated } = sharingInfos
   const styles = useStyles()
 
-  const showBanner = useMemo(
-    () =>
-      showSharingBanner({
-        isPublic,
-        isFromSharing,
-        isInSharedFolder
-      }),
-    [isPublic, isFromSharing, isInSharedFolder]
-  )
+  // Check if the sharing shortcut has already been created (but not synced)
+  const isShareAlreadyAdded = !loading && isSharingShortcutCreated
+  // Check if you are sharing Cozy to Cozy (Link sharing is on the `/public` route)
+  const isPreview = window.location.pathname === '/preview'
+  // Show the sharing banner plugin only on shared links view and cozy to cozy sharing view(not added)
+  const isSharingBannerPluginDisplayed =
+    isPublic && (!isShareAlreadyAdded || !isPreview)
 
   const showDialogToolbar = isEditorModeView || !isMobile
 
@@ -62,7 +56,7 @@ const Title = () => {
         <div style={{ backgroundColor: 'var(--paperBackgroundColor)' }}>
           <TrashedBanner fileId={fileId} isPublic={isPublic} />
         </div>
-      ) : showBanner ? (
+      ) : isSharingBannerPluginDisplayed ? (
         <SharingBannerPlugin />
       ) : null}
     </div>
