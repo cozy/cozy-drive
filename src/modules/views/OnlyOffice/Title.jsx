@@ -8,6 +8,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 
 import { TrashedBanner } from 'components/TrashedBanner'
+import { OpenExternalLinkButton } from 'modules/public/OpenExternalLinkButton'
 import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
 import Toolbar from 'modules/views/OnlyOffice/Toolbar'
 
@@ -37,6 +38,9 @@ const Title = () => {
 
   const showDialogToolbar = isEditorModeView || !isMobile
 
+  const isAddToMyCozyFabDisplayed =
+    isMobile && isPreview && !isShareAlreadyAdded
+
   return (
     <div style={{ zIndex: 'var(--zIndex-nav)' }}>
       {showDialogToolbar && (
@@ -59,6 +63,12 @@ const Title = () => {
       ) : isSharingBannerPluginDisplayed ? (
         <SharingBannerPlugin />
       ) : null}
+      {isAddToMyCozyFabDisplayed && (
+        <OpenExternalLinkButton
+          link={sharingInfos.discoveryLink}
+          variant="fab"
+        />
+      )}
     </div>
   )
 }
