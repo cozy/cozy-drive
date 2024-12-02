@@ -19,8 +19,6 @@ import {
   divider,
   makeActions
 } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
-import { ExtendableFab } from 'cozy-ui/transpiled/react/Fab'
-import CloudPlusOutlinedIcon from 'cozy-ui/transpiled/react/Icons/CloudPlusOutlined'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
@@ -39,10 +37,9 @@ import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
 import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
 import FabWithAddMenuContext from 'modules/drive/FabWithAddMenuContext'
-import { useFabStyles } from 'modules/drive/helpers'
 import Main from 'modules/layout/Main'
+import { OpenExternalLinkButton } from 'modules/public/OpenExternalLinkButton'
 import PublicToolbar from 'modules/public/PublicToolbar'
-import { openExternalLink } from 'modules/public/helpers'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 
 const getBreadcrumbPath = (t, displayedFolder, parentFolder) =>
@@ -86,7 +83,6 @@ const PublicFolderView = () => {
   const dispatch = useDispatch()
   const sharingInfos = useSharingInfos()
   const { showAlert } = useAlert()
-  const styles = useFabStyles()
   const isOnSharedFolder =
     !sharingInfos.loading &&
     sharingInfos.sharing?.rules?.some(rule =>
@@ -229,13 +225,9 @@ const PublicFolderView = () => {
           </AddMenuProvider>
         )}
         {isAddToMyCozyFabDisplayed && (
-          <ExtendableFab
-            color="primary"
-            label={t('toolbar.add_to_mine')}
-            className={styles.root}
-            icon={CloudPlusOutlinedIcon}
-            follow={window}
-            onClick={() => openExternalLink(sharingInfos.discoveryLink)}
+          <OpenExternalLinkButton
+            link={sharingInfos.discoveryLink}
+            variant="fab"
           />
         )}
         <Outlet />
