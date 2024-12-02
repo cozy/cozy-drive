@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import Button from 'cozy-ui/transpiled/react/Buttons'
+import { ExtendableFab } from 'cozy-ui/transpiled/react/Fab'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import CloudPlusOutlinedIcon from 'cozy-ui/transpiled/react/Icons/CloudPlusOutlined'
 import SyncIcon from 'cozy-ui/transpiled/react/Icons/Sync'
@@ -9,6 +10,7 @@ import ToTheCloudIcon from 'cozy-ui/transpiled/react/Icons/ToTheCloud'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { HOME_LINK_HREF } from 'constants/config'
+import { useFabStyles } from 'modules/drive/helpers'
 import { openExternalLink } from 'modules/public/helpers'
 
 /**
@@ -47,10 +49,12 @@ export const getIconWithlabel = ({ link, isSharingShortcutCreated, t }) => {
 
 export const OpenExternalLinkButton = ({
   link,
+  variant = 'button',
   isSharingShortcutCreated,
   ...props
 }) => {
   const { t } = useI18n()
+  const fabStyles = useFabStyles()
 
   const handleClick = () => {
     openExternalLink(link)
@@ -61,6 +65,20 @@ export const OpenExternalLinkButton = ({
     isSharingShortcutCreated,
     t
   })
+
+  if (variant === 'fab') {
+    return (
+      <ExtendableFab
+        color="primary"
+        label={label}
+        className={fabStyles.root}
+        icon={icon}
+        follow={window}
+        onClick={handleClick}
+        {...props}
+      />
+    )
+  }
 
   return (
     <Button
@@ -74,5 +92,6 @@ export const OpenExternalLinkButton = ({
 
 OpenExternalLinkButton.propTypes = {
   link: PropTypes.string.isRequired,
-  isSharingShortcutCreated: PropTypes.bool
+  isSharingShortcutCreated: PropTypes.bool,
+  variant: PropTypes.oneOf(['button', 'fab'])
 }
