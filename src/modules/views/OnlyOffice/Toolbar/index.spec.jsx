@@ -42,13 +42,23 @@ client.collection = () => ({
       included: []
     })
 })
-
+const defaultSharingInfos = {
+  discoveryLink: '',
+  isSharingShortcutCreated: false,
+  loading: false
+}
 const setup = ({
   isReadOnly = false,
   isPublic = false,
   isFromSharing = false,
-  isMobile = false
+  isMobile = false,
+  isEditorModeView = false,
+  sharingInfos = {}
 } = {}) => {
+  const sharingInfosProps = {
+    ...defaultSharingInfos,
+    ...sharingInfos
+  }
   useBreakpoints.mockReturnValue({ isMobile })
 
   const root = render(
@@ -63,12 +73,13 @@ const setup = ({
         value={{
           fileId: officeDocParam.id,
           isPublic,
+          isEditorModeView,
           isFromSharing,
           isReadOnly,
           isEditorReady: true
         }}
       >
-        <Toolbar />
+        <Toolbar sharingInfos={sharingInfosProps} />
       </OnlyOfficeContext.Provider>
     </AppLike>
   )
@@ -143,77 +154,176 @@ describe('Toolbar', () => {
   })
 
   describe('Sharing', () => {
-    it('should show sharing button in not public views', () => {
-      useQuery.mockReturnValue(officeDocParam)
-
-      const { root } = setup({ isPublic: false })
-      const { queryByTestId } = root
-
-      expect(queryByTestId('onlyoffice-sharing-button')).toBeTruthy()
-    })
-
-    it('should not show sharing button in public views', () => {
-      useQuery.mockReturnValue(officeDocParam)
-
-      const { root } = setup({ isPublic: true })
-      const { queryByTestId } = root
-
-      expect(queryByTestId('onlyoffice-sharing-button')).toBeFalsy()
-    })
-
-    describe('Sharing on mobile', () => {
-      it('should show only sharing icon on mobile', () => {
+    describe('Private view', () => {
+      it('should show sharing button', () => {
         useQuery.mockReturnValue(officeDocParam)
 
-        const { root } = setup({ isPublic: false, isMobile: true })
+        const { root } = setup({ isPublic: false })
         const { queryByTestId } = root
 
-        expect(queryByTestId('onlyoffice-sharing-button')).toBeFalsy()
-        expect(queryByTestId('onlyoffice-sharing-icon')).toBeTruthy()
+        expect(queryByTestId('onlyoffice-sharing-button')).toBeTruthy()
       })
-    })
-  })
-
-  describe('Read only', () => {
-    it('should show text and icon if editor is read only', () => {
-      useQuery.mockReturnValue(officeDocParam)
-
-      const { root } = setup({ isReadOnly: true, isMobile: false })
-      const { queryByTestId } = root
-
-      expect(queryByTestId('onlyoffice-readonly-icon')).toBeTruthy()
-      expect(queryByTestId('onlyoffice-readonly-text')).toBeTruthy()
-    })
-
-    it('should not show text and icon if editor is not read only', () => {
-      useQuery.mockReturnValue(officeDocParam)
-
-      const { root } = setup({ isReadOnly: false, isMobile: false })
-      const { queryByTestId } = root
-
-      expect(queryByTestId('onlyoffice-readonly-icon')).toBeFalsy()
-      expect(queryByTestId('onlyoffice-readonly-text')).toBeFalsy()
-    })
-
-    describe('Read only on mobile', () => {
-      it('should show only icon if editor is read only', () => {
+      it('should not show more menu', () => {
         useQuery.mockReturnValue(officeDocParam)
 
-        const { root } = setup({ isReadOnly: true, isMobile: true })
+        const { root } = setup({ isPublic: false })
         const { queryByTestId } = root
 
-        expect(queryByTestId('onlyoffice-readonly-icon-only')).toBeTruthy()
-        expect(queryByTestId('onlyoffice-readonly-text')).toBeFalsy()
+        expect(queryByTestId('more-menu')).toBeNull()
       })
 
-      it('should not show text and icon if editor is not read only', () => {
-        useQuery.mockReturnValue(officeDocParam)
+      describe('On mobile', () => {
+        it('should show sharing icon', () => {
+          useQuery.mockReturnValue(officeDocParam)
 
-        const { root } = setup({ isReadOnly: false, isMobile: true })
-        const { queryByTestId } = root
+          const { root } = setup({ isPublic: false, isMobile: true })
+          const { queryByTestId } = root
 
-        expect(queryByTestId('onlyoffice-readonly-icon')).toBeFalsy()
-        expect(queryByTestId('onlyoffice-readonly-text')).toBeFalsy()
+          expect(queryByTestId('onlyoffice-sharing-button')).toBeFalsy()
+          expect(queryByTestId('onlyoffice-sharing-icon')).toBeTruthy()
+        })
+        it('should not show more menu', () => {
+          useQuery.mockReturnValue(officeDocParam)
+
+          const { root } = setup({ isPublic: false, isMobile: true })
+          const { queryByTestId } = root
+
+          expect(queryByTestId('more-menu')).toBeNull()
+        })
+      })
+    })
+
+    describe('Public view', () => {
+      describe('Cozy to Cozy', () => {
+        it('should not show sharing button', () => {
+          useQuery.mockReturnValue(officeDocParam)
+          const sharingInfos = {
+            isSharingShortcutCreated: false
+          }
+          const { root } = setup({ isPublic: true, sharingInfos })
+          const { queryByTestId } = root
+
+          expect(queryByTestId('onlyoffice-sharing-button')).toBeNull()
+        })
+        describe("Sharing is not added to the recipient's Cozy", () => {
+          it('should show "MoreMenu" button', () => {
+            useQuery.mockReturnValue(officeDocParam)
+            const sharingInfos = {
+              isSharingShortcutCreated: false
+            }
+            const { root } = setup({ isPublic: true, sharingInfos })
+            const { queryByTestId } = root
+
+            expect(queryByTestId('more-menu')).toBeTruthy()
+          })
+          it('should show "Add to my Cozy" button', () => {
+            useQuery.mockReturnValue(officeDocParam)
+            const sharingInfos = {
+              isSharingShortcutCreated: false
+            }
+            const { root } = setup({ isPublic: true, sharingInfos })
+            const { queryByTestId } = root
+
+            expect(queryByTestId('open-external-link-button')).toBeTruthy()
+          })
+
+          describe('On mobile', () => {
+            it('should not show sharing icon and button', () => {
+              useQuery.mockReturnValue(officeDocParam)
+              const sharingInfos = {
+                isSharingShortcutCreated: false
+              }
+              const { root } = setup({
+                isPublic: true,
+                isMobile: true,
+                sharingInfos
+              })
+              const { queryByTestId } = root
+
+              expect(queryByTestId('onlyoffice-sharing-button')).toBeNull()
+              expect(queryByTestId('onlyoffice-sharing-icon')).toBeNull()
+            })
+            it('should show more menu', () => {
+              useQuery.mockReturnValue(officeDocParam)
+              const sharingInfos = {
+                isSharingShortcutCreated: false
+              }
+              const { root } = setup({
+                isPublic: true,
+                isMobile: true,
+                sharingInfos
+              })
+              const { queryByTestId } = root
+
+              expect(queryByTestId('more-menu')).toBeTruthy()
+            })
+          })
+        })
+
+        describe("Sharing is added to the recipient's Cozy (not sync)", () => {
+          it('should not show sharing button', () => {
+            useQuery.mockReturnValue(officeDocParam)
+            const sharingInfos = {
+              isSharingShortcutCreated: true
+            }
+            const { root } = setup({ isPublic: true, sharingInfos })
+            const { queryByTestId } = root
+
+            expect(queryByTestId('onlyoffice-sharing-button')).toBeNull()
+          })
+          it('should show "MoreMenu" button', () => {
+            useQuery.mockReturnValue(officeDocParam)
+            const sharingInfos = {
+              isSharingShortcutCreated: true
+            }
+            const { root } = setup({ isPublic: true, sharingInfos })
+            const { queryByTestId } = root
+
+            expect(queryByTestId('more-menu')).toBeTruthy()
+          })
+          it('should not show "Add to my Cozy" button', () => {
+            useQuery.mockReturnValue(officeDocParam)
+            const sharingInfos = {
+              isSharingShortcutCreated: true
+            }
+            const { root } = setup({ isPublic: true, sharingInfos })
+            const { queryByTestId } = root
+
+            expect(queryByTestId('open-external-link-button')).toBeNull()
+          })
+
+          describe('On mobile', () => {
+            it('should not show sharing icon and button', () => {
+              useQuery.mockReturnValue(officeDocParam)
+              const sharingInfos = {
+                isSharingShortcutCreated: true
+              }
+              const { root } = setup({
+                isPublic: true,
+                isMobile: true,
+                sharingInfos
+              })
+              const { queryByTestId } = root
+
+              expect(queryByTestId('onlyoffice-sharing-button')).toBeNull()
+              expect(queryByTestId('onlyoffice-sharing-icon')).toBeNull()
+            })
+            it('should show more menu', () => {
+              useQuery.mockReturnValue(officeDocParam)
+              const sharingInfos = {
+                isSharingShortcutCreated: true
+              }
+              const { root } = setup({
+                isPublic: true,
+                isMobile: true,
+                sharingInfos
+              })
+              const { queryByTestId } = root
+
+              expect(queryByTestId('more-menu')).toBeTruthy()
+            })
+          })
+        })
       })
     })
   })
