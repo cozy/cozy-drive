@@ -5,7 +5,7 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 
-import { HOME_LINK_HREF } from 'constants/config'
+import { getIconWithlabel } from 'modules/public/OpenExternalLinkButton'
 import { openExternalLink as openExtLink } from 'modules/public/helpers'
 
 const makeComponent = (label, icon) => {
@@ -25,17 +25,11 @@ const makeComponent = (label, icon) => {
 }
 
 export const openExternalLink = ({ t, isSharingShortcutCreated, link }) => {
-  const label =
-    link === HOME_LINK_HREF
-      ? t('Share.create-cozy')
-      : isSharingShortcutCreated
-      ? t('toolbar.menu_sync_cozy')
-      : t('toolbar.add_to_mine')
-
-  const icon =
-    !isSharingShortcutCreated || link === HOME_LINK_HREF
-      ? 'to-the-cloud'
-      : 'sync'
+  const { icon, label } = getIconWithlabel({
+    link,
+    isSharingShortcutCreated,
+    t
+  })
 
   return {
     name: 'openExternalLink',
