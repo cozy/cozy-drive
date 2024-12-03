@@ -25,6 +25,7 @@ const PublicToolbarMoreMenu = ({ files, actions }) => {
     <>
       <div
         ref={moreButtonRef}
+        data-testid="more-menu"
         className={cx({
           'u-ml-half': !isMobile
         })}

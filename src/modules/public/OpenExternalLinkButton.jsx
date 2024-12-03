@@ -71,6 +71,7 @@ export const OpenExternalLinkButton = ({
       <ExtendableFab
         color="primary"
         label={label}
+        data-testid="open-external-link-button"
         className={fabStyles.root}
         icon={icon}
         follow={window}
@@ -83,6 +84,7 @@ export const OpenExternalLinkButton = ({
   return (
     <Button
       onClick={handleClick}
+      data-testid="open-external-link-button"
       startIcon={<Icon icon={icon} />}
       label={label}
       {...props}
