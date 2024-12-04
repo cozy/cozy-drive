@@ -6580,10 +6580,10 @@ cozy-scripts@^8.3.0:
     webpack-dev-server "3.10.3"
     webpack-merge "4.2.2"
 
-cozy-sharing@^16.7.0:
-  version "16.7.0"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-16.7.0.tgz#3ee7865e9b888378d62d28095c0c28f9ceca8e00"
-  integrity sha512-yK/Owt3y6+bxpLT9JeHVIS1H0vwaTtAl6EF9fqCYsSoTt0sM3kIoS65cws2F1m32q5gqztdYXgpQb74Z4U+PVA==
+cozy-sharing@^16.9.0:
+  version "16.9.0"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-16.9.0.tgz#edb38be918477cf89385857a40f9118f3c5f25ec"
+  integrity sha512-VhIgIFLAIG3PcXr0BYSQC+OjCKaUsW5nAGZmE1kpKGqi9hTbYnfQ3fgGLCjGOlxcHsJdgzxbSbW7Rc0CCjT3+A==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     classnames "^2.2.6"
@@ -12973,9 +12973,9 @@ msgpack5@^4.0.2:
     readable-stream "^2.3.6"
     safe-buffer "^5.1.2"
 
-"mui-bottom-sheet@git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
+"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
   version "1.0.8"
-  resolved "git+https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
+  resolved "https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
     jest-environment-jsdom-sixteen "^1.0.3"
