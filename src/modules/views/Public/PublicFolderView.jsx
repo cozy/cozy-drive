@@ -161,16 +161,15 @@ const PublicFolderView = () => {
     !showNewBreadcrumbFlag || showNewBreadcrumbFlag !== true
 
   // Check if the sharing shortcut has already been created (but not synced)
-  const isShareAlreadyAdded =
-    !sharingInfos.loading && sharingInfos.isSharingShortcutCreated
+  const isShareNotAdded =
+    !sharingInfos.loading && !sharingInfos.isSharingShortcutCreated
   // Check if you are sharing Cozy to Cozy (Link sharing is on the `/public` route)
   const isPreview = window.location.pathname === '/preview'
   // Show the sharing banner plugin only on shared links view and cozy to cozy sharing view(not added)
   const isSharingBannerPluginDisplayed =
-    !isShareAlreadyAdded || (isOnSharedFolder && !isPreview)
+    isShareNotAdded || (isOnSharedFolder && !isPreview)
 
-  const isAddToMyCozyFabDisplayed =
-    isMobile && isPreview && !isShareAlreadyAdded
+  const isAddToMyCozyFabDisplayed = isMobile && isPreview && isShareNotAdded
 
   return (
     <Main isPublic={true}>
