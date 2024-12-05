@@ -36,6 +36,9 @@ const mockSharingContextValue = {
   refresh: jest.fn(),
   hasWriteAccess: jest.fn(),
   getRecipients: jest.fn(),
+  getDocumentPermissions: jest.fn(),
+  isOwner: jest.fn(),
+  allLoaded: jest.fn(),
   getSharingLink: jest.fn()
 }
 
