@@ -35,7 +35,10 @@ export const TestI18n = ({ children }) => {
 const mockSharingContextValue = {
   refresh: jest.fn(),
   hasWriteAccess: jest.fn(),
-  getRecipients: jest.fn(),
+  getRecipients: jest.fn().mockReturnValue([]),
+  getDocumentPermissions: jest.fn(),
+  isOwner: jest.fn(),
+  allLoaded: jest.fn(),
   getSharingLink: jest.fn()
 }
 

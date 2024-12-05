@@ -27,7 +27,9 @@ const client = new createMockClient({})
 const setup = () => {
   const root = render(
     <AppLike client={client}>
-      <LightFileViewer files={[{ id: '01', name: 'fileName' }]} />
+      <LightFileViewer
+        files={[{ id: '01', type: 'file', name: 'fileName.txt' }]}
+      />
     </AppLike>
   )
 
@@ -42,6 +44,7 @@ describe('LightFileViewer', () => {
 
     it('should have the sharing banner and public toolbar but no viewer toolbar', () => {
       jest.spyOn(console, 'error').mockImplementation() // TODO: to be removed with https://github.com/cozy/cozy-libs/pull/1457
+      jest.spyOn(console, 'warn').mockImplementation()
 
       const { root } = setup()
       const { queryByTestId, queryAllByRole } = root
