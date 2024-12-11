@@ -6580,10 +6580,10 @@ cozy-scripts@^8.3.0:
     webpack-dev-server "3.10.3"
     webpack-merge "4.2.2"
 
-cozy-sharing@^16.11.0:
-  version "16.11.0"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-16.11.0.tgz#2476f6a91b2b34c111b48c9ea83bab1eaece5c5d"
-  integrity sha512-76xmn3w4ta1g/JplySRqTRcpLddX3+erOo/Razk1EY+1sLL5uQVglNuoN4WjuFhKpe4lcysR/GHoFPEg12SA0g==
+cozy-sharing@^16.17.0:
+  version "16.17.0"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-16.17.0.tgz#2fcf01f3840997e1637e0562b16d727e78d8971b"
+  integrity sha512-3/OOxnWKpUrhZzeJKxryjXgZHVMq0z1cZywpYx6Aor4Q3DpwzPMg4pniFIDbgWQmST+393PJSD4WL4MNtNfC6A==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     classnames "^2.2.6"
@@ -6656,10 +6656,10 @@ cozy-ui@^113.8.0:
     react-swipeable-views "^0.13.3"
     rooks "^5.11.2"
 
-cozy-viewer@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/cozy-viewer/-/cozy-viewer-8.0.0.tgz#a997d442ae5dfc5f9a2896bb15f3c6092a185fa7"
-  integrity sha512-HiKhAaCbDDEYrL4gyAo/5RAMNphUm+DE+9Bmt0QhRFSD0tNUA93WTtlR1T9/6VfzqbPUi7IvnDvIs1u4xIMW6A==
+cozy-viewer@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/cozy-viewer/-/cozy-viewer-8.1.0.tgz#9036634d562b14df545eb3fd3aec41fd5c85dc34"
+  integrity sha512-5+i1czmbR/t+7gK1Nw4ZaKxP2zJUWRREIHLfKHBdIBLvRTBdahEA3KF2Lq3kZWnICDqbfXXH5lJkKf8o2N9hiQ==
   dependencies:
     classnames "^2.2.5"
     hammerjs "^2.0.8"
@@ -12973,9 +12973,9 @@ msgpack5@^4.0.2:
     readable-stream "^2.3.6"
     safe-buffer "^5.1.2"
 
-"mui-bottom-sheet@git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
+"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
   version "1.0.8"
-  resolved "git+https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
+  resolved "https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
     jest-environment-jsdom-sixteen "^1.0.3"
