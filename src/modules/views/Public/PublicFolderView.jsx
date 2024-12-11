@@ -12,7 +12,8 @@ import flag from 'cozy-flags'
 import {
   useSharingContext,
   SharingBannerPlugin,
-  useSharingInfos
+  useSharingInfos,
+  OpenSharingLinkFabButton
 } from 'cozy-sharing'
 import { Content } from 'cozy-ui/transpiled/react'
 import {
@@ -38,7 +39,6 @@ import { useExtraColumns } from 'modules/certifications/useExtraColumns'
 import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
 import FabWithAddMenuContext from 'modules/drive/FabWithAddMenuContext'
 import Main from 'modules/layout/Main'
-import { OpenExternalLinkButton } from 'modules/public/OpenExternalLinkButton'
 import PublicToolbar from 'modules/public/PublicToolbar'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 
@@ -224,10 +224,7 @@ const PublicFolderView = () => {
           </AddMenuProvider>
         )}
         {isAddToMyCozyFabDisplayed && (
-          <OpenExternalLinkButton
-            link={sharingInfos.discoveryLink}
-            variant="fab"
-          />
+          <OpenSharingLinkFabButton link={sharingInfos.discoveryLink} />
         )}
         <Outlet />
       </Content>

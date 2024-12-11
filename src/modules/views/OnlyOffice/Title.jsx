@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { SharingBannerPlugin } from 'cozy-sharing'
+import { SharingBannerPlugin, OpenSharingLinkFabButton } from 'cozy-sharing'
 import { useSharingInfos } from 'cozy-sharing'
 import { DialogTitle } from 'cozy-ui/transpiled/react/Dialog'
 import Divider from 'cozy-ui/transpiled/react/Divider'
@@ -8,7 +8,6 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 
 import { TrashedBanner } from 'components/TrashedBanner'
-import { OpenExternalLinkButton } from 'modules/public/OpenExternalLinkButton'
 import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
 import Toolbar from 'modules/views/OnlyOffice/Toolbar'
 
@@ -64,10 +63,7 @@ const Title = () => {
         <SharingBannerPlugin />
       ) : null}
       {isAddToMyCozyFabDisplayed && (
-        <OpenExternalLinkButton
-          link={sharingInfos.discoveryLink}
-          variant="fab"
-        />
+        <OpenSharingLinkFabButton link={sharingInfos.discoveryLink} />
       )}
     </div>
   )

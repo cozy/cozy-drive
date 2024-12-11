@@ -3,6 +3,7 @@ import React from 'react'
 
 import { useClient } from 'cozy-client'
 import { useVaultClient } from 'cozy-keys-lib'
+import { openSharingLink, OpenSharingLinkButton } from 'cozy-sharing'
 import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -10,9 +11,8 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { BarRightOnMobile } from 'components/Bar'
 import useCurrentFolderId from 'hooks/useCurrentFolderId'
-import { download, hr, openExternalLink, select } from 'modules/actions'
+import { download, hr, select } from 'modules/actions'
 import { DownloadFilesButton } from 'modules/public/DownloadFilesButton'
-import { OpenExternalLinkButton } from 'modules/public/OpenExternalLinkButton'
 import PublicToolbarMoreMenu from 'modules/public/PublicToolbarMoreMenu'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 
@@ -36,7 +36,7 @@ const PublicToolbarCozyToCozy = ({ sharingInfos, files }) => {
       isMobile && download,
       files.length > 1 && select,
       ((isMobile && files.length > 0) || files.length > 1) && hr,
-      isOnSharedFolder && openExternalLink
+      isOnSharedFolder && openSharingLink
     ],
     {
       t,
@@ -53,7 +53,7 @@ const PublicToolbarCozyToCozy = ({ sharingInfos, files }) => {
     <BarRightOnMobile>
       {!isMobile && files.length > 0 && <DownloadFilesButton files={files} />}
       {!isMobile && !isSharingShortcutCreated && isOnSharedFolder && (
-        <OpenExternalLinkButton
+        <OpenSharingLinkButton
           className="u-ml-half"
           link={discoveryLink}
           isSharingShortcutCreated={isSharingShortcutCreated}
