@@ -26,10 +26,11 @@ const PublicToolbarCozyToCozy = ({ sharingInfos, files }) => {
   const { showSelectionBar } = useSelectionContext()
   const vaultClient = useVaultClient()
   const currentFolderId = useCurrentFolderId()
+  // Sharing can be a folder or a file
+  const itemId = currentFolderId ?? files[0]?._id
 
   const isOnSharedFolder =
-    !loading &&
-    sharing?.rules?.some(rule => rule.values.includes(currentFolderId))
+    !loading && sharing?.rules?.some(rule => rule.values.includes(itemId))
 
   const actions = makeActions(
     [
