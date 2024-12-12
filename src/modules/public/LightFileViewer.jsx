@@ -35,6 +35,12 @@ const LightFileViewer = ({ files, isPublic }) => {
     [navigate, pathname]
   )
 
+  const isCozySharing = window.location.pathname === '/preview'
+  const isShareNotAdded = !loading && !isSharingShortcutCreated
+  const isSharingBannerPluginDisplayed = isShareNotAdded || !isCozySharing
+
+  if (loading) return <FilesViewerLoading />
+
   return (
     <div className={styles['viewer-wrapper-with-bar']}>
       {isMobile && (
@@ -44,7 +50,7 @@ const LightFileViewer = ({ files, isPublic }) => {
           </Typography>
         </BarCenter>
       )}
-      <SharingBannerPlugin />
+      {isSharingBannerPluginDisplayed && <SharingBannerPlugin />}
       {!isDesktop && (
         <PublicToolbar
           className={cx({ 'u-mt-1 u-mr-1': !isMobile })}
