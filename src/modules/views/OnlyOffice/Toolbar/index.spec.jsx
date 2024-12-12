@@ -10,6 +10,12 @@ import Toolbar from 'modules/views/OnlyOffice/Toolbar'
 import AppLike from 'test/components/AppLike'
 import { officeDocParam } from 'test/data'
 
+jest.mock('cozy-sharing', () => ({
+  ...jest.requireActual('cozy-sharing'),
+  __esModule: true,
+  OpenSharingLinkButton: () => <div data-testid="open-external-link-button" />
+}))
+
 jest.mock('cozy-ui/transpiled/react/providers/Breakpoints', () => ({
   ...jest.requireActual('cozy-ui/transpiled/react/providers/Breakpoints'),
   __esModule: true,
