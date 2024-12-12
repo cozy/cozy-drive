@@ -58,7 +58,7 @@ const LightFileViewer = ({ files, isPublic }) => {
         </BarCenter>
       )}
       {isSharingBannerPluginDisplayed && <SharingBannerPlugin />}
-      {!isDesktop && (
+      {isMobile && (
         <PublicToolbar
           className={cx({ 'u-mt-1 u-mr-1': !isMobile })}
           files={files}
