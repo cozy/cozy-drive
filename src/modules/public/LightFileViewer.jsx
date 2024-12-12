@@ -4,12 +4,17 @@ import React, { useCallback } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import { BarCenter } from 'cozy-bar'
-import { SharingBannerPlugin, useSharingInfos } from 'cozy-sharing'
+import {
+  SharingBannerPlugin,
+  useSharingInfos,
+  OpenSharingLinkButton
+} from 'cozy-sharing'
 import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { FooterActionButtons, ForwardOrDownloadButton } from 'cozy-viewer'
 
+import { FilesViewerLoading } from 'components/FilesViewerLoading'
 import PublicToolbar from 'modules/public/PublicToolbar'
 import PublicViewer from 'modules/viewer/PublicViewer'
 import {
@@ -24,6 +29,7 @@ const LightFileViewer = ({ files, isPublic }) => {
   const { isDesktop, isMobile } = useBreakpoints()
   const { pathname } = useLocation()
   const navigate = useNavigate()
+  const { loading, isSharingShortcutCreated, discoveryLink } = sharingInfos
 
   const onlyOfficeOpener = useCallback(
     file => {
@@ -38,6 +44,7 @@ const LightFileViewer = ({ files, isPublic }) => {
   const isCozySharing = window.location.pathname === '/preview'
   const isShareNotAdded = !loading && !isSharingShortcutCreated
   const isSharingBannerPluginDisplayed = isShareNotAdded || !isCozySharing
+  const isAddToMyCozyDisplayed = isShareNotAdded && isCozySharing
 
   if (loading) return <FilesViewerLoading />
 
@@ -73,7 +80,18 @@ const LightFileViewer = ({ files, isPublic }) => {
           }}
         >
           <FooterActionButtons>
-            <ForwardOrDownloadButton />
+            {isAddToMyCozyDisplayed && (
+              <OpenSharingLinkButton
+                link={discoveryLink}
+                isSharingShortcutCreated={isSharingShortcutCreated}
+                isShortLabel
+                fullWidth
+                variant="secondary"
+              />
+            )}
+            <ForwardOrDownloadButton
+              {...(isAddToMyCozyDisplayed ? { variant: 'buttonIcon' } : {})}
+            />
           </FooterActionButtons>
         </PublicViewer>
       </div>
