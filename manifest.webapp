@@ -178,6 +178,16 @@
       "type": "eu.mycozy.dacc_v2",
       "verbs": ["POST"],
       "description": "Remote-doctype required to send anonymized measures to the DACC shared among mycozy.eu's Cozy."
+    },
+    "chatConversations": {
+      "description": "Required by the cozy Assistant",
+      "type": "io.cozy.ai.chat.conversations",
+      "verbs": ["GET", "POST"]
+    },
+    "chatEvents": {
+      "description": "Required by the cozy Assistant",
+      "type": "io.cozy.ai.chat.events",
+      "verbs": ["GET"]
     }
   },
   "accept_from_flagship": true,
