@@ -1,6 +1,8 @@
 import React from 'react'
 import { Route, useParams, Navigate } from 'react-router-dom'
 
+import { RealTimeQueries } from 'cozy-client'
+import { SearchDialog, AssistantDialog } from 'cozy-dataproxy-lib'
 import flag from 'cozy-flags'
 
 import ExternalRedirect from './ExternalRedirect'
@@ -12,7 +14,6 @@ import OnlyOfficeCreateView from '../views/OnlyOffice/Create'
 import OnlyOfficePaywallView from '../views/OnlyOffice/OnlyOfficePaywallView'
 import RecentView from '../views/Recent'
 import FilesViewerRecent from '../views/Recent/FilesViewerRecent'
-import SearchView from '../views/Search/SearchView'
 import SharingsView from '../views/Sharings'
 import SharingsFilesViewer from '../views/Sharings/FilesViewerSharings'
 import SharingsFolderView from '../views/Sharings/SharingsFolderView'
@@ -152,7 +153,16 @@ const AppRoute = () => (
       />
 
       <Route path="file/:fileId" element={<FileOpenerExternal />} />
-      <Route path="search" element={<SearchView />} />
+      <Route path="search" element={<SearchDialog />} />
+      <Route
+        path="assistant/:conversationId"
+        element={
+          <>
+            <RealTimeQueries doctype="io.cozy.ai.chat.conversations" />
+            <AssistantDialog />
+          </>
+        }
+      />
 
       <Route path="favorites" element={<FavoritesView />}>
         <Route path="file/:fileId/revision" element={<FileHistory />} />
