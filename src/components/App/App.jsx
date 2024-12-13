@@ -3,6 +3,7 @@ import React from 'react'
 import { Provider } from 'react-redux'
 
 import { BarProvider } from 'cozy-bar'
+import { DataProxyProvider } from 'cozy-dataproxy-lib'
 import { WebviewIntentProvider } from 'cozy-intent'
 
 import PushBannerProvider from 'components/PushBanner/PushBannerProvider'
@@ -25,13 +26,15 @@ const App = ({ isPublic, store, client, lang, polyglot, children }) => {
         <BarProvider>
           <Provider store={store}>
             <DriveProvider client={client} lang={lang} polyglot={polyglot}>
-              <PushBannerProvider>
-                <AcceptingSharingProvider>
-                  <ThumbnailSizeContextProvider>
-                    <ModalContextProvider>{children}</ModalContextProvider>
-                  </ThumbnailSizeContextProvider>
-                </AcceptingSharingProvider>
-              </PushBannerProvider>
+              <DataProxyProvider>
+                <PushBannerProvider>
+                  <AcceptingSharingProvider>
+                    <ThumbnailSizeContextProvider>
+                      <ModalContextProvider>{children}</ModalContextProvider>
+                    </ThumbnailSizeContextProvider>
+                  </AcceptingSharingProvider>
+                </PushBannerProvider>
+              </DataProxyProvider>
             </DriveProvider>
           </Provider>
         </BarProvider>
