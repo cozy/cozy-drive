@@ -6647,10 +6647,10 @@ cozy-ui@^114.0.1:
     react-swipeable-views "^0.13.3"
     rooks "^5.11.2"
 
-cozy-viewer@^9.0.1:
-  version "9.0.1"
-  resolved "https://registry.yarnpkg.com/cozy-viewer/-/cozy-viewer-9.0.1.tgz#51cec84eeeb947aaebab5713dad8badcbbbda398"
-  integrity sha512-mJMczJxIZAQrZSHVTmjtYyTPq9Kk1pg555gND+kD13lH4xbr/wn6JCcBLPJGYe5eO16ebcdwWSf7NJ5oewFDSw==
+cozy-viewer@^9.0.2:
+  version "9.0.2"
+  resolved "https://registry.yarnpkg.com/cozy-viewer/-/cozy-viewer-9.0.2.tgz#f618f5296b7637a96f9017327fb2bbff85b06f38"
+  integrity sha512-VhB7m1EIOW8oL67+PT38Miw+n1YFEBKgQAcVJMN8Yo6otNi0rTiqKuPSnbmLbhI+J88TWKK68Z0E2JBX1UOZyQ==
   dependencies:
     classnames "^2.2.5"
     hammerjs "^2.0.8"
@@ -12964,9 +12964,9 @@ msgpack5@^4.0.2:
     readable-stream "^2.3.6"
     safe-buffer "^5.1.2"
 
-"mui-bottom-sheet@git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
+"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
   version "1.0.8"
-  resolved "git+https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
+  resolved "https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
     jest-environment-jsdom-sixteen "^1.0.3"
