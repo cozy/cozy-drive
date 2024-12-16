@@ -73,6 +73,7 @@ const SearchView = () => {
           window.location.assign(url)
         }
       } else {
+        // eslint-disable-next-line no-console
         console.error(
           `openSuggestion (${suggestion.name}) could not be executed`
         )
