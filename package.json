@@ -96,7 +96,7 @@
     "cozy-realtime": "4.6.0",
     "cozy-scripts": "^8.3.0",
     "cozy-sharing": "^16.17.0",
-    "cozy-stack-client": "^49.8.0",
+    "cozy-stack-client": "^51.6.0",
     "cozy-ui": "^114.0.0",
     "cozy-viewer": "^9.0.1",
     "date-fns": "1.30.1",
