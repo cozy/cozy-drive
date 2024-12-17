@@ -26,15 +26,19 @@ const App = ({ isPublic, store, client, lang, polyglot, children }) => {
         <BarProvider>
           <Provider store={store}>
             <DriveProvider client={client} lang={lang} polyglot={polyglot}>
-              <DataProxyProvider>
-                <PushBannerProvider>
-                  <AcceptingSharingProvider>
-                    <ThumbnailSizeContextProvider>
-                      <ModalContextProvider>{children}</ModalContextProvider>
-                    </ThumbnailSizeContextProvider>
-                  </AcceptingSharingProvider>
-                </PushBannerProvider>
-              </DataProxyProvider>
+              <PushBannerProvider>
+                <AcceptingSharingProvider>
+                  <ThumbnailSizeContextProvider>
+                    <ModalContextProvider>
+                      {isPublic ? (
+                        children
+                      ) : (
+                        <DataProxyProvider>{children}</DataProxyProvider>
+                      )}
+                    </ModalContextProvider>
+                  </ThumbnailSizeContextProvider>
+                </AcceptingSharingProvider>
+              </PushBannerProvider>
             </DriveProvider>
           </Provider>
         </BarProvider>
