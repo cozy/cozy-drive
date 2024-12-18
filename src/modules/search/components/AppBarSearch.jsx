@@ -10,9 +10,11 @@ const AppBarSearch = () => {
   return (
     <BarSearch>
       {!isMobile && (
-        <AssistantDesktop
-          componentsProps={{ SearchBarDesktop: { size: 'small' } }}
-        />
+        <div className="u-flex-grow u-mh-2">
+          <AssistantDesktop
+            componentsProps={{ SearchBarDesktop: { size: 'small' } }}
+          />
+        </div>
       )}
     </BarSearch>
   )
