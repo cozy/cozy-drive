@@ -6,7 +6,11 @@ import { useNavigate, Outlet, useLocation, useParams } from 'react-router-dom'
 import { useQuery, useClient } from 'cozy-client'
 import flag from 'cozy-flags'
 import { useVaultClient } from 'cozy-keys-lib'
-import { useSharingContext } from 'cozy-sharing'
+import {
+  useSharingContext,
+  useNativeFileSharing,
+  shareNative
+} from 'cozy-sharing'
 import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -65,6 +69,8 @@ const DriveFolderView = () => {
   const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)
   const { allLoaded, hasWriteAccess, refresh, isOwner, byDocId } =
     useSharingContext()
+  const { isNativeFileSharingAvailable, shareFilesNative } =
+    useNativeFileSharing()
   const client = useClient()
   const vaultClient = useVaultClient()
   const { pushModal, popModal } = useModalContext()
@@ -159,11 +165,14 @@ const DriveFolderView = () => {
     allLoaded,
     showAlert,
     isOwner,
-    byDocId
+    byDocId,
+    isNativeFileSharingAvailable,
+    shareFilesNative
   }
   const actions = makeActions(
     [
       share,
+      shareNative,
       download,
       hr,
       rename,

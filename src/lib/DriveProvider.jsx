@@ -7,7 +7,7 @@ import {
   VaultProvider,
   VaultUnlockPlaceholder
 } from 'cozy-keys-lib'
-import SharingProvider from 'cozy-sharing'
+import SharingProvider, { NativeFileSharingProvider } from 'cozy-sharing'
 import AlertProvider from 'cozy-ui/transpiled/react/providers/Alert'
 import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
@@ -25,14 +25,16 @@ const DriveProvider = ({ client, lang, polyglot, dictRequire, children }) => {
         <VaultProvider cozyClient={client}>
           <VaultUnlockProvider>
             <SharingProvider doctype="io.cozy.files" documentType="Files">
-              <CozyTheme ignoreCozySettings={isPublic} className="u-w-100">
-                <BreakpointsProvider>
-                  <AlertProvider>
-                    <VaultUnlockPlaceholder />
-                    <FabProvider>{children}</FabProvider>
-                  </AlertProvider>
-                </BreakpointsProvider>
-              </CozyTheme>
+              <NativeFileSharingProvider>
+                <CozyTheme ignoreCozySettings={isPublic} className="u-w-100">
+                  <BreakpointsProvider>
+                    <AlertProvider>
+                      <VaultUnlockPlaceholder />
+                      <FabProvider>{children}</FabProvider>
+                    </AlertProvider>
+                  </BreakpointsProvider>
+                </CozyTheme>
+              </NativeFileSharingProvider>
             </SharingProvider>
           </VaultUnlockProvider>
         </VaultProvider>

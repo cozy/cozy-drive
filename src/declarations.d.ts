@@ -125,7 +125,7 @@ declare module 'cozy-ui/transpiled/react/ActionsMenu/Actions' {
   export function divider(): Action
 
   export function makeActions(
-    arg1: ((props?: T) => Action)[],
+    arg1: (((props?: T) => Action) | boolean)[],
     T
   ): Record<string, Action>[]
 }
@@ -135,6 +135,15 @@ declare module 'cozy-sharing' {
     allLoaded: boolean
     refresh: () => void
   }
+
+  export const useNativeFileSharing: () => {
+    isNativeFileSharingAvailable: boolean
+    shareFilesNative: (
+      files: import('cozy-client/types/CozyClient').CozyClient[]
+    ) => void
+  }
+
+  export const shareNative: (props?: T) => Action
 }
 
 declare module 'cozy-ui/transpiled/react/Nav' {

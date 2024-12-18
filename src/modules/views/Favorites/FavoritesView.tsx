@@ -4,7 +4,11 @@ import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 
 import { useClient, useQuery } from 'cozy-client'
 import { IOCozyFile } from 'cozy-client/types/types'
-import { useSharingContext } from 'cozy-sharing'
+import {
+  useSharingContext,
+  useNativeFileSharing,
+  shareNative
+} from 'cozy-sharing'
 import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -51,6 +55,8 @@ const FavoritesView: FC = () => {
   const client = useClient()
   const { pushModal, popModal } = useModalContext()
   const { allLoaded, refresh } = useSharingContext()
+  const { isNativeFileSharingAvailable, shareFilesNative } =
+    useNativeFileSharing()
   const dispatch = useDispatch()
   const { showAlert } = useAlert()
   const [sortOrder] = useFolderSort('favorites')
@@ -95,13 +101,16 @@ const FavoritesView: FC = () => {
     canMove: true,
     isPublic: false,
     allLoaded,
-    showAlert
+    showAlert,
+    isNativeFileSharingAvailable,
+    shareFilesNative
   }
 
   const actions = makeActions(
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     [
       share,
+      shareNative,
       download,
       hr,
       rename,
