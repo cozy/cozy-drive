@@ -22,7 +22,7 @@ import {
   download,
   trash,
   rename,
-  qualify,
+  infos,
   versions,
   hr
 } from 'modules/actions'
@@ -166,12 +166,12 @@ const DriveFolderView = () => {
       share,
       download,
       hr,
-      qualify,
       rename,
       moveTo,
       duplicateTo,
       addToFavorites,
       removeFromFavorites,
+      infos,
       hr,
       versions,
       hr,

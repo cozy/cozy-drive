@@ -14,7 +14,7 @@ import { useModalContext } from 'lib/ModalContext'
 import {
   download,
   rename,
-  qualify,
+  infos,
   versions,
   share,
   hr,
@@ -99,15 +99,16 @@ const FavoritesView: FC = () => {
   }
 
   const actions = makeActions(
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     [
       share,
       download,
       hr,
-      qualify,
       rename,
       moveTo,
       addToFavorites,
       removeFromFavorites,
+      infos,
       hr,
       versions,
       hr,
