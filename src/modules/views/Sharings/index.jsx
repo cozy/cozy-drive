@@ -3,7 +3,11 @@ import { useDispatch } from 'react-redux'
 import { useNavigate, useLocation, Outlet } from 'react-router-dom'
 
 import { useClient, hasQueryBeenLoaded } from 'cozy-client'
-import { useSharingContext } from 'cozy-sharing'
+import {
+  useSharingContext,
+  useNativeFileSharing,
+  shareNative
+} from 'cozy-sharing'
 import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -41,6 +45,8 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
   const client = useClient()
   const { pushModal, popModal } = useModalContext()
   const { allLoaded, refresh } = useSharingContext()
+  const { isNativeFileSharingAvailable, shareFilesNative } =
+    useNativeFileSharing()
   const dispatch = useDispatch()
   useHead()
   const { showAlert } = useAlert()
@@ -77,12 +83,15 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
     canMove: true,
     isPublic: false,
     allLoaded,
-    showAlert
+    showAlert,
+    isNativeFileSharingAvailable,
+    shareFilesNative
   }
 
   const actions = makeActions(
     [
       share,
+      shareNative,
       download,
       hr,
       rename,
