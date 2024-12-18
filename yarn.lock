@@ -6645,10 +6645,10 @@ cozy-scripts@^8.4.0:
     webpack-dev-server "3.10.3"
     webpack-merge "4.2.2"
 
-cozy-sharing@^16.17.0:
-  version "16.17.0"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-16.17.0.tgz#2fcf01f3840997e1637e0562b16d727e78d8971b"
-  integrity sha512-3/OOxnWKpUrhZzeJKxryjXgZHVMq0z1cZywpYx6Aor4Q3DpwzPMg4pniFIDbgWQmST+393PJSD4WL4MNtNfC6A==
+cozy-sharing@^17.0.0:
+  version "17.0.0"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-17.0.0.tgz#7da5ec722aa37b9416da845092844e268fe144c0"
+  integrity sha512-rUDqZLE8BOzfW6QLrEL/7zdKeQbd9m3WdZ2nKXZHkK2ovrfUs7sa2lGtjm0gYn0RYPG0Cfpv237PnhcvHSQzXQ==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     classnames "^2.2.6"
