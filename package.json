@@ -96,7 +96,7 @@
     "cozy-minilog": "3.3.1",
     "cozy-realtime": "4.6.0",
     "cozy-scripts": "^8.4.0",
-    "cozy-sharing": "^16.17.0",
+    "cozy-sharing": "^17.0.0",
     "cozy-stack-client": "^51.6.0",
     "cozy-ui": "^114.0.1",
     "cozy-viewer": "^10.0.0",
