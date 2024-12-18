@@ -781,6 +781,7 @@
     "error": "An error occurred, please try again."
   },
   "actions": {
+    "infos": "Details and qualification",
     "duplicateTo": {
       "label": "Duplicate to…"
     }

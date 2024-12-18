@@ -782,6 +782,7 @@
     "error": "Une erreur est survenue, merci de réessayer."
   },
   "actions": {
+    "infos": "Détails et qualification",
     "duplicateTo": {
       "label": "Dupliquer vers…"
     }

@@ -15,7 +15,7 @@ import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewHeader from '../Folder/FolderViewHeader'
 import useHead from 'components/useHead'
 import { useModalContext } from 'lib/ModalContext'
-import { download, rename, qualify, versions, share, hr } from 'modules/actions'
+import { download, rename, infos, versions, share, hr } from 'modules/actions'
 import { addToFavorites } from 'modules/actions/components/addToFavorites'
 import { moveTo } from 'modules/actions/components/moveTo'
 import { removeFromFavorites } from 'modules/actions/components/removeFromFavorites'
@@ -85,11 +85,11 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
       share,
       download,
       hr,
-      qualify,
       rename,
       moveTo,
       addToFavorites,
       removeFromFavorites,
+      infos,
       hr,
       versions
     ],
