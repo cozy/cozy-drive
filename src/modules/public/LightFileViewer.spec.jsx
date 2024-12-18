@@ -11,7 +11,6 @@ jest.mock('cozy-keys-lib', () => ({
   ...jest.requireActual('cozy-keys-lib'),
   useVaultClient: jest.fn()
 }))
-
 jest.mock('cozy-intent', () => ({
   WebviewIntentProvider: ({ children }) => children,
   useWebviewIntent: () => ({ call: () => {} })
@@ -20,6 +19,11 @@ jest.mock('cozy-ui/transpiled/react/providers/Breakpoints', () => ({
   __esModule: true,
   default: jest.fn(),
   BreakpointsProvider: ({ children }) => children
+}))
+// used inside cozy-viewer
+jest.mock('cozy-client/dist/models/permission', () => ({
+  ...jest.requireActual('cozy-client/dist/models/permission'),
+  isDocumentReadOnly: jest.fn().mockResolvedValue(false)
 }))
 
 const client = new createMockClient({})
