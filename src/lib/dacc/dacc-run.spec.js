@@ -1,4 +1,5 @@
-import { endOfMonth, subMonths } from 'date-fns'
+import endOfMonth from 'date-fns/endOfMonth'
+import subMonths from 'date-fns/subMonths'
 
 import CozyClient from 'cozy-client'
 import flag from 'cozy-flags'
@@ -14,7 +15,7 @@ jest.mock('lib/dacc/dacc')
 
 describe('dacc', () => {
   const maxGivenDate = '2022-01-01'
-  const maxDate = new Date(maxGivenDate).toISOString()
+  const maxDate = new Date(maxGivenDate)
   beforeEach(() => {
     flag.mockReturnValue({
       excludedSlug: 'excludedSlug',
@@ -67,9 +68,7 @@ describe('dacc', () => {
       measureName: 'measureName',
       remoteDoctype: 'remoteDoctype'
     })
-    const endOfThisMonth = new Date(
-      endOfMonth(subMonths(new Date(), 1))
-    ).toISOString()
+    const endOfThisMonth = new Date(endOfMonth(subMonths(new Date(), 1)))
 
     // When
     await run()
