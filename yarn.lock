@@ -6721,10 +6721,10 @@ cozy-ui@^114.0.1:
     react-swipeable-views "^0.13.3"
     rooks "^5.11.2"
 
-cozy-viewer@^9.1.0:
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-viewer/-/cozy-viewer-9.1.0.tgz#13b1bc573076f676ac5f73b98620ef55ebfb7e88"
-  integrity sha512-X1HjMuCYJNLV9fW5aRVlkwloQbOaxcnsSETaacPJXzxXMyPqDkyuNT1HLqXDWCU5y8WGankMMGJtp9iGre94bg==
+cozy-viewer@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/cozy-viewer/-/cozy-viewer-10.0.0.tgz#0dd7d18a6625034bd072698188454ac28289a573"
+  integrity sha512-8MhPi/OtdkjbpCEInld8awjo1yeinAEoFma1eJpVHoN6Fotj3hHouCdOj0+kqlp7mebUHBtTvUQFGZ0DmWaKSQ==
   dependencies:
     classnames "^2.2.5"
     hammerjs "^2.0.8"
