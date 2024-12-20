@@ -1,4 +1,5 @@
 import cx from 'classnames'
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import { TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
@@ -6,7 +7,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import styles from 'styles/filelist.styl'
 
-const _LastUpdate = ({ date, formatted = '—' }) => {
+const LastUpdate = ({ date, formatted = '—' }) => {
   const { f, t } = useI18n()
 
   return (
@@ -21,6 +22,9 @@ const _LastUpdate = ({ date, formatted = '—' }) => {
   )
 }
 
-const LastUpdate = React.memo(_LastUpdate)
+LastUpdate.propTypes = {
+  date: PropTypes.string,
+  formatted: PropTypes.string
+}
 
-export default LastUpdate
+export default React.memo(LastUpdate)
