@@ -149,8 +149,8 @@
     "head_size": "Größe",
     "head_status": "Teilen",
     "head_thumbnail_size": "Wechsele die Größe des Vorschaubildes",
-    "row_update_format": "DD.MM.YYYY",
-    "row_update_format_full": "DD.MM.YYYY",
+    "row_update_format": "dd.LL.yyyy",
+    "row_update_format_full": "dd.LL.yyyy",
     "row_read_only": "Freigeben (nur Lesen)",
     "row_read_write": "Freigeben (Lesen & Schreiben)",
     "row_size_symbols": {

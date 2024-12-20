@@ -151,8 +151,8 @@
     "head_size": "Grootte",
     "head_status": "Delen",
     "head_thumbnail_size": "Miniatuurgrootte aanpassen",
-    "row_update_format": "MMM D, YYYY",
-    "row_update_format_full": "MMMM D, YYYY",
+    "row_update_format": "LLL d, yyyy",
+    "row_update_format_full": "LLLL d, yyyy",
     "row_read_only": "Delen (alleen-lezen)",
     "row_read_write": "Delen (lezen en bewerken)",
     "row_size_symbols": {
