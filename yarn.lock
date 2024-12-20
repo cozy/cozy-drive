@@ -6309,10 +6309,10 @@ cozy-client@^51.3.0:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
-cozy-dataproxy-lib@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/cozy-dataproxy-lib/-/cozy-dataproxy-lib-2.0.0.tgz#7c64ce52893f05cd176c852c8ab0ff767239cc85"
-  integrity sha512-jYZ3VilkJuOiTTU+7Jf3yIYWYhFeOC+fQ5yieFEeD17INj7tg2jqB3J9iSRj0lMSCZgABTeWanmGAMjXX1zw3w==
+cozy-dataproxy-lib@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/cozy-dataproxy-lib/-/cozy-dataproxy-lib-2.1.1.tgz#5a1a18fe3ac09cacd451c39ecec7712966a86c60"
+  integrity sha512-SHURcEf3kPURBueQaes7H0OimL4Zfwuw/lO7ykVU5C4Z7dg2t/Ij5gcofl9Jj0lx9HlKmbffgZvoMCriCzK7Pg==
   dependencies:
     classnames "2.5.1"
     comlink "4.4.1"

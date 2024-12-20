@@ -84,7 +84,7 @@
     "cozy-ci": "0.5.2",
     "cozy-client": "^51.3.0",
     "cozy-client-js": "0.20.0",
-    "cozy-dataproxy-lib": "^2.0.0",
+    "cozy-dataproxy-lib": "^2.1.1",
     "cozy-device-helper": "^3.7.1",
     "cozy-devtools": "^1.2.1",
     "cozy-doctypes": "1.85.4",
