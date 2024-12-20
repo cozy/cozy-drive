@@ -14,7 +14,7 @@ import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import styles from './styles.styl'
 
 const formatDate = (date, f) => {
-  return f(date, 'DD MMMM - HH:mm')
+  return f(date, 'dd LLLL - HH:mm')
 }
 
 const HistoryModal = ({

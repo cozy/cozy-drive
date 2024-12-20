@@ -134,8 +134,8 @@
     "head_update": "最終更新",
     "head_size": "サイズ",
     "head_thumbnail_size": "サムネイルのサイズを切り替え",
-    "row_update_format": "yyyy/MM/dd",
-    "row_update_format_full": "YYYY/MM/DD",
+    "row_update_format": "yyyy/LL/dd",
+    "row_update_format_full": "yyyy/LL/dd",
     "row_read_only": "共有 (読み取り専用)",
     "row_read_write": "共有 (読み書き)",
     "row_size_symbols": {

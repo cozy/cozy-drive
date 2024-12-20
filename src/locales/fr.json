@@ -157,8 +157,8 @@
     "head_size": "Taille",
     "head_status": "Partage",
     "head_thumbnail_size": "Changer la taille des miniatures",
-    "row_update_format": "D MMM YYYY",
-    "row_update_format_full": "D MMMM YYYY",
+    "row_update_format": "d LLL yyyy",
+    "row_update_format_full": "d LLLL yyyy",
     "row_read_only": "Partagé (lecture seule)",
     "row_read_write": "Partagé (lecture & écriture)",
     "row_size_symbols": {
@@ -797,7 +797,7 @@
     "label": "Ouvrir le dossier"
   },
   "LastUpdate": {
-    "titleFormat": "DD MMMM YYYY, HH:MM"
+    "titleFormat": "dd LLLL yyyy, HH:MM"
   },
   "PublicNoteRedirect": {
     "error": {

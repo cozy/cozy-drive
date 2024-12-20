@@ -36,7 +36,10 @@ const FolderPickerListItem: FC<FolderPickerListItemProps> = ({
     onClick(file)
   }
 
-  const formattedUpdatedAt = f(file.updated_at, t('table.row_update_format'))
+  const formattedUpdatedAt = f(
+    new Date(file.updated_at),
+    t('table.row_update_format')
+  )
   const formattedSize = file.size
     ? filesize(file.size, { base: 10 })
     : undefined

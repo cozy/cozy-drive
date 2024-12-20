@@ -138,8 +138,8 @@
     "head_name": "Nome",
     "head_update": "Ultimo aggiornamento",
     "head_size": "Dimensione",
-    "row_update_format": "MMM D, YYYY",
-    "row_update_format_full": "MMMM D, YYYY",
+    "row_update_format": "LLL d, yyyy",
+    "row_update_format_full": "LLLL d, yyyy",
     "row_read_only": "Condividi (Solo Lettura)",
     "row_read_write": "Condividi (Lettura e Scrittura)",
     "row_size_symbols": {
