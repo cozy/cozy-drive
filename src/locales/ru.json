@@ -110,8 +110,8 @@
     "head_name": "Имя",
     "head_update": "Последнее обновление",
     "head_size": "Размер",
-    "row_update_format": "MMM D, YYYY",
-    "row_update_format_full": "MMMM D, YYYY",
+    "row_update_format": "LLL d, yyyy",
+    "row_update_format_full": "LLLL d, yyyy",
     "row_read_only": "Поделится (Чтение)",
     "row_read_write": "Поделится (Чтение и Запись)",
     "row_size_symbols": {

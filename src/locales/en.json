@@ -157,8 +157,8 @@
     "head_size": "Size",
     "head_status": "Share",
     "head_thumbnail_size": "Switch thumbnail size",
-    "row_update_format": "MMM D, YYYY",
-    "row_update_format_full": "MMMM D, YYYY",
+    "row_update_format": "LLL d, yyyy",
+    "row_update_format_full": "LLLL d, yyyy",
     "row_read_only": "Share (Read only)",
     "row_read_write": "Share (Read & Write)",
     "row_size_symbols": {
@@ -796,7 +796,7 @@
     "label": "Open directory"
   },
   "LastUpdate": {
-    "titleFormat": "MMMM DD, YYYY, HH:MM"
+    "titleFormat": "LLLL dd, yyyy, HH:MM"
   },
   "PublicNoteRedirect": {
     "error": {

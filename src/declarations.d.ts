@@ -25,7 +25,7 @@ declare module 'cozy-ui/transpiled/react' {
 declare module 'cozy-ui/transpiled/react/providers/I18n' {
   export const useI18n: () => {
     t: (key: string, options?: Record<string, unknown>) => string
-    f: (date: string, format: string) => string
+    f: (date: Date | number, format: string) => string
     lang: string
   }
 }

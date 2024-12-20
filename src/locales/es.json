@@ -142,8 +142,8 @@
     "head_size": "Tamaño",
     "head_status": "Compartir",
     "head_thumbnail_size": "Cambiar el tamaño de las miniaturas",
-    "row_update_format": "MMM D, AAAA",
-    "row_update_format_full": "MMM D, AAAA",
+    "row_update_format": "LLL d, yyyy",
+    "row_update_format_full": "LLL d, yyyy",
     "row_read_only": "Compartido (sólo en lectura)",
     "row_read_write": "Compartido (Lectura & Escritura)",
     "row_size_symbols": {
