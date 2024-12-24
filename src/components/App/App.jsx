@@ -11,6 +11,7 @@ import { AcceptingSharingProvider } from 'lib/AcceptingSharingContext'
 import DriveProvider from 'lib/DriveProvider'
 import { ModalContextProvider } from 'lib/ModalContext'
 import { ThumbnailSizeContextProvider } from 'lib/ThumbnailSizeContext'
+import { DOCTYPE_APPS, DOCTYPE_CONTACTS, DOCTYPE_FILES } from 'lib/doctypes'
 import { PublicProvider } from 'modules/public/PublicProvider'
 import { onFileUploaded } from 'modules/views/Upload/UploadUtils'
 
@@ -26,19 +27,19 @@ const App = ({ isPublic, store, client, lang, polyglot, children }) => {
         <BarProvider>
           <Provider store={store}>
             <DriveProvider client={client} lang={lang} polyglot={polyglot}>
-              <PushBannerProvider>
-                <AcceptingSharingProvider>
-                  <ThumbnailSizeContextProvider>
-                    <ModalContextProvider>
-                      {isPublic ? (
-                        children
-                      ) : (
-                        <DataProxyProvider>{children}</DataProxyProvider>
-                      )}
-                    </ModalContextProvider>
-                  </ThumbnailSizeContextProvider>
-                </AcceptingSharingProvider>
-              </PushBannerProvider>
+              <DataProxyProvider
+                options={{
+                  doctypes: [DOCTYPE_FILES, DOCTYPE_CONTACTS, DOCTYPE_APPS]
+                }}
+              >
+                <PushBannerProvider>
+                  <AcceptingSharingProvider>
+                    <ThumbnailSizeContextProvider>
+                      <ModalContextProvider>{children}</ModalContextProvider>
+                    </ThumbnailSizeContextProvider>
+                  </AcceptingSharingProvider>
+                </PushBannerProvider>
+              </DataProxyProvider>
             </DriveProvider>
           </Provider>
         </BarProvider>
