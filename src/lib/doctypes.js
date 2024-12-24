@@ -9,6 +9,7 @@ export const DOCTYPE_FILES_SHORTCUT = 'io.cozy.files.shortcuts'
 export const DOCTYPE_ALBUMS = 'io.cozy.photos.albums'
 export const DOCTYPE_PHOTOS_SETTINGS = 'io.cozy.photos.settings'
 export const DOCTYPE_APPS = 'io.cozy.apps'
+export const DOCTYPE_CONTACTS = 'io.cozy.contacts'
 export const DOCTYPE_CONTACTS_VERSION = 2
 
 export const schema = {
