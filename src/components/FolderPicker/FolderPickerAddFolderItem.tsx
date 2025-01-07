@@ -12,9 +12,9 @@ import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import FilenameInput from 'modules/filelist/FilenameInput'
-import { createFolder } from 'modules/navigation/duck'
-import IconEncryptedFolder from 'modules/views/Folder/EncryptedFolderIcon'
+import FilenameInput from '@/modules/filelist/FilenameInput'
+import { createFolder } from '@/modules/navigation/duck'
+import IconEncryptedFolder from '@/modules/views/Folder/EncryptedFolderIcon'
 
 interface FolderPickerAddFolderItemProps {
   isEncrypted: boolean

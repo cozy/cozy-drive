@@ -6,10 +6,10 @@ import {
   useSearchParams
 } from 'react-router-dom'
 
-import { LoaderModal } from 'components/LoaderModal'
-import { getParentPath } from 'lib/path'
-import { NextcloudDeleteConfirm } from 'modules/nextcloud/components/NextcloudDeleteConfirm'
-import { useNextcloudEntries } from 'modules/nextcloud/hooks/useNextcloudEntries'
+import { LoaderModal } from '@/components/LoaderModal'
+import { getParentPath } from '@/lib/path'
+import { NextcloudDeleteConfirm } from '@/modules/nextcloud/components/NextcloudDeleteConfirm'
+import { useNextcloudEntries } from '@/modules/nextcloud/hooks/useNextcloudEntries'
 
 const NextcloudDeleteView = () => {
   const navigate = useNavigate()

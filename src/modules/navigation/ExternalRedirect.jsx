@@ -5,8 +5,8 @@ import { useClient, useFetchShortcut } from 'cozy-client'
 import Empty from 'cozy-ui/transpiled/react/Empty'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import EmptyIcon from 'assets/icons/icon-folder-broken.svg'
-import { DummyLayout } from 'modules/layout/DummyLayout'
+import EmptyIcon from '@/assets/icons/icon-folder-broken.svg'
+import { DummyLayout } from '@/modules/layout/DummyLayout'
 
 const ExternalRedirect = ({ t }) => {
   const { fileId } = useParams()

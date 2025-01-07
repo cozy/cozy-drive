@@ -7,7 +7,8 @@ import { default as UIButtonClient } from 'cozy-ui/transpiled/react/deprecated/P
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { isLinux, isClientAlreadyInstalled, DESKTOP_BANNER } from '.'
-import Config from 'config/config.json'
+
+import Config from '@/config/config.json'
 
 class ButtonClient extends Component {
   state = {

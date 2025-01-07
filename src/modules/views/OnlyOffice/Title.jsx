@@ -8,9 +8,9 @@ import Divider from 'cozy-ui/transpiled/react/Divider'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 
-import { TrashedBanner } from 'components/TrashedBanner'
-import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
-import Toolbar from 'modules/views/OnlyOffice/Toolbar'
+import { TrashedBanner } from '@/components/TrashedBanner'
+import { useOnlyOfficeContext } from '@/modules/views/OnlyOffice/OnlyOfficeProvider'
+import Toolbar from '@/modules/views/OnlyOffice/Toolbar'
 
 const useStyles = makeStyles(theme => ({
   root: {

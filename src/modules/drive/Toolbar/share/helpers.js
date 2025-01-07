@@ -1,4 +1,4 @@
-import { joinPath } from 'lib/path'
+import { joinPath } from '@/lib/path'
 
 /**
  * Get the path to share the displayed folder

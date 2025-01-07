@@ -6,7 +6,7 @@ import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 
-import DeleteConfirm from 'modules/drive/DeleteConfirm'
+import DeleteConfirm from '@/modules/drive/DeleteConfirm'
 
 const makeComponent = ({ icon, t, byDocId, isOwner }) => {
   const Component = forwardRef((props, ref) => {

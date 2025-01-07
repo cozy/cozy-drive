@@ -6,7 +6,8 @@ import flag from 'cozy-flags'
 import log from 'cozy-logger'
 
 import { run } from './dacc-run'
-import { aggregateFilesSize } from 'lib/dacc/dacc'
+
+import { aggregateFilesSize } from '@/lib/dacc/dacc'
 
 jest.mock('cozy-flags')
 jest.mock('cozy-client')

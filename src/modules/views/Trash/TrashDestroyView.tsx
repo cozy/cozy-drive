@@ -5,9 +5,9 @@ import { useQuery, hasQueryBeenLoaded, useClient } from 'cozy-client'
 import { IOCozyFile } from 'cozy-client/types/types'
 import { useSharingContext } from 'cozy-sharing'
 
-import { LoaderModal } from 'components/LoaderModal'
-import DestroyConfirm from 'modules/trash/components/DestroyConfirm'
-import { buildParentsByIdsQuery } from 'queries'
+import { LoaderModal } from '@/components/LoaderModal'
+import DestroyConfirm from '@/modules/trash/components/DestroyConfirm'
+import { buildParentsByIdsQuery } from '@/queries'
 
 const TrashDestroyView: FC = () => {
   const { refresh } = useSharingContext()

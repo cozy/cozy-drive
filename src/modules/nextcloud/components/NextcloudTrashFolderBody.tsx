@@ -7,9 +7,9 @@ import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { FolderBody } from 'modules/folder/components/FolderBody'
-import { restoreNextcloudFile } from 'modules/nextcloud/components/actions/restoreNextcloudFile'
-import { destroy } from 'modules/trash/components/actions/destroy'
+import { FolderBody } from '@/modules/folder/components/FolderBody'
+import { restoreNextcloudFile } from '@/modules/nextcloud/components/actions/restoreNextcloudFile'
+import { destroy } from '@/modules/trash/components/actions/destroy'
 
 interface NextcloudTrashFolderBodyProps {
   path: string

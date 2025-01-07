@@ -6,7 +6,7 @@ import RenameIcon from 'cozy-ui/transpiled/react/Icons/Rename'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 
-import { startRenamingAsync } from 'modules/drive/rename'
+import { startRenamingAsync } from '@/modules/drive/rename'
 
 const makeComponent = (label, icon) => {
   const Component = forwardRef((props, ref) => {

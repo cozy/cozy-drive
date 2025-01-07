@@ -5,9 +5,9 @@ import CarbonCopyIcon from 'cozy-ui/transpiled/react/Icons/CarbonCopy'
 import { TableHeader } from 'cozy-ui/transpiled/react/deprecated/Table'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import CertificationTooltip from 'modules/certifications/CertificationTooltip'
+import styles from '@/styles/filelist.styl'
 
-import styles from 'styles/filelist.styl'
+import CertificationTooltip from '@/modules/certifications/CertificationTooltip'
 
 const CarbonCopyHeader = () => {
   const { t } = useI18n()

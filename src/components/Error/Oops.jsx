@@ -6,7 +6,8 @@ import Empty from 'cozy-ui/transpiled/react/Empty'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import styles from './oops.styl'
-import EmptyIcon from 'assets/icons/icon-folder-broken.svg'
+
+import EmptyIcon from '@/assets/icons/icon-folder-broken.svg'
 
 const reload = () => {
   window.location.reload()

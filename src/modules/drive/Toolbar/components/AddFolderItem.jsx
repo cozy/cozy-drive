@@ -8,7 +8,7 @@ import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { showNewFolderInput } from 'modules/filelist/duck'
+import { showNewFolderInput } from '@/modules/filelist/duck'
 
 const AddFolderItem = translate()(({ t, addFolder, onClick }) => {
   const handleClick = () => {

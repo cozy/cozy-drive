@@ -2,7 +2,7 @@ import {
   downloadEncryptedFile,
   getEncryptionKeyFromDirId,
   isEncryptedFile
-} from 'lib/encryption'
+} from '@/lib/encryption'
 
 export const downloadFile = async (client, file, { vaultClient }) => {
   if (isEncryptedFile(file)) {

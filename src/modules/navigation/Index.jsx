@@ -4,8 +4,9 @@ import { useNavigate } from 'react-router-dom'
 import { useClient, Q, models } from 'cozy-client'
 
 import { getSharingIdFromUrl } from './duck'
-import { SHAREDWITHME_DIR_ID } from 'constants/config'
-import AcceptingSharingContext from 'lib/AcceptingSharingContext'
+
+import { SHAREDWITHME_DIR_ID } from '@/constants/config'
+import AcceptingSharingContext from '@/lib/AcceptingSharingContext'
 
 /**
  * Compute sharing object according to the sharing found in io.cozy.sharings and the sharing context

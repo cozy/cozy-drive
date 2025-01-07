@@ -1,5 +1,4 @@
 import get from 'lodash/get'
-import { CozyFile } from 'models'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -12,6 +11,8 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import styles from './styles.styl'
+
+import { CozyFile } from '@/models'
 
 const formatDate = (date, f) => {
   return f(date, 'dd LLLL - HH:mm')

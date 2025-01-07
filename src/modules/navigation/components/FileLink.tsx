@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react'
 import { Link } from 'react-router-dom'
 
-import type { LinkResult } from 'modules/navigation/hooks/useFileLink'
+import type { LinkResult } from '@/modules/navigation/hooks/useFileLink'
 
 interface FileLinkProps {
   link: LinkResult

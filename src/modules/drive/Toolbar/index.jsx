@@ -1,22 +1,22 @@
 import cx from 'classnames'
-import { useDisplayedFolder, useCurrentFolderId } from 'hooks'
 import PropTypes from 'prop-types'
 import React from 'react'
 
 import { SharedDocument, useSharingContext } from 'cozy-sharing'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import { BarRightOnMobile } from 'components/Bar'
-import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
-import AddButton from 'modules/drive/Toolbar/components/AddButton'
-import InsideRegularFolder from 'modules/drive/Toolbar/components/InsideRegularFolder'
-import MoreMenu from 'modules/drive/Toolbar/components/MoreMenu'
-import SearchButton from 'modules/drive/Toolbar/components/SearchButton'
-import ShareButton from 'modules/drive/Toolbar/share/ShareButton'
-import SharedRecipients from 'modules/drive/Toolbar/share/SharedRecipients'
-import { useSelectionContext } from 'modules/selection/SelectionProvider'
+import styles from '@/styles/toolbar.styl'
 
-import styles from 'styles/toolbar.styl'
+import { BarRightOnMobile } from '@/components/Bar'
+import { useDisplayedFolder, useCurrentFolderId } from '@/hooks'
+import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
+import AddButton from '@/modules/drive/Toolbar/components/AddButton'
+import InsideRegularFolder from '@/modules/drive/Toolbar/components/InsideRegularFolder'
+import MoreMenu from '@/modules/drive/Toolbar/components/MoreMenu'
+import SearchButton from '@/modules/drive/Toolbar/components/SearchButton'
+import ShareButton from '@/modules/drive/Toolbar/share/ShareButton'
+import SharedRecipients from '@/modules/drive/Toolbar/share/SharedRecipients'
+import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 
 const Toolbar = ({
   folderId,

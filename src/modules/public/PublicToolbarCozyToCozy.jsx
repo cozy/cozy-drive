@@ -13,12 +13,12 @@ import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { BarRightOnMobile } from 'components/Bar'
-import useCurrentFolderId from 'hooks/useCurrentFolderId'
-import { download, hr, select } from 'modules/actions'
-import { DownloadFilesButton } from 'modules/public/DownloadFilesButton'
-import PublicToolbarMoreMenu from 'modules/public/PublicToolbarMoreMenu'
-import { useSelectionContext } from 'modules/selection/SelectionProvider'
+import { BarRightOnMobile } from '@/components/Bar'
+import useCurrentFolderId from '@/hooks/useCurrentFolderId'
+import { download, hr, select } from '@/modules/actions'
+import { DownloadFilesButton } from '@/modules/public/DownloadFilesButton'
+import PublicToolbarMoreMenu from '@/modules/public/PublicToolbarMoreMenu'
+import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 
 const PublicToolbarCozyToCozy = ({ sharingInfos, files }) => {
   const {

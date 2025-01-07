@@ -3,7 +3,7 @@ import React from 'react'
 
 import Icon from 'cozy-ui/transpiled/react/Icon'
 
-import { makeOnlyOfficeIconByClass } from 'modules/views/OnlyOffice/helpers'
+import { makeOnlyOfficeIconByClass } from '@/modules/views/OnlyOffice/helpers'
 
 const FileIcon = ({ fileClass }) => {
   return (

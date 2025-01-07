@@ -1,4 +1,3 @@
-import { useCurrentFolderId, useDisplayedFolder } from 'hooks'
 import React, { useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate, Outlet, useLocation } from 'react-router-dom'
@@ -15,8 +14,10 @@ import FolderView from '../Folder/FolderView'
 import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
 import FolderViewHeader from '../Folder/FolderViewHeader'
-import useHead from 'components/useHead'
-import { useModalContext } from 'lib/ModalContext'
+
+import useHead from '@/components/useHead'
+import { useCurrentFolderId, useDisplayedFolder } from '@/hooks'
+import { useModalContext } from '@/lib/ModalContext'
 import {
   share,
   download,
@@ -24,17 +25,17 @@ import {
   rename,
   qualify,
   versions
-} from 'modules/actions'
-import { moveTo } from 'modules/actions/components/moveTo'
-import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
-import { useExtraColumns } from 'modules/certifications/useExtraColumns'
-import Toolbar from 'modules/drive/Toolbar'
-import { useFolderSort } from 'modules/navigation/duck'
-import Dropzone from 'modules/upload/Dropzone'
+} from '@/modules/actions'
+import { moveTo } from '@/modules/actions/components/moveTo'
+import { makeExtraColumnsNamesFromMedia } from '@/modules/certifications'
+import { useExtraColumns } from '@/modules/certifications/useExtraColumns'
+import Toolbar from '@/modules/drive/Toolbar'
+import { useFolderSort } from '@/modules/navigation/duck'
+import Dropzone from '@/modules/upload/Dropzone'
 import {
   buildDriveQuery,
   buildFileWithSpecificMetadataAttributeQuery
-} from 'queries'
+} from '@/queries'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []

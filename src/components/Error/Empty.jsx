@@ -9,7 +9,8 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import styles from './empty.styl'
-import EncryptedFolderIcon from 'modules/views/Folder/EncryptedFolderIcon'
+
+import EncryptedFolderIcon from '@/modules/views/Folder/EncryptedFolderIcon'
 
 const EmptyIcon = {
   drive: DriveIcon,

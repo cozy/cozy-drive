@@ -1,9 +1,9 @@
 import CozyClient from 'cozy-client/types/CozyClient'
 import { IOCozyFile, NextcloudFile } from 'cozy-client/types/types'
 
-import { FolderPickerEntry, File } from 'components/FolderPicker/types'
-import { getParentPath } from 'lib/path'
-import { buildOnlyFolderQuery, buildNextcloudFolderQuery } from 'queries'
+import { FolderPickerEntry, File } from '@/components/FolderPicker/types'
+import { getParentPath } from '@/lib/path'
+import { buildOnlyFolderQuery, buildNextcloudFolderQuery } from '@/queries'
 
 /**
  * Checks if the target is an invalid move target based on the subjects and target provided.

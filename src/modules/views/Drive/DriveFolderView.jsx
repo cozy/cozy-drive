@@ -1,4 +1,3 @@
-import { useCurrentFolderId, useDisplayedFolder } from 'hooks'
 import React, { useContext, useEffect, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate, Outlet, useLocation, useParams } from 'react-router-dom'
@@ -17,10 +16,12 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import HarvestBanner from './HarvestBanner'
-import useHead from 'components/useHead'
-import { ROOT_DIR_ID, TRASH_DIR_ID } from 'constants/config'
-import { FabContext } from 'lib/FabProvider'
-import { useModalContext } from 'lib/ModalContext'
+
+import useHead from '@/components/useHead'
+import { ROOT_DIR_ID, TRASH_DIR_ID } from '@/constants/config'
+import { useCurrentFolderId, useDisplayedFolder } from '@/hooks'
+import { FabContext } from '@/lib/FabProvider'
+import { useModalContext } from '@/lib/ModalContext'
 import {
   share,
   download,
@@ -29,30 +30,30 @@ import {
   infos,
   versions,
   hr
-} from 'modules/actions'
-import { addToFavorites } from 'modules/actions/components/addToFavorites'
-import { duplicateTo } from 'modules/actions/components/duplicateTo'
-import { moveTo } from 'modules/actions/components/moveTo'
-import { removeFromFavorites } from 'modules/actions/components/removeFromFavorites'
-import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
-import { useExtraColumns } from 'modules/certifications/useExtraColumns'
-import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
-import FabWithAddMenuContext from 'modules/drive/FabWithAddMenuContext'
-import Toolbar from 'modules/drive/Toolbar'
-import { useFolderSort } from 'modules/navigation/duck'
-import { useSelectionContext } from 'modules/selection/SelectionProvider'
-import Dropzone from 'modules/upload/Dropzone'
-import { useTrashRedirect } from 'modules/views/Drive/useTrashRedirect'
-import FolderView from 'modules/views/Folder/FolderView'
-import FolderViewBody from 'modules/views/Folder/FolderViewBody'
-import FolderViewBreadcrumb from 'modules/views/Folder/FolderViewBreadcrumb'
-import FolderViewHeader from 'modules/views/Folder/FolderViewHeader'
-import { useResumeUploadFromFlagship } from 'modules/views/Upload/useResumeFromFlagship'
+} from '@/modules/actions'
+import { addToFavorites } from '@/modules/actions/components/addToFavorites'
+import { duplicateTo } from '@/modules/actions/components/duplicateTo'
+import { moveTo } from '@/modules/actions/components/moveTo'
+import { removeFromFavorites } from '@/modules/actions/components/removeFromFavorites'
+import { makeExtraColumnsNamesFromMedia } from '@/modules/certifications'
+import { useExtraColumns } from '@/modules/certifications/useExtraColumns'
+import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
+import FabWithAddMenuContext from '@/modules/drive/FabWithAddMenuContext'
+import Toolbar from '@/modules/drive/Toolbar'
+import { useFolderSort } from '@/modules/navigation/duck'
+import { useSelectionContext } from '@/modules/selection/SelectionProvider'
+import Dropzone from '@/modules/upload/Dropzone'
+import { useTrashRedirect } from '@/modules/views/Drive/useTrashRedirect'
+import FolderView from '@/modules/views/Folder/FolderView'
+import FolderViewBody from '@/modules/views/Folder/FolderViewBody'
+import FolderViewBreadcrumb from '@/modules/views/Folder/FolderViewBreadcrumb'
+import FolderViewHeader from '@/modules/views/Folder/FolderViewHeader'
+import { useResumeUploadFromFlagship } from '@/modules/views/Upload/useResumeFromFlagship'
 import {
   buildDriveQuery,
   buildFileWithSpecificMetadataAttributeQuery,
   buildMagicFolderQuery
-} from 'queries'
+} from '@/queries'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []

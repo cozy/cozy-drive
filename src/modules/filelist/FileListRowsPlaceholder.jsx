@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import FilePlaceholder from 'modules/filelist/FilePlaceholder'
+import FilePlaceholder from '@/modules/filelist/FilePlaceholder'
 
 const FileListPlaceholder = ({ rows }) => (
   <div>

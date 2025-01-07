@@ -7,7 +7,7 @@ import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import Radio from 'cozy-ui/transpiled/react/Radios'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { SORTABLE_ATTRIBUTES } from 'config/sort'
+import { SORTABLE_ATTRIBUTES } from '@/config/sort'
 
 const MobileSortMenu = ({ sort, onSort, onClose }) => {
   const { t } = useI18n()

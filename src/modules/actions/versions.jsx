@@ -7,7 +7,7 @@ import HistoryIcon from 'cozy-ui/transpiled/react/Icons/History'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 
-import { navigateToModal } from 'modules/actions/helpers'
+import { navigateToModal } from '@/modules/actions/helpers'
 
 const makeComponent = (label, icon) => {
   const Component = forwardRef((props, ref) => {

@@ -4,8 +4,8 @@ import React from 'react'
 import { isDirectory } from 'cozy-client/dist/models/file'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 
-import { isEncryptedFolder } from 'lib/encryption'
-import getMimeTypeIcon from 'lib/getMimeTypeIcon'
+import { isEncryptedFolder } from '@/lib/encryption'
+import getMimeTypeIcon from '@/lib/getMimeTypeIcon'
 
 const FileIcon = ({ file, size = 32, isEncrypted = false }) => {
   const isDir = isDirectory(file)

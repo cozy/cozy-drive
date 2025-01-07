@@ -11,11 +11,12 @@ import {
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import HeaderCell from './HeaderCell'
-import iconListMin from 'assets/icons/icon-list-min.svg'
-import iconList from 'assets/icons/icon-list.svg'
-import { SORTABLE_ATTRIBUTES, DEFAULT_SORT } from 'config/sort'
 
-import styles from 'styles/filelist.styl'
+import styles from '@/styles/filelist.styl'
+
+import iconListMin from '@/assets/icons/icon-list-min.svg'
+import iconList from '@/assets/icons/icon-list.svg'
+import { SORTABLE_ATTRIBUTES, DEFAULT_SORT } from '@/config/sort'
 
 const FileListHeaderDesktop = ({
   folderId,

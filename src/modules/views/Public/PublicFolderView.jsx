@@ -1,9 +1,7 @@
 import cx from 'classnames'
-import { useCurrentFolderId, useDisplayedFolder, useParentFolder } from 'hooks'
 import get from 'lodash/get'
 import uniqBy from 'lodash/uniqBy'
 import React, { useCallback, useContext, useEffect } from 'react'
-import { ModalManager } from 'react-cozy-helpers'
 import { useDispatch } from 'react-redux'
 import { useNavigate, useLocation, Outlet } from 'react-router-dom'
 
@@ -30,17 +28,24 @@ import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
 import FolderViewHeader from '../Folder/FolderViewHeader'
 import OldFolderViewBreadcrumb from '../Folder/OldFolderViewBreadcrumb'
-import { ROOT_DIR_ID } from 'constants/config'
-import { FabContext } from 'lib/FabProvider'
-import { ModalStack, useModalContext } from 'lib/ModalContext'
-import { download, trash, rename, versions } from 'modules/actions'
-import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
-import { useExtraColumns } from 'modules/certifications/useExtraColumns'
-import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
-import FabWithAddMenuContext from 'modules/drive/FabWithAddMenuContext'
-import Main from 'modules/layout/Main'
-import PublicToolbar from 'modules/public/PublicToolbar'
-import { useSelectionContext } from 'modules/selection/SelectionProvider'
+
+import { ROOT_DIR_ID } from '@/constants/config'
+import {
+  useCurrentFolderId,
+  useDisplayedFolder,
+  useParentFolder
+} from '@/hooks'
+import { FabContext } from '@/lib/FabProvider'
+import { ModalStack, useModalContext } from '@/lib/ModalContext'
+import { ModalManager } from '@/lib/react-cozy-helpers'
+import { download, trash, rename, versions } from '@/modules/actions'
+import { makeExtraColumnsNamesFromMedia } from '@/modules/certifications'
+import { useExtraColumns } from '@/modules/certifications/useExtraColumns'
+import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
+import FabWithAddMenuContext from '@/modules/drive/FabWithAddMenuContext'
+import Main from '@/modules/layout/Main'
+import PublicToolbar from '@/modules/public/PublicToolbar'
+import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 
 const getBreadcrumbPath = (t, displayedFolder, parentFolder) =>
   uniqBy(

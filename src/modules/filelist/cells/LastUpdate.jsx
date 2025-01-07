@@ -5,7 +5,7 @@ import React from 'react'
 import { TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import styles from 'styles/filelist.styl'
+import styles from '@/styles/filelist.styl'
 
 const LastUpdate = ({ date, formatted = '—' }) => {
   const { f, t } = useI18n()

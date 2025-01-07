@@ -9,11 +9,11 @@ import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import type { File } from 'components/FolderPicker/types'
-import { getFileNameAndExtension } from 'modules/filelist/helpers'
-import FileThumbnail from 'modules/filelist/icons/FileThumbnail'
+import styles from '@/styles/folder-picker.styl'
 
-import styles from 'styles/folder-picker.styl'
+import type { File } from '@/components/FolderPicker/types'
+import { getFileNameAndExtension } from '@/modules/filelist/helpers'
+import FileThumbnail from '@/modules/filelist/icons/FileThumbnail'
 
 interface FolderPickerListItemProps {
   file: File

@@ -1,6 +1,6 @@
 import localforage from 'localforage'
 
-import logger from 'lib/logger'
+import logger from '@/lib/logger'
 // We had some settings that were persisted outside of mobile.settings prior to 1.8.1
 // TODO: fix me
 // eslint-disable-next-line no-prototype-builtins

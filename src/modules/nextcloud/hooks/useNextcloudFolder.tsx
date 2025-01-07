@@ -5,7 +5,7 @@ import {
   buildNextcloudFolderQuery,
   buildNextcloudTrashFolderQuery,
   QueryConfig
-} from 'queries'
+} from '@/queries'
 
 interface NextcloudFolderProps {
   sourceAccount?: string

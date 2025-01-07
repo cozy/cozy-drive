@@ -1,4 +1,3 @@
-import { useCurrentFileId } from 'hooks'
 import React, { useCallback, useEffect, useState, useMemo } from 'react'
 import { RemoveScroll } from 'react-remove-scroll'
 import { useNavigate } from 'react-router-dom'
@@ -14,19 +13,20 @@ import Viewer, {
   SharingButton
 } from 'cozy-viewer'
 
-import { FilesViewerLoading } from 'components/FilesViewerLoading'
+import { FilesViewerLoading } from '@/components/FilesViewerLoading'
+import { useCurrentFileId } from '@/hooks'
 import {
   isEncryptedFile,
   getEncryptionKeyFromDirId,
   getDecryptedFileURL
-} from 'lib/encryption'
-import logger from 'lib/logger'
-import Fallback from 'modules/viewer/Fallback'
-import MoreMenu from 'modules/viewer/MoreMenu'
+} from '@/lib/encryption'
+import logger from '@/lib/logger'
+import Fallback from '@/modules/viewer/Fallback'
+import MoreMenu from '@/modules/viewer/MoreMenu'
 import {
   isOfficeEnabled,
   makeOnlyOfficeFileRoute
-} from 'modules/views/OnlyOffice/helpers'
+} from '@/modules/views/OnlyOffice/helpers'
 
 /**
  * Shows a set of files through cozy-ui's Viewer
