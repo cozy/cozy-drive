@@ -1,10 +1,9 @@
-/* global __APP_SLUG__ */
 import minilog from 'cozy-minilog'
 
-const logger = minilog(`cozy-${__APP_SLUG__}`)
+const logger = minilog(`cozy-drive`)
 minilog.enable()
 
-minilog.suggest.allow(`cozy-${__APP_SLUG__}`, 'log')
-minilog.suggest.allow(`cozy-${__APP_SLUG__}`, 'info')
+minilog.suggest.allow(`cozy-drive`, 'log')
+minilog.suggest.allow(`cozy-drive`, 'info')
 
 export default logger
