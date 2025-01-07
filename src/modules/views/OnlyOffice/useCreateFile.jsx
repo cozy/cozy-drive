@@ -3,11 +3,11 @@ import { useEffect, useState, useMemo } from 'react'
 import { CozyFile } from 'cozy-doctypes'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import logger from 'lib/logger'
+import logger from '@/lib/logger'
 import {
   makeExtByClass,
   makeMimeByClass
-} from 'modules/views/OnlyOffice/helpers'
+} from '@/modules/views/OnlyOffice/helpers'
 
 const useCreateFile = (folderId, fileClass) => {
   const [status, setStatus] = useState('pending')

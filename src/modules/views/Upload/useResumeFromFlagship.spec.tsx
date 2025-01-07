@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { WebviewService } from 'cozy-intent'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 
-import { getProcessed, getSuccessful } from 'modules/upload'
-import { useResumeUploadFromFlagship } from 'modules/views/Upload/useResumeFromFlagship'
+import { getProcessed, getSuccessful } from '@/modules/upload'
+import { useResumeUploadFromFlagship } from '@/modules/views/Upload/useResumeFromFlagship'
 
 global.jasmine = {
   // @ts-expect-error - Test will fail if this is not set

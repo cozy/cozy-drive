@@ -1,8 +1,8 @@
 import { useQuery } from 'cozy-client'
 import { IOCozyFile } from 'cozy-client/types/types'
 
-import useCurrentFolderId from 'hooks/useCurrentFolderId'
-import { buildOnlyFolderQuery } from 'queries'
+import useCurrentFolderId from '@/hooks/useCurrentFolderId'
+import { buildOnlyFolderQuery } from '@/queries'
 
 interface DisplayedFolderResult {
   isNotFound: boolean

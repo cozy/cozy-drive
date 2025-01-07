@@ -8,9 +8,9 @@ import Buttons from 'cozy-ui/transpiled/react/Buttons'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { LoaderModal } from 'components/LoaderModal'
-import { getEntriesTypeTranslated } from 'lib/entries'
-import { buildFolderByPathQuery } from 'queries'
+import { LoaderModal } from '@/components/LoaderModal'
+import { getEntriesTypeTranslated } from '@/lib/entries'
+import { buildFolderByPathQuery } from '@/queries'
 
 /**
  * Alert the user when is trying to move a folder/file outside of a shared folder

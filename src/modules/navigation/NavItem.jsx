@@ -4,8 +4,8 @@ import React from 'react'
 import { NavItem as UINavItem } from 'cozy-ui/transpiled/react/Nav'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { NavContent } from 'modules/navigation/NavContent'
-import { NavLink } from 'modules/navigation/NavLink'
+import { NavContent } from '@/modules/navigation/NavContent'
+import { NavLink } from '@/modules/navigation/NavLink'
 
 /**
  * Renders a navigation item with optional badge content and support for shared links.

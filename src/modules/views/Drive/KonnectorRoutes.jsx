@@ -8,7 +8,7 @@ import datacardOptions from 'cozy-harvest-lib/dist/datacards/datacardOptions'
 import {
   buildTriggersQueryByKonnectorSlug,
   buildKonnectorsQueryById
-} from 'queries'
+} from '@/queries'
 
 const KonnectorRoutes = () => {
   const { konnectorSlug } = useParams()

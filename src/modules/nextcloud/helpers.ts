@@ -2,7 +2,7 @@ import { isShortcut } from 'cozy-client/dist/models/file'
 import type { IOCozyFile, NextcloudFile } from 'cozy-client/types/types'
 import flag from 'cozy-flags'
 
-import type { File, FolderPickerEntry } from 'components/FolderPicker/types'
+import type { File, FolderPickerEntry } from '@/components/FolderPicker/types'
 
 export const computeNextcloudFolderQueryId = ({
   sourceAccount,

@@ -16,8 +16,9 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import FolderView from '../Folder/FolderView'
 import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewHeader from '../Folder/FolderViewHeader'
-import useHead from 'components/useHead'
-import { useModalContext } from 'lib/ModalContext'
+
+import useHead from '@/components/useHead'
+import { useModalContext } from '@/lib/ModalContext'
 import {
   download,
   trash,
@@ -26,19 +27,19 @@ import {
   versions,
   hr,
   share
-} from 'modules/actions'
-import { addToFavorites } from 'modules/actions/components/addToFavorites'
-import { moveTo } from 'modules/actions/components/moveTo'
-import { removeFromFavorites } from 'modules/actions/components/removeFromFavorites'
-import { MobileAwareBreadcrumb as Breadcrumb } from 'modules/breadcrumb/components/MobileAwareBreadcrumb'
-import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
-import { useExtraColumns } from 'modules/certifications/useExtraColumns'
-import Toolbar from 'modules/drive/Toolbar'
-import { useFilesQueryWithPath } from 'modules/views/hooks'
+} from '@/modules/actions'
+import { addToFavorites } from '@/modules/actions/components/addToFavorites'
+import { moveTo } from '@/modules/actions/components/moveTo'
+import { removeFromFavorites } from '@/modules/actions/components/removeFromFavorites'
+import { MobileAwareBreadcrumb as Breadcrumb } from '@/modules/breadcrumb/components/MobileAwareBreadcrumb'
+import { makeExtraColumnsNamesFromMedia } from '@/modules/certifications'
+import { useExtraColumns } from '@/modules/certifications/useExtraColumns'
+import Toolbar from '@/modules/drive/Toolbar'
+import { useFilesQueryWithPath } from '@/modules/views/hooks'
 import {
   buildRecentQuery,
   buildRecentWithMetadataAttributeQuery
-} from 'queries'
+} from '@/queries'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []

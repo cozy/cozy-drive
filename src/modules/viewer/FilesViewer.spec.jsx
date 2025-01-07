@@ -1,13 +1,14 @@
 import { render, screen } from '@testing-library/react'
-import { useCurrentFileId } from 'hooks'
 import React from 'react'
 
 import CozyClient, { useQuery } from 'cozy-client'
 
 import FilesViewer from './FilesViewer'
-import { getEncryptionKeyFromDirId } from 'lib/encryption'
 import AppLike from 'test/components/AppLike'
 import { generateFile } from 'test/generate'
+
+import { useCurrentFileId } from '@/hooks'
+import { getEncryptionKeyFromDirId } from '@/lib/encryption'
 
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 jest.mock('cozy-keys-lib', () => ({

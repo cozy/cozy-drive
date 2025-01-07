@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import React from 'react'
 
-import styles from 'styles/topbar.styl'
+import styles from '@/styles/topbar.styl'
 
 const Topbar = ({ children, hideOnMobile = true }) => (
   <div

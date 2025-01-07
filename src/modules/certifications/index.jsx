@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import {
   CarbonCopy as CarbonCopyCell,
   ElectronicSafe as ElectronicSafeCell
-} from 'modules/filelist/cells'
+} from '@/modules/filelist/cells'
 import {
   CarbonCopy as CarbonCopyHeader,
   ElectronicSafe as ElectronicSafeHeader
-} from 'modules/filelist/headers'
+} from '@/modules/filelist/headers'
 
 export const extraColumnsSpecs = {
   carbonCopy: {

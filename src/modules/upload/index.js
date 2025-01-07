@@ -1,17 +1,18 @@
-import { CozyFile } from 'models'
 import { combineReducers } from 'redux'
 
 import { models } from 'cozy-client'
 import flag from 'cozy-flags'
 
 import UploadQueue from './UploadQueue'
-import { MAX_PAYLOAD_SIZE } from 'constants/config'
-import { DOCTYPE_FILES } from 'lib/doctypes'
+
+import { MAX_PAYLOAD_SIZE } from '@/constants/config'
+import { DOCTYPE_FILES } from '@/lib/doctypes'
 import {
   encryptAndUploadNewFile,
   getEncryptionKeyFromDirId
-} from 'lib/encryption'
-import logger from 'lib/logger'
+} from '@/lib/encryption'
+import logger from '@/lib/logger'
+import { CozyFile } from '@/models'
 
 const { doMobileUpload, readMobileFile, uploadFileWithConflictStrategy } =
   models.file

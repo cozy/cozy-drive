@@ -4,7 +4,8 @@ import ActionsMenu from 'cozy-ui/transpiled/react/ActionsMenu'
 import { Action } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 
 import { File } from './FolderPicker/types'
-import MoreButton from 'components/Button/MoreButton'
+
+import MoreButton from '@/components/Button/MoreButton'
 
 interface MoreMenuProps {
   actions: Record<string, Action>[]

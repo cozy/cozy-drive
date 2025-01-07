@@ -4,7 +4,7 @@ import { NavigateFunction } from 'react-router-dom'
 import Button from 'cozy-ui/transpiled/react/Buttons'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { File } from 'components/FolderPicker/types'
+import { File } from '@/components/FolderPicker/types'
 
 interface OpenFolderButtonProps {
   folder: File

@@ -26,7 +26,8 @@ module.exports = {
     '^config/(.*)': '<rootDir>/src/config/$1',
     '^constants/(.*)': '<rootDir>/src/constants/$1',
     '^modules/(.*)': '<rootDir>/src/modules/$1',
-    '^queries(.*)': '<rootDir>/src/queries$1'
+    '^queries(.*)': '<rootDir>/src/queries$1',
+    '^@/(.*)$': '<rootDir>/src/$1'
   },
   clearMocks: true,
   transform: {

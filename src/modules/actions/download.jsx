@@ -7,7 +7,8 @@ import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 
 import { downloadFiles } from './utils'
-import { isEncryptedFolder, isEncryptedFile } from 'lib/encryption'
+
+import { isEncryptedFolder, isEncryptedFile } from '@/lib/encryption'
 
 const makeComponent = (label, icon) => {
   const Component = forwardRef((props, ref) => {

@@ -11,10 +11,10 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 
-import { DOCTYPE_FILES_SETTINGS } from 'lib/doctypes'
-import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
-import { canWriteOfficeDocument } from 'modules/views/OnlyOffice/helpers'
-import { getAppSettingQuery } from 'queries'
+import { DOCTYPE_FILES_SETTINGS } from '@/lib/doctypes'
+import { useOnlyOfficeContext } from '@/modules/views/OnlyOffice/OnlyOfficeProvider'
+import { canWriteOfficeDocument } from '@/modules/views/OnlyOffice/helpers'
+import { getAppSettingQuery } from '@/queries'
 
 const useStyle = makeStyles({
   popper: {

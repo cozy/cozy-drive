@@ -1,6 +1,6 @@
 import { useParams, useLocation } from 'react-router-dom'
 
-import { ROOT_DIR_ID, TRASH_DIR_ID } from 'constants/config'
+import { ROOT_DIR_ID, TRASH_DIR_ID } from '@/constants/config'
 
 const useCurrentFolderId = () => {
   const { folderId } = useParams()

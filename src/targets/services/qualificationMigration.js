@@ -3,13 +3,13 @@ import fetch from 'node-fetch'
 import CozyClient, { Q } from 'cozy-client'
 import log from 'cozy-logger'
 
-import { schema, DOCTYPE_FILES_SETTINGS } from 'lib/doctypes'
+import { schema, DOCTYPE_FILES_SETTINGS } from '@/lib/doctypes'
 import {
   migrateQualifiedFiles,
   extractFilesToMigrate,
   queryFilesFromDate,
   getMostRecentUpdatedDate
-} from 'lib/migration/qualification'
+} from '@/lib/migration/qualification'
 
 global.fetch = fetch
 

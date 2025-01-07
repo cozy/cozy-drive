@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 
 import { useQuery } from 'cozy-client'
 
-import { MobileAwareBreadcrumb as Breadcrumb } from 'modules/breadcrumb/components/MobileAwareBreadcrumb'
-import { buildFolderQuery } from 'queries'
+import { MobileAwareBreadcrumb as Breadcrumb } from '@/modules/breadcrumb/components/MobileAwareBreadcrumb'
+import { buildFolderQuery } from '@/queries'
 
 const FolderViewBreadcrumb = ({ currentFolderId, getBreadcrumbPath }) => {
   const navigate = useNavigate()

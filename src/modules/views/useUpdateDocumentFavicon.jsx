@@ -2,8 +2,8 @@ import { useEffect } from 'react'
 
 import { useClient } from 'cozy-client'
 
-import useDocument from 'components/useDocument'
-import { buildFileByIdQuery } from 'queries'
+import useDocument from '@/components/useDocument'
+import { buildFileByIdQuery } from '@/queries'
 
 const acceptedTypes = [
   'text',

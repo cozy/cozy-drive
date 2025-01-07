@@ -9,10 +9,11 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 
 import styles from './styles.styl'
-import { RenameInput } from 'modules/drive/RenameInput'
-import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
 
-import filelistStyles from 'styles/filelist.styl'
+import filelistStyles from '@/styles/filelist.styl'
+
+import { RenameInput } from '@/modules/drive/RenameInput'
+import { useOnlyOfficeContext } from '@/modules/views/OnlyOffice/OnlyOfficeProvider'
 
 const useStyles = makeStyles(theme => ({
   name: {

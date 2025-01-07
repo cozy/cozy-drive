@@ -3,8 +3,8 @@ import React, { ReactNode } from 'react'
 import ListItemSkeleton from 'cozy-ui/transpiled/react/Skeletons/ListItemSkeleton'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import { EmptyDrive } from 'components/Error/Empty'
-import Oops from 'components/Error/Oops'
+import { EmptyDrive } from '@/components/Error/Empty'
+import Oops from '@/components/Error/Oops'
 
 interface FolderPickerContentLoaderProps {
   fetchStatus: string

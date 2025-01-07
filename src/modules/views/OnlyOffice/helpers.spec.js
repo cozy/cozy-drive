@@ -2,7 +2,7 @@ import {
   showSharingBanner,
   makeName,
   shouldBeOpenedOnOtherInstance
-} from 'modules/views/OnlyOffice/helpers'
+} from '@/modules/views/OnlyOffice/helpers'
 
 describe('shouldBeOpenedOnOtherInstance', () => {
   it('should return true if current instance is different from document instance', () => {

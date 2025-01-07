@@ -5,11 +5,11 @@ import {
   isDirectory
 } from 'cozy-client/dist/models/file'
 
-import type { File } from 'components/FolderPicker/types'
-import { TRASH_DIR_ID } from 'constants/config'
-import { joinPath } from 'lib/path'
-import { isNextcloudShortcut } from 'modules/nextcloud/helpers'
-import { makeOnlyOfficeFileRoute } from 'modules/views/OnlyOffice/helpers'
+import type { File } from '@/components/FolderPicker/types'
+import { TRASH_DIR_ID } from '@/constants/config'
+import { joinPath } from '@/lib/path'
+import { isNextcloudShortcut } from '@/modules/nextcloud/helpers'
+import { makeOnlyOfficeFileRoute } from '@/modules/views/OnlyOffice/helpers'
 
 interface ComputeFileTypeOptions {
   isOfficeEnabled?: boolean

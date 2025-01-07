@@ -10,10 +10,8 @@ import 'cozy-bar/dist/stylesheet.css'
 import 'cozy-sharing/dist/stylesheet.css'
 
 import React from 'react'
-import { getQueryParameter } from 'react-cozy-helpers'
 import { render } from 'react-dom'
 import { HashRouter } from 'react-router-dom'
-import configureStore from 'store/configureStore'
 import 'whatwg-fetch'
 
 import CozyClient, { models } from 'cozy-client'
@@ -23,19 +21,21 @@ import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
 import { I18n, initTranslation } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import AppRouter from './components/AppRouter'
-import App from 'components/App/App'
-import ErrorShare from 'components/Error/ErrorShare'
-import appMetadata from 'lib/appMetadata'
-import { schema } from 'lib/doctypes'
-import logger from 'lib/logger'
-import { joinPath } from 'lib/path'
-import registerClientPlugins from 'lib/registerClientPlugins'
 
-import styles from 'styles/main.styl'
+import App from '@/components/App/App'
+import ErrorShare from '@/components/Error/ErrorShare'
+import appMetadata from '@/lib/appMetadata'
+import { schema } from '@/lib/doctypes'
+import logger from '@/lib/logger'
+import { joinPath } from '@/lib/path'
+import { getQueryParameter } from '@/lib/react-cozy-helpers'
+import registerClientPlugins from '@/lib/registerClientPlugins'
+import configureStore from '@/store/configureStore'
+import styles from '@/styles/main.styl'
 
 const renderError = (lang, root) =>
   render(
-    <I18n lang={lang} dictRequire={lang => require(`locales/${lang}`)}>
+    <I18n lang={lang} dictRequire={lang => require(`@/locales/${lang}`)}>
       <CozyTheme ignoreCozySettings className="u-w-100">
         <main className={styles['center-layout']}>
           <ErrorShare errorType="public_unshared" />
@@ -74,7 +74,7 @@ const init = async () => {
     token: sharecode
   })
   const polyglot = initTranslation(dataset.locale, lang =>
-    require(`locales/${lang}`)
+    require(`@/locales/${lang}`)
   )
 
   const store = configureStore({

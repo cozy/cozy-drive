@@ -2,7 +2,7 @@ import React from 'react'
 
 import List from 'cozy-ui/transpiled/react/List'
 
-import SuggestionItemSkeleton from 'modules/search/components/SuggestionItemSkeleton'
+import SuggestionItemSkeleton from '@/modules/search/components/SuggestionItemSkeleton'
 
 const SuggestionListSkeleton = ({ count }) => (
   <List>

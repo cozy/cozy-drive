@@ -3,11 +3,11 @@ import React, { useState } from 'react'
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 
-import { FolderPickerBody } from 'components/FolderPicker/FolderPickerBody'
-import { FolderPickerFooter } from 'components/FolderPicker/FolderPickerFooter'
-import { FolderPickerHeader } from 'components/FolderPicker/FolderPickerHeader'
-import { FolderPickerTopbar } from 'components/FolderPicker/FolderPickerTopbar'
-import { File, FolderPickerEntry } from 'components/FolderPicker/types'
+import { FolderPickerBody } from '@/components/FolderPicker/FolderPickerBody'
+import { FolderPickerFooter } from '@/components/FolderPicker/FolderPickerFooter'
+import { FolderPickerHeader } from '@/components/FolderPicker/FolderPickerHeader'
+import { FolderPickerTopbar } from '@/components/FolderPicker/FolderPickerTopbar'
+import { File, FolderPickerEntry } from '@/components/FolderPicker/types'
 
 interface FolderPickerSlotProps {
   header?: {

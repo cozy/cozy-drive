@@ -9,12 +9,12 @@ import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { Layout as LayoutUI } from 'cozy-ui/transpiled/react/Layout'
 import Sidebar from 'cozy-ui/transpiled/react/Sidebar'
 
-import ButtonClient from 'components/pushClient/Button'
-import SupportUs from 'components/pushClient/SupportUs'
-import { initFlags } from 'lib/flags'
-import Nav from 'modules/navigation/Nav'
-import { SelectionProvider } from 'modules/selection/SelectionProvider'
-import { UploadQueue } from 'modules/upload'
+import ButtonClient from '@/components/pushClient/Button'
+import SupportUs from '@/components/pushClient/SupportUs'
+import { initFlags } from '@/lib/flags'
+import Nav from '@/modules/navigation/Nav'
+import { SelectionProvider } from '@/modules/selection/SelectionProvider'
+import { UploadQueue } from '@/modules/upload'
 
 initFlags()
 

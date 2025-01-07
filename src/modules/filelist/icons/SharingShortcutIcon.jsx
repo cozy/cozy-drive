@@ -6,9 +6,9 @@ import {
 } from 'cozy-client/dist/models/file'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 
-import { DOCTYPE_FILES } from 'lib/doctypes'
-import getMimeTypeIcon from 'lib/getMimeTypeIcon'
-import FileIconShortcut from 'modules/filelist/icons/FileIconShortcut'
+import { DOCTYPE_FILES } from '@/lib/doctypes'
+import getMimeTypeIcon from '@/lib/getMimeTypeIcon'
+import FileIconShortcut from '@/modules/filelist/icons/FileIconShortcut'
 
 const SharingShortcutIcon = ({ file, size }) => {
   const targetMimeType = getSharingShortcutTargetMime(file)

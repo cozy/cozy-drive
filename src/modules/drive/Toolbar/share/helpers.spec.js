@@ -1,4 +1,4 @@
-import { getPathToShareDisplayedFolder } from 'modules/drive/Toolbar/share/helpers'
+import { getPathToShareDisplayedFolder } from '@/modules/drive/Toolbar/share/helpers'
 
 describe('getPathToShareDisplayedFolder', () => {
   it('should return path to displayed folder share modal', () => {

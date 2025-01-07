@@ -1,13 +1,13 @@
 import CozyClient, { Q, QueryDefinition } from 'cozy-client'
 import { QueryOptions } from 'cozy-client/types/types'
 
-import { SHARED_DRIVES_DIR_ID, TRASH_DIR_ID } from 'constants/config'
+import { SHARED_DRIVES_DIR_ID, TRASH_DIR_ID } from '@/constants/config'
 import {
   DOCTYPE_FILES_ENCRYPTION,
   DOCTYPE_ALBUMS,
   DOCTYPE_FILES_SETTINGS
-} from 'lib/doctypes'
-import { formatFolderQueryId } from 'lib/queries'
+} from '@/lib/doctypes'
+import { formatFolderQueryId } from '@/lib/queries'
 
 export interface QueryConfig {
   definition: () => QueryDefinition

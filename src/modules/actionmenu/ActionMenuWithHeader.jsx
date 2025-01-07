@@ -1,4 +1,3 @@
-import { CozyFile } from 'models'
 import React from 'react'
 
 import { isDirectory } from 'cozy-client/dist/models/file'
@@ -8,9 +7,10 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 
-import getMimeTypeIcon from 'lib/getMimeTypeIcon'
+import styles from '@/styles/actionmenu.styl'
 
-import styles from 'styles/actionmenu.styl'
+import getMimeTypeIcon from '@/lib/getMimeTypeIcon'
+import { CozyFile } from '@/models'
 
 export const ActionMenuWithHeader = ({
   file,

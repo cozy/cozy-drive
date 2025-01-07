@@ -6,7 +6,7 @@ import PlusIcon from 'cozy-ui/transpiled/react/Icons/Plus'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 
-import { AddMenuContext } from 'modules/drive/AddMenu/AddMenuProvider'
+import { AddMenuContext } from '@/modules/drive/AddMenu/AddMenuProvider'
 
 const makeComponent = (label, icon) => {
   const Component = forwardRef((props, ref) => {

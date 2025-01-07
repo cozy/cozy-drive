@@ -4,8 +4,9 @@ import React from 'react'
 import { createMockClient } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
 
-import { FolderPicker } from 'components/FolderPicker/FolderPicker'
 import AppLike from 'test/components/AppLike'
+
+import { FolderPicker } from '@/components/FolderPicker/FolderPicker'
 
 jest.mock('cozy-keys-lib', () => ({
   useVaultClient: jest.fn()

@@ -8,8 +8,8 @@ import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
-import { makeOnlyOfficeFileRoute } from 'modules/views/OnlyOffice/helpers'
+import { useOnlyOfficeContext } from '@/modules/views/OnlyOffice/OnlyOfficeProvider'
+import { makeOnlyOfficeFileRoute } from '@/modules/views/OnlyOffice/helpers'
 
 const FileDivergedModal = () => {
   const { officeKey, setFileDiverged, editorMode } = useOnlyOfficeContext()

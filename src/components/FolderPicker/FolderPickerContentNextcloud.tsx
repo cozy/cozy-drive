@@ -6,10 +6,11 @@ import { NextcloudFile } from 'cozy-client/types/types'
 import List from 'cozy-ui/transpiled/react/List'
 
 import { FolderPickerListItem } from './FolderPickerListItem'
-import { FolderPickerContentLoader } from 'components/FolderPicker/FolderPickerContentLoader'
-import { isInvalidMoveTarget } from 'components/FolderPicker/helpers'
-import type { File, FolderPickerEntry } from 'components/FolderPicker/types'
-import { buildNextcloudFolderQuery } from 'queries'
+
+import { FolderPickerContentLoader } from '@/components/FolderPicker/FolderPickerContentLoader'
+import { isInvalidMoveTarget } from '@/components/FolderPicker/helpers'
+import type { File, FolderPickerEntry } from '@/components/FolderPicker/types'
+import { buildNextcloudFolderQuery } from '@/queries'
 
 interface Props {
   folder: NextcloudFile

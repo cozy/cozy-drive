@@ -6,12 +6,12 @@ import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { FolderPicker } from 'components/FolderPicker/FolderPicker'
-import { File, FolderPickerEntry } from 'components/FolderPicker/types'
-import { ROOT_DIR_ID } from 'constants/config'
-import { shouldRender } from 'modules/views/Upload/UploadUtils'
-import { useUploadFromFlagship } from 'modules/views/Upload/useUploadFromFlagship'
-import { buildOnlyFolderQuery } from 'queries'
+import { FolderPicker } from '@/components/FolderPicker/FolderPicker'
+import { File, FolderPickerEntry } from '@/components/FolderPicker/types'
+import { ROOT_DIR_ID } from '@/constants/config'
+import { shouldRender } from '@/modules/views/Upload/UploadUtils'
+import { useUploadFromFlagship } from '@/modules/views/Upload/useUploadFromFlagship'
+import { buildOnlyFolderQuery } from '@/queries'
 
 const UploaderComponent = (): JSX.Element | null => {
   const { t } = useI18n()
