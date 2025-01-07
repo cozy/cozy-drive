@@ -2,7 +2,7 @@
 <html lang="{{.Locale}}">
   <head>
     <meta charset="utf-8" />
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <title><%= htmlPlugin.options.title %></title>
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link
       rel="icon"
@@ -20,11 +20,7 @@
     <meta name="theme-color" content="#ffffff" />
     <meta name="color-scheme" content="light dark" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <% if (__STACK_ASSETS__) { %>
-    {{.CozyClientJS}}
-    <% } %> <% _.forEach(htmlWebpackPlugin.files.css, function(file) { %>
-      <link rel="stylesheet" href="<%- file %>" />
-    <% }); %>
+    <link rel="stylesheet" type="text/css" href="//{{.Domain}}/assets/fonts/fonts.css">
     {{.ThemeCSS}}
   </head>
   <div
@@ -32,7 +28,4 @@
     role="application"
     data-cozy="{{.CozyData}}"
   ></div>
-  <% _.forEach(htmlWebpackPlugin.files.js, function(file) { %>
-    <script src="<%- file %>"></script>
-  <% }); %>
 </html>
