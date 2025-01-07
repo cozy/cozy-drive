@@ -5,7 +5,7 @@
   "version": "1.79.0",
   "type": "webapp",
   "licence": "AGPL-3.0",
-  "icon": "public/app-icon.svg",
+  "icon": "assets/app-icon.svg",
   "categories": ["cozy"],
   "source": "https://github.com/cozy/cozy-drive",
   "editor": "Cozy",
@@ -18,28 +18,28 @@
       "short_description": "Cozy Drive helps you to save, sync and secure your files on your Cozy.",
       "long_description": "With Cozy Drive, you can easily:\n- Store your important files and keep them secure in your Cozy\n- Access to all your documents online & offline, from your desktop, and on your smartphone or tablet\n- Share links to files ans folders with who you like;\n- Automatically retrieve bills, payrolls, tax notices and other data from your main online services (internet, energy, retail, mobile, energy, travel...)\n- Upload files to your Cozy from your Android",
       "screenshots": [
-        "screenshots/en/screenshot01.png",
-        "screenshots/en/screenshot02.png",
-        "screenshots/en/screenshot03.png",
-        "screenshots/en/screenshot04.png"
+        "assets/screenshots/en/screenshot01.png",
+        "assets/screenshots/en/screenshot02.png",
+        "assets/screenshots/en/screenshot03.png",
+        "assets/screenshots/en/screenshot04.png"
       ]
     },
     "fr": {
       "short_description": "Cozy Drive est l’application de sauvegarde, de synchronisation et de sécurisation de tous vos fichiers sur Cozy.",
       "long_description": "Avec Cozy Drive vous pourrez :\n- Sauvegarder et synchroniser gratuitement tous vos documents importants (carte d’identité, photos de vacances, avis d’imposition, fiches de salaires…);\n- Accéder à vos documents n’importe quand, n’importe ou même en mode avion depuis votre bureau, votre smartphone ou tablette;\n- Partager vos fichiers et dossiers par lien avec qui vous le souhaitez;\n- Récupérer automatiquement vos documents administratifs de vos principaux fournisseurs de service (opérateur mobile, fournisseur d’énergie, assureur, internet, santé…);\n- Rester synchronisé·e lors de vos voyages et déplacements professionnels avec nos applications mobiles.",
       "screenshots": [
-        "screenshots/fr/screenshot01.png",
-        "screenshots/fr/screenshot02.png",
-        "screenshots/fr/screenshot03.png",
-        "screenshots/fr/screenshot04.png"
+        "assets/screenshots/fr/screenshot01.png",
+        "assets/screenshots/fr/screenshot02.png",
+        "assets/screenshots/fr/screenshot03.png",
+        "assets/screenshots/fr/screenshot04.png"
       ]
     }
   },
   "screenshots": [
-    "screenshots/fr/screenshot01.png",
-    "screenshots/fr/screenshot02.png",
-    "screenshots/fr/screenshot03.png",
-    "screenshots/fr/screenshot04.png"
+    "assets/screenshots/fr/screenshot01.png",
+    "assets/screenshots/fr/screenshot02.png",
+    "assets/screenshots/fr/screenshot03.png",
+    "assets/screenshots/fr/screenshot04.png"
   ],
   "langs": ["en", "fr"],
   "routes": {
@@ -61,6 +61,10 @@
     "/preview": {
       "folder": "/public",
       "index": "index.html",
+      "public": true
+    },
+    "/assets": {
+      "folder": "/assets",
       "public": true
     }
   },
