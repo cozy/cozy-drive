@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useClient } from 'cozy-client'
 import { useVaultClient } from 'cozy-keys-lib'
-import { Button } from 'cozy-ui/transpiled/react'
+import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 
 import { downloadFile } from './helpers'
 
