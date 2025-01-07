@@ -2,8 +2,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { useQuery } from 'cozy-client'
-import { ConfirmDialog } from 'cozy-ui/react/CozyDialogs'
 import Buttons from 'cozy-ui/transpiled/react/Buttons'
+import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { LoaderModal } from '@/components/LoaderModal'
