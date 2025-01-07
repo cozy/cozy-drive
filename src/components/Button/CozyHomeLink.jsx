@@ -2,7 +2,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { useSharingInfos } from 'cozy-sharing'
-import { ButtonLink, useI18n } from 'cozy-ui/transpiled/react'
+import { ButtonLink } from 'cozy-ui/transpiled/react/deprecated/Button'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import CozyHomeLinkIcon from 'components/Button/CozyHomeLinkIcon'
 

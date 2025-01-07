@@ -15,11 +15,11 @@ import {
   useSharingInfos,
   OpenSharingLinkFabButton
 } from 'cozy-sharing'
-import { Content } from 'cozy-ui/transpiled/react'
 import {
   divider,
   makeActions
 } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
+import { Content } from 'cozy-ui/transpiled/react/Layout'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
