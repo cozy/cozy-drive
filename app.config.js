@@ -52,7 +52,6 @@ const extraConfig = {
   plugins: [
     new DefinePlugin({
       __APP_VERSION__: JSON.stringify(pkg.version),
-      __APP_SLUG__: JSON.stringify(process.env.COZY_APP_SLUG)
     })
   ]
 }
