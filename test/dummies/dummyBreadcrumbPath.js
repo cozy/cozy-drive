@@ -1,4 +1,4 @@
-import { ROOT_DIR_ID } from 'cozy-client-js'
+import { ROOT_DIR_ID } from '@/constants/config'
 
 export const dummyBreadcrumbPath = (breadcrumbPath = []) => [
   { id: ROOT_DIR_ID, name: 'Drive' },

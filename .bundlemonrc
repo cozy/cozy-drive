@@ -35,9 +35,6 @@
       "path": "public/cozy-bar.js"
     },
     {
-      "path": "public/cozy-client-js.js"
-    },
-    {
       "path": "public/drive.<hash>.js"
     },
     {

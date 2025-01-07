@@ -68,11 +68,6 @@ const init = async () => {
     Document.registerClient(client)
   }
 
-  // we still need cozy-client-js for opening a folder
-  cozy.client.init({
-    cozyURL: cozyUrl,
-    token: sharecode
-  })
   const polyglot = initTranslation(dataset.locale, lang =>
     require(`@/locales/${lang}`)
   )
