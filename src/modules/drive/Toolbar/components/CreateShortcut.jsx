@@ -1,5 +1,4 @@
 import React from 'react'
-import { showModal } from 'react-cozy-helpers'
 import { connect } from 'react-redux'
 
 import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
@@ -10,6 +9,8 @@ import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import ShortcutCreationModal from './ShortcutCreationModal'
+
+import { showModal } from '@/lib/react-cozy-helpers'
 
 const CreateShortcutWrapper = ({ openModal, onClick }) => {
   const { t } = useI18n()

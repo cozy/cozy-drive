@@ -1,4 +1,4 @@
-import { buildFolderQuery } from 'queries'
+import { buildFolderQuery } from '@/queries'
 
 export const fetchFolder = async ({ client, folderId }) => {
   const folderQuery = buildFolderQuery(folderId)

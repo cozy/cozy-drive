@@ -10,13 +10,13 @@ import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoi
 import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
 import { I18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import PushBannerProvider from 'components/PushBanner/PushBannerProvider'
-import { AcceptingSharingProvider } from 'lib/AcceptingSharingContext'
-import FabProvider from 'lib/FabProvider'
-import { ModalContext } from 'lib/ModalContext'
-import { ThumbnailSizeContextProvider } from 'lib/ThumbnailSizeContext'
-import enLocale from 'locales/en.json'
-import { SelectionProvider } from 'modules/selection/SelectionProvider'
+import PushBannerProvider from '@/components/PushBanner/PushBannerProvider'
+import { AcceptingSharingProvider } from '@/lib/AcceptingSharingContext'
+import FabProvider from '@/lib/FabProvider'
+import { ModalContext } from '@/lib/ModalContext'
+import { ThumbnailSizeContextProvider } from '@/lib/ThumbnailSizeContext'
+import enLocale from '@/locales/en.json'
+import { SelectionProvider } from '@/modules/selection/SelectionProvider'
 
 const mockStore = createStore(() => ({
   mobile: {

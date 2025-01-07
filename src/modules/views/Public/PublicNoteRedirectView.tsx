@@ -7,8 +7,8 @@ import Empty from 'cozy-ui/transpiled/react/Empty'
 import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import EmptyIcon from 'assets/icons/icon-folder-broken.svg'
-import { joinPath } from 'lib/path'
+import EmptyIcon from '@/assets/icons/icon-folder-broken.svg'
+import { joinPath } from '@/lib/path'
 
 const PublicNoteRedirectView: FC = () => {
   const { t } = useI18n()

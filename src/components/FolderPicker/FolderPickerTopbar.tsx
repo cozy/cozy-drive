@@ -10,10 +10,11 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { getParentFolder } from './helpers'
-import BackButton from 'components/Button/BackButton'
-import { File } from 'components/FolderPicker/types'
-import { ROOT_DIR_ID } from 'constants/config'
-import { useNextcloudInfos } from 'modules/nextcloud/hooks/useNextcloudInfos'
+
+import BackButton from '@/components/Button/BackButton'
+import { File } from '@/components/FolderPicker/types'
+import { ROOT_DIR_ID } from '@/constants/config'
+import { useNextcloudInfos } from '@/modules/nextcloud/hooks/useNextcloudInfos'
 
 interface FolderPickerTopbarProps {
   navigateTo: (folder: import('./types').File) => void

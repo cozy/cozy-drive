@@ -6,7 +6,8 @@ import { createMockClient } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { TrashToolbar } from './TrashToolbar'
-import AppLike from 'test/components/AppLike'
+
+import AppLike from '@/test/components/AppLike'
 
 jest.mock('cozy-ui/transpiled/react/providers/Breakpoints', () => ({
   ...jest.requireActual('cozy-ui/transpiled/react/providers/Breakpoints'),

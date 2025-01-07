@@ -8,15 +8,16 @@ import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { useMove } from './hooks/useMove'
-import { FolderPicker } from 'components/FolderPicker/FolderPicker'
-import logger from 'lib/logger'
-import { joinPath, getParentPath } from 'lib/path'
-import { MoveInsideSharedFolderModal } from 'modules/move/MoveInsideSharedFolderModal'
-import { MoveOutsideSharedFolderModal } from 'modules/move/MoveOutsideSharedFolderModal'
-import { MoveSharedFolderInsideAnotherModal } from 'modules/move/MoveSharedFolderInsideAnotherModal'
-import { hasOneOfEntriesShared } from 'modules/move/helpers'
-import { useCancelable } from 'modules/move/hooks/useCancelable'
-import { computeNextcloudFolderQueryId } from 'modules/nextcloud/helpers'
+
+import { FolderPicker } from '@/components/FolderPicker/FolderPicker'
+import logger from '@/lib/logger'
+import { joinPath, getParentPath } from '@/lib/path'
+import { MoveInsideSharedFolderModal } from '@/modules/move/MoveInsideSharedFolderModal'
+import { MoveOutsideSharedFolderModal } from '@/modules/move/MoveOutsideSharedFolderModal'
+import { MoveSharedFolderInsideAnotherModal } from '@/modules/move/MoveSharedFolderInsideAnotherModal'
+import { hasOneOfEntriesShared } from '@/modules/move/helpers'
+import { useCancelable } from '@/modules/move/hooks/useCancelable'
+import { computeNextcloudFolderQueryId } from '@/modules/nextcloud/helpers'
 
 /**
  * Modal to move a folder to an other

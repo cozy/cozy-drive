@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { DumbUploadQueue as UploadQueue } from 'modules/upload/UploadQueue'
+import { DumbUploadQueue as UploadQueue } from '@/modules/upload/UploadQueue'
 
 class PortaledQueue extends Component {
   render() {

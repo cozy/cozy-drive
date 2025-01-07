@@ -1,11 +1,11 @@
 import { WebviewService } from 'cozy-intent'
 import logger from 'cozy-logger'
 
-import { RECEIVE_UPLOAD_ERROR, RECEIVE_UPLOAD_SUCCESS } from 'modules/upload'
+import { RECEIVE_UPLOAD_ERROR, RECEIVE_UPLOAD_SUCCESS } from '@/modules/upload'
 import type {
   FileFromNative,
   FileForQueue
-} from 'modules/views/Upload/UploadTypes'
+} from '@/modules/views/Upload/UploadTypes'
 
 export const generateForQueue = (
   files: FileFromNative['file'][]

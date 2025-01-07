@@ -7,11 +7,11 @@ import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { ROOT_DIR_ID } from 'constants/config'
+import { ROOT_DIR_ID } from '@/constants/config'
 import {
   makeOnlyOfficeIconByClass,
   canWriteOfficeDocument
-} from 'modules/views/OnlyOffice/helpers'
+} from '@/modules/views/OnlyOffice/helpers'
 
 const CreateOnlyOfficeItem = ({ fileClass }) => {
   const { folderId = ROOT_DIR_ID } = useParams()

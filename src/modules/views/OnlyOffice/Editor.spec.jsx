@@ -5,14 +5,14 @@ import { createMockClient, useQuery } from 'cozy-client'
 import useFetchJSON from 'cozy-client/dist/hooks/useFetchJSON'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import Editor from 'modules/views/OnlyOffice/Editor'
-import { OnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
+import Editor from '@/modules/views/OnlyOffice/Editor'
+import { OnlyOfficeContext } from '@/modules/views/OnlyOffice/OnlyOfficeProvider'
 import {
   isOfficeEnabled,
   isOfficeEditingEnabled
-} from 'modules/views/OnlyOffice/helpers'
-import AppLike from 'test/components/AppLike'
-import { officeDocParam } from 'test/data'
+} from '@/modules/views/OnlyOffice/helpers'
+import AppLike from '@/test/components/AppLike'
+import { officeDocParam } from '@/test/data'
 
 jest.mock('cozy-client/dist/hooks/useFetchJSON', () => ({
   __esModule: true,

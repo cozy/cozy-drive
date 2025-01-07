@@ -3,10 +3,10 @@ import React from 'react'
 import flag from 'cozy-flags'
 import FileImageLoader from 'cozy-ui/transpiled/react/FileImageLoader'
 
-import FileIconMime from 'modules/filelist/icons/FileIconMime'
-import FileIconShortcut from 'modules/filelist/icons/FileIconShortcut'
+import styles from '@/styles/filelist.styl'
 
-import styles from 'styles/filelist.styl'
+import FileIconMime from '@/modules/filelist/icons/FileIconMime'
+import FileIconShortcut from '@/modules/filelist/icons/FileIconShortcut'
 
 const FileIcon = ({ file, size, isEncrypted }) => {
   const isImage = file.class === 'image'

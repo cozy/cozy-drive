@@ -8,7 +8,8 @@ import { useWebviewIntent } from 'cozy-intent'
 
 import { usePushBannerContext } from './PushBannerProvider'
 import QuotaBanner from './QuotaBanner'
-import { TestI18n } from 'test/components/AppLike'
+
+import { TestI18n } from '@/test/components/AppLike'
 
 jest.mock('./PushBannerProvider', () => ({
   usePushBannerContext: jest.fn()

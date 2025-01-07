@@ -4,7 +4,8 @@ import React from 'react'
 import CozyClient from 'cozy-client'
 
 import { FolderPickerHeader } from './FolderPickerHeader'
-import AppLike from 'test/components/AppLike'
+
+import AppLike from '@/test/components/AppLike'
 
 describe('FolderPickerHeader', () => {
   const setupComponent = ({ entries = [], title, subTitle }) => {

@@ -2,8 +2,9 @@ import { render, fireEvent } from '@testing-library/react'
 import React from 'react'
 
 import { AddFolder } from './AddFolder'
-import AppLike from 'test/components/AppLike'
-import { setupStoreAndClient } from 'test/setup'
+
+import AppLike from '@/test/components/AppLike'
+import { setupStoreAndClient } from '@/test/setup'
 
 jest.mock('modules/navigation/duck/actions', () => ({
   createFolder: jest.fn(() => async () => {})

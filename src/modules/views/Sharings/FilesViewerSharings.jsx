@@ -1,13 +1,14 @@
-import { useCurrentFolderId } from 'hooks'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useQuery } from 'cozy-client'
 
 import withSharedDocumentIds from './withSharedDocumentIds'
-import { FilesViewerLoading } from 'components/FilesViewerLoading'
-import FilesViewer from 'modules/viewer/FilesViewer'
-import { buildSharingsQuery } from 'queries'
+
+import { FilesViewerLoading } from '@/components/FilesViewerLoading'
+import { useCurrentFolderId } from '@/hooks'
+import FilesViewer from '@/modules/viewer/FilesViewer'
+import { buildSharingsQuery } from '@/queries'
 
 const FilesViewerSharing = ({ sharedDocumentIds }) => {
   const currentFolderId = useCurrentFolderId()

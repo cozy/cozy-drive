@@ -6,8 +6,9 @@ import { useSharingContext } from 'cozy-sharing'
 import { PublicFolderView } from './PublicFolderView'
 import usePublicFilesQuery from './usePublicFilesQuery'
 import { generateFileFixtures, getByTextWithMarkup } from '../testUtils'
-import AppLike from 'test/components/AppLike'
-import { setupStoreAndClient } from 'test/setup'
+
+import AppLike from '@/test/components/AppLike'
+import { setupStoreAndClient } from '@/test/setup'
 
 jest.mock('cozy-client/dist/hooks/useCapabilities', () =>
   jest.fn().mockReturnValue({ capabilities: {} })

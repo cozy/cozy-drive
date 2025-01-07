@@ -1,9 +1,9 @@
 import { act, render } from '@testing-library/react'
 import React from 'react'
 
-import AppRoute from 'modules/navigation/AppRoute'
-import AppLike from 'test/components/AppLike'
-import { setupStoreAndClient } from 'test/setup'
+import AppRoute from '@/modules/navigation/AppRoute'
+import AppLike from '@/test/components/AppLike'
+import { setupStoreAndClient } from '@/test/setup'
 
 jest.mock('cozy-harvest-lib', () => ({
   LaunchTriggerCard: jest.fn()

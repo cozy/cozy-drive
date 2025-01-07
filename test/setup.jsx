@@ -9,8 +9,9 @@ import CozyClient from 'cozy-client'
 
 import { generateFile } from './generate'
 import configureStore from '../src/store/configureStore'
-import AppLike from 'test/components/AppLike'
-import FolderContent from 'test/components/FolderContent'
+
+import AppLike from '@/test/components/AppLike'
+import FolderContent from '@/test/components/FolderContent'
 
 jest.mock('cozy-keys-lib', () => ({
   withVaultClient: BaseComponent => {

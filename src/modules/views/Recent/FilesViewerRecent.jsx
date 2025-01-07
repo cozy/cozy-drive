@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom'
 
 import { useQuery } from 'cozy-client'
 
-import { FilesViewerLoading } from 'components/FilesViewerLoading'
-import FilesViewer from 'modules/viewer/FilesViewer'
-import { buildRecentQuery } from 'queries'
+import { FilesViewerLoading } from '@/components/FilesViewerLoading'
+import FilesViewer from '@/modules/viewer/FilesViewer'
+import { buildRecentQuery } from '@/queries'
 
 const FilesViewerRecent = () => {
   const filesQuery = buildRecentQuery()

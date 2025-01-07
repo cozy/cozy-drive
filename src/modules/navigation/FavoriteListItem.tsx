@@ -8,9 +8,10 @@ import { NavIcon, NavLink, NavItem } from 'cozy-ui/transpiled/react/Nav'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 
 import { FileLink } from './components/FileLink'
-import ServerIcon from 'assets/icons/icon-server.svg'
-import { useFileLink } from 'modules/navigation/hooks/useFileLink'
-import { isNextcloudShortcut } from 'modules/nextcloud/helpers'
+
+import ServerIcon from '@/assets/icons/icon-server.svg'
+import { useFileLink } from '@/modules/navigation/hooks/useFileLink'
+import { isNextcloudShortcut } from '@/modules/nextcloud/helpers'
 
 interface FavoriteListItemProps {
   file: IOCozyFile

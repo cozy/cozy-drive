@@ -1,9 +1,10 @@
 import { getFolderContent } from './selectors'
+
 import {
   setupFolderContent,
   setupStoreAndClient,
   mockCozyClientRequestQuery
-} from 'test/setup'
+} from '@/test/setup'
 
 jest.mock('modules/navigation/AppRoute', () => ({ routes: [] }))
 

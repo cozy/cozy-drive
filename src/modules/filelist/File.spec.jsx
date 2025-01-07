@@ -7,8 +7,9 @@ import { createMockClient } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
 
 import { DumbFile } from './File'
-import AppLike from 'test/components/AppLike'
-import { folder, actionsMenu } from 'test/data'
+
+import AppLike from '@/test/components/AppLike'
+import { folder, actionsMenu } from '@/test/data'
 
 jest.mock('cozy-sharing', () => ({
   ...jest.requireActual('cozy-sharing'),

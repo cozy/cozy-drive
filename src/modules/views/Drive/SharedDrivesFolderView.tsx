@@ -5,22 +5,22 @@ import { useQuery } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { ROOT_DIR_ID } from 'constants/config'
-import useDisplayedFolder from 'hooks/useDisplayedFolder'
-import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
+import { ROOT_DIR_ID } from '@/constants/config'
+import useDisplayedFolder from '@/hooks/useDisplayedFolder'
+import { makeExtraColumnsNamesFromMedia } from '@/modules/certifications'
 import {
   useExtraColumns,
   ExtraColumn
-} from 'modules/certifications/useExtraColumns'
-import { FolderBody } from 'modules/folder/components/FolderBody'
-import { useFolderSort } from 'modules/navigation/duck'
-import FolderView from 'modules/views/Folder/FolderView'
-import FolderViewBreadcrumb from 'modules/views/Folder/FolderViewBreadcrumb'
-import FolderViewHeader from 'modules/views/Folder/FolderViewHeader'
+} from '@/modules/certifications/useExtraColumns'
+import { FolderBody } from '@/modules/folder/components/FolderBody'
+import { useFolderSort } from '@/modules/navigation/duck'
+import FolderView from '@/modules/views/Folder/FolderView'
+import FolderViewBreadcrumb from '@/modules/views/Folder/FolderViewBreadcrumb'
+import FolderViewHeader from '@/modules/views/Folder/FolderViewHeader'
 import {
   buildDriveQuery,
   buildFileWithSpecificMetadataAttributeQuery
-} from 'queries'
+} from '@/queries'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames: string[] = []

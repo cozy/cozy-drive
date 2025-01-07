@@ -3,7 +3,8 @@ import localforage from 'localforage'
 import React from 'react'
 
 import CallToAction from './CallToAction'
-import { NOVIEWER_DESKTOP_CTA } from 'components/pushClient'
+
+import { NOVIEWER_DESKTOP_CTA } from '@/components/pushClient'
 
 jest.mock('localforage')
 jest.mock('config/config.json', () => ({

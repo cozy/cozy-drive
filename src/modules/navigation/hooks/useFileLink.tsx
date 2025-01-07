@@ -5,15 +5,15 @@ import type { Path } from 'react-router-dom'
 import { useClient, generateWebLink } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import type { File } from 'components/FolderPicker/types'
-import { joinPath } from 'lib/path'
+import type { File } from '@/components/FolderPicker/types'
+import { joinPath } from '@/lib/path'
 import {
   computeFileType,
   computeApp,
   computePath
-} from 'modules/navigation/hooks/helpers'
-import { usePublicContext } from 'modules/public/PublicProvider'
-import { isOfficeEnabled as computeOfficeEnabled } from 'modules/views/OnlyOffice/helpers'
+} from '@/modules/navigation/hooks/helpers'
+import { usePublicContext } from '@/modules/public/PublicProvider'
+import { isOfficeEnabled as computeOfficeEnabled } from '@/modules/views/OnlyOffice/helpers'
 
 export interface LinkResult {
   app: string

@@ -1,4 +1,4 @@
-import { generateFile } from 'test/generate'
+import { generateFile } from '@/test/generate'
 
 export const generateFileFixtures = ({
   nbFiles = 5,

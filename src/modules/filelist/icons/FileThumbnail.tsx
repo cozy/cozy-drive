@@ -9,14 +9,17 @@ import TrashDuotoneIcon from 'cozy-ui/transpiled/react/Icons/TrashDuotone'
 import InfosBadge from 'cozy-ui/transpiled/react/InfosBadge'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 
-import IconServer from 'assets/icons/icon-type-server.svg'
-import type { File, FolderPickerEntry } from 'components/FolderPicker/types'
-import FileIcon from 'modules/filelist/icons/FileIcon'
-import FileIconMime from 'modules/filelist/icons/FileIconMime'
-import { SharingShortcutIcon } from 'modules/filelist/icons/SharingShortcutIcon'
-import { isNextcloudShortcut, isNextcloudFile } from 'modules/nextcloud/helpers'
+import styles from '@/styles/filelist.styl'
 
-import styles from 'styles/filelist.styl'
+import IconServer from '@/assets/icons/icon-type-server.svg'
+import type { File, FolderPickerEntry } from '@/components/FolderPicker/types'
+import FileIcon from '@/modules/filelist/icons/FileIcon'
+import FileIconMime from '@/modules/filelist/icons/FileIconMime'
+import { SharingShortcutIcon } from '@/modules/filelist/icons/SharingShortcutIcon'
+import {
+  isNextcloudShortcut,
+  isNextcloudFile
+} from '@/modules/nextcloud/helpers'
 
 interface FileThumbnailProps {
   file: File | FolderPickerEntry

@@ -10,7 +10,7 @@ import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { getPathToShareDisplayedFolder } from 'modules/drive/Toolbar/share/helpers'
+import { getPathToShareDisplayedFolder } from '@/modules/drive/Toolbar/share/helpers'
 
 const ShareItem = ({ displayedFolder }) => {
   const { t } = useI18n()

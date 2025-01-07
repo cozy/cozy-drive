@@ -14,8 +14,8 @@ import IconText from 'cozy-ui/transpiled/react/Icons/FileTypeText'
 import IconVideo from 'cozy-ui/transpiled/react/Icons/FileTypeVideo'
 import IconZip from 'cozy-ui/transpiled/react/Icons/FileTypeZip'
 
-import { getFileMimetype } from 'lib/getFileMimetype'
-import IconEncryptedFolder from 'modules/views/Folder/EncryptedFolderIcon'
+import { getFileMimetype } from '@/lib/getFileMimetype'
+import IconEncryptedFolder from '@/modules/views/Folder/EncryptedFolderIcon'
 
 /**
  * Returns the appropriate icon for a given file based on its mime type and other properties.

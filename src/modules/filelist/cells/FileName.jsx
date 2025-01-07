@@ -12,10 +12,10 @@ import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
 import { TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import RenameInput from 'modules/drive/RenameInput'
-import { getFileNameAndExtension } from 'modules/filelist/helpers'
+import styles from '@/styles/filelist.styl'
 
-import styles from 'styles/filelist.styl'
+import RenameInput from '@/modules/drive/RenameInput'
+import { getFileNameAndExtension } from '@/modules/filelist/helpers'
 
 export const CertificationsIcons = ({ attributes }) => {
   const isCarbonCopy = get(attributes, 'metadata.carbonCopy')

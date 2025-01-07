@@ -3,8 +3,8 @@ import React from 'react'
 
 import { createMockClient } from 'cozy-client'
 
-import { FolderPickerTopbar } from 'components/FolderPicker/FolderPickerTopbar'
-import AppLike from 'test/components/AppLike'
+import { FolderPickerTopbar } from '@/components/FolderPicker/FolderPickerTopbar'
+import AppLike from '@/test/components/AppLike'
 
 describe('FolderPickerTopbar', () => {
   const navigateTo = jest.fn()

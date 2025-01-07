@@ -4,7 +4,7 @@ import React, { useState, useCallback, useRef } from 'react'
 import ActionsMenu from 'cozy-ui/transpiled/react/ActionsMenu'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import { MoreButton } from 'components/Button'
+import { MoreButton } from '@/components/Button'
 
 const PublicToolbarMoreMenu = ({ files, actions }) => {
   const moreButtonRef = useRef()

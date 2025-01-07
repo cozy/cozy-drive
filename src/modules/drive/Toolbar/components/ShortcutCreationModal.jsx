@@ -1,4 +1,3 @@
-import { useDisplayedFolder } from 'hooks'
 import React, { useCallback, useEffect, useState } from 'react'
 
 import { useClient } from 'cozy-client'
@@ -12,7 +11,8 @@ import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { DOCTYPE_FILES_SHORTCUT } from 'lib/doctypes'
+import { useDisplayedFolder } from '@/hooks'
+import { DOCTYPE_FILES_SHORTCUT } from '@/lib/doctypes'
 
 const ENTER_KEY = 13
 

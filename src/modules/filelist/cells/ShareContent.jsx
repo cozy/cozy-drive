@@ -4,10 +4,10 @@ import { useNavigate, useLocation } from 'react-router-dom'
 
 import { SharedStatus, useSharingContext } from 'cozy-sharing'
 
-import { joinPath } from 'lib/path'
-import HammerComponent from 'modules/filelist/HammerComponent'
+import styles from '@/styles/filelist.styl'
 
-import styles from 'styles/filelist.styl'
+import { joinPath } from '@/lib/path'
+import HammerComponent from '@/modules/filelist/HammerComponent'
 
 const ShareContent = ({ file, disabled, isInSyncFromSharing }) => {
   const navigate = useNavigate()

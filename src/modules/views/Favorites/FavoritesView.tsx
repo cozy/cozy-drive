@@ -14,7 +14,7 @@ import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { useModalContext } from 'lib/ModalContext'
+import { useModalContext } from '@/lib/ModalContext'
 import {
   download,
   rename,
@@ -23,26 +23,26 @@ import {
   share,
   hr,
   trash
-} from 'modules/actions'
-import { addToFavorites } from 'modules/actions/components/addToFavorites'
-import { moveTo } from 'modules/actions/components/moveTo'
-import { removeFromFavorites } from 'modules/actions/components/removeFromFavorites'
-import { MobileAwareBreadcrumb as Breadcrumb } from 'modules/breadcrumb/components/MobileAwareBreadcrumb'
-import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
+} from '@/modules/actions'
+import { addToFavorites } from '@/modules/actions/components/addToFavorites'
+import { moveTo } from '@/modules/actions/components/moveTo'
+import { removeFromFavorites } from '@/modules/actions/components/removeFromFavorites'
+import { MobileAwareBreadcrumb as Breadcrumb } from '@/modules/breadcrumb/components/MobileAwareBreadcrumb'
+import { makeExtraColumnsNamesFromMedia } from '@/modules/certifications'
 import {
   useExtraColumns,
   ExtraColumn
-} from 'modules/certifications/useExtraColumns'
-import Toolbar from 'modules/drive/Toolbar'
-import { FolderBody } from 'modules/folder/components/FolderBody'
-import { useFolderSort } from 'modules/navigation/duck'
-import { isNextcloudShortcut } from 'modules/nextcloud/helpers'
-import FolderView from 'modules/views/Folder/FolderView'
-import FolderViewHeader from 'modules/views/Folder/FolderViewHeader'
+} from '@/modules/certifications/useExtraColumns'
+import Toolbar from '@/modules/drive/Toolbar'
+import { FolderBody } from '@/modules/folder/components/FolderBody'
+import { useFolderSort } from '@/modules/navigation/duck'
+import { isNextcloudShortcut } from '@/modules/nextcloud/helpers'
+import FolderView from '@/modules/views/Folder/FolderView'
+import FolderViewHeader from '@/modules/views/Folder/FolderViewHeader'
 import {
   buildFavoritesQuery,
   buildFileWithSpecificMetadataAttributeQuery
-} from 'queries'
+} from '@/queries'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames: string[] = []

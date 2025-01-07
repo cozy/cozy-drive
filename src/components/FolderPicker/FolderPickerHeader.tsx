@@ -5,8 +5,8 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 import { Media, Img, Bd } from 'cozy-ui/transpiled/react/deprecated/Media'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { FolderPickerHeaderIllustration } from 'components/FolderPicker/FolderPickerHeaderIllustration'
-import { FolderPickerEntry } from 'components/FolderPicker/types'
+import { FolderPickerHeaderIllustration } from '@/components/FolderPicker/FolderPickerHeaderIllustration'
+import { FolderPickerEntry } from '@/components/FolderPicker/types'
 
 interface FolderPickerHeaderProps {
   entries: FolderPickerEntry[]

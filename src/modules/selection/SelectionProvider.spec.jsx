@@ -11,8 +11,8 @@ import {
 import {
   SelectionProvider,
   useSelectionContext
-} from 'modules/selection/SelectionProvider'
-import { generateFile } from 'test/generate'
+} from '@/modules/selection/SelectionProvider'
+import { generateFile } from '@/test/generate'
 
 const SelectionConsumer = ({ items }) => {
   const {

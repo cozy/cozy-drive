@@ -1,5 +1,5 @@
-import { aggregateFilesSize, aggregateNonExcludedSlugs } from 'lib/dacc/dacc'
-import { queryAllDocsWithFields } from 'lib/dacc/query'
+import { aggregateFilesSize, aggregateNonExcludedSlugs } from '@/lib/dacc/dacc'
+import { queryAllDocsWithFields } from '@/lib/dacc/query'
 
 jest.mock('lib/dacc/query')
 

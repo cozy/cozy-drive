@@ -7,7 +7,7 @@ import RightIcon from 'cozy-ui/transpiled/react/Icons/Right'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import styles from 'modules/breadcrumb/styles/breadcrumb.styl'
+import styles from '@/modules/breadcrumb/styles/breadcrumb.styl'
 
 const Breadcrumb = ({
   path,

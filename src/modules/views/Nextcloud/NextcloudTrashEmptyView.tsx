@@ -8,10 +8,10 @@ import {
 
 import { useClient } from 'cozy-client'
 
-import { getParentPath } from 'lib/path'
-import { computeNextcloudFolderQueryId } from 'modules/nextcloud/helpers'
-import { useNextcloudPath } from 'modules/nextcloud/hooks/useNextcloudPath'
-import { EmptyTrashConfirm } from 'modules/trash/components/EmptyTrashConfirm'
+import { getParentPath } from '@/lib/path'
+import { computeNextcloudFolderQueryId } from '@/modules/nextcloud/helpers'
+import { useNextcloudPath } from '@/modules/nextcloud/hooks/useNextcloudPath'
+import { EmptyTrashConfirm } from '@/modules/trash/components/EmptyTrashConfirm'
 
 const NextcloudTrashEmptyView: FC = () => {
   const { sourceAccount } = useParams()

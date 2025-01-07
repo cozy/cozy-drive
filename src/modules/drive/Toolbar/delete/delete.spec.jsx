@@ -2,8 +2,9 @@ import { render, fireEvent, waitFor } from '@testing-library/react'
 import React from 'react'
 
 import { EnhancedDeleteConfirm } from './delete'
-import AppLike from 'test/components/AppLike'
-import { setupStoreAndClient } from 'test/setup'
+
+import AppLike from '@/test/components/AppLike'
+import { setupStoreAndClient } from '@/test/setup'
 
 const mockNavigate = jest.fn()
 

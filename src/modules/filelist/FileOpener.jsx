@@ -3,8 +3,9 @@ import propagating from 'propagating-hammerjs'
 import React, { useEffect, useRef } from 'react'
 
 import styles from './fileopener.styl'
-import { FileLink } from 'modules/navigation/components/FileLink'
-import { useFileLink } from 'modules/navigation/hooks/useFileLink'
+
+import { FileLink } from '@/modules/navigation/components/FileLink'
+import { useFileLink } from '@/modules/navigation/hooks/useFileLink'
 
 const getParentDiv = element => {
   if (element.nodeName.toLowerCase() === 'div') {

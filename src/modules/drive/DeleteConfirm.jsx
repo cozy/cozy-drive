@@ -11,10 +11,10 @@ import { Media, Img, Bd } from 'cozy-ui/transpiled/react/deprecated/Media'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { DOCTYPE_ALBUMS } from 'lib/doctypes'
-import { getEntriesTypeTranslated } from 'lib/entries'
-import { trashFiles } from 'modules/actions/utils'
-import { buildAlbumByIdQuery } from 'queries'
+import { DOCTYPE_ALBUMS } from '@/lib/doctypes'
+import { getEntriesTypeTranslated } from '@/lib/entries'
+import { trashFiles } from '@/modules/actions/utils'
+import { buildAlbumByIdQuery } from '@/queries'
 
 const Message = ({ type, fileCount }) => {
   const ico =

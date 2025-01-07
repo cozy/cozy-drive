@@ -6,8 +6,9 @@ import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 
 import { RenameInput } from './RenameInput'
-import AppLike from 'test/components/AppLike'
-import { generateFile } from 'test/generate'
+
+import AppLike from '@/test/components/AppLike'
+import { generateFile } from '@/test/generate'
 
 const showAlert = jest.fn()
 
