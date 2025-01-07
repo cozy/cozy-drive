@@ -43,8 +43,5 @@ module.exports = {
     url: 'http://cozy.localhost:8080/'
   },
   testMatch: ['**/(*.)(spec|test).[jt]s?(x)'],
-  globals: {
-    __TARGET__: 'browser'
-  },
   reporters: ['default', '<rootDir>/jestHelpers/ConsoleUsageReporter.js']
 }
