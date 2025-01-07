@@ -41,6 +41,7 @@
   "homepage": "https://github.com/cozy/cozy-drive#readme",
   "devDependencies": {
     "@babel/eslint-parser": "7.23.3",
+    "@rsbuild/core": "^1.1.6",
     "@testing-library/jest-dom": "5.17.0",
     "@testing-library/react": "11.2.7",
     "@testing-library/react-hooks": "8.0.1",
@@ -71,6 +72,7 @@
     "prettier": "2.8.8",
     "react-test-renderer": "16.14.0",
     "replace": "1.2.1",
+    "rsbuild-config-cozy-app": "^0.1.1",
     "stylint": "1.5.9",
     "terser-webpack-plugin": "1.4.5",
     "typescript": "4.9.5",
