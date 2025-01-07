@@ -6,11 +6,11 @@ import {
   useSearchParams
 } from 'react-router-dom'
 
-import { LoaderModal } from 'components/LoaderModal'
-import { getParentPath } from 'lib/path'
-import { DuplicateModal } from 'modules/duplicate/components/DuplicateModal'
-import { useNextcloudCurrentFolder } from 'modules/nextcloud/hooks/useNextcloudCurrentFolder'
-import { useNextcloudEntries } from 'modules/nextcloud/hooks/useNextcloudEntries'
+import { LoaderModal } from '@/components/LoaderModal'
+import { getParentPath } from '@/lib/path'
+import { DuplicateModal } from '@/modules/duplicate/components/DuplicateModal'
+import { useNextcloudCurrentFolder } from '@/modules/nextcloud/hooks/useNextcloudCurrentFolder'
+import { useNextcloudEntries } from '@/modules/nextcloud/hooks/useNextcloudEntries'
 
 const NextcloudDuplicateView: FC = () => {
   const { pathname } = useLocation()

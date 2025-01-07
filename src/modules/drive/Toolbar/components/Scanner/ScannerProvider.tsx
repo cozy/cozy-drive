@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 
-import { useScannerService } from 'modules/drive/Toolbar/components/Scanner/useScannerService'
+import { useScannerService } from '@/modules/drive/Toolbar/components/Scanner/useScannerService'
 
 interface ScannerContextValue {
   startScanner?: () => Promise<void>

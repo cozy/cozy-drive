@@ -5,14 +5,14 @@ import ActionsMenu from 'cozy-ui/transpiled/react/ActionsMenu'
 import Divider from 'cozy-ui/transpiled/react/Divider'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import { MoreButton } from 'components/Button'
-import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
-import AddMenuItem from 'modules/drive/Toolbar/components/AddMenuItem'
-import DownloadButtonItem from 'modules/drive/Toolbar/components/DownloadButtonItem'
-import InsideRegularFolder from 'modules/drive/Toolbar/components/InsideRegularFolder'
-import DeleteItem from 'modules/drive/Toolbar/delete/DeleteItem'
-import SelectableItem from 'modules/drive/Toolbar/selectable/SelectableItem'
-import ShareItem from 'modules/drive/Toolbar/share/ShareItem'
+import { MoreButton } from '@/components/Button'
+import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
+import AddMenuItem from '@/modules/drive/Toolbar/components/AddMenuItem'
+import DownloadButtonItem from '@/modules/drive/Toolbar/components/DownloadButtonItem'
+import InsideRegularFolder from '@/modules/drive/Toolbar/components/InsideRegularFolder'
+import DeleteItem from '@/modules/drive/Toolbar/delete/DeleteItem'
+import SelectableItem from '@/modules/drive/Toolbar/selectable/SelectableItem'
+import ShareItem from '@/modules/drive/Toolbar/share/ShareItem'
 
 export const openMenu = setMenuVisible => {
   setMenuVisible(true)

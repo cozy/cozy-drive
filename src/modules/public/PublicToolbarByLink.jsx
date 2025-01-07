@@ -1,4 +1,3 @@
-import { useDisplayedFolder } from 'hooks'
 import React from 'react'
 
 import { useClient } from 'cozy-client'
@@ -9,13 +8,14 @@ import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { BarRightOnMobile } from 'components/Bar'
-import { addItems, download, hr, select } from 'modules/actions'
-import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
-import AddButton from 'modules/drive/Toolbar/components/AddButton'
-import { DownloadFilesButton } from 'modules/public/DownloadFilesButton'
-import PublicToolbarMoreMenu from 'modules/public/PublicToolbarMoreMenu'
-import { useSelectionContext } from 'modules/selection/SelectionProvider'
+import { BarRightOnMobile } from '@/components/Bar'
+import { useDisplayedFolder } from '@/hooks'
+import { addItems, download, hr, select } from '@/modules/actions'
+import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
+import AddButton from '@/modules/drive/Toolbar/components/AddButton'
+import { DownloadFilesButton } from '@/modules/public/DownloadFilesButton'
+import PublicToolbarMoreMenu from '@/modules/public/PublicToolbarMoreMenu'
+import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 
 const PublicToolbarByLink = ({
   files,

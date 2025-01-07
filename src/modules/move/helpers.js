@@ -1,6 +1,5 @@
-import { CozyFile } from 'models'
-
-import logger from 'lib/logger'
+import logger from '@/lib/logger'
+import { CozyFile } from '@/models'
 
 /**
  * Cancel file movement function

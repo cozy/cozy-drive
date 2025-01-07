@@ -7,7 +7,7 @@ import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { AddMenuContext } from 'modules/drive/AddMenu/AddMenuProvider'
+import { AddMenuContext } from '@/modules/drive/AddMenu/AddMenuProvider'
 
 const AddMenuItem = ({ onClick }) => {
   const { t } = useI18n()

@@ -22,7 +22,8 @@ import {
   DESKTOP_BANNER
 } from '.'
 import styles from './pushClient.styl'
-import Config from 'config/config.json'
+
+import Config from '@/config/config.json'
 
 class BannerClient extends Component {
   state = {

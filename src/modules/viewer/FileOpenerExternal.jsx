@@ -22,11 +22,11 @@ import Viewer, {
   SharingButton
 } from 'cozy-viewer'
 
-import Fallback from 'modules/viewer/Fallback'
+import Fallback from '@/modules/viewer/Fallback'
 import {
   isOfficeEnabled,
   makeOnlyOfficeFileRoute
-} from 'modules/views/OnlyOffice/helpers'
+} from '@/modules/views/OnlyOffice/helpers'
 
 const FileNotFoundError = translate()(({ t }) => (
   <pre className="u-error">{t('FileOpenerExternal.fileNotFoundError')}</pre>

@@ -4,9 +4,10 @@ import React from 'react'
 import { createMockClient } from 'cozy-client'
 
 import FileOpener, { getParentLink, handlePress } from './FileOpener'
-import { useFileLink } from 'modules/navigation/hooks/useFileLink'
 import AppLike from 'test/components/AppLike'
 import { generateFile } from 'test/generate'
+
+import { useFileLink } from '@/modules/navigation/hooks/useFileLink'
 
 jest.mock('cozy-client/dist/models/file', () => ({
   ...jest.requireActual('cozy-client/dist/models/file'),

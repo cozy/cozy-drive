@@ -7,13 +7,13 @@ import { isFlagshipApp } from 'cozy-device-helper'
 import { useWebviewIntent } from 'cozy-intent'
 import List from 'cozy-ui/transpiled/react/List'
 
-import { SHARED_DRIVES_DIR_ID } from 'constants/config'
-import BarSearchInputGroup from 'modules/search/components/BarSearchInputGroup'
-import SuggestionItem from 'modules/search/components/SuggestionItem'
-import SuggestionListSkeleton from 'modules/search/components/SuggestionListSkeleton'
-import useSearch from 'modules/search/hooks/useSearch'
+import styles from '@/modules/search/components/styles.styl'
 
-import styles from 'modules/search/components/styles.styl'
+import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
+import BarSearchInputGroup from '@/modules/search/components/BarSearchInputGroup'
+import SuggestionItem from '@/modules/search/components/SuggestionItem'
+import SuggestionListSkeleton from '@/modules/search/components/SuggestionListSkeleton'
+import useSearch from '@/modules/search/hooks/useSearch'
 
 const BarSearchAutosuggest = ({ t }) => {
   const webviewIntent = useWebviewIntent()

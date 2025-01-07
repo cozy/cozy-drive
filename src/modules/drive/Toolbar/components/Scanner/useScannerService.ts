@@ -11,8 +11,8 @@ import {
   getErrorMessage,
   getFileFromBase64,
   getUniqueNameFromPrefix
-} from 'modules/drive/helpers'
-import { uploadFiles } from 'modules/navigation/duck'
+} from '@/modules/drive/helpers'
+import { uploadFiles } from '@/modules/navigation/duck'
 
 /**
  * Custom hook that provides scanner functionality.

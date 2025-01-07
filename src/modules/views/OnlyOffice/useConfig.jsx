@@ -5,12 +5,12 @@ import { useClient, isQueryLoading, generateWebLink } from 'cozy-client'
 import useFetchJSON from 'cozy-client/dist/hooks/useFetchJSON'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
+import { useOnlyOfficeContext } from '@/modules/views/OnlyOffice/OnlyOfficeProvider'
 import {
   shouldBeOpenedOnOtherInstance,
   isOfficeEnabled,
   makeName
-} from 'modules/views/OnlyOffice/helpers'
+} from '@/modules/views/OnlyOffice/helpers'
 
 const useConfig = () => {
   const {

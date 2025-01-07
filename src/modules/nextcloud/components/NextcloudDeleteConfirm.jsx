@@ -14,8 +14,8 @@ import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { getEntriesTypeTranslated } from 'lib/entries'
-import { computeNextcloudFolderQueryId } from 'modules/nextcloud/helpers'
+import { getEntriesTypeTranslated } from '@/lib/entries'
+import { computeNextcloudFolderQueryId } from '@/modules/nextcloud/helpers'
 
 const NextcloudDeleteConfirm = ({ files, onClose }) => {
   const { t } = useI18n()

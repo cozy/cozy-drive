@@ -7,8 +7,8 @@ import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { showNewFolderInput, encryptedFolder } from 'modules/filelist/duck'
-import EncryptedFolderIcon from 'modules/views/Folder/EncryptedFolderIcon'
+import { showNewFolderInput, encryptedFolder } from '@/modules/filelist/duck'
+import EncryptedFolderIcon from '@/modules/views/Folder/EncryptedFolderIcon'
 
 const AddEncryptedFolderItem = ({ addEncryptedFolder, onClick }) => {
   const { t } = useI18n()

@@ -8,9 +8,9 @@ import RenameIcon from 'cozy-ui/transpiled/react/Icons/Rename'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { useFabStyles } from 'modules/drive/helpers'
-import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
-import { canWriteOfficeDocument } from 'modules/views/OnlyOffice/helpers'
+import { useFabStyles } from '@/modules/drive/helpers'
+import { useOnlyOfficeContext } from '@/modules/views/OnlyOffice/OnlyOfficeProvider'
+import { canWriteOfficeDocument } from '@/modules/views/OnlyOffice/helpers'
 
 const ReadOnlyFab = () => {
   const navigate = useNavigate()

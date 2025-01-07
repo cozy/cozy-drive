@@ -6,7 +6,7 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import DotsIcon from 'cozy-ui/transpiled/react/Icons/Dots'
 import { TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
 
-import styles from 'styles/filelist.styl'
+import styles from '@/styles/filelist.styl'
 
 const FileAction = forwardRef(function FileAction(
   { t, onClick, disabled, isInSyncFromSharing },

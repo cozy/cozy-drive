@@ -4,9 +4,9 @@ import React from 'react'
 
 import { Main as MainUI } from 'cozy-ui/transpiled/react/Layout'
 
-import PushBanner from 'components/PushBanner'
+import styles from '@/styles/main.styl'
 
-import styles from 'styles/main.styl'
+import PushBanner from '@/components/PushBanner'
 
 const Main = ({ children, isPublic = false }) => (
   <MainUI

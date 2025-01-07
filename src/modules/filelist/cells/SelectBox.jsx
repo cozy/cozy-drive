@@ -3,7 +3,7 @@ import React from 'react'
 
 import { TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
 
-import styles from 'styles/filelist.styl'
+import styles from '@/styles/filelist.styl'
 
 const SelectBox = ({ withSelectionCheckbox, selected, onClick, disabled }) => (
   <TableCell

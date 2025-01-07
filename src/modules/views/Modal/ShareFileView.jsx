@@ -4,8 +4,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { hasQueryBeenLoaded, useQuery } from 'cozy-client'
 import { ShareModal } from 'cozy-sharing'
 
-import { LoaderModal } from 'components/LoaderModal'
-import { buildFileByIdQuery } from 'queries'
+import { LoaderModal } from '@/components/LoaderModal'
+import { buildFileByIdQuery } from '@/queries'
 
 const ShareFileView = () => {
   const navigate = useNavigate()

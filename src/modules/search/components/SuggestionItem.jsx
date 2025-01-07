@@ -4,11 +4,11 @@ import ListItem from 'cozy-ui/transpiled/react/ListItem'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 
-import { SHARED_DRIVES_DIR_ID } from 'constants/config'
-import FileIconMime from 'modules/filelist/icons/FileIconMime'
-import FileIconShortcut from 'modules/filelist/icons/FileIconShortcut'
-import SuggestionItemTextHighlighted from 'modules/search/components/SuggestionItemTextHighlighted'
-import SuggestionItemTextSecondary from 'modules/search/components/SuggestionItemTextSecondary'
+import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
+import FileIconMime from '@/modules/filelist/icons/FileIconMime'
+import FileIconShortcut from '@/modules/filelist/icons/FileIconShortcut'
+import SuggestionItemTextHighlighted from '@/modules/search/components/SuggestionItemTextHighlighted'
+import SuggestionItemTextSecondary from '@/modules/search/components/SuggestionItemTextSecondary'
 
 const SuggestionItem = ({
   suggestion,

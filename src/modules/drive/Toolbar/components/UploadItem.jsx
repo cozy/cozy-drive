@@ -14,7 +14,7 @@ import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { uploadFiles } from 'modules/navigation/duck'
+import { uploadFiles } from '@/modules/navigation/duck'
 
 const UploadItem = ({ t, isDisabled, onUpload, displayedFolder, onClick }) => {
   const client = useClient()

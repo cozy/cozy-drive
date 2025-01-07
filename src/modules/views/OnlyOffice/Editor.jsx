@@ -4,18 +4,18 @@ import { isIOS } from 'cozy-device-helper'
 import flag from 'cozy-flags'
 import { DialogContent } from 'cozy-ui/transpiled/react/Dialog'
 
-import Error from 'modules/views/OnlyOffice/Error'
-import Loading from 'modules/views/OnlyOffice/Loading'
-import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
-import Title from 'modules/views/OnlyOffice/Title'
-import View from 'modules/views/OnlyOffice/View'
-import { FileDeletedModal } from 'modules/views/OnlyOffice/components/FileDeletedModal'
-import { FileDivergedModal } from 'modules/views/OnlyOffice/components/FileDivergedModal'
+import Error from '@/modules/views/OnlyOffice/Error'
+import Loading from '@/modules/views/OnlyOffice/Loading'
+import { useOnlyOfficeContext } from '@/modules/views/OnlyOffice/OnlyOfficeProvider'
+import Title from '@/modules/views/OnlyOffice/Title'
+import View from '@/modules/views/OnlyOffice/View'
+import { FileDeletedModal } from '@/modules/views/OnlyOffice/components/FileDeletedModal'
+import { FileDivergedModal } from '@/modules/views/OnlyOffice/components/FileDivergedModal'
 import {
   DEFAULT_EDITOR_TOOLBAR_HEIGHT_IOS,
   DEFAULT_EDITOR_TOOLBAR_HEIGHT
-} from 'modules/views/OnlyOffice/config'
-import useConfig from 'modules/views/OnlyOffice/useConfig'
+} from '@/modules/views/OnlyOffice/config'
+import useConfig from '@/modules/views/OnlyOffice/useConfig'
 
 const getEditorToolbarHeight = editorToolbarHeightFlag => {
   if (Number.isInteger(editorToolbarHeightFlag)) {

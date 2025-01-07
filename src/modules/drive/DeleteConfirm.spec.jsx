@@ -4,9 +4,10 @@ import React from 'react'
 import { createMockClient } from 'cozy-client'
 
 import { DeleteConfirm } from './DeleteConfirm'
-import { trashFiles } from 'modules/actions/utils'
 import AppLike from 'test/components/AppLike'
 import { generateFile } from 'test/generate'
+
+import { trashFiles } from '@/modules/actions/utils'
 
 jest.mock('modules/actions/utils', () => ({
   trashFiles: jest.fn().mockResolvedValue({})

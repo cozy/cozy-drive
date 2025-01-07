@@ -9,9 +9,10 @@ import {
   getByTextWithMarkup,
   removeNonASCII
 } from '../testUtils'
-import { useFilesQueryWithPath } from 'modules/views/hooks'
 import AppLike from 'test/components/AppLike'
 import { setupStoreAndClient } from 'test/setup'
+
+import { useFilesQueryWithPath } from '@/modules/views/hooks'
 
 const mockNavigate = jest.fn()
 

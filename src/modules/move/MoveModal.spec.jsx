@@ -1,5 +1,4 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-import { CozyFile } from 'models'
 import React from 'react'
 
 import { createMockClient } from 'cozy-client'
@@ -7,8 +6,10 @@ import { move } from 'cozy-client/dist/models/file'
 import { useSharingContext } from 'cozy-sharing'
 
 import { MoveModal } from './MoveModal'
-import { ROOT_DIR_ID } from 'constants/config'
 import AppLike from 'test/components/AppLike'
+
+import { ROOT_DIR_ID } from '@/constants/config'
+import { CozyFile } from '@/models'
 
 jest.mock('cozy-sharing', () => ({
   ...jest.requireActual('cozy-sharing'),

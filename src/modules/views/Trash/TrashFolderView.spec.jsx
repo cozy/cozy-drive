@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react'
-import { useCurrentFolderId } from 'hooks'
 import React from 'react'
 
 import { createMockClient } from 'cozy-client'
@@ -7,9 +6,11 @@ import { useSharingContext } from 'cozy-sharing'
 
 import { TrashFolderView } from './TrashFolderView'
 import { generateFileFixtures } from '../testUtils'
-import { TRASH_DIR_ID } from 'constants/config'
 import AppLike from 'test/components/AppLike'
 import { setupStore } from 'test/setup'
+
+import { TRASH_DIR_ID } from '@/constants/config'
+import { useCurrentFolderId } from '@/hooks'
 
 jest.mock('components/pushClient')
 jest.mock('components/useHead', () => jest.fn())

@@ -3,10 +3,10 @@ import React, { useContext } from 'react'
 
 import { TableBody } from 'cozy-ui/transpiled/react/deprecated/Table'
 
-import { FabContext } from 'lib/FabProvider'
-import { useSelectionContext } from 'modules/selection/SelectionProvider'
+import styles from '@/styles/filelist.styl'
 
-import styles from 'styles/filelist.styl'
+import { FabContext } from '@/lib/FabProvider'
+import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 
 /**
  * Renders the body of the file list.

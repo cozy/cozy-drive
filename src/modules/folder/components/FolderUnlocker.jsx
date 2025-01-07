@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 
 import { useVaultClient, VaultUnlocker } from 'cozy-keys-lib'
 
-import { isEncryptedFolder } from 'lib/encryption'
+import { isEncryptedFolder } from '@/lib/encryption'
 
 const FolderUnlocker = ({ children, folder, onDismiss }) => {
   const vaultClient = useVaultClient()

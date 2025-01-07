@@ -2,9 +2,10 @@ import { render, fireEvent } from '@testing-library/react'
 import React from 'react'
 
 import MoreMenu from './MoreMenu'
-import { downloadFiles } from 'modules/actions/utils'
 import AppLike from 'test/components/AppLike'
 import { setupFolderContent, mockCozyClientRequestQuery } from 'test/setup'
+
+import { downloadFiles } from '@/modules/actions/utils'
 
 jest.mock('modules/actions/utils', () => ({
   downloadFiles: jest.fn().mockResolvedValue()

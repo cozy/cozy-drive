@@ -2,12 +2,12 @@ import { useParams } from 'react-router-dom'
 
 import { NextcloudFile, UseQueryReturnValue } from 'cozy-client/types/types'
 
-import { computeNextcloudRootFolder } from 'components/FolderPicker/helpers'
-import { getParentPath } from 'lib/path'
-import { hasDataLoaded } from 'lib/queries'
-import { useNextcloudFolder } from 'modules/nextcloud/hooks/useNextcloudFolder'
-import { useNextcloudInfos } from 'modules/nextcloud/hooks/useNextcloudInfos'
-import { useNextcloudPath } from 'modules/nextcloud/hooks/useNextcloudPath'
+import { computeNextcloudRootFolder } from '@/components/FolderPicker/helpers'
+import { getParentPath } from '@/lib/path'
+import { hasDataLoaded } from '@/lib/queries'
+import { useNextcloudFolder } from '@/modules/nextcloud/hooks/useNextcloudFolder'
+import { useNextcloudInfos } from '@/modules/nextcloud/hooks/useNextcloudInfos'
+import { useNextcloudPath } from '@/modules/nextcloud/hooks/useNextcloudPath'
 
 /**
  * Nextcloud don't have route to get parent folder

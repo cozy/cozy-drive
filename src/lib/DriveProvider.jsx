@@ -13,8 +13,8 @@ import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoi
 import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
 import { I18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import FabProvider from 'lib/FabProvider'
-import { usePublicContext } from 'modules/public/PublicProvider'
+import FabProvider from '@/lib/FabProvider'
+import { usePublicContext } from '@/modules/public/PublicProvider'
 
 const DriveProvider = ({ client, lang, polyglot, dictRequire, children }) => {
   const { isPublic } = usePublicContext()

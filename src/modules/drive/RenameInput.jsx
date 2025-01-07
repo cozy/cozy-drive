@@ -1,4 +1,3 @@
-import { CozyFile } from 'models'
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -8,7 +7,9 @@ import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { abortRenaming } from './rename'
-import FilenameInput from 'modules/filelist/FilenameInput'
+
+import { CozyFile } from '@/models'
+import FilenameInput from '@/modules/filelist/FilenameInput'
 
 // If we set the _rev then CozyClient tries to update. Else
 // it tries to create

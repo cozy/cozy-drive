@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
 
-import { EmptyTrashConfirm } from 'modules/trash/components/EmptyTrashConfirm'
+import { EmptyTrashConfirm } from '@/modules/trash/components/EmptyTrashConfirm'
 
 const TrashEmptyView: FC = () => {
   const navigate = useNavigate()

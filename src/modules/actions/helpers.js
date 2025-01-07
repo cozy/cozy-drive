@@ -1,4 +1,4 @@
-import { joinPath } from 'lib/path'
+import { joinPath } from '@/lib/path'
 
 export const navigateToModal = ({ navigate, pathname, files, path }) => {
   const file = Array.isArray(files) ? files[0] : files

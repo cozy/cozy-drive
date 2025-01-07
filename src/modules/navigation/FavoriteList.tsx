@@ -6,8 +6,8 @@ import List from 'cozy-ui/transpiled/react/List'
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { FavoriteListItem } from 'modules/navigation/FavoriteListItem'
-import { buildFavoritesQuery } from 'queries'
+import { FavoriteListItem } from '@/modules/navigation/FavoriteListItem'
+import { buildFavoritesQuery } from '@/queries'
 
 interface FavoriteListProps {
   className?: string

@@ -3,9 +3,9 @@ import React, { useState } from 'react'
 import UINav from 'cozy-ui/transpiled/react/Nav'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import { FavoriteList } from 'modules/navigation/FavoriteList'
-import { NavItem } from 'modules/navigation/NavItem'
-import { SharingsNavItem } from 'modules/navigation/SharingsNavItem'
+import { FavoriteList } from '@/modules/navigation/FavoriteList'
+import { NavItem } from '@/modules/navigation/NavItem'
+import { SharingsNavItem } from '@/modules/navigation/SharingsNavItem'
 
 export const Nav = () => {
   const clickState = useState(null)

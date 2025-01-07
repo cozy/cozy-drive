@@ -2,13 +2,14 @@ import { createMockClient } from 'cozy-client'
 import { initQuery, receiveQueryResult } from 'cozy-client/dist/store'
 
 import { trashFiles, downloadFiles } from './utils'
-import { TRASH_DIR_ID } from 'constants/config'
-import { DOCTYPE_FILES_ENCRYPTION } from 'lib/doctypes'
+import { generateFile } from 'test/generate'
+
+import { TRASH_DIR_ID } from '@/constants/config'
+import { DOCTYPE_FILES_ENCRYPTION } from '@/lib/doctypes'
 import {
   getEncryptionKeyFromDirId,
   downloadEncryptedFile
-} from 'lib/encryption'
-import { generateFile } from 'test/generate'
+} from '@/lib/encryption'
 
 jest.mock('modules/navigation/AppRoute', () => ({
   routes: []

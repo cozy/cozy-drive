@@ -9,12 +9,12 @@ import {
 
 import { useClient } from 'cozy-client'
 
-import { LoaderModal } from 'components/LoaderModal'
-import { getParentPath } from 'lib/path'
-import { computeNextcloudFolderQueryId } from 'modules/nextcloud/helpers'
-import { useNextcloudEntries } from 'modules/nextcloud/hooks/useNextcloudEntries'
-import { useNextcloudPath } from 'modules/nextcloud/hooks/useNextcloudPath'
-import DestroyConfirm from 'modules/trash/components/DestroyConfirm'
+import { LoaderModal } from '@/components/LoaderModal'
+import { getParentPath } from '@/lib/path'
+import { computeNextcloudFolderQueryId } from '@/modules/nextcloud/helpers'
+import { useNextcloudEntries } from '@/modules/nextcloud/hooks/useNextcloudEntries'
+import { useNextcloudPath } from '@/modules/nextcloud/hooks/useNextcloudPath'
+import DestroyConfirm from '@/modules/trash/components/DestroyConfirm'
 
 const NextcloudDestroyView: FC = () => {
   const navigate = useNavigate()
