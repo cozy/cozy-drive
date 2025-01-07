@@ -83,7 +83,6 @@
     "classnames": "2.3.1",
     "cozy-bar": "^16.0.1",
     "cozy-client": "^53.1.1",
-    "cozy-client-js": "0.20.0",
     "cozy-dataproxy-lib": "^2.3.0",
     "cozy-device-helper": "^3.7.1",
     "cozy-devtools": "^1.2.1",

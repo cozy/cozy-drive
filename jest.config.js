@@ -44,8 +44,7 @@ module.exports = {
   },
   testMatch: ['**/(*.)(spec|test).[jt]s?(x)'],
   globals: {
-    __TARGET__: 'browser',
-    __DEVELOPMENT__: true
+    __TARGET__: 'browser'
   },
   reporters: ['default', '<rootDir>/jestHelpers/ConsoleUsageReporter.js']
 }
