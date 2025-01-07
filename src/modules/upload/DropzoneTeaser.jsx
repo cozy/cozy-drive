@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Icon } from 'cozy-ui/transpiled/react'
+import Icon from 'cozy-ui/transpiled/react/Icon'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import IconDropZone from 'modules/upload/IconDropZone'

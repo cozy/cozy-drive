@@ -2,7 +2,8 @@
 import classNames from 'classnames'
 import React from 'react'
 
-import { Modal, Button } from 'cozy-ui/transpiled/react'
+import Modal from 'cozy-ui/transpiled/react/Modal'
+import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 
 import styles from 'styles/intentbutton.styl'
 
