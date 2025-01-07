@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ConfirmDialog } from 'cozy-ui/react/CozyDialogs'
+import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 
 /**
