@@ -1,4 +1,3 @@
-/* global __DEVELOPMENT__ */
 import { compose, createStore, applyMiddleware } from 'redux'
 import { createLogger } from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
@@ -29,7 +28,7 @@ const configureStore = options => {
 
   // Enable Redux dev tools
   const composeEnhancers =
-    (__DEVELOPMENT__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
+    (flag('debug') && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
 
   const rootReducer = createRootReducer(client)
 
@@ -47,7 +46,7 @@ const configureStore = options => {
 }
 
 const loggerOptions = () =>
-  __DEVELOPMENT__
+  flag('debug')
     ? {}
     : {
         level: {
