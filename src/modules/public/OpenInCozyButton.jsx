@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ButtonLink } from 'cozy-ui/transpiled/react'
+import { ButtonLink } from 'cozy-ui/transpiled/react/deprecated/Button'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 const OpenInCozyButton = ({ size = 'normal', href = '' }) => {
