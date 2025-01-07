@@ -9,8 +9,8 @@ import RestoreIcon from 'cozy-ui/transpiled/react/Icons/Restore'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 
-import { getParentPath } from 'lib/path'
-import { computeNextcloudFolderQueryId } from 'modules/nextcloud/helpers'
+import { getParentPath } from '@/lib/path'
+import { computeNextcloudFolderQueryId } from '@/modules/nextcloud/helpers'
 
 interface RestoreNextcloudFileProps {
   t: (key: string) => string

@@ -6,12 +6,12 @@ import { copy } from 'cozy-client/dist/models/file'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { OpenFolderButton } from 'components/Button/OpenFolderButton'
-import { FolderPicker } from 'components/FolderPicker/FolderPicker'
-import { File, FolderPickerEntry } from 'components/FolderPicker/types'
-import { ROOT_DIR_ID } from 'constants/config'
-import { useCancelable } from 'modules/move/hooks/useCancelable'
-import { computeNextcloudFolderQueryId } from 'modules/nextcloud/helpers'
+import { OpenFolderButton } from '@/components/Button/OpenFolderButton'
+import { FolderPicker } from '@/components/FolderPicker/FolderPicker'
+import { File, FolderPickerEntry } from '@/components/FolderPicker/types'
+import { ROOT_DIR_ID } from '@/constants/config'
+import { useCancelable } from '@/modules/move/hooks/useCancelable'
+import { computeNextcloudFolderQueryId } from '@/modules/nextcloud/helpers'
 
 interface DuplicateModalProps {
   entries: FolderPickerEntry[]

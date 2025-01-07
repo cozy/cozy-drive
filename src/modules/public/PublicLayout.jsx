@@ -6,8 +6,8 @@ import FlagSwitcher from 'cozy-flags/dist/FlagSwitcher'
 import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { Layout } from 'cozy-ui/transpiled/react/Layout'
 
-import { SelectionProvider } from 'modules/selection/SelectionProvider'
-import UploadQueue from 'modules/upload/UploadQueue'
+import { SelectionProvider } from '@/modules/selection/SelectionProvider'
+import UploadQueue from '@/modules/upload/UploadQueue'
 
 const PublicLayout = () => {
   return (

@@ -1,4 +1,3 @@
-import { useCurrentFolderId, useDisplayedFolder } from 'hooks'
 import React from 'react'
 import { useNavigate, Outlet, useLocation } from 'react-router-dom'
 
@@ -11,18 +10,20 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import FolderView from '../Folder/FolderView'
 import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewHeader from '../Folder/FolderViewHeader'
-import useHead from 'components/useHead'
-import { restore } from 'modules/actions'
-import { makeExtraColumnsNamesFromMedia } from 'modules/certifications'
-import { useExtraColumns } from 'modules/certifications/useExtraColumns'
-import { useFolderSort } from 'modules/navigation/duck'
-import { TrashBreadcrumb } from 'modules/trash/components/TrashBreadcrumb'
-import { TrashToolbar } from 'modules/trash/components/TrashToolbar'
-import { destroy } from 'modules/trash/components/actions/destroy'
+
+import useHead from '@/components/useHead'
+import { useCurrentFolderId, useDisplayedFolder } from '@/hooks'
+import { restore } from '@/modules/actions'
+import { makeExtraColumnsNamesFromMedia } from '@/modules/certifications'
+import { useExtraColumns } from '@/modules/certifications/useExtraColumns'
+import { useFolderSort } from '@/modules/navigation/duck'
+import { TrashBreadcrumb } from '@/modules/trash/components/TrashBreadcrumb'
+import { TrashToolbar } from '@/modules/trash/components/TrashToolbar'
+import { destroy } from '@/modules/trash/components/actions/destroy'
 import {
   buildTrashQuery,
   buildFileWithSpecificMetadataAttributeQuery
-} from 'queries'
+} from '@/queries'
 
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []

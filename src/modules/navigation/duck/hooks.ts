@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { sortFolder, getSort } from 'modules/navigation/duck'
+import { sortFolder, getSort } from '@/modules/navigation/duck'
 
 const useFolderSort = (folderId: string): [Sort, (props: Sort) => void] => {
   const defaultSort: Sort = { attribute: 'name', order: 'asc' }

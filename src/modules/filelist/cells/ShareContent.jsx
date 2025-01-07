@@ -4,9 +4,9 @@ import { useNavigate, useLocation } from 'react-router-dom'
 
 import { SharedStatus, useSharingContext } from 'cozy-sharing'
 
-import { joinPath } from 'lib/path'
+import styles from '@/styles/filelist.styl'
 
-import styles from 'styles/filelist.styl'
+import { joinPath } from '@/lib/path'
 
 const ShareContent = ({ file, disabled, isInSyncFromSharing }) => {
   const navigate = useNavigate()

@@ -7,7 +7,7 @@ import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import { TableRow } from 'cozy-ui/transpiled/react/deprecated/Table'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import styles from 'styles/filelist.styl'
+import styles from '@/styles/filelist.styl'
 
 const LoadMore = ({ onClick, isLoading, text }) => (
   <TableRow

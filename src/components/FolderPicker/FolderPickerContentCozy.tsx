@@ -6,20 +6,21 @@ import { IOCozyFile } from 'cozy-client/types/types'
 import List from 'cozy-ui/transpiled/react/List'
 
 import { FolderPickerListItem } from './FolderPickerListItem'
-import { FolderPickerAddFolderItem } from 'components/FolderPicker/FolderPickerAddFolderItem'
-import { FolderPickerContentLoadMore } from 'components/FolderPicker/FolderPickerContentLoadMore'
-import { FolderPickerContentLoader } from 'components/FolderPicker/FolderPickerContentLoader'
-import { isInvalidMoveTarget } from 'components/FolderPicker/helpers'
-import { computeNextcloudRootFolder } from 'components/FolderPicker/helpers'
-import type { File, FolderPickerEntry } from 'components/FolderPicker/types'
-import { ROOT_DIR_ID } from 'constants/config'
-import { isEncryptedFolder } from 'lib/encryption'
-import { FolderUnlocker } from 'modules/folder/components/FolderUnlocker'
+
+import { FolderPickerAddFolderItem } from '@/components/FolderPicker/FolderPickerAddFolderItem'
+import { FolderPickerContentLoadMore } from '@/components/FolderPicker/FolderPickerContentLoadMore'
+import { FolderPickerContentLoader } from '@/components/FolderPicker/FolderPickerContentLoader'
+import { isInvalidMoveTarget } from '@/components/FolderPicker/helpers'
+import { computeNextcloudRootFolder } from '@/components/FolderPicker/helpers'
+import type { File, FolderPickerEntry } from '@/components/FolderPicker/types'
+import { ROOT_DIR_ID } from '@/constants/config'
+import { isEncryptedFolder } from '@/lib/encryption'
+import { FolderUnlocker } from '@/modules/folder/components/FolderUnlocker'
 import {
   buildMoveOrImportQuery,
   buildOnlyFolderQuery,
   buildMagicFolderQuery
-} from 'queries'
+} from '@/queries'
 
 interface FolderPickerContentCozyProps {
   folder: IOCozyFile

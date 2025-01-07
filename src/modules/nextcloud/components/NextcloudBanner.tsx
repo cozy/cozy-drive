@@ -7,7 +7,7 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import NextcloudIcon from 'assets/icons/icon-nextcloud.svg'
+import NextcloudIcon from '@/assets/icons/icon-nextcloud.svg'
 
 const NextcloudBanner = (): JSX.Element => {
   const { t } = useI18n()

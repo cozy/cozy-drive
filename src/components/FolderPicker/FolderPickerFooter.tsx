@@ -3,8 +3,8 @@ import React from 'react'
 import Buttons from 'cozy-ui/transpiled/react/Buttons'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { areTargetsInCurrentDir } from 'components/FolderPicker/helpers'
-import { File, FolderPickerEntry } from 'components/FolderPicker/types'
+import { areTargetsInCurrentDir } from '@/components/FolderPicker/helpers'
+import { File, FolderPickerEntry } from '@/components/FolderPicker/types'
 
 interface FolderPickerFooterProps {
   onConfirm: (folder: File) => void

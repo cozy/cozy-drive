@@ -1,9 +1,10 @@
 import React, { useRef } from 'react'
 
 import styles from './fileopener.styl'
-import useLongPress from 'hooks/useOnLongPress'
-import { FileLink } from 'modules/navigation/components/FileLink'
-import { useFileLink } from 'modules/navigation/hooks/useFileLink'
+
+import useLongPress from '@/hooks/useOnLongPress'
+import { FileLink } from '@/modules/navigation/components/FileLink'
+import { useFileLink } from '@/modules/navigation/hooks/useFileLink'
 
 export const getParentLink = element => {
   if (!element) {

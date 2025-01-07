@@ -3,9 +3,9 @@ import React from 'react'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import IconDropZone from 'modules/upload/IconDropZone'
+import styles from '@/styles/dropzone.styl'
 
-import styles from 'styles/dropzone.styl'
+import IconDropZone from '@/modules/upload/IconDropZone'
 
 const DropzoneTeaser = translate()(({ t, currentFolder }) => (
   <div className={styles['fil-dropzone-teaser']}>

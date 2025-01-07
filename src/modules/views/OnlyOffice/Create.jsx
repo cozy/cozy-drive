@@ -4,12 +4,12 @@ import { useNavigate, useParams, Navigate } from 'react-router-dom'
 import Dialog, { DialogContent } from 'cozy-ui/transpiled/react/Dialog'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 
-import Oops from 'components/Error/Oops'
+import Oops from '@/components/Error/Oops'
 import {
   canWriteOfficeDocument,
   makeOnlyOfficeFileRoute
-} from 'modules/views/OnlyOffice/helpers'
-import useCreateFile from 'modules/views/OnlyOffice/useCreateFile'
+} from '@/modules/views/OnlyOffice/helpers'
+import useCreateFile from '@/modules/views/OnlyOffice/useCreateFile'
 
 const Create = ({ isPublic = false }) => {
   const navigate = useNavigate()

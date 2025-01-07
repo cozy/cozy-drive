@@ -10,7 +10,7 @@ import UploadIcon from 'cozy-ui/transpiled/react/Icons/Upload'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { uploadFiles } from 'modules/navigation/duck'
+import { uploadFiles } from '@/modules/navigation/duck'
 
 const UploadButton = ({ label, disabled, onUpload, className }) => {
   const { showAlert } = useAlert()

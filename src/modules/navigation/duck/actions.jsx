@@ -1,15 +1,16 @@
 import React from 'react'
-import { showModal } from 'react-cozy-helpers'
 
 import { isDirectory } from 'cozy-client/dist/models/file'
 import { QuotaPaywall } from 'cozy-ui/transpiled/react/Paywall'
 
-import { MAX_PAYLOAD_SIZE_IN_GB } from 'constants/config'
-import { createEncryptedDir } from 'lib/encryption'
-import { getEntriesTypeTranslated } from 'lib/entries'
-import logger from 'lib/logger'
-import { getFolderContent } from 'modules/selectors'
-import { addToUploadQueue } from 'modules/upload'
+import { MAX_PAYLOAD_SIZE_IN_GB } from '@/constants/config'
+import { createEncryptedDir } from '@/lib/encryption'
+import { getEntriesTypeTranslated } from '@/lib/entries'
+import logger from '@/lib/logger'
+import { showModal } from '@/lib/react-cozy-helpers'
+import { getFolderContent } from '@/modules/selectors'
+import { addToUploadQueue } from '@/modules/upload'
+
 export const SORT_FOLDER = 'SORT_FOLDER'
 
 const HTTP_CODE_CONFLICT = 409

@@ -6,7 +6,7 @@ import CrossCircleOutlineIcon from 'cozy-ui/transpiled/react/Icons/CrossCircleOu
 import Magnifier from 'cozy-ui/transpiled/react/Icons/Magnifier'
 import InputGroup from 'cozy-ui/transpiled/react/InputGroup'
 
-import styles from 'modules/search/components/styles.styl'
+import styles from '@/modules/search/components/styles.styl'
 
 const BarSearchInputGroup = ({
   children,

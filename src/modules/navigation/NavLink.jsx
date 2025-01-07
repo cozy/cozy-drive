@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom'
 
 import { NavLink as UINavLink } from 'cozy-ui/transpiled/react/Nav'
 
-import { navLinkMatch } from 'modules/navigation/helpers'
+import { navLinkMatch } from '@/modules/navigation/helpers'
 
 /**
  * Like react-router NavLink but sets the lastClicked state (passed in props)

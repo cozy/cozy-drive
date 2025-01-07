@@ -6,10 +6,10 @@ import Button from 'cozy-ui/transpiled/react/Buttons'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { OpenFolderButton } from 'components/Button/OpenFolderButton'
-import { File, FolderPickerEntry } from 'components/FolderPicker/types'
-import { cancelMove } from 'modules/move/helpers'
-import { useCancelable } from 'modules/move/hooks/useCancelable'
+import { OpenFolderButton } from '@/components/Button/OpenFolderButton'
+import { File, FolderPickerEntry } from '@/components/FolderPicker/types'
+import { cancelMove } from '@/modules/move/helpers'
+import { useCancelable } from '@/modules/move/hooks/useCancelable'
 
 interface MoveModalSuccessActionProps {
   folder: File

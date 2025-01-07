@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useClient } from 'cozy-client'
 import log from 'cozy-logger'
 
-import { fetchFolder } from 'modules/breadcrumb/utils/fetchFolder'
+import { fetchFolder } from '@/modules/breadcrumb/utils/fetchFolder'
 
 /**
  * @typedef {Object} BreadcrumbPath

@@ -1,5 +1,6 @@
 import { download } from './index'
-import { DOCTYPE_FILES_ENCRYPTION } from 'lib/doctypes'
+
+import { DOCTYPE_FILES_ENCRYPTION } from '@/lib/doctypes'
 
 describe('download', () => {
   it('should not display when an encrypted folder is selected', () => {

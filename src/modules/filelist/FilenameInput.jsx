@@ -1,5 +1,4 @@
 import cx from 'classnames'
-import { CozyFile } from 'models'
 import React, { Component } from 'react'
 
 import { isDirectory } from 'cozy-client/dist/models/file'
@@ -8,7 +7,9 @@ import { Dialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import styles from 'styles/filenameinput.styl'
+import styles from '@/styles/filenameinput.styl'
+
+import { CozyFile } from '@/models'
 
 const ENTER_KEY = 13
 const ESC_KEY = 27

@@ -5,7 +5,7 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import styles from 'modules/breadcrumb/styles/breadcrumb.styl'
+import styles from '@/modules/breadcrumb/styles/breadcrumb.styl'
 
 const DesktopBreadcrumbItem = ({ item, isCurrent, onClick, icon }) => {
   const { t } = useI18n()
