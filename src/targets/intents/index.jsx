@@ -38,10 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
     schema
   })
 
-  cozy.client.init({
-    cozyURL: cozyUrl,
-    token: data.token
-  })
   registerClientPlugins(client)
 
   render(

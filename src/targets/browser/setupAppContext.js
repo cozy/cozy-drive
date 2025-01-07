@@ -38,11 +38,6 @@ const setupApp = memoize(() => {
     t: polyglot.t.bind(polyglot)
   })
 
-  cozy.client.init({
-    cozyURL: cozyUrl,
-    token: data.token
-  })
-
   return { locale, polyglot, client, store, root }
 })
 
