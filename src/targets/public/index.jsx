@@ -1,4 +1,3 @@
-/* global cozy */
 /* eslint-disable import/order */
 
 // cozy-ui css import should be done before any other import

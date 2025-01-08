@@ -1,4 +1,3 @@
-/* global cozy */
 /* eslint-disable import/order */
 
 import 'cozy-ui/transpiled/react/stylesheet.css'

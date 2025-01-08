@@ -1,5 +1,3 @@
-/* global cozy */
-
 import memoize from 'lodash/memoize'
 
 import CozyClient from 'cozy-client'
