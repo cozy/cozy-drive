@@ -2162,7 +2162,7 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.1.2", "@babel/runtime@^7.6.0", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.6.0", "@babel/runtime@^7.9.2":
   version "7.26.0"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.26.0.tgz#8600c2f595f277c60815256418b85356a65173c1"
   integrity sha512-FDSOghenHTiToteC/QRlv2q3DhPZ/oOXTBoirfWNx1Cx3TMVcGWQtMMmQcSvb/JjpNeGzx8Pq/b4fKEJuWm1sw==
@@ -6424,10 +6424,10 @@ cozy-flags@^4.6.1:
   dependencies:
     microee "^0.0.6"
 
-cozy-harvest-lib@^32.1.0:
-  version "32.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-harvest-lib/-/cozy-harvest-lib-32.1.0.tgz#a7ef572d57fc0dcde42bda3e92baf4ff770dc26a"
-  integrity sha512-IWRxOOiN4sqYUQgrtiyqpakxmg68zMitDJbotlwOtfos2ff31bAxh4pCnHFPpfEk2HOpBrTi52/YTi54r1NdSQ==
+cozy-harvest-lib@^32.2.6:
+  version "32.2.6"
+  resolved "https://registry.yarnpkg.com/cozy-harvest-lib/-/cozy-harvest-lib-32.2.6.tgz#bda1f623af5cef1f0a90af5bdabf974223aba698"
+  integrity sha512-Q/wonMdu+wKxgu+iQqla3qLxrxcFHH+kg0EFxcITTXQai2mJl/ezh29yszbqvL5hURE8hIUcBLVd7l3yYV/2uw==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     classnames "^2.3.1"
@@ -6442,6 +6442,7 @@ cozy-harvest-lib@^32.1.0:
     react-final-form "^3.7.0"
     react-json-print "^0.1.3"
     react-markdown "^4.2.2"
+    react-redux "7.2.2"
     use-deep-compare-effect "^1.8.1"
     uuid "^3.3.2"
 
@@ -6711,15 +6712,6 @@ cozy-stack-client@^52.0.0:
     mime "^2.4.0"
     qs "^6.7.0"
 
-cozy-stack-client@^52.0.0:
-  version "52.0.0"
-  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-52.0.0.tgz#b146997637facc8de55033a84fd7e4b30ea4533d"
-  integrity sha512-rJOUp7jcnIBEaL48+HVRF24IzYgNJYh2KLpkKFKfaNhO6oz/+dwW1VfETAKWldtNk1hMcFapbQIN58CqhGkIzA==
-  dependencies:
-    detect-node "^2.0.4"
-    mime "^2.4.0"
-    qs "^6.7.0"
-
 cozy-tsconfig@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/cozy-tsconfig/-/cozy-tsconfig-1.2.0.tgz#17e61f960f139fae4d26cbac2254b9ab632b269e"
@@ -6757,10 +6749,10 @@ cozy-ui@^116.0.0:
     react-swipeable-views "^0.13.3"
     rooks "^5.11.2"
 
-cozy-viewer@^12.0.1:
-  version "12.0.1"
-  resolved "https://registry.yarnpkg.com/cozy-viewer/-/cozy-viewer-12.0.1.tgz#b07baf1529d8e1e617d3d095faffa98fb5af0c30"
-  integrity sha512-N9qDFqV1cBNqGlekoyHlMMJvx8u0gBQWwzo1xseghQLMDd42Nm2puI34boypptyVZf/7F6XnbIUmxMmWrjQDpQ==
+cozy-viewer@^13.0.0:
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/cozy-viewer/-/cozy-viewer-13.0.0.tgz#4bc1c6315bdd5b66eb6b2546fb2fb588213549c0"
+  integrity sha512-bHmMinbRk130VcfCWa1GuX+fw5KWyhOc1KD8dvn1H1lVmzThC4MOe/G7/UBCsRusAAIOtqNLq8QHeDvlInaklA==
   dependencies:
     classnames "^2.2.5"
     hammerjs "^2.0.8"
@@ -15239,6 +15231,17 @@ react-redux@7.2.0:
     loose-envify "^1.4.0"
     prop-types "^15.7.2"
     react-is "^16.9.0"
+
+react-redux@7.2.2:
+  version "7.2.2"
+  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-7.2.2.tgz#03862e803a30b6b9ef8582dadcc810947f74b736"
+  integrity sha512-8+CQ1EvIVFkYL/vu6Olo7JFLWop1qRUeb46sGtIMDCSpgwPQq8fPLpirIB0iTqFe9XYEFPHssdX8/UwN6pAkEA==
+  dependencies:
+    "@babel/runtime" "^7.12.1"
+    hoist-non-react-statics "^3.3.2"
+    loose-envify "^1.4.0"
+    prop-types "^15.7.2"
+    react-is "^16.13.1"
 
 react-redux@^7.2.0:
   version "7.2.1"
