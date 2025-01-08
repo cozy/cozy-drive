@@ -46,7 +46,7 @@ const configureStore = options => {
 }
 
 const loggerOptions = () =>
-  __DEVELOPMENT__
+  flag('debug')
     ? {}
     : {
         level: {
