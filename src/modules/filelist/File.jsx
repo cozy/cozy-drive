@@ -80,6 +80,8 @@ const File = ({
   const isLargeRow = isImage && thumbnailSizeBig
   const isRowDisabledOrInSyncFromSharing = disabled || isInSyncFromSharing
 
+  const selected = isItemSelected(attributes.id)
+
   const filContentRowSelected = cx(styles['fil-content-row'], {
     [styles['fil-content-row-selected']]: selected,
     [styles['fil-content-row-actioned']]: actionMenuVisible,
@@ -99,8 +101,6 @@ const File = ({
       ? t('table.row_update_format_full')
       : t('table.row_update_format')
   )
-
-  const selected = isItemSelected(attributes.id)
 
   // We don't allow any action on shared drives and trash
   // because they are magic folder created by the stack
