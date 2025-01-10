@@ -71,8 +71,10 @@ const File = ({
 
   const isRowDisabledOrInSyncFromSharing = disabled || isInSyncFromSharing
 
+  const selected = isItemSelected(attributes.id)
+
   const filContentRowSelected = cx(styles['fil-content-row'], {
-    [styles['fil-content-row-selected']]: selected,
+    [styles['fil-content-row-selected']]: undefined, // TODO: replace with `selected` and fix dark theme for this variable
     [styles['fil-content-row-actioned']]: actionMenuVisible,
     [styles['fil-content-row-disabled']]: styleDisabled,
     [styles['fil-content-row-bigger']]: thumbnailSizeBig
@@ -90,8 +92,6 @@ const File = ({
       ? t('table.row_update_format_full')
       : t('table.row_update_format')
   )
-
-  const selected = isItemSelected(attributes.id)
 
   // We don't allow any action on shared drives and trash
   // because they are magic folder created by the stack
