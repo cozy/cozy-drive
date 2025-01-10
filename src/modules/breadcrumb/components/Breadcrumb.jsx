@@ -20,6 +20,10 @@ const Breadcrumb = ({
   const [deployed, setDeployed] = useState(false)
   const wrapperRef = useRef(null)
 
+  const closeMenu = useCallback(() => {
+    setDeployed(false)
+  }, [setDeployed])
+
   useEffect(() => {
     function handleClickOutside(event) {
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
@@ -36,10 +40,6 @@ const Breadcrumb = ({
 
   const openMenu = useCallback(() => {
     setDeployed(true)
-  }, [setDeployed])
-
-  const closeMenu = useCallback(() => {
-    setDeployed(false)
   }, [setDeployed])
 
   if (!path) return false
