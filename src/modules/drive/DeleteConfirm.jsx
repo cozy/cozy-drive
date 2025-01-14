@@ -7,7 +7,7 @@ import Button from 'cozy-ui/transpiled/react/Buttons'
 import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import Stack from 'cozy-ui/transpiled/react/Stack'
-import { Media, Img, Bd } from 'cozy-ui/transpiled/react/deprecated/Media'
+import Typography from 'cozy-ui/transpiled/react/Typography'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -17,17 +17,17 @@ import { trashFiles } from 'modules/actions/utils'
 import { buildAlbumByIdQuery } from 'queries'
 
 const Message = ({ type, fileCount }) => {
-  const ico =
+  const icon =
     type === 'referenced' ? 'album' : type === 'shared' ? 'share' : type
 
   const { t } = useI18n()
   return (
-    <Media>
-      <Img>
-        <Icon icon={ico} color="var(--iconTextColor)" />
-      </Img>
-      <Bd className="u-pl-1-half">{t(`DeleteConfirm.${type}`, fileCount)}</Bd>
-    </Media>
+    <div className="u-flex u-flex-items-center">
+      <Icon icon={icon} color="var(--iconTextColor)" />
+      <Typography className="u-pl-1-half">
+        {t(`DeleteConfirm.${type}`, fileCount)}
+      </Typography>
+    </div>
   )
 }
 
