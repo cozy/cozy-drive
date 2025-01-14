@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useRef } from 'react'
 
-import { isIOSApp } from 'cozy-device-helper'
 import { useSharingContext } from 'cozy-sharing'
 import ActionsMenu from 'cozy-ui/transpiled/react/ActionsMenu'
 import Divider from 'cozy-ui/transpiled/react/Divider'
@@ -16,16 +15,10 @@ import SelectableItem from 'modules/drive/Toolbar/selectable/SelectableItem'
 import ShareItem from 'modules/drive/Toolbar/share/ShareItem'
 
 export const openMenu = setMenuVisible => {
-  if (window.StatusBar && isIOSApp()) {
-    window.StatusBar.backgroundColorByHexString('#989AA0')
-  }
   setMenuVisible(true)
 }
 
 export const closeMenu = setMenuVisible => {
-  if (window.StatusBar && isIOSApp()) {
-    window.StatusBar.backgroundColorByHexString('#FFFFFF')
-  }
   setMenuVisible(false)
 }
 
