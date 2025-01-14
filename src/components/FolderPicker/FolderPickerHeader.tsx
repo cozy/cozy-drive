@@ -2,7 +2,6 @@ import React from 'react'
 
 import Card from 'cozy-ui/transpiled/react/Card'
 import Typography from 'cozy-ui/transpiled/react/Typography'
-import { Media, Img, Bd } from 'cozy-ui/transpiled/react/deprecated/Media'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { FolderPickerHeaderIllustration } from 'components/FolderPicker/FolderPickerHeaderIllustration'
@@ -19,7 +18,10 @@ const specificCardStyle: React.CSSProperties = {
   marginRight: '4rem',
   marginTop: '1rem',
   marginBottom: '1rem',
-  background: 'var(--contrastBackgroundColor)'
+  background: 'var(--contrastBackgroundColor)',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '1rem'
 }
 
 const FolderPickerHeader: React.FC<FolderPickerHeaderProps> = ({
@@ -35,19 +37,15 @@ const FolderPickerHeader: React.FC<FolderPickerHeaderProps> = ({
 
   return (
     <Card inset style={specificCardStyle}>
-      <Media>
-        <Img className="u-mr-1">
-          <FolderPickerHeaderIllustration entries={entries} />
-        </Img>
-        <Bd>
-          <Typography variant="h6" noWrap>
-            {entries.length !== 1 ? titleToUse : entries[0].name}
-          </Typography>
-          <Typography variant="caption" color="textSecondary" noWrap>
-            {subTitleToUse}
-          </Typography>
-        </Bd>
-      </Media>
+      <FolderPickerHeaderIllustration entries={entries} />
+      <div>
+        <Typography variant="h6" noWrap>
+          {entries.length !== 1 ? titleToUse : entries[0].name}
+        </Typography>
+        <Typography variant="caption" color="textSecondary" noWrap>
+          {subTitleToUse}
+        </Typography>
+      </div>
     </Card>
   )
 }
