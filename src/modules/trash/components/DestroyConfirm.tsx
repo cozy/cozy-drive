@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import { splitFilename } from 'cozy-client/dist/models/file'
+import Button from 'cozy-ui/transpiled/react/Buttons'
 import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import ForbiddenIcon from 'cozy-ui/transpiled/react/Icons/Forbidden'
@@ -9,7 +10,6 @@ import List from 'cozy-ui/transpiled/react/List'
 import ListItem from 'cozy-ui/transpiled/react/ListItem'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
-import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -95,15 +95,16 @@ const DestroyConfirm: React.FC<DestroyConfirmProps> = ({
       actions={
         <>
           <Button
-            theme="secondary"
+            variant="secondary"
             onClick={onClose}
             label={t('DestroyConfirm.cancel')}
           />
           <Button
-            theme="danger"
-            label={t('DestroyConfirm.delete')}
-            busy={isBusy}
+            variant="primary"
             onClick={handleDestroy}
+            label={t('DestroyConfirm.delete')}
+            color="error"
+            busy={isBusy}
           />
         </>
       }

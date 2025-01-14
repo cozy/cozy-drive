@@ -3,11 +3,11 @@ import React, { useCallback, useEffect, useState } from 'react'
 
 import { useClient } from 'cozy-client'
 import { isIOS } from 'cozy-device-helper'
+import Button from 'cozy-ui/transpiled/react/Buttons'
 import { FixedDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import InputAdornment from 'cozy-ui/transpiled/react/InputAdornment'
 import Stack from 'cozy-ui/transpiled/react/Stack'
 import TextField from 'cozy-ui/transpiled/react/TextField'
-import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
@@ -162,12 +162,12 @@ const ShortcutCreationModal = ({ onClose, onCreated }) => {
       actions={
         <>
           <Button
-            theme="secondary"
+            variant="secondary"
             onClick={onClose}
             label={t('Shortcut.cancel')}
           />
           <Button
-            theme="primary"
+            variant="primary"
             label={t('Shortcut.create')}
             onClick={createShortcut}
           />

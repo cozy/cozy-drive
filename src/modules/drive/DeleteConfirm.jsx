@@ -3,10 +3,10 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useClient } from 'cozy-client'
 import { splitFilename } from 'cozy-client/dist/models/file'
 import { SharedDocument, SharedRecipientsList } from 'cozy-sharing'
+import Button from 'cozy-ui/transpiled/react/Buttons'
 import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import Stack from 'cozy-ui/transpiled/react/Stack'
-import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import { Media, Img, Bd } from 'cozy-ui/transpiled/react/deprecated/Media'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
@@ -107,15 +107,16 @@ export const DeleteConfirm = ({
       actions={
         <>
           <Button
-            theme="secondary"
+            variant="secondary"
             onClick={onClose}
             label={t('DeleteConfirm.cancel')}
           />
           <Button
-            busy={isDeleting}
-            theme="danger"
-            label={t('DeleteConfirm.delete')}
+            variant="primary"
             onClick={onDelete}
+            label={t('DeleteConfirm.delete')}
+            color="error"
+            busy={isDeleting}
           />
         </>
       }
