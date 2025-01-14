@@ -3,9 +3,9 @@ import { CozyFile } from 'models'
 import React, { Component } from 'react'
 
 import { isDirectory } from 'cozy-client/dist/models/file'
+import Button from 'cozy-ui/transpiled/react/Buttons'
 import { Dialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
-import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import styles from 'styles/filenameinput.styl'
@@ -157,14 +157,13 @@ class FilenameInput extends Component {
           content={t('RenameModal.description')}
           actions={
             <>
-              {' '}
               <Button
-                theme="secondary"
+                variant="secondary"
                 onClick={this.abort}
                 label={t('RenameModal.cancel')}
               />
               <Button
-                theme="primary"
+                variant="primary"
                 label={t('RenameModal.continue')}
                 onClick={this.save}
               />
