@@ -18,12 +18,16 @@ import { buildAlbumByIdQuery } from 'queries'
 
 const Message = ({ type, fileCount }) => {
   const icon =
-    type === 'referenced' ? 'album' : type === 'shared' ? 'share' : type
+    type === 'referenced' ? 'album' : type.includes('share') ? 'people' : type
 
   const { t } = useI18n()
   return (
     <div className="u-flex u-flex-items-center">
-      <Icon icon={icon} color="var(--iconTextColor)" />
+      <Icon
+        icon={icon}
+        className="u-flex-shrink-0"
+        color="var(--iconTextColor)"
+      />
       <Typography className="u-pl-1-half">
         {t(`DeleteConfirm.${type}`, fileCount)}
       </Typography>
@@ -153,7 +157,10 @@ const DeleteConfirmWithSharingContext = ({ files, ...rest }) =>
               <Message type={shareMessageType} fileCount={files.length} />
             ) : null}
             {isSharedByMe && recipients.length > 0 ? (
-              <SharedRecipientsList className="u-ml-1" docId={files[0].id} />
+              <SharedRecipientsList
+                className="u-ml-2-half"
+                docId={files[0].id}
+              />
             ) : null}
           </DeleteConfirm>
         )
