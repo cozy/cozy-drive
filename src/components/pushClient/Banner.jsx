@@ -7,11 +7,11 @@ import React, { Component } from 'react'
 
 import { withClient } from 'cozy-client'
 import Banner from 'cozy-ui/transpiled/react/Banner'
+import Button from 'cozy-ui/transpiled/react/Buttons'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import DeviceLaptopIcon from 'cozy-ui/transpiled/react/Icons/DeviceLaptop'
 import DevicePhoneIcon from 'cozy-ui/transpiled/react/Icons/DevicePhone'
 import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
-import Button, { ButtonLink } from 'cozy-ui/transpiled/react/deprecated/Button'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import {
@@ -82,21 +82,20 @@ class BannerClient extends Component {
           text={t(text)}
           bgcolor="var(--contrastBackgroundColor)"
           buttonOne={
-            <ButtonLink
-              href={t(link)}
-              theme="text"
-              icon={DownloadIcon}
+            <Button
+              component="a"
+              variant="text"
               label={t('Nav.banner-btn-client')}
               onClick={() => this.markAsSeen('banner')}
+              startIcon={<Icon icon={DownloadIcon} />}
+              href={t(link)}
             />
           }
           buttonTwo={
             <Button
-              theme="text"
+              variant="text"
               label={t('SelectionBar.close')}
-              onClick={() => {
-                this.markAsSeen('close')
-              }}
+              onClick={() => this.markAsSeen('close')}
             />
           }
         />
