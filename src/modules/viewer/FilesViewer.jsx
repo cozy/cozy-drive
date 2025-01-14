@@ -4,7 +4,6 @@ import { RemoveScroll } from 'react-remove-scroll'
 import { useNavigate } from 'react-router-dom'
 
 import { Q, useClient } from 'cozy-client'
-import { isIOSApp } from 'cozy-device-helper'
 import { useVaultClient } from 'cozy-keys-lib'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
@@ -27,18 +26,6 @@ import {
   isOfficeEnabled,
   makeOnlyOfficeFileRoute
 } from 'modules/views/OnlyOffice/helpers'
-
-const styleStatusBar = switcher => {
-  if (window.StatusBar && isIOSApp()) {
-    if (switcher) {
-      window.StatusBar.backgroundColorByHexString('#32363F')
-      window.StatusBar.styleLightContent()
-    } else {
-      window.StatusBar.backgroundColorByHexString('#FFFFFF')
-      window.StatusBar.styleDefault()
-    }
-  }
-}
 
 /**
  * Shows a set of files through cozy-ui's Viewer
@@ -83,14 +70,6 @@ const FilesViewer = ({ filesQuery, files, onClose, onChange }) => {
     () => (hasCurrentIndex ? files : [currentFile]),
     [hasCurrentIndex, files, currentFile]
   )
-
-  useEffect(() => {
-    styleStatusBar(true)
-
-    return () => {
-      styleStatusBar(false)
-    }
-  }, [])
 
   useEffect(() => {
     let isMounted = true

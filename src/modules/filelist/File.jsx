@@ -6,7 +6,6 @@ import React, { useState, useRef } from 'react'
 import { connect } from 'react-redux'
 
 import { isDirectory } from 'cozy-client/dist/models/file'
-import { isIOSApp } from 'cozy-device-helper'
 import { TableRow, TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
@@ -57,16 +56,10 @@ const File = ({
     else showActionMenu()
   }
   const showActionMenu = () => {
-    if (window.StatusBar && isIOSApp()) {
-      window.StatusBar.backgroundColorByHexString('#989AA0')
-    }
     setActionMenuVisible(true)
   }
 
   const hideActionMenu = () => {
-    if (window.StatusBar && isIOSApp()) {
-      window.StatusBar.backgroundColorByHexString('#FFFFFF')
-    }
     setActionMenuVisible(false)
   }
 
