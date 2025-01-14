@@ -2,6 +2,7 @@ import React from 'react'
 import { showModal } from 'react-cozy-helpers'
 
 import { isDirectory } from 'cozy-client/dist/models/file'
+import { QuotaPaywall } from 'cozy-ui/transpiled/react/Paywall'
 
 import { MAX_PAYLOAD_SIZE_IN_GB } from 'constants/config'
 import { createEncryptedDir } from 'lib/encryption'
@@ -9,8 +10,6 @@ import { getEntriesTypeTranslated } from 'lib/entries'
 import logger from 'lib/logger'
 import { getFolderContent } from 'modules/selectors'
 import { addToUploadQueue } from 'modules/upload'
-import QuotaAlert from 'modules/upload/QuotaAlert'
-
 export const SORT_FOLDER = 'SORT_FOLDER'
 
 const HTTP_CODE_CONFLICT = 409
@@ -99,7 +98,7 @@ const uploadQueueProcessed =
     if (quotas.length > 0) {
       logger.warn(`Upload module triggers a quota alert: ${quotas}`)
       // quota errors have their own modal instead of a notification
-      dispatch(showModal(<QuotaAlert />))
+      dispatch(showModal(<QuotaPaywall />))
     } else if (networkErrors.length > 0) {
       logger.warn(`Upload module triggers a network error: ${networkErrors}`)
       showAlert({

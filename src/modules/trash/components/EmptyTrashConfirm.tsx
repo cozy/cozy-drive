@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react'
 
+import Button from 'cozy-ui/transpiled/react/Buttons'
 import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import ForbiddenIcon from 'cozy-ui/transpiled/react/Icons/Forbidden'
@@ -8,7 +9,6 @@ import List from 'cozy-ui/transpiled/react/List'
 import ListItem from 'cozy-ui/transpiled/react/ListItem'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
-import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -73,15 +73,16 @@ const EmptyTrashConfirm: React.FC<EmptyTrashConfirmProps> = ({
       actions={
         <>
           <Button
-            theme="secondary"
+            variant="secondary"
             onClick={onClose}
             label={t('EmptyTrashConfirm.cancel')}
           />
           <Button
-            theme="danger"
-            label={t('EmptyTrashConfirm.delete')}
-            busy={isBusy}
+            variant="primary"
             onClick={handleConfirm}
+            label={t('EmptyTrashConfirm.delete')}
+            color="error"
+            busy={isBusy}
           />
         </>
       }

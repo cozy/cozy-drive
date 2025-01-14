@@ -1,8 +1,8 @@
 import cx from 'classnames'
 import React, { useState, useCallback } from 'react'
 
+import Button from 'cozy-ui/transpiled/react/Buttons'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import Button from 'cozy-ui/transpiled/react/deprecated/Button'
 import {
   TableHead,
   TableHeader,
@@ -66,20 +66,16 @@ const FileListHeaderMobile = ({
           )}
         >
           <Button
-            theme="action"
+            variant="text"
             onClick={() => {
               toggleThumbnailSize()
             }}
-            label={t('table.head_thumbnail_size')}
-            extension="narrow"
-            icon={
+            label={
               <Icon
                 icon={thumbnailSizeBig ? iconListMin : iconList}
                 size={17}
-                label={t('table.head_thumbnail_size')}
               />
             }
-            iconOnly
           />
         </TableHeader>
       </TableRow>

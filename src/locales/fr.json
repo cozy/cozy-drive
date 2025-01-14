@@ -221,7 +221,7 @@
     "share_accepted": "Le partage sera arrêté. Ainsi, les contacts suivant conserveront une copie mais vos changements ne seront plus synchronisés :",
     "share_waiting": "Le partage sera arrêté. Ainsi, les contacts suivant ne pourront donc plus accepter le partage et ne pourront plus accéder aux contenus partagés :",
     "share_both": "Le partage sera arrêté. Ainsi, les contacts ayant stocké les fichiers dans leur Cozy conserveront une copie, les autres contacts ne pourront plus accéder aux contenus partagés :",
-    "link": "Le partage par lien ne sera plus actif",
+    "link": "Le partage par lien ne sera plus actif.",
     "referenced": "Des photos de la sélection sont dans un album. Elles seront retirées de l'album si vous confirmez.",
     "cancel": "Annuler",
     "delete": "Supprimer"

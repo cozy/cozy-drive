@@ -1,12 +1,12 @@
 import React from 'react'
 
+import Backdrop from 'cozy-ui/transpiled/react/Backdrop'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
-import Overlay from 'cozy-ui/transpiled/react/deprecated/Overlay'
 
 const FilesViewerLoading = () => (
-  <Overlay>
+  <Backdrop isOver open>
     <Spinner size="xxlarge" middle noMargin color="var(--white)" />
-  </Overlay>
+  </Backdrop>
 )
 
 export { FilesViewerLoading }

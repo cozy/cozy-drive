@@ -3,11 +3,11 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useClient } from 'cozy-client'
 import { splitFilename } from 'cozy-client/dist/models/file'
 import { SharedDocument, SharedRecipientsList } from 'cozy-sharing'
+import Button from 'cozy-ui/transpiled/react/Buttons'
 import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import Stack from 'cozy-ui/transpiled/react/Stack'
-import Button from 'cozy-ui/transpiled/react/deprecated/Button'
-import { Media, Img, Bd } from 'cozy-ui/transpiled/react/deprecated/Media'
+import Typography from 'cozy-ui/transpiled/react/Typography'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -17,17 +17,21 @@ import { trashFiles } from 'modules/actions/utils'
 import { buildAlbumByIdQuery } from 'queries'
 
 const Message = ({ type, fileCount }) => {
-  const ico =
-    type === 'referenced' ? 'album' : type === 'shared' ? 'share' : type
+  const icon =
+    type === 'referenced' ? 'album' : type.includes('share') ? 'people' : type
 
   const { t } = useI18n()
   return (
-    <Media>
-      <Img>
-        <Icon icon={ico} color="var(--iconTextColor)" />
-      </Img>
-      <Bd className="u-pl-1-half">{t(`DeleteConfirm.${type}`, fileCount)}</Bd>
-    </Media>
+    <div className="u-flex u-flex-items-center">
+      <Icon
+        icon={icon}
+        className="u-flex-shrink-0"
+        color="var(--iconTextColor)"
+      />
+      <Typography className="u-pl-1-half">
+        {t(`DeleteConfirm.${type}`, fileCount)}
+      </Typography>
+    </div>
   )
 }
 
@@ -107,15 +111,16 @@ export const DeleteConfirm = ({
       actions={
         <>
           <Button
-            theme="secondary"
+            variant="secondary"
             onClick={onClose}
             label={t('DeleteConfirm.cancel')}
           />
           <Button
-            busy={isDeleting}
-            theme="danger"
-            label={t('DeleteConfirm.delete')}
+            variant="primary"
             onClick={onDelete}
+            label={t('DeleteConfirm.delete')}
+            color="error"
+            busy={isDeleting}
           />
         </>
       }
@@ -152,7 +157,10 @@ const DeleteConfirmWithSharingContext = ({ files, ...rest }) =>
               <Message type={shareMessageType} fileCount={files.length} />
             ) : null}
             {isSharedByMe && recipients.length > 0 ? (
-              <SharedRecipientsList className="u-ml-1" docId={files[0].id} />
+              <SharedRecipientsList
+                className="u-ml-2-half"
+                docId={files[0].id}
+              />
             ) : null}
           </DeleteConfirm>
         )
