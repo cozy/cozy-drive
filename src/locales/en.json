@@ -41,7 +41,6 @@
     "more": "More"
   },
   "toolbar": {
-    "item_upload": "Upload",
     "menu_upload": "Upload files",
     "item_more": "More",
     "menu_new_folder": "Folder",
@@ -53,7 +52,6 @@
     "add_to_mine": "Add to my Cozy",
     "menu_download_folder": "Download folder",
     "menu_download_file": "Download this file",
-    "menu_open_cozy": "Open in my Cozy",
     "menu_create_note": "Note",
     "menu_create_shortcut": "Shortcut",
     "share": "Share",

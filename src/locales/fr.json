@@ -41,7 +41,6 @@
     "more": "Plus"
   },
   "toolbar": {
-    "item_upload": "Importer des fichiers",
     "menu_upload": "Importer des fichiers",
     "item_more": "Plus",
     "menu_new_folder": "Dossier",
@@ -53,7 +52,6 @@
     "add_to_mine": "Ajouter à mon Cozy",
     "menu_download_folder": "Télécharger le dossier",
     "menu_download_file": "Télécharger ce fichier",
-    "menu_open_cozy": "Ouvrir dans mon Cozy",
     "menu_create_note": "Note",
     "menu_create_shortcut": "Raccourci",
     "share": "Partager",
