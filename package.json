@@ -4,7 +4,7 @@
   "main": "src/main.jsx",
   "scripts": {
     "build": "rsbuild build",
-    "watch": "rsbuild build --watch",
+    "watch": "rsbuild build --watch --mode development",
     "analyze": "RSDOCTOR=true yarn build",
     "cozyPublish": "cozy-app-publish --token $REGISTRY_TOKEN --prepublish downcloud --postpublish mattermost",
     "tx": "tx pull --all || true",
