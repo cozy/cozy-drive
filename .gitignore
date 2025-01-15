@@ -38,3 +38,6 @@ desktop.ini
 # cozy-jobs-cli
 .token.json
 konnector-dev-config.json
+
+# SWC
+.swc

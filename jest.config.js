@@ -31,7 +31,33 @@ module.exports = {
   },
   clearMocks: true,
   transform: {
-    '\\.[jt]sx?$': 'babel-jest',
+    '\\.(js|jsx|mjs)$': [
+      '@swc/jest',
+      {
+        jsc: {
+          experimental: {
+            plugins: [['swc_mut_cjs_exports', {}]],
+          },
+          parser: {
+            jsx: true,
+          },
+        },
+      },
+    ],
+    '\\.(ts|tsx)$': [
+      '@swc/jest',
+      {
+        jsc: {
+          experimental: {
+            plugins: [['swc_mut_cjs_exports', {}]],
+          },
+          parser: {
+            syntax: 'typescript',
+            tsx: true,
+          },
+        },
+      },
+    ],
     '^.+\\.webapp$': '<rootDir>/test/jestLib/json-transformer.js'
   },
   transformIgnorePatterns: [
