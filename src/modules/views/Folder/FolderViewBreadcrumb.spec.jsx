@@ -3,7 +3,7 @@ import React from 'react'
 
 import FolderViewBreadcrumb from './FolderViewBreadcrumb'
 import {
-  dummyBreadcrumbPath,
+  dummyBreadcrumbPathWithRootLarge,
   dummyRootBreadcrumbPath
 } from 'test/dummies/dummyBreadcrumbPath'
 
@@ -51,7 +51,7 @@ describe('FolderViewBreadcrumb', () => {
 
   it('should set correct path in template', () => {
     // Given
-    useBreadcrumbPath.mockReturnValue(dummyBreadcrumbPath())
+    useBreadcrumbPath.mockReturnValue(dummyBreadcrumbPathWithRootLarge())
 
     // When
     const { getByTestId } = render(

@@ -5,7 +5,14 @@ import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoi
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import DesktopBreadcrumb from './DesktopBreadcrumb'
-import { dummyBreadcrumbPath } from 'test/dummies/dummyBreadcrumbPath'
+import {
+  dummyBreadcrumbPathNoRootLarge,
+  dummyBreadcrumbPathNoRootSmall,
+  dummyBreadcrumbPathWithRootLarge,
+  dummyBreadcrumbPathWithRootSmall,
+  dummyBreadcrumbPathWithSharedDriveLarge,
+  dummyBreadcrumbPathWithSharedDriveSmall
+} from 'test/dummies/dummyBreadcrumbPath'
 
 jest.mock('cozy-ui/transpiled/react/ActionsMenu', () => ({ children }) => (
   <div data-testid="action-menu">{children}</div>
@@ -24,27 +31,109 @@ describe('DesktopBreadcrumb', () => {
   })
 
   describe('template', () => {
-    it('should display breadcrumb from material ui - with root + only parent - on desktop', () => {
-      // When
-      const { container, queryByText } = render(
-        <DesktopBreadcrumb path={dummyBreadcrumbPath()} />
-      )
+    describe('When parent is ROOT folder', () => {
+      it('should display breadcrumb with | 📁 > "..." > parent > current | when more than 3 nested folders', () => {
+        // When
+        const { container, queryByText } = render(
+          <DesktopBreadcrumb path={dummyBreadcrumbPathWithRootLarge()} />
+        )
 
-      // Then
-      expect(queryByText('Drive')).toBeTruthy()
-      expect(queryByText('current')).toBeTruthy()
-      expect(queryByText('parent')).toBeTruthy()
-      expect(queryByText('grandparent')).toBeFalsy()
-      expect(
-        container.querySelector('[aria-label]').getAttribute('aria-label')
-      ).toEqual('Show path')
-      expect(container.querySelector('.fil-path-separator')).toBeTruthy()
+        // Then
+        expect(container.querySelector('[aria-label="Drive"]')).toBeTruthy()
+        expect(queryByText('grandparent')).toBeFalsy()
+        expect(queryByText('parent')).toBeTruthy()
+        expect(queryByText('current')).toBeTruthy()
+        expect(container.querySelector('[aria-label="Show path"]')).toBeTruthy()
+        expect(container.querySelector('.fil-path-separator')).toBeTruthy()
+      })
+
+      it('should display breadcrumb with | 📁 > parent > current | when 3 nested folders or less', () => {
+        // When
+        const { container, queryByText } = render(
+          <DesktopBreadcrumb path={dummyBreadcrumbPathWithRootSmall()} />
+        )
+
+        // Then
+        expect(container.querySelector('[aria-label="Drive"]')).toBeTruthy()
+        expect(queryByText('grandparent')).toBeFalsy()
+        expect(queryByText('parent')).toBeTruthy()
+        expect(queryByText('current')).toBeTruthy()
+        expect(container.querySelector('[aria-label="Show path"]')).toBeFalsy()
+        expect(container.querySelector('.fil-path-separator')).toBeTruthy()
+      })
+    })
+
+    describe('When parent is a Shared drive', () => {
+      it('should display breadcrumb with | 📁 > "..." > parent > current | when more than 3 nested folders', () => {
+        // When
+        const { container, queryByText } = render(
+          <DesktopBreadcrumb path={dummyBreadcrumbPathWithSharedDriveLarge()} />
+        )
+
+        // Then
+        expect(
+          container.querySelector('[aria-label="Shared Drive"]')
+        ).toBeTruthy()
+        expect(queryByText('grandparent')).toBeFalsy()
+        expect(queryByText('parent')).toBeTruthy()
+        expect(queryByText('current')).toBeTruthy()
+        expect(container.querySelector('[aria-label="Show path"]')).toBeTruthy()
+        expect(container.querySelector('.fil-path-separator')).toBeTruthy()
+      })
+
+      it('should display breadcrumb with | 📁 > parent > current | when 3 nested folders or less', () => {
+        // When
+        const { container, queryByText } = render(
+          <DesktopBreadcrumb path={dummyBreadcrumbPathWithSharedDriveSmall()} />
+        )
+
+        // Then
+        expect(
+          container.querySelector('[aria-label="Shared Drive"]')
+        ).toBeTruthy()
+        expect(queryByText('grandparent')).toBeFalsy()
+        expect(queryByText('parent')).toBeTruthy()
+        expect(queryByText('current')).toBeTruthy()
+        expect(container.querySelector('[aria-label="Show path"]')).toBeFalsy()
+        expect(container.querySelector('.fil-path-separator')).toBeTruthy()
+      })
+    })
+
+    describe('When parent is nor ROOT nor Shared drive', () => {
+      it('should display breadcrumb with | Drive > "..." > parent > current | when more than 3 nested folders', () => {
+        // When
+        const { container, queryByText } = render(
+          <DesktopBreadcrumb path={dummyBreadcrumbPathNoRootLarge()} />
+        )
+
+        // Then
+        expect(queryByText('Some Main Folder')).toBeTruthy()
+        expect(queryByText('grandparent')).toBeFalsy()
+        expect(queryByText('parent')).toBeTruthy()
+        expect(queryByText('current')).toBeTruthy()
+        expect(container.querySelector('[aria-label="Show path"]')).toBeTruthy()
+        expect(container.querySelector('.fil-path-separator')).toBeTruthy()
+      })
+
+      it('should display breadcrumb with | Drive > parent > current | when 3 nested folders or less', () => {
+        // When
+        const { container, queryByText } = render(
+          <DesktopBreadcrumb path={dummyBreadcrumbPathNoRootSmall()} />
+        )
+
+        // Then
+        expect(queryByText('Some Main Folder')).toBeTruthy()
+        expect(queryByText('parent')).toBeTruthy()
+        expect(queryByText('current')).toBeTruthy()
+        expect(container.querySelector('[aria-label="Show path"]')).toBeFalsy()
+        expect(container.querySelector('.fil-path-separator')).toBeTruthy()
+      })
     })
 
     it('should have convenient style on Public view - on desktop', () => {
       // When
       const { container } = render(
-        <DesktopBreadcrumb path={dummyBreadcrumbPath()} />
+        <DesktopBreadcrumb path={dummyBreadcrumbPathWithRootLarge()} />
       )
 
       // Then
@@ -62,15 +151,15 @@ describe('DesktopBreadcrumb', () => {
     it('should hide menu displayed while navigating', async () => {
       // Given
       const { container, queryByTestId, rerender } = await render(
-        <DesktopBreadcrumb path={dummyBreadcrumbPath()} />
+        <DesktopBreadcrumb path={dummyBreadcrumbPathWithRootLarge()} />
       )
       act(() => {
-        container.querySelector('[aria-label]').click()
+        container.querySelector('[aria-label="Show path"]').click()
       })
       expect(queryByTestId('action-menu')).toBeInTheDocument()
 
       // When
-      rerender(<DesktopBreadcrumb path={dummyBreadcrumbPath()} />)
+      rerender(<DesktopBreadcrumb path={dummyBreadcrumbPathWithRootLarge()} />)
 
       // Then
       expect(queryByTestId('action-menu')).not.toBeInTheDocument()
@@ -82,17 +171,17 @@ describe('DesktopBreadcrumb', () => {
         <DesktopBreadcrumb path={[]} />
       )
 
-      expect(container.querySelector('[aria-label]')).toBeNull()
+      expect(container.querySelector('[aria-label="Show path"]')).toBeNull()
 
-      rerender(<DesktopBreadcrumb path={dummyBreadcrumbPath()} />)
+      rerender(<DesktopBreadcrumb path={dummyBreadcrumbPathWithRootLarge()} />)
 
       // When
       act(() => {
-        container.querySelector('[aria-label]').click()
+        container.querySelector('[aria-label="Show path"]').click()
       })
 
       // Then
-      expect(container.querySelector('[aria-label]')).not.toBeNull()
+      expect(container.querySelector('[aria-label="Show path"]')).not.toBeNull()
     })
   })
 
@@ -100,22 +189,22 @@ describe('DesktopBreadcrumb', () => {
     it('should dispatch on breadcrumb click - on desktop', () => {
       // Given
       const onBreadcrumbClick = jest.fn()
-      const path = dummyBreadcrumbPath()
+      const path = dummyBreadcrumbPathWithRootLarge()
 
       const { queryByText } = render(
         <DesktopBreadcrumb path={path} onBreadcrumbClick={onBreadcrumbClick} />
       )
 
       // When
-      queryByText('Drive').click()
+      queryByText('parent').click()
 
       // Then
-      expect(onBreadcrumbClick).toHaveBeenCalledWith(path[0])
+      expect(onBreadcrumbClick).toHaveBeenCalledWith(path[2])
     })
 
     it('should display action menu on click on "..." on desktop', () => {
       // Given
-      const path = dummyBreadcrumbPath()
+      const path = dummyBreadcrumbPathWithRootLarge()
 
       const { container, queryByTestId } = render(
         <BreakpointsProvider>
@@ -125,7 +214,7 @@ describe('DesktopBreadcrumb', () => {
 
       // When
       act(() => {
-        container.querySelector('[aria-label]').click()
+        container.querySelector('[aria-label="Show path"]').click()
       })
 
       // Then
@@ -135,7 +224,7 @@ describe('DesktopBreadcrumb', () => {
 
     it('should add grandParents only in dropdown - on click on ... on desktop', () => {
       // Given
-      const path = dummyBreadcrumbPath()
+      const path = dummyBreadcrumbPathWithRootLarge()
 
       const { container, queryByText } = render(
         <BreakpointsProvider>
@@ -145,7 +234,7 @@ describe('DesktopBreadcrumb', () => {
 
       // When
       act(() => {
-        container.querySelector('[aria-label]').click()
+        container.querySelector('[aria-label="Show path"]').click()
       })
 
       // Then
@@ -157,7 +246,7 @@ describe('DesktopBreadcrumb', () => {
 
     it('should handle on click outside on desktop - removing dropdown', () => {
       // Given
-      const path = dummyBreadcrumbPath()
+      const path = dummyBreadcrumbPathWithRootLarge()
 
       const { container, queryByText } = render(
         <div>
