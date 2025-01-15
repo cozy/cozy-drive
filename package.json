@@ -39,8 +39,8 @@
   },
   "homepage": "https://github.com/cozy/cozy-drive#readme",
   "devDependencies": {
-    "@rsbuild/core": "^1.1.6",
     "@babel/eslint-parser": "7.23.3",
+    "@rsbuild/core": "^1.1.6",
     "@testing-library/jest-dom": "5.17.0",
     "@testing-library/react": "11.2.7",
     "@testing-library/react-hooks": "8.0.1",
