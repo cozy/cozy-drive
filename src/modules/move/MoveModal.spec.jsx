@@ -6,10 +6,10 @@ import { move } from 'cozy-client/dist/models/file'
 import { useSharingContext } from 'cozy-sharing'
 
 import { MoveModal } from './MoveModal'
+import AppLike from 'test/components/AppLike'
 
 import { ROOT_DIR_ID } from '@/constants/config'
 import { CozyFile } from '@/models'
-import AppLike from '@/test/components/AppLike'
 
 jest.mock('cozy-sharing', () => ({
   ...jest.requireActual('cozy-sharing'),

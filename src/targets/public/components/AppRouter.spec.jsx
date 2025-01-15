@@ -6,9 +6,9 @@ import React from 'react'
 import { createMockClient } from 'cozy-client'
 
 import AppRouter from './AppRouter'
+import AppLike from 'test/components/AppLike'
 
 import { isOfficeEnabled } from '@/modules/views/OnlyOffice/helpers'
-import AppLike from '@/test/components/AppLike'
 
 const client = createMockClient({})
 

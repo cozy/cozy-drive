@@ -5,8 +5,7 @@ import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoi
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import DesktopBreadcrumb from './DesktopBreadcrumb'
-
-import { dummyBreadcrumbPath } from '@/test/dummies/dummyBreadcrumbPath'
+import { dummyBreadcrumbPath } from 'test/dummies/dummyBreadcrumbPath'
 
 jest.mock('cozy-ui/transpiled/react/ActionsMenu', () => ({ children }) => (
   <div data-testid="action-menu">{children}</div>

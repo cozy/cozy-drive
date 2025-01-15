@@ -6,11 +6,11 @@ import { useSharingContext } from 'cozy-sharing'
 
 import { TrashFolderView } from './TrashFolderView'
 import { generateFileFixtures } from '../testUtils'
+import AppLike from 'test/components/AppLike'
+import { setupStore } from 'test/setup'
 
 import { TRASH_DIR_ID } from '@/constants/config'
 import { useCurrentFolderId } from '@/hooks'
-import AppLike from '@/test/components/AppLike'
-import { setupStore } from '@/test/setup'
 
 jest.mock('components/pushClient')
 jest.mock('components/useHead', () => jest.fn())

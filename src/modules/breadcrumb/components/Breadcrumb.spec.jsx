@@ -2,9 +2,8 @@ import { fireEvent, render } from '@testing-library/react'
 import React from 'react'
 
 import Breadcrumb from './Breadcrumb'
-
-import { TestI18n } from '@/test/components/AppLike'
-import { dummyBreadcrumbPath } from '@/test/dummies/dummyBreadcrumbPath'
+import { TestI18n } from 'test/components/AppLike'
+import { dummyBreadcrumbPath } from 'test/dummies/dummyBreadcrumbPath'
 
 describe('Breadcrumbs', () => {
   const dummyPath = dummyBreadcrumbPath()

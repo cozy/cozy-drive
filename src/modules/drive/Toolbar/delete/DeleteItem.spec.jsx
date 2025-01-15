@@ -3,9 +3,8 @@ import React from 'react'
 
 import DeleteItem from './DeleteItem'
 import { EnhancedDeleteConfirm } from './delete'
-
-import AppLike from '@/test/components/AppLike'
-import { setupStoreAndClient } from '@/test/setup'
+import AppLike from 'test/components/AppLike'
+import { setupStoreAndClient } from 'test/setup'
 
 jest.mock('modules/actions/utils', () => ({
   trashFiles: jest.fn().mockResolvedValue()

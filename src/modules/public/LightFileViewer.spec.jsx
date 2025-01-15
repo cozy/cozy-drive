@@ -5,8 +5,7 @@ import { createMockClient } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import LightFileViewer from './LightFileViewer'
-
-import AppLike from '@/test/components/AppLike'
+import AppLike from 'test/components/AppLike'
 
 jest.mock('cozy-keys-lib', () => ({
   ...jest.requireActual('cozy-keys-lib'),

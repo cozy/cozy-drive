@@ -1,4 +1,4 @@
-import { setupFolderContent } from '@/test/setup'
+import { setupFolderContent } from 'test/setup'
 
 describe('FolderContent', () => {
   /**

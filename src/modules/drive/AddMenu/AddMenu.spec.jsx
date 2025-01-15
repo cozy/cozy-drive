@@ -4,10 +4,10 @@ import React from 'react'
 import { useAppLinkWithStoreFallback } from 'cozy-client'
 
 import { ActionMenuContent } from './AddMenu'
+import AppLike from 'test/components/AppLike'
+import { setupFolderContent, mockCozyClientRequestQuery } from 'test/setup'
 
 import { ScannerProvider } from '@/modules/drive/Toolbar/components/Scanner/ScannerProvider'
-import AppLike from '@/test/components/AppLike'
-import { setupFolderContent, mockCozyClientRequestQuery } from '@/test/setup'
 
 jest.mock('cozy-client/dist/hooks/useAppLinkWithStoreFallback', () => jest.fn())
 jest.mock('cozy-keys-lib', () => ({

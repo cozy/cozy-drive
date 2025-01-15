@@ -4,11 +4,11 @@ import React from 'react'
 import CozyClient, { useQuery } from 'cozy-client'
 
 import FilesViewer from './FilesViewer'
+import AppLike from 'test/components/AppLike'
+import { generateFile } from 'test/generate'
 
 import { useCurrentFileId } from '@/hooks'
 import { getEncryptionKeyFromDirId } from '@/lib/encryption'
-import AppLike from '@/test/components/AppLike'
-import { generateFile } from '@/test/generate'
 
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 jest.mock('cozy-keys-lib', () => ({
