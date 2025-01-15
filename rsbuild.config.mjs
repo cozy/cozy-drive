@@ -1,4 +1,4 @@
-import { defineConfig } from '@rsbuild/core'
+import { defineConfig, mergeRsbuildConfig } from '@rsbuild/core'
 import { getRsbuildConfig } from 'rsbuild-config-cozy-app'
 
 const config = getRsbuildConfig({
@@ -7,4 +7,12 @@ const config = getRsbuildConfig({
   hasPublic: true
 })
 
-export default defineConfig(config)
+const mergedConfig = mergeRsbuildConfig(config, {
+  resolve: {
+    alias: {
+      'react-pdf$': 'react-pdf/dist/esm/entry.webpack'
+    }
+  }
+})
+
+export default defineConfig(mergedConfig)
