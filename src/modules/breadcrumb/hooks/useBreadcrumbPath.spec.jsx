@@ -5,7 +5,7 @@ import log from 'cozy-logger'
 
 import { useBreadcrumbPath } from './useBreadcrumbPath'
 import {
-  dummyBreadcrumbPath,
+  dummyBreadcrumbPathWithRootLarge,
   dummyRootBreadcrumbPath
 } from 'test/dummies/dummyBreadcrumbPath'
 
@@ -155,7 +155,7 @@ describe('useBreadcrumbPath', () => {
       client: 'cozy-client',
       folderId: parentFolderId
     })
-    expect(render.result.current).toEqual(dummyBreadcrumbPath())
+    expect(render.result.current).toEqual(dummyBreadcrumbPathWithRootLarge())
   })
 
   it('should not call fetch folder, on rerender', async () => {

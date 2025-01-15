@@ -3,10 +3,10 @@ import React from 'react'
 
 import Breadcrumb from './Breadcrumb'
 import { TestI18n } from 'test/components/AppLike'
-import { dummyBreadcrumbPath } from 'test/dummies/dummyBreadcrumbPath'
+import { dummyBreadcrumbPathWithRootLarge } from 'test/dummies/dummyBreadcrumbPath'
 
 describe('Breadcrumbs', () => {
-  const dummyPath = dummyBreadcrumbPath()
+  const dummyPath = dummyBreadcrumbPathWithRootLarge()
 
   const setup = ({ path, inlined, onBreadcrumbClick } = {}) => {
     return render(
@@ -56,7 +56,10 @@ describe('Breadcrumbs', () => {
       fireEvent.click(container.querySelector('.fil-path-link'))
 
       // Then
-      expect(onBreadcrumbClick).toHaveBeenCalledWith({ name: 'Drive' })
+      expect(onBreadcrumbClick).toHaveBeenCalledWith({
+        id: 'io.cozy.files.root-dir',
+        name: 'Drive'
+      })
     })
 
     it('should toggle deploy on click on current', () => {
