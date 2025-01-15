@@ -1,104 +1,85 @@
 {
   "baseDir": "./build",
+  "pathLabels": {
+    "chunkId": "[\\d-]+"
+  },
   "files": [
     {
-      "path": "app/drive.<hash>.js"
+      "path": "static/js/<chunkId>.<hash>.js"
     },
     {
-      "path": "app/drive.<hash>.min.css"
+      "path": "static/js/cozy.<hash>.js"
     },
     {
-      "path": "img/app-icon.<hash>.svg"
+      "path": "static/js/main.<hash>.js"
     },
     {
-      "path": "intents/drive.<hash>.js"
+      "path": "static/js/lib-react.<hash>.js"
     },
     {
-      "path": "intents/drive.<hash>.min.css"
+      "path": "static/js/lib-router.<hash>.js"
     },
     {
-      "path": "intents/index.html"
+      "path": "static/css/cozy.<hash>.css"
     },
     {
-      "path": "onlyOffice/slide.pptx"
+      "path": "static/css/main.<hash>.css"
     },
     {
-      "path": "onlyOffice/spreadsheet.xlsx"
+      "path": "public/<hash>.js"
     },
     {
-      "path": "onlyOffice/text.docx"
+      "path": "public/static/js/<chunkId>.<hash>.js"
     },
     {
-      "path": "public/cozy-bar.css"
+      "path": "public/static/js/public.<hash>.js"
     },
     {
-      "path": "public/cozy-bar.js"
+      "path": "public/static/js/cozy.<hash>.js"
     },
     {
-      "path": "public/drive.<hash>.js"
+      "path": "public/static/js/lib-react.<hash>.js"
     },
     {
-      "path": "public/drive.<hash>.min.css"
+      "path": "public/static/js/lib-router.<hash>.js"
     },
     {
-      "path": "public/pdf.worker.entry.<hash>.worker.js"
+      "path": "public/static/css/cozy.<hash>.css"
     },
     {
-      "path": "services/dacc/drive.js"
+      "path": "public/static/css/public.<hash>.css"
     },
     {
-      "path": "services/qualificationMigration/drive.js"
+      "path": "services/dacc.js"
     },
     {
-      "path": "vendors/drive.<hash>.<hash>.min.css"
+      "path": "services/qualificationMigration.js"
     },
     {
-      "path": "vendors/drive.<hash>.js"
-    },
-    {
-      "path": "app-drive.<hash>.min.css"
+      "path": "<hash>.js"
     },
     {
       "path": "index.html"
     },
     {
-      "path": "intents-drive.<hash>.min.css"
-    },
-    {
-      "path": "manifest.json"
+      "path": "assets/manifest.json"
     },
     {
       "path": "manifest.webapp"
-    },
-    {
-      "path": "public-drive.<hash>.min.css"
-    },
-    {
-      "path": "vendors-drive.<hash>.min.css"
     }
   ],
   "groups": [
-    {
-      "path": "app/**"
-    },
-    {
-      "path": "img/**"
-    },
-    {
-      "path": "intents/**"
-    },
-    {
-      "path": "onlyOffice/**"
-    },
-    {
-      "path": "public/**"
-    },
-    {
-      "path": "services/**"
-    },
-    {
-      "path": "vendors/**"
-    }
+      {
+          "path": "**/*.js"
+      },
+      {
+          "path": "**/*.css"
+      },
+      {
+          "path": "**/*.{png,svg,ico}"
+      }
   ],
-  "reportOutput": ["github"]
+  "reportOutput": [
+    "github"
+  ]
 }
