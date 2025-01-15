@@ -61,19 +61,18 @@ describe('FileOpener component', () => {
 describe('handlePress function', () => {
   const mockToggle = jest.fn()
   const mockOpenLink = jest.fn()
-  const mockPreventDefault = jest.fn()
-  const mockStopImmediatePropagation = jest.fn()
 
   const ev = {
-    srcEvent: { stopImmediatePropagation: mockStopImmediatePropagation },
-    preventDefault: mockPreventDefault,
+    target: {
+      nodeName: 'A',
+      className: ''
+    },
     type: 'press'
   }
 
   const setupTest = ({
     actionMenuVisible = false,
     disabled = false,
-    enableTouchEvents = jest.fn(() => true),
     selectionModeActive = false,
     isRenaming = false
   }) => {
@@ -81,7 +80,6 @@ describe('handlePress function', () => {
       params: {
         actionMenuVisible,
         disabled,
-        enableTouchEvents,
         selectionModeActive,
         isRenaming,
         openLink: mockOpenLink,
@@ -94,45 +92,38 @@ describe('handlePress function', () => {
     jest.clearAllMocks()
   })
 
-  it('should not trigger any action if actionMenuVisible or disabled', () => {
+  it('should do nothing if actionMenuVisible or disabled', () => {
     const { params } = setupTest({ actionMenuVisible: true })
-    handlePress(ev, params)
+    handlePress(ev, 'press', params)
     expect(mockToggle).not.toHaveBeenCalled()
     expect(mockOpenLink).not.toHaveBeenCalled()
-    expect(mockPreventDefault).not.toHaveBeenCalled()
-    expect(mockStopImmediatePropagation).not.toHaveBeenCalled()
   })
 
   it('should toggle if event type is press or selectionModeActive', () => {
     const { params } = setupTest({ selectionModeActive: true })
-    handlePress(ev, params)
-    expect(mockPreventDefault).toHaveBeenCalled()
-    expect(mockStopImmediatePropagation).toHaveBeenCalled()
+    handlePress(ev, 'press', params)
     expect(mockToggle).toHaveBeenCalledWith(ev)
+    expect(mockOpenLink).not.toHaveBeenCalled()
   })
 
-  it('should open link if not renaming and event type is tap', () => {
+  it('should open link if not renaming and event type is click', () => {
     const { params } = setupTest({ isRenaming: false })
-    ev.type = 'tap'
-    handlePress(ev, params)
-    expect(mockPreventDefault).toHaveBeenCalled()
-    expect(mockStopImmediatePropagation).toHaveBeenCalled()
-    expect(mockOpenLink).toHaveBeenCalledWith(ev.srcEvent)
+    handlePress(ev, 'click', params)
+    expect(mockToggle).not.toHaveBeenCalledWith()
+    expect(mockOpenLink).toHaveBeenCalledWith(ev)
   })
 
-  it('should not open link if isRenaming', () => {
+  it('should not open link if isRenaming and event type is click', () => {
     const { params } = setupTest({ isRenaming: true })
-    ev.type = 'tap'
-    handlePress(ev, params)
+    handlePress(ev, 'click', params)
+    expect(mockToggle).not.toHaveBeenCalledWith()
     expect(mockOpenLink).not.toHaveBeenCalled()
   })
 
   it('should not trigger actions if enableTouchEvents returns false', () => {
-    const enableTouchEvents = jest.fn(() => false)
-    const { params } = setupTest({ enableTouchEvents })
-    handlePress(ev, params)
-    expect(mockPreventDefault).not.toHaveBeenCalled()
-    expect(mockStopImmediatePropagation).not.toHaveBeenCalled()
+    const customEv = { ...ev, target: { nodeName: 'INPUT' } }
+    const { params } = setupTest({})
+    handlePress(customEv, 'press', params)
     expect(mockToggle).not.toHaveBeenCalled()
     expect(mockOpenLink).not.toHaveBeenCalled()
   })
