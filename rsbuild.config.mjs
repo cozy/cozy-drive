@@ -8,6 +8,18 @@ const config = getRsbuildConfig({
 })
 
 const mergedConfig = mergeRsbuildConfig(config, {
+  environments: {
+    main: {
+      output: {
+        copy: [
+          {
+            from: 'src/assets/onlyOffice',
+            to: 'onlyOffice'
+          }
+        ]
+      }
+    }
+  },
   resolve: {
     alias: {
       'react-pdf$': 'react-pdf/dist/esm/entry.webpack'
