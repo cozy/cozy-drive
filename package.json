@@ -42,6 +42,8 @@
   "devDependencies": {
     "@babel/eslint-parser": "7.23.3",
     "@rsbuild/core": "^1.1.6",
+    "@swc/core": "^1.10.7",
+    "@swc/jest": "^0.2.37",
     "@testing-library/jest-dom": "5.17.0",
     "@testing-library/react": "11.2.7",
     "@testing-library/react-hooks": "8.0.1",
@@ -74,6 +76,7 @@
     "replace": "1.2.1",
     "rsbuild-config-cozy-app": "^0.2.0",
     "stylint": "1.5.9",
+    "swc_mut_cjs_exports": "^8.0.1",
     "typescript": "4.9.5",
     "worker-loader": "2.0.0"
   },
