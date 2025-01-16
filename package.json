@@ -98,7 +98,7 @@
     "cozy-sharing": "^19.0.0",
     "cozy-stack-client": "^52.0.0",
     "cozy-ui": "^116.0.0",
-    "cozy-viewer": "^13.1.0",
+    "cozy-viewer": "^13.2.2",
     "date-fns": "2.30.0",
     "diacritics": "1.3.0",
     "filesize": "10.1.6",
