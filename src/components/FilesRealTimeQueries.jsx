@@ -1,6 +1,6 @@
 import { memo, useEffect } from 'react'
 
-import { useClient, Mutations } from 'cozy-client'
+import { useClient, Mutations, getReferencedBy } from 'cozy-client'
 import { ensureFilePath } from 'cozy-client/dist/models/file'
 import { receiveMutationResult } from 'cozy-client/dist/store'
 
@@ -22,6 +22,11 @@ const normalizeDoc = (couchDBDoc, doctype) => {
     ...couchDBDoc
   }
 }
+
+export const normalizeRef = c => ({
+  _id: c.id,
+  _type: c.type
+})
 
 /**
  * DispatchChange
@@ -59,6 +64,10 @@ const dispatchChange = async (
 }
 
 const ensureFileHasPath = async (doc, client) => {
+  // console.info(' ')
+  // console.info('🔴 ensureFileHasPath')
+  // console.info('doc :', doc)
+
   if (doc.path) return doc
 
   const parentQuery = buildFileByIdQuery(doc.dir_id)
@@ -67,7 +76,63 @@ const ensureFileHasPath = async (doc, client) => {
     options: parentQuery.options
   })
 
+  // console.info('🔴 parentResult :', parentResult.data)
+  // console.info(' ')
+
   return ensureFilePath(doc, parentResult.data)
+}
+
+export const makeTutu = async (doc, client) => {
+  console.info('🟣🟣 makeTutu')
+  console.info('🟣 doc :', doc)
+
+  const contactRefs = getReferencedBy(doc, 'io.cozy.contacts')
+  console.info('🟣 contactRefs :', contactRefs)
+
+  if (contactRefs.length === 0) {
+    return doc
+  }
+
+  const contactsRefToBeAdded = contactRefs.filter(
+    contactRef =>
+      !doc.relationships?.referenced_by?.data?.some(
+        contact =>
+          contact.id === contactRef.id && contact.type === contactRef.type
+      )
+  )
+
+  console.info(
+    '🟣 contactsRefToBeAdded :',
+    JSON.stringify(contactsRefToBeAdded)
+  )
+
+  const hasContactsRefToAdd = contactsRefToBeAdded.length > 0
+
+  console.info('🟣 hasContactsRefToAdd :', hasContactsRefToAdd)
+
+  if (!hasContactsRefToAdd) {
+    return doc
+  }
+
+  const fileCollection = client.collection('io.cozy.files')
+  const { data: docWithContactRefs } = await fileCollection.addReferencedBy(
+    doc,
+    contactsRefToBeAdded.map(normalizeRef)
+  )
+
+  console.info('🟣 docWithContactRefs :', docWithContactRefs)
+
+  return docWithContactRefs
+}
+
+const computeDocBeforeDispatch = async (doc, client) => {
+  console.info(' ')
+  console.info('🟣 computeDocBeforeDispatch')
+
+  const docWithPath = await ensureFileHasPath(doc, client)
+  const docWithContactRefs = await makeTutu(docWithPath, client)
+
+  return docWithContactRefs
 }
 
 /**
@@ -83,10 +148,10 @@ const ensureFileHasPath = async (doc, client) => {
  */
 const FilesRealTimeQueries = ({
   doctype = 'io.cozy.files',
-  computeDocBeforeDispatchCreate = ensureFileHasPath,
-  computeDocBeforeDispatchUpdate = ensureFileHasPath,
+  computeDocBeforeDispatchCreate = computeDocBeforeDispatch,
+  computeDocBeforeDispatchUpdate = computeDocBeforeDispatch,
   computeDocBeforeDispatchDelete = (doc, client) =>
-    ensureFileHasPath({ ...doc, _deleted: true }, client)
+    computeDocBeforeDispatch({ ...doc, _deleted: true }, client)
 }) => {
   const client = useClient()
 
