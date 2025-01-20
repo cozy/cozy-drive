@@ -75,6 +75,7 @@ const PublicFileViewer = () => {
     <PublicViewer
       files={viewableFiles}
       currentIndex={viewerIndex}
+      isPublic={true}
       onChangeRequest={handleChange}
       onCloseRequest={handleClose}
     >
