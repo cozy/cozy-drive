@@ -32,7 +32,7 @@ export const infos = ({ t, navigate }) => {
     name: 'infos',
     icon,
     label,
-    displayCondition: docs => isFile(docs[0]),
+    displayCondition: docs => docs.length <= 1 && isFile(docs[0]),
     Component: makeComponent(label, icon),
     action: docs => {
       navigate(`file/${docs[0]._id}`)
