@@ -6315,16 +6315,16 @@ cozy-client@^50.4.0:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
-cozy-client@^52.1.0:
-  version "52.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-52.1.0.tgz#fd878978393a4bee57567e1602471eb1271f2738"
-  integrity sha512-QgKpaECkV0hsaOCSGT6TCLl2eWs186+YmGVFKaYJurL03O8O58rfv8xthNCEanE+ntK/KpX2DegsmvfO0HqZdg==
+cozy-client@^53.1.0:
+  version "53.1.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-53.1.0.tgz#c25750ec9a559a7e82f58e81dfe08b99a66bd8ea"
+  integrity sha512-Y8GfWcIfIK7LavpXLq3nU0ufGoqp5WE4l4s7biuk6s9ifLI1nptBODDzLVR6noLcytxiOX+/ti5nOo/fmQCoKg==
   dependencies:
     "@cozy/minilog" "1.0.0"
     "@types/jest" "^26.0.20"
     "@types/lodash" "^4.14.170"
     btoa "^1.2.1"
-    cozy-stack-client "^52.0.0"
+    cozy-stack-client "^53.0.0"
     date-fns "2.29.3"
     json-stable-stringify "^1.0.1"
     lodash "^4.17.13"
@@ -6670,10 +6670,10 @@ cozy-scripts@^8.4.0:
     webpack-dev-server "3.10.3"
     webpack-merge "4.2.2"
 
-cozy-sharing@^19.0.0:
-  version "19.0.0"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-19.0.0.tgz#6cf77a486387eceb413db7ea5cea028d0f14ffe2"
-  integrity sha512-1VrKF5T3ZW/6mxWoALEf+GFeA+mdODWiwMTMJGpcCx5BegnIAOYjdcAmiXiw+LZPshxFg6JkX1ggMgbPEyhP5w==
+cozy-sharing@^20.0.0:
+  version "20.0.0"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-20.0.0.tgz#75e8da9ba586e5246ab61a492cef5ca76a2a2018"
+  integrity sha512-fq9ah106L+BFsr8BuGLMw1JNjqieYaDA4y/AHMvt2UbuDUGOkwGJ/evhedastPaxJY0faga+HkKNNX4TzNqo8A==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     classnames "^2.2.6"
@@ -6707,6 +6707,15 @@ cozy-stack-client@^52.0.0:
   version "52.0.0"
   resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-52.0.0.tgz#b146997637facc8de55033a84fd7e4b30ea4533d"
   integrity sha512-rJOUp7jcnIBEaL48+HVRF24IzYgNJYh2KLpkKFKfaNhO6oz/+dwW1VfETAKWldtNk1hMcFapbQIN58CqhGkIzA==
+  dependencies:
+    detect-node "^2.0.4"
+    mime "^2.4.0"
+    qs "^6.7.0"
+
+cozy-stack-client@^53.0.0:
+  version "53.0.0"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-53.0.0.tgz#c3ad5354e4779547ce8fe58976ea79249fb64742"
+  integrity sha512-gpQ+8qsRpip0brxavxgQqSoOAsR8KzpDxURPYtdeCa/00Xz1NIbXun29TWPVcNvVVNNZxbtpn0CBHyZpnVEDbw==
   dependencies:
     detect-node "^2.0.4"
     mime "^2.4.0"
@@ -6749,10 +6758,10 @@ cozy-ui@^116.0.0:
     react-swipeable-views "^0.13.3"
     rooks "^5.11.2"
 
-cozy-viewer@^13.2.6:
-  version "13.2.6"
-  resolved "https://registry.yarnpkg.com/cozy-viewer/-/cozy-viewer-13.2.6.tgz#d23181f6917b2b93aa3a63f9cf9ac1d9e88a9a2a"
-  integrity sha512-9aNEzPZy2qpGTmmtrseylaxgKHLqgDVpDD4ua1Df7UWiqhzKfXV2McKULPHuUIeO1pVH40lmjwFxL34sS9Onlg==
+cozy-viewer@^13.3.1:
+  version "13.3.1"
+  resolved "https://registry.yarnpkg.com/cozy-viewer/-/cozy-viewer-13.3.1.tgz#a4043ffe96f66c89b995068afb8437f2a9d1f5f2"
+  integrity sha512-uE0zy/RlxLmShejszZY677WQtVA/rk8RoHacX6eRTeuLjl8U5nqoHKEylvVtPACV7jH8o3WIw9ZdrZkcQDX7JA==
   dependencies:
     classnames "^2.2.5"
     hammerjs "^2.0.8"
