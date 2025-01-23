@@ -16,9 +16,9 @@ jest.mock('cozy-intent', () => ({
   useWebviewIntent: () => ({ call: () => {} })
 }))
 jest.mock('cozy-ui/transpiled/react/providers/Breakpoints', () => ({
+  ...jest.requireActual('cozy-ui/transpiled/react/providers/Breakpoints'),
   __esModule: true,
-  default: jest.fn(),
-  BreakpointsProvider: ({ children }) => children
+  default: jest.fn()
 }))
 // used inside cozy-viewer
 jest.mock('cozy-client/dist/models/permission', () => ({

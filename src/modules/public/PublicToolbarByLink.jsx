@@ -3,14 +3,13 @@ import React from 'react'
 
 import { useClient } from 'cozy-client'
 import { useVaultClient } from 'cozy-keys-lib'
-import { openSharingLink } from 'cozy-sharing'
+import { createCozySharingLink, useSharingInfos } from 'cozy-sharing'
 import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { BarRightOnMobile } from 'components/Bar'
-import { HOME_LINK_HREF } from 'constants/config'
 import { addItems, download, hr, select } from 'modules/actions'
 import AddMenuProvider from 'modules/drive/AddMenu/AddMenuProvider'
 import AddButton from 'modules/drive/Toolbar/components/AddButton'
@@ -30,6 +29,7 @@ const PublicToolbarByLink = ({
   const { showAlert } = useAlert()
   const client = useClient()
   const vaultClient = useVaultClient()
+  const { createCozyLink } = useSharingInfos()
 
   const isMoreMenuDisplayed = files.length > 1
 
@@ -39,7 +39,7 @@ const PublicToolbarByLink = ({
       files.length > 1 && select,
       addItems,
       isMobile && (files.length > 1 || hasWriteAccess) && hr,
-      isMobile && openSharingLink
+      isMobile && createCozySharingLink
     ],
     {
       t,
@@ -47,7 +47,7 @@ const PublicToolbarByLink = ({
       client,
       vaultClient,
       showSelectionBar,
-      link: HOME_LINK_HREF,
+      createCozyLink,
       hasWriteAccess
     }
   )

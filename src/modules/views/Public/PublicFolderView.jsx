@@ -224,7 +224,7 @@ const PublicFolderView = () => {
           </AddMenuProvider>
         )}
         {isAddToMyCozyFabDisplayed && (
-          <OpenSharingLinkFabButton link={sharingInfos.discoveryLink} />
+          <OpenSharingLinkFabButton link={sharingInfos.addSharingLink} />
         )}
         <Outlet />
       </Content>

@@ -29,7 +29,7 @@ const LightFileViewer = ({ files, isPublic }) => {
   const { isDesktop, isMobile } = useBreakpoints()
   const { pathname } = useLocation()
   const navigate = useNavigate()
-  const { loading, isSharingShortcutCreated, discoveryLink } = sharingInfos
+  const { loading, isSharingShortcutCreated, addSharingLink } = sharingInfos
 
   const onlyOfficeOpener = useCallback(
     file => {
@@ -82,7 +82,7 @@ const LightFileViewer = ({ files, isPublic }) => {
           <FooterActionButtons>
             {isAddToMyCozyDisplayed && (
               <OpenSharingLinkButton
-                link={discoveryLink}
+                link={addSharingLink}
                 isSharingShortcutCreated={isSharingShortcutCreated}
                 isShortLabel
                 fullWidth

@@ -49,9 +49,10 @@ client.collection = () => ({
     })
 })
 const defaultSharingInfos = {
-  discoveryLink: '',
+  addSharingLink: '',
   isSharingShortcutCreated: false,
-  loading: false
+  loading: false,
+  createCozyLink: 'http://cozy.tools'
 }
 const setup = ({
   isReadOnly = false,

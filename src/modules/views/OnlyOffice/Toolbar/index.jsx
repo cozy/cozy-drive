@@ -1,12 +1,16 @@
 import React from 'react'
 
-import { openSharingLink, OpenSharingLinkButton } from 'cozy-sharing'
+import {
+  addToCozySharingLink,
+  createCozySharingLink,
+  syncToCozySharingLink,
+  OpenSharingLinkButton
+} from 'cozy-sharing'
 import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import FilesRealTimeQueries from 'components/FilesRealTimeQueries'
-import { HOME_LINK_HREF } from 'constants/config'
 import { useRedirectLink } from 'hooks/useRedirectLink'
 import PublicToolbarMoreMenu from 'modules/public/PublicToolbarMoreMenu'
 import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
@@ -23,7 +27,13 @@ const Toolbar = ({ sharingInfos }) => {
   const { isMobile } = useBreakpoints()
   const { t } = useI18n()
   const { fileId, isPublic, isEditorReady } = useOnlyOfficeContext()
-  const { discoveryLink, isSharingShortcutCreated, loading } = sharingInfos
+  const {
+    addSharingLink,
+    syncSharingLink,
+    createCozyLink,
+    isSharingShortcutCreated,
+    loading
+  } = sharingInfos
 
   const { data: fileWithPath } = useFileWithPath(fileId)
   const { redirectBack, canRedirect } = useRedirectLink({ isPublic })
@@ -35,14 +45,25 @@ const Toolbar = ({ sharingInfos }) => {
   }
   // Check if the share shortcut has not yet been added
   const isShareNotAdded = !loading && !isSharingShortcutCreated
+  // Check if you are sharing Cozy to Cozy (Link sharing is on the `/public` route)
+  const isCozyToCozySharing = window.location.pathname === '/preview'
 
-  // discoveryLink exists only in cozy to cozy sharing
-  const link = discoveryLink || HOME_LINK_HREF
-  const actions = makeActions([openSharingLink], {
-    t,
-    link,
-    isSharingShortcutCreated
-  })
+  // addSharingLink exists only in cozy to cozy sharing
+  const link = isCozyToCozySharing ? addSharingLink : createCozyLink
+  const actions = makeActions(
+    [
+      !isCozyToCozySharing && createCozySharingLink,
+      isCozyToCozySharing && addToCozySharingLink,
+      isCozyToCozySharing && syncToCozySharingLink
+    ],
+    {
+      t,
+      addSharingLink,
+      syncSharingLink,
+      createCozyLink,
+      isSharingShortcutCreated
+    }
+  )
 
   return (
     <>
