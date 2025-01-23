@@ -3,7 +3,11 @@ import React from 'react'
 
 import { useClient } from 'cozy-client'
 import { useVaultClient } from 'cozy-keys-lib'
-import { openSharingLink, OpenSharingLinkButton } from 'cozy-sharing'
+import {
+  addToCozySharingLink,
+  syncToCozySharingLink,
+  OpenSharingLinkButton
+} from 'cozy-sharing'
 import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -17,8 +21,13 @@ import PublicToolbarMoreMenu from 'modules/public/PublicToolbarMoreMenu'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 
 const PublicToolbarCozyToCozy = ({ sharingInfos, files }) => {
-  const { loading, discoveryLink, sharing, isSharingShortcutCreated } =
-    sharingInfos
+  const {
+    loading,
+    addSharingLink,
+    syncSharingLink,
+    sharing,
+    isSharingShortcutCreated
+  } = sharingInfos
   const { isMobile } = useBreakpoints()
   const { t } = useI18n()
   const { showAlert } = useAlert()
@@ -37,7 +46,8 @@ const PublicToolbarCozyToCozy = ({ sharingInfos, files }) => {
       isMobile && download,
       files.length > 1 && select,
       ((isMobile && files.length > 0) || files.length > 1) && hr,
-      isOnSharedFolder && openSharingLink
+      isOnSharedFolder && addToCozySharingLink,
+      isOnSharedFolder && syncToCozySharingLink
     ],
     {
       t,
@@ -46,7 +56,8 @@ const PublicToolbarCozyToCozy = ({ sharingInfos, files }) => {
       vaultClient,
       showSelectionBar,
       isSharingShortcutCreated,
-      link: discoveryLink
+      addSharingLink,
+      syncSharingLink
     }
   )
 
@@ -56,7 +67,7 @@ const PublicToolbarCozyToCozy = ({ sharingInfos, files }) => {
       {!isMobile && !isSharingShortcutCreated && isOnSharedFolder && (
         <OpenSharingLinkButton
           className="u-ml-half"
-          link={discoveryLink}
+          link={addSharingLink}
           isSharingShortcutCreated={isSharingShortcutCreated}
         />
       )}

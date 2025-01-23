@@ -63,7 +63,7 @@ const Title = () => {
         <SharingBannerPlugin />
       ) : null}
       {isAddToMyCozyFabDisplayed && (
-        <OpenSharingLinkFabButton link={sharingInfos.discoveryLink} />
+        <OpenSharingLinkFabButton link={sharingInfos.addSharingLink} />
       )}
     </div>
   )

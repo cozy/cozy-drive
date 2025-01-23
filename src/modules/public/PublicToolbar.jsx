@@ -12,7 +12,7 @@ const PublicToolbar = ({
   sharingInfos,
   className
 }) => {
-  const { loading, discoveryLink } = sharingInfos
+  const { loading, addSharingLink } = sharingInfos
 
   if (loading) return null
   return (
@@ -20,7 +20,7 @@ const PublicToolbar = ({
       className={cx('u-flex u-flex-justify-end', className)}
       data-testid="public-toolbar"
     >
-      {!discoveryLink ? (
+      {!addSharingLink ? (
         <PublicToolbarByLink
           files={files}
           hasWriteAccess={hasWriteAccess}

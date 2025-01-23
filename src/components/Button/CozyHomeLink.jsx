@@ -1,19 +1,20 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
+import { useSharingInfos } from 'cozy-sharing'
 import { ButtonLink, useI18n } from 'cozy-ui/transpiled/react'
 
 import CozyHomeLinkIcon from 'components/Button/CozyHomeLinkIcon'
-import { HOME_LINK_HREF } from 'constants/config'
 
 const CozyHomeLink = ({ className }) => {
   const { t } = useI18n()
+  const { createCozyLink } = useSharingInfos
   return (
     <ButtonLink
       label={t('Share.create-cozy')}
       icon={CozyHomeLinkIcon}
       className={className}
-      href={HOME_LINK_HREF}
+      href={createCozyLink}
       size="normal"
     />
   )
