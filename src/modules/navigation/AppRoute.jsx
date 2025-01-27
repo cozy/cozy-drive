@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, useParams, Navigate } from 'react-router-dom'
+import { Route, useParams, Outlet, Navigate } from 'react-router-dom'
 
 import { RealTimeQueries } from 'cozy-client'
 import { AssistantDialog } from 'cozy-dataproxy-lib'
@@ -50,6 +50,13 @@ const FilesRedirect = () => {
   return <Navigate to={`/folder/${folderId}`} replace={true} />
 }
 
+const OutletWrapper = ({ Component }) => (
+  <>
+    <Component />
+    <Outlet />
+  </>
+)
+
 const AppRoute = () => (
   <SentryRoutes>
     <Route path="external/:fileId" element={<ExternalRedirect />} />
@@ -65,7 +72,15 @@ const AppRoute = () => (
         element={<Navigate to={ROOT_DIR_ID} replace={true} />}
       />
       <Route path="folder/:folderId" element={<DriveFolderView />}>
-        <Route path="file/:fileId" element={<FilesViewerDrive />} />
+        <Route
+          path="file/:fileId"
+          element={<OutletWrapper Component={FilesViewerDrive} />}
+        >
+          <Route path="v/revision" element={<FileHistory />} />
+          <Route path="v/share" element={<ShareFileView />} />
+          <Route path="v/move" element={<MoveFilesView />} />
+          <Route path="v/duplicate" element={<FolderDuplicateView />} />
+        </Route>
         <Route path="file/:fileId/revision" element={<FileHistory />} />
         <Route path="file/:fileId/share" element={<ShareFileView />} />
         <Route path="file/:fileId/qualify" element={<QualifyFileView />} />
@@ -104,7 +119,15 @@ const AppRoute = () => (
       ) : null}
 
       <Route path="recent" element={<RecentView />}>
-        <Route path="file/:fileId" element={<FilesViewerRecent />} />
+        <Route
+          path="file/:fileId"
+          element={<OutletWrapper Component={FilesViewerRecent} />}
+        >
+          <Route path="v/revision" element={<FileHistory />} />
+          <Route path="v/share" element={<ShareFileView />} />
+          <Route path="v/move" element={<MoveFilesView />} />
+          <Route path="v/duplicate" element={<FolderDuplicateView />} />
+        </Route>
         <Route path="file/:fileId/revision" element={<FileHistory />} />
         <Route path="file/:fileId/share" element={<ShareFileView />} />
         <Route path="file/:fileId/qualify" element={<QualifyFileView />} />
@@ -117,6 +140,7 @@ const AppRoute = () => (
         path="trash"
         element={<Navigate to={TRASH_DIR_ID} replace={true} />}
       />
+
       <Route path="trash/:folderId" element={<TrashFolderView />}>
         <Route path="file/:fileId" element={<FilesViewerTrash />} />
         <Route path="file/:fileId/revision" element={<FileHistory />} />
@@ -127,7 +151,15 @@ const AppRoute = () => (
       <Route path="sharings">
         <Route index element={<SharingsView />} />
         <Route element={<SharingsView />}>
-          <Route path="file/:fileId" element={<SharingsFilesViewer />} />
+          <Route
+            path="file/:fileId"
+            element={<OutletWrapper Component={SharingsFilesViewer} />}
+          >
+            <Route path="v/revision" element={<FileHistory />} />
+            <Route path="v/share" element={<ShareFileView />} />
+            <Route path="v/move" element={<MoveFilesView />} />
+            <Route path="v/duplicate" element={<FolderDuplicateView />} />
+          </Route>
           {/* This route must be a child of SharingsView so the modal opens on top of the sharing view */}
           <Route path="file/:fileId/revision" element={<FileHistory />} />
           <Route path="file/:fileId/share" element={<ShareFileView />} />
@@ -145,16 +177,20 @@ const AppRoute = () => (
           <Route path="move" element={<MoveFilesView />} />
         </Route>
       </Route>
+
       <Route path="onlyoffice/:fileId" element={<OnlyOfficeView />}>
         <Route path="paywall" element={<OnlyOfficePaywallView />} />
       </Route>
+
       <Route
         path="onlyoffice/create/:folderId/:fileClass"
         element={<OnlyOfficeCreateView />}
       />
 
       <Route path="file/:fileId" element={<FileOpenerExternal />} />
+
       <Route path="search" element={<SearchView />} />
+
       <Route
         path="assistant/:conversationId"
         element={
