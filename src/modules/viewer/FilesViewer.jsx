@@ -22,6 +22,7 @@ import {
 } from 'lib/encryption'
 import logger from 'lib/logger'
 import Fallback from 'modules/viewer/Fallback'
+import MoreMenu from 'modules/viewer/MoreMenu'
 import {
   isOfficeEnabled,
   makeOnlyOfficeFileRoute
@@ -36,12 +37,11 @@ import {
  *   fetchMore() on the query
  */
 const FilesViewer = ({ filesQuery, files, onClose, onChange }) => {
-  const { isDesktop } = useBreakpoints()
-  const fileId = useCurrentFileId()
   const [currentFile, setCurrentFile] = useState(null)
   const [currentDecryptedFileURL, setCurrentDecryptedFileURL] = useState(null)
   const [fetchingMore, setFetchingMore] = useState(false)
-
+  const { isDesktop } = useBreakpoints()
+  const fileId = useCurrentFileId()
   const client = useClient()
   const { t } = useI18n()
   const vaultClient = useVaultClient()
@@ -178,13 +178,11 @@ const FilesViewer = ({ filesQuery, files, onClose, onChange }) => {
             isEnabled: isOfficeEnabled(isDesktop),
             opener: file => navigate(makeOnlyOfficeFileRoute(file.id))
           },
-          toolbarProps: {
-            showFilePath: true
-          }
+          toolbarProps: { showFilePath: true }
         }}
       >
         <ToolbarButtons>
-          <SharingButton variant="iconButton" />
+          <MoreMenu />
         </ToolbarButtons>
         <FooterActionButtons>
           <SharingButton />
