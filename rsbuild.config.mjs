@@ -4,7 +4,8 @@ import { getRsbuildConfig } from 'rsbuild-config-cozy-app'
 const config = getRsbuildConfig({
   title: 'Cozy Drive',
   hasServices: true,
-  hasPublic: true
+  hasPublic: true,
+  hasIntents: true
 })
 
 const mergedConfig = mergeRsbuildConfig(config, {
