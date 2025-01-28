@@ -5270,6 +5270,11 @@ cozy-intent@^2.29.1:
     cozy-minilog "^3.9.1"
     post-me "0.4.5"
 
+cozy-interapp@^0.15.1:
+  version "0.15.1"
+  resolved "https://registry.yarnpkg.com/cozy-interapp/-/cozy-interapp-0.15.1.tgz#ffdbdf5f67522d4e4c8d212d2f52836c78acca76"
+  integrity sha512-VzEB9lbovh8mOA4G6KwmKQclQsQSP3l9uM4q1xXcGEl22FAlp4sNPIkDL6pPuMhkWVrYG5xwuIaUCVSsd1oOcA==
+
 cozy-interapp@^0.5.4:
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/cozy-interapp/-/cozy-interapp-0.5.7.tgz#75cafe1732ad660e2caf1ccf412f302594705f39"
