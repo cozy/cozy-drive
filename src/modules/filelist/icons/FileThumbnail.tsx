@@ -1,7 +1,9 @@
 import React from 'react'
 
 import { models } from 'cozy-client'
+import { isDirectory } from 'cozy-client/dist/models/file'
 import { SharedBadge, SharingOwnerAvatar } from 'cozy-sharing'
+import Box from 'cozy-ui/transpiled/react/Box'
 import GhostFileBadge from 'cozy-ui/transpiled/react/GhostFileBadge'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import LinkIcon from 'cozy-ui/transpiled/react/Icons/Link'
@@ -44,7 +46,21 @@ const FileThumbnail: React.FC<FileThumbnailProps> = ({
   }
 
   if (file._id?.endsWith('.trash-dir')) {
-    return <Icon icon={TrashDuotoneIcon} size={size ?? 32} />
+    return size && size >= 48 ? (
+      <Box
+        width={size}
+        height={size}
+        bgcolor="var(--contrastBackgroundColor)"
+        borderRadius={8}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Icon icon={TrashDuotoneIcon} size={48} />
+      </Box>
+    ) : (
+      <Icon icon={TrashDuotoneIcon} size={size ?? 32} />
+    )
   }
 
   if (
@@ -60,6 +76,22 @@ const FileThumbnail: React.FC<FileThumbnailProps> = ({
     !isSharingShortcut && file.class === 'shortcut' && !isInSyncFromSharing
   const isSimpleFile =
     !isSharingShortcut && !isRegularShortcut && !isInSyncFromSharing
+  const isFolder = isSimpleFile && isDirectory(file)
+
+  if (isFolder && size && size >= 48)
+    return (
+      <Box
+        width={size}
+        height={size}
+        bgcolor="var(--contrastBackgroundColor)"
+        borderRadius={8}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <FileIcon file={file} size={48} isEncrypted={isEncrypted} />
+      </Box>
+    )
 
   return (
     <>

@@ -68,15 +68,13 @@ const File = ({
     toggleSelectedItem(attributes)
   }
 
-  const isImage = attributes.class === 'image'
-  const isLargeRow = isImage && thumbnailSizeBig
   const isRowDisabledOrInSyncFromSharing = disabled || isInSyncFromSharing
 
   const filContentRowSelected = cx(styles['fil-content-row'], {
     [styles['fil-content-row-selected']]: selected,
     [styles['fil-content-row-actioned']]: actionMenuVisible,
     [styles['fil-content-row-disabled']]: styleDisabled,
-    [styles['fil-content-row-bigger']]: isLargeRow
+    [styles['fil-content-row-bigger']]: thumbnailSizeBig
   })
 
   const formattedSize =
@@ -134,7 +132,7 @@ const File = ({
         >
           <FileThumbnail
             file={attributes}
-            size={isLargeRow ? 96 : undefined}
+            size={thumbnailSizeBig ? 96 : undefined}
             isInSyncFromSharing={isInSyncFromSharing}
             showSharedBadge={isMobile}
             componentsProps={{
