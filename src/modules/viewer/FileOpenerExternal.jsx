@@ -1,4 +1,3 @@
-/* global cozy */
 /**
  * This component was previously named FileOpener
  * It has been renamed since it is used in :
@@ -6,11 +5,12 @@
  *  - via cozydrive://
  */
 
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { RemoveScroll } from 'react-remove-scroll'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import { useClient } from 'cozy-client'
+import { ensureFilePath } from 'cozy-client/dist/models/file'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -27,110 +27,98 @@ import {
   isOfficeEnabled,
   makeOnlyOfficeFileRoute
 } from '@/modules/views/OnlyOffice/helpers'
+import { buildFileByIdQuery } from '@/queries'
 
 const FileNotFoundError = translate()(({ t }) => (
   <pre className="u-error">{t('FileOpenerExternal.fileNotFoundError')}</pre>
 ))
 
-export class FileOpener extends Component {
-  state = {
-    loading: true,
-    file: null
-  }
-  UNSAFE_componentWillMount() {
-    if (this.props.fileId) {
-      this.loadFileInfo(this.props.fileId)
-    }
-  }
+const ensureFileHasPath = async (doc, client) => {
+  if (doc.path) return doc
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.fileId !== this.props.fileId) {
-      return this.loadFileInfo(this.props.fileId)
-    }
-  }
+  const parentQuery = buildFileByIdQuery(doc.dir_id)
+  const parentResult = await client.fetchQueryAndGetFromState({
+    definition: parentQuery.definition(),
+    options: parentQuery.options
+  })
 
-  async loadFileInfo(id) {
-    const { showAlert, t } = this.props
-    try {
-      this.setState({ fileNotFound: false })
-      const resp = await cozy.client.files.statById(id, false)
-      const file = { ...resp, ...resp.attributes, id: resp._id }
-      this.setState({ file, loading: false })
-    } catch (e) {
-      this.setState({ fileNotFound: true, loading: false })
-      showAlert({
-        message: t('alert.could_not_open_file')
-      })
-    }
-  }
-
-  render() {
-    const { file, loading, fileNotFound } = this.state
-    const {
-      t,
-      service,
-      navigate,
-      breakpoints: { isDesktop }
-    } = this.props
-
-    return (
-      <div className="u-pos-absolute u-w-100 u-h-100 u-bg-charcoalGrey">
-        {loading && <Spinner size="xxlarge" middle noMargin color="white" />}
-        {fileNotFound && <FileNotFoundError />}
-        {!loading && !fileNotFound && (
-          <RemoveScroll>
-            <Viewer
-              files={[file]}
-              currentIndex={0}
-              onChangeRequest={() => {}}
-              onCloseRequest={service ? () => service.terminate() : null}
-              renderFallbackExtraContent={file => (
-                <Fallback file={file} t={t} />
-              )}
-              componentsProps={{
-                OnlyOfficeViewer: {
-                  isEnabled: isOfficeEnabled(isDesktop),
-                  opener: file => navigate(makeOnlyOfficeFileRoute(file.id))
-                }
-              }}
-            >
-              <ToolbarButtons>
-                <SharingButton variant="iconButton" />
-              </ToolbarButtons>
-              <FooterActionButtons>
-                <SharingButton />
-                <ForwardOrDownloadButton variant="buttonIcon" />
-              </FooterActionButtons>
-            </Viewer>
-          </RemoveScroll>
-        )}
-      </div>
-    )
-  }
+  return ensureFilePath(doc, parentResult.data)
 }
 
-FileOpener.propTypes = {
-  fileId: PropTypes.string.isRequired,
-  service: PropTypes.object
-}
-
-const FileOpenerWrapper = props => {
+const FileOpener = props => {
   const navigate = useNavigate()
-  const breakpoints = useBreakpoints()
+  const { isDesktop } = useBreakpoints()
   const { t } = useI18n()
   const { fileId } = useParams()
   const { showAlert } = useAlert()
 
+  const client = useClient()
+  const [state, setState] = useState({
+    loading: true,
+    file: null
+  })
+
+  const { service } = props
+  const { file, loading, fileNotFound } = state
+
+  const loadFileInfo = useCallback(
+    async id => {
+      try {
+        setState({ fileNotFound: false, loading: true })
+        const query = buildFileByIdQuery(id)
+        const result = await client.query(query.definition(), query.options)
+
+        const file = await ensureFileHasPath(result.data, client)
+
+        setState({ file, loading: false })
+      } catch (e) {
+        setState({ fileNotFound: true, loading: false })
+        showAlert({
+          message: t('alert.could_not_open_file')
+        })
+      }
+    },
+    [client, showAlert, t]
+  )
+
+  useEffect(() => {
+    const requestedFileId = fileId ?? props.fileId
+    if (requestedFileId) {
+      loadFileInfo(requestedFileId)
+    }
+  }, [fileId, props.fileId, loadFileInfo])
+
   return (
-    <FileOpener
-      breakpoints={breakpoints}
-      t={t}
-      fileId={fileId}
-      navigate={navigate}
-      showAlert={showAlert}
-      {...props}
-    />
+    <div className="u-pos-absolute u-w-100 u-h-100 u-bg-charcoalGrey">
+      {loading && <Spinner size="xxlarge" middle noMargin color="white" />}
+      {fileNotFound && <FileNotFoundError />}
+      {!loading && !fileNotFound && (
+        <RemoveScroll>
+          <Viewer
+            files={[file]}
+            currentIndex={0}
+            onChangeRequest={() => {}}
+            onCloseRequest={service ? () => service.terminate() : null}
+            renderFallbackExtraContent={file => <Fallback file={file} t={t} />}
+            componentsProps={{
+              OnlyOfficeViewer: {
+                isEnabled: isOfficeEnabled(isDesktop),
+                opener: file => navigate(makeOnlyOfficeFileRoute(file.id))
+              }
+            }}
+          >
+            <ToolbarButtons>
+              <SharingButton variant="iconButton" />
+            </ToolbarButtons>
+            <FooterActionButtons>
+              <SharingButton />
+              <ForwardOrDownloadButton variant="buttonIcon" />
+            </FooterActionButtons>
+          </Viewer>
+        </RemoveScroll>
+      )}
+    </div>
   )
 }
 
-export default FileOpenerWrapper
+export default FileOpener
