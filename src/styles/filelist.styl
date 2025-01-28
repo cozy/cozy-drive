@@ -103,8 +103,12 @@ column-width-thumbnail-bigger = 7rem
     &.fil-content-file-select
         padding .9375rem .5rem
 
-.fil-content-row-bigger .fil-content-cell.fil-content-file
-    flex 0 1 "calc(%s - %s)" % (column-width-large column-width-thumbnail-bigger)
+.fil-content-row-bigger
+    .fil-content-cell.fil-content-file
+        flex 0 1 "calc(%s - %s)" % (column-width-large column-width-thumbnail-bigger)
+
+    .fil-content-file-action
+        margin-right 0
 
 .fil-file-thumbnail
     position relative
