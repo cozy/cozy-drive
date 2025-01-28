@@ -664,6 +664,14 @@
     "actions": {
       "edit": "Modifier",
       "validate": "Valider"
+    },
+    "tooltip": {
+      "title": "Modifier le document",
+      "text": "Le document est actuellement en lecture seule, Vous pouvez le modifier en cliquant ici.",
+      "actions": {
+        "ok": "Ok",
+        "hide": "Ne plus afficher"
+      }
     }
   },
   "Migration": {

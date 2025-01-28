@@ -271,7 +271,7 @@ describe('Editor', () => {
 
         setup({ isMobile: false })
 
-        expect(screen.queryByText('Edit')).toBeTruthy()
+        expect(screen.queryByText('Edit')).toBeNull()
       })
 
       it('should hide the readOnlyFab when the editor is in edit mode', () => {
