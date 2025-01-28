@@ -4,7 +4,6 @@ import { useClient } from 'cozy-client'
 import Intents from 'cozy-interapp'
 
 import Embeder from './Embeder'
-import URLGetter from './URLGetter'
 
 const IntentHandler = ({ intentId }) => {
   const client = useClient()
@@ -32,8 +31,6 @@ const IntentHandler = ({ intentId }) => {
           intent.attributes.type === 'io.cozy.files'
         ) {
           component = Embeder
-        } else if (intent.attributes.action === 'GET_URL') {
-          component = URLGetter
         }
 
         setState({
