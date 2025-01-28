@@ -12,13 +12,15 @@ import {
 import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-import { FooterActionButtons, ForwardOrDownloadButton } from 'cozy-viewer'
+import Viewer, {
+  FooterActionButtons,
+  ForwardOrDownloadButton
+} from 'cozy-viewer'
 
 import styles from '@/modules/viewer/barviewer.styl'
 
 import { FilesViewerLoading } from '@/components/FilesViewerLoading'
 import PublicToolbar from '@/modules/public/PublicToolbar'
-import PublicViewer from '@/modules/viewer/PublicViewer'
 import {
   isOfficeEnabled,
   makeOnlyOfficeFileRoute
@@ -66,7 +68,7 @@ const LightFileViewer = ({ files, isPublic }) => {
         />
       )}
       <div className="u-pos-relative u-h-100">
-        <PublicViewer
+        <Viewer
           files={files}
           isPublic={isPublic}
           currentIndex={0}
@@ -93,7 +95,7 @@ const LightFileViewer = ({ files, isPublic }) => {
               {...(isAddToMyCozyDisplayed ? { variant: 'buttonIcon' } : {})}
             />
           </FooterActionButtons>
-        </PublicViewer>
+        </Viewer>
       </div>
     </div>
   )
