@@ -15,6 +15,7 @@ import { useRedirectLink } from 'hooks/useRedirectLink'
 import PublicToolbarMoreMenu from 'modules/public/PublicToolbarMoreMenu'
 import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
 import BackButton from 'modules/views/OnlyOffice/Toolbar/BackButton'
+import EditButton from 'modules/views/OnlyOffice/Toolbar/EditButton'
 import FileIcon from 'modules/views/OnlyOffice/Toolbar/FileIcon'
 import FileName from 'modules/views/OnlyOffice/Toolbar/FileName'
 import HomeIcon from 'modules/views/OnlyOffice/Toolbar/HomeIcon'
@@ -98,7 +99,12 @@ const Toolbar = ({ sharingInfos }) => {
         <PublicToolbarMoreMenu files={[fileWithPath]} actions={actions} />
       )}
 
-      {!isPublic && isEditorReady && <Sharing fileWithPath={fileWithPath} />}
+      {!isPublic && isEditorReady && (
+        <>
+          <Sharing fileWithPath={fileWithPath} />
+          <EditButton />
+        </>
+      )}
     </>
   )
 }
