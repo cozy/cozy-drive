@@ -52,7 +52,7 @@ const LightFileViewer = ({ files, isPublic }) => {
     <div className={styles['viewer-wrapper-with-bar']}>
       {isMobile && (
         <BarCenter>
-          <Typography variant="h3" noWrap className="u-ph-1 u-pt-half">
+          <Typography variant="h4" noWrap className="u-ph-1 u-pt-half">
             <MidEllipsis text={files[0].name} />
           </Typography>
         </BarCenter>
