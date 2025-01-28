@@ -1,11 +1,13 @@
 import React, { useMemo, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 
-import { FooterActionButtons, ForwardOrDownloadButton } from 'cozy-viewer'
+import Viewer, {
+  FooterActionButtons,
+  ForwardOrDownloadButton
+} from 'cozy-viewer'
 
 import { FilesViewerLoading } from '@/components/FilesViewerLoading'
 import { useCurrentFolderId } from '@/hooks'
-import PublicViewer from '@/modules/viewer/PublicViewer'
 import usePublicFilesQuery from '@/modules/views/Public/usePublicFilesQuery'
 
 const PublicFileViewer = () => {
@@ -72,7 +74,7 @@ const PublicFileViewer = () => {
   }
 
   return (
-    <PublicViewer
+    <Viewer
       files={viewableFiles}
       currentIndex={viewerIndex}
       isPublic={true}
@@ -82,7 +84,7 @@ const PublicFileViewer = () => {
       <FooterActionButtons>
         <ForwardOrDownloadButton />
       </FooterActionButtons>
-    </PublicViewer>
+    </Viewer>
   )
 }
 
