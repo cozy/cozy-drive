@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { models } from 'cozy-client'
+import { isReferencedBy, models } from 'cozy-client'
 import { isDirectory } from 'cozy-client/dist/models/file'
 import { SharedBadge, SharingOwnerAvatar } from 'cozy-sharing'
 import Box from 'cozy-ui/transpiled/react/Box'
@@ -13,6 +13,8 @@ import Spinner from 'cozy-ui/transpiled/react/Spinner'
 
 import IconServer from 'assets/icons/icon-type-server.svg'
 import type { File, FolderPickerEntry } from 'components/FolderPicker/types'
+import { DOCTYPE_KONNECTORS } from 'lib/doctypes'
+import { BadgeKonnector } from 'modules/filelist/icons/BadgeKonnector'
 import FileIcon from 'modules/filelist/icons/FileIcon'
 import FileIconMime from 'modules/filelist/icons/FileIconMime'
 import { SharingShortcutIcon } from 'modules/filelist/icons/SharingShortcutIcon'
@@ -77,21 +79,38 @@ const FileThumbnail: React.FC<FileThumbnailProps> = ({
   const isSimpleFile =
     !isSharingShortcut && !isRegularShortcut && !isInSyncFromSharing
   const isFolder = isSimpleFile && isDirectory(file)
+  const isKonnectorFolder = isReferencedBy(file, DOCTYPE_KONNECTORS)
 
-  if (isFolder && size && size >= 48)
+  if (isFolder) {
+    if (size && size >= 48) {
+      return (
+        <Box
+          width={size}
+          height={size}
+          bgcolor="var(--contrastBackgroundColor)"
+          borderRadius={8}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          {isKonnectorFolder ? (
+            <BadgeKonnector file={file}>
+              <FileIcon file={file} size={48} isEncrypted={isEncrypted} />
+            </BadgeKonnector>
+          ) : (
+            <FileIcon file={file} size={48} isEncrypted={isEncrypted} />
+          )}
+        </Box>
+      )
+    }
+  }
+  if (isKonnectorFolder) {
     return (
-      <Box
-        width={size}
-        height={size}
-        bgcolor="var(--contrastBackgroundColor)"
-        borderRadius={8}
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <FileIcon file={file} size={48} isEncrypted={isEncrypted} />
-      </Box>
+      <BadgeKonnector file={file}>
+        <FileIcon file={file} size={size} isEncrypted={isEncrypted} />
+      </BadgeKonnector>
     )
+  }
 
   return (
     <>
