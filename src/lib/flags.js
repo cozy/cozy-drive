@@ -26,6 +26,5 @@ const flagsList = () => {
   flag('drive.enable-encryption')
   flag('drive.dacc-files-size-by-slug')
   flag('drive.breadcrumb.showCompleteBreadcrumbOnPublicPage') // flagName should use kebab case
-  flag('drive.thumbnails-pdf.enabled')
   flag('drive.hide-nextcloud-dev')
 }

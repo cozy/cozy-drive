@@ -1,6 +1,5 @@
 import React from 'react'
 
-import flag from 'cozy-flags'
 import FileImageLoader from 'cozy-ui/transpiled/react/FileImageLoader'
 
 import FileIconMime from 'modules/filelist/icons/FileIconMime'
@@ -11,8 +10,7 @@ import styles from 'styles/filelist.styl'
 const FileIcon = ({ file, size, isEncrypted }) => {
   const isImage = file.class === 'image'
   const isShortcut = file.class === 'shortcut'
-  const shoudUseThumbnailsForPDF = flag('drive.thumbnails-pdf.enabled')
-  if (isImage || (shoudUseThumbnailsForPDF && file.class === 'pdf'))
+  if (isImage || file.class === 'pdf')
     return (
       <FileImageLoader
         file={file}
