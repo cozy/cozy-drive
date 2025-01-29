@@ -306,7 +306,8 @@ export const buildFileByIdQuery: QueryBuilder<string> = fileId => ({
   options: {
     as: `io.cozy.files/${fileId}`,
     fetchPolicy: defaultFetchPolicy,
-    singleDocData: true
+    singleDocData: true,
+    enabled: !!fileId
   }
 })
 
