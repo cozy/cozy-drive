@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 import {
   addToCozySharingLink,
@@ -27,6 +28,7 @@ import { useFileWithPath } from 'modules/views/hooks'
 
 const Toolbar = ({ sharingInfos }) => {
   const { isMobile, isDesktop } = useBreakpoints()
+  const [searchParams] = useSearchParams(window.location.search)
   const { isEditorReady, isReadOnly, isTrashed, fileId, isPublic } =
     useOnlyOfficeContext()
   const { t } = useI18n()
@@ -50,6 +52,8 @@ const Toolbar = ({ sharingInfos }) => {
   const isShareNotAdded = !loading && !isSharingShortcutCreated
   // Check if you are sharing Cozy to Cozy (Link sharing is on the `/public` route)
   const isCozyToCozySharing = window.location.pathname === '/preview'
+  // Check if you are sharing Cozy to Cozy synced (Also on the `/public` route)
+  const isCozyToCozySharingSynced = searchParams.has('username')
 
   // addSharingLink exists only in cozy to cozy sharing
   const link = isCozyToCozySharing ? addSharingLink : createCozyLink
@@ -74,6 +78,9 @@ const Toolbar = ({ sharingInfos }) => {
     !isTrashed &&
     isOfficeEditingEnabled(isDesktop)
 
+  const showSharingLinkButton =
+    isPublic && !isMobile && isShareNotAdded && !isCozyToCozySharingSynced
+
   return (
     <>
       <FilesRealTimeQueries />
@@ -96,15 +103,16 @@ const Toolbar = ({ sharingInfos }) => {
         )}
         <FileName fileWithPath={fileWithPath} isPublic={isPublic} />
       </div>
-      {isPublic && !isMobile && isShareNotAdded && (
+      {showSharingLinkButton && (
         <OpenSharingLinkButton
           link={link}
           isSharingShortcutCreated={isSharingShortcutCreated}
+          variant={showEditButton ? 'secondary' : 'primary'}
         />
       )}
       {showEditButton && <EditButton />}
 
-      {isPublic && (
+      {isPublic && !isCozyToCozySharingSynced && (
         <PublicToolbarMoreMenu files={[fileWithPath]} actions={actions} />
       )}
 
