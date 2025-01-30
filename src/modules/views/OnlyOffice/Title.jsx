@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 import { SharingBannerPlugin, OpenSharingLinkFabButton } from 'cozy-sharing'
 import { useSharingInfos } from 'cozy-sharing'
@@ -20,6 +21,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Title = () => {
+  const [searchParams] = useSearchParams(window.location.search)
   const { isMobile } = useBreakpoints()
   const { fileId, isPublic, isEditorModeView, isTrashed } =
     useOnlyOfficeContext()
@@ -30,15 +32,19 @@ const Title = () => {
   // Check if the sharing shortcut has already been created (but not synced)
   const isShareAlreadyAdded = !loading && isSharingShortcutCreated
   // Check if you are sharing Cozy to Cozy (Link sharing is on the `/public` route)
-  const isPreview = window.location.pathname === '/preview'
+  const isCozyToCozySharing = window.location.pathname === '/preview'
+  // Check if you are sharing Cozy to Cozy synced (Also on the `/public` route)
+  const isCozyToCozySharingSynced = searchParams.has('username')
   // Show the sharing banner plugin only on shared links view and cozy to cozy sharing view(not added)
   const isSharingBannerPluginDisplayed =
-    isPublic && (!isShareAlreadyAdded || !isPreview)
+    isPublic &&
+    (!isShareAlreadyAdded || !isCozyToCozySharing) &&
+    !isCozyToCozySharingSynced
 
   const showDialogToolbar = isEditorModeView || !isMobile
 
   const isAddToMyCozyFabDisplayed =
-    isMobile && isPreview && !isShareAlreadyAdded
+    isMobile && isCozyToCozySharing && !isShareAlreadyAdded
 
   return (
     <div style={{ zIndex: 'var(--zIndex-nav)' }}>
