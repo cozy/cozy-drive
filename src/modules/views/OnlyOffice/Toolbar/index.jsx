@@ -22,12 +22,14 @@ import HomeIcon from 'modules/views/OnlyOffice/Toolbar/HomeIcon'
 import HomeLinker from 'modules/views/OnlyOffice/Toolbar/HomeLinker'
 import Separator from 'modules/views/OnlyOffice/Toolbar/Separator'
 import Sharing from 'modules/views/OnlyOffice/Toolbar/Sharing'
+import { isOfficeEditingEnabled } from 'modules/views/OnlyOffice/helpers'
 import { useFileWithPath } from 'modules/views/hooks'
 
 const Toolbar = ({ sharingInfos }) => {
-  const { isMobile } = useBreakpoints()
+  const { isMobile, isDesktop } = useBreakpoints()
+  const { isEditorReady, isReadOnly, isTrashed, fileId, isPublic } =
+    useOnlyOfficeContext()
   const { t } = useI18n()
-  const { fileId, isPublic, isEditorReady } = useOnlyOfficeContext()
   const {
     addSharingLink,
     syncSharingLink,
@@ -65,6 +67,12 @@ const Toolbar = ({ sharingInfos }) => {
       isSharingShortcutCreated
     }
   )
+  const showEditButton =
+    !isMobile &&
+    isEditorReady &&
+    !isReadOnly &&
+    !isTrashed &&
+    isOfficeEditingEnabled(isDesktop)
 
   return (
     <>
@@ -94,6 +102,7 @@ const Toolbar = ({ sharingInfos }) => {
           isSharingShortcutCreated={isSharingShortcutCreated}
         />
       )}
+      {showEditButton && <EditButton />}
 
       {isPublic && (
         <PublicToolbarMoreMenu files={[fileWithPath]} actions={actions} />
