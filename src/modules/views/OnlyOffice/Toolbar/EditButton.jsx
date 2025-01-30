@@ -107,7 +107,7 @@ const EditButton = ({ openTooltip }) => {
   )
 }
 
-const EditButtonWrapper = () => {
+const EditButtonWithQuery = () => {
   const { isEditorModeView } = useOnlyOfficeContext()
 
   const { data: settings, ...appSettingsQueryResult } = useQuery(
@@ -120,6 +120,16 @@ const EditButtonWrapper = () => {
     : !hideOOEditTooltip && isEditorModeView && canWriteOfficeDocument()
 
   return <EditButton openTooltip={openTooltip} />
+}
+
+const EditButtonWrapper = () => {
+  const { isPublic } = useOnlyOfficeContext()
+
+  if (isPublic) {
+    return <EditButtonWithQuery />
+  }
+
+  return <EditButton openTooltip={false} />
 }
 
 export default EditButtonWrapper
