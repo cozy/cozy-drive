@@ -8,7 +8,6 @@ import LightbulbIcon from 'cozy-ui/transpiled/react/Icons/Lightbulb'
 import RenameIcon from 'cozy-ui/transpiled/react/Icons/Rename'
 import Tooltip from 'cozy-ui/transpiled/react/Tooltip'
 import Typography from 'cozy-ui/transpiled/react/Typography'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 
@@ -109,8 +108,7 @@ const EditButton = ({ openTooltip }) => {
 }
 
 const EditButtonWrapper = () => {
-  const { isMobile } = useBreakpoints()
-  const { editorMode } = useOnlyOfficeContext()
+  const { isEditorModeView } = useOnlyOfficeContext()
 
   const { data: settings, ...appSettingsQueryResult } = useQuery(
     getAppSettingQuery.definition,
@@ -119,11 +117,7 @@ const EditButtonWrapper = () => {
   const hideOOEditTooltip = settings?.[0]?.hideOOEditTooltip
   const openTooltip = isQueryLoading(appSettingsQueryResult)
     ? false
-    : !hideOOEditTooltip && editorMode === 'view' && canWriteOfficeDocument()
-
-  if (isMobile) {
-    return null
-  }
+    : !hideOOEditTooltip && isEditorModeView && canWriteOfficeDocument()
 
   return <EditButton openTooltip={openTooltip} />
 }
