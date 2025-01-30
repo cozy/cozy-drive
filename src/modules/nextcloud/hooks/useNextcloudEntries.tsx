@@ -2,9 +2,9 @@ import { useLocation, useParams } from 'react-router-dom'
 
 import { NextcloudFile } from 'cozy-client/types/types'
 
-import { hasDataLoaded } from 'lib/queries'
-import { useNextcloudFolder } from 'modules/nextcloud/hooks/useNextcloudFolder'
-import { useNextcloudPath } from 'modules/nextcloud/hooks/useNextcloudPath'
+import { hasDataLoaded } from '@/lib/queries'
+import { useNextcloudFolder } from '@/modules/nextcloud/hooks/useNextcloudFolder'
+import { useNextcloudPath } from '@/modules/nextcloud/hooks/useNextcloudPath'
 
 interface useNextcloudEntriesReturn {
   isLoading: boolean

@@ -2,8 +2,8 @@ import PropTypes from 'prop-types'
 import React, { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { MobileAwareBreadcrumb as Breadcrumb } from 'modules/breadcrumb/components/MobileAwareBreadcrumb'
-import { useBreadcrumbPath } from 'modules/breadcrumb/hooks/useBreadcrumbPath.jsx'
+import { MobileAwareBreadcrumb as Breadcrumb } from '@/modules/breadcrumb/components/MobileAwareBreadcrumb'
+import { useBreadcrumbPath } from '@/modules/breadcrumb/hooks/useBreadcrumbPath.jsx'
 
 const FolderViewBreadcrumb = ({
   currentFolderId,

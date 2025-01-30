@@ -10,14 +10,14 @@ import useBrowserOffline from 'cozy-ui/transpiled/react/hooks/useBrowserOffline'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { isEncryptedFolder } from 'lib/encryption'
-import logger from 'lib/logger'
-import AddMenu from 'modules/drive/AddMenu/AddMenu'
+import { isEncryptedFolder } from '@/lib/encryption'
+import logger from '@/lib/logger'
+import AddMenu from '@/modules/drive/AddMenu/AddMenu'
 import {
   closeMenu,
   toggleMenu
-} from 'modules/drive/Toolbar/components/MoreMenu'
-import { ScannerProvider } from 'modules/drive/Toolbar/components/Scanner/ScannerProvider'
+} from '@/modules/drive/Toolbar/components/MoreMenu'
+import { ScannerProvider } from '@/modules/drive/Toolbar/components/Scanner/ScannerProvider'
 
 export const AddMenuContext = createContext()
 

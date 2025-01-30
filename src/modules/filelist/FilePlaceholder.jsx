@@ -5,7 +5,7 @@ import React from 'react'
 import { TableRow, TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 
-import styles from 'styles/filelist.styl'
+import styles from '@/styles/filelist.styl'
 
 // using a seeded PRNG to prevent re-renders from changing the results
 const seededRandom = seed => {

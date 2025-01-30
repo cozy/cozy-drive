@@ -1,6 +1,6 @@
 import { useClient } from 'cozy-client'
 
-import { DOCTYPE_FILES } from 'lib/doctypes'
+import { DOCTYPE_FILES } from '@/lib/doctypes'
 
 const useParentFolder = parentFolderId => {
   const client = useClient()

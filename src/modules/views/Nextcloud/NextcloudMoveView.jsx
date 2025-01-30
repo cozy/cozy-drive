@@ -6,11 +6,11 @@ import {
   useSearchParams
 } from 'react-router-dom'
 
-import { LoaderModal } from 'components/LoaderModal'
-import { getParentPath } from 'lib/path'
-import MoveModal from 'modules/move/MoveModal'
-import { useNextcloudCurrentFolder } from 'modules/nextcloud/hooks/useNextcloudCurrentFolder'
-import { useNextcloudEntries } from 'modules/nextcloud/hooks/useNextcloudEntries'
+import { LoaderModal } from '@/components/LoaderModal'
+import { getParentPath } from '@/lib/path'
+import MoveModal from '@/modules/move/MoveModal'
+import { useNextcloudCurrentFolder } from '@/modules/nextcloud/hooks/useNextcloudCurrentFolder'
+import { useNextcloudEntries } from '@/modules/nextcloud/hooks/useNextcloudEntries'
 
 const NextcloudMoveView = () => {
   const { pathname } = useLocation()

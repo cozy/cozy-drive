@@ -5,7 +5,7 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import PlusIcon from 'cozy-ui/transpiled/react/Icons/Plus'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { AddMenuContext } from 'modules/drive/AddMenu/AddMenuProvider'
+import { AddMenuContext } from '@/modules/drive/AddMenu/AddMenuProvider'
 
 export const AddButton = ({ className }) => {
   const { t } = useI18n()

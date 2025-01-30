@@ -1,6 +1,7 @@
 import { computeFileType, computeApp, computePath } from './helpers'
-import { TRASH_DIR_ID } from 'constants/config'
-import { makeOnlyOfficeFileRoute } from 'modules/views/OnlyOffice/helpers'
+
+import { TRASH_DIR_ID } from '@/constants/config'
+import { makeOnlyOfficeFileRoute } from '@/modules/views/OnlyOffice/helpers'
 
 jest.mock('modules/views/OnlyOffice/helpers', () => ({
   makeOnlyOfficeFileRoute: jest.fn()

@@ -10,7 +10,8 @@ import {
   getSuccessful,
   purgeUploadQueue
 } from '.'
-import getMimeTypeIcon from 'lib/getMimeTypeIcon'
+
+import getMimeTypeIcon from '@/lib/getMimeTypeIcon'
 
 export const DumbUploadQueue = translate()(props => {
   return (

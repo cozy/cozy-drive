@@ -1,4 +1,4 @@
-import Contact from 'models/Contact'
+import Contact from '@/models/Contact'
 
 describe('Contact model', () => {
   describe('getInitials method', () => {

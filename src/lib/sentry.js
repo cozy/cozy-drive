@@ -8,7 +8,7 @@ import {
   matchRoutes
 } from 'react-router-dom'
 
-import appMetadata from 'lib/appMetadata'
+import appMetadata from '@/lib/appMetadata'
 
 Sentry.init({
   dsn: 'https://05f3392b39bb4504a179c95aa5b0e8f6@errors.cozycloud.cc/41',

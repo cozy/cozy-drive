@@ -7,7 +7,7 @@ import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import DotsIcon from 'cozy-ui/transpiled/react/Icons/Dots'
 import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import { useMoreMenuActions } from 'hooks/useMoreMenuActions'
+import { useMoreMenuActions } from '@/hooks/useMoreMenuActions'
 
 const MoreMenu = ({ file }) => {
   const [showMenu, setShowMenu] = useState(false)

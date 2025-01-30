@@ -4,11 +4,12 @@ import React from 'react'
 import { createMockClient, useQuery } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import * as hookHelpers from 'hooks/helpers'
-import { OnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
-import Toolbar from 'modules/views/OnlyOffice/Toolbar'
 import AppLike from 'test/components/AppLike'
 import { officeDocParam } from 'test/data'
+
+import * as hookHelpers from '@/hooks/helpers'
+import { OnlyOfficeContext } from '@/modules/views/OnlyOffice/OnlyOfficeProvider'
+import Toolbar from '@/modules/views/OnlyOffice/Toolbar'
 
 jest.mock('cozy-sharing', () => ({
   ...jest.requireActual('cozy-sharing'),

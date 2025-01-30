@@ -8,7 +8,7 @@ import DownloadIcon from 'cozy-ui/transpiled/react/Icons/Download'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { downloadFiles } from 'modules/actions/utils'
+import { downloadFiles } from '@/modules/actions/utils'
 
 export const DownloadFilesButton = ({
   files,

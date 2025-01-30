@@ -1,6 +1,6 @@
 import React from 'react'
 
-import LoadMoreButton from 'modules/filelist/LoadMore'
+import LoadMoreButton from '@/modules/filelist/LoadMore'
 
 interface FolderPickerContentLoadMoreProps {
   hasMore: boolean

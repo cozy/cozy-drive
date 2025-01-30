@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { normalizeString } from 'modules/search/components/helpers'
+import { normalizeString } from '@/modules/search/components/helpers'
 
 /**
  * Add <b> on part that equlas query into each result

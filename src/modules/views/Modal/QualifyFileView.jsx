@@ -12,8 +12,8 @@ import IconStack from 'cozy-ui/transpiled/react/IconStack'
 import NestedSelectResponsive from 'cozy-ui/transpiled/react/NestedSelect/NestedSelectResponsive'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { LoaderModal } from 'components/LoaderModal'
-import { buildFileByIdQuery } from 'queries'
+import { LoaderModal } from '@/components/LoaderModal'
+import { buildFileByIdQuery } from '@/queries'
 
 const getThemesList = () =>
   flag('hide.healthTheme.enabled')

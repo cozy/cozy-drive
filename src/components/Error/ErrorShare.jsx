@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Empty } from 'cozy-ui/transpiled/react'
+import Empty from 'cozy-ui/transpiled/react/Empty'
 import CloudBrokenIcon from 'cozy-ui/transpiled/react/Icons/CloudBroken'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 

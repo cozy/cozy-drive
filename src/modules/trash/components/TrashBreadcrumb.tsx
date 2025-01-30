@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom'
 
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { ROOT_DIR_ID, TRASH_DIR_ID } from 'constants/config.js'
-import { MobileAwareBreadcrumb as Breadcrumb } from 'modules/breadcrumb/components/MobileAwareBreadcrumb'
-import { useBreadcrumbPath } from 'modules/breadcrumb/hooks/useBreadcrumbPath.jsx'
+import { ROOT_DIR_ID, TRASH_DIR_ID } from '@/constants/config.js'
+import { MobileAwareBreadcrumb as Breadcrumb } from '@/modules/breadcrumb/components/MobileAwareBreadcrumb'
+import { useBreadcrumbPath } from '@/modules/breadcrumb/hooks/useBreadcrumbPath.jsx'
 
 interface TrashBreadcrumbProps {
   currentFolderId: string

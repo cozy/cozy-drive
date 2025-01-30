@@ -6,7 +6,7 @@ import LoadMore from 'cozy-ui/transpiled/react/LoadMore'
 import { TableRow } from 'cozy-ui/transpiled/react/deprecated/Table'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import styles from 'styles/filelist.styl'
+import styles from '@/styles/filelist.styl'
 
 const LoadMoreFiles = ({ fetchMore }) => {
   const { t } = useI18n()

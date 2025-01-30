@@ -1,4 +1,3 @@
-/* global cozy */
 /* eslint-disable import/order */
 
 import 'cozy-ui/transpiled/react/stylesheet.css'
@@ -8,19 +7,19 @@ import 'cozy-sharing/dist/stylesheet.css'
 
 import 'whatwg-fetch'
 import React from 'react'
-import { getQueryParameter } from 'react-cozy-helpers'
+import { getQueryParameter } from '@/lib/react-cozy-helpers'
 import { render } from 'react-dom'
 
 import CozyClient from 'cozy-client'
 
-import DriveProvider from 'lib/DriveProvider'
-import appMetadata from 'lib/appMetadata'
-import { schema } from 'lib/doctypes'
-import registerClientPlugins from 'lib/registerClientPlugins'
-import IntentHandler from 'modules/services'
+import DriveProvider from '@/lib/DriveProvider'
+import appMetadata from '@/lib/appMetadata'
+import { schema } from '@/lib/doctypes'
+import registerClientPlugins from '@/lib/registerClientPlugins'
+import IntentHandler from '@/modules/services'
 
 // ambient styles
-import styles from 'styles/main.styl' // eslint-disable-line no-unused-vars
+import styles from '@/styles/main.styl' // eslint-disable-line no-unused-vars
 
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.getElementById('main')
@@ -38,17 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
     schema
   })
 
-  cozy.client.init({
-    cozyURL: cozyUrl,
-    token: data.token
-  })
   registerClientPlugins(client)
 
   render(
     <DriveProvider
       client={client}
       lang={data.locale}
-      dictRequire={lang => require(`locales/${lang}`)}
+      dictRequire={lang => require(`@/locales/${lang}`)}
     >
       <IntentHandler intentId={intent} />
     </DriveProvider>,

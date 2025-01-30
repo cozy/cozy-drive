@@ -6,14 +6,15 @@ import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { moveNextcloud } from './actions/moveNextcloud'
-import { hr } from 'modules/actions'
-import { duplicateTo } from 'modules/actions/components/duplicateTo'
-import { FolderBody } from 'modules/folder/components/FolderBody'
-import { deleteNextcloudFile } from 'modules/nextcloud/components/actions/deleteNextcloudFile'
-import { downloadNextcloudFile } from 'modules/nextcloud/components/actions/downloadNextcloudFile'
-import { openWithinNextcloud } from 'modules/nextcloud/components/actions/openWithinNextcloud'
-import { rename } from 'modules/nextcloud/components/actions/rename'
-import { shareNextcloudFile } from 'modules/nextcloud/components/actions/shareNextcloudFile'
+
+import { hr } from '@/modules/actions'
+import { duplicateTo } from '@/modules/actions/components/duplicateTo'
+import { FolderBody } from '@/modules/folder/components/FolderBody'
+import { deleteNextcloudFile } from '@/modules/nextcloud/components/actions/deleteNextcloudFile'
+import { downloadNextcloudFile } from '@/modules/nextcloud/components/actions/downloadNextcloudFile'
+import { openWithinNextcloud } from '@/modules/nextcloud/components/actions/openWithinNextcloud'
+import { rename } from '@/modules/nextcloud/components/actions/rename'
+import { shareNextcloudFile } from '@/modules/nextcloud/components/actions/shareNextcloudFile'
 
 const NextcloudFolderBody = ({ path, queryResults }) => {
   const [searchParams] = useSearchParams()

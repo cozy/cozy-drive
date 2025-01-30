@@ -1,4 +1,3 @@
-import { useCurrentFolderId } from 'hooks'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -20,12 +19,13 @@ import {
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { useModalContext } from 'lib/ModalContext'
-import { share, download, trash, versions, hr } from 'modules/actions'
-import { addToFavorites } from 'modules/actions/components/addToFavorites'
-import { duplicateTo } from 'modules/actions/components/duplicateTo'
-import { moveTo } from 'modules/actions/components/moveTo'
-import { removeFromFavorites } from 'modules/actions/components/removeFromFavorites'
+import { useCurrentFolderId } from '@/hooks'
+import { useModalContext } from '@/lib/ModalContext'
+import { share, download, trash, versions, hr } from '@/modules/actions'
+import { addToFavorites } from '@/modules/actions/components/addToFavorites'
+import { duplicateTo } from '@/modules/actions/components/duplicateTo'
+import { moveTo } from '@/modules/actions/components/moveTo'
+import { removeFromFavorites } from '@/modules/actions/components/removeFromFavorites'
 
 export const useMoreMenuActions = file => {
   const [isPrintAvailable, setIsPrintAvailable] = useState(false)

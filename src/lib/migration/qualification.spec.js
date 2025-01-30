@@ -5,7 +5,7 @@ import {
   getFileRequalification,
   getMostRecentUpdatedDate,
   removeOldQualificationAttributes
-} from 'lib/migration/qualification'
+} from '@/lib/migration/qualification'
 
 jest.mock('cozy-logger', () => jest.fn())
 

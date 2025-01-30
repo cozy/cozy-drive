@@ -11,9 +11,9 @@ import Viewer, {
   SharingButton
 } from 'cozy-viewer'
 
-import Oops from 'components/Error/Oops'
-import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
-import { buildFileByIdQuery } from 'queries'
+import Oops from '@/components/Error/Oops'
+import { useOnlyOfficeContext } from '@/modules/views/OnlyOffice/OnlyOfficeProvider'
+import { buildFileByIdQuery } from '@/queries'
 
 const Error = () => {
   const { t } = useI18n()
