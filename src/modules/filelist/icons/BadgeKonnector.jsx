@@ -11,8 +11,8 @@ import AppIcon from 'cozy-ui/transpiled/react/AppIcon'
 import Badge from 'cozy-ui/transpiled/react/Badge'
 import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 
-import { DOCTYPE_KONNECTORS } from 'lib/doctypes'
-import { buildFileByIdQuery } from 'queries'
+import { DOCTYPE_KONNECTORS } from '@/lib/doctypes'
+import { buildFileByIdQuery } from '@/queries'
 
 const getKonnectorSlugFromFile = file => {
   const konnector = getReferencedBy(file, DOCTYPE_KONNECTORS)[0]

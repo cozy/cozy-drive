@@ -23,7 +23,7 @@ import HomeIcon from '@/modules/views/OnlyOffice/Toolbar/HomeIcon'
 import HomeLinker from '@/modules/views/OnlyOffice/Toolbar/HomeLinker'
 import Separator from '@/modules/views/OnlyOffice/Toolbar/Separator'
 import Sharing from '@/modules/views/OnlyOffice/Toolbar/Sharing'
-import { isOfficeEditingEnabled } from 'modules/views/OnlyOffice/helpers'
+import { isOfficeEditingEnabled } from '@/modules/views/OnlyOffice/helpers'
 import { useFileWithPath } from '@/modules/views/hooks'
 
 const Toolbar = ({ sharingInfos }) => {
