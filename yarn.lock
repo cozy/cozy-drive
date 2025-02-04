@@ -13423,6 +13423,11 @@ stylis@^4.0.3:
   resolved "https://registry.yarnpkg.com/stylis/-/stylis-4.0.10.tgz#446512d1097197ab3f02fb3c258358c3f7a14240"
   integrity sha512-m3k+dk7QeJw660eIKRRn3xPF6uuvHs/FFzjX3HQ5ove0qYsiygoAhwn5a3IYKaZPo5LrYD0rfVmtv1gNY1uYwg==
 
+stylus-config-cozy-app@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/stylus-config-cozy-app/-/stylus-config-cozy-app-0.1.0.tgz#208f22c25c2ace8a3c355ade0bef6eac40d66aab"
+  integrity sha512-G74vCU/3KwuVTexZCBgDJZ/OirE1Zg07x7eGt6OdqAwUHagFNQ/X+to7PSuAsajoE2oOeLklv8F42Rvo5Htvww==
+
 stylus-loader@8.1.1:
   version "8.1.1"
   resolved "https://registry.yarnpkg.com/stylus-loader/-/stylus-loader-8.1.1.tgz#e43f71660a16cb14a45b3d13acb1cc7a16d11b8f"
