@@ -71,7 +71,8 @@ const Toolbar = ({ sharingInfos }) => {
       isSharingShortcutCreated
     }
   )
-  const showEditButton =
+  const showPublicEditButton =
+    isPublic &&
     !isMobile &&
     isEditorReady &&
     !isReadOnly &&
@@ -107,10 +108,10 @@ const Toolbar = ({ sharingInfos }) => {
         <OpenSharingLinkButton
           link={link}
           isSharingShortcutCreated={isSharingShortcutCreated}
-          variant={showEditButton ? 'secondary' : 'primary'}
+          variant={showPublicEditButton ? 'secondary' : 'primary'}
         />
       )}
-      {showEditButton && <EditButton />}
+      {showPublicEditButton && <EditButton />}
 
       {isPublic && !isCozyToCozySharingSynced && (
         <PublicToolbarMoreMenu files={[fileWithPath]} actions={actions} />
