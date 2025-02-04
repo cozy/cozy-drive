@@ -74,7 +74,7 @@ const File = ({
   const selected = isItemSelected(attributes.id)
 
   const filContentRowSelected = cx(styles['fil-content-row'], {
-    [styles['fil-content-row-selected']]: undefined, // TODO: replace with `selected` and fix dark theme for this variable
+    [styles['fil-content-row-selected']]: selected,
     [styles['fil-content-row-actioned']]: actionMenuVisible,
     [styles['fil-content-row-disabled']]: styleDisabled,
     [styles['fil-content-row-bigger']]: thumbnailSizeBig
