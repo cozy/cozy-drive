@@ -5424,10 +5424,10 @@ cozy-realtime@4.6.0:
     "@cozy/minilog" "^1.0.0"
     cozy-device-helper "^2.7.0"
 
-cozy-sharing@^21.2.0:
-  version "21.2.0"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-21.2.0.tgz#d40e843950fc3f85243349dea0b0a3065ccb77a0"
-  integrity sha512-7Nb/Rrt8e43p95JnCmHGWbFCpjnw7w4vFeuK2jQay0szW19ZapSolW5sp8lDLzTs2QpKp3GgEO/T/Bh3ERV9Lg==
+cozy-sharing@^21.2.2:
+  version "21.2.2"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-21.2.2.tgz#7b1fac91a62ff2fe2e5090b7db92f3dded221a8e"
+  integrity sha512-SFPPrhJXam+gbwmEI6sglHIyLAcqeHwEDpkqhQ+sujVJ9VM4wVwKMRPwm24lAiEcv/5aoEdAKhd0v1KC0SXLmQ==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     classnames "^2.2.6"
@@ -5480,10 +5480,10 @@ cozy-tsconfig@1.2.0:
   resolved "https://registry.yarnpkg.com/cozy-tsconfig/-/cozy-tsconfig-1.2.0.tgz#17e61f960f139fae4d26cbac2254b9ab632b269e"
   integrity sha512-TRHnY9goF3FzVlUbP7BcHxuN2XAA4AmppT4fHHZmTKaSwYTByVR1Al+riFMDbce94kJZ1wzl9WNLWQuqzGZ6Cw==
 
-cozy-ui@^117.2.0:
-  version "117.2.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-117.2.0.tgz#642427d7d9d95a69d8927ab27504782e1bddaa36"
-  integrity sha512-9v8ggKK0rqdVGgp6LBBbISHH8GUKLtbJMaicJ0vdwcOR+JpYmTZeBM2jVIjyTMiyK/220nDbK3kusGxERnLLJg==
+cozy-ui@^117.2.1:
+  version "117.2.1"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-117.2.1.tgz#2e915bbcbfc02d52a0ff26ee35be215a8bb27636"
+  integrity sha512-0Ti5L0AKl/3zryt7G/QmOLXIqWKxwhLxRVdbgpXfccVREHSWyURJoRYnYIpyNHa3my8qFVFmYVHJB3opVqQPmA==
   dependencies:
     "@babel/runtime" "^7.3.4"
     "@date-io/date-fns" "1"
@@ -5512,10 +5512,10 @@ cozy-ui@^117.2.0:
     react-swipeable-views "^0.13.3"
     rooks "^5.11.2"
 
-cozy-viewer@^16.2.0:
-  version "16.2.0"
-  resolved "https://registry.yarnpkg.com/cozy-viewer/-/cozy-viewer-16.2.0.tgz#50048e6fcb31da81fb7d6baafd1147e3663d7d25"
-  integrity sha512-O76kLqRSp49HdbkgZjbuzfiHHSJ191vT8OWtne9h3Gn5/QXa5Fqd0hXgjAElKDpaKySMaswnFPWfyxFlWrgYTg==
+cozy-viewer@^17.0.0:
+  version "17.0.0"
+  resolved "https://registry.yarnpkg.com/cozy-viewer/-/cozy-viewer-17.0.0.tgz#87f6a9600ba3f0315c89280d4821bc370629dcd1"
+  integrity sha512-eiJ6we6bvDeX0Hzpv+zVz2JmnEtZmsJAKuA2qwpleXeaLQlN968fPsR9Mamtv8mYuA0Pt63fXQmf3cy8TmLqXw==
   dependencies:
     classnames "^2.2.5"
     hammerjs "^2.0.8"
