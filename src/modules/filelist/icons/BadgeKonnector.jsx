@@ -45,17 +45,23 @@ export const BadgeKonnector = ({ file, children }) => {
 
   // Check if the parent folder is a konnector folder, because if have no file in your account folder, its considered as a konnector folder
   const parentFolderQuery = buildFileByIdQuery(file.dir_id)
-  const { data: parentFolder, ...parentQueryQueryLeft } = useQuery(
+  const { data: parentFolder, ...parentFolderQueryLeft } = useQuery(
     parentFolderQuery.definition,
     parentFolderQuery.options
   )
-  const isparentQueryLoading = isQueryLoading(parentQueryQueryLeft)
-  const hasKonnectorParentFolder = isReferencedBy(
-    parentFolder,
-    DOCTYPE_KONNECTORS
-  )
+  const isParentQueryLoading = isQueryLoading(parentFolderQueryLeft)
+  const hasKonnectorParentFolder =
+    isReferencedBy(parentFolder, DOCTYPE_KONNECTORS) ||
+    // To guarantee the exclusion of account folders
+    (isReferencedBy(file, DOCTYPE_KONNECTORS) &&
+      isReferencedBy(file, 'io.cozy.accounts.sourceAccountIdentifier'))
 
-  if (isparentQueryLoading || hasKonnectorParentFolder) {
+  const withoutKonnectorBadge =
+    isParentQueryLoading ||
+    hasKonnectorParentFolder ||
+    !isReferencedBy(file, DOCTYPE_KONNECTORS)
+
+  if (withoutKonnectorBadge) {
     return <>{children}</>
   }
 
