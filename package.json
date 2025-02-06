@@ -77,6 +77,7 @@
     "replace": "1.2.1",
     "rsbuild-config-cozy-app": "^0.2.1",
     "stylint": "1.5.9",
+    "svg-sprite-loader": "^6.0.11",
     "swc_mut_cjs_exports": "^8.0.1",
     "typescript": "4.9.5",
     "worker-loader": "2.0.0"
