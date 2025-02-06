@@ -42,6 +42,7 @@ import Toolbar from 'modules/drive/Toolbar'
 import { useFolderSort } from 'modules/navigation/duck'
 import { useSelectionContext } from 'modules/selection/SelectionProvider'
 import Dropzone from 'modules/upload/Dropzone'
+import { POC_FolderViewBody } from 'modules/views/Drive/POC_FolderViewBody'
 import { useTrashRedirect } from 'modules/views/Drive/useTrashRedirect'
 import FolderView from 'modules/views/Folder/FolderView'
 import FolderViewBody from 'modules/views/Folder/FolderViewBody'
@@ -209,6 +210,8 @@ const DriveFolderView = () => {
     }
   }, [setIsFabDisplayed, isMobile, canWriteToCurrentFolder])
 
+  const poc = true
+
   return (
     <FolderView isNotFound={isNotFound}>
       <FolderViewHeader>
@@ -232,14 +235,19 @@ const DriveFolderView = () => {
         {flag('drive.show.harvest-banner') && (
           <HarvestBanner folderId={currentFolderId} />
         )}
-        <FolderViewBody
-          actions={actions}
-          queryResults={allResults}
-          canSort
-          currentFolderId={currentFolderId}
-          displayedFolder={displayedFolder}
-          extraColumns={extraColumns}
-        />
+
+        {poc ? (
+          <POC_FolderViewBody />
+        ) : (
+          <FolderViewBody
+            actions={actions}
+            queryResults={allResults}
+            canSort
+            currentFolderId={currentFolderId}
+            displayedFolder={displayedFolder}
+            extraColumns={extraColumns}
+          />
+        )}
         {isFabDisplayed && (
           <AddMenuProvider
             canCreateFolder={true}
