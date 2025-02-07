@@ -19,14 +19,15 @@ import {
   FileAction,
   SharingShortcutBadge
 } from './cells'
-import { ActionMenuWithHeader } from 'modules/actionmenu/ActionMenuWithHeader'
-import { extraColumnsPropTypes } from 'modules/certifications'
-import { isRenaming, getRenamingFile } from 'modules/drive/rename'
-import FileOpener from 'modules/filelist/FileOpener'
-import FileThumbnail from 'modules/filelist/icons/FileThumbnail'
-import { useSelectionContext } from 'modules/selection/SelectionProvider'
 
-import styles from 'styles/filelist.styl'
+import styles from '@/styles/filelist.styl'
+
+import { ActionMenuWithHeader } from '@/modules/actionmenu/ActionMenuWithHeader'
+import { extraColumnsPropTypes } from '@/modules/certifications'
+import { isRenaming, getRenamingFile } from '@/modules/drive/rename'
+import FileOpener from '@/modules/filelist/FileOpener'
+import FileThumbnail from '@/modules/filelist/icons/FileThumbnail'
+import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 
 const File = ({
   t,
@@ -70,6 +71,8 @@ const File = ({
 
   const isRowDisabledOrInSyncFromSharing = disabled || isInSyncFromSharing
 
+  const selected = isItemSelected(attributes.id)
+
   const filContentRowSelected = cx(styles['fil-content-row'], {
     [styles['fil-content-row-selected']]: selected,
     [styles['fil-content-row-actioned']]: actionMenuVisible,
@@ -89,8 +92,6 @@ const File = ({
       ? t('table.row_update_format_full')
       : t('table.row_update_format')
   )
-
-  const selected = isItemSelected(attributes.id)
 
   // We don't allow any action on shared drives and trash
   // because they are magic folder created by the stack

@@ -5,9 +5,9 @@ import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
 
-import FileOpenerExternal from 'modules/viewer/FileOpenerExternal'
-import OnlyOfficeView from 'modules/views/OnlyOffice'
-import { isOfficeEnabled } from 'modules/views/OnlyOffice/helpers'
+import FileOpenerExternal from '@/modules/viewer/FileOpenerExternal'
+import OnlyOfficeView from '@/modules/views/OnlyOffice'
+import { isOfficeEnabled } from '@/modules/views/OnlyOffice/helpers'
 
 class Embeder extends React.Component {
   constructor(props) {

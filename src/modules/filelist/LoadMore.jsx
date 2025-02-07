@@ -2,18 +2,19 @@ import cx from 'classnames'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { Button, Spinner } from 'cozy-ui/transpiled/react'
+import Buttons from 'cozy-ui/transpiled/react/Buttons'
+import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { TableRow } from 'cozy-ui/transpiled/react/deprecated/Table'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import styles from 'styles/filelist.styl'
+import styles from '@/styles/filelist.styl'
 
 const LoadMore = ({ onClick, isLoading, text }) => (
   <TableRow
     className={cx(styles['fil-content-row'], styles['fil-content-row--center'])}
   >
-    <Button
-      theme="secondary"
+    <Buttons
+      variant="secondary"
       onClick={onClick}
       label={isLoading ? <Spinner noMargin /> : text}
     />

@@ -8,8 +8,8 @@ import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import { isEncryptedFileOrFolder } from 'lib/encryption'
-import { navigateToModal } from 'modules/actions/helpers'
+import { isEncryptedFileOrFolder } from '@/lib/encryption'
+import { navigateToModal } from '@/modules/actions/helpers'
 
 const share = ({ t, hasWriteAccess, navigate, pathname, allLoaded }) => {
   const label = t('Files.share.cta')

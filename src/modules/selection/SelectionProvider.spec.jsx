@@ -8,11 +8,12 @@ import {
   useLocation
 } from 'react-router-dom'
 
+import { generateFile } from 'test/generate'
+
 import {
   SelectionProvider,
   useSelectionContext
-} from 'modules/selection/SelectionProvider'
-import { generateFile } from 'test/generate'
+} from '@/modules/selection/SelectionProvider'
 
 const SelectionConsumer = ({ items }) => {
   const {

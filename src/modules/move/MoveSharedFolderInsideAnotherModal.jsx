@@ -3,14 +3,14 @@ import React from 'react'
 
 import { useQuery } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
-import { ConfirmDialog } from 'cozy-ui/react/CozyDialogs'
 import Buttons from 'cozy-ui/transpiled/react/Buttons'
+import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { LoaderModal } from 'components/LoaderModal'
-import { getEntriesName } from 'modules/move/helpers'
-import { buildOnlyFolderQuery } from 'queries'
+import { LoaderModal } from '@/components/LoaderModal'
+import { getEntriesName } from '@/modules/move/helpers'
+import { buildOnlyFolderQuery } from '@/queries'
 
 /**
  * Alert the user when is trying to move a shared folder/file inside another shared folder

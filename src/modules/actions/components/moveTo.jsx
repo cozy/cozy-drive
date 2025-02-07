@@ -6,7 +6,7 @@ import MovetoIcon from 'cozy-ui/transpiled/react/Icons/Moveto'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 
-import { navigateToModalWithMultipleFile } from 'modules/actions/helpers'
+import { navigateToModalWithMultipleFile } from '@/modules/actions/helpers'
 
 const moveTo = ({ t, canMove, pathname, navigate, search }) => {
   const label = t('SelectionBar.moveto')

@@ -14,14 +14,14 @@ import LoadMore from 'cozy-ui/transpiled/react/LoadMore'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import BackButton from 'components/Button/BackButton'
-import BarSearchInputGroup from 'modules/search/components/BarSearchInputGroup'
-import SearchEmpty from 'modules/search/components/SearchEmpty'
-import SuggestionItem from 'modules/search/components/SuggestionItem'
-import SuggestionListSkeleton from 'modules/search/components/SuggestionListSkeleton'
-import useSearch from 'modules/search/hooks/useSearch'
+import styles from '@/modules/search/components/styles.styl'
 
-import styles from 'modules/search/components/styles.styl'
+import BackButton from '@/components/Button/BackButton'
+import BarSearchInputGroup from '@/modules/search/components/BarSearchInputGroup'
+import SearchEmpty from '@/modules/search/components/SearchEmpty'
+import SuggestionItem from '@/modules/search/components/SuggestionItem'
+import SuggestionListSkeleton from '@/modules/search/components/SuggestionListSkeleton'
+import useSearch from '@/modules/search/hooks/useSearch'
 
 const SearchView = () => {
   const webviewIntent = useWebviewIntent()

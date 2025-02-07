@@ -10,9 +10,9 @@ import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import logger from 'lib/logger'
-import DestroyConfirm from 'modules/trash/components/DestroyConfirm'
-import { buildFileByIdQuery } from 'queries'
+import logger from '@/lib/logger'
+import DestroyConfirm from '@/modules/trash/components/DestroyConfirm'
+import { buildFileByIdQuery } from '@/queries'
 
 const TrashedBanner = ({ fileId, isPublic }) => {
   const { t } = useI18n()

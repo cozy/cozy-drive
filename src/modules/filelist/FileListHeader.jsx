@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { FileListHeaderDesktop } from 'modules/filelist/FileListHeaderDesktop'
-import { FileListHeaderMobile } from 'modules/filelist/FileListHeaderMobile'
+import { FileListHeaderDesktop } from '@/modules/filelist/FileListHeaderDesktop'
+import { FileListHeaderMobile } from '@/modules/filelist/FileListHeaderMobile'
 
 /**
  * @typedef {Object} Props

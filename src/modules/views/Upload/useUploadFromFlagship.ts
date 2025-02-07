@@ -7,17 +7,17 @@ import logger from 'cozy-logger'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { getErrorMessage } from 'modules/drive/helpers'
-import { ADD_TO_UPLOAD_QUEUE, purgeUploadQueue } from 'modules/upload'
+import { getErrorMessage } from '@/modules/drive/helpers'
+import { ADD_TO_UPLOAD_QUEUE, purgeUploadQueue } from '@/modules/upload'
 import {
   FileFromNative,
   UploadFromFlagship
-} from 'modules/views/Upload/UploadTypes'
+} from '@/modules/views/Upload/UploadTypes'
 import {
   generateForQueue,
   getFilesToHandle,
   sendFilesToHandle
-} from 'modules/views/Upload/UploadUtils'
+} from '@/modules/views/Upload/UploadUtils'
 
 export const useUploadFromFlagship = (): UploadFromFlagship => {
   const webviewIntent = useWebviewIntent()

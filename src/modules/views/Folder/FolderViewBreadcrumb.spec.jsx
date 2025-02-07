@@ -2,11 +2,12 @@ import { render } from '@testing-library/react'
 import React from 'react'
 
 import FolderViewBreadcrumb from './FolderViewBreadcrumb'
-import { useBreadcrumbPath } from 'modules/breadcrumb/hooks/useBreadcrumbPath'
 import {
-  dummyBreadcrumbPath,
+  dummyBreadcrumbPathWithRootLarge,
   dummyRootBreadcrumbPath
 } from 'test/dummies/dummyBreadcrumbPath'
+
+import { useBreadcrumbPath } from '@/modules/breadcrumb/hooks/useBreadcrumbPath'
 
 jest.mock('modules/breadcrumb/hooks/useBreadcrumbPath')
 jest.mock('modules/breadcrumb/components/MobileAwareBreadcrumb', () => ({
@@ -50,7 +51,7 @@ describe('FolderViewBreadcrumb', () => {
 
   it('should set correct path in template', () => {
     // Given
-    useBreadcrumbPath.mockReturnValue(dummyBreadcrumbPath())
+    useBreadcrumbPath.mockReturnValue(dummyBreadcrumbPathWithRootLarge())
 
     // When
     const { getByTestId } = render(

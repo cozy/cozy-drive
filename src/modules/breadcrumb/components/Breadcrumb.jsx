@@ -7,7 +7,7 @@ import RightIcon from 'cozy-ui/transpiled/react/Icons/Right'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import styles from 'modules/breadcrumb/styles/breadcrumb.styl'
+import styles from '@/modules/breadcrumb/styles/breadcrumb.styl'
 
 const Breadcrumb = ({
   path,
@@ -19,6 +19,14 @@ const Breadcrumb = ({
   const { t } = useI18n()
   const [deployed, setDeployed] = useState(false)
   const wrapperRef = useRef(null)
+
+  const closeMenu = useCallback(() => {
+    setDeployed(false)
+  }, [setDeployed])
+
+  const openMenu = useCallback(() => {
+    setDeployed(true)
+  }, [setDeployed])
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -33,14 +41,6 @@ const Breadcrumb = ({
   }, [wrapperRef, closeMenu])
 
   const toggleDeploy = () => (deployed ? closeMenu() : openMenu())
-
-  const openMenu = useCallback(() => {
-    setDeployed(true)
-  }, [setDeployed])
-
-  const closeMenu = useCallback(() => {
-    setDeployed(false)
-  }, [setDeployed])
 
   if (!path) return false
 

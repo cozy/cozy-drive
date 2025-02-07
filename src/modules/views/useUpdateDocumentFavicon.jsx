@@ -2,8 +2,8 @@ import { useEffect } from 'react'
 
 import { useClient } from 'cozy-client'
 
-import useDocument from 'components/useDocument'
-import { buildFileByIdQuery } from 'queries'
+import useDocument from '@/components/useDocument'
+import { buildFileByIdQuery } from '@/queries'
 
 const acceptedTypes = [
   'text',
@@ -29,7 +29,7 @@ const normalizeClass = docClass => {
 
 const makeFaviconHref = docClass => {
   const type = normalizeClass(docClass)
-  return `/public/icons/icon-type-${
+  return `/assets/icons/icon-type-${
     acceptedTypes.includes(type) ? type : 'files'
   }.svg`
 }

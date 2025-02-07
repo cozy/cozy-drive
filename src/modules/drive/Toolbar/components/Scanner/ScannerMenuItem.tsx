@@ -8,7 +8,7 @@ import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { useScannerContext } from 'modules/drive/Toolbar/components/Scanner/ScannerProvider'
+import { useScannerContext } from '@/modules/drive/Toolbar/components/Scanner/ScannerProvider'
 
 const log = logger.namespace('Toolbar/components/Scanner/ScannerMenuItem')
 

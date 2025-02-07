@@ -8,10 +8,10 @@ import { ConfirmDialog } from 'cozy-ui/transpiled/react/CozyDialogs'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { useRedirectLink } from 'hooks/useRedirectLink'
-import { DOCTYPE_FILES } from 'lib/doctypes'
-import { useOnlyOfficeContext } from 'modules/views/OnlyOffice/OnlyOfficeProvider'
-import { makeOnlyOfficeFileRoute } from 'modules/views/OnlyOffice/helpers'
+import { useRedirectLink } from '@/hooks/useRedirectLink'
+import { DOCTYPE_FILES } from '@/lib/doctypes'
+import { useOnlyOfficeContext } from '@/modules/views/OnlyOffice/OnlyOfficeProvider'
+import { makeOnlyOfficeFileRoute } from '@/modules/views/OnlyOffice/helpers'
 
 const FileDeletedModal = () => {
   const { fileId, setFileDeleted, editorMode, isPublic } =

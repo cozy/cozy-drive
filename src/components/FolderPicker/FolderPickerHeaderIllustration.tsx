@@ -5,9 +5,9 @@ import Counter from 'cozy-ui/transpiled/react/Counter'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import DriveIcon from 'cozy-ui/transpiled/react/Icons/FileTypeFolder'
 
-import { FolderPickerEntry } from 'components/FolderPicker/types'
-import getMimeTypeIcon from 'lib/getMimeTypeIcon'
-import FileThumbnail from 'modules/filelist/icons/FileThumbnail'
+import { FolderPickerEntry } from '@/components/FolderPicker/types'
+import getMimeTypeIcon from '@/lib/getMimeTypeIcon'
+import FileThumbnail from '@/modules/filelist/icons/FileThumbnail'
 
 interface FolderPickerHeaderIllustrationProps {
   entries: FolderPickerEntry[]

@@ -6,13 +6,13 @@ import { withClient } from 'cozy-client'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { AddFolderRow } from 'modules/filelist/AddFolderRow'
+import { AddFolderRow } from '@/modules/filelist/AddFolderRow'
 import {
   isTypingNewFolderName,
   hideNewFolderInput,
   isEncryptedFolder
-} from 'modules/filelist/duck'
-import { createFolder } from 'modules/navigation/duck'
+} from '@/modules/filelist/duck'
+import { createFolder } from '@/modules/navigation/duck'
 
 const AddFolder = ({
   visible,

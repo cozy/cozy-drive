@@ -1,9 +1,10 @@
 import React, { useCallback } from 'react'
-import { showModal } from 'react-cozy-helpers'
 import { connect } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import DeleteConfirm from '../../DeleteConfirm'
+
+import { showModal } from '@/lib/react-cozy-helpers'
 
 const EnhancedDeleteConfirm = ({ folder, ...rest }) => {
   const navigate = useNavigate()

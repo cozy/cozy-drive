@@ -5,10 +5,10 @@ import { hasQueryBeenLoaded, useQuery } from 'cozy-client'
 import { IOCozyFile } from 'cozy-client/types/types'
 import flag from 'cozy-flags'
 
-import { LoaderModal } from 'components/LoaderModal'
-import useDisplayedFolder from 'hooks/useDisplayedFolder'
-import { DuplicateModal } from 'modules/duplicate/components/DuplicateModal'
-import { buildParentsByIdsQuery } from 'queries'
+import { LoaderModal } from '@/components/LoaderModal'
+import useDisplayedFolder from '@/hooks/useDisplayedFolder'
+import { DuplicateModal } from '@/modules/duplicate/components/DuplicateModal'
+import { buildParentsByIdsQuery } from '@/queries'
 
 const FolderDuplicateView: FC = () => {
   const navigate = useNavigate()

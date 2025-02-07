@@ -13,8 +13,8 @@ import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { File } from 'components/FolderPicker/types'
-import { getEntriesTypeTranslated } from 'lib/entries'
+import { File } from '@/components/FolderPicker/types'
+import { getEntriesTypeTranslated } from '@/lib/entries'
 
 interface DestroyConfirmProps {
   files: File[]

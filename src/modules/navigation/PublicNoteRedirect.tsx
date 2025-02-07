@@ -9,8 +9,8 @@ import SadCozyIcon from 'cozy-ui/transpiled/react/Icons/SadCozy'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { joinPath } from 'lib/path'
-import { DummyLayout } from 'modules/layout/DummyLayout'
+import { joinPath } from '@/lib/path'
+import { DummyLayout } from '@/modules/layout/DummyLayout'
 
 const PublicNoteRedirect: FC = () => {
   const { t } = useI18n()

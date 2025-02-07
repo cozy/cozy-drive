@@ -26,11 +26,38 @@ module.exports = {
     '^config/(.*)': '<rootDir>/src/config/$1',
     '^constants/(.*)': '<rootDir>/src/constants/$1',
     '^modules/(.*)': '<rootDir>/src/modules/$1',
-    '^queries(.*)': '<rootDir>/src/queries$1'
+    '^queries(.*)': '<rootDir>/src/queries$1',
+    '^@/(.*)$': '<rootDir>/src/$1'
   },
   clearMocks: true,
   transform: {
-    '\\.[jt]sx?$': 'babel-jest',
+    '\\.(js|jsx|mjs)$': [
+      '@swc/jest',
+      {
+        jsc: {
+          experimental: {
+            plugins: [['swc_mut_cjs_exports', {}]],
+          },
+          parser: {
+            jsx: true,
+          },
+        },
+      },
+    ],
+    '\\.(ts|tsx)$': [
+      '@swc/jest',
+      {
+        jsc: {
+          experimental: {
+            plugins: [['swc_mut_cjs_exports', {}]],
+          },
+          parser: {
+            syntax: 'typescript',
+            tsx: true,
+          },
+        },
+      },
+    ],
     '^.+\\.webapp$': '<rootDir>/test/jestLib/json-transformer.js'
   },
   transformIgnorePatterns: [
@@ -42,10 +69,5 @@ module.exports = {
     url: 'http://cozy.localhost:8080/'
   },
   testMatch: ['**/(*.)(spec|test).[jt]s?(x)'],
-  globals: {
-    __APP_SLUG__: 'drive',
-    __TARGET__: 'browser',
-    __DEVELOPMENT__: true
-  },
   reporters: ['default', '<rootDir>/jestHelpers/ConsoleUsageReporter.js']
 }

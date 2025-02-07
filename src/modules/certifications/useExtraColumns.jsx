@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react'
 
 import { useClient } from 'cozy-client'
 
-import { extraColumnsSpecs } from 'modules/certifications/'
+import { extraColumnsSpecs } from '@/modules/certifications/'
 
 /**
  * @typedef {object} ExtraColumn

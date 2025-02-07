@@ -2,7 +2,7 @@ import React from 'react'
 
 import ActionsBar from 'cozy-ui/transpiled/react/ActionsBar'
 
-import { useSelectionContext } from 'modules/selection/SelectionProvider'
+import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 
 type DriveAction = Record<
   string,

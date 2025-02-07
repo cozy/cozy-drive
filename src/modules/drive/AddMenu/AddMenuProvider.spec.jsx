@@ -4,8 +4,9 @@ import React, { useContext } from 'react'
 import { createMockClient } from 'cozy-client'
 
 import AddMenuProvider, { AddMenuContext } from './AddMenuProvider'
-import logger from 'lib/logger'
 import AppLike from 'test/components/AppLike'
+
+import logger from '@/lib/logger'
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),

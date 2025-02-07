@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { FolderPickerContentCozy } from 'components/FolderPicker/FolderPickerContentCozy'
-import { FolderPickerContentNextcloud } from 'components/FolderPicker/FolderPickerContentNextcloud'
-import { File, FolderPickerEntry } from 'components/FolderPicker/types'
+import { FolderPickerContentCozy } from '@/components/FolderPicker/FolderPickerContentCozy'
+import { FolderPickerContentNextcloud } from '@/components/FolderPicker/FolderPickerContentNextcloud'
+import { File, FolderPickerEntry } from '@/components/FolderPicker/types'
 
 interface FolderPickerBodyProps {
   folder: File
