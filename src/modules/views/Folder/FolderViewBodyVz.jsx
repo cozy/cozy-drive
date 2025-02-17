@@ -13,7 +13,7 @@ import TableCell from 'cozy-ui/transpiled/react/TableCell'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { columns, secondarySort } from './helpers'
+import { desktopColumns, mobileColumns, secondarySort } from './helpers'
 import { useSyncingFakeFile } from './useSyncingFakeFile'
 
 import styles from '@/styles/filelist.styl'
@@ -50,7 +50,7 @@ const FolderViewBody = ({
   extraColumns,
   canInteractWith
 }) => {
-  const { isDesktop } = useBreakpoints()
+  const { isDesktop, isMobile } = useBreakpoints()
   const navigate = useNavigate()
 
   /**
@@ -136,6 +136,8 @@ const FolderViewBody = ({
   // console.info(' ')
 
   if (needsToWait || isLoading || !hasDataToShow) return null
+
+  const columns = isMobile ? mobileColumns : desktopColumns
 
   return (
     <FolderUnlocker

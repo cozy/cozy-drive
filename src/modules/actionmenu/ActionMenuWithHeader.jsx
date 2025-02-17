@@ -18,6 +18,10 @@ export const ActionMenuWithHeader = ({
   onClose,
   anchorElRef
 }) => {
+  console.log('==========')
+  console.log('ActionMenuWithHeader')
+  console.log('file : ', file)
+  console.log('==========')
   return (
     <ActionsMenu
       open

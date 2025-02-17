@@ -1,4 +1,4 @@
-export const columns = [
+export const desktopColumns = [
   {
     id: 'name',
     // width: 300,
@@ -26,6 +26,23 @@ export const columns = [
     label: 'Partage',
     textAlign: 'right',
     sortable: false
+  },
+  {
+    id: 'menu',
+    disablePadding: false,
+    width: 60,
+    label: 'Menu',
+    textAlign: 'center',
+    sortable: false
+  }
+]
+
+export const mobileColumns = [
+  {
+    id: 'name',
+    // width: 300,
+    maxWidth: 0,
+    label: 'Nom'
   },
   {
     id: 'menu',
