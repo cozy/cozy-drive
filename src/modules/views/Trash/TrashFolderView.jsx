@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate, Outlet, useLocation } from 'react-router-dom'
 
 import { useQuery, useClient } from 'cozy-client'
+import flag from 'cozy-flags'
 import { useSharingContext } from 'cozy-sharing'
 import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import { Content } from 'cozy-ui/transpiled/react/Layout'
@@ -11,16 +12,17 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import FolderView from '../Folder/FolderView'
 import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewHeader from '../Folder/FolderViewHeader'
+import FolderViewBodyVz from '../Folder/virtualized/FolderViewBody'
 
 import useHead from '@/components/useHead'
 import { useCurrentFolderId, useDisplayedFolder } from '@/hooks'
 import { restore } from '@/modules/actions'
-import { useSelectionContext } from '@/modules/selection/SelectionProvider'
-import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
-import FabWithAddMenuContext from '@/modules/drive/FabWithAddMenuContext'
 import { makeExtraColumnsNamesFromMedia } from '@/modules/certifications'
 import { useExtraColumns } from '@/modules/certifications/useExtraColumns'
+import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
+import FabWithAddMenuContext from '@/modules/drive/FabWithAddMenuContext'
 import { useFolderSort } from '@/modules/navigation/duck'
+import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 import { TrashBreadcrumb } from '@/modules/trash/components/TrashBreadcrumb'
 import { TrashToolbar } from '@/modules/trash/components/TrashToolbar'
 import { destroy } from '@/modules/trash/components/actions/destroy'
@@ -91,14 +93,23 @@ export const TrashFolderView = () => {
           <TrashBreadcrumb currentFolderId={currentFolderId} />
           <TrashToolbar />
         </FolderViewHeader>
-        <FolderViewBody
-          currentFolderId={currentFolderId}
-          displayedFolder={displayedFolder}
-          actions={actions}
-          queryResults={[foldersResult, filesResult]}
-          canSort
-          extraColumns={extraColumns}
-        />
+        {flag('drive.virtualization.enabled') && !isMobile ? (
+          <FolderViewBodyVz
+            actions={actions}
+            queryResults={[foldersResult, filesResult]}
+            withFilePath={true}
+            extraColumns={extraColumns}
+          />
+        ) : (
+          <FolderViewBody
+            currentFolderId={currentFolderId}
+            displayedFolder={displayedFolder}
+            actions={actions}
+            queryResults={[foldersResult, filesResult]}
+            canSort
+            extraColumns={extraColumns}
+          />
+        )}
         <Outlet />
         {isMobile && (
           <AddMenuProvider
