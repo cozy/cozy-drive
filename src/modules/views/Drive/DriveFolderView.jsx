@@ -49,6 +49,7 @@ import FolderView from '@/modules/views/Folder/FolderView'
 import FolderViewBody from '@/modules/views/Folder/FolderViewBody'
 import FolderViewBreadcrumb from '@/modules/views/Folder/FolderViewBreadcrumb'
 import FolderViewHeader from '@/modules/views/Folder/FolderViewHeader'
+import FolderViewBodyVz from '@/modules/views/Folder/virtualized/FolderViewBody'
 import { useResumeUploadFromFlagship } from '@/modules/views/Upload/useResumeFromFlagship'
 import {
   buildDriveQuery,
@@ -91,7 +92,9 @@ const DriveFolderView = () => {
     currentFolderId
   })
 
-  const { displayedFolder, isNotFound } = useDisplayedFolder()
+  const { displayedFolder: _displayedFolder, isNotFound } = useDisplayedFolder()
+
+  const displayedFolder = useMemo(() => _displayedFolder, [_displayedFolder])
 
   useTrashRedirect(displayedFolder)
 
@@ -227,14 +230,24 @@ const DriveFolderView = () => {
         {flag('drive.show.harvest-banner') && (
           <HarvestBanner folderId={currentFolderId} />
         )}
-        <FolderViewBody
-          actions={actions}
-          queryResults={allResults}
-          canSort
-          currentFolderId={currentFolderId}
-          displayedFolder={displayedFolder}
-          extraColumns={extraColumns}
-        />
+        {flag('drive.virtualization.enabled') && !isMobile ? (
+          <FolderViewBodyVz
+            actions={actions}
+            queryResults={allResults}
+            currentFolderId={currentFolderId}
+            displayedFolder={displayedFolder}
+            extraColumns={extraColumns}
+          />
+        ) : (
+          <FolderViewBody
+            actions={actions}
+            queryResults={allResults}
+            canSort
+            currentFolderId={currentFolderId}
+            displayedFolder={displayedFolder}
+            extraColumns={extraColumns}
+          />
+        )}
         {isFabDisplayed && (
           <AddMenuProvider
             canCreateFolder={true}

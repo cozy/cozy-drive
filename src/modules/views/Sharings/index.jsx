@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate, useLocation, Outlet } from 'react-router-dom'
 
 import { useClient, hasQueryBeenLoaded, useQuery } from 'cozy-client'
+import flag from 'cozy-flags'
 import {
   useSharingContext,
   useNativeFileSharing,
@@ -18,6 +19,7 @@ import withSharedDocumentIds from './withSharedDocumentIds'
 import FolderView from '../Folder/FolderView'
 import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewHeader from '../Folder/FolderViewHeader'
+import FolderViewBodyVz from '../Folder/virtualized/FolderViewBody'
 
 import useHead from '@/components/useHead'
 import { useModalContext } from '@/lib/ModalContext'
@@ -122,13 +124,22 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
           <FileListRowsPlaceholder />
         ) : (
           <>
-            <FolderViewBody
-              actions={actions}
-              queryResults={[result]}
-              canSort={false}
-              withFilePath={true}
-              extraColumns={extraColumns}
-            />
+            {flag('drive.virtualization.enabled') && !isMobile ? (
+              <FolderViewBodyVz
+                actions={actions}
+                queryResults={[result]}
+                withFilePath={true}
+                extraColumns={extraColumns}
+              />
+            ) : (
+              <FolderViewBody
+                actions={actions}
+                queryResults={[result]}
+                canSort={false}
+                withFilePath={true}
+                extraColumns={extraColumns}
+              />
+            )}
             <Outlet />
           </>
         )}
