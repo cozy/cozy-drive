@@ -46,6 +46,7 @@ import Dropzone from '@/modules/upload/Dropzone'
 import { useTrashRedirect } from '@/modules/views/Drive/useTrashRedirect'
 import FolderView from '@/modules/views/Folder/FolderView'
 import FolderViewBody from '@/modules/views/Folder/FolderViewBody'
+import FolderViewBodyVz from '@/modules/views/Folder/FolderViewBodyVz'
 import FolderViewBreadcrumb from '@/modules/views/Folder/FolderViewBreadcrumb'
 import FolderViewHeader from '@/modules/views/Folder/FolderViewHeader'
 import { useResumeUploadFromFlagship } from '@/modules/views/Upload/useResumeFromFlagship'
@@ -233,14 +234,25 @@ const DriveFolderView = () => {
         {flag('drive.show.harvest-banner') && (
           <HarvestBanner folderId={currentFolderId} />
         )}
-        <FolderViewBody
-          actions={actions}
-          queryResults={allResults}
-          canSort
-          currentFolderId={currentFolderId}
-          displayedFolder={displayedFolder}
-          extraColumns={extraColumns}
-        />
+        {flag('drive.virtualization.enabled') && !isMobile ? (
+          <FolderViewBodyVz
+            actions={actions}
+            queryResults={allResults}
+            canSort
+            currentFolderId={currentFolderId}
+            displayedFolder={displayedFolder}
+            extraColumns={extraColumns}
+          />
+        ) : (
+          <FolderViewBody
+            actions={actions}
+            queryResults={allResults}
+            canSort
+            currentFolderId={currentFolderId}
+            displayedFolder={displayedFolder}
+            extraColumns={extraColumns}
+          />
+        )}
         {isFabDisplayed && (
           <AddMenuProvider
             canCreateFolder={true}
