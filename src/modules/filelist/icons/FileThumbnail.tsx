@@ -53,13 +53,11 @@ const FileThumbnail: React.FC<FileThumbnailProps> = ({
   if (file._id?.endsWith('.trash-dir')) {
     return size && size >= 48 ? (
       <Box
+        className="u-flex u-flex-items-center u-flex-justify-center"
         width={size}
         height={size}
         bgcolor="var(--contrastBackgroundColor)"
         borderRadius={8}
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
       >
         <Icon icon={TrashDuotoneIcon} size={48} />
       </Box>
@@ -88,13 +86,11 @@ const FileThumbnail: React.FC<FileThumbnailProps> = ({
     if (size && size >= 48) {
       return (
         <Box
+          className="u-flex u-flex-items-center u-flex-justify-center"
           width={size}
           height={size}
           bgcolor="var(--contrastBackgroundColor)"
           borderRadius={8}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
         >
           {isKonnectorFolder ? (
             <BadgeKonnector file={file}>
