@@ -16,6 +16,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import withSharedDocumentIds from './withSharedDocumentIds'
 import FolderView from '../Folder/FolderView'
 import FolderViewBody from '../Folder/FolderViewBody'
+import FolderViewBodyVZ from '../Folder/FolderViewBodyVZ'
 import FolderViewHeader from '../Folder/FolderViewHeader'
 
 import useHead from '@/components/useHead'
@@ -116,7 +117,7 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
         <FileListRowsPlaceholder />
       ) : (
         <>
-          <FolderViewBody
+          <FolderViewBodyVZ
             actions={actions}
             queryResults={[result]}
             canSort={false}

@@ -15,6 +15,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import FolderView from '../Folder/FolderView'
 import FolderViewBody from '../Folder/FolderViewBody'
+import FolderViewBodyVZ from '../Folder/FolderViewBodyVZ'
 import FolderViewHeader from '../Folder/FolderViewHeader'
 
 import useHead from '@/components/useHead'
@@ -118,7 +119,7 @@ export const RecentView = () => {
         <Breadcrumb path={[{ name: t('breadcrumb.title_recent') }]} />
         <Toolbar canUpload={false} canCreateFolder={false} />
       </FolderViewHeader>
-      <FolderViewBody
+      <FolderViewBodyVZ
         actions={actions}
         queryResults={[result]}
         canSort={false}
