@@ -2,13 +2,20 @@ import cx from 'classnames'
 import PropTypes from 'prop-types'
 import React from 'react'
 
+import flag from 'cozy-flags'
 import { SharedDocument, useSharingContext } from 'cozy-sharing'
+import Button from 'cozy-ui/transpiled/react/Buttons'
+import Icon from 'cozy-ui/transpiled/react/Icon'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import styles from '@/styles/toolbar.styl'
 
+import iconListMin from '@/assets/icons/icon-list-min.svg'
+import iconList from '@/assets/icons/icon-list.svg'
 import { BarRightOnMobile } from '@/components/Bar'
 import { useDisplayedFolder, useCurrentFolderId } from '@/hooks'
+import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
 import InsideRegularFolder from '@/modules/drive/Toolbar/components/InsideRegularFolder'
 import MoreMenu from '@/modules/drive/Toolbar/components/MoreMenu'
 import SearchButton from '@/modules/drive/Toolbar/components/SearchButton'
@@ -25,6 +32,8 @@ const Toolbar = ({
   hasWriteAccess,
   isSharedWithMe
 }) => {
+  const { t } = useI18n()
+  const { isBigThumbnail, toggleThumbnailSize } = useThumbnailSizeContext()
   const { displayedFolder } = useDisplayedFolder()
   const { isMobile } = useBreakpoints()
   const { showSelectionBar, isSelectionBarVisible } = useSelectionContext()
@@ -43,6 +52,15 @@ const Toolbar = ({
       className={cx(styles['fil-toolbar-files'], 'u-flex-items-center')}
       role="toolbar"
     >
+      {flag('drive.virtualization.enabled') && !isMobile && (
+        <Button
+          className="u-miw-auto u-mr-half"
+          variant="secondary"
+          label={<Icon icon={isBigThumbnail ? iconListMin : iconList} />}
+          aria-label={t('table.head_thumbnail_size')}
+          onClick={() => toggleThumbnailSize()}
+        />
+      )}
       <InsideRegularFolder
         displayedFolder={displayedFolder}
         folderId={folderId}
