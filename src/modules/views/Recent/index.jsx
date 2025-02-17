@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate, Outlet, useLocation } from 'react-router-dom'
 
 import { useClient, useQuery } from 'cozy-client'
+import flag from 'cozy-flags'
 import {
   useSharingContext,
   useNativeFileSharing,
@@ -17,6 +18,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import FolderView from '../Folder/FolderView'
 import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewHeader from '../Folder/FolderViewHeader'
+import FolderViewBodyVz from '../Folder/virtualized/FolderViewBody'
 
 import useHead from '@/components/useHead'
 import { useModalContext } from '@/lib/ModalContext'
@@ -124,13 +126,22 @@ export const RecentView = () => {
           <Breadcrumb path={[{ name: t('breadcrumb.title_recent') }]} />
           <Toolbar canUpload={false} canCreateFolder={false} />
         </FolderViewHeader>
-        <FolderViewBody
-          actions={actions}
-          queryResults={[result]}
-          canSort={false}
-          withFilePath={true}
-          extraColumns={extraColumns}
-        />
+        {flag('drive.virtualization.enabled') && !isMobile ? (
+          <FolderViewBodyVz
+            actions={actions}
+            queryResults={[result]}
+            withFilePath={true}
+            extraColumns={extraColumns}
+          />
+        ) : (
+          <FolderViewBody
+            actions={actions}
+            queryResults={[result]}
+            canSort={false}
+            withFilePath={true}
+            extraColumns={extraColumns}
+          />
+        )}
         <Outlet />
         {isMobile && (
           <AddMenuProvider
