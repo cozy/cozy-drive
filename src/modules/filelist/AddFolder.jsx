@@ -3,7 +3,9 @@ import React from 'react'
 import { connect, useDispatch } from 'react-redux'
 
 import { withClient } from 'cozy-client'
+import flag from 'cozy-flags'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
+import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { AddFolderRow } from '@/modules/filelist/AddFolderRow'
@@ -12,6 +14,7 @@ import {
   hideNewFolderInput,
   isEncryptedFolder
 } from '@/modules/filelist/duck'
+import AddFolderRowVz from '@/modules/filelist/virtualized/AddFolderRow'
 import { createFolder } from '@/modules/navigation/duck'
 
 const AddFolder = ({
@@ -23,13 +26,19 @@ const AddFolder = ({
 }) => {
   const { t } = useI18n()
   const { showAlert } = useAlert()
+  const { isMobile } = useBreakpoints()
 
   if (!visible) {
     return null
   }
 
+  const Comp =
+    flag('drive.virtualization.enabled') && !isMobile
+      ? AddFolderRowVz
+      : AddFolderRow
+
   return (
-    <AddFolderRow
+    <Comp
       isEncrypted={isEncrypted}
       onSubmit={name => onSubmit(name, showAlert, t)}
       onAbort={accidental => onAbort(accidental, showAlert, t)}
