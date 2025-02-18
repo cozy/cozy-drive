@@ -21,7 +21,6 @@ const FileNameVz = ({
   isRenaming,
   interactive,
   withFilePath,
-  // isMobile,
   formattedSize,
   formattedUpdatedAt,
   refreshFolderContent,
@@ -43,7 +42,7 @@ const FileNameVz = ({
             showSharedBadge={isMobile}
             componentsProps={{
               sharedBadge: {
-                className: styles['fil-content-shared']
+                className: styles['fil-content-shared-vz']
               }
             }}
           />
@@ -56,35 +55,8 @@ const FileNameVz = ({
     )
   }
 
-  // return (
-  //   <>
-  //     {filename}
-  //     {/* {extension && (
-  //       <span className={styles['fil-content-ext']}>{extension}</span>
-  //     )} */}
-  //   </>
-  // )
-
   return (
     <>
-      {/* <div className={styles['fil-file']}>
-       <div className={styles['fil-file-filename']}>
-         <div className={styles['fil-file-filename-wrapper']}>
-           <div
-             data-testid="fil-file-filename-and-ext"
-             className={styles['fil-file-filename-and-ext']}
-           >
-             {filename}
-             {extension && (
-               <span className={styles['fil-content-ext']}>{extension}</span>
-             )}
-           </div>
-         </div>
-       </div> */}
-      {/* {filename}
-      {extension && (
-        <span className={styles['fil-content-ext']}>{extension}</span>
-      )} */}
       <Filename
         icon={
           <FileThumbnail
@@ -94,7 +66,7 @@ const FileNameVz = ({
             showSharedBadge={isMobile}
             componentsProps={{
               sharedBadge: {
-                className: styles['fil-content-shared']
+                className: styles['fil-content-shared-vz']
               }
             }}
           />
@@ -104,62 +76,41 @@ const FileNameVz = ({
         extension={extension}
         midEllipsis
         path={
-          withFilePath &&
-          attributes.displayedPath &&
-          (isMobile ? (
-            <div
-              className={styles['fil-file-description']}
-              title={filename + extension}
-            >
-              <MidEllipsis
-                className={styles['fil-file-description--path']}
-                text={attributes.displayedPath}
-              />
-              <CertificationsIcons attributes={attributes} />
-            </div>
-          ) : (
-            <Link
-              to={`/folder/${attributes.dir_id}`}
-              // Please do not modify the className as it is used in event handling, see FileOpener#46
-              className={styles['fil-file-path']}
-            >
-              <MidEllipsis text={attributes.displayedPath} />
-            </Link>
-          ))
+          <>
+            {withFilePath &&
+              attributes.displayedPath &&
+              (isMobile ? (
+                <div
+                  className={styles['fil-file-description']}
+                  title={filename + extension}
+                >
+                  <MidEllipsis
+                    className={styles['fil-file-description--path']}
+                    text={attributes.displayedPath}
+                  />
+                  <CertificationsIcons attributes={attributes} />
+                </div>
+              ) : (
+                <Link
+                  to={`/folder/${attributes.dir_id}`}
+                  // Please do not modify the className as it is used in event handling, see FileOpener#46
+                  className={styles['fil-file-path']}
+                >
+                  <MidEllipsis text={attributes.displayedPath} />
+                </Link>
+              ))}
+            {!withFilePath &&
+              (isDirectory(attributes) || (
+                <div className={styles['fil-file-infos']}>
+                  {`${formattedUpdatedAt}${
+                    formattedSize ? ` - ${formattedSize}` : ''
+                  }`}
+                  {isMobile && <CertificationsIcons attributes={attributes} />}
+                </div>
+              ))}
+          </>
         }
       />
-      {/* {withFilePath &&
-        attributes.displayedPath &&
-        (isMobile ? (
-          <div
-            className={styles['fil-file-description']}
-            title={filename + extension}
-          >
-            <MidEllipsis
-              className={styles['fil-file-description--path']}
-              text={attributes.displayedPath}
-            />
-            <CertificationsIcons attributes={attributes} />
-          </div>
-        ) : (
-          <Link
-            to={`/folder/${attributes.dir_id}`}
-            // Please do not modify the className as it is used in event handling, see FileOpener#46
-            className={styles['fil-file-path']}
-          >
-            <MidEllipsis text={attributes.displayedPath} />
-          </Link>
-        ))} */}
-      {!withFilePath &&
-        (isDirectory(attributes) || (
-          <div className={styles['fil-file-infos']}>
-            {`${formattedUpdatedAt}${
-              formattedSize ? ` - ${formattedSize}` : ''
-            }`}
-            {isMobile && <CertificationsIcons attributes={attributes} />}
-          </div>
-        ))}
-      {/* </div> */}
     </>
   )
 }

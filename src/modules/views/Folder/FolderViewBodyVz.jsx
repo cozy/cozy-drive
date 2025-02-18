@@ -1,22 +1,12 @@
-import { filesize } from 'filesize'
 import React, { useCallback, useContext, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { isSharingShortcut } from 'cozy-client/dist/models/file'
 import { useVaultClient } from 'cozy-keys-lib'
-import Box from 'cozy-ui/transpiled/react/Box'
-import Checkbox from 'cozy-ui/transpiled/react/Checkbox'
-import Icon from 'cozy-ui/transpiled/react/Icon'
-import FileTypeFolderIcon from 'cozy-ui/transpiled/react/Icons/FileTypeFolder'
 import VirtuosoTable from 'cozy-ui/transpiled/react/Table/Virtuoso/Virtuoso'
-import TableCell from 'cozy-ui/transpiled/react/TableCell'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { columns, secondarySort } from './helpers'
+import { columns, columnsMobile, secondarySort } from './helpers'
 import { useSyncingFakeFile } from './useSyncingFakeFile'
-
-import styles from '@/styles/filelist.styl'
 
 import { EmptyDrive, EmptyTrash } from '@/components/Error/Empty'
 import Oops from '@/components/Error/Oops'
@@ -25,32 +15,26 @@ import AcceptingSharingContext from '@/lib/AcceptingSharingContext'
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
 import { isEncryptedFolder } from '@/lib/encryption'
 import AddFolder from '@/modules/filelist/AddFolder'
-import { FileWithSelection as File } from '@/modules/filelist/File'
-import { FileList } from '@/modules/filelist/FileList'
-import FileListBody from '@/modules/filelist/FileListBody'
-import { FileListHeader } from '@/modules/filelist/FileListHeader'
 import FileListRowsPlaceholder from '@/modules/filelist/FileListRowsPlaceholder'
-import LoadMore from '@/modules/filelist/LoadMoreV2'
 import CellComp from '@/modules/filelist/cells/CellComp'
-import FileThumbnail from '@/modules/filelist/icons/FileThumbnail'
 import { FolderUnlocker } from '@/modules/folder/components/FolderUnlocker'
 import { useFolderSort } from '@/modules/navigation/duck'
 import SelectionBar from '@/modules/selection/SelectionBar'
-import { isReferencedByShareInSharingContext } from '@/modules/views/Folder/syncHelpers'
+import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 
 const FolderViewBodyVz = ({
   currentFolderId,
   displayedFolder,
   queryResults,
   actions,
-  canSort,
+  // canSort,
   canUpload = true,
   withFilePath = false,
   refreshFolderContent = null,
   extraColumns,
   canInteractWith
 }) => {
-  const { isDesktop } = useBreakpoints()
+  const { isMobile, isDesktop } = useBreakpoints()
   const navigate = useNavigate()
 
   /**
@@ -81,10 +65,11 @@ const FolderViewBodyVz = ({
   const { sharingsValue } = useContext(AcceptingSharingContext)
   const [sortOrder, setSortOrder] = useFolderSort(currentFolderId)
   const vaultClient = useVaultClient()
-  const changeSortOrder = useCallback(
-    (folderId_legacy, attribute, order) => setSortOrder({ attribute, order }),
-    [setSortOrder]
-  )
+  const { toggleSelectedItem, selectAll, selectedItems } = useSelectionContext()
+
+  const isSelectedItem = file => {
+    return selectedItems.some(item => item.id === file.id)
+  }
 
   const isInError = queryResults.some(query => query.fetchStatus === 'failed')
   const hasDataToShow =
@@ -96,9 +81,12 @@ const FolderViewBodyVz = ({
       query => query.fetchStatus === 'loading' && !query.lastUpdate
     )
   const isEmpty = !isInError && !isLoading && !hasDataToShow
-  const isSharingContextEmpty = Object.keys(sharingsValue).length <= 0
-
   const { syncingFakeFile } = useSyncingFakeFile({ isEmpty, queryResults })
+  const isSharingContextEmpty = Object.keys(sharingsValue).length <= 0
+  const rows = queryResults.flatMap(el => el.data)
+  if (syncingFakeFile) {
+    rows.push(syncingFakeFile)
+  }
   const isEncFolder = isEncryptedFolder(displayedFolder)
 
   /**
@@ -129,14 +117,6 @@ const FolderViewBodyVz = ({
     navigate('/folder')
   }, [navigate])
 
-  const rows = queryResults.flatMap(el => el.data)
-  // console.info(' ')
-  // console.info('queryResults :', queryResults)
-  // console.info('rows :', rows)
-  // console.info(' ')
-
-  if (needsToWait || isLoading || !hasDataToShow) return null
-
   return (
     <FolderUnlocker
       folder={displayedFolder}
@@ -149,24 +129,52 @@ const FolderViewBodyVz = ({
           width: '100%'
         }}
       >
-        <VirtuosoTable
-          rows={rows}
-          columns={columns}
-          defaultOrder={columns[0].id}
-          secondarySort={secondarySort}
-          componentsProps={{
-            rowContent: {
-              children: (
-                <CellComp
-                  withFilePath={withFilePath}
-                  refreshFolderContent={refreshFolderContent}
-                  canInteractWith={canInteractWith}
-                  actions={actions}
-                />
-              )
-            }
-          }}
+        <AddFolder
+          vaultClient={vaultClient}
+          refreshFolderContent={refreshFolderContent}
+          extraColumns={extraColumns}
+          currentFolderId={currentFolderId}
         />
+        {isInError && <Oops />}
+        {(needsToWait || isLoading) && <FileListRowsPlaceholder />}
+        {/* TODO FolderViewBody should not have the responsability to chose
+          which empty component to display. It should be done by the "view" itself.
+          But adding a new prop like <FolderViewBody emptyComponent={}
+          is not good enought too */}
+        {displayedFolder !== null &&
+          isEmpty &&
+          currentFolderId !== TRASH_DIR_ID && (
+            <EmptyDrive isEncrypted={isEncFolder} canUpload={canUpload} />
+          )}
+        {displayedFolder !== null &&
+          isEmpty &&
+          currentFolderId === TRASH_DIR_ID && (
+            <EmptyTrash canUpload={canUpload} />
+          )}
+        {hasDataToShow && !needsToWait && (
+          <VirtuosoTable
+            rows={rows}
+            columns={isDesktop ? columns : columnsMobile}
+            defaultOrder={columns[0].id}
+            secondarySort={secondarySort}
+            onSelectAll={selectAll}
+            onSelect={toggleSelectedItem}
+            isSelectedItem={isSelectedItem}
+            selectedItems={selectedItems}
+            componentsProps={{
+              rowContent: {
+                children: (
+                  <CellComp
+                    withFilePath={withFilePath}
+                    refreshFolderContent={refreshFolderContent}
+                    canInteractWith={canInteractWith}
+                    actions={actions}
+                  />
+                )
+              }
+            }}
+          />
+        )}
       </div>
     </FolderUnlocker>
   )

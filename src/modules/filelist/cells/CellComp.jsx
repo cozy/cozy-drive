@@ -1,5 +1,7 @@
 import { filesize } from 'filesize'
-import React, { useContext, useReducer, useRef } from 'react'
+import get from 'lodash/get'
+import React, { useContext, useReducer, useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import { isDirectory } from 'cozy-client/dist/models/file'
 import { isSharingShortcut } from 'cozy-client/dist/models/file'
@@ -7,14 +9,20 @@ import { useSharingContext } from 'cozy-sharing'
 import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import FileActionVz from './FileActionVz'
-import FileNameWithThumbnail from './FileNameWithThumbnail'
-import LastUpdateVz from './LastUpdateVz'
-import Share from './Share'
-import SizeVz from './SizeVz'
-
 import AcceptingSharingContext from '@/lib/AcceptingSharingContext'
 import { ActionMenuWithHeader } from '@/modules/actionmenu/ActionMenuWithHeader'
+import {
+  isRenaming as isRenamingSelector,
+  getRenamingFile
+} from '@/modules/drive/rename'
+import FileOpener from '@/modules/filelist/FileOpener'
+import FileActionVz from '@/modules/filelist/cells/FileActionVz'
+import FileNameVz from '@/modules/filelist/cells/FileNameVz'
+import FileNameWithThumbnail from '@/modules/filelist/cells/FileNameWithThumbnail'
+import LastUpdateVz from '@/modules/filelist/cells/LastUpdateVz'
+import Share from '@/modules/filelist/cells/Share'
+import SizeVz from '@/modules/filelist/cells/SizeVz'
+import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 import { isReferencedByShareInSharingContext } from '@/modules/views/Folder/syncHelpers'
 
 const CellComp = ({
@@ -32,9 +40,16 @@ const CellComp = ({
   const { sharingsValue } = useContext(AcceptingSharingContext)
   const { byDocId } = useSharingContext()
   const filerowMenuToggleRef = useRef()
+  const { toggleSelectedItem, isItemSelected, isSelectionBarVisible } =
+    useSelectionContext()
+  const [actionMenuVisible, setActionMenuVisible] = useState(false)
   const [showActionMenu, toggleShowActionMenu] = useReducer(
     state => !state,
     false
+  )
+  const isRenaming = useSelector(
+    state =>
+      isRenamingSelector(state) && get(getRenamingFile(state), 'id') === row.id
   )
 
   const formattedSize =
@@ -54,30 +69,36 @@ const CellComp = ({
   // const isRowDisabledOrInSyncFromSharing = disabled || isInSyncFromSharing // why disabled not used ??
   const isRowDisabledOrInSyncFromSharing = isInSyncFromSharing
 
-  // if (!cell) {
-  //   return '—'
-  // }
-
-  // return cell
+  const toggle = e => {
+    e.stopPropagation()
+    toggleSelectedItem(row)
+  }
 
   if (column.id === 'name') {
     if (!cell) {
       return '—'
     }
 
-    // return cell
-
     return (
-      <FileNameWithThumbnail
-        row={row}
-        cell={cell}
-        withFilePath={withFilePath}
-        isRowDisabledOrInSyncFromSharing={isRowDisabledOrInSyncFromSharing}
-        formattedSize={formattedSize}
-        formattedUpdatedAt={formattedUpdatedAt}
-        refreshFolderContent={refreshFolderContent}
-        isInSyncFromSharing={isInSyncFromSharing}
-      />
+      <FileOpener
+        file={row}
+        disabled={isRowDisabledOrInSyncFromSharing}
+        actionMenuVisible={showActionMenu}
+        selectionModeActive={isSelectionBarVisible}
+        toggle={toggle}
+        isRenaming={isRenaming}
+      >
+        <FileNameVz
+          attributes={row}
+          isRenaming={isRenaming}
+          interactive={!isRowDisabledOrInSyncFromSharing}
+          withFilePath={withFilePath}
+          formattedSize={formattedSize}
+          formattedUpdatedAt={formattedUpdatedAt}
+          refreshFolderContent={refreshFolderContent}
+          isInSyncFromSharing={isInSyncFromSharing}
+        />
+      </FileOpener>
     )
   }
 
