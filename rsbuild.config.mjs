@@ -30,6 +30,18 @@ const mergedConfig = mergeRsbuildConfig(config, {
     alias: {
       'react-pdf$': 'react-pdf/dist/esm/entry.webpack'
     }
+  },
+  tools: {
+    rspack: {
+      module: {
+        rules: [
+          {
+            test: /react-spring/,
+            sideEffects: true
+          }
+        ]
+      }
+    }
   }
 })
 
