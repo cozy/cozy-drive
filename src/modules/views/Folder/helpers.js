@@ -37,6 +37,23 @@ export const columns = [
   }
 ]
 
+export const columnsMobile = [
+  {
+    id: 'name',
+    // width: 300,
+    maxWidth: 0,
+    label: 'Nom'
+  },
+  {
+    id: 'menu',
+    disablePadding: false,
+    width: 60,
+    label: 'Menu',
+    textAlign: 'center',
+    sortable: false
+  }
+]
+
 /**
  * Sort files by type
  * @param {import('cozy-client/types').IOCozyFile[]} file
