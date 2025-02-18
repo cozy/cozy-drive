@@ -20,6 +20,7 @@ import CellComp from '@/modules/filelist/cells/CellComp'
 import { FolderUnlocker } from '@/modules/folder/components/FolderUnlocker'
 import { useFolderSort } from '@/modules/navigation/duck'
 import SelectionBar from '@/modules/selection/SelectionBar'
+import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 
 const FolderViewBodyVz = ({
   currentFolderId,
@@ -64,6 +65,11 @@ const FolderViewBodyVz = ({
   const { sharingsValue } = useContext(AcceptingSharingContext)
   const [sortOrder, setSortOrder] = useFolderSort(currentFolderId)
   const vaultClient = useVaultClient()
+  const { toggleSelectedItem, selectAll, selectedItems } = useSelectionContext()
+
+  const isSelectedItem = file => {
+    return selectedItems.some(item => item.id === file.id)
+  }
 
   const isInError = queryResults.some(query => query.fetchStatus === 'failed')
   const hasDataToShow =
@@ -151,6 +157,10 @@ const FolderViewBodyVz = ({
             columns={isDesktop ? columns : columnsMobile}
             defaultOrder={columns[0].id}
             secondarySort={secondarySort}
+            onSelectAll={selectAll}
+            onSelect={toggleSelectedItem}
+            isSelectedItem={isSelectedItem}
+            selectedItems={selectedItems}
             componentsProps={{
               rowContent: {
                 children: (
