@@ -36,6 +36,7 @@ import FileThumbnail from '@/modules/filelist/icons/FileThumbnail'
 import { FolderUnlocker } from '@/modules/folder/components/FolderUnlocker'
 import { useFolderSort } from '@/modules/navigation/duck'
 import SelectionBar from '@/modules/selection/SelectionBar'
+import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 import { isReferencedByShareInSharingContext } from '@/modules/views/Folder/syncHelpers'
 
 const FolderViewBody = ({
@@ -135,6 +136,12 @@ const FolderViewBody = ({
   // console.info('rows :', rows)
   // console.info(' ')
 
+  const { toggleSelectedItem, selectAll, selectedItems } = useSelectionContext()
+
+  const isSelectedItem = file => {
+    return selectedItems.some(item => item.id === file.id)
+  }
+
   if (needsToWait || isLoading || !hasDataToShow) return null
 
   const columns = isMobile ? mobileColumns : desktopColumns
@@ -156,6 +163,10 @@ const FolderViewBody = ({
           columns={columns}
           defaultOrder={columns[0].id}
           secondarySort={secondarySort}
+          onSelectAll={selectAll}
+          onSelect={toggleSelectedItem}
+          isSelectedItem={isSelectedItem}
+          selectedItems={selectedItems}
           componentsProps={{
             rowContent: {
               children: (
