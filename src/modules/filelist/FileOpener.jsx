@@ -71,6 +71,7 @@ const FileOpener = ({
   const rowRef = useRef()
   const { link, openLink } = useFileLink(file)
   const { handlers: longPressHandlers } = useLongPress({
+    selectionModeActive,
     onPress: (ev, type) =>
       handlePress(ev, type, {
         actionMenuVisible,
