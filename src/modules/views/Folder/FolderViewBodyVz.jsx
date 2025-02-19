@@ -158,6 +158,27 @@ const FolderViewBodyVz = ({
         <VirtuosoTable
           rows={rows}
           columns={columns}
+          dragProps={{
+            dragId: 'drag-drive',
+            isDragging: (monitor, file) => {
+              return selectedItems.length > 0
+                ? selectedItems.some(
+                    selectedItem => selectedItem.id === file.id
+                  )
+                : file.id === monitor.getItem().selectedItems[0].id
+            },
+            canDrag: item => item.name !== '.cozy_trash',
+            canDrop: item => item.name !== '.cozy_trash',
+            onDrop: (itemsSelected, itemHovered) => {
+              if (
+                itemsSelected.some(({ id }) => id !== itemHovered.id) &&
+                itemHovered.type === 'directory'
+              ) {
+                console.log('DROP selectedItems', selectedItems)
+                console.log('DROP item hovered', itemHovered)
+              }
+            }
+          }}
           defaultOrder={columns[0].id}
           secondarySort={secondarySort}
           onSelectAll={selectAll}
