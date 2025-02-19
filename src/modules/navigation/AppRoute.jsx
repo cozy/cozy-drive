@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, useParams, Outlet, Navigate } from 'react-router-dom'
 
 import { RealTimeQueries } from 'cozy-client'
-import { AssistantDialog } from 'cozy-dataproxy-lib'
+import { AssistantDialog, SearchDialog } from 'cozy-dataproxy-lib'
 import flag from 'cozy-flags'
 
 import ExternalRedirect from './ExternalRedirect'
@@ -42,7 +42,6 @@ import { NextcloudFolderView } from '@/modules/views/Nextcloud/NextcloudFolderVi
 import { NextcloudMoveView } from '@/modules/views/Nextcloud/NextcloudMoveView'
 import { NextcloudTrashEmptyView } from '@/modules/views/Nextcloud/NextcloudTrashEmptyView'
 import { NextcloudTrashView } from '@/modules/views/Nextcloud/NextcloudTrashView'
-import SearchView from '@/modules/views/Search/SearchView'
 import { TrashDestroyView } from '@/modules/views/Trash/TrashDestroyView'
 import { TrashEmptyView } from '@/modules/views/Trash/TrashEmptyView'
 
@@ -190,7 +189,7 @@ const AppRoute = () => (
 
       <Route path="file/:fileId" element={<FileOpenerExternal />} />
 
-      <Route path="search" element={<SearchView />} />
+      <Route path="search" element={<SearchDialog />} />
 
       <Route
         path="assistant/:conversationId"
