@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 
-export default function useLongPress({ onPress }) {
+export default function useLongPress({ onPress, selectionModeActive }) {
   const timerRef = useRef()
   const isLongPress = useRef()
 
@@ -9,7 +9,7 @@ export default function useLongPress({ onPress }) {
     timerRef.current = setTimeout(() => {
       isLongPress.current = true
       onPress(e, 'press')
-    }, 500)
+    }, 250)
   }
   function handleOnClick(e) {
     e.preventDefault()
@@ -20,6 +20,9 @@ export default function useLongPress({ onPress }) {
     onPress(e, 'click')
   }
   function handleOnMouseDown(e) {
+    if (selectionModeActive) {
+      return
+    }
     // We need to persist event in React <= 16
     e.persist()
     startPressTimer(e)
