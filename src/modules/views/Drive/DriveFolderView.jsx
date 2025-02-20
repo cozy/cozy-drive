@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useMemo } from 'react'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import { useDispatch } from 'react-redux'
 import { useNavigate, Outlet, useLocation, useParams } from 'react-router-dom'
 
@@ -205,63 +207,65 @@ const DriveFolderView = () => {
 
   return (
     <FolderView isNotFound={isNotFound}>
-      <Dropzone
-        role="main"
-        disabled={!canWriteToCurrentFolder}
-        displayedFolder={displayedFolder}
-      >
-        <FolderViewHeader>
-          {currentFolderId && (
-            <FolderViewBreadcrumb
-              rootBreadcrumbPath={rootBreadcrumbPath}
+      <DndProvider backend={HTML5Backend}>
+        <Dropzone
+          role="main"
+          disabled={!canWriteToCurrentFolder}
+          displayedFolder={displayedFolder}
+        >
+          <FolderViewHeader>
+            {currentFolderId && (
+              <FolderViewBreadcrumb
+                rootBreadcrumbPath={rootBreadcrumbPath}
+                currentFolderId={currentFolderId}
+              />
+            )}
+            <Toolbar
+              canUpload={true}
+              canCreateFolder={true}
+              disabled={isLoading || isInError || isPending}
+              isBigThumbnail={isBigThumbnail}
+              toggleThumbnailSize={toggleThumbnailSize}
+            />
+          </FolderViewHeader>
+          {flag('drive.show.harvest-banner') && (
+            <HarvestBanner folderId={currentFolderId} />
+          )}
+          {flag('drive.virtualization.enabled') && !isMobile ? (
+            <FolderViewBodyVz
+              actions={actions}
+              queryResults={allResults}
+              canSort
               currentFolderId={currentFolderId}
+              displayedFolder={displayedFolder}
+              extraColumns={extraColumns}
+            />
+          ) : (
+            <FolderViewBody
+              actions={actions}
+              queryResults={allResults}
+              canSort
+              currentFolderId={currentFolderId}
+              displayedFolder={displayedFolder}
+              extraColumns={extraColumns}
             />
           )}
-          <Toolbar
-            canUpload={true}
-            canCreateFolder={true}
-            disabled={isLoading || isInError || isPending}
-            isBigThumbnail={isBigThumbnail}
-            toggleThumbnailSize={toggleThumbnailSize}
-          />
-        </FolderViewHeader>
-        {flag('drive.show.harvest-banner') && (
-          <HarvestBanner folderId={currentFolderId} />
-        )}
-        {flag('drive.virtualization.enabled') && !isMobile ? (
-          <FolderViewBodyVz
-            actions={actions}
-            queryResults={allResults}
-            canSort
-            currentFolderId={currentFolderId}
-            displayedFolder={displayedFolder}
-            extraColumns={extraColumns}
-          />
-        ) : (
-          <FolderViewBody
-            actions={actions}
-            queryResults={allResults}
-            canSort
-            currentFolderId={currentFolderId}
-            displayedFolder={displayedFolder}
-            extraColumns={extraColumns}
-          />
-        )}
-        {isFabDisplayed && (
-          <AddMenuProvider
-            canCreateFolder={true}
-            canUpload={true}
-            disabled={isLoading || isInError || isPending}
-            navigate={navigate}
-            params={params}
-            displayedFolder={displayedFolder}
-            isSelectionBarVisible={isSelectionBarVisible}
-          >
-            <FabWithAddMenuContext />
-          </AddMenuProvider>
-        )}
-        <Outlet />
-      </Dropzone>
+          {isFabDisplayed && (
+            <AddMenuProvider
+              canCreateFolder={true}
+              canUpload={true}
+              disabled={isLoading || isInError || isPending}
+              navigate={navigate}
+              params={params}
+              displayedFolder={displayedFolder}
+              isSelectionBarVisible={isSelectionBarVisible}
+            >
+              <FabWithAddMenuContext />
+            </AddMenuProvider>
+          )}
+          <Outlet />
+        </Dropzone>
+      </DndProvider>
     </FolderView>
   )
 }
