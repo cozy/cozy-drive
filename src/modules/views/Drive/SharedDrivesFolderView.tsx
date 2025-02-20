@@ -1,7 +1,9 @@
-import React, { FC, useMemo } from 'react'
+import React, { FC, useState, useMemo } from 'react'
 import { Outlet } from 'react-router-dom'
 
 import { useQuery } from 'cozy-client'
+import flag from 'cozy-flags'
+import { SharedDriveModal } from 'cozy-sharing'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -14,6 +16,8 @@ import {
 } from '@/modules/certifications/useExtraColumns'
 import { FolderBody } from '@/modules/folder/components/FolderBody'
 import { useFolderSort } from '@/modules/navigation/duck'
+import AddSharedDriveButton from '@/modules/shareddrives/components/AddSharedDriveButton'
+import AddSharedDriveFab from '@/modules/shareddrives/components/AddSharedDriveFab'
 import FolderView from '@/modules/views/Folder/FolderView'
 import FolderViewBreadcrumb from '@/modules/views/Folder/FolderViewBreadcrumb'
 import FolderViewHeader from '@/modules/views/Folder/FolderViewHeader'
@@ -29,6 +33,7 @@ const SharedDrivesFolderView: FC = () => {
   const { isMobile } = useBreakpoints()
   const { t } = useI18n()
   const { isNotFound } = useDisplayedFolder()
+  const [isSharedDriveModalOpen, setIsSharedDriveModalOpen] = useState(false)
 
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
     isMobile,
@@ -70,6 +75,13 @@ const SharedDrivesFolderView: FC = () => {
     [t]
   )
 
+  const showSharedDriveModal = (): void => setIsSharedDriveModalOpen(true)
+  const hideSharedDriveModal = (): void => setIsSharedDriveModalOpen(false)
+
+  const showAddSharedDriveButton =
+    flag('drive.shared-drive.enabled') && !isMobile
+  const showAddSharedDriveFab = flag('drive.shared-drive.enabled') && isMobile
+
   return (
     <FolderView isNotFound={isNotFound}>
       <FolderViewHeader>
@@ -77,12 +89,21 @@ const SharedDrivesFolderView: FC = () => {
           rootBreadcrumbPath={rootBreadcrumbPath}
           currentFolderId="io.cozy.files.shared-drives-dir"
         />
+        {showAddSharedDriveButton && (
+          <AddSharedDriveButton onClick={showSharedDriveModal} />
+        )}
       </FolderViewHeader>
       <FolderBody
         folderId="io.cozy.files.shared-drives-dir"
         queryResults={queryResults}
         extraColumns={extraColumns}
       />
+      {showAddSharedDriveFab && (
+        <AddSharedDriveFab onClick={showSharedDriveModal} />
+      )}
+      {isSharedDriveModalOpen && (
+        <SharedDriveModal onClose={hideSharedDriveModal} />
+      )}
       <Outlet />
     </FolderView>
   )
