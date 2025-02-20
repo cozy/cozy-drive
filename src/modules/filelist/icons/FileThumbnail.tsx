@@ -24,6 +24,7 @@ import {
   isNextcloudShortcut,
   isNextcloudFile
 } from '@/modules/nextcloud/helpers'
+import { isSharedDriveFolder } from '@/modules/shareddrives/helpers'
 
 interface FileThumbnailProps {
   file: File | FolderPickerEntry
@@ -70,7 +71,8 @@ const FileThumbnail: React.FC<FileThumbnailProps> = ({
 
   if (
     file._id === 'io.cozy.files.shared-drives-dir' ||
-    isNextcloudShortcut(file)
+    isNextcloudShortcut(file) ||
+    isSharedDriveFolder(file)
   ) {
     return <Icon icon={IconServer} size={size ?? 32} />
   }
