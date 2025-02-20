@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { useDrop } from 'react-dnd'
+import { NativeTypes } from 'react-dnd-html5-backend'
 import UIDropzone from 'react-dropzone'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
@@ -14,45 +16,87 @@ import styles from '@/styles/dropzone.styl'
 import { uploadFiles } from '@/modules/navigation/duck'
 import DropzoneTeaser from '@/modules/upload/DropzoneTeaser'
 
+// const Dropzone = ({ displayedFolder, onDrop, disabled, role, children }) => {
+//   const [{ canDrop, isOver }, drop] = useDrop(
+//     () => ({
+//       accept: [NativeTypes.FILE],
+//       canDrop: item => canDropHelper(item),
+//       drop(item) {
+//         console.log(item)
+//         const filesToUpload = canHandleFolders(item)
+//           ? item.dataTransfer.items
+//           : item.files
+//         console.log('==========')
+//         console.log('filesToUpload : ', filesToUpload)
+//         console.log('==========')
+//         // uploadFiles(filesToUpload, { client, vaultClient, showAlert, t })
+//       },
+//       collect: monitor => {
+//         return {
+//           isOver: monitor.isOver(),
+//           canDrop: monitor.canDrop()
+//         }
+//       }
+//     }),
+//     [onDrop]
+//   )
+//   const isActive = canDrop && isOver
+
+//   if (disabled) {
+//     return <div role={role}>{children}</div>
+//   }
+
+//   return (
+//     <div
+//       role={role}
+//       ref={drop}
+//       className={isActive ? styles['fil-dropzone-active'] : ''}
+//     >
+//       {isActive && <DropzoneTeaser currentFolder={displayedFolder} />}
+//       {children}
+//     </div>
+//   )
+// }
+
 export class Dropzone extends Component {
   state = {
-    dropzoneActive: false
-  }
-
-  onDragEnter = evt => {
-    if (!canDrop(evt)) return
-    this.setState(state => ({ ...state, dropzoneActive: true }))
-  }
-
-  onDragLeave = () =>
-    this.setState(state => ({ ...state, dropzoneActive: false }))
-
-  onDrop = async (files, _, evt) => {
-    const { uploadFiles, client, vaultClient, showAlert, t } = this.props
-    this.setState(state => ({ ...state, dropzoneActive: false }))
-    if (!canDrop(evt)) return
-    const filesToUpload = canHandleFolders(evt) ? evt.dataTransfer.items : files
-    uploadFiles(filesToUpload, { client, vaultClient, showAlert, t })
+    dropzoneActive: this.props.isActive
   }
 
   render() {
-    const { dropzoneActive } = this.state
-    const { displayedFolder, children, disabled, role } = this.props
+    const { displayedFolder, children, disabled, role, isActive, innerRef } =
+      this.props
+
+    if (disabled) {
+      return <div role={role}>{children}</div>
+    }
+
     return (
-      <UIDropzone
-        disabled={disabled}
+      <div
         role={role}
-        className={dropzoneActive ? styles['fil-dropzone-active'] : ''}
-        disableClick
-        style={{}}
-        onDrop={this.onDrop}
-        onDragEnter={this.onDragEnter}
-        onDragLeave={this.onDragLeave}
+        ref={innerRef}
+        className={isActive ? styles['fil-dropzone-active'] : ''}
       >
-        {dropzoneActive && <DropzoneTeaser currentFolder={displayedFolder} />}
+        {isActive && <DropzoneTeaser currentFolder={displayedFolder} />}
         {children}
-      </UIDropzone>
+      </div>
     )
+
+    // return (
+    //   <UIDropzone
+    //     disabled={disabled}
+    //     role={role}
+    //     className={dropzoneActive ? styles['fil-dropzone-active'] : ''}
+    //     disableClick
+    //     style={{}}
+    //     onDrop={this.onDrop}
+    //     onDragEnter={this.onDragEnter}
+    //     onDragLeave={this.onDragLeave}
+    //   >
+    //     {dropzoneActive && <DropzoneTeaser currentFolder={displayedFolder} />}
+    //     {children}
+    //   </UIDropzone>
+    // )
   }
 }
 
@@ -63,7 +107,7 @@ const canHandleFolders = evt => {
   return dt.items && dt.items.length && dt.items[0].webkitGetAsEntry != null
 }
 
-const canDrop = evt => {
+const canDropHelper = evt => {
   const items = evt.dataTransfer.items
   for (let i = 0; i < items.length; i += 1) {
     if (items[i].kind !== 'file') return false
@@ -83,10 +127,49 @@ const mapDispatchToProps = (dispatch, { displayedFolder, sharingState }) => ({
     )
 })
 
-const DropzoneWrapper = props => {
+const DropzoneWrapper = ({
+  vaultClient,
+  client,
+  t,
+  uploadFiles: uploadFilesProp,
+  ...props
+}) => {
   const { showAlert } = useAlert()
 
-  return <Dropzone {...props} showAlert={showAlert} />
+  const [{ canDrop, isOver }, drop] = useDrop(
+    () => ({
+      accept: [NativeTypes.FILE],
+      canDrop: item => canDropHelper(item),
+      drop(item) {
+        console.log(item)
+        const filesToUpload = canHandleFolders(item)
+          ? item.dataTransfer.items
+          : item.files
+        console.log('==========')
+        console.log('filesToUpload : ', filesToUpload)
+        console.log('vaultClient, client, t : ', vaultClient, client, t)
+        console.log('==========')
+        uploadFilesProp(filesToUpload, { client, vaultClient, showAlert, t })
+      },
+      collect: monitor => {
+        return {
+          isOver: monitor.isOver(),
+          canDrop: monitor.canDrop()
+        }
+      }
+    }),
+    []
+  )
+  const isActive = canDrop && isOver
+
+  return (
+    <Dropzone
+      {...props}
+      isActive={isActive}
+      innerRef={drop}
+      showAlert={showAlert}
+    />
+  )
 }
 
 export default compose(
