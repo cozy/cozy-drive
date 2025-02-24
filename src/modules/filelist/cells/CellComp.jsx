@@ -1,11 +1,13 @@
 import { filesize } from 'filesize'
 import get from 'lodash/get'
-import React, { useContext, useReducer, useRef, useState } from 'react'
+import React, { useContext, useReducer, useRef, useState, memo } from 'react'
 import { useSelector } from 'react-redux'
 
 import { isDirectory } from 'cozy-client/dist/models/file'
 import { isSharingShortcut } from 'cozy-client/dist/models/file'
+import { useVaultClient } from 'cozy-keys-lib'
 import { useSharingContext } from 'cozy-sharing'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -15,27 +17,38 @@ import {
   isRenaming as isRenamingSelector,
   getRenamingFile
 } from '@/modules/drive/rename'
+import AddFolder from '@/modules/filelist/AddFolder'
 import FileOpener from '@/modules/filelist/FileOpener'
+import FilenameInput from '@/modules/filelist/FilenameInput'
 import FileActionVz from '@/modules/filelist/cells/FileActionVz'
 import FileNameVz from '@/modules/filelist/cells/FileNameVz'
 import FileNameWithThumbnail from '@/modules/filelist/cells/FileNameWithThumbnail'
 import LastUpdateVz from '@/modules/filelist/cells/LastUpdateVz'
 import Share from '@/modules/filelist/cells/Share'
 import SizeVz from '@/modules/filelist/cells/SizeVz'
+import {
+  isTypingNewFolderName,
+  hideNewFolderInput,
+  isEncryptedFolder
+} from '@/modules/filelist/duck'
+import FileIconMime from '@/modules/filelist/icons/FileIconMime'
+import FileThumbnail from '@/modules/filelist/icons/FileThumbnail'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 import { isReferencedByShareInSharingContext } from '@/modules/views/Folder/syncHelpers'
 
 const CellComp = ({
   row,
-  columns,
+  // columns,
   column,
   cell,
+  currentFolderId,
   withFilePath,
-  refreshFolderContent,
-  actions,
-  canInteractWith
+  actions
 }) => {
   const { f, t } = useI18n()
+  const { showAlert } = useAlert()
+  const vaultClient = useVaultClient()
+
   const { isExtraLarge } = useBreakpoints()
   const { sharingsValue } = useContext(AcceptingSharingContext)
   const { byDocId } = useSharingContext()
@@ -51,6 +64,24 @@ const CellComp = ({
     state =>
       isRenamingSelector(state) && get(getRenamingFile(state), 'id') === row.id
   )
+  // const IsAddingFolder = useSelector(isTypingNewFolderName)
+
+  if (row.type === 'tempDirectory') {
+    if (column.id === 'name') {
+      return (
+        <AddFolder
+          vaultClient={vaultClient}
+          currentFolderId={currentFolderId}
+        />
+      )
+    }
+
+    if (column.id === 'menu') {
+      return null
+    }
+
+    return '—'
+  }
 
   const formattedSize =
     !isDirectory(row) && row.size ? filesize(row.size, { base: 10 }) : undefined
@@ -68,6 +99,11 @@ const CellComp = ({
     isReferencedByShareInSharingContext(row, sharingsValue)
   // const isRowDisabledOrInSyncFromSharing = disabled || isInSyncFromSharing // why disabled not used ??
   const isRowDisabledOrInSyncFromSharing = isInSyncFromSharing
+  // We don't allow any action on shared drives and trash
+  // because they are magic folder created by the stack
+  const canInteractWithFile =
+    row._id !== 'io.cozy.files.shared-drives-dir' &&
+    !row._id.endsWith('.trash-dir')
 
   const toggle = e => {
     e.stopPropagation()
@@ -95,7 +131,6 @@ const CellComp = ({
           withFilePath={withFilePath}
           formattedSize={formattedSize}
           formattedUpdatedAt={formattedUpdatedAt}
-          refreshFolderContent={refreshFolderContent}
           isInSyncFromSharing={isInSyncFromSharing}
         />
       </FileOpener>
@@ -134,11 +169,6 @@ const CellComp = ({
   }
 
   if (column.id === 'menu') {
-    const canInteractWithFile =
-      row._id !== 'io.cozy.files.shared-drives-dir' &&
-      !row._id.endsWith('.trash-dir') &&
-      (typeof canInteractWith !== 'function' || canInteractWith(row))
-
     if (!actions || !canInteractWithFile) {
       return null
     }
@@ -166,4 +196,4 @@ const CellComp = ({
   return <>{cell}</>
 }
 
-export default CellComp
+export default memo(CellComp)

@@ -90,7 +90,9 @@ const DriveFolderView = () => {
     currentFolderId
   })
 
-  const { displayedFolder, isNotFound } = useDisplayedFolder()
+  const { displayedFolder: _displayedFolder, isNotFound } = useDisplayedFolder()
+
+  const displayedFolder = useMemo(() => _displayedFolder, [_displayedFolder])
 
   useTrashRedirect(displayedFolder)
 
@@ -226,34 +228,32 @@ const DriveFolderView = () => {
           disabled={isLoading || isInError || isPending}
         />
       </FolderViewHeader>
-      <Dropzone
+      {/* <Dropzone
         role="main"
         disabled={!canWriteToCurrentFolder}
         displayedFolder={displayedFolder}
-      >
-        {flag('drive.show.harvest-banner') && (
+      > */}
+      {/* {flag('drive.show.harvest-banner') && (
           <HarvestBanner folderId={currentFolderId} />
-        )}
-        {flag('drive.virtualization.enabled') && !isMobile ? (
-          <FolderViewBodyVz
-            actions={actions}
-            queryResults={allResults}
-            canSort
-            currentFolderId={currentFolderId}
-            displayedFolder={displayedFolder}
-            extraColumns={extraColumns}
-          />
-        ) : (
-          <FolderViewBody
-            actions={actions}
-            queryResults={allResults}
-            canSort
-            currentFolderId={currentFolderId}
-            displayedFolder={displayedFolder}
-            extraColumns={extraColumns}
-          />
-        )}
-        {isFabDisplayed && (
+        )} */}
+      {flag('drive.virtualization.enabled') && !isMobile ? (
+        <FolderViewBodyVz
+          actions={actions}
+          queryResults={allResults}
+          currentFolderId={currentFolderId}
+          displayedFolder={displayedFolder}
+        />
+      ) : (
+        <FolderViewBody
+          actions={actions}
+          queryResults={allResults}
+          canSort
+          currentFolderId={currentFolderId}
+          displayedFolder={displayedFolder}
+          extraColumns={extraColumns}
+        />
+      )}
+      {/* {isFabDisplayed && (
           <AddMenuProvider
             canCreateFolder={true}
             canUpload={true}
@@ -265,9 +265,9 @@ const DriveFolderView = () => {
           >
             <FabWithAddMenuContext />
           </AddMenuProvider>
-        )}
-        <Outlet />
-      </Dropzone>
+        )} */}
+      <Outlet />
+      {/* </Dropzone> */}
     </FolderView>
   )
 }

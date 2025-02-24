@@ -61,14 +61,14 @@ export const ActionMenuContent = ({
         <CreateShortcut onCreated={refreshFolderContent} onClick={onClick} />
       )}
       {canUpload && <Divider className="u-mv-half" />}
-      {canUpload && (
+      {/* {canUpload && (
         <UploadItem
           disabled={isDisabled}
           onUploaded={refreshFolderContent}
           displayedFolder={displayedFolder}
           onClick={onClick}
         />
-      )}
+      )} */}
       {hasScanner && <ScannerMenuItem onClick={onClick} />}
     </>
   )

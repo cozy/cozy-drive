@@ -119,6 +119,10 @@ const FolderViewBody = ({
     navigate('/folder')
   }, [navigate])
 
+  console.info(' ')
+  console.info('RENDER APP')
+  console.info(' ')
+
   return (
     <FolderUnlocker
       folder={displayedFolder}

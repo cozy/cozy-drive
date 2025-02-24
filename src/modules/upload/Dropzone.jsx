@@ -86,6 +86,8 @@ const mapDispatchToProps = (dispatch, { displayedFolder, sharingState }) => ({
 const DropzoneWrapper = props => {
   const { showAlert } = useAlert()
 
+  return <div {...props} />
+
   return <Dropzone {...props} showAlert={showAlert} />
 }
 

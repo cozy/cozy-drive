@@ -11,7 +11,7 @@ import 'cozy-dataproxy-lib/dist/stylesheet.css'
 
 // Uncomment to activate why-did-you-render
 // https://github.com/welldone-software/why-did-you-render
-// import './wdyr'
+import './wdyr'
 
 import 'whatwg-fetch'
 import React from 'react'
