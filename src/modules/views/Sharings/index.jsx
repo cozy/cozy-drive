@@ -128,7 +128,6 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
               <FolderViewBodyVz
                 actions={actions}
                 queryResults={[result]}
-                canSort={false}
                 withFilePath={true}
                 extraColumns={extraColumns}
               />

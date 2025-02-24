@@ -130,7 +130,6 @@ export const RecentView = () => {
           <FolderViewBodyVz
             actions={actions}
             queryResults={[result]}
-            canSort={false}
             withFilePath={true}
             extraColumns={extraColumns}
           />

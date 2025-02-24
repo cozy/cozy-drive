@@ -45,14 +45,16 @@ export const makeColumns = isBigThumbnail => {
 }
 
 /**
- * Sort files by type
+ * Sort files by type to put directory and trash before files
  * @param {import('cozy-client/types').IOCozyFile[]} file
  * @returns {import('cozy-client/types').IOCozyFile[]}
  */
 export const secondarySort = file => {
-  const { folders, files, trashFolder } = file.reduce(
+  const { tempFolder, folders, files, trashFolder } = file.reduce(
     (acc, el) => {
-      if (el.type === 'directory') {
+      if (el.type === 'tempDirectory') {
+        acc.tempFolder.push(el)
+      } else if (el.type === 'directory') {
         if (el.name === '.cozy_trash') {
           acc.trashFolder.push(el)
         } else {
@@ -63,8 +65,8 @@ export const secondarySort = file => {
       }
       return acc
     },
-    { folders: [], files: [], trashFolder: [] }
+    { tempFolder: [], folders: [], files: [], trashFolder: [] }
   )
 
-  return [...folders, ...trashFolder, ...files]
+  return [...tempFolder, ...folders, ...trashFolder, ...files]
 }

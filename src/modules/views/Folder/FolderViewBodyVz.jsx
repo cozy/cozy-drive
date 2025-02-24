@@ -1,5 +1,13 @@
 import cx from 'classnames'
-import React, { useCallback, useContext, useState, useEffect } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useState,
+  useEffect,
+  useMemo,
+  memo
+} from 'react'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { useVaultClient } from 'cozy-keys-lib'
@@ -23,50 +31,80 @@ import { FileList } from '@/modules/filelist/FileList'
 import FileListBody from '@/modules/filelist/FileListBody'
 import FileListRowsPlaceholder from '@/modules/filelist/FileListRowsPlaceholder'
 import CellComp from '@/modules/filelist/cells/CellComp'
+import {
+  isTypingNewFolderName,
+  isEncryptedFolder as isEncryptedFolderFromState,
+  hideNewFolderInput
+} from '@/modules/filelist/duck'
 import { FolderUnlocker } from '@/modules/folder/components/FolderUnlocker'
 import { useFolderSort } from '@/modules/navigation/duck'
 import SelectionBar from '@/modules/selection/SelectionBar'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
+
+const Totoo = ({ rows, columns }) => {
+  console.info(' ')
+  console.info('RENDER TOTO')
+  console.info(' ')
+
+  return (
+    <>
+      {/* {rows.map(row => (
+        <div key={row.name}>{row.name}</div>
+      ))} */}
+      <VirtuosoTable
+        rows={rows}
+        columns={columns}
+        defaultOrder={columns[0].id}
+        // secondarySort={secondarySort}
+        // onSelectAll={selectAll}
+        // onSelect={toggleSelectedItem}
+        // isSelectedItem={isSelectedItem}
+        // selectedItems={selectedItems}
+        // componentsProps={{
+        //   rowContent: {
+        //     children: (
+        //       <div>toto</div>
+        //       // <CellComp
+        //       //   currentFolderId={currentFolderId}
+        //       //   withFilePath={withFilePath}
+        //       //   actions={actions}
+        //       // />
+        //     )
+        //   }
+        // }}
+      />
+    </>
+  )
+}
+
+const Toto = memo(Totoo)
+
+const makeRows = ({ queryResults, IsAddingFolder, syncingFakeFile }) => {
+  const rows = queryResults.flatMap(el => el.data)
+  if (IsAddingFolder) {
+    rows.push({
+      type: 'tempDirectory'
+      // isEncrypted: isEncryptedFolderFromState
+    })
+  }
+  if (syncingFakeFile) {
+    rows.push(syncingFakeFile)
+  }
+  return rows
+}
 
 const FolderViewBodyVz = ({
   currentFolderId,
   displayedFolder,
   queryResults,
   actions,
-  // canSort,
   canUpload = true,
-  withFilePath = false,
-  refreshFolderContent = null,
-  extraColumns,
-  canInteractWith
+  withFilePath = false
 }) => {
   const { isMobile, isDesktop } = useBreakpoints()
   const navigate = useNavigate()
-
-  /**
-   *  Since we are not able to restore the scroll correctly,
-   * and force the scroll to top every time we change the
-   * current folder. This is to avoid this kind of weird
-   * behavior:
-   * - If I go to a sub-folder, if this subfolder has a lot
-   * of data and I scrolled down until the bottom. If I go
-   * back, then my folder will also be scrolled down.
-   *
-   * This is an ugly hack, yeah.
-   * */
-  useEffect(() => {
-    if (isDesktop) {
-      const scrollable = document.querySelectorAll(
-        '[data-testid=fil-content-body]'
-      )[0]
-      if (scrollable) {
-        scrollable.scroll({ top: 0 })
-      }
-    } else {
-      window.scroll({ top: 0 })
-    }
-  }, [currentFolderId, isDesktop])
-
+  const IsAddingFolder = useSelector(isTypingNewFolderName)
+  // const isEncryptedFolderFromState = false // useSelector(isEncryptedFolderFromState)
   const { isSelectionBarVisible } = useSelectionContext()
   const { isFabDisplayed } = useContext(FabContext)
   const { isBigThumbnail, toggleThumbnailSize } = useThumbnailSizeContext()
@@ -91,12 +129,36 @@ const FolderViewBodyVz = ({
   const isEmpty = !isInError && !isLoading && !hasDataToShow
   const { syncingFakeFile } = useSyncingFakeFile({ isEmpty, queryResults })
   const isSharingContextEmpty = Object.keys(sharingsValue).length <= 0
-  const columns = makeColumns(isBigThumbnail)
-  const rows = queryResults.flatMap(el => el.data)
-  if (syncingFakeFile) {
-    rows.push(syncingFakeFile)
-  }
+  const columns = useMemo(() => makeColumns(isBigThumbnail), [isBigThumbnail])
+  const rows = useMemo(
+    () => makeRows({ queryResults, IsAddingFolder, syncingFakeFile }),
+    [queryResults, IsAddingFolder, syncingFakeFile]
+  )
   const isEncFolder = isEncryptedFolder(displayedFolder)
+
+  /**
+   *  Since we are not able to restore the scroll correctly,
+   * and force the scroll to top every time we change the
+   * current folder. This is to avoid this kind of weird
+   * behavior:
+   * - If I go to a sub-folder, if this subfolder has a lot
+   * of data and I scrolled down until the bottom. If I go
+   * back, then my folder will also be scrolled down.
+   *
+   * This is an ugly hack, yeah.
+   * */
+  useEffect(() => {
+    if (isDesktop) {
+      const scrollable = document.querySelectorAll(
+        '[data-testid=fil-content-body]'
+      )[0]
+      if (scrollable) {
+        scrollable.scroll({ top: 0 })
+      }
+    } else {
+      window.scroll({ top: 0 })
+    }
+  }, [currentFolderId, isDesktop])
 
   /**
    * When we mount the component when we already have data in cache,
@@ -126,18 +188,18 @@ const FolderViewBodyVz = ({
     navigate('/folder')
   }, [navigate])
 
+  // return <div>toto</div>
+
+  // console.info(' ')
+  // console.info('rows :', rows)
+  // console.info(' ')
+
   return (
     <FolderUnlocker
       folder={displayedFolder}
       onDismiss={handleFolderUnlockerDismiss}
     >
       <SelectionBar actions={actions} />
-      <AddFolder
-        vaultClient={vaultClient}
-        refreshFolderContent={refreshFolderContent}
-        extraColumns={extraColumns}
-        currentFolderId={currentFolderId}
-      />
       {isInError && <Oops />}
       {(needsToWait || isLoading) && <FileListRowsPlaceholder />}
       {/* TODO FolderViewBody should not have the responsability to chose
@@ -154,30 +216,7 @@ const FolderViewBodyVz = ({
         currentFolderId === TRASH_DIR_ID && (
           <EmptyTrash canUpload={canUpload} />
         )}
-      {hasDataToShow && !needsToWait && (
-        <VirtuosoTable
-          rows={rows}
-          columns={columns}
-          defaultOrder={columns[0].id}
-          secondarySort={secondarySort}
-          onSelectAll={selectAll}
-          onSelect={toggleSelectedItem}
-          isSelectedItem={isSelectedItem}
-          selectedItems={selectedItems}
-          componentsProps={{
-            rowContent: {
-              children: (
-                <CellComp
-                  withFilePath={withFilePath}
-                  refreshFolderContent={refreshFolderContent}
-                  canInteractWith={canInteractWith}
-                  actions={actions}
-                />
-              )
-            }
-          }}
-        />
-      )}
+      {hasDataToShow && !needsToWait && <Toto rows={rows} columns={columns} />}
     </FolderUnlocker>
   )
 }

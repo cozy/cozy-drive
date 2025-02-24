@@ -7,7 +7,7 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import { isEncryptedFolder } from '@/lib/encryption'
 import getMimeTypeIcon from '@/lib/getMimeTypeIcon'
 
-const FileIcon = ({ file, size = 32, isEncrypted = false }) => {
+const FileIconMime = ({ file, size = 32, isEncrypted = false }) => {
   const isDir = isDirectory(file)
   const isDirEncrypted = isEncrypted || (isDirectory && isEncryptedFolder(file)) // use file.ref + file.type
 
@@ -21,7 +21,7 @@ const FileIcon = ({ file, size = 32, isEncrypted = false }) => {
   )
 }
 
-FileIcon.propTypes = {
+FileIconMime.propTypes = {
   file: PropTypes.shape({
     type: PropTypes.string,
     mime: PropTypes.string,
@@ -30,4 +30,4 @@ FileIcon.propTypes = {
   size: PropTypes.number
 }
 
-export default FileIcon
+export default FileIconMime

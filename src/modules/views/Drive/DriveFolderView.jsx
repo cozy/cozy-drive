@@ -92,7 +92,9 @@ const DriveFolderView = () => {
     currentFolderId
   })
 
-  const { displayedFolder, isNotFound } = useDisplayedFolder()
+  const { displayedFolder: _displayedFolder, isNotFound } = useDisplayedFolder()
+
+  const displayedFolder = useMemo(() => _displayedFolder, [_displayedFolder])
 
   useTrashRedirect(displayedFolder)
 
@@ -205,49 +207,47 @@ const DriveFolderView = () => {
 
   return (
     <FolderView isNotFound={isNotFound}>
-      <Dropzone
+      {/* <Dropzone
         role="main"
         disabled={!canWriteToCurrentFolder}
         displayedFolder={displayedFolder}
-      >
-        <FolderViewHeader>
-          {currentFolderId && (
-            <FolderViewBreadcrumb
-              rootBreadcrumbPath={rootBreadcrumbPath}
-              currentFolderId={currentFolderId}
-            />
-          )}
-          <Toolbar
-            canUpload={true}
-            canCreateFolder={true}
-            disabled={isLoading || isInError || isPending}
-            isBigThumbnail={isBigThumbnail}
-            toggleThumbnailSize={toggleThumbnailSize}
-          />
-        </FolderViewHeader>
-        {flag('drive.show.harvest-banner') && (
-          <HarvestBanner folderId={currentFolderId} />
-        )}
-        {flag('drive.virtualization.enabled') && !isMobile ? (
-          <FolderViewBodyVz
-            actions={actions}
-            queryResults={allResults}
-            canSort
+      > */}
+      <FolderViewHeader>
+        {currentFolderId && (
+          <FolderViewBreadcrumb
+            rootBreadcrumbPath={rootBreadcrumbPath}
             currentFolderId={currentFolderId}
-            displayedFolder={displayedFolder}
-            extraColumns={extraColumns}
-          />
-        ) : (
-          <FolderViewBody
-            actions={actions}
-            queryResults={allResults}
-            canSort
-            currentFolderId={currentFolderId}
-            displayedFolder={displayedFolder}
-            extraColumns={extraColumns}
           />
         )}
-        {isFabDisplayed && (
+        <Toolbar
+          canUpload={true}
+          canCreateFolder={true}
+          disabled={isLoading || isInError || isPending}
+          isBigThumbnail={isBigThumbnail}
+          toggleThumbnailSize={toggleThumbnailSize}
+        />
+      </FolderViewHeader>
+      {/* {flag('drive.show.harvest-banner') && (
+        <HarvestBanner folderId={currentFolderId} />
+      )} */}
+      {flag('drive.virtualization.enabled') && !isMobile ? (
+        <FolderViewBodyVz
+          actions={actions}
+          queryResults={allResults}
+          currentFolderId={currentFolderId}
+          displayedFolder={displayedFolder}
+        />
+      ) : (
+        <FolderViewBody
+          actions={actions}
+          queryResults={allResults}
+          canSort
+          currentFolderId={currentFolderId}
+          displayedFolder={displayedFolder}
+          extraColumns={extraColumns}
+        />
+      )}
+      {/* {isFabDisplayed && (
           <AddMenuProvider
             canCreateFolder={true}
             canUpload={true}
@@ -259,9 +259,9 @@ const DriveFolderView = () => {
           >
             <FabWithAddMenuContext />
           </AddMenuProvider>
-        )}
-        <Outlet />
-      </Dropzone>
+        )} */}
+      <Outlet />
+      {/* </Dropzone> */}
     </FolderView>
   )
 }

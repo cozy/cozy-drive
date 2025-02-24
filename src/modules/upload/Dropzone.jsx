@@ -92,6 +92,8 @@ const DropzoneWrapper = props => {
   const { showAlert } = useAlert()
   const { isMobile } = useBreakpoints()
 
+  return <div {...props} />
+
   return <Dropzone {...props} isMobile={isMobile} showAlert={showAlert} />
 }
 
