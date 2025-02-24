@@ -82,6 +82,7 @@
           "rw": "Vous pouvez consulter, modifier et supprimer du contenu. Les modifications sur le contenu seront répercutées automatiquement entre vos Cozy."
         }
       },
+      "shared": "Partagé",
       "sharedByMe": "Partagé",
       "sharedWithMe": "Partagé avec moi",
       "sharedBy": "Partagé par %{name}",

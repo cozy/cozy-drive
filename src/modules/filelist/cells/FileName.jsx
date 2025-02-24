@@ -8,6 +8,7 @@ import { isDirectory } from 'cozy-client/dist/models/file'
 import AppIcon from 'cozy-ui/transpiled/react/AppIcon'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import CarbonCopyIcon from 'cozy-ui/transpiled/react/Icons/CarbonCopy'
+import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'
 import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
 import { TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
@@ -16,6 +17,7 @@ import styles from '@/styles/filelist.styl'
 
 import RenameInput from '@/modules/drive/RenameInput'
 import { getFileNameAndExtension } from '@/modules/filelist/helpers'
+import { isSharedDriveFolder } from '@/modules/shareddrives/helpers'
 
 export const CertificationsIcons = ({ attributes }) => {
   const isCarbonCopy = get(attributes, 'metadata.carbonCopy')
@@ -147,6 +149,16 @@ const FileName = ({
                 {isMobile && <CertificationsIcons attributes={attributes} />}
               </div>
             ))}
+          {!withFilePath && isSharedDriveFolder(attributes) && (
+            <div className={styles['fil-file-shared']}>
+              <Icon
+                icon={ShareIcon}
+                size="10"
+                className={styles['fil-file-shared-icon']}
+              />
+              {t('Files.share.shared')}
+            </div>
+          )}
         </div>
       )}
     </TableCell>
