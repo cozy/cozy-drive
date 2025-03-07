@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux'
 
-import { models } from 'cozy-client'
 import flag from 'cozy-flags'
 
 import UploadQueue from './UploadQueue'
@@ -13,9 +12,6 @@ import {
 } from '@/lib/encryption'
 import logger from '@/lib/logger'
 import { CozyFile } from '@/models'
-
-const { doMobileUpload, readMobileFile, uploadFileWithConflictStrategy } =
-  models.file
 
 export { UploadQueue }
 
@@ -407,49 +403,6 @@ export const overwriteFile = async (client, file, path, options = {}) => {
 
   return resp.data
 }
-
-export const uploadFilesFromNative =
-  (files, folderId, uploadFilesSuccessCallback, { client, vaultClient }) =>
-  async dispatch => {
-    dispatch({
-      type: ADD_TO_UPLOAD_QUEUE,
-      files: files
-    })
-    const encryptionKey = await getEncryptionKeyFromDirId(client, folderId)
-    // !TODO Promise.All to use parallelization
-    for (const file of files) {
-      try {
-        const fileOpts = {
-          name: file.file.name,
-          dirId: folderId,
-          conflictStrategy: 'rename'
-        }
-        if (encryptionKey) {
-          const blobFile = await readMobileFile(file.file.fileUrl)
-          const encryptedFile = await vaultClient.encryptFile(
-            blobFile,
-            encryptionKey
-          )
-          await uploadFileWithConflictStrategy(client, encryptedFile, {
-            ...fileOpts,
-            contentType: file.file.type
-          })
-        } else {
-          await doMobileUpload(client, file.file.fileUrl, {
-            ...fileOpts,
-            contentType: file.file.type
-          })
-        }
-        dispatch(removeFileToUploadQueue(file.file))
-      } catch (error) {
-        logger.error(
-          `Uploading files from native failed with file ${file.file}: ${error}`
-        )
-      }
-    }
-
-    if (uploadFilesSuccessCallback) uploadFilesSuccessCallback()
-  }
 
 export const removeFileToUploadQueue = file => async dispatch => {
   dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file, isUpdate: true })
