@@ -101,7 +101,7 @@
     "cozy-minilog": "3.9.1",
     "cozy-realtime": "4.6.0",
     "cozy-sharing": "^22.0.0",
-    "cozy-stack-client": "^52.0.0",
+    "cozy-stack-client": "^57.0.0",
     "cozy-ui": "^118.0.0",
     "cozy-viewer": "^18.1.0",
     "date-fns": "2.30.0",
