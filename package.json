@@ -100,7 +100,7 @@
     "cozy-logger": "1.9.1",
     "cozy-minilog": "3.9.1",
     "cozy-realtime": "4.6.0",
-    "cozy-sharing": "^23.0.0",
+    "cozy-sharing": "^23.2.0",
     "cozy-stack-client": "^57.0.0",
     "cozy-ui": "^119.0.3",
     "cozy-viewer": "^19.0.0",
