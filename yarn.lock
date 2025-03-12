@@ -5829,10 +5829,10 @@ cozy-tsconfig@1.2.0:
   resolved "https://registry.yarnpkg.com/cozy-tsconfig/-/cozy-tsconfig-1.2.0.tgz#17e61f960f139fae4d26cbac2254b9ab632b269e"
   integrity sha512-TRHnY9goF3FzVlUbP7BcHxuN2XAA4AmppT4fHHZmTKaSwYTByVR1Al+riFMDbce94kJZ1wzl9WNLWQuqzGZ6Cw==
 
-cozy-ui@^119.0.3:
-  version "119.0.3"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-119.0.3.tgz#9de0116e99ef6fe7e9916605ebf68ec3c1c8e52e"
-  integrity sha512-A26oMIWnKklstjJqYYVc71MrmILAxu8J2NDVs+9DYfNtu+R04kax0zSe/cD/7aAzCgUZTI7nlX8q5Vryo5J3oQ==
+cozy-ui@^119.1.0:
+  version "119.1.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-119.1.0.tgz#41c31c18c4e135ab8b994d02f6352040dc73b008"
+  integrity sha512-2ROtP5IXdENfJv38hlND7D0cCNx9kkJN0ap5Jueceh4JPoMElmF5WDnUneJ949phRK4u8jYGwaBCGlHGaHERyQ==
   dependencies:
     "@babel/runtime" "^7.3.4"
     "@date-io/date-fns" "1"
@@ -10667,9 +10667,9 @@ msgpack5@^4.0.2:
     readable-stream "^2.3.6"
     safe-buffer "^5.1.2"
 
-"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
+"mui-bottom-sheet@git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
   version "1.0.8"
-  resolved "https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
+  resolved "git+https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
     jest-environment-jsdom-sixteen "^1.0.3"
