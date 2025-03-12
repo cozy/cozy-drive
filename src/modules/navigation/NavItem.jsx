@@ -13,7 +13,7 @@ import { NavLink } from '@/modules/navigation/NavLink'
  * @component
  * @param {Object} props - The component props.
  * @param {string} [props.to] - The path to navigate to when the item is clicked.
- * @param {string} [props.icon] - The icon to display next to the label.
+ * @param {string|Object} [props.icon] - The icon to display next to the label.
  * @param {string} [props.label] - The text label for the navigation item.
  * @param {string} [props.forcedLabel] - The forced text label for the navigation item (optional).
  * @param {RegExp} [props.rx] - A RegExp to modify the path dynamically (optional).
@@ -49,7 +49,7 @@ const NavItem = ({
 
 NavItem.propTypes = {
   to: PropTypes.string,
-  icon: PropTypes.string,
+  icon: PropTypes.oneOfType(PropTypes.string, PropTypes.object),
   label: PropTypes.string,
   forcedLabel: PropTypes.string,
   rx: PropTypes.shape(RegExp),
