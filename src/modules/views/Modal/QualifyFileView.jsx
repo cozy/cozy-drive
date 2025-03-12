@@ -9,6 +9,8 @@ import { getBoundT } from 'cozy-client/dist/models/document/locales'
 import flag from 'cozy-flags'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconStack from 'cozy-ui/transpiled/react/IconStack'
+import FileDuotoneIcon from 'cozy-ui/transpiled/react/Icons/FileDuotone'
+import FileTypeNoteIcon from 'cozy-ui/transpiled/react/Icons/FileTypeNote'
 import NestedSelectResponsive from 'cozy-ui/transpiled/react/NestedSelect/NestedSelectResponsive'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -23,7 +25,7 @@ const getThemesList = () =>
 const OptionIconStack = ({ icon }) => {
   return (
     <IconStack
-      backgroundIcon={<Icon icon="file-duotone" color="#E049BF" size={32} />}
+      backgroundIcon={<Icon icon={FileDuotoneIcon} color="#E049BF" size={32} />}
       {...(icon && {
         foregroundIcon: <Icon icon={icon} color="#E049BF" size={16} />
       })}
@@ -56,7 +58,7 @@ const makeOptions = ({ t, scannerT, focusedId }) => {
             item,
             title: scannerT(`Scan.items.${item.label}`),
             icon: isQualificationNote(item) ? (
-              <Icon icon="file-type-note" size={64} />
+              <Icon icon={FileTypeNoteIcon} size={64} />
             ) : (
               <OptionIconStack icon={item.icon} />
             )

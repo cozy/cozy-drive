@@ -1,5 +1,9 @@
 import React, { useState } from 'react'
 
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import ClockIcon from 'cozy-ui/transpiled/react/Icons/Clock'
+import FolderIcon from 'cozy-ui/transpiled/react/Icons/Folder'
+import StarIcon from 'cozy-ui/transpiled/react/Icons/Star'
 import UINav from 'cozy-ui/transpiled/react/Nav'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
@@ -15,7 +19,7 @@ export const Nav = () => {
     <UINav>
       <NavItem
         to="/folder"
-        icon="folder"
+        icon={<Icon icon={FolderIcon} />}
         label="drive"
         rx={/\/(folder|nextcloud|trash)(\/.*)?/}
         clickState={clickState}
@@ -23,7 +27,7 @@ export const Nav = () => {
       {!isDesktop ? (
         <NavItem
           to="/favorites"
-          icon="star"
+          icon={<Icon icon={StarIcon} />}
           label="favorites"
           rx={/\/favorites(\/.*)?/}
           clickState={clickState}
@@ -31,7 +35,7 @@ export const Nav = () => {
       ) : null}
       <NavItem
         to="/recent"
-        icon="clock"
+        icon={<Icon icon={ClockIcon} />}
         label="recent"
         rx={/\/recent(\/.*)?/}
         clickState={clickState}
