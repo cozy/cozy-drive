@@ -2,14 +2,17 @@ import cx from 'classnames'
 import React from 'react'
 
 import Empty from 'cozy-ui/transpiled/react/Empty'
+import Icon from 'cozy-ui/transpiled/react/Icon'
 import DriveIcon from 'cozy-ui/transpiled/react/Icons/FileTypeFolder'
 import PhotosIcon from 'cozy-ui/transpiled/react/Icons/FileTypeImage'
 import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
+import { isTwakeTheme } from 'cozy-ui/transpiled/react/helpers/isTwakeTheme'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import styles from './empty.styl'
 
+import FolderEmptyIllu from '@/assets/icons/illu-folder-empty.svg'
 import EncryptedFolderIcon from '@/modules/views/Folder/EncryptedFolderIcon'
 
 const EmptyIcon = {
@@ -22,6 +25,17 @@ const EmptyIcon = {
 const EmptyCanvas = ({ type, canUpload, localeKey, hasTextMobileVersion }) => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
+  const props = isTwakeTheme()
+    ? {
+        icon: (
+          <div className="u-w-100">
+            <Icon icon={FolderEmptyIllu} size={160} />
+          </div>
+        ),
+        iconSize: isMobile ? 'large' : 'medium'
+      }
+    : {}
+
   return (
     <Empty
       data-testid="empty-folder"
@@ -35,6 +49,7 @@ const EmptyCanvas = ({ type, canUpload, localeKey, hasTextMobileVersion }) => {
         (canUpload && t('empty.text'))
       }
       className={cx(styles['empty'])}
+      {...props}
     />
   )
 }
