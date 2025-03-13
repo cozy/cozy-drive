@@ -24,14 +24,14 @@ const App = ({ isPublic, store, client, lang, polyglot, children }) => {
       }}
     >
       <PublicProvider isPublic={isPublic}>
-        <BarProvider>
-          <Provider store={store}>
-            <DriveProvider client={client} lang={lang} polyglot={polyglot}>
-              <DataProxyProvider
-                options={{
-                  doctypes: [DOCTYPE_FILES, DOCTYPE_CONTACTS, DOCTYPE_APPS]
-                }}
-              >
+        <Provider store={store}>
+          <DriveProvider client={client} lang={lang} polyglot={polyglot}>
+            <DataProxyProvider
+              options={{
+                doctypes: [DOCTYPE_FILES, DOCTYPE_CONTACTS, DOCTYPE_APPS]
+              }}
+            >
+              <BarProvider>
                 <PushBannerProvider>
                   <AcceptingSharingProvider>
                     <ThumbnailSizeContextProvider>
@@ -39,10 +39,10 @@ const App = ({ isPublic, store, client, lang, polyglot, children }) => {
                     </ThumbnailSizeContextProvider>
                   </AcceptingSharingProvider>
                 </PushBannerProvider>
-              </DataProxyProvider>
-            </DriveProvider>
-          </Provider>
-        </BarProvider>
+              </BarProvider>
+            </DataProxyProvider>
+          </DriveProvider>
+        </Provider>
       </PublicProvider>
     </WebviewIntentProvider>
   )

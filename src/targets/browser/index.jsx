@@ -7,7 +7,6 @@ import 'cozy-ui/dist/cozy-ui.utils.min.css'
 import 'cozy-viewer/dist/stylesheet.css'
 import 'cozy-bar/dist/stylesheet.css'
 import 'cozy-sharing/dist/stylesheet.css'
-import 'cozy-dataproxy-lib/dist/stylesheet.css'
 
 // Uncomment to activate why-did-you-render
 // https://github.com/welldone-software/why-did-you-render
@@ -21,14 +20,12 @@ import { HashRouter } from 'react-router-dom'
 import setupApp from './setupAppContext'
 import App from '@/components/App/App'
 import AppRoute from '@/modules/navigation/AppRoute'
-import AppBarSearch from '@/modules/search/components/AppBarSearch'
 
 // ambient styles
 import styles from '@/styles/main.styl' // eslint-disable-line no-unused-vars
 
 const AppComponent = props => (
   <App {...props}>
-    <AppBarSearch />
     <HashRouter>
       <AppRoute />
     </HashRouter>

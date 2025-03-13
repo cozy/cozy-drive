@@ -1,8 +1,7 @@
 import React from 'react'
 import { Route, useParams, Outlet, Navigate } from 'react-router-dom'
 
-import { RealTimeQueries } from 'cozy-client'
-import { AssistantDialog } from 'cozy-dataproxy-lib'
+import { BarRoutes } from 'cozy-bar'
 import flag from 'cozy-flags'
 
 import ExternalRedirect from './ExternalRedirect'
@@ -192,16 +191,6 @@ const AppRoute = () => (
 
       <Route path="search" element={<SearchView />} />
 
-      <Route
-        path="assistant/:conversationId"
-        element={
-          <>
-            <RealTimeQueries doctype="io.cozy.ai.chat.conversations" />
-            <AssistantDialog />
-          </>
-        }
-      />
-
       <Route path="favorites" element={<FavoritesView />}>
         <Route path="file/:fileId/revision" element={<FileHistory />} />
         <Route path="file/:fileId/share" element={<ShareFileView />} />
@@ -209,6 +198,8 @@ const AppRoute = () => (
         <Route path="share" element={<ShareDisplayedFolderView />} />
         <Route path="move" element={<MoveFilesView />} />
       </Route>
+
+      {BarRoutes.map(BarRoute => BarRoute)}
     </Route>
   </SentryRoutes>
 )
