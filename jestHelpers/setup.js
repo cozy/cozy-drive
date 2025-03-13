@@ -16,10 +16,7 @@ jest.mock('cozy-intent', () => ({
 }))
 
 jest.mock('cozy-dataproxy-lib', () => ({
-  DataProxyProvider: ({ children }) => children,
-  SearchDialog: () => <div>SearchDialog</div>,
-  AssistantDialog: () => <div>AssistantDialog</div>,
-  AssistantDesktop: () => <div>AssistantDesktop</div>
+  DataProxyProvider: ({ children }) => children
 }))
 
 // see https://github.com/jsdom/jsdom/issues/1695
