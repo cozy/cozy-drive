@@ -21,7 +21,7 @@ initFlags()
 const Layout = () => {
   return (
     <LayoutUI>
-      <BarComponent disableInternalStore />
+      <BarComponent searchOptions={{ enabled: true }} disableInternalStore />
       <FlagSwitcher />
       <Sidebar className="u-flex-justify-between">
         <Nav />
