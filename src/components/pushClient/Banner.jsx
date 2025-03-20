@@ -21,7 +21,6 @@ import {
   isClientAlreadyInstalled,
   DESKTOP_BANNER
 } from '.'
-import styles from './pushClient.styl'
 
 import Config from '@/config/config.json'
 
@@ -71,7 +70,7 @@ class BannerClient extends Component {
     const text = isMobile ? 'Nav.btn-client-mobile' : 'Nav.banner-txt-client'
 
     return (
-      <div className={styles['coz-banner-client']}>
+      <div className="u-pos-relative">
         <Banner
           inline
           icon={
