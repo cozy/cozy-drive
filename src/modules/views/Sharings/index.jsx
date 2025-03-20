@@ -9,6 +9,7 @@ import {
   shareNative
 } from 'cozy-sharing'
 import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
+import { Content } from 'cozy-ui/transpiled/react/Layout'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
@@ -108,24 +109,26 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
 
   return (
     <FolderView>
-      <FolderViewHeader>
-        <Breadcrumb path={[{ name: t('breadcrumb.title_sharings') }]} />
-        <Toolbar canUpload={false} canCreateFolder={false} />
-      </FolderViewHeader>
-      {!allLoaded || !hasQueryBeenLoaded(result) ? (
-        <FileListRowsPlaceholder />
-      ) : (
-        <>
-          <FolderViewBody
-            actions={actions}
-            queryResults={[result]}
-            canSort={false}
-            withFilePath={true}
-            extraColumns={extraColumns}
-          />
-          <Outlet />
-        </>
-      )}
+      <Content className={isMobile ? '' : 'u-pt-1'}>
+        <FolderViewHeader>
+          <Breadcrumb path={[{ name: t('breadcrumb.title_sharings') }]} />
+          <Toolbar canUpload={false} canCreateFolder={false} />
+        </FolderViewHeader>
+        {!allLoaded || !hasQueryBeenLoaded(result) ? (
+          <FileListRowsPlaceholder />
+        ) : (
+          <>
+            <FolderViewBody
+              actions={actions}
+              queryResults={[result]}
+              canSort={false}
+              withFilePath={true}
+              extraColumns={extraColumns}
+            />
+            <Outlet />
+          </>
+        )}
+      </Content>
     </FolderView>
   )
 }
