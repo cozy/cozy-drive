@@ -15,7 +15,6 @@ import CloudSyncIcon from 'cozy-ui/transpiled/react/Icons/CloudSync'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { usePushBannerContext } from './PushBannerProvider'
-import styles from '../pushClient/pushClient.styl'
 
 /**
  * Banner to inform users that they have reached more than 80% of their disk space
@@ -53,7 +52,7 @@ const QuotaBanner = () => {
     arePremiumLinksEnabled(instanceInfo) && (!isFlagshipApp() || hasIAP)
 
   return (
-    <div className={styles['coz-banner-client']}>
+    <div className="u-pos-relative">
       <Banner
         inline
         icon={<Icon icon={CloudSyncIcon} />}
