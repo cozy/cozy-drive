@@ -1,3 +1,4 @@
+import cx from 'classnames'
 import React, { Component } from 'react'
 import UIDropzone from 'react-dropzone'
 import { connect } from 'react-redux'
@@ -7,6 +8,7 @@ import { withClient } from 'cozy-client'
 import { withVaultClient } from 'cozy-keys-lib'
 import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import styles from '@/styles/dropzone.styl'
@@ -37,12 +39,15 @@ export class Dropzone extends Component {
 
   render() {
     const { dropzoneActive } = this.state
-    const { displayedFolder, children, disabled, role } = this.props
+    const { displayedFolder, isMobile, children, disabled, role } = this.props
+
     return (
       <UIDropzone
         disabled={disabled}
         role={role}
-        className={dropzoneActive ? styles['fil-dropzone-active'] : ''}
+        className={cx(isMobile ? '' : 'u-pt-1', {
+          [styles['fil-dropzone-active']]: dropzoneActive
+        })}
         disableClick
         style={{}}
         onDrop={this.onDrop}
@@ -85,8 +90,9 @@ const mapDispatchToProps = (dispatch, { displayedFolder, sharingState }) => ({
 
 const DropzoneWrapper = props => {
   const { showAlert } = useAlert()
+  const { isMobile } = useBreakpoints()
 
-  return <Dropzone {...props} showAlert={showAlert} />
+  return <Dropzone {...props} isMobile={isMobile} showAlert={showAlert} />
 }
 
 export default compose(
