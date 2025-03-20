@@ -96,6 +96,11 @@
       "head_size_desc": "最大優先"
     }
   },
+  "Storage": {
+    "title": "儲存空間",
+    "availability": "可用 %{smart_count} GB",
+    "increase": "增加您的空間"
+  },
   "SelectionBar": {
     "share": "分享",
     "download": "下載",

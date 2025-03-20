@@ -184,6 +184,11 @@
       }
     }
   },
+  "Storage": {
+    "title": "Opslag",
+    "availability": "%{smart_count} GB beschikbaar",
+    "increase": "Vergroot je ruimte"
+  },
   "SelectionBar": {
     "selected_count": "item geselecteerd |||| items geselecteerd",
     "share": "Delen",
