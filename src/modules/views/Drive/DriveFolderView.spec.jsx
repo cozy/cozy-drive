@@ -14,7 +14,9 @@ jest.mock('modules/views/Drive/useTrashRedirect', () => ({
 }))
 
 // eslint-disable-next-line react/display-name
-jest.mock('../../upload/Dropzone', () => () => <div />)
+jest.mock('../../upload/Dropzone', () => ({ children }) => (
+  <div>{children}</div>
+))
 
 jest.mock('../Folder/FolderViewBreadcrumb', () =>
   // eslint-disable-next-line react/display-name

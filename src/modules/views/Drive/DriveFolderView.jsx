@@ -212,24 +212,24 @@ const DriveFolderView = () => {
 
   return (
     <FolderView isNotFound={isNotFound}>
-      <FolderViewHeader>
-        {currentFolderId && (
-          <FolderViewBreadcrumb
-            rootBreadcrumbPath={rootBreadcrumbPath}
-            currentFolderId={currentFolderId}
-          />
-        )}
-        <Toolbar
-          canUpload={true}
-          canCreateFolder={true}
-          disabled={isLoading || isInError || isPending}
-        />
-      </FolderViewHeader>
       <Dropzone
         role="main"
         disabled={!canWriteToCurrentFolder}
         displayedFolder={displayedFolder}
       >
+        <FolderViewHeader>
+          {currentFolderId && (
+            <FolderViewBreadcrumb
+              rootBreadcrumbPath={rootBreadcrumbPath}
+              currentFolderId={currentFolderId}
+            />
+          )}
+          <Toolbar
+            canUpload={true}
+            canCreateFolder={true}
+            disabled={isLoading || isInError || isPending}
+          />
+        </FolderViewHeader>
         {flag('drive.show.harvest-banner') && (
           <HarvestBanner folderId={currentFolderId} />
         )}
