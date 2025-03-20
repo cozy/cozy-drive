@@ -130,6 +130,11 @@
       "head_updated_at_desc": "Последние"
     }
   },
+  "Storage": {
+    "title": "Хранилище",
+    "availability": "%{smart_count} ГБ доступно",
+    "increase": "Увеличьте ваше пространство"
+  },
   "SelectionBar": {
     "selected_count": "выбран |||| выбрано",
     "share": "Поделится",

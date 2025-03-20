@@ -175,6 +175,11 @@
       }
     }
   },
+  "Storage": {
+    "title": "Almacenamiento",
+    "availability": "%{smart_count} GB disponibles",
+    "increase": "Aumenta tu espacio"
+  },
   "SelectionBar": {
     "selected_count": "item seleccionado |||| items seleccionados",
     "share": "Compartir",

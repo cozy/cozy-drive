@@ -157,6 +157,11 @@
       "head_name_desc": "Z-A"
     }
   },
+  "Storage": {
+    "title": "Archiviazione",
+    "availability": "%{smart_count} GB disponibili",
+    "increase": "Aumenta il tuo spazio"
+  },
   "SelectionBar": {
     "share": "Condividi",
     "download": "Scarica",

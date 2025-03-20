@@ -182,6 +182,11 @@
       }
     }
   },
+  "Storage": {
+    "title": "Speicher",
+    "availability": "%{smart_count} GB verfügbar",
+    "increase": "Speicherplatz erweitern"
+  },
   "SelectionBar": {
     "selected_count": "Element ausgewählt |||| Elemente ausgewählt",
     "share": "Freigeben",

@@ -157,6 +157,11 @@
       "head_size_desc": "大きなものが先頭"
     }
   },
+  "Storage": {
+    "title": "ストレージ",
+    "availability": "%{smart_count} GB 利用可能",
+    "increase": "スペースを増やす"
+  },
   "SelectionBar": {
     "selected_count": "アイテム選択 |||| アイテム選択",
     "share": "共有",

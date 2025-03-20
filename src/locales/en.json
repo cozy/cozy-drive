@@ -192,6 +192,11 @@
       }
     }
   },
+  "Storage": {
+    "title": "Storage",
+    "availability": "%{smart_count} GB available",
+    "increase": "Increase your space"
+  },
   "SelectionBar": {
     "selected_count": "item selected |||| items selected",
     "share": "Share",

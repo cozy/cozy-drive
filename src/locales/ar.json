@@ -63,6 +63,11 @@
     },
     "load_more": "عرض المزيد"
   },
+  "Storage": {
+    "title": "التخزين",
+    "availability": "متاح %{smart_count} جيجابايت",
+    "increase": "زيادة مساحتك"
+  },
   "SelectionBar": {
     "share": "مشاركة",
     "download": "تنزيل",
