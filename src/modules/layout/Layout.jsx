@@ -8,7 +8,10 @@ import FlagSwitcher from 'cozy-flags/dist/FlagSwitcher'
 import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { Layout as LayoutUI } from 'cozy-ui/transpiled/react/Layout'
 import Sidebar from 'cozy-ui/transpiled/react/Sidebar'
+import { isTwakeTheme } from 'cozy-ui/transpiled/react/helpers/isTwakeTheme'
 
+import StorageButton from '@/components/Storage/StorageButton'
+import StorageProgress from '@/components/Storage/StorageProgress'
 import ButtonClient from '@/components/pushClient/Button'
 import SupportUs from '@/components/pushClient/SupportUs'
 import { initFlags } from '@/lib/flags'
@@ -26,6 +29,12 @@ const Layout = () => {
       <Sidebar className="u-flex-justify-between">
         <Nav />
         <div>
+          {isTwakeTheme() && (
+            <div className="u-p-1-half">
+              <StorageProgress />
+              <StorageButton className="u-mt-1" />
+            </div>
+          )}
           <SupportUs />
           <ButtonClient />
         </div>
