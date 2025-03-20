@@ -1,4 +1,3 @@
-import cx from 'classnames'
 import get from 'lodash/get'
 import uniqBy from 'lodash/uniqBy'
 import React, { useCallback, useContext, useEffect } from 'react'
@@ -181,31 +180,30 @@ const PublicFolderView = () => {
       <ModalStack />
       <ModalManager />
       {isSharingBannerPluginDisplayed && <SharingBannerPlugin />}
-      <span className={cx({ 'u-pt-2': !isMobile })} />
-      <FolderViewHeader>
-        {currentFolderId && (
-          <>
-            {isOldBreadcrumb ? (
-              <OldFolderViewBreadcrumb
-                currentFolderId={currentFolderId}
-                getBreadcrumbPath={geTranslatedBreadcrumbPath}
+      <Content className={isMobile ? '' : 'u-pt-1'}>
+        <FolderViewHeader>
+          {currentFolderId && (
+            <>
+              {isOldBreadcrumb ? (
+                <OldFolderViewBreadcrumb
+                  currentFolderId={currentFolderId}
+                  getBreadcrumbPath={geTranslatedBreadcrumbPath}
+                />
+              ) : (
+                <FolderViewBreadcrumb
+                  rootBreadcrumbPath={rootBreadcrumbPath}
+                  currentFolderId={currentFolderId}
+                />
+              )}
+              <PublicToolbar
+                files={files}
+                hasWriteAccess={hasWritePermissions}
+                refreshFolderContent={refreshFolderContent}
+                sharingInfos={sharingInfos}
               />
-            ) : (
-              <FolderViewBreadcrumb
-                rootBreadcrumbPath={rootBreadcrumbPath}
-                currentFolderId={currentFolderId}
-              />
-            )}
-            <PublicToolbar
-              files={files}
-              hasWriteAccess={hasWritePermissions}
-              refreshFolderContent={refreshFolderContent}
-              sharingInfos={sharingInfos}
-            />
-          </>
-        )}
-      </FolderViewHeader>
-      <Content>
+            </>
+          )}
+        </FolderViewHeader>
         <FolderViewBody
           actions={actions}
           queryResults={[filesResult]}

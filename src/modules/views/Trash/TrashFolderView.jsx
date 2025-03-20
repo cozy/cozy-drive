@@ -4,6 +4,7 @@ import { useNavigate, Outlet, useLocation } from 'react-router-dom'
 import { useQuery, useClient } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
 import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
+import { Content } from 'cozy-ui/transpiled/react/Layout'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -81,19 +82,21 @@ export const TrashFolderView = () => {
 
   return (
     <FolderView isNotFound={isNotFound}>
-      <FolderViewHeader>
-        <TrashBreadcrumb currentFolderId={currentFolderId} />
-        <TrashToolbar />
-      </FolderViewHeader>
-      <FolderViewBody
-        currentFolderId={currentFolderId}
-        displayedFolder={displayedFolder}
-        actions={actions}
-        queryResults={[foldersResult, filesResult]}
-        canSort
-        extraColumns={extraColumns}
-      />
-      <Outlet />
+      <Content className={isMobile ? '' : 'u-pt-1'}>
+        <FolderViewHeader>
+          <TrashBreadcrumb currentFolderId={currentFolderId} />
+          <TrashToolbar />
+        </FolderViewHeader>
+        <FolderViewBody
+          currentFolderId={currentFolderId}
+          displayedFolder={displayedFolder}
+          actions={actions}
+          queryResults={[foldersResult, filesResult]}
+          canSort
+          extraColumns={extraColumns}
+        />
+        <Outlet />
+      </Content>
     </FolderView>
   )
 }
