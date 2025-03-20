@@ -14,7 +14,7 @@ import SupportUs from '@/components/pushClient/SupportUs'
 import { initFlags } from '@/lib/flags'
 import Nav from '@/modules/navigation/Nav'
 import { SelectionProvider } from '@/modules/selection/SelectionProvider'
-import { UploadQueue } from '@/modules/upload'
+import UploadQueue from '@/modules/upload/UploadQueue'
 
 initFlags()
 
