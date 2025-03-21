@@ -57,7 +57,7 @@
     "bundlemon": "3.1.0",
     "cozy-app-publish": "^0.40.1",
     "cozy-jobs-cli": "^2.4.3",
-    "cozy-tsconfig": "1.2.0",
+    "cozy-tsconfig": "^1.8.1",
     "css-mediaquery": "0.1.2",
     "eslint": "8.56.0",
     "eslint-config-cozy-app": "6.1.0",
