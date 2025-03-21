@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { SharedDocument, useSharingContext } from 'cozy-sharing'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import styles from '@/styles/toolbar.styl'
 
@@ -13,7 +12,6 @@ import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
 import AddButton from '@/modules/drive/Toolbar/components/AddButton'
 import InsideRegularFolder from '@/modules/drive/Toolbar/components/InsideRegularFolder'
 import MoreMenu from '@/modules/drive/Toolbar/components/MoreMenu'
-import SearchButton from '@/modules/drive/Toolbar/components/SearchButton'
 import ShareButton from '@/modules/drive/Toolbar/share/ShareButton'
 import SharedRecipients from '@/modules/drive/Toolbar/share/SharedRecipients'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
@@ -27,7 +25,6 @@ const Toolbar = ({
   isSharedWithMe
 }) => {
   const { displayedFolder } = useDisplayedFolder()
-  const { isMobile } = useBreakpoints()
   const { showSelectionBar, isSelectionBarVisible } = useSelectionContext()
   const { allLoaded } = useSharingContext() // We need to wait for the sharing context to be completely loaded to avoid race conditions
 
@@ -70,7 +67,6 @@ const Toolbar = ({
       )}
 
       <BarRightOnMobile>
-        {isMobile && <SearchButton />}
         <MoreMenu
           isDisabled={isDisabled}
           hasWriteAccess={hasWriteAccess}

@@ -12,7 +12,6 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { MoreMenu } from '@/components/MoreMenu'
 import { selectable } from '@/modules/actions/components/selectable'
-import SearchButton from '@/modules/drive/Toolbar/components/SearchButton'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 import { emptyTrash } from '@/modules/trash/components/actions/emptyTrash'
 
@@ -36,7 +35,6 @@ const TrashToolbar: FC = () => {
   if (isMobile) {
     return (
       <BarRight>
-        <SearchButton />
         <MoreMenu actions={actions} docs={[]} />
       </BarRight>
     )
