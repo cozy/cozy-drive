@@ -10,8 +10,8 @@
     "item_collect": "管理",
     "btn-client": "下載桌面版 Cozy Drive",
     "btn-client-web": "取得 Cozy",
-    "btn-client-mobile": "在您的手機上下載 Cozy Drive",
-    "banner-txt-client": "下載桌面版 Cozy Drive 來安全地同步您的檔案並隨時存取它們",
+    "btn-client-mobile": "在您的手機上下載 %{name}",
+    "banner-txt-client": "下載桌面版 %{name} 來安全地同步您的檔案並隨時存取它們",
     "banner-btn-client": "下載"
   },
   "breadcrumb": {
