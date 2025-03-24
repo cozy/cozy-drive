@@ -1,7 +1,6 @@
 import cx from 'classnames'
 import React from 'react'
 
-import Button from 'cozy-ui/transpiled/react/Buttons'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import {
   TableHead,
@@ -13,9 +12,6 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import HeaderCell from './HeaderCell'
 
 import styles from '@/styles/filelist.styl'
-
-import iconListMin from '@/assets/icons/icon-list-min.svg'
-import iconList from '@/assets/icons/icon-list.svg'
 import { SORTABLE_ATTRIBUTES, DEFAULT_SORT } from '@/config/sort'
 import { isTwakeTheme } from 'cozy-ui/transpiled/react/helpers/isTwakeTheme';
 
@@ -98,23 +94,7 @@ const FileListHeaderDesktop = ({
             { [styles['u-capitalize']]: isTwake }
           )}
         >
-          {/** in order to not display this button in a MoveModal for instance */}
-          {canSort && (
-            <Button
-              variant="text"
-              onClick={() => {
-                toggleThumbnailSize()
-              }}
-              label={
-                <Icon
-                  icon={thumbnailSizeBig ? iconListMin : iconList}
-                  size={17}
-                  label={t('table.head_thumbnail_size')}
-                />
-              }
-              aria-label={t('table.head_thumbnail_size')}
-            />
-          )}
+          {/** Empty header cell for actions column */}
         </TableHeader>
       </TableRow>
     </TableHead>

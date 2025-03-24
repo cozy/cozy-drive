@@ -22,6 +22,7 @@ import { ROOT_DIR_ID, TRASH_DIR_ID } from '@/constants/config'
 import { useCurrentFolderId, useDisplayedFolder } from '@/hooks'
 import { FabContext } from '@/lib/FabProvider'
 import { useModalContext } from '@/lib/ModalContext'
+import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
 import {
   share,
   download,
@@ -68,6 +69,7 @@ const DriveFolderView = () => {
   const { isMobile } = useBreakpoints()
   const { t, lang } = useI18n()
   const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)
+  const { isBigThumbnail, toggleThumbnailSize } = useThumbnailSizeContext()
   const { allLoaded, hasWriteAccess, refresh, isOwner, byDocId } =
     useSharingContext()
   const { isNativeFileSharingAvailable, shareFilesNative } =
@@ -228,6 +230,8 @@ const DriveFolderView = () => {
             canUpload={true}
             canCreateFolder={true}
             disabled={isLoading || isInError || isPending}
+            isBigThumbnail={isBigThumbnail}
+            toggleThumbnailSize={toggleThumbnailSize}
           />
         </FolderViewHeader>
         {flag('drive.show.harvest-banner') && (
