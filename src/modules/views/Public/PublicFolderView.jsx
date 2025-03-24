@@ -180,7 +180,7 @@ const PublicFolderView = () => {
       <ModalStack />
       <ModalManager />
       {isSharingBannerPluginDisplayed && <SharingBannerPlugin />}
-      <Content className={isMobile ? '' : 'u-pt-1'}>
+      <Content className={isMobile ? '' : 'u-ml-1 u-pt-1'}>
         <FolderViewHeader>
           {currentFolderId && (
             <>
