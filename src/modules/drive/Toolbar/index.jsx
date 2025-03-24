@@ -6,6 +6,8 @@ import { SharedDocument, useSharingContext } from 'cozy-sharing'
 import { isTwakeTheme } from 'cozy-ui/transpiled/react/helpers/isTwakeTheme'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
+import ViewSwitcher from '@/modules/drive/Toolbar/components/ViewSwitcher'
+
 import styles from '@/styles/toolbar.styl'
 
 import { BarRightOnMobile } from '@/components/Bar'
@@ -25,7 +27,9 @@ const Toolbar = ({
   canUpload,
   canCreateFolder,
   hasWriteAccess,
-  isSharedWithMe
+  isSharedWithMe,
+  isBigThumbnail,
+  toggleThumbnailSize
 }) => {
   const { displayedFolder } = useDisplayedFolder()
   const { isMobile } = useBreakpoints()
@@ -57,6 +61,14 @@ const Toolbar = ({
       >
         <ShareButton isDisabled={isSharingDisabled} className="u-mr-half" />
       </InsideRegularFolder>
+
+      {toggleThumbnailSize && (
+        <ViewSwitcher
+          isBigThumbnail={isBigThumbnail}
+          toggleThumbnailSize={toggleThumbnailSize}
+          className="u-mr-half"
+        />
+      )}
 
       {hasWriteAccess && (
         <AddMenuProvider
@@ -95,7 +107,9 @@ Toolbar.propTypes = {
   disabled: PropTypes.bool,
   canUpload: PropTypes.bool,
   canCreateFolder: PropTypes.bool,
-  hasWriteAccess: PropTypes.bool
+  hasWriteAccess: PropTypes.bool,
+  isBigThumbnail: PropTypes.bool,
+  toggleThumbnailSize: PropTypes.func
 }
 
 Toolbar.defaultProps = {
