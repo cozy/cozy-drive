@@ -9,6 +9,7 @@ import {
   TableRow
 } from 'cozy-ui/transpiled/react/deprecated/Table'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import { isTwakeTheme } from 'cozy-ui/transpiled/react/helpers/isTwakeTheme'
 
 import MobileSortMenu from './MobileSortMenu'
 
@@ -45,10 +46,14 @@ const FileListHeaderMobile = ({
       <TableRow className={styles['fil-content-row-head']}>
         <TableHeader
           onClick={showSortMenu}
-          className={cx(styles['fil-content-mobile-header'], {
-            [styles['fil-content-header-sortasc']]: actualSort.order === 'asc',
-            [styles['fil-content-header-sortdesc']]: actualSort.order === 'desc'
-          })}
+          className={cx(
+            styles['fil-content-mobile-header'],
+            {
+              [styles['fil-content-header-sortasc']]: actualSort.order === 'asc',
+              [styles['fil-content-header-sortdesc']]: actualSort.order === 'desc',
+              [styles['u-capitalize']]: isTwakeTheme()
+            }
+          )}
         >
           {t(`table.mobile.head_${actualSort.attribute}_${actualSort.order}`)}
         </TableHeader>
@@ -63,7 +68,10 @@ const FileListHeaderMobile = ({
         <TableHeader
           className={cx(
             styles['fil-content-mobile-header'],
-            styles['fil-content-header-action']
+            styles['fil-content-header-action'],
+            {
+              [styles['u-capitalize']]: isTwakeTheme()
+            }
           )}
         >
           <Button

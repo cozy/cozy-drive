@@ -12,7 +12,8 @@ const HeaderCell = ({
   attr,
   order = null,
   defaultOrder,
-  onSort
+  onSort,
+  className
 }) => {
   const { t } = useI18n()
   const sortCallback = useCallback(
@@ -27,11 +28,12 @@ const HeaderCell = ({
       className={cx(
         styles['fil-content-header'],
         styles[`fil-content-${css}`],
+        className,
         {
           [styles['fil-content-header-sortableasc']]:
-            onSort && order === null && defaultOrder === 'asc',
+          onSort && order === null && defaultOrder === 'asc',
           [styles['fil-content-header-sortabledesc']]:
-            onSort && order === null && defaultOrder === 'desc',
+          onSort && order === null && defaultOrder === 'desc',
           [styles['fil-content-header-sortasc']]: onSort && order === 'asc',
           [styles['fil-content-header-sortdesc']]: onSort && order === 'desc'
         }
