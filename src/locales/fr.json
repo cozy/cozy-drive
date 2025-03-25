@@ -195,7 +195,7 @@
   "Storage": {
     "title": "Stockage",
     "availability": "%{smart_count} Go disponible",
-    "increase": "Augmenter votre espace"
+    "increase": "Augmenter l'espace"
   },
   "SelectionBar": {
     "selected_count": "élément sélectionné |||| éléments sélectionnés",
