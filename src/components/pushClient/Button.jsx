@@ -3,7 +3,14 @@ import React, { Component } from 'react'
 
 import { withClient } from 'cozy-client'
 import { isFlagshipApp } from 'cozy-device-helper'
+import Icon from 'cozy-ui/transpiled/react/Icon'
+import DriveIcon from 'cozy-ui/transpiled/react/Icons/Drive'
+import ListItem from 'cozy-ui/transpiled/react/ListItem'
+import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
+import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
+import Paper from 'cozy-ui/transpiled/react/Paper'
 import { default as UIButtonClient } from 'cozy-ui/transpiled/react/deprecated/PushClientButton'
+import { isTwakeTheme } from 'cozy-ui/transpiled/react/helpers/isTwakeTheme'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { isLinux, isClientAlreadyInstalled, DESKTOP_BANNER } from '.'
@@ -35,7 +42,41 @@ class ButtonClient extends Component {
       isFlagshipApp()
     )
       return null
+
     const { t } = this.props
+
+    if (isTwakeTheme())
+      return (
+        <Paper
+          elevation={10}
+          className="u-mh-1-half u-mb-1-half u-c-pointer"
+          style={{ backgroundColor: 'var(--defaultBackgroundColor)' }}
+          onClick={() =>
+            window.open(
+              t(isLinux() ? 'Nav.link-client' : 'Nav.link-client-desktop')
+            )
+          }
+        >
+          <ListItem component="div">
+            <ListItemIcon>
+              <Icon icon={DriveIcon} size={32} />
+            </ListItemIcon>
+            <ListItemText
+              primaryTypographyProps={{
+                variant: 'overline',
+                color: 'textPrimary'
+              }}
+              primary="Twake Drive App"
+              secondaryTypographyProps={{
+                variant: 'overline',
+                color: 'primary'
+              }}
+              secondary={t('Nav.banner-btn-client')}
+            />
+          </ListItem>
+        </Paper>
+      )
+
     return (
       <UIButtonClient
         label={t('Nav.btn-client')}
