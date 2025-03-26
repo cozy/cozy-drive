@@ -109,11 +109,7 @@ const DriveFolderView = () => {
     sortAttribute: sortOrder.attribute,
     sortOrder: sortOrder.order
   })
-  // Không hiển thị thùng rác trong danh sách file nữa vì đã chuyển sang sidebar
-  // const trashFolderQuery = buildMagicFolderQuery({
-  //   id: TRASH_DIR_ID,
-  //   enabled: currentFolderId === ROOT_DIR_ID
-  // })
+
   const sharedFolderQuery = buildMagicFolderQuery({
     id: 'io.cozy.files.shared-drives-dir',
     enabled: currentFolderId === ROOT_DIR_ID
@@ -121,10 +117,7 @@ const DriveFolderView = () => {
 
   const foldersResult = useQuery(folderQuery.definition, folderQuery.options)
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
-  // const trashFolderResult = useQuery(
-  //   trashFolderQuery.definition,
-  //   trashFolderQuery.options
-  // )
+
   const sharedFolderResult = useQuery(
     sharedFolderQuery.definition,
     sharedFolderQuery.options

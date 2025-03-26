@@ -695,7 +695,8 @@
   },
   "button": {
     "back": "Back",
-    "add": "Add"
+    "add": "Add",
+    "create": "Create"
   },
   "search": {
     "action": "Search",

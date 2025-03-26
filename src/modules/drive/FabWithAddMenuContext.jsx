@@ -30,7 +30,7 @@ const FabWithAddMenuContext = ({ noSidebar }) => {
     >
       <ExtendableFab
         color="primary"
-        label={t('button.add')}
+        label={t('button.create')}
         icon={PlusIcon}
         className={styles.root}
         disabled={isDisabled || isOffline}
