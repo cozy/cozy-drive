@@ -39,27 +39,29 @@ const Layout = () => {
       />
       <FlagSwitcher />
       <Sidebar className="u-flex-justify-between">
-        {folderId ? (
-          <SharedDocument docId={folderId}>
-            {sharingProps => {
-              const { hasWriteAccess } = sharingProps
-              return (
-                hasWriteAccess && (
-                  <AddMenuProvider
-                    canCreateFolder={true}
-                    canUpload={true}
-                    disabled={false}
-                    displayedFolder={displayedFolder}
-                    isSelectionBarVisible={false}
-                  >
-                    <AddButton className="u-mh-1-half u-mt-1-half u-miw-4 u-bdrs-6" />
-                  </AddMenuProvider>
+        <div>
+          {folderId ? (
+            <SharedDocument docId={folderId}>
+              {sharingProps => {
+                const { hasWriteAccess } = sharingProps
+                return (
+                  hasWriteAccess && (
+                    <AddMenuProvider
+                      canCreateFolder={true}
+                      canUpload={true}
+                      disabled={false}
+                      displayedFolder={displayedFolder}
+                      isSelectionBarVisible={false}
+                    >
+                      <AddButton className="u-mh-1-half u-mt-1-half u-miw-4 u-bdrs-6" />
+                    </AddMenuProvider>
+                  )
                 )
-              )
-            }}
-          </SharedDocument>
-        ) : null}
-        <Nav />
+              }}
+            </SharedDocument>
+          ) : null}
+          <Nav />
+        </div>
         <div>
           {isTwakeTheme() && (
             <div className="u-p-1-half">
