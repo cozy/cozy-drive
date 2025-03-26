@@ -637,7 +637,8 @@
   },
   "button": {
     "back": "Terug",
-    "add": "Toevoegen"
+    "add": "Toevoegen",
+    "create": "Creëren"
   },
   "search": {
     "action": "Zoeken",

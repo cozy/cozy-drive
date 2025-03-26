@@ -36,7 +36,7 @@ export const ActionMenuContent = ({
     <>
       <ActionsMenuMobileHeader>
         <ListItemText
-          primary={t('toolbar.menu_add')}
+          primary={t('toolbar.menu_create')}
           primaryTypographyProps={{ variant: 'h6' }}
         />
       </ActionsMenuMobileHeader>

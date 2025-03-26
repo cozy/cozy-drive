@@ -696,7 +696,8 @@
   },
   "button": {
     "back": "Retour",
-    "add": "Ajouter"
+    "add": "Ajouter",
+    "create": "Créer"
   },
   "search": {
     "action": "Rechercher",

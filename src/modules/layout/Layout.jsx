@@ -23,6 +23,7 @@ import AddButton from '@/modules/drive/Toolbar/components/AddButton'
 import Nav from '@/modules/navigation/Nav'
 import { SelectionProvider } from '@/modules/selection/SelectionProvider'
 import UploadQueue from '@/modules/upload/UploadQueue'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 initFlags()
 
@@ -30,6 +31,7 @@ const Layout = () => {
   const { isMobile } = useBreakpoints()
   const folderId = useCurrentFolderId()
   const { displayedFolder } = useDisplayedFolder()
+  const { isDesktop } = useBreakpoints()
 
   return (
     <LayoutUI>
@@ -40,7 +42,7 @@ const Layout = () => {
       <FlagSwitcher />
       <Sidebar className="u-flex-justify-between">
         <div>
-          {folderId ? (
+          {folderId && isDesktop ? (
             <SharedDocument docId={folderId}>
               {sharingProps => {
                 const { hasWriteAccess } = sharingProps

@@ -68,7 +68,6 @@ const Toolbar = ({
         />
       )}
 
-
       <BarRightOnMobile>
         {isMobile && <SearchButton />}
         {!isTwakeTheme() && (
