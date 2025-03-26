@@ -4,6 +4,7 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import ClockIcon from 'cozy-ui/transpiled/react/Icons/Clock'
 import FolderIcon from 'cozy-ui/transpiled/react/Icons/Folder'
 import StarIcon from 'cozy-ui/transpiled/react/Icons/Star'
+import TrashIcon from 'cozy-ui/transpiled/react/Icons/Trash'
 import UINav from 'cozy-ui/transpiled/react/Nav'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
@@ -21,7 +22,7 @@ export const Nav = () => {
         to="/folder"
         icon={<Icon icon={FolderIcon} />}
         label="drive"
-        rx={/\/(folder|nextcloud|trash)(\/.*)?/}
+        rx={/\/(folder|nextcloud)(\/.*)?/}
         clickState={clickState}
       />
       {!isDesktop ? (
@@ -41,6 +42,13 @@ export const Nav = () => {
         clickState={clickState}
       />
       <SharingsNavItem clickState={clickState} />
+      <NavItem
+        to="/trash"
+        icon={<Icon icon={TrashIcon} />}
+        label="trash"
+        rx={/\/trash(\/.*)?/}
+        clickState={clickState}
+      />
       {isDesktop ? (
         <FavoriteList clickState={clickState} className="u-mt-half" />
       ) : null}
