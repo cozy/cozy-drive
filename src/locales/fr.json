@@ -215,6 +215,7 @@
     "forward": "Transférer",
     "forwardTo": "Transférer vers...",
     "moveto": "Déplacer vers…",
+    "moveto_mobile": "Déplacer",
     "phone-download": "Rendre accessible hors-ligne",
     "requalify": "Requalifier",
     "qualify": "Qualifier",
@@ -782,6 +783,7 @@
   "favorites": {
     "label": {
       "add": "Ajouter aux favoris",
+      "addMobile": "Favoris",
       "remove": "Retirer des favoris"
     },
     "error": "Une erreur est survenue, merci de réessayer.",
@@ -800,8 +802,12 @@
   },
   "actions": {
     "infos": "Détails et qualification",
+    "infosMobile": "Détails",
     "duplicateTo": {
       "label": "Dupliquer vers…"
+    },
+    "duplicateToMobile": {
+      "label": "Dupliquer"
     }
   },
   "DuplicateModal": {

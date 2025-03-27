@@ -110,6 +110,7 @@
     "restore": "還原",
     "close": "關閉",
     "moveto": "移動到...",
+    "moveto_mobile": "移動到",
     "phone-download": "使離線可用"
   },
   "DeleteConfirm": {

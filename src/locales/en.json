@@ -215,6 +215,7 @@
     "forward": "Forward",
     "forwardTo": "Forward to...",
     "moveto": "Move to…",
+    "moveto_mobile": "Move",
     "phone-download": "Make available offline",
     "qualify": "Categorize",
     "history": "History",
@@ -781,6 +782,7 @@
   "favorites": {
     "label": {
       "add": "Add to favorites",
+      "addMobile": "Favorites",
       "remove": "Remove from favorites"
     },
     "error": "An error occurred, please try again.",
@@ -799,8 +801,12 @@
   },
   "actions": {
     "infos": "Details and qualification",
+    "infosMobile": "Details",
     "duplicateTo": {
       "label": "Duplicate to…"
+    },
+    "duplicateToMobile": {
+      "label": "Duplicate"
     }
   },
   "DuplicateModal": {
