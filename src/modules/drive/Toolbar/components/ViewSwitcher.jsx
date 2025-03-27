@@ -1,10 +1,12 @@
 import React from 'react'
-import ToggleButton from 'cozy-ui/transpiled/react/ToggleButton'
-import ToggleButtonGroup from 'cozy-ui/transpiled/react/ToggleButtonGroup'
+
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import ListMinIcon from 'cozy-ui/transpiled/react/Icons/ListMin'
 import MosaicMinIcon from 'cozy-ui/transpiled/react/Icons/MosaicMin'
+import ToggleButton from 'cozy-ui/transpiled/react/ToggleButton'
+import ToggleButtonGroup from 'cozy-ui/transpiled/react/ToggleButtonGroup'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
 
 /**
@@ -23,8 +25,10 @@ const ViewSwitcher = ({ className }) => {
   const handleChange = (event, newValue) => {
     if (newValue !== null) {
       // If the new value is different from the current value, call toggleThumbnailSize
-      if ((newValue === 'grid' && !isBigThumbnail) ||
-          (newValue === 'list' && isBigThumbnail)) {
+      if (
+        (newValue === 'grid' && !isBigThumbnail) ||
+        (newValue === 'list' && isBigThumbnail)
+      ) {
         toggleThumbnailSize()
       }
     }
