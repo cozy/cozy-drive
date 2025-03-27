@@ -51,7 +51,7 @@ const FileListHeaderMobile = ({
             {
               [styles['fil-content-header-sortasc']]: actualSort.order === 'asc',
               [styles['fil-content-header-sortdesc']]: actualSort.order === 'desc',
-              [styles['u-capitalize']]: isTwakeTheme()
+              [styles['fil-content-header--capitalize']]: isTwakeTheme()
             }
           )}
         >
@@ -70,7 +70,7 @@ const FileListHeaderMobile = ({
             styles['fil-content-mobile-header'],
             styles['fil-content-header-action'],
             {
-              [styles['u-capitalize']]: isTwakeTheme()
+              [styles['fil-content-header--capitalize']]: isTwakeTheme()
             }
           )}
         >
