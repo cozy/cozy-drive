@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { SharedDocument, useSharingContext } from 'cozy-sharing'
+import { isTwakeTheme } from 'cozy-ui/transpiled/react/helpers/isTwakeTheme'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import styles from '@/styles/toolbar.styl'
@@ -71,17 +72,19 @@ const Toolbar = ({
 
       <BarRightOnMobile>
         {isMobile && <SearchButton />}
-        <MoreMenu
-          isDisabled={isDisabled}
-          hasWriteAccess={hasWriteAccess}
-          isSharedWithMe={isSharedWithMe}
-          canCreateFolder={canCreateFolder}
-          canUpload={canUpload}
-          folderId={folderId}
-          displayedFolder={displayedFolder}
-          showSelectionBar={showSelectionBar}
-          isSelectionBarVisible={isSelectionBarVisible}
-        />
+        {!isTwakeTheme() && (
+          <MoreMenu
+            isDisabled={isDisabled}
+            hasWriteAccess={hasWriteAccess}
+            isSharedWithMe={isSharedWithMe}
+            canCreateFolder={canCreateFolder}
+            canUpload={canUpload}
+            folderId={folderId}
+            displayedFolder={displayedFolder}
+            showSelectionBar={showSelectionBar}
+            isSelectionBarVisible={isSelectionBarVisible}
+          />
+        )}
       </BarRightOnMobile>
     </div>
   )
