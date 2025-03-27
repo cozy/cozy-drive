@@ -1,27 +1,25 @@
 import cx from 'classnames'
 import React from 'react'
 
-import Icon from 'cozy-ui/transpiled/react/Icon'
 import {
   TableHead,
   TableHeader,
   TableRow
 } from 'cozy-ui/transpiled/react/deprecated/Table'
+import { isTwakeTheme } from 'cozy-ui/transpiled/react/helpers/isTwakeTheme'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import HeaderCell from './HeaderCell'
 
 import styles from '@/styles/filelist.styl'
+
 import { SORTABLE_ATTRIBUTES, DEFAULT_SORT } from '@/config/sort'
-import { isTwakeTheme } from 'cozy-ui/transpiled/react/helpers/isTwakeTheme'
 
 const FileListHeaderDesktop = ({
   folderId,
   canSort,
   sort,
   onFolderSort,
-  thumbnailSizeBig,
-  toggleThumbnailSize,
   extraColumns
 }) => {
   const { t } = useI18n()
@@ -40,7 +38,18 @@ const FileListHeaderDesktop = ({
         {SORTABLE_ATTRIBUTES.map(
           ({ label, attr, css, defaultOrder }, index) => {
             if (!canSort) {
-              return <HeaderCell key={index} label={label} css={css} className={isTwakeTheme() ? [styles['fil-content-header--capitalize']] : ''} />
+              return (
+                <HeaderCell
+                  key={index}
+                  label={label}
+                  css={css}
+                  className={
+                    isTwakeTheme()
+                      ? [styles['fil-content-header--capitalize']]
+                      : ''
+                  }
+                />
+              )
             }
             const isActive = actualSort && actualSort.attribute === attr
             return (
@@ -52,7 +61,11 @@ const FileListHeaderDesktop = ({
                 defaultOrder={defaultOrder}
                 order={isActive ? actualSort.order : null}
                 onSort={(attr, order) => onFolderSort(folderId, attr, order)}
-                className={isTwakeTheme() ? [styles['fil-content-header--capitalize']] : ''}
+                className={
+                  isTwakeTheme()
+                    ? [styles['fil-content-header--capitalize']]
+                    : ''
+                }
               />
             )
           }
