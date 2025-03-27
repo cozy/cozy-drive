@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react'
 
 import { isFile } from 'cozy-client/dist/models/file'
 import { Action } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import MultiFilesIcon from 'cozy-ui/transpiled/react/Icons/MultiFiles'
@@ -41,12 +42,17 @@ const duplicateTo = ({
       })
     },
     Component: forwardRef(function DuplicateTo(props, ref) {
+      const { isMobile } = useBreakpoints()
+      const actionLabel = isMobile
+        ? t('actions.duplicateToMobile.label')
+        : t('actions.duplicateTo.label')
+
       return (
         <ActionsMenuItem {...props} ref={ref}>
           <ListItemIcon>
             <Icon icon={icon} />
           </ListItemIcon>
-          <ListItemText primary={label} />
+          <ListItemText primary={actionLabel} />
         </ActionsMenuItem>
       )
     })

@@ -3,6 +3,7 @@ import React, { forwardRef } from 'react'
 import { splitFilename } from 'cozy-client/dist/models/file'
 import CozyClient from 'cozy-client/types/CozyClient'
 import { Action } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import StarOutlineIcon from 'cozy-ui/transpiled/react/Icons/StarOutline'
@@ -54,12 +55,17 @@ const addToFavorites = ({
       }
     },
     Component: forwardRef(function AddToFavorites(props, ref) {
+      const { isMobile } = useBreakpoints()
+      const actionLabel = isMobile
+        ? t('favorites.label.addMobile')
+        : t('favorites.label.add')
+
       return (
         <ActionsMenuItem {...props} ref={ref}>
           <ListItemIcon>
             <Icon icon={icon} />
           </ListItemIcon>
-          <ListItemText primary={label} />
+          <ListItemText primary={actionLabel} />
         </ActionsMenuItem>
       )
     })
