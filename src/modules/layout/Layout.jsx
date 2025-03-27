@@ -9,6 +9,7 @@ import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { Layout as LayoutUI } from 'cozy-ui/transpiled/react/Layout'
 import Sidebar from 'cozy-ui/transpiled/react/Sidebar'
 import { isTwakeTheme } from 'cozy-ui/transpiled/react/helpers/isTwakeTheme'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import StorageButton from '@/components/Storage/StorageButton'
 import StorageProgress from '@/components/Storage/StorageProgress'
@@ -22,9 +23,14 @@ import UploadQueue from '@/modules/upload/UploadQueue'
 initFlags()
 
 const Layout = () => {
+  const { isMobile } = useBreakpoints()
+
   return (
     <LayoutUI>
-      <BarComponent searchOptions={{ enabled: true }} disableInternalStore />
+      <BarComponent
+        searchOptions={{ enabled: !isMobile }}
+        disableInternalStore
+      />
       <FlagSwitcher />
       <Sidebar className="u-flex-justify-between">
         <Nav />
