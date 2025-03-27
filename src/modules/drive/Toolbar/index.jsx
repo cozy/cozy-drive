@@ -25,9 +25,7 @@ const Toolbar = ({
   canUpload,
   canCreateFolder,
   hasWriteAccess,
-  isSharedWithMe,
-  isBigThumbnail,
-  toggleThumbnailSize
+  isSharedWithMe
 }) => {
   const { displayedFolder } = useDisplayedFolder()
   const { isMobile } = useBreakpoints()
@@ -60,13 +58,7 @@ const Toolbar = ({
         <ShareButton isDisabled={isSharingDisabled} className="u-mr-half" />
       </InsideRegularFolder>
 
-      {toggleThumbnailSize && (
-        <ViewSwitcher
-          isBigThumbnail={isBigThumbnail}
-          toggleThumbnailSize={toggleThumbnailSize}
-          className="u-mr-half"
-        />
-      )}
+      <ViewSwitcher className="u-mr-half" />
 
       <BarRightOnMobile>
         {isMobile && <SearchButton />}
@@ -93,9 +85,7 @@ Toolbar.propTypes = {
   disabled: PropTypes.bool,
   canUpload: PropTypes.bool,
   canCreateFolder: PropTypes.bool,
-  hasWriteAccess: PropTypes.bool,
-  isBigThumbnail: PropTypes.bool,
-  toggleThumbnailSize: PropTypes.func
+  hasWriteAccess: PropTypes.bool
 }
 
 Toolbar.defaultProps = {

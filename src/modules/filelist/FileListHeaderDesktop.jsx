@@ -13,7 +13,7 @@ import HeaderCell from './HeaderCell'
 
 import styles from '@/styles/filelist.styl'
 import { SORTABLE_ATTRIBUTES, DEFAULT_SORT } from '@/config/sort'
-import { isTwakeTheme } from 'cozy-ui/transpiled/react/helpers/isTwakeTheme';
+import { isTwakeTheme } from 'cozy-ui/transpiled/react/helpers/isTwakeTheme'
 
 const FileListHeaderDesktop = ({
   folderId,
@@ -26,7 +26,6 @@ const FileListHeaderDesktop = ({
 }) => {
   const { t } = useI18n()
   const actualSort = sort || DEFAULT_SORT
-  const isTwake = isTwakeTheme()
 
   return (
     <TableHead className={styles['fil-content-head']}>
@@ -35,13 +34,13 @@ const FileListHeaderDesktop = ({
           className={cx(
             styles['fil-content-header'],
             styles['fil-content-file-select'],
-            { [styles['u-capitalize']]: isTwake }
+            { [styles['fil-content-header--capitalize']]: isTwakeTheme() }
           )}
         />
         {SORTABLE_ATTRIBUTES.map(
           ({ label, attr, css, defaultOrder }, index) => {
             if (!canSort) {
-              return <HeaderCell key={index} label={label} css={css} className={isTwake ? [styles['u-capitalize']] : ''} />
+              return <HeaderCell key={index} label={label} css={css} className={isTwakeTheme() ? [styles['fil-content-header--capitalize']] : ''} />
             }
             const isActive = actualSort && actualSort.attribute === attr
             return (
@@ -53,7 +52,7 @@ const FileListHeaderDesktop = ({
                 defaultOrder={defaultOrder}
                 order={isActive ? actualSort.order : null}
                 onSort={(attr, order) => onFolderSort(folderId, attr, order)}
-                className={isTwake ? [styles['u-capitalize']] : ''}
+                className={isTwakeTheme() ? [styles['fil-content-header--capitalize']] : ''}
               />
             )
           }
@@ -62,7 +61,7 @@ const FileListHeaderDesktop = ({
           className={cx(
             styles['fil-content-header'],
             styles['fil-content-size'],
-            { [styles['u-capitalize']]: isTwake }
+            { [styles['fil-content-header--capitalize']]: isTwakeTheme() }
           )}
         >
           {t('table.head_size')}
@@ -75,7 +74,7 @@ const FileListHeaderDesktop = ({
           className={cx(
             styles['fil-content-header'],
             styles['fil-content-header-status'],
-            { [styles['u-capitalize']]: isTwake }
+            { [styles['fil-content-header--capitalize']]: isTwakeTheme() }
           )}
         >
           {t('table.head_status')}
@@ -84,14 +83,14 @@ const FileListHeaderDesktop = ({
           className={cx(
             styles['fil-content-header'],
             styles['fil-content-header-sharing-shortcut'],
-            { [styles['u-capitalize']]: isTwake }
+            { [styles['fil-content-header--capitalize']]: isTwakeTheme() }
           )}
         />
         <TableHeader
           className={cx(
             styles['fil-content-header'],
             styles['fil-content-header-action'],
-            { [styles['u-capitalize']]: isTwake }
+            { [styles['fil-content-header--capitalize']]: isTwakeTheme() }
           )}
         >
           {/** Empty header cell for actions column */}

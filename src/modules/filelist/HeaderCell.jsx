@@ -11,9 +11,9 @@ const HeaderCell = ({
   css,
   attr,
   order = null,
+  className,
   defaultOrder,
-  onSort,
-  className
+  onSort
 }) => {
   const { t } = useI18n()
   const sortCallback = useCallback(

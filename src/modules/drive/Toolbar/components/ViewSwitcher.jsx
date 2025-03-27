@@ -5,17 +5,17 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import ListMinIcon from 'cozy-ui/transpiled/react/Icons/ListMin'
 import MosaicMinIcon from 'cozy-ui/transpiled/react/Icons/MosaicMin'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
 
 /**
  * ViewSwitcher component for toggling between grid and list views
  * @param {Object} props - Component props
- * @param {boolean} props.isBigThumbnail - Whether the thumbnail size is big (grid view)
- * @param {Function} props.toggleThumbnailSize - Function to toggle the thumbnail size
  * @param {string} props.className - Additional CSS class name
  * @returns {JSX.Element} The rendered component
  */
-const ViewSwitcher = ({ isBigThumbnail, toggleThumbnailSize, className }) => {
+const ViewSwitcher = ({ className }) => {
   const { t } = useI18n()
+  const { isBigThumbnail, toggleThumbnailSize } = useThumbnailSizeContext()
 
   // Convert isBigThumbnail to value for ToggleButtonGroup
   const value = isBigThumbnail ? 'grid' : 'list'
