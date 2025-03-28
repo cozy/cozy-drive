@@ -1,8 +1,7 @@
-import cx from 'classnames'
 import React from 'react'
 
-import CircleButton from 'cozy-ui/transpiled/react/CircleButton'
 import Icon from 'cozy-ui/transpiled/react/Icon'
+import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import DotsIcon from 'cozy-ui/transpiled/react/Icons/Dots'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -12,9 +11,9 @@ const MoreButton = ({ disabled, onClick, ...props }) => {
   const { t } = useI18n()
   return (
     <div>
-      <CircleButton
+      <IconButton
         data-testid="more-button"
-        className={cx('u-miw-auto', styles['dri-btn--more'])}
+        className={styles['dri-btn--more']}
         disabled={disabled}
         onClick={onClick}
         size="small"
@@ -22,7 +21,7 @@ const MoreButton = ({ disabled, onClick, ...props }) => {
         {...props}
       >
         <Icon icon={DotsIcon} />
-      </CircleButton>
+      </IconButton>
     </div>
   )
 }
