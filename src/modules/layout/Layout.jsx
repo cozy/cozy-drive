@@ -23,7 +23,6 @@ import AddButton from '@/modules/drive/Toolbar/components/AddButton'
 import Nav from '@/modules/navigation/Nav'
 import { SelectionProvider } from '@/modules/selection/SelectionProvider'
 import UploadQueue from '@/modules/upload/UploadQueue'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 initFlags()
 
