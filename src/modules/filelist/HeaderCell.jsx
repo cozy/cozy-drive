@@ -31,9 +31,9 @@ const HeaderCell = ({
         className,
         {
           [styles['fil-content-header-sortableasc']]:
-          onSort && order === null && defaultOrder === 'asc',
+            onSort && order === null && defaultOrder === 'asc',
           [styles['fil-content-header-sortabledesc']]:
-          onSort && order === null && defaultOrder === 'desc',
+            onSort && order === null && defaultOrder === 'desc',
           [styles['fil-content-header-sortasc']]: onSort && order === 'asc',
           [styles['fil-content-header-sortdesc']]: onSort && order === 'desc'
         }

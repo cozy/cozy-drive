@@ -18,7 +18,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import HarvestBanner from './HarvestBanner'
 
 import useHead from '@/components/useHead'
-import { ROOT_DIR_ID, TRASH_DIR_ID } from '@/constants/config'
+import { ROOT_DIR_ID } from '@/constants/config'
 import { useCurrentFolderId, useDisplayedFolder } from '@/hooks'
 import { FabContext } from '@/lib/FabProvider'
 import { useModalContext } from '@/lib/ModalContext'
@@ -127,11 +127,7 @@ const DriveFolderView = () => {
   if (currentFolderId === ROOT_DIR_ID) {
     // The folder may not be found if the user has not configured shared drives
     if (sharedFolderResult.fetchStatus === 'loaded') {
-      allResults = [
-        sharedFolderResult,
-        foldersResult,
-        filesResult
-      ]
+      allResults = [sharedFolderResult, foldersResult, filesResult]
     } else {
       allResults = [foldersResult, filesResult]
     }
