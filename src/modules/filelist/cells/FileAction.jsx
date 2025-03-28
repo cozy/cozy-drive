@@ -1,8 +1,8 @@
 import cx from 'classnames'
 import React, { forwardRef } from 'react'
 
-import CircleButton from 'cozy-ui/transpiled/react/CircleButton'
 import Icon from 'cozy-ui/transpiled/react/Icon'
+import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import DotsIcon from 'cozy-ui/transpiled/react/Icons/Dots'
 import { TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
 
@@ -21,15 +21,14 @@ const FileAction = forwardRef(function FileAction(
       )}
     >
       <span ref={ref}>
-        <CircleButton
-          className="u-miw-auto"
-          style={{ boxShadow: 'none' }}
-          {...(!disabled && { onClick })}
+        <IconButton
+          disabled={disabled}
+          onClick={onClick}
           size="small"
           aria-label={t('Toolbar.more')}
         >
           <Icon icon={DotsIcon} size={17} />
-        </CircleButton>
+        </IconButton>
       </span>
     </TableCell>
   )
