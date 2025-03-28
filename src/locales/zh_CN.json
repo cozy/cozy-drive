@@ -45,6 +45,7 @@
     "trash": "移除",
     "leave": "离开文件夹并删除",
     "menu_add": "添加",
+    "menu_create": "创造",
     "menu_onlyOffice": {
       "text": "文本文件",
       "spreadsheet": "电子表格",

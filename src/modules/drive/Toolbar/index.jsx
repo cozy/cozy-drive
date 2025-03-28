@@ -12,8 +12,6 @@ import styles from '@/styles/toolbar.styl'
 
 import { BarRightOnMobile } from '@/components/Bar'
 import { useDisplayedFolder, useCurrentFolderId } from '@/hooks'
-import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
-import AddButton from '@/modules/drive/Toolbar/components/AddButton'
 import InsideRegularFolder from '@/modules/drive/Toolbar/components/InsideRegularFolder'
 import MoreMenu from '@/modules/drive/Toolbar/components/MoreMenu'
 import SearchButton from '@/modules/drive/Toolbar/components/SearchButton'
@@ -70,17 +68,6 @@ const Toolbar = ({
         />
       )}
 
-      {hasWriteAccess && (
-        <AddMenuProvider
-          canCreateFolder={canCreateFolder}
-          canUpload={canUpload}
-          disabled={isDisabled}
-          displayedFolder={displayedFolder}
-          isSelectionBarVisible={isSelectionBarVisible}
-        >
-          <AddButton className="u-mr-half" />
-        </AddMenuProvider>
-      )}
 
       <BarRightOnMobile>
         {isMobile && <SearchButton />}
