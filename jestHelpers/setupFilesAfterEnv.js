@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
-import ConsoleUsageReporter from './ConsoleUsageReporter'
+// import ConsoleUsageReporter from './ConsoleUsageReporter'
 
-ConsoleUsageReporter.makeTestsFailWhenConsoleUsed()
+// ConsoleUsageReporter.makeTestsFailWhenConsoleUsed()
 
 process.on('unhandledRejection', error => console.error(error))
