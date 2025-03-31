@@ -18,8 +18,7 @@ interface FavoriteListItemProps {
 }
 
 const FavoriteListItem: FC<FavoriteListItemProps> = ({ file }) => {
-  const { link } = useFileLink(file)
-
+  const { link } = useFileLink(file, { forceFolderPath: true })
   const { filename } = splitFilename(file)
 
   return (

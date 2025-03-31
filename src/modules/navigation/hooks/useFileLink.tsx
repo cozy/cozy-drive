@@ -13,6 +13,7 @@ import {
   computePath
 } from '@/modules/navigation/hooks/helpers'
 import { usePublicContext } from '@/modules/public/PublicProvider'
+import { getFolderPath } from '@/modules/routeUtils'
 import { isOfficeEnabled as computeOfficeEnabled } from '@/modules/views/OnlyOffice/helpers'
 
 export interface LinkResult {
@@ -30,6 +31,8 @@ interface UseFileLinkResult {
 /**
  * useFileLink computes the link to open a file.
  *
+ * forceFolderPath is used to force `/folder` in the path
+ *
  * To categories files requires different logic for the moment we can distinguishing 10 different cases. You can find the full list in the computeFileType function.
  *
  * Based on this category, we can compute the path to open the file. This path is relative so in case it will be used inside Drive we need to resolve it to use it inside generateWebLink. To work with relative path allows us to use the same logic for both cases (eg. recent, sharing pages)
@@ -41,7 +44,10 @@ interface UseFileLinkResult {
  * The first one is useful for link inside Drive and the second one for link outside of external application (eg. Notes, Nextcloud) or that will be opened in a new tab be default.
  *
  */
-const useFileLink = (file: File): UseFileLinkResult => {
+const useFileLink = (
+  file: File,
+  { forceFolderPath }: { forceFolderPath?: boolean } = {}
+): UseFileLinkResult => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const client = useClient()
@@ -66,17 +72,29 @@ const useFileLink = (file: File): UseFileLinkResult => {
   const shouldBeOpenedInNewTab =
     type === 'shortcut' || type === 'nextcloud-file'
 
+  const currentURL = new URL(window.location.href)
+  const currentPathname = currentURL.pathname
+  const currentSearchParams = currentURL.searchParams
+
   // we use relative path because by default react-router-dom will use the structure of routes
   // each level of the path don't have a route but we want to move relatively to the path
   // to have more explanation : https://reactrouter.com/en/main/components/link#relative
-  const to = useResolvedPath(path, { relative: 'path' })
-
-  const currentURL = new URL(window.location.href)
+  let to = useResolvedPath(path, {
+    relative: forceFolderPath ? 'route' : 'path'
+  })
+  if (forceFolderPath && !shouldBeOpenedInNewTab) {
+    to = {
+      ...to,
+      pathname:
+        (type === 'directory' ? '/folder' : getFolderPath(file.dir_id)) +
+        to.pathname
+    }
+  }
 
   // we need to merge the searchParams of the current url and the new one created in computed path
   // for example, to keep the sharecode in public context
   const searchParams = new URLSearchParams({
-    ...Object.fromEntries(currentURL.searchParams.entries()),
+    ...Object.fromEntries(currentSearchParams.entries()),
     ...Object.fromEntries(new URLSearchParams(to.search).entries())
   })
 
@@ -93,8 +111,8 @@ const useFileLink = (file: File): UseFileLinkResult => {
           // Inside notes, we need to add / at the end of /public/ or /preview/ to avoid 409 error
           pathname:
             type === 'public-note-same-instance'
-              ? joinPath(currentURL.pathname, '')
-              : currentURL.pathname,
+              ? joinPath(currentPathname, '')
+              : currentPathname,
           searchParams: searchParams as unknown as unknown[],
           hash: to.pathname
         })
