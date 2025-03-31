@@ -6,7 +6,7 @@ import { useQuery } from 'cozy-client'
 import { FilesViewerLoading } from '@/components/FilesViewerLoading'
 import { useCurrentFolderId } from '@/hooks'
 import { useFolderSort } from '@/modules/navigation/duck'
-import { getFolderPath } from '@/modules/routeUtils'
+import { getFolderPath, getViewerPath } from '@/modules/routeUtils'
 import FilesViewer from '@/modules/viewer/FilesViewer'
 import { buildDriveQuery } from '@/queries'
 
@@ -35,9 +35,7 @@ const FilesViewerDrive = () => {
         files={viewableFiles}
         filesQuery={filesQuery}
         onClose={() => navigate(getFolderPath(folderId))}
-        onChange={fileId =>
-          navigate(`${getFolderPath(folderId)}/file/${fileId}`)
-        }
+        onChange={fileId => navigate(`${getViewerPath(folderId, fileId)}`)}
       />
     )
   }
