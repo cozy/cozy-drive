@@ -15,15 +15,24 @@ import { isNextcloudShortcut } from '@/modules/nextcloud/helpers'
 
 interface FavoriteListItemProps {
   file: IOCozyFile
+  clickState: [string, (value: string | undefined) => void]
 }
 
-const FavoriteListItem: FC<FavoriteListItemProps> = ({ file }) => {
+const FavoriteListItem: FC<FavoriteListItemProps> = ({
+  file,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  clickState: [lastClicked, setLastClicked]
+}) => {
   const { link } = useFileLink(file, { forceFolderPath: true })
   const { filename } = splitFilename(file)
 
   return (
     <NavItem key={file._id}>
-      <FileLink link={link} className={NavLink.className}>
+      <FileLink
+        link={link}
+        className={NavLink.className}
+        onClick={(): void => setLastClicked(undefined)}
+      >
         <NavIcon
           icon={
             isNextcloudShortcut(file)
