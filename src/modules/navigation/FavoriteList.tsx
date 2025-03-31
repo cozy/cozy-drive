@@ -11,9 +11,10 @@ import { buildFavoritesQuery } from '@/queries'
 
 interface FavoriteListProps {
   className?: string
+  clickState: [string, (value: string | undefined) => void]
 }
 
-const FavoriteList: FC<FavoriteListProps> = ({ className }) => {
+const FavoriteList: FC<FavoriteListProps> = ({ className, clickState }) => {
   const { t } = useI18n()
   const favoritesQuery = buildFavoritesQuery({
     sortAttribute: 'name',
@@ -33,7 +34,11 @@ const FavoriteList: FC<FavoriteListProps> = ({ className }) => {
         className={className}
       >
         {favoritesResult.data.map(file => (
-          <FavoriteListItem key={file._id} file={file} />
+          <FavoriteListItem
+            key={file._id}
+            file={file}
+            clickState={clickState}
+          />
         ))}
       </List>
     )
