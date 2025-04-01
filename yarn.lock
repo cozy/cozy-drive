@@ -5358,10 +5358,10 @@ cozy-app-publish@^0.40.1:
     tar "^6.1.11"
     verror "^1.10.1"
 
-cozy-bar@^18.0.0:
-  version "18.0.0"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-18.0.0.tgz#db070e2bdbdd6909c794e84c974b9b0907dd1959"
-  integrity sha512-Oy78vvH9cRtwRB04UBHxG+1YMxgF0Pf/XW0/bdmxIuvPkbzpcgi48TRxvr6+FssIkGv7mGTyr3LlW2DY3virtw==
+cozy-bar@^18.2.0:
+  version "18.2.0"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-18.2.0.tgz#5f777ad8eb01564523a6d9e1be5d51f5dc6c1a77"
+  integrity sha512-byt9iWUpZ7Tabqjgr/9v47PIXsZtmCQ7ShbrrWJQQYqOdPuMPkxqrbLSFgZTLXaLh3k6IQSzL2h4/lG5CP62zA==
   dependencies:
     cozy-search "0.2.0"
     hammerjs "2.0.8"
