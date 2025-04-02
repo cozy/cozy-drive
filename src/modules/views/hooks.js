@@ -60,11 +60,13 @@ export const useFileWithPath = docId => {
   const parentData = parentResult.data
 
   // doc.path is necessay for sharing
-  const file = resultData
-    ? resultData.path
-      ? resultData
-      : ensureFilePath(resultData, parentData)
-    : resultData
+  // resultData could be a doc or a docs array, but we are only interested in simple doc
+  const file =
+    resultData && !Array.isArray(resultData)
+      ? resultData.path
+        ? resultData
+        : ensureFilePath(resultData, parentData)
+      : resultData
 
   return {
     ...fileResult,
