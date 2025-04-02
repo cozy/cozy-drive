@@ -3,6 +3,7 @@ import keyBy from 'lodash/keyBy'
 import uniq from 'lodash/uniq'
 
 import { useQuery } from 'cozy-client'
+import { ensureFilePath } from 'cozy-client/dist/models/file'
 
 import { TRASH_DIR_ID } from '@/constants/config'
 import { buildParentsByIdsQuery, buildFileByIdQuery } from '@/queries'
@@ -58,6 +59,13 @@ export const useFileWithPath = docId => {
   const parentResult = useQuery(parentQuery.definition, parentQuery.options)
   const parentData = parentResult.data
 
+  // doc.path is necessay for sharing
+  const file = resultData
+    ? resultData.path
+      ? resultData
+      : ensureFilePath(resultData, parentData)
+    : resultData
+
   return {
     ...fileResult,
     fetchStatus:
@@ -67,7 +75,7 @@ export const useFileWithPath = docId => {
         ? 'loaded'
         : 'loading',
     data: {
-      ...resultData,
+      ...file,
       displayedPath: parentData ? parentData.path : undefined
     }
   }

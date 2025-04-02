@@ -10,6 +10,11 @@ import { TRASH_DIR_ID } from '@/constants/config'
 
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 
+jest.mock('cozy-client/dist/models/file', () => ({
+  ...jest.requireActual('cozy-client/dist/models/file'),
+  ensureFilePath: jest.fn(doc => ({ ...doc, path: '/' }))
+}))
+
 describe('useFilesWithPath', () => {
   it('test if the parent path is assigned to the file displayedPath', () => {
     useQuery
