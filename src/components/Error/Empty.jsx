@@ -27,7 +27,7 @@ const EmptyCanvas = ({ type, canUpload, localeKey, hasTextMobileVersion }) => {
   const { isMobile } = useBreakpoints()
 
   let iconToShow = EmptyIcon[type]
-  if (isTwakeTheme() && type !== 'trash') {
+  if (isTwakeTheme()) {
     iconToShow = (
       <div className="u-w-100">
         <Icon icon={FolderEmptyIllu} size={160} />
