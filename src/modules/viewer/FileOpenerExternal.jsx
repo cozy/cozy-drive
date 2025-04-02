@@ -10,7 +10,6 @@ import { RemoveScroll } from 'react-remove-scroll'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
-import { ensureFilePath } from 'cozy-client/dist/models/file'
 import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -22,6 +21,7 @@ import Viewer, {
   SharingButton
 } from 'cozy-viewer'
 
+import { ensureFileHasPath } from '@/components/FilesRealTimeQueries'
 import Fallback from '@/modules/viewer/Fallback'
 import {
   isOfficeEnabled,
@@ -32,18 +32,6 @@ import { buildFileByIdQuery } from '@/queries'
 const FileNotFoundError = translate()(({ t }) => (
   <pre className="u-error">{t('FileOpenerExternal.fileNotFoundError')}</pre>
 ))
-
-const ensureFileHasPath = async (doc, client) => {
-  if (doc.path) return doc
-
-  const parentQuery = buildFileByIdQuery(doc.dir_id)
-  const parentResult = await client.fetchQueryAndGetFromState({
-    definition: parentQuery.definition(),
-    options: parentQuery.options
-  })
-
-  return ensureFilePath(doc, parentResult.data)
-}
 
 const FileOpener = props => {
   const navigate = useNavigate()
