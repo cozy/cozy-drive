@@ -27,6 +27,12 @@ describe('makeTitle', () => {
       ).toBe('(folder/subFolder) - Cozy Drive')
     })
 
+    it('should not show the folder name and app name if inside an array', () => {
+      expect(
+        makeTitle([{ displayedPath: '/folder/subFolder' }], 'Cozy Drive', t)
+      ).toBe('Cozy Drive')
+    })
+
     it('should show the file name, folder name and app name', () => {
       expect(
         makeTitle(
@@ -91,6 +97,16 @@ describe('makeTitle', () => {
           t
         )
       ).toBe('subfolder (folder/subfolder) - Cozy Drive')
+    })
+
+    it('should not show folder path and app name if inside an array', () => {
+      expect(
+        makeTitle(
+          [{ type: 'directory', name: 'subfolder', path: '/folder/subfolder' }],
+          'Cozy Drive',
+          t
+        )
+      ).toBe('Cozy Drive')
     })
 
     it('should show only app name for root directory', () => {
