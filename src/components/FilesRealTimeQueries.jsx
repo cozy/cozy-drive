@@ -58,7 +58,7 @@ const dispatchChange = async (
   )
 }
 
-const ensureFileHasPath = async (doc, client) => {
+export const ensureFileHasPath = async (doc, client) => {
   if (doc.path) return doc
 
   const parentQuery = buildFileByIdQuery(doc.dir_id)
