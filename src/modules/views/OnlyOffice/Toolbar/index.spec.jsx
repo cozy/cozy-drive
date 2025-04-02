@@ -35,6 +35,11 @@ jest.mock('react-router-dom', () => ({
   useNavigate: () => mockNavigate
 }))
 
+jest.mock('cozy-client/dist/models/file', () => ({
+  ...jest.requireActual('cozy-client/dist/models/file'),
+  ensureFilePath: jest.fn(doc => ({ ...doc, path: '/' }))
+}))
+
 const client = createMockClient({})
 client.stackClient.uri = 'http://cozy.tools'
 client.plugins = {
