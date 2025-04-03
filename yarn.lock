@@ -5782,10 +5782,10 @@ cozy-realtime@4.6.0:
     "@cozy/minilog" "^1.0.0"
     cozy-device-helper "^2.7.0"
 
-cozy-sharing@^25.1.0:
-  version "25.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-25.1.0.tgz#b99d5c065825c85b79346850029cd0a02a2c2482"
-  integrity sha512-yFddHqASeHer1Pg3QNCLhowmTbjSVEPnVeeRaJ4AJEuEgI16+mC6rI+JxjwTpEj0gSKrAXChhijr7L9sZ+rQQQ==
+cozy-sharing@^25.1.1:
+  version "25.1.1"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-25.1.1.tgz#c701c82456978012a5a0409c16a233a849648d85"
+  integrity sha512-PR9ih5yBVkLIhrOHl8GYY38tATZWBE6wIldPQIn2+113x55Rpy7S0H652FX8AU2LIKa/oDY1+oLiSQFxYMMDQA==
   dependencies:
     "@cozy/minilog" "^1.0.0"
     classnames "^2.2.6"
@@ -5869,10 +5869,10 @@ cozy-ui@^121.9.0:
     react-swipeable-views "^0.13.3"
     rooks "^5.11.2"
 
-cozy-viewer@^21.0.2:
-  version "21.0.2"
-  resolved "https://registry.yarnpkg.com/cozy-viewer/-/cozy-viewer-21.0.2.tgz#ae8eebb6842c31b8772aad70d257a1c8e54d7fab"
-  integrity sha512-V3gdWF8riJlLyCaj2i4qLmHUovPhcjIgpDsuHunagTonw0+K7Gxz8VN1FB6SGheJUFtlR+P/6UeWa0WHemWyCA==
+cozy-viewer@^22.0.0:
+  version "22.0.0"
+  resolved "https://registry.yarnpkg.com/cozy-viewer/-/cozy-viewer-22.0.0.tgz#52ae2352fb00e48f460bcbc5d488d421a93308cd"
+  integrity sha512-siWnDxxD3S6VHiwiGCk9bITahH/apobD0PsTVNL+7jLK+7i1ITt25Qs05FkOy5xU76lbTJt7v89tFH0ZQtZYXA==
   dependencies:
     classnames "^2.2.5"
     hammerjs "^2.0.8"
