@@ -52,8 +52,10 @@ const UploadItem = ({ t, isDisabled, onUpload, displayedFolder, onClick }) => {
 
 const mapDispatchToProps = (dispatch, { sharingState, onUploaded, t }) => ({
   onUpload: (client, vaultClient, files, displayedFolder, showAlert) => {
+    // Determine the initial directory ID. Use null if displayedFolder or its ID is invalid.
+    const initialDirId = displayedFolder?.id || null
     dispatch(
-      uploadFiles(files, displayedFolder.id, sharingState, onUploaded, {
+      uploadFiles(files, initialDirId, sharingState, onUploaded, {
         client,
         vaultClient,
         showAlert,

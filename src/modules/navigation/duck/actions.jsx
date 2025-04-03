@@ -3,6 +3,7 @@ import React from 'react'
 import { isDirectory } from 'cozy-client/dist/models/file'
 import { QuotaPaywall } from 'cozy-ui/transpiled/react/Paywall'
 
+import { ROOT_DIR_ID, TRASH_DIR_ID } from '@/constants/config'
 import { MAX_PAYLOAD_SIZE_IN_GB } from '@/constants/config'
 import { createEncryptedDir } from '@/lib/encryption'
 import { getEntriesTypeTranslated } from '@/lib/entries'
@@ -12,8 +13,11 @@ import { getFolderContent } from '@/modules/selectors'
 import { addToUploadQueue } from '@/modules/upload'
 
 export const SORT_FOLDER = 'SORT_FOLDER'
+export const OPERATION_REDIRECTED = 'navigation/OPERATION_REDIRECTED'
 
 const HTTP_CODE_CONFLICT = 409
+
+export const operationRedirected = () => ({ type: OPERATION_REDIRECTED })
 
 export const sortFolder = (folderId, sortAttribute, sortOrder = 'asc') => {
   return {
@@ -41,11 +45,19 @@ export const uploadFiles =
     { client, vaultClient, showAlert, t }
   ) =>
   dispatch => {
+    let targetDirId = dirId
+    let navigateAfterUpload = false
+
+    if (dirId === null || dirId === undefined || dirId === TRASH_DIR_ID) {
+      targetDirId = ROOT_DIR_ID
+      navigateAfterUpload = true
+    }
+
     dispatch(
       addToUploadQueue(
         files,
-        dirId,
-        sharingState, // used to know if files are shared for conflicts management
+        targetDirId,
+        sharingState,
         fileUploadedCallback,
         (
           loaded,
@@ -66,7 +78,8 @@ export const uploadFiles =
               updated,
               showAlert,
               t,
-              fileTooLargeErrors
+              fileTooLargeErrors,
+              navigateAfterUpload
             )
           ),
         { client, vaultClient }
@@ -84,7 +97,8 @@ const uploadQueueProcessed =
     updated,
     showAlert,
     t,
-    fileTooLargeErrors
+    fileTooLargeErrors,
+    navigateAfterUpload
   ) =>
   dispatch => {
     const conflictCount = conflicts.length
@@ -98,7 +112,6 @@ const uploadQueueProcessed =
 
     if (quotas.length > 0) {
       logger.warn(`Upload module triggers a quota alert: ${quotas}`)
-      // quota errors have their own modal instead of a notification
       dispatch(showModal(<QuotaPaywall />))
     } else if (networkErrors.length > 0) {
       logger.warn(`Upload module triggers a network error: ${networkErrors}`)
@@ -175,6 +188,19 @@ const uploadQueueProcessed =
         severity: 'success'
       })
     }
+
+    const isSuccess =
+      errors.length === 0 &&
+      networkErrors.length === 0 &&
+      quotas.length === 0 &&
+      fileTooLargeErrors.length === 0
+    if (
+      navigateAfterUpload &&
+      isSuccess &&
+      (created.length > 0 || updated.length > 0)
+    ) {
+      dispatch(operationRedirected())
+    }
   }
 
 /**
@@ -185,7 +211,7 @@ const uploadQueueProcessed =
  * negatives.
  */
 const doesFolderExistByName = (state, parentFolderId, name) => {
-  const filesInCurrentView = getFolderContent(state, parentFolderId) || [] // TODO in the public view we don't use a query, so getFolderContent returns null. We could look inside the cozy-client store with a predicate to find folders with a matching dir_id.
+  const filesInCurrentView = getFolderContent(state, parentFolderId) || []
 
   const existingFolder = filesInCurrentView.find(f => {
     return isDirectory(f) && f.name === name
@@ -206,8 +232,21 @@ export const createFolder = (
 ) => {
   return async (dispatch, getState) => {
     const state = getState()
+    let targetFolderId = currentFolderId
+    let isTargetEncrypted = isEncryptedFolder
+    let navigateAfterCreate = false
 
-    const existingFolder = doesFolderExistByName(state, currentFolderId, name)
+    if (
+      currentFolderId === null ||
+      currentFolderId === undefined ||
+      currentFolderId === TRASH_DIR_ID
+    ) {
+      targetFolderId = ROOT_DIR_ID
+      isTargetEncrypted = false
+      navigateAfterCreate = true
+    }
+
+    const existingFolder = doesFolderExistByName(state, targetFolderId, name)
 
     if (existingFolder) {
       showAlert({
@@ -217,18 +256,33 @@ export const createFolder = (
       throw new Error('alert.folder_name')
     }
 
+    let createdFolder = null
     try {
-      if (!isEncryptedFolder) {
-        await client.create('io.cozy.files', {
+      if (!isTargetEncrypted) {
+        createdFolder = await client.create('io.cozy.files', {
           name: name,
-          dirId: currentFolderId,
+          dirId: targetFolderId,
           type: 'directory'
         })
       } else {
-        await createEncryptedDir(client, vaultClient, {
-          name,
-          dirID: currentFolderId
-        })
+        if (targetFolderId === currentFolderId) {
+          createdFolder = await createEncryptedDir(client, vaultClient, {
+            name,
+            dirID: targetFolderId
+          })
+        } else {
+          logger.error(
+            'Attempted to create encrypted folder in non-original/root target.'
+          )
+          showAlert({ message: t('alert.folder_generic'), severity: 'error' })
+          throw new Error(
+            'Cannot create encrypted folder in root via redirection.'
+          )
+        }
+      }
+
+      if (navigateAfterCreate && createdFolder) {
+        dispatch(operationRedirected())
       }
     } catch (err) {
       if (err.response && err.response.status === HTTP_CODE_CONFLICT) {
@@ -236,7 +290,7 @@ export const createFolder = (
           message: t('alert.folder_name', { folderName: name }),
           severity: 'error'
         })
-      } else {
+      } else if (!err.message?.includes('Cannot create encrypted folder')) {
         showAlert({ message: t('alert.folder_generic'), severity: 'error' })
       }
       throw err
