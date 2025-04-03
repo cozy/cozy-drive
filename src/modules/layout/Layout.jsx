@@ -1,11 +1,11 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 import { BarComponent } from 'cozy-bar'
 import CozyDevtools from 'cozy-devtools'
 import flag from 'cozy-flags'
 import FlagSwitcher from 'cozy-flags/dist/FlagSwitcher'
-import { SharedDocument } from 'cozy-sharing'
 import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { Layout as LayoutUI } from 'cozy-ui/transpiled/react/Layout'
 import Sidebar from 'cozy-ui/transpiled/react/Sidebar'
@@ -16,21 +16,36 @@ import StorageButton from '@/components/Storage/StorageButton'
 import StorageProgress from '@/components/Storage/StorageProgress'
 import ButtonClient from '@/components/pushClient/Button'
 import SupportUs from '@/components/pushClient/SupportUs'
-import { useDisplayedFolder, useCurrentFolderId } from '@/hooks'
+import { ROOT_DIR_ID } from '@/constants/config'
+import { useDisplayedFolder } from '@/hooks'
 import { initFlags } from '@/lib/flags'
 import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
 import AddButton from '@/modules/drive/Toolbar/components/AddButton'
 import Nav from '@/modules/navigation/Nav'
+import {
+  wasOperationRedirected,
+  RESET_OPERATION_REDIRECTED
+} from '@/modules/navigation/duck/reducer'
 import { SelectionProvider } from '@/modules/selection/SelectionProvider'
 import UploadQueue from '@/modules/upload/UploadQueue'
 
 initFlags()
 
 const Layout = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const { isMobile } = useBreakpoints()
-  const folderId = useCurrentFolderId()
   const { displayedFolder } = useDisplayedFolder()
   const { isDesktop } = useBreakpoints()
+
+  const shouldRedirect = useSelector(wasOperationRedirected)
+
+  useEffect(() => {
+    if (shouldRedirect) {
+      navigate(`/folder/${ROOT_DIR_ID}`)
+      dispatch({ type: RESET_OPERATION_REDIRECTED })
+    }
+  }, [shouldRedirect, navigate, dispatch])
 
   return (
     <LayoutUI>
@@ -41,25 +56,16 @@ const Layout = () => {
       <FlagSwitcher />
       <Sidebar className="u-flex-justify-between">
         <div>
-          {folderId && isDesktop ? (
-            <SharedDocument docId={folderId}>
-              {sharingProps => {
-                const { hasWriteAccess } = sharingProps
-                return (
-                  hasWriteAccess && (
-                    <AddMenuProvider
-                      canCreateFolder={true}
-                      canUpload={true}
-                      disabled={false}
-                      displayedFolder={displayedFolder}
-                      isSelectionBarVisible={false}
-                    >
-                      <AddButton className="u-mh-1-half u-mt-1-half u-miw-4 u-bdrs-6" />
-                    </AddMenuProvider>
-                  )
-                )
-              }}
-            </SharedDocument>
+          {isDesktop ? (
+            <AddMenuProvider
+              canCreateFolder={true}
+              canUpload={true}
+              disabled={false}
+              displayedFolder={displayedFolder}
+              isSelectionBarVisible={false}
+            >
+              <AddButton className="u-mh-1-half u-mt-1-half u-miw-4 u-bdrs-6" />
+            </AddMenuProvider>
           ) : null}
           <Nav />
         </div>

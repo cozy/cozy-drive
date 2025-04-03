@@ -1,6 +1,10 @@
 import { combineReducers } from 'redux'
 
-import { SORT_FOLDER } from './actions'
+import { SORT_FOLDER, OPERATION_REDIRECTED } from './actions'
+
+// Action type for resetting the flag
+export const RESET_OPERATION_REDIRECTED =
+  'navigation/RESET_OPERATION_REDIRECTED'
 
 const sort = (state = null, action) => {
   switch (action.type) {
@@ -14,8 +18,21 @@ const sort = (state = null, action) => {
   }
 }
 
+// Reducer for the redirection flag
+const operationRedirectedReducer = (state = false, action) => {
+  switch (action.type) {
+    case OPERATION_REDIRECTED:
+      return true
+    case RESET_OPERATION_REDIRECTED:
+      return false
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
-  sort
+  sort,
+  operationRedirected: operationRedirectedReducer // Add the new reducer
 })
 
 /**
@@ -24,4 +41,8 @@ export default combineReducers({
  * @param {Object} state - The state object containing the view property.
  * @returns {string} The sort value.
  */
-export const getSort = ({ view }) => view.sort
+// Selector needs to point to the correct state slice (`view`)
+export const getSort = state => state.view.sort
+
+// Selector for the new state (`view`)
+export const wasOperationRedirected = state => state.view.operationRedirected
