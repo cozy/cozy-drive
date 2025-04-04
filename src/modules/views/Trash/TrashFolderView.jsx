@@ -15,6 +15,9 @@ import FolderViewHeader from '../Folder/FolderViewHeader'
 import useHead from '@/components/useHead'
 import { useCurrentFolderId, useDisplayedFolder } from '@/hooks'
 import { restore } from '@/modules/actions'
+import { useSelectionContext } from '@/modules/selection/SelectionProvider'
+import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
+import FabWithAddMenuContext from '@/modules/drive/FabWithAddMenuContext'
 import { makeExtraColumnsNamesFromMedia } from '@/modules/certifications'
 import { useExtraColumns } from '@/modules/certifications/useExtraColumns'
 import { useFolderSort } from '@/modules/navigation/duck'
@@ -33,6 +36,7 @@ export const TrashFolderView = () => {
   const { isMobile } = useBreakpoints()
   const navigate = useNavigate()
   const { pathname } = useLocation()
+  const { isSelectionBarVisible } = useSelectionContext()
   const currentFolderId = useCurrentFolderId()
   const { t } = useI18n()
   const { refresh } = useSharingContext()
@@ -96,6 +100,19 @@ export const TrashFolderView = () => {
           extraColumns={extraColumns}
         />
         <Outlet />
+        {isMobile && (
+          <AddMenuProvider
+            canCreateFolder={true}
+            canUpload={true}
+            disabled={false}
+            displayedFolder={displayedFolder}
+            isSelectionBarVisible={isSelectionBarVisible}
+            isPublic={false}
+            refreshFolderContent={() => {}}
+          >
+            <FabWithAddMenuContext noSidebar={false} />
+          </AddMenuProvider>
+        )}
       </Content>
     </FolderView>
   )
