@@ -24,6 +24,9 @@ import {
   hr,
   trash
 } from '@/modules/actions'
+import { useSelectionContext } from '@/modules/selection/SelectionProvider'
+import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
+import FabWithAddMenuContext from '@/modules/drive/FabWithAddMenuContext'
 import { addToFavorites } from '@/modules/actions/components/addToFavorites'
 import { moveTo } from '@/modules/actions/components/moveTo'
 import { removeFromFavorites } from '@/modules/actions/components/removeFromFavorites'
@@ -53,6 +56,7 @@ const FavoritesView: FC = () => {
   const { isMobile } = useBreakpoints()
   const { t, lang } = useI18n()
   const client = useClient()
+  const { isSelectionBarVisible } = useSelectionContext()
   const { pushModal, popModal } = useModalContext()
   const { allLoaded, refresh } = useSharingContext()
   const { isNativeFileSharingAvailable, shareFilesNative } =
@@ -140,6 +144,21 @@ const FavoritesView: FC = () => {
         canInteractWith={handleInteractWith}
       />
       <Outlet />
+      {isMobile && (
+        <AddMenuProvider
+          canCreateFolder={true}
+          canUpload={true}
+          disabled={false}
+          displayedFolder={null}
+          isSelectionBarVisible={isSelectionBarVisible}
+          isPublic={false}
+          refreshFolderContent={(): void => {
+            // No action needed in virtual folders
+          }}
+        >
+          <FabWithAddMenuContext noSidebar={false} />
+        </AddMenuProvider>
+      )}
     </FolderView>
   )
 }

@@ -110,6 +110,22 @@ const uploadQueueProcessed =
       ...conflicts
     ])
 
+    // Add logging to debug upload completion
+    logger.debug('uploadQueueProcessed called with:', {
+      created: created.map(f => f.name),
+      updated: updated.map(f => f.name),
+      quotas: quotas.map(f => f.name),
+      conflicts: conflicts.map(f => f.name),
+      networkErrors: networkErrors.map(f => f.name),
+      errors: errors.map(f => ({
+        name: f.name,
+        status: f.status,
+        message: f.message
+      })),
+      fileTooLargeErrors: fileTooLargeErrors.map(f => f.name),
+      navigateAfterUpload
+    })
+
     if (quotas.length > 0) {
       logger.warn(`Upload module triggers a quota alert: ${quotas}`)
       dispatch(showModal(<QuotaPaywall />))
@@ -121,9 +137,15 @@ const uploadQueueProcessed =
       })
     } else if (errors.length > 0) {
       logger.error(`Upload module triggers an error: ${errors}`)
+      // Show more detailed error message
+      const errorMessages = errors
+        .map(err => err.message || JSON.stringify(err))
+        .join(', ')
       showAlert({
-        message: t('upload.alert.errors', {
-          type
+        message: t('upload.alert.errors_detailed', {
+          type,
+          count: errors.length,
+          details: errorMessages
         }),
         severity: 'secondary'
       })
@@ -189,17 +211,18 @@ const uploadQueueProcessed =
       })
     }
 
-    const isSuccess =
-      errors.length === 0 &&
-      networkErrors.length === 0 &&
-      quotas.length === 0 &&
-      fileTooLargeErrors.length === 0
-    if (
-      navigateAfterUpload &&
-      isSuccess &&
-      (created.length > 0 || updated.length > 0)
-    ) {
+    // Check if there are any successful uploads (created or updated files)
+    const hasSuccessfulUploads = created.length > 0 || updated.length > 0
+
+    // If we need to navigate after upload and there were successful uploads, redirect
+    if (navigateAfterUpload && hasSuccessfulUploads) {
+      logger.debug('Dispatching operationRedirected for upload.')
       dispatch(operationRedirected())
+    } else {
+      logger.debug('Not dispatching operationRedirected for upload.', {
+        navigateAfterUpload,
+        hasSuccessfulUploads
+      })
     }
   }
 

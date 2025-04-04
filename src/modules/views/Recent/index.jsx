@@ -29,6 +29,9 @@ import {
   hr,
   share
 } from '@/modules/actions'
+import { useSelectionContext } from '@/modules/selection/SelectionProvider'
+import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
+import FabWithAddMenuContext from '@/modules/drive/FabWithAddMenuContext'
 import { addToFavorites } from '@/modules/actions/components/addToFavorites'
 import { moveTo } from '@/modules/actions/components/moveTo'
 import { removeFromFavorites } from '@/modules/actions/components/removeFromFavorites'
@@ -52,6 +55,7 @@ export const RecentView = () => {
   const { isMobile } = useBreakpoints()
   const client = useClient()
   const { pushModal, popModal } = useModalContext()
+  const { isSelectionBarVisible } = useSelectionContext()
   const { allLoaded, refresh, isOwner, byDocId } = useSharingContext()
   const { isNativeFileSharingAvailable, shareFilesNative } =
     useNativeFileSharing()
@@ -128,6 +132,19 @@ export const RecentView = () => {
           extraColumns={extraColumns}
         />
         <Outlet />
+        {isMobile && (
+          <AddMenuProvider
+            canCreateFolder={true}
+            canUpload={true}
+            disabled={false}
+            displayedFolder={null}
+            isSelectionBarVisible={isSelectionBarVisible}
+            isPublic={false}
+            refreshFolderContent={() => {}}
+          >
+            <FabWithAddMenuContext noSidebar={false} />
+          </AddMenuProvider>
+        )}
       </Content>
     </FolderView>
   )
