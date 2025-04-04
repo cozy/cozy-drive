@@ -22,6 +22,7 @@ import { initFlags } from '@/lib/flags'
 import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
 import AddButton from '@/modules/drive/Toolbar/components/AddButton'
 import Nav from '@/modules/navigation/Nav'
+import { NavProvider, useNavContext } from '@/modules/navigation/NavContext'
 import {
   wasOperationRedirected,
   RESET_OPERATION_REDIRECTED
@@ -31,7 +32,7 @@ import UploadQueue from '@/modules/upload/UploadQueue'
 
 initFlags()
 
-const Layout = () => {
+const LayoutContent = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { isMobile } = useBreakpoints()
@@ -39,13 +40,16 @@ const Layout = () => {
   const { isDesktop } = useBreakpoints()
 
   const shouldRedirect = useSelector(wasOperationRedirected)
+  const [, setLastClicked] = useNavContext()
 
   useEffect(() => {
     if (shouldRedirect) {
+      // Update lastClicked state to ensure sidebar shows the correct active item
+      setLastClicked(`/folder/${ROOT_DIR_ID}`)
       navigate(`/folder/${ROOT_DIR_ID}`)
       dispatch({ type: RESET_OPERATION_REDIRECTED })
     }
-  }, [shouldRedirect, navigate, dispatch])
+  }, [shouldRedirect, navigate, dispatch, setLastClicked])
 
   return (
     <LayoutUI>
@@ -87,6 +91,14 @@ const Layout = () => {
       <Sprite />
       {flag('debug') && <CozyDevtools />}
     </LayoutUI>
+  )
+}
+
+const Layout = () => {
+  return (
+    <NavProvider>
+      <LayoutContent />
+    </NavProvider>
   )
 }
 

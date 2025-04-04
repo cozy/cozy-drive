@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import ClockIcon from 'cozy-ui/transpiled/react/Icons/Clock'
@@ -10,10 +10,11 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { FavoriteList } from '@/modules/navigation/FavoriteList'
 import { NavItem } from '@/modules/navigation/NavItem'
+import { useNavContext } from '@/modules/navigation/NavContext'
 import { SharingsNavItem } from '@/modules/navigation/SharingsNavItem'
 
 export const Nav = () => {
-  const clickState = useState(null)
+  const clickState = useNavContext()
   const { isDesktop } = useBreakpoints()
 
   return (
