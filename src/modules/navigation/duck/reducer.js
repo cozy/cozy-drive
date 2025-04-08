@@ -32,7 +32,7 @@ const operationRedirectedReducer = (state = false, action) => {
 
 export default combineReducers({
   sort,
-  operationRedirected: operationRedirectedReducer // Add the new reducer
+  operationRedirected: operationRedirectedReducer // Add the reducer
 })
 
 /**
@@ -44,5 +44,5 @@ export default combineReducers({
 // Selector needs to point to the correct state slice (`view`)
 export const getSort = state => state.view.sort
 
-// Selector for the new state (`view`)
+// Selector for the state (`view`)
 export const wasOperationRedirected = state => state.view.operationRedirected
