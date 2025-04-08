@@ -211,10 +211,8 @@ const uploadQueueProcessed =
       })
     }
 
-    // Check if there are any successful uploads (created or updated files)
     const hasSuccessfulUploads = created.length > 0 || updated.length > 0
 
-    // If we need to navigate after upload and there were successful uploads, redirect
     if (navigateAfterUpload && hasSuccessfulUploads) {
       logger.debug('Dispatching operationRedirected for upload.')
       dispatch(operationRedirected())
@@ -234,7 +232,7 @@ const uploadQueueProcessed =
  * negatives.
  */
 const doesFolderExistByName = (state, parentFolderId, name) => {
-  const filesInCurrentView = getFolderContent(state, parentFolderId) || []
+  const filesInCurrentView = getFolderContent(state, parentFolderId) || [] // TODO in the public view we don't use a query, so getFolderContent returns null. We could look inside the cozy-client store with a predicate to find folders with a matching dir_id.
 
   const existingFolder = filesInCurrentView.find(f => {
     return isDirectory(f) && f.name === name
@@ -297,7 +295,6 @@ export const createFolder = (
           logger.error(
             'Attempted to create encrypted folder in non-original/root target.'
           )
-          showAlert({ message: t('alert.folder_generic'), severity: 'error' })
           throw new Error(
             'Cannot create encrypted folder in root via redirection.'
           )
@@ -313,7 +310,7 @@ export const createFolder = (
           message: t('alert.folder_name', { folderName: name }),
           severity: 'error'
         })
-      } else if (!err.message?.includes('Cannot create encrypted folder')) {
+      } else {
         showAlert({ message: t('alert.folder_generic'), severity: 'error' })
       }
       throw err

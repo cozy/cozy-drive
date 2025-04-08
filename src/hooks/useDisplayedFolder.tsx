@@ -7,6 +7,7 @@ import { buildOnlyFolderQuery } from '@/queries'
 interface DisplayedFolderResult {
   isNotFound: boolean
   displayedFolder: IOCozyFile | null
+  initialDirId: string | null
 }
 
 const useDisplayedFolder = (): DisplayedFolderResult => {
@@ -22,6 +23,9 @@ const useDisplayedFolder = (): DisplayedFolderResult => {
     lastError: { status: number }
   }
 
+  const displayedFolder = folderResult.data ?? null
+  const initialDirId = displayedFolder?.id ?? null
+
   if (folderId) {
     const isNotFound =
       folderResult.fetchStatus === 'failed' &&
@@ -29,13 +33,15 @@ const useDisplayedFolder = (): DisplayedFolderResult => {
 
     return {
       isNotFound,
-      displayedFolder: folderResult.data ?? null
+      displayedFolder,
+      initialDirId
     }
   }
 
   return {
     isNotFound: true,
-    displayedFolder: null
+    displayedFolder: null,
+    initialDirId: null
   }
 }
 

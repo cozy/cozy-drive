@@ -14,18 +14,20 @@ import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import { useDisplayedFolder } from '@/hooks'
 import { uploadFiles } from '@/modules/navigation/duck'
 
-const UploadItem = ({ t, isDisabled, onUpload, displayedFolder, onClick }) => {
+const UploadItem = ({ t, isDisabled, onUpload, onClick }) => {
   const client = useClient()
   const vaultClient = useVaultClient()
   const { showAlert } = useAlert()
+  const { initialDirId } = useDisplayedFolder()
 
   const handleClick = evt => {
     evt.stopPropagation()
   }
   const handleChange = files => {
-    onUpload(client, vaultClient, files, displayedFolder, showAlert)
+    onUpload(client, vaultClient, files, initialDirId, showAlert)
     onClick()
   }
 
@@ -51,9 +53,7 @@ const UploadItem = ({ t, isDisabled, onUpload, displayedFolder, onClick }) => {
 }
 
 const mapDispatchToProps = (dispatch, { sharingState, onUploaded, t }) => ({
-  onUpload: (client, vaultClient, files, displayedFolder, showAlert) => {
-    // Determine the initial directory ID. Use null if displayedFolder or its ID is invalid.
-    const initialDirId = displayedFolder?.id || null
+  onUpload: (client, vaultClient, files, initialDirId, showAlert) => {
     dispatch(
       uploadFiles(files, initialDirId, sharingState, onUploaded, {
         client,

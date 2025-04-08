@@ -68,7 +68,9 @@ const LayoutContent = () => {
               displayedFolder={displayedFolder}
               isSelectionBarVisible={false}
             >
-              <AddButton className="u-mh-1-half u-mt-1-half u-miw-4 u-bdrs-6" />
+              <div className="u-mh-1-half u-mt-1-half">
+                <AddButton className="u-w-100 u-bdrs-6" />
+              </div>
             </AddMenuProvider>
           ) : null}
           <Nav />
