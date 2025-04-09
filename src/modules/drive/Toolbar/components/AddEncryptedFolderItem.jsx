@@ -6,15 +6,32 @@ import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuIte
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 
 import { showNewFolderInput, encryptedFolder } from '@/modules/filelist/duck'
 import EncryptedFolderIcon from '@/modules/views/Folder/EncryptedFolderIcon'
 
-const AddEncryptedFolderItem = ({ addEncryptedFolder, onClick }) => {
+const AddEncryptedFolderItem = ({
+  addEncryptedFolder,
+  onClick,
+  isReadOnly
+}) => {
   const { t } = useI18n()
   const { showUnlockForm } = useVaultUnlockContext()
+  const { showAlert } = useAlert()
 
   const handleClick = () => {
+    if (isReadOnly) {
+      showAlert({
+        message: t(
+          'AddMenu.readOnlyFolder',
+          'This is a read-only folder. You cannot perform this action.'
+        ),
+        severity: 'warning'
+      })
+      onClick()
+      return
+    }
     showUnlockForm({ onUnlock: addEncryptedFolder })
     onClick()
   }

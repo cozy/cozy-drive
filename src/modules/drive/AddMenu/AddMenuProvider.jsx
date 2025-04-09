@@ -29,7 +29,8 @@ const AddMenuProvider = ({
   children,
   isPublic,
   displayedFolder,
-  isSelectionBarVisible
+  isSelectionBarVisible,
+  isReadOnly
 }) => {
   const [menuIsVisible, setMenuVisible] = useState(false)
   const isOffline = useBrowserOffline()
@@ -97,6 +98,7 @@ const AddMenuProvider = ({
             isPublic={isPublic}
             isEncryptedFolder={isEncryptedDir}
             displayedFolder={displayedFolder}
+            isReadOnly={isReadOnly}
           />
         )}
       </ScannerProvider>
