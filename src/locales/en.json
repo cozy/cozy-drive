@@ -821,6 +821,9 @@
   "LastUpdate": {
     "titleFormat": "LLLL dd, yyyy, HH:MM"
   },
+  "AddMenu": {
+    "readOnlyFolder": "This is a read-only folder. You cannot perform this action."
+  },
   "PublicNoteRedirect": {
     "error": {
       "title": "Unable to access document",

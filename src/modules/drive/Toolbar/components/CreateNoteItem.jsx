@@ -17,11 +17,19 @@ import IconNote from 'cozy-ui/transpiled/react/Icons/FileTypeNote'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 
-const CreateNoteItem = ({ client, t, displayedFolder }) => {
+const CreateNoteItem = ({
+  client,
+  t,
+  displayedFolder,
+  isReadOnly,
+  onClick
+}) => {
   const { capabilities } = useCapabilities(client)
   const isFlatDomain = get(capabilities, 'flat_subdomains')
   const webviewIntent = useWebviewIntent()
+  const { showAlert } = useAlert()
 
   let notesAppUrl = undefined
   let notesAppIsInstalled = true
@@ -56,6 +64,18 @@ const CreateNoteItem = ({ client, t, displayedFolder }) => {
   }
 
   const handleClick = async () => {
+    if (isReadOnly) {
+      showAlert({
+        message: t(
+          'AddMenu.readOnlyFolder',
+          'This is a read-only folder. You cannot perform this action.'
+        ),
+        severity: 'warning'
+      })
+      onClick()
+      return
+    }
+
     if (notesAppUrl === undefined) return
     if (notesAppIsInstalled) {
       const { data: file } = await client.create('io.cozy.notes', {

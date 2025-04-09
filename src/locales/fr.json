@@ -822,6 +822,9 @@
   "LastUpdate": {
     "titleFormat": "dd LLLL yyyy, HH:MM"
   },
+  "AddMenu": {
+    "readOnlyFolder": "Ce dossier est en lecture seule. Vous ne pouvez pas effectuer cette action."
+  },
   "PublicNoteRedirect": {
     "error": {
       "title": "Impossible d'accéder au document",

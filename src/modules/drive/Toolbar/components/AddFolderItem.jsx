@@ -6,12 +6,27 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconFolder from 'cozy-ui/transpiled/react/Icons/FileTypeFolder'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
-import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 
 import { showNewFolderInput } from '@/modules/filelist/duck'
 
-const AddFolderItem = translate()(({ t, addFolder, onClick }) => {
+const AddFolderItem = ({ addFolder, onClick, isReadOnly }) => {
+  const { t } = useI18n()
+  const { showAlert } = useAlert()
+
   const handleClick = () => {
+    if (isReadOnly) {
+      showAlert({
+        message: t(
+          'AddMenu.readOnlyFolder',
+          'This is a read-only folder. You cannot perform this action.'
+        ),
+        severity: 'warning'
+      })
+      onClick()
+      return
+    }
     addFolder()
     onClick()
   }
@@ -24,7 +39,8 @@ const AddFolderItem = translate()(({ t, addFolder, onClick }) => {
       <ListItemText primary={t('toolbar.menu_new_folder')} />
     </ActionsMenuItem>
   )
-})
+}
+
 const mapDispatchToProps = dispatch => ({
   addFolder: () => dispatch(showNewFolderInput())
 })

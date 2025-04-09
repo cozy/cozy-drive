@@ -11,6 +11,7 @@ import { Layout as LayoutUI } from 'cozy-ui/transpiled/react/Layout'
 import Sidebar from 'cozy-ui/transpiled/react/Sidebar'
 import { isTwakeTheme } from 'cozy-ui/transpiled/react/helpers/isTwakeTheme'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useSharingContext } from 'cozy-sharing'
 
 import StorageButton from '@/components/Storage/StorageButton'
 import StorageProgress from '@/components/Storage/StorageProgress'
@@ -38,6 +39,7 @@ const LayoutContent = () => {
   const { isMobile } = useBreakpoints()
   const { displayedFolder } = useDisplayedFolder()
   const { isDesktop } = useBreakpoints()
+  const { hasWriteAccess } = useSharingContext()
 
   const shouldRedirect = useSelector(wasOperationRedirected)
   const [, setLastClicked] = useNavContext()
@@ -50,6 +52,10 @@ const LayoutContent = () => {
       dispatch({ type: RESET_OPERATION_REDIRECTED })
     }
   }, [shouldRedirect, navigate, dispatch, setLastClicked])
+
+  const isFolderReadOnly = displayedFolder
+    ? !hasWriteAccess(displayedFolder._id)
+    : false
 
   return (
     <LayoutUI>
@@ -67,6 +73,7 @@ const LayoutContent = () => {
               disabled={false}
               displayedFolder={displayedFolder}
               isSelectionBarVisible={false}
+              isReadOnly={isFolderReadOnly}
             >
               <div className="u-mh-1-half u-mt-1-half">
                 <AddButton className="u-w-100 u-bdrs-6" />

@@ -17,16 +17,32 @@ import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import { useDisplayedFolder } from '@/hooks'
 import { uploadFiles } from '@/modules/navigation/duck'
 
-const UploadItem = ({ t, isDisabled, onUpload, onClick }) => {
+const UploadItem = ({ t, isDisabled, onUpload, onClick, isReadOnly }) => {
   const client = useClient()
   const vaultClient = useVaultClient()
   const { showAlert } = useAlert()
   const { initialDirId } = useDisplayedFolder()
 
-  const handleClick = evt => {
-    evt.stopPropagation()
+  const handleMenuItemClick = evt => {
+    if (isReadOnly) {
+      evt.preventDefault()
+      evt.stopPropagation()
+
+      showAlert({
+        message: t(
+          'AddMenu.readOnlyFolder',
+          'This is a read-only folder. You cannot perform this action.'
+        ),
+        severity: 'warning'
+      })
+      onClick()
+      return
+    }
   }
+
   const handleChange = files => {
+    if (isReadOnly || !files || files.length === 0) return
+
     onUpload(client, vaultClient, files, initialDirId, showAlert)
     onClick()
   }
@@ -39,10 +55,8 @@ const UploadItem = ({ t, isDisabled, onUpload, onClick }) => {
       onChange={handleChange}
       data-testid="upload-btn"
       value={[]}
-      // FileInput needs to stay rendered until the onChange event, so we prevent the event from bubbling
-      onClick={handleClick}
     >
-      <ActionsMenuItem onClick={handleClick}>
+      <ActionsMenuItem onClick={handleMenuItemClick}>
         <ListItemIcon>
           <Icon icon={UploadIcon} />
         </ListItemIcon>
