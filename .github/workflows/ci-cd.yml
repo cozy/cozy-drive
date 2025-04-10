@@ -33,8 +33,8 @@ jobs:
         run: yarn test
       - name: Build
         run: yarn build
-      - name: BundleMon
-        uses: lironer/bundlemon-action@v1
+      # - name: BundleMon
+      #   uses: lironer/bundlemon-action@v1
       - name: Set SSH for downcloud
         uses: webfactory/ssh-agent@v0.9.0
         with:
