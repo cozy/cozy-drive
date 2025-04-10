@@ -152,8 +152,9 @@ const FavoritesView: FC = () => {
           displayedFolder={null}
           isSelectionBarVisible={isSelectionBarVisible}
           isPublic={false}
+          isReadOnly={false}
           refreshFolderContent={(): void => {
-            // No action needed in virtual folders
+            // Empty function needed because this props is required
           }}
         >
           <FabWithAddMenuContext noSidebar={false} />
