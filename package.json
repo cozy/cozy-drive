@@ -76,7 +76,7 @@
     "prettier": "2.8.8",
     "react-test-renderer": "16.14.0",
     "replace": "1.2.1",
-    "rsbuild-config-cozy-app": "^0.3.0",
+    "rsbuild-config-cozy-app": "^0.5.0",
     "stylint": "1.5.9",
     "stylus-config-cozy-app": "^0.1.0",
     "swc_mut_cjs_exports": "^8.0.1",
