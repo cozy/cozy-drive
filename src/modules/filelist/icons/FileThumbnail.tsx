@@ -6,6 +6,7 @@ import { SharedBadge, SharingOwnerAvatar } from 'cozy-sharing'
 import Box from 'cozy-ui/transpiled/react/Box'
 import GhostFileBadge from 'cozy-ui/transpiled/react/GhostFileBadge'
 import Icon from 'cozy-ui/transpiled/react/Icon'
+import FileTypeServerIcon from 'cozy-ui/transpiled/react/Icons/FileTypeServer'
 import LinkIcon from 'cozy-ui/transpiled/react/Icons/Link'
 import TrashDuotoneIcon from 'cozy-ui/transpiled/react/Icons/TrashDuotone'
 import InfosBadge from 'cozy-ui/transpiled/react/InfosBadge'
@@ -13,7 +14,6 @@ import Spinner from 'cozy-ui/transpiled/react/Spinner'
 
 import styles from '@/styles/filelist.styl'
 
-import IconServer from '@/assets/icons/icon-type-server.svg'
 import type { File, FolderPickerEntry } from '@/components/FolderPicker/types'
 import { DOCTYPE_KONNECTORS } from '@/lib/doctypes'
 import { BadgeKonnector } from '@/modules/filelist/icons/BadgeKonnector'
@@ -74,7 +74,7 @@ const FileThumbnail: React.FC<FileThumbnailProps> = ({
     isNextcloudShortcut(file) ||
     isSharedDriveFolder(file)
   ) {
-    return <Icon icon={IconServer} size={size ?? 32} />
+    return <Icon icon={FileTypeServerIcon} size={size ?? 32} />
   }
 
   const isSharingShortcut =
