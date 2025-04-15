@@ -16,11 +16,6 @@ const mergedConfig = mergeRsbuildConfig(config, {
           {
             from: 'src/assets/onlyOffice',
             to: 'onlyOffice'
-          },
-          {
-            from: 'icon-type-*.svg',
-            to: 'assets/icons',
-            context: 'src/assets/icons'
           }
         ]
       }
