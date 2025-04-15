@@ -3,10 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { SharedDocument, useSharingContext } from 'cozy-sharing'
-import { isTwakeTheme } from 'cozy-ui/transpiled/react/helpers/isTwakeTheme'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-
-import ViewSwitcher from '@/modules/drive/Toolbar/components/ViewSwitcher'
 
 import styles from '@/styles/toolbar.styl'
 
@@ -15,6 +12,7 @@ import { useDisplayedFolder, useCurrentFolderId } from '@/hooks'
 import InsideRegularFolder from '@/modules/drive/Toolbar/components/InsideRegularFolder'
 import MoreMenu from '@/modules/drive/Toolbar/components/MoreMenu'
 import SearchButton from '@/modules/drive/Toolbar/components/SearchButton'
+import ViewSwitcher from '@/modules/drive/Toolbar/components/ViewSwitcher'
 import ShareButton from '@/modules/drive/Toolbar/share/ShareButton'
 import SharedRecipients from '@/modules/drive/Toolbar/share/SharedRecipients'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
@@ -57,25 +55,19 @@ const Toolbar = ({
       >
         <ShareButton isDisabled={isSharingDisabled} className="u-mr-half" />
       </InsideRegularFolder>
-
       <ViewSwitcher className="u-mr-half" />
-
-      <BarRightOnMobile>
-        {isMobile && <SearchButton />}
-        {!isTwakeTheme() && (
-          <MoreMenu
-            isDisabled={isDisabled}
-            hasWriteAccess={hasWriteAccess}
-            isSharedWithMe={isSharedWithMe}
-            canCreateFolder={canCreateFolder}
-            canUpload={canUpload}
-            folderId={folderId}
-            displayedFolder={displayedFolder}
-            showSelectionBar={showSelectionBar}
-            isSelectionBarVisible={isSelectionBarVisible}
-          />
-        )}
-      </BarRightOnMobile>
+      <MoreMenu
+        isDisabled={isDisabled}
+        hasWriteAccess={hasWriteAccess}
+        isSharedWithMe={isSharedWithMe}
+        canCreateFolder={canCreateFolder}
+        canUpload={canUpload}
+        folderId={folderId}
+        displayedFolder={displayedFolder}
+        showSelectionBar={showSelectionBar}
+        isSelectionBarVisible={isSelectionBarVisible}
+      />
+      <BarRightOnMobile>{isMobile && <SearchButton />}</BarRightOnMobile>
     </div>
   )
 }
