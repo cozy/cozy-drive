@@ -6,12 +6,12 @@ import { BarComponent } from 'cozy-bar'
 import CozyDevtools from 'cozy-devtools'
 import flag from 'cozy-flags'
 import FlagSwitcher from 'cozy-flags/dist/FlagSwitcher'
+import { useSharingContext } from 'cozy-sharing'
 import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { Layout as LayoutUI } from 'cozy-ui/transpiled/react/Layout'
 import Sidebar from 'cozy-ui/transpiled/react/Sidebar'
 import { isTwakeTheme } from 'cozy-ui/transpiled/react/helpers/isTwakeTheme'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-import { useSharingContext } from 'cozy-sharing'
 
 import StorageButton from '@/components/Storage/StorageButton'
 import StorageProgress from '@/components/Storage/StorageProgress'
@@ -83,7 +83,7 @@ const LayoutContent = () => {
           <Nav />
         </div>
         <div>
-          {isTwakeTheme() && (
+          {isTwakeTheme() && isDesktop && (
             <div className="u-p-1-half">
               <StorageProgress />
               <StorageButton className="u-mt-1" />
