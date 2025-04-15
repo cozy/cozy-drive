@@ -7,13 +7,14 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 const MoreButton = ({ disabled, onClick, ...props }) => {
   const { t } = useI18n()
+
   return (
     <div>
       <IconButton
         data-testid="more-button"
         disabled={disabled}
         onClick={onClick}
-        size="small"
+        size="medium"
         aria-label={t('Toolbar.more')}
         {...props}
       >
