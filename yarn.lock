@@ -5358,10 +5358,10 @@ cozy-app-publish@^0.40.1:
     tar "^6.1.11"
     verror "^1.10.1"
 
-cozy-bar@^20.0.0:
-  version "20.0.0"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-20.0.0.tgz#4f739c700fd881619cb71e223529e4ce9b465791"
-  integrity sha512-AHpSOunkzdcEGTONUNisqrxhfzAu91W3clQAPIssOeSpQdiwC8A+zfF7KK06SdgkPOHQpcoUs6G0soZz7IU+dA==
+cozy-bar@^21.0.0:
+  version "21.0.0"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-21.0.0.tgz#2158cbd3c6008a2b9efb4a31bb437f81bc540c45"
+  integrity sha512-F304yLBSMkL5/c07M0ysvyq7fMJBcTwwE1NXk5sZIRG44kUX/JzczfYk98RdIszrpDX0E84rPMvsnQeZ1YUyZQ==
   dependencies:
     hammerjs "2.0.8"
     lodash.debounce "4.0.8"
@@ -5841,10 +5841,10 @@ cozy-tsconfig@^1.8.1:
   resolved "https://registry.yarnpkg.com/cozy-tsconfig/-/cozy-tsconfig-1.8.1.tgz#5f206f4e6e041a4afc6691098264ba630bdeb7e2"
   integrity sha512-/9QBxK8Tc12O2ojuyRpSMjPpXpqldVvzfNB1+/nPD+IkIBkU+mqxpHYJwKWjNYHGraCSy69mIwt9J3aiaJdz9w==
 
-cozy-ui@^122.3.0:
-  version "122.3.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-122.3.0.tgz#44266c56124a4e3162dd674afb8f86f9a12fe89c"
-  integrity sha512-QtH08YVsb3ueVq6G+XslFT7oeKAJn/brPy+VeRpYyv5VuWDSlcrSkQj8NlWg+mDGht0q5Z88k4/zNMyuGY0XtQ==
+cozy-ui@^122.7.0:
+  version "122.7.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-122.7.0.tgz#fc4af58014537a80d979168c3b37686152ee4889"
+  integrity sha512-7cjT3LRBdCHjMFRoKEQIZ8kbeuQy6giS1/8GFJoKcMiwN4uE873dHJDBUb0tv0AMx64chB9ClSL+HaPsY8hSIQ==
   dependencies:
     "@babel/runtime" "^7.3.4"
     "@date-io/date-fns" "1"
@@ -10679,9 +10679,9 @@ msgpack5@^4.0.2:
     readable-stream "^2.3.6"
     safe-buffer "^5.1.2"
 
-"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
+"mui-bottom-sheet@git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
   version "1.0.8"
-  resolved "https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
+  resolved "git+https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
     jest-environment-jsdom-sixteen "^1.0.3"
