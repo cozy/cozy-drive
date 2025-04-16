@@ -3,7 +3,6 @@ import React, { forwardRef } from 'react'
 import { splitFilename } from 'cozy-client/dist/models/file'
 import CozyClient from 'cozy-client/types/CozyClient'
 import { Action } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import StarOutlineIcon from 'cozy-ui/transpiled/react/Icons/StarOutline'
@@ -13,16 +12,20 @@ import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 interface addToFavoritesProps {
   t: (key: string, options?: Record<string, unknown>) => string
   client: CozyClient
+  isMobile: boolean
   showAlert: import('cozy-ui/transpiled/react/providers/Alert').showAlertFunction
 }
 
 const addToFavorites = ({
   t,
   client,
+  isMobile,
   showAlert
 }: addToFavoritesProps): Action => {
-  const label = t('favorites.label.add')
   const icon = StarOutlineIcon
+  const label = isMobile
+    ? t('favorites.label.addMobile')
+    : t('favorites.label.add')
 
   return {
     name: 'addToFavourites',
@@ -55,17 +58,12 @@ const addToFavorites = ({
       }
     },
     Component: forwardRef(function AddToFavorites(props, ref) {
-      const { isMobile } = useBreakpoints()
-      const actionLabel = isMobile
-        ? t('favorites.label.addMobile')
-        : t('favorites.label.add')
-
       return (
         <ActionsMenuItem {...props} ref={ref}>
           <ListItemIcon>
             <Icon icon={icon} />
           </ListItemIcon>
-          <ListItemText primary={actionLabel} />
+          <ListItemText primary={label} />
         </ActionsMenuItem>
       )
     })

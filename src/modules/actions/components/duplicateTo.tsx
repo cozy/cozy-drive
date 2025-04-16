@@ -2,7 +2,6 @@ import React, { forwardRef } from 'react'
 
 import { isFile } from 'cozy-client/dist/models/file'
 import { Action } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import MultiFilesIcon from 'cozy-ui/transpiled/react/Icons/MultiFiles'
@@ -15,6 +14,7 @@ interface duplicateToProps {
   t: (key: string, options?: Record<string, unknown>) => string
   navigate: (to: string) => void
   pathname: string
+  isMobile: boolean
   search?: string
 }
 
@@ -22,10 +22,13 @@ const duplicateTo = ({
   t,
   pathname,
   navigate,
+  isMobile,
   search
 }: duplicateToProps): Action => {
-  const label = t('actions.duplicateTo.label')
   const icon = MultiFilesIcon
+  const label = isMobile
+    ? t('actions.duplicateToMobile.label')
+    : t('actions.duplicateTo.label')
 
   return {
     name: 'duplicateTo',
@@ -42,17 +45,12 @@ const duplicateTo = ({
       })
     },
     Component: forwardRef(function DuplicateTo(props, ref) {
-      const { isMobile } = useBreakpoints()
-      const actionLabel = isMobile
-        ? t('actions.duplicateToMobile.label')
-        : t('actions.duplicateTo.label')
-
       return (
         <ActionsMenuItem {...props} ref={ref}>
           <ListItemIcon>
             <Icon icon={icon} />
           </ListItemIcon>
-          <ListItemText primary={actionLabel} />
+          <ListItemText primary={label} />
         </ActionsMenuItem>
       )
     })
