@@ -158,6 +158,7 @@ const DriveFolderView = () => {
     showAlert,
     isOwner,
     byDocId,
+    isMobile,
     isNativeFileSharingAvailable,
     shareFilesNative
   }

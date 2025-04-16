@@ -29,16 +29,16 @@ import {
   hr,
   share
 } from '@/modules/actions'
-import { useSelectionContext } from '@/modules/selection/SelectionProvider'
-import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
-import FabWithAddMenuContext from '@/modules/drive/FabWithAddMenuContext'
 import { addToFavorites } from '@/modules/actions/components/addToFavorites'
 import { moveTo } from '@/modules/actions/components/moveTo'
 import { removeFromFavorites } from '@/modules/actions/components/removeFromFavorites'
 import { MobileAwareBreadcrumb as Breadcrumb } from '@/modules/breadcrumb/components/MobileAwareBreadcrumb'
 import { makeExtraColumnsNamesFromMedia } from '@/modules/certifications'
 import { useExtraColumns } from '@/modules/certifications/useExtraColumns'
+import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
+import FabWithAddMenuContext from '@/modules/drive/FabWithAddMenuContext'
 import Toolbar from '@/modules/drive/Toolbar'
+import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 import { useFilesQueryWithPath } from '@/modules/views/hooks'
 import {
   buildRecentQuery,
@@ -94,6 +94,7 @@ export const RecentView = () => {
     showAlert,
     isOwner,
     byDocId,
+    isMobile,
     isNativeFileSharingAvailable,
     shareFilesNative
   }

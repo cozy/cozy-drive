@@ -24,9 +24,6 @@ import {
   hr,
   trash
 } from '@/modules/actions'
-import { useSelectionContext } from '@/modules/selection/SelectionProvider'
-import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
-import FabWithAddMenuContext from '@/modules/drive/FabWithAddMenuContext'
 import { addToFavorites } from '@/modules/actions/components/addToFavorites'
 import { moveTo } from '@/modules/actions/components/moveTo'
 import { removeFromFavorites } from '@/modules/actions/components/removeFromFavorites'
@@ -36,10 +33,13 @@ import {
   useExtraColumns,
   ExtraColumn
 } from '@/modules/certifications/useExtraColumns'
+import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
+import FabWithAddMenuContext from '@/modules/drive/FabWithAddMenuContext'
 import Toolbar from '@/modules/drive/Toolbar'
 import { FolderBody } from '@/modules/folder/components/FolderBody'
 import { useFolderSort } from '@/modules/navigation/duck'
 import { isNextcloudShortcut } from '@/modules/nextcloud/helpers'
+import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 import FolderView from '@/modules/views/Folder/FolderView'
 import FolderViewHeader from '@/modules/views/Folder/FolderViewHeader'
 import {
@@ -106,6 +106,7 @@ const FavoritesView: FC = () => {
     isPublic: false,
     allLoaded,
     showAlert,
+    isMobile,
     isNativeFileSharingAvailable,
     shareFilesNative
   }

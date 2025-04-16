@@ -17,6 +17,7 @@ import {
   print
 } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
+import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { useCurrentFolderId } from '@/hooks'
@@ -33,6 +34,7 @@ export const useMoreMenuActions = file => {
   const vaultClient = useVaultClient()
   const webviewIntent = useWebviewIntent()
   const { t, lang } = useI18n()
+  const { isMobile } = useBreakpoints()
   const navigate = useNavigate()
   const { pushModal, popModal } = useModalContext()
   const { allLoaded, hasWriteAccess, isOwner, byDocId } = useSharingContext()
@@ -86,6 +88,7 @@ export const useMoreMenuActions = file => {
       isSharingShortcutCreated,
       openSharingLinkDisplayed: isCozySharing,
       syncSharingLink,
+      isMobile,
       addSharingLink
     }
   )
