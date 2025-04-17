@@ -7,7 +7,7 @@ import {
 
 jest.mock('modules/navigation/AppRoute', () => ({ routes: [] }))
 
-mockCozyClientRequestQuery()
+mockCozyClientRequestQuery('folderid123456')
 
 describe('getFolderContent', () => {
   it('should return an empty list if queries have not been loaded', () => {

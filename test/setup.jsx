@@ -33,18 +33,27 @@ jest.mock('cozy-keys-lib', () => ({
 
 configure({ testIdAttribute: 'data-testid' })
 
-export const mockCozyClientRequestQuery = () => {
+export const mockCozyClientRequestQuery = dir_id => {
   beforeEach(() => {
     const files = Array(10)
       .fill(null)
-      .map((x, i) => generateFile({ i }))
+      .map((x, i) => generateFile({ i, dir_id }))
     const directories = Array(3)
       .fill(null)
-      .map((x, i) => generateFile({ i, type: 'directory' }))
-    const fileAndDirs = directories.concat(files)
-    jest.spyOn(CozyClient.prototype, 'requestQuery').mockResolvedValue({
-      data: fileAndDirs
-    })
+      .map((x, i) => generateFile({ i, type: 'directory', dir_id }))
+    jest
+      .spyOn(CozyClient.prototype, 'requestQuery')
+      .mockImplementation(queryDefinition => {
+        if (queryDefinition.selector?.type === 'directory') {
+          return Promise.resolve({
+            data: directories
+          })
+        } else {
+          return Promise.resolve({
+            data: files
+          })
+        }
+      })
   })
 
   afterEach(() => {
