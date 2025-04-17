@@ -5783,10 +5783,10 @@ cozy-realtime@4.6.0:
     "@cozy/minilog" "^1.0.0"
     cozy-device-helper "^2.7.0"
 
-cozy-search@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/cozy-search/-/cozy-search-0.4.0.tgz#126413d3e67ed105c4e76f6b3464324dc0e8db51"
-  integrity sha512-rFmOr3QM+doasZOhT4dW+/fvv/qUmpg/cPBzFTOt/x1XOvgbFORnHLRIXst2cFPRgpXarlRwj33+cqfjTKYAKQ==
+cozy-search@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/cozy-search/-/cozy-search-0.5.1.tgz#85c81a139d585117395231b37ec8e0ca701a4c37"
+  integrity sha512-8u3HiPO9fVPXhJPtbyUISGB9osOsMrLQmyZHjtobJtwT4Q8oeKBVPSeh0apKaGg/h2jES8Z/G+ygK+Mq7QNiPw==
   dependencies:
     classnames "2.5.1"
     lodash "4.17.21"
@@ -10679,9 +10679,9 @@ msgpack5@^4.0.2:
     readable-stream "^2.3.6"
     safe-buffer "^5.1.2"
 
-"mui-bottom-sheet@git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
+"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
   version "1.0.8"
-  resolved "git+https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
+  resolved "https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
     jest-environment-jsdom-sixteen "^1.0.3"

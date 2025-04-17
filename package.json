@@ -101,7 +101,7 @@
     "cozy-minilog": "3.9.1",
     "cozy-pouch-link": "^57.5.0",
     "cozy-realtime": "4.6.0",
-    "cozy-search": "^0.4.0",
+    "cozy-search": "^0.5.1",
     "cozy-sharing": "^25.1.1",
     "cozy-stack-client": "^57.0.0",
     "cozy-ui": "^122.7.0",
