@@ -57,11 +57,6 @@
   "alert": {
     "could_not_open_file": "이 파일을 열 수 없습니다."
   },
-  "mobile": {
-    "settings": {
-      "title": "설정"
-    }
-  },
   "History": {
     "loading": "불러오는 중..."
   },
