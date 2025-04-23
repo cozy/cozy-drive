@@ -8,10 +8,10 @@
     "item_trash": "Papierkorb",
     "item_settings": "Einstellungen",
     "item_collect": "Verwaltung",
-    "btn-client": "Hol' dir Cozy für den Desktop!",
+    "btn-client": "Hol' dir Twake für den Desktop!",
     "support-us": "Angebote anzeigen",
-    "support-us-description": "Brauchst du mehr Speicherplatz oder möchtest du Cozy einfach nur unterstützen?",
-    "btn-client-web": "Hol' dir Cozy!",
+    "support-us-description": "Brauchst du mehr Speicherplatz oder möchtest du Twake einfach nur unterstützen?",
+    "btn-client-web": "Hol' dir Twake!",
     "btn-client-mobile": "Hol' dir %{name} auf dein Handy!",
     "banner-txt-client": "Hol' dir %{name} für den Desktop und synchronisiere deine Dateien sicher, um jederzeit auf sie zuzugreifen.",
     "banner-btn-client": "Herunterladen",
@@ -40,8 +40,8 @@
     "menu_select": "Elemente auswählen",
     "menu_share_folder": "Ordner freigeben",
     "menu_download": "Herunterladen",
-    "menu_sync_cozy": "In mein Cozy synchronisieren",
-    "add_to_mine": "Meinem Cozy hinzufügen",
+    "menu_sync_cozy": "In mein Twake synchronisieren",
+    "add_to_mine": "Meinem Twake hinzufügen",
     "menu_download_folder": "Ordner herunterladen",
     "menu_download_file": "Diese Datei herunterladen",
     "menu_create_note": "Notizen",
@@ -59,7 +59,7 @@
     }
   },
   "Share": {
-    "create-cozy": "Meinen Cozy erstellen"
+    "create-cozy": "Meinen Twake erstellen"
   },
   "Files": {
     "share": {
@@ -71,8 +71,8 @@
         "ro": "Kann lesen",
         "rw": "Darf ändern",
         "desc": {
-          "ro": "Du kannst diesen Inhalt sehen, herunterladen und deinem Cozy hinzufügen. Du wirst Aktualisierungen des Besitzers erhalten, selbst jedoch keine Änderungen vornehmen können.",
-          "rw": "Du kannst diesen Inhalt sehen, ändern, löschen und deinem Cozy hinzufügen. Deine Änderungen sind auf anderen Cozies sichtbar."
+          "ro": "Du kannst diesen Inhalt sehen, herunterladen und deinem Twake hinzufügen. Du wirst Aktualisierungen des Besitzers erhalten, selbst jedoch keine Änderungen vornehmen können.",
+          "rw": "Du kannst diesen Inhalt sehen, ändern, löschen und deinem Twake hinzufügen. Deine Änderungen sind auf anderen Cozies sichtbar."
         }
       },
       "sharedByMe": "Von mir geteilt",
@@ -109,7 +109,7 @@
       },
       "revokeSelf": {
         "title": "Entferne mich von der Freigabe",
-        "desc": "Du behältst den Inhalt. Er wird aber nicht mehr in deinem Cozy erneuert.",
+        "desc": "Du behältst den Inhalt. Er wird aber nicht mehr in deinem Twake erneuert.",
         "success": "Du wurdest von dieser Freigabe entfernt."
       },
       "sharingLink": {
@@ -175,7 +175,7 @@
     "tooltip": {
       "carbonCopy": {
         "title": "Durchschlag",
-        "caption": "Zeigt an, ob das Dokument von Cozy Cloud, dem Host Ihrer Cozy, als \"authentisch und original\" definiert wird, da es behaupten kann, dass es direkt von einem Drittanbieterdienst stammt, ohne dass es verändert wurde."
+        "caption": "Zeigt an, ob das Dokument von Twake Workplace, dem Host Ihrer Twake, als \"authentisch und original\" definiert wird, da es behaupten kann, dass es direkt von einem Drittanbieterdienst stammt, ohne dass es verändert wurde."
       },
       "electronicSafe": {
         "title": "Elektronischer Tresor",
@@ -297,7 +297,7 @@
     }
   },
   "UploadQueue": {
-    "header": "Hochladen von %{smart_count} Foto in dein Cozy Drive |||| Hochladen von %{smart_count} Fotos in dein Cozy Drive",
+    "header": "Hochladen von %{smart_count} Foto in dein Twake Drive |||| Hochladen von %{smart_count} Fotos in dein Twake Drive",
     "header_mobile": "Hochladen %{done} von %{total}",
     "header_done": "Hochladen %{done} aus %{total} erfolgreich",
     "close": "Schließen",
@@ -402,7 +402,7 @@
     "description": "Die letzten 20 Versionen deiner Dateien werden automatisch behalten. Wähle eine Version aus, um sie herunterzuladen.",
     "current_version": "Aktuelle Version",
     "loading": "Lädt...",
-    "noFileVersionEnabled": "Dein Cozy wird bald dazu in der Lage sein, deine letzten Dateiänderungen zu archivieren, um einem Verlust vorzubeugen"
+    "noFileVersionEnabled": "Dein Twake wird bald dazu in der Lage sein, deine letzten Dateiänderungen zu archivieren, um einem Verlust vorzubeugen"
   },
   "External": {
     "redirection": {
@@ -445,8 +445,8 @@
     }
   },
   "Migration": {
-    "title": "Aktualisierte Cozy Drive",
-    "content": "Cozy Drive muss aktualisiert werden, um seine Leistung zu verbessern. Dies kann bis zu mehreren Minuten dauern, während derer Sie Ihre App nicht nutzen können. Möchten Sie es jetzt tun? Wenn Sie sich weigern, werden wir Sie beim nächsten Mal wieder fragen",
+    "title": "Aktualisierte Twake Drive",
+    "content": "Twake Drive muss aktualisiert werden, um seine Leistung zu verbessern. Dies kann bis zu mehreren Minuten dauern, während derer Sie Ihre App nicht nutzen können. Möchten Sie es jetzt tun? Wenn Sie sich weigern, werden wir Sie beim nächsten Mal wieder fragen",
     "confirm": "Okay, los geht's!",
     "cancel": "Nein, nicht jetzt"
   },

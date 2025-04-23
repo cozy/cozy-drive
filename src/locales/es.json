@@ -8,10 +8,10 @@
     "item_trash": "Papelera",
     "item_settings": "Parámetros",
     "item_collect": "Administración",
-    "btn-client": "Descargar Cozy Drive para ordenador",
+    "btn-client": "Descargar Twake Drive para ordenador",
     "support-us": "Ver ofertas",
     "support-us-description": "¿Le gustaría beneficiarse de más espacio o simplemente apoyar a cozy?",
-    "btn-client-web": "Descargar Cozy",
+    "btn-client-web": "Descargar Twake",
     "btn-client-mobile": "Descargar %{name} en su celular",
     "banner-txt-client": "Descargue %{name} para ordenador y sincronice sus archivos con toda seguridad para que les puedan ser accesibles todo el tiempo.",
     "banner-btn-client": "Descargar",
@@ -39,8 +39,8 @@
     "menu_select": "Seleccionar los items",
     "menu_share_folder": "Compartir carpeta",
     "menu_download": "Descargar",
-    "menu_sync_cozy": "Sincronizar con mi Cozy",
-    "add_to_mine": "Añadir a mi Cozy",
+    "menu_sync_cozy": "Sincronizar con mi Twake",
+    "add_to_mine": "Añadir a mi Twake",
     "menu_download_folder": "Descargar carpeta",
     "menu_download_file": "Descargar este archivo",
     "menu_create_note": "Nota",
@@ -64,7 +64,7 @@
         "rw": "Puede cambiar",
         "desc": {
           "ro": "Usted puede consultar, descargar y añadir el contenido a su Coz. Recibirá las modificaciones que el propietario haga, pero usted no podrá modificarlo. ",
-          "rw": "Usted puede consultar, modificar y suprimir el contenido. Las modificaciones del contenido se repercutirán automaticamente entre sus Cozy."
+          "rw": "Usted puede consultar, modificar y suprimir el contenido. Las modificaciones del contenido se repercutirán automaticamente entre sus Twake."
         }
       },
       "sharedByMe": "Compartido por mí",
@@ -101,7 +101,7 @@
       },
       "revokeSelf": {
         "title": "Parar el intercambio",
-        "desc": "Usted conservará el contenido pero no se actualizará más entre sus Cozy.",
+        "desc": "Usted conservará el contenido pero no se actualizará más entre sus Twake.",
         "success": "Usted fue borrado desde este compartir"
       },
       "sharingLink": {
@@ -167,11 +167,11 @@
     "tooltip": {
       "carbonCopy": {
         "title": "Copia Carbón",
-        "caption": "Indica si Cozy Cloud, su sitio de hospedaje,  define el documento como \"auténtico y original\", ya que puede afirmar que proviene directamente de un servicio de terceros, sin haber sufrido ninguna modificación."
+        "caption": "Indica si Twake Workplace, su sitio de hospedaje,  define el documento como \"auténtico y original\", ya que puede afirmar que proviene directamente de un servicio de terceros, sin haber sufrido ninguna modificación."
       },
       "electronicSafe": {
         "title": "Seguridad electrónica",
-        "caption": "Indica si el documento original está protegido por su seguridad digital personal con las certificaciones que le dan valor probatorio y una garantía de retención de 50 años más allá de su depósito si el documento es definido como \"auténtico y original\" por Cozy Cloud, donde se hospeda su Cozy, ya que puede afirmar que proviene directamente de un servicio de terceros, sin haber sufrido ninguna modificación.\n\n"
+        "caption": "Indica si el documento original está protegido por su seguridad digital personal con las certificaciones que le dan valor probatorio y una garantía de retención de 50 años más allá de su depósito si el documento es definido como \"auténtico y original\" por Twake Workplace, donde se hospeda su Twake, ya que puede afirmar que proviene directamente de un servicio de terceros, sin haber sufrido ninguna modificación.\n\n"
       }
     }
   },
@@ -274,7 +274,7 @@
   },
   "intents": {
     "alert": {
-      "error": "La recuperación del archivo ha fallado. Súbalo manualmente con ayuda del menú de Cozy."
+      "error": "La recuperación del archivo ha fallado. Súbalo manualmente con ayuda del menú de Twake."
     },
     "picker": {
       "select": "Seleccionar",
@@ -284,7 +284,7 @@
     }
   },
   "UploadQueue": {
-    "header": "Subiendo %{smart_count} foto a Cozy Drive |||| Subiendo %{smart_count} fotos a Cozy Drive",
+    "header": "Subiendo %{smart_count} foto a Twake Drive |||| Subiendo %{smart_count} fotos a Twake Drive",
     "header_mobile": "Subiendo %{done} de %{total}",
     "header_done": "Subidos %{done} de %{total} con éxito",
     "close": "cerrar",
@@ -389,7 +389,7 @@
     "description": "Las últimas 20 versiones de sus archivos se guardan automáticamente. Seleccione una versión para descargarla.",
     "current_version": "Versión actual",
     "loading": "Cargando...",
-    "noFileVersionEnabled": "Su Cozy pronto podrá archivar las últimas modificaciones de un archivo para no arriesgarse a perderlas en el futuro."
+    "noFileVersionEnabled": "Su Twake pronto podrá archivar las últimas modificaciones de un archivo para no arriesgarse a perderlas en el futuro."
   },
   "External": {
     "redirection": {
