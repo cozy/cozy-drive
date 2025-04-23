@@ -8,10 +8,10 @@
     "item_trash": "Prullenbak",
     "item_settings": "Instellingen",
     "item_collect": "Administratie",
-    "btn-client": "Download Cozy Schijf voor je computer",
+    "btn-client": "Download Twake Schijf voor je computer",
     "support-us": "Aanbiedingen bekijken",
     "support-us-description": "Wil je graag meer opslagruimte of alleen een hart onder de riem steken?",
-    "btn-client-web": "Download Cozy",
+    "btn-client-web": "Download Twake",
     "btn-client-mobile": "Download %{name} Schijf op je telefoon!",
     "banner-txt-client": "Download %{name} Schijf voor je computer en synchroniseer veilig je bestanden om ze overal beschikbaar te maken.",
     "banner-btn-client": "Downloaden",
@@ -41,8 +41,8 @@
     "menu_select": "Items selecteren",
     "menu_share_folder": "Map delen",
     "menu_download": "Downloaden",
-    "menu_sync_cozy": "Synchroniseren naar mijn Cozy",
-    "add_to_mine": "Toevoegen aan mijn Cozy",
+    "menu_sync_cozy": "Synchroniseren naar mijn Twake",
+    "add_to_mine": "Toevoegen aan mijn Twake",
     "menu_download_folder": "Map downloaden",
     "menu_download_file": "Download dit bestand",
     "menu_create_note": "Notitie",
@@ -73,8 +73,8 @@
         "ro": "Mag bekijken",
         "rw": "Mag wijzigen",
         "desc": {
-          "ro": "Je kunt deze inhoud bekijken, downloaden op en toevoegen aan je Cozy. Je ontvangt bijgewerkte versies van de eigenaar, maar je kunt zelfs niks aanpassen.",
-          "rw": "Je kunt deze inhoud bekijken, downloaden op en toevoegen aan je Cozy. Bijgewerkte versies zijn beschikbaar op andere Cozies."
+          "ro": "Je kunt deze inhoud bekijken, downloaden op en toevoegen aan je Twake. Je ontvangt bijgewerkte versies van de eigenaar, maar je kunt zelfs niks aanpassen.",
+          "rw": "Je kunt deze inhoud bekijken, downloaden op en toevoegen aan je Twake. Bijgewerkte versies zijn beschikbaar op andere Cozies."
         }
       },
       "sharedByMe": "Door mij gedeeld",
@@ -111,7 +111,7 @@
       },
       "revokeSelf": {
         "title": "Verwijder mij uit gedeelde items",
-        "desc": "De inhoud blijft bewaard, maar wordt niet langer bijgewerkt tussen je Cozy-apparaten.",
+        "desc": "De inhoud blijft bewaard, maar wordt niet langer bijgewerkt tussen je Twake-apparaten.",
         "success": "Je bent verwijderd uit deze gedeelde items."
       },
       "sharingLink": {
@@ -177,7 +177,7 @@
     "tooltip": {
       "carbonCopy": {
         "title": "Carbon Copy",
-        "caption": "Toont aan of het document ‘authentiek en origineel’ is verklaard door Cozy Cloud, de hoster van je Cozy. Het kan namelijk zo zijn dat de claim is gedaan door een externe partij zonder enige aanpassing."
+        "caption": "Toont aan of het document ‘authentiek en origineel’ is verklaard door Twake Workplace, de hoster van je Twake. Het kan namelijk zo zijn dat de claim is gedaan door een externe partij zonder enige aanpassing."
       },
       "electronicSafe": {
         "title": "Elektronische kluis",
@@ -301,7 +301,7 @@
     }
   },
   "UploadQueue": {
-    "header": "Bezig met uploaden van %{smart_count} foto naar Cozy Drive |||| Bezig met uploaden van %{smart_count} foto's naar Cozy Drive",
+    "header": "Bezig met uploaden van %{smart_count} foto naar Twake Drive |||| Bezig met uploaden van %{smart_count} foto's naar Twake Drive",
     "header_mobile": "Bezig met uploaden - %{done} van %{total}…",
     "header_done": "%{done} van de %{total} geüpload",
     "close": "sluiten",
@@ -370,7 +370,7 @@
   "TOS": {
     "updated": {
       "title": "De GDPR is werkelijkheid geworden!",
-      "detail": "In verband met de General Data Protection Regulation, ook wel AVG, [zijn onze algemene voorwaarden bijgewerkt](%{link}) en van toepassing op alle Cozy-gebruikers vanaf 25 mei 2018.",
+      "detail": "In verband met de General Data Protection Regulation, ook wel AVG, [zijn onze algemene voorwaarden bijgewerkt](%{link}) en van toepassing op alle Twake-gebruikers vanaf 25 mei 2018.",
       "cta": "Voorwaarden accepteren en doorgaan",
       "disconnect": "Weigeren en verbinding verbreken",
       "error": "Er is iets misgegaan; probeer het later opnieuw."
@@ -412,7 +412,7 @@
     "description": "De laatste 20 versies van je bestanden worden automatisch bewaard. Selecteer een versie om deze te downloaden.",
     "current_version": "Huidige versie",
     "loading": "Bezig met laden…",
-    "noFileVersionEnabled": "Je Cozy kan binnenkort de recenste bestandsaanpassingen archiveren zodat je nooit meer een bestand kwijtraakt"
+    "noFileVersionEnabled": "Je Twake kan binnenkort de recenste bestandsaanpassingen archiveren zodat je nooit meer een bestand kwijtraakt"
   },
   "External": {
     "redirection": {
@@ -462,8 +462,8 @@
     }
   },
   "Migration": {
-    "title": "Cozy Schijf bijwerken",
-    "content": "Cozy Schijf moet worden bijgewerkt om de prestaties ervan te verbeteren - dit kan enkele minuten duren. Gedurende deze periode kun je de app niet gebruiken. Wil je Cozy Schijf nu bijwerken? Als je dat niet wilt, dan vragen we het volgende keer opnieuw.",
+    "title": "Twake Schijf bijwerken",
+    "content": "Twake Schijf moet worden bijgewerkt om de prestaties ervan te verbeteren - dit kan enkele minuten duren. Gedurende deze periode kun je de app niet gebruiken. Wil je Twake Schijf nu bijwerken? Als je dat niet wilt, dan vragen we het volgende keer opnieuw.",
     "confirm": "Ja, doe maar!",
     "cancel": "Nee, niet nu"
   },

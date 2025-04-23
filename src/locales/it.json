@@ -8,10 +8,10 @@
     "item_trash": "Cestino",
     "item_settings": "Impostazioni",
     "item_collect": "Amministrativo",
-    "btn-client": "Ottieni Cozy Drive per desktop",
+    "btn-client": "Ottieni Twake Drive per desktop",
     "support-us": "Visualizza offerte",
-    "support-us-description": "Desideri beneficiare di più spazio o semplicemente sostenere Cozy?",
-    "btn-client-web": "Ottieni Cozy",
+    "support-us-description": "Desideri beneficiare di più spazio o semplicemente sostenere Twake?",
+    "btn-client-web": "Ottieni Twake",
     "btn-client-mobile": "Ottieni %{name} sul tuo telefono!",
     "banner-txt-client": "Ottieni %{name} per Desktop e sincronizza i tuoi file in modo sicuro per renderli accessibili in qualsiasi momento.",
     "banner-btn-client": "Scarica",
@@ -41,8 +41,8 @@
     "menu_select": "Seleziona oggetti",
     "menu_share_folder": "Condividi cartella",
     "menu_download": "Scarica",
-    "menu_sync_cozy": "Sincronizza con il mio Cozy",
-    "add_to_mine": "Aggiungi al mio Cozy",
+    "menu_sync_cozy": "Sincronizza con il mio Twake",
+    "add_to_mine": "Aggiungi al mio Twake",
     "menu_download_folder": "Cartella download",
     "menu_download_file": "Scarica questo file",
     "menu_create_note": "Nota",
@@ -72,8 +72,8 @@
         "ro": "Può visualizzare",
         "rw": "Può modificare",
         "desc": {
-          "ro": "È possibile visualizzare, scaricare e aggiungere questo contenuto al proprio Cozy. Riceverao gli aggiornamenti da parte del proprietario, ma non potrai aggiornarli tu stesso.",
-          "rw": "Puoi visualizzare, aggiornare, cancellare e aggiungere questo contenuto al tuo Cozy. Gli aggiornamenti apportati saranno visibili anche agli altri Cozy."
+          "ro": "È possibile visualizzare, scaricare e aggiungere questo contenuto al proprio Twake. Riceverao gli aggiornamenti da parte del proprietario, ma non potrai aggiornarli tu stesso.",
+          "rw": "Puoi visualizzare, aggiornare, cancellare e aggiungere questo contenuto al tuo Twake. Gli aggiornamenti apportati saranno visibili anche agli altri Twake."
         }
       },
       "sharedByMe": "Condiviso da me",
@@ -110,7 +110,7 @@
       },
       "revokeSelf": {
         "title": "Rimuovimi dalla condivisione",
-        "desc": "Il contenuto viene mantenuto, ma non verrà più aggiornato sul tuo Cozy.",
+        "desc": "Il contenuto viene mantenuto, ma non verrà più aggiornato sul tuo Twake.",
         "success": "Sei stato rimosso da questa condivisione."
       },
       "sharingLink": {

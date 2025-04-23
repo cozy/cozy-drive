@@ -11,10 +11,10 @@
     "item_shared_drives": "Drives partagés",
     "item_favorites": "Favoris",
     "item_my_drive": "Mon Drive",
-    "btn-client": "Télécharger Cozy Drive ",
+    "btn-client": "Télécharger Twake Drive ",
     "support-us": "Voir les offres",
     "support-us-description": "Vous souhaitez bénéficier de plus d’espace ou simplement soutenir cozy ?",
-    "btn-client-web": "Obtenez un Cozy",
+    "btn-client-web": "Obtenez un Twake",
     "btn-client-mobile": "Emportez votre cloud personnel avec vous : installez notre app %{name} !",
     "banner-txt-client": "Installez %{name} pour ordinateur et synchronisez vos fichiers pour les rendre accessibles à tout moment.",
     "banner-btn-client": "Télécharger",
@@ -48,8 +48,8 @@
     "menu_select": "Sélectionner les éléments",
     "menu_share_folder": "Partager le dossier",
     "menu_download": "Télécharger",
-    "menu_sync_cozy": "Synchroniser dans mon Cozy",
-    "add_to_mine": "Ajouter à mon Cozy",
+    "menu_sync_cozy": "Synchroniser dans mon Twake",
+    "add_to_mine": "Ajouter à mon Twake",
     "menu_download_folder": "Télécharger le dossier",
     "menu_download_file": "Télécharger ce fichier",
     "menu_create_note": "Note",
@@ -67,7 +67,7 @@
     }
   },
   "Share": {
-    "create-cozy": "Créer mon Cozy"
+    "create-cozy": "Créer mon Twake"
   },
   "Files": {
     "share": {
@@ -79,8 +79,8 @@
         "ro": "Peut consulter",
         "rw": "Peut modifier",
         "desc": {
-          "ro": "Vous pouvez consulter, télécharger, et ajouter ce contenu à votre Cozy. Vous recevrez les modifications faites par le propriétaire, mais vous ne pourrez pas le modifier.",
-          "rw": "Vous pouvez consulter, modifier et supprimer du contenu. Les modifications sur le contenu seront répercutées automatiquement entre vos Cozy."
+          "ro": "Vous pouvez consulter, télécharger, et ajouter ce contenu à votre Twake. Vous recevrez les modifications faites par le propriétaire, mais vous ne pourrez pas le modifier.",
+          "rw": "Vous pouvez consulter, modifier et supprimer du contenu. Les modifications sur le contenu seront répercutées automatiquement entre vos Twake."
         }
       },
       "shared": "Partagé",
@@ -118,7 +118,7 @@
       },
       "revokeSelf": {
         "title": "Arrêter le partage",
-        "desc": "Vous conservez le contenu mais il ne sera plus mis à jour entre vos Cozy.",
+        "desc": "Vous conservez le contenu mais il ne sera plus mis à jour entre vos Twake.",
         "success": "Vous avez été retiré de ce partage."
       },
       "sharingLink": {
@@ -188,7 +188,7 @@
     "tooltip": {
       "carbonCopy": {
         "title": "Copie conforme",
-        "caption": "Le document est défini \"authentique et original\" par Cozy Cloud, l'hébergeur de votre Cozy, car il peut affirmer qu'il provient directement des services de son émetteur sans avoir subi aucune modification."
+        "caption": "Le document est défini \"authentique et original\" par Twake Workplace, l'hébergeur de votre Twake, car il peut affirmer qu'il provient directement des services de son émetteur sans avoir subi aucune modification."
       },
       "electronicSafe": {
         "title": "Coffre-fort numérique",
@@ -229,7 +229,7 @@
     "restore": "Vous pouvez toujours le restaurer quand vous voulez.",
     "share_accepted": "Le partage sera arrêté. Ainsi, les contacts suivant conserveront une copie mais vos changements ne seront plus synchronisés :",
     "share_waiting": "Le partage sera arrêté. Ainsi, les contacts suivant ne pourront donc plus accepter le partage et ne pourront plus accéder aux contenus partagés :",
-    "share_both": "Le partage sera arrêté. Ainsi, les contacts ayant stocké les fichiers dans leur Cozy conserveront une copie, les autres contacts ne pourront plus accéder aux contenus partagés :",
+    "share_both": "Le partage sera arrêté. Ainsi, les contacts ayant stocké les fichiers dans leur Twake conserveront une copie, les autres contacts ne pourront plus accéder aux contenus partagés :",
     "link": "Le partage par lien ne sera plus actif.",
     "referenced": "Des photos de la sélection sont dans un album. Elles seront retirées de l'album si vous confirmez.",
     "cancel": "Annuler",
@@ -323,7 +323,7 @@
   },
   "intents": {
     "alert": {
-      "error": "La récupération du fichier a échoué. Téléchargez le fichier manuellement puis ajoutez-le à Cozy. "
+      "error": "La récupération du fichier a échoué. Téléchargez le fichier manuellement puis ajoutez-le à Twake. "
     },
     "picker": {
       "select": "Sélectionner",
@@ -333,7 +333,7 @@
     }
   },
   "UploadQueue": {
-    "header": "Import de %{smart_count} fichier dans votre Cozy |||| Import de %{smart_count} fichiers dans votre Cozy",
+    "header": "Import de %{smart_count} fichier dans votre Twake |||| Import de %{smart_count} fichiers dans votre Twake",
     "header_mobile": "Import de %{done} sur %{total}",
     "header_done": "%{done} sur %{total} élément(s) importé(s)",
     "success_flagship": "%{smart_count} fichier importé avec succès. |||| %{smart_count} fichiers importés avec succès.",
@@ -463,7 +463,7 @@
     "description": "Les 20 dernières versions de vos fichiers sont conservées automatiquement. Sélectionnez une version pour la télécharger.",
     "current_version": "Version actuelle",
     "loading": "Chargement...",
-    "noFileVersionEnabled": "Nouveauté : votre Cozy pourra prochainement archiver les dernières modifications d'un fichier pour ne plus jamais risquer de les perdre"
+    "noFileVersionEnabled": "Nouveauté : votre Twake pourra prochainement archiver les dernières modifications d'un fichier pour ne plus jamais risquer de les perdre"
   },
   "External": {
     "redirection": {
@@ -521,8 +521,8 @@
     }
   },
   "Migration": {
-    "title": "Mettre à jour Cozy Drive",
-    "content": "Cozy Drive doit être mis à jour afin d'améliorer ses performances. Cela peut prendre jusqu'à plusieurs minutes durant lesquelles vous ne pourrez pas utiliser l'application. Souhaitez-vous le faire maintenant ? Si vous refusez, nous vous redemanderons la prochaine fois.",
+    "title": "Mettre à jour Twake Drive",
+    "content": "Twake Drive doit être mis à jour afin d'améliorer ses performances. Cela peut prendre jusqu'à plusieurs minutes durant lesquelles vous ne pourrez pas utiliser l'application. Souhaitez-vous le faire maintenant ? Si vous refusez, nous vous redemanderons la prochaine fois.",
     "confirm": "Ok, c'est parti !",
     "cancel": "Non, pas maintenant"
   },
@@ -613,7 +613,7 @@
     "trash": "Corbeille"
   },
   "NextcloudBanner": {
-    "title": "Les éléments ci-dessous sont affichés depuis un drive NextCloud et ne sont pas stockés dans votre Cozy."
+    "title": "Les éléments ci-dessous sont affichés depuis un drive NextCloud et ne sont pas stockés dans votre Twake."
   },
   "favorites": {
     "label": {

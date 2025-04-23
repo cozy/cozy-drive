@@ -7,8 +7,8 @@
     "item_activity": "活动",
     "item_trash": "垃圾桶",
     "item_collect": "管理",
-    "btn-client": "下载桌面版 Cozy Drive",
-    "btn-client-web": "获取 Cozy",
+    "btn-client": "下载桌面版 Twake Drive",
+    "btn-client-web": "获取 Twake",
     "banner-btn-client": "下载",
     "link-client": "https://cozy.io/en/download/",
     "link-client-desktop": "https://nuts.cozycloud.cc/download/channel/stable/",
@@ -35,8 +35,8 @@
     "menu_select": "选择项目",
     "menu_share_folder": "分析文件夹",
     "menu_download": "下载",
-    "menu_sync_cozy": "同步到我的 Cozy",
-    "add_to_mine": "添加到我的 Cozy",
+    "menu_sync_cozy": "同步到我的 Twake",
+    "add_to_mine": "添加到我的 Twake",
     "menu_download_folder": "下载文件夹",
     "menu_download_file": "下载这个文件",
     "menu_create_note": "便签",
@@ -53,7 +53,7 @@
     }
   },
   "Share": {
-    "create-cozy": "创建我的 Cozy"
+    "create-cozy": "创建我的 Twake"
   },
   "searchbar": {
     "placeholder": "搜索任何内容",

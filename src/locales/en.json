@@ -11,10 +11,10 @@
     "item_shared_drives": "Shared Drives",
     "item_favorites": "Favorites",
     "item_my_drive": "My Drive",
-    "btn-client": "Get Cozy Drive for desktop",
+    "btn-client": "Get Twake Drive for desktop",
     "support-us": "View offers",
     "support-us-description": "Would you like to benefit from more space or simply support cozy?",
-    "btn-client-web": "Get Cozy",
+    "btn-client-web": "Get Twake",
     "btn-client-mobile": "Take your personnal cloud with you: install %{name} on all your devices!",
     "banner-txt-client": "Get %{name} for Desktop and synchronise your files safely to make them accessible at all times.",
     "banner-btn-client": "Download",
@@ -48,8 +48,8 @@
     "menu_select": "Select items",
     "menu_share_folder": "Share folder",
     "menu_download": "Download",
-    "menu_sync_cozy": "Synchronise to my Cozy",
-    "add_to_mine": "Add to my Cozy",
+    "menu_sync_cozy": "Synchronise to my Twake",
+    "add_to_mine": "Add to my Twake",
     "menu_download_folder": "Download folder",
     "menu_download_file": "Download this file",
     "menu_create_note": "Note",
@@ -79,8 +79,8 @@
         "ro": "Can read",
         "rw": "Can change",
         "desc": {
-          "ro": "You can view, download, and add this content to your Cozy. You will get updates by the owner, but you won't be able to update this content yourself.",
-          "rw": "You can view, update, delete and add this content to your Cozy. Updates you make will be seen on other Cozies."
+          "ro": "You can view, download, and add this content to your Twake. You will get updates by the owner, but you won't be able to update this content yourself.",
+          "rw": "You can view, update, delete and add this content to your Twake. Updates you make will be seen on other Cozies."
         }
       },
       "shared": "Shared",
@@ -118,7 +118,7 @@
       },
       "revokeSelf": {
         "title": "Remove me from sharing",
-        "desc": "You keep the content but it won't be updated between your Cozy anymore.",
+        "desc": "You keep the content but it won't be updated between your Twake anymore.",
         "success": "You were removed from this sharing."
       },
       "sharingLink": {
@@ -188,7 +188,7 @@
     "tooltip": {
       "carbonCopy": {
         "title": "Carbon Copy",
-        "caption": "Indicates whether the document is defined as \"authentic and original\" by Cozy Cloud, the host of your Cozy, as it can claim that it comes directly from a third-party service, without having undergone any modification."
+        "caption": "Indicates whether the document is defined as \"authentic and original\" by Twake Workplace, the host of your Twake, as it can claim that it comes directly from a third-party service, without having undergone any modification."
       },
       "electronicSafe": {
         "title": "Electronic Safe",
@@ -228,7 +228,7 @@
     "restore": "You can still restore it whenever you want. |||| You can still restore them whenever you want.",
     "share_accepted": "Sharing will be stopped. The following contacts will keep a copy, but your changes will no longer be synchronised:",
     "share_waiting": "Sharing will be stopped. The following contacts will no longer be able to accept sharing and will no longer be able to access shared content:",
-    "share_both": "Sharing will be stopped. This means that contacts who have stored files in their Cozy will keep a copy, while other contacts will no longer be able to access shared content:",
+    "share_both": "Sharing will be stopped. This means that contacts who have stored files in their Twake will keep a copy, while other contacts will no longer be able to access shared content:",
     "link": "Link sharing will no longer be active",
     "referenced": "Some of the files within the selection are related to a photo album. They will be removed from it if you proceed to trash them.",
     "cancel": "Cancel",
@@ -332,7 +332,7 @@
     }
   },
   "UploadQueue": {
-    "header": "Uploading %{smart_count} photo to Cozy Drive |||| Uploading %{smart_count} photos to Cozy Drive",
+    "header": "Uploading %{smart_count} photo to Twake Drive |||| Uploading %{smart_count} photos to Twake Drive",
     "header_mobile": "Uploading %{done} of %{total}",
     "header_done": "Uploaded %{done} out of %{total} successfully",
     "success_flagship": "%{smart_count} file uploaded with success. |||| %{smart_count} files uploaded with success.",
@@ -418,7 +418,7 @@
   "TOS": {
     "updated": {
       "title": "GDPR comes into reality !",
-      "detail": "In the context of the General Data Protection Regulation, [our Terms of Service have been updated](%{link}) and will apply to all our Cozy users on May 25, 2018.",
+      "detail": "In the context of the General Data Protection Regulation, [our Terms of Service have been updated](%{link}) and will apply to all our Twake users on May 25, 2018.",
       "cta": "Accept TOS and continue",
       "disconnect": "Refuse and disconnect",
       "error": "Something went wrong, please try again later"
@@ -462,7 +462,7 @@
     "description": "The last 20 versions of your files are automatically kept. Select a version to download it.",
     "current_version": "Current version",
     "loading": "Loading...",
-    "noFileVersionEnabled": "Your Cozy will soon be able to archive the last modifications of a file to never risk losing them again"
+    "noFileVersionEnabled": "Your Twake will soon be able to archive the last modifications of a file to never risk losing them again"
   },
   "External": {
     "redirection": {
@@ -520,8 +520,8 @@
     }
   },
   "Migration": {
-    "title": "Update Cozy Drive",
-    "content": "Cozy Drive needs to update in order to improve its performances. This might take up to several minutes during which you cannot use your app. Do you want to do it now? If you refuse, we will ask you again next time",
+    "title": "Update Twake Drive",
+    "content": "Twake Drive needs to update in order to improve its performances. This might take up to several minutes during which you cannot use your app. Do you want to do it now? If you refuse, we will ask you again next time",
     "confirm": "Ok, let's do it!",
     "cancel": "No, not now"
   },
@@ -552,7 +552,7 @@
   },
   "FileDivergedModal": {
     "title": "Someone has modified this file",
-    "content": "Someone has modified the file outside Cozy while you were editing it, you can retrieve their modifications instead of yours or continue your editing in a new file.",
+    "content": "Someone has modified the file outside Twake while you were editing it, you can retrieve their modifications instead of yours or continue your editing in a new file.",
     "confirm": "Continue editing",
     "cancel": "See its changes",
     "error": "An error occurred, please try again.",
@@ -612,7 +612,7 @@
     "trash": "Trash"
   },
   "NextcloudBanner": {
-    "title": "The items below are displayed from a NextCloud drive and are not stored in your Cozy."
+    "title": "The items below are displayed from a NextCloud drive and are not stored in your Twake."
   },
   "favorites": {
     "label": {

@@ -8,8 +8,8 @@
     "item_trash": "垃圾桶",
     "item_settings": "設定",
     "item_collect": "管理",
-    "btn-client": "下載桌面版 Cozy Drive",
-    "btn-client-web": "取得 Cozy",
+    "btn-client": "下載桌面版 Twake Drive",
+    "btn-client-web": "取得 Twake",
     "btn-client-mobile": "在您的手機上下載 %{name}",
     "banner-txt-client": "下載桌面版 %{name} 來安全地同步您的檔案並隨時存取它們",
     "banner-btn-client": "下載"
@@ -36,7 +36,7 @@
     "leave": "離開分享資料夾並刪除"
   },
   "Share": {
-    "create-cozy": "建立我的 Cozy"
+    "create-cozy": "建立我的 Twake"
   },
   "Files": {
     "share": {
