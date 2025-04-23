@@ -175,62 +175,6 @@
       "missing": "Этот файл не найден"
     }
   },
-  "mobile": {
-    "onboarding": {
-      "server_selection": {
-        "button": "Далее"
-      },
-      "step": {
-        "button": "Включить",
-        "skip": "Позже",
-        "next": "Далее"
-      },
-      "analytics": {
-        "title": "Помочь улучшить Cozy"
-      }
-    },
-    "settings": {
-      "title": "Настройки",
-      "about": {
-        "title": "О программе",
-        "app_version": "Версия",
-        "account": "Пользователь"
-      },
-      "media_backup": {
-        "launch": "Запустить копирование",
-        "stop": "Остановить копирование",
-        "wifi": {
-          "title": "Делать копии только при WiFi подключении"
-        }
-      },
-      "support": {
-        "title": "Помощь"
-      },
-      "contacts": {
-        "title": "Контакты",
-        "subtitle": "Импортировать контакты"
-      }
-    },
-    "revoked": {
-      "loginagain": "Войти заного",
-      "logout": "Выйти"
-    },
-    "rating": {
-      "enjoy": {
-        "yes": "Да!",
-        "no": "Не возможно"
-      },
-      "rate": {
-        "yes": "Сделаем это!",
-        "no": "Нет, спасибо",
-        "later": "Позже"
-      },
-      "feedback": {
-        "yes": "Отправить",
-        "no": "Нет, спасибо"
-      }
-    }
-  },
   "UploadQueue": {
     "close": "отмена"
   },

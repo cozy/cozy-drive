@@ -152,48 +152,5 @@
   },
   "alert": {
     "could_not_open_file": "此檔案無法開啟"
-  },
-  "mobile": {
-    "settings": {
-      "title": "設定",
-      "about": {
-        "title": "關於",
-        "app_version": "App 版本",
-        "account": "帳號"
-      },
-      "unlink": {
-        "title": "從 Cozy 登出",
-        "description": "如果您從這個裝置登出 Cozy，您不會遺失儲存在 Cozy 上的資料。這將會移除您在此裝置有關 Cozy 的離線檔案。",
-        "button": "登出"
-      },
-      "media_backup": {
-        "media_folder": "相片",
-        "backup_folder": "從我的手機備份",
-        "legacy_backup_folder": "已從我的手機備份",
-        "title": "媒體備份",
-        "images": {
-          "title": "備份圖片",
-          "label": "將您的圖片自動備份到 Cozy 上來永久保存並輕易地分享它們"
-        },
-        "launch": "啟動備份",
-        "stop": "停止備份",
-        "wifi": {
-          "title": "僅使用 WIFI 備份",
-          "label": "若這個選項開啟，您的裝置只會在連結至 WIFI 時備份相片以節省您的流量。"
-        },
-        "media_upload": "剩餘相片 %{smart_count}  |||| 剩餘相片 %{smart_count}",
-        "media_uptodate": "已更新媒體備份",
-        "preparing": "正在尋找要來備份的媒體...",
-        "no_wifi": "請連結至 WIFI",
-        "quota": "即將用滿儲存空間",
-        "quota_contact": "管理您的儲存空間"
-      },
-      "support": {
-        "title": "支援",
-        "analytics": {
-          "title": "協助我們改善 Cozy"
-        }
-      }
-    }
   }
 }
