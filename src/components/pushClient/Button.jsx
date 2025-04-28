@@ -9,8 +9,6 @@ import ListItem from 'cozy-ui/transpiled/react/ListItem'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import Paper from 'cozy-ui/transpiled/react/Paper'
-import { default as UIButtonClient } from 'cozy-ui/transpiled/react/deprecated/PushClientButton'
-import { isTwakeTheme } from 'cozy-ui/transpiled/react/helpers/isTwakeTheme'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import {
@@ -50,40 +48,31 @@ class ButtonClient extends Component {
 
     const link = getDesktopAppDownloadLink({ t })
 
-    if (isTwakeTheme())
-      return (
-        <Paper
-          elevation={10}
-          className="u-mh-1-half u-mb-1-half u-c-pointer"
-          style={{ backgroundColor: 'var(--defaultBackgroundColor)' }}
-          onClick={() => window.open(link)}
-        >
-          <ListItem component="div">
-            <ListItemIcon>
-              <Icon icon={DriveIcon} size={32} />
-            </ListItemIcon>
-            <ListItemText
-              primaryTypographyProps={{
-                variant: 'overline',
-                color: 'textPrimary'
-              }}
-              primary="Twake Drive App"
-              secondaryTypographyProps={{
-                variant: 'overline',
-                color: 'primary'
-              }}
-              secondary={t('Nav.banner-btn-client')}
-            />
-          </ListItem>
-        </Paper>
-      )
-
     return (
-      <UIButtonClient
-        label={t('Nav.btn-client')}
-        href={link}
-        className="u-m-1 u-dn-m"
-      />
+      <Paper
+        elevation={10}
+        className="u-mh-1-half u-mb-1-half u-c-pointer"
+        style={{ backgroundColor: 'var(--defaultBackgroundColor)' }}
+        onClick={() => window.open(link)}
+      >
+        <ListItem component="div">
+          <ListItemIcon>
+            <Icon icon={DriveIcon} size={32} />
+          </ListItemIcon>
+          <ListItemText
+            primaryTypographyProps={{
+              variant: 'overline',
+              color: 'textPrimary'
+            }}
+            primary="Twake Drive App"
+            secondaryTypographyProps={{
+              variant: 'overline',
+              color: 'primary'
+            }}
+            secondary={t('Nav.banner-btn-client')}
+          />
+        </ListItem>
+      </Paper>
     )
   }
 }

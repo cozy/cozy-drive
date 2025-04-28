@@ -51,7 +51,7 @@ describe('LightFileViewer', () => {
       const { queryByTestId, queryAllByRole } = root
 
       expect(queryAllByRole('link')[0].getAttribute('href')).toBe(
-        'https://cozy.io'
+        'https://twake.app'
       ) // This is the sharing banner
       expect(queryByTestId('public-toolbar')).toBeTruthy()
       expect(queryByTestId('viewer-toolbar')).toBeFalsy()
@@ -64,7 +64,7 @@ describe('LightFileViewer', () => {
       const { queryByTestId, queryAllByRole } = root
 
       expect(queryAllByRole('link')[0].getAttribute('href')).toBe(
-        'https://cozy.io'
+        'https://twake.app'
       ) // This is the sharing banner
       expect(queryByTestId('public-toolbar')).toBeFalsy()
       expect(queryByTestId('viewer-toolbar')).toBeTruthy()
