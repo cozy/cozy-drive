@@ -111,6 +111,7 @@ class BannerClient extends Component {
               label={t('Nav.banner-btn-client')}
               onClick={() => this.markAsSeen('banner')}
               startIcon={<Icon icon={DownloadIcon} />}
+              target="_blank"
               href={link}
             />
           }
