@@ -1,6 +1,7 @@
 import get from 'lodash/get'
 
 import CozyClient, { Q } from 'cozy-client'
+import flag from 'cozy-flags'
 
 export const DESKTOP_SOFTWARE_ID = 'github.com/cozy-labs/cozy-desktop'
 
@@ -36,7 +37,15 @@ export const isClientAlreadyInstalled = async client => {
 }
 
 export const getDesktopAppDownloadLink = ({ t }) => {
-  return isLinux() ? t('Nav.link-client') : t('Nav.link-client-desktop')
+  const desktopAppDownloadLinkFromFlag = flag('cozy.desktop-app-download-link')
+
+  if (desktopAppDownloadLinkFromFlag) {
+    return desktopAppDownloadLinkFromFlag
+  } else if (isLinux()) {
+    return t('Nav.link-client')
+  } else {
+    return t('Nav.link-client-desktop')
+  }
 }
 
 export const getMobileAppDownloadLink = ({ t }) => {
