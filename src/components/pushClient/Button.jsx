@@ -13,8 +13,11 @@ import { default as UIButtonClient } from 'cozy-ui/transpiled/react/deprecated/P
 import { isTwakeTheme } from 'cozy-ui/transpiled/react/helpers/isTwakeTheme'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { isLinux, isClientAlreadyInstalled, DESKTOP_BANNER } from '.'
-
+import {
+  getDesktopAppDownloadLink,
+  isClientAlreadyInstalled,
+  DESKTOP_BANNER
+} from '@/components/pushClient'
 import Config from '@/config/config.json'
 
 class ButtonClient extends Component {
@@ -45,17 +48,15 @@ class ButtonClient extends Component {
 
     const { t } = this.props
 
+    const link = getDesktopAppDownloadLink({ t })
+
     if (isTwakeTheme())
       return (
         <Paper
           elevation={10}
           className="u-mh-1-half u-mb-1-half u-c-pointer"
           style={{ backgroundColor: 'var(--defaultBackgroundColor)' }}
-          onClick={() =>
-            window.open(
-              t(isLinux() ? 'Nav.link-client' : 'Nav.link-client-desktop')
-            )
-          }
+          onClick={() => window.open(link)}
         >
           <ListItem component="div">
             <ListItemIcon>
@@ -80,7 +81,7 @@ class ButtonClient extends Component {
     return (
       <UIButtonClient
         label={t('Nav.btn-client')}
-        href={t(isLinux() ? 'Nav.link-client' : 'Nav.link-client-desktop')}
+        href={link}
         className="u-m-1 u-dn-m"
       />
     )

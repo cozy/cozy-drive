@@ -11,6 +11,7 @@ jest.mock('config/config.json', () => ({
   promoteDesktop: { isActivated: true }
 }))
 jest.mock('components/pushClient', () => ({
+  getDesktopAppDownloadLink: jest.fn().mockReturnValue('https://twake.app'),
   isClientAlreadyInstalled: jest.fn().mockResolvedValueOnce(false),
   isLinux: jest.fn(),
   NOVIEWER_DESKTOP_CTA: 'noviewer_desktop_cta'

@@ -34,3 +34,17 @@ export const isClientAlreadyInstalled = async client => {
     device => get(device, 'attributes.software_id') === DESKTOP_SOFTWARE_ID
   )
 }
+
+export const getDesktopAppDownloadLink = ({ t }) => {
+  return isLinux() ? t('Nav.link-client') : t('Nav.link-client-desktop')
+}
+
+export const getMobileAppDownloadLink = ({ t }) => {
+  if (isIOS()) {
+    return t('Nav.link-client-ios')
+  } else if (isAndroid()) {
+    return t('Nav.link-client-android')
+  } else {
+    return t('Nav.link-client')
+  }
+}
