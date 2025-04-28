@@ -22,6 +22,7 @@ jest.mock('react-router-dom', () => ({
 }))
 
 jest.mock('components/pushClient')
+jest.mock('components/pushClient/Banner', () => () => <div>Banner</div>)
 jest.mock('cozy-client/dist/hooks/useQuery', () =>
   jest.fn(() => ({
     fetchStatus: '',

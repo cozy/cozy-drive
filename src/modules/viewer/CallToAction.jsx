@@ -8,8 +8,8 @@ import CrossIcon from 'cozy-ui/transpiled/react/Icons/Cross'
 import styles from './styles.styl'
 
 import {
+  getDesktopAppDownloadLink,
   isClientAlreadyInstalled,
-  isLinux,
   NOVIEWER_DESKTOP_CTA
 } from '@/components/pushClient'
 import Config from '@/config/config.json'
@@ -42,7 +42,11 @@ class CallToAction extends Component {
   render() {
     if (!this.state.mustShow || Config.promoteDesktop.isActivated !== true)
       return null
+
     const { t } = this.props
+
+    const link = getDesktopAppDownloadLink({ t })
+
     return (
       <div className={styles['pho-viewer-noviewer-cta']}>
         <Icon
@@ -57,9 +61,7 @@ class CallToAction extends Component {
             <a
               // eslint-disable-next-line react/jsx-no-target-blank
               target="_blank"
-              href={t(
-                isLinux() ? 'Nav.link-client' : 'Nav.link-client-desktop'
-              )}
+              href={link}
               rel="noreferrer"
             >
               {t('Viewer.noviewer.cta.installDesktop')}

@@ -18,13 +18,13 @@ import { isTwakeTheme } from 'cozy-ui/transpiled/react/helpers/isTwakeTheme'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import {
-  isLinux,
+  getMobileAppDownloadLink,
+  getDesktopAppDownloadLink,
+  isClientAlreadyInstalled,
   isAndroid,
   isIOS,
-  isClientAlreadyInstalled,
   DESKTOP_BANNER
-} from '.'
-
+} from '@/components/pushClient'
 import Config from '@/config/config.json'
 
 class BannerClient extends Component {
@@ -61,16 +61,11 @@ class BannerClient extends Component {
 
     const { t } = this.props
 
-    const link = isIOS()
-      ? 'Nav.link-client-ios'
-      : isAndroid()
-      ? 'Nav.link-client-android'
-      : isLinux()
-      ? 'Nav.link-client'
-      : 'Nav.link-client-desktop'
-
     const isMobile = isIOS() || isAndroid()
     const text = isMobile ? 'Nav.btn-client-mobile' : 'Nav.banner-txt-client'
+    const link = isMobile
+      ? getMobileAppDownloadLink({ t })
+      : getDesktopAppDownloadLink({ t })
 
     return (
       <div className="u-pos-relative">
@@ -116,7 +111,7 @@ class BannerClient extends Component {
               label={t('Nav.banner-btn-client')}
               onClick={() => this.markAsSeen('banner')}
               startIcon={<Icon icon={DownloadIcon} />}
-              href={t(link)}
+              href={link}
             />
           }
           buttonTwo={
