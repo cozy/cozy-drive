@@ -116,22 +116,21 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
 
   return (
     <FolderView isNotFound={isNotFound}>
-      <FolderViewHeader>
-        {currentFolderId && (
-          <FolderViewBreadcrumb
-            sharedDocumentIds={sharedDocumentIds}
-            rootBreadcrumbPath={rootBreadcrumbPath}
-            currentFolderId={currentFolderId}
-          />
-        )}
-        <Toolbar canUpload={hasWrite} canCreateFolder={hasWrite} />
-      </FolderViewHeader>
-
       <Dropzone
         role="main"
         disabled={!hasWrite}
         displayedFolder={displayedFolder}
       >
+        <FolderViewHeader>
+          {currentFolderId && (
+            <FolderViewBreadcrumb
+              sharedDocumentIds={sharedDocumentIds}
+              rootBreadcrumbPath={rootBreadcrumbPath}
+              currentFolderId={currentFolderId}
+            />
+          )}
+          <Toolbar canUpload={hasWrite} canCreateFolder={hasWrite} />
+        </FolderViewHeader>
         <FolderViewBody
           actions={actions}
           queryResults={[foldersResult, filesResult]}
@@ -139,9 +138,8 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
           extraColumns={extraColumns}
           currentFolderId={currentFolderId}
         />
+        <Outlet />
       </Dropzone>
-
-      <Outlet />
     </FolderView>
   )
 }
