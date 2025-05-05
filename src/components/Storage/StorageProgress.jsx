@@ -35,7 +35,7 @@ const StorageProgress = () => {
       <LinearProgress
         className="u-mv-half"
         variant="determinate"
-        value={percentUsage}
+        value={parseInt(percentUsage)}
       />
       <Typography variant="caption">
         {t('Storage.availability', humanDiskQuota - humanDiskUsage)}
