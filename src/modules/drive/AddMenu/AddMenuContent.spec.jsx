@@ -3,7 +3,7 @@ import React from 'react'
 
 import { useAppLinkWithStoreFallback } from 'cozy-client'
 
-import { ActionMenuContent } from './AddMenu'
+import AddMenuContent from './AddMenuContent'
 import AppLike from 'test/components/AppLike'
 import { setupFolderContent, mockCozyClientRequestQuery } from 'test/setup'
 
@@ -37,7 +37,7 @@ const setup = async (
   const root = render(
     <AppLike client={client} store={store}>
       <ScannerProvider displayedFolder={displayedFolder}>
-        <ActionMenuContent
+        <AddMenuContent
           isDisabled={isDisabled}
           canCreateFolder={canCreateFolder}
           canUpload={canUpload}
@@ -53,13 +53,14 @@ const setup = async (
   return { root }
 }
 
-describe('AddMenu', () => {
+describe('AddMenuContent', () => {
   describe('Menu', () => {
     beforeAll(() => {
       useAppLinkWithStoreFallback.mockReturnValue({
         fetchStatus: 'loaded'
       })
     })
+
     it('does not display createNote on public Page', async () => {
       await act(async () => {
         const { root } = await setup(
