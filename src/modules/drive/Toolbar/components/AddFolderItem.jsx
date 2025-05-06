@@ -6,8 +6,8 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconFolder from 'cozy-ui/transpiled/react/Icons/FileTypeFolder'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { showNewFolderInput } from '@/modules/filelist/duck'
 
