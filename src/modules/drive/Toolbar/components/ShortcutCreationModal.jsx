@@ -12,6 +12,7 @@ import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { useDisplayedFolder } from '@/hooks'
+import { displayedFolderOrRootFolder } from '@/hooks/helpers'
 import { DOCTYPE_FILES_SHORTCUT } from '@/lib/doctypes'
 
 const ENTER_KEY = 13
@@ -39,6 +40,8 @@ const ShortcutCreationModal = ({ onClose, onCreated }) => {
   const { showAlert } = useAlert()
   const isOffline = useBrowserOffline()
 
+  const _displayedFolder = displayedFolderOrRootFolder(displayedFolder)
+
   const createShortcut = useCallback(async () => {
     if (!fileName || !url) {
       showAlert({ message: t('Shortcut.needs_info'), severity: 'error' })
@@ -55,7 +58,7 @@ const ShortcutCreationModal = ({ onClose, onCreated }) => {
       } else {
         await client.save({
           _type: DOCTYPE_FILES_SHORTCUT,
-          dir_id: displayedFolder.id,
+          dir_id: _displayedFolder.id,
           name: fileName.endsWith('.url') ? fileName : fileName + '.url',
           url: makedURL
         })
@@ -103,7 +106,7 @@ const ShortcutCreationModal = ({ onClose, onCreated }) => {
     onCreated,
     t,
     url,
-    displayedFolder,
+    _displayedFolder,
     isOffline,
     showAlert
   ])

@@ -16,8 +16,10 @@ import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconNote from 'cozy-ui/transpiled/react/Icons/FileTypeNote'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
-import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
+import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
+
+import { displayedFolderOrRootFolder } from '@/hooks/helpers'
 
 const CreateNoteItem = ({
   client,
@@ -31,6 +33,8 @@ const CreateNoteItem = ({
   const webviewIntent = useWebviewIntent()
   const { showAlert } = useAlert()
 
+  const _displayedFolder = displayedFolderOrRootFolder(displayedFolder)
+
   let notesAppUrl = undefined
   let notesAppIsInstalled = true
 
@@ -38,29 +42,28 @@ const CreateNoteItem = ({
     'notes',
     client
   )
+
   if (fetchStatus === 'loaded') {
     notesAppUrl = url
     notesAppIsInstalled = isInstalled
   }
 
   let returnUrl = ''
-  if (displayedFolder) {
-    if (isFlagshipApp() && webviewIntent) {
-      returnUrl = generateWebLink({
-        slug: 'drive',
-        cozyUrl: client.getStackClient().uri,
-        subDomainType: isFlatDomain ? 'flat' : 'nested',
-        pathname: '',
-        hash: `/files/${displayedFolder.id}`
-      })
-    } else {
-      returnUrl = generateUniversalLink({
-        slug: 'drive',
-        cozyUrl: client.getStackClient().uri,
-        subDomainType: isFlatDomain ? 'flat' : 'nested',
-        nativePath: `/files/${displayedFolder.id}`
-      })
-    }
+  if (isFlagshipApp() && webviewIntent) {
+    returnUrl = generateWebLink({
+      slug: 'drive',
+      cozyUrl: client.getStackClient().uri,
+      subDomainType: isFlatDomain ? 'flat' : 'nested',
+      pathname: '',
+      hash: `/files/${_displayedFolder.id}`
+    })
+  } else {
+    returnUrl = generateUniversalLink({
+      slug: 'drive',
+      cozyUrl: client.getStackClient().uri,
+      subDomainType: isFlatDomain ? 'flat' : 'nested',
+      nativePath: `/files/${_displayedFolder.id}`
+    })
   }
 
   const handleClick = async () => {
@@ -77,9 +80,10 @@ const CreateNoteItem = ({
     }
 
     if (notesAppUrl === undefined) return
+
     if (notesAppIsInstalled) {
       const { data: file } = await client.create('io.cozy.notes', {
-        dir_id: displayedFolder.id
+        dir_id: _displayedFolder.id
       })
 
       const privateUrl = await models.note.generatePrivateUrl(
