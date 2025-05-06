@@ -5,10 +5,10 @@ import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuIte
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { ROOT_DIR_ID } from '@/constants/config'
+import { ROOT_DIR_ID, TRASH_DIR_ID } from '@/constants/config'
 import {
   makeOnlyOfficeIconByClass,
   canWriteOfficeDocument
@@ -19,6 +19,8 @@ const CreateOnlyOfficeItem = ({ fileClass, isReadOnly, onClick }) => {
   const { t } = useI18n()
   const navigate = useNavigate()
   const { showAlert } = useAlert()
+
+  const _folderId = folderId === TRASH_DIR_ID ? ROOT_DIR_ID : folderId
 
   const handleClick = useCallback(() => {
     if (isReadOnly) {
@@ -34,11 +36,11 @@ const CreateOnlyOfficeItem = ({ fileClass, isReadOnly, onClick }) => {
     }
 
     if (canWriteOfficeDocument()) {
-      navigate(`/onlyoffice/create/${folderId}/${fileClass}`)
+      navigate(`/onlyoffice/create/${_folderId}/${fileClass}`)
     } else {
-      navigate(`/folder/${folderId}/paywall`)
+      navigate(`/folder/${_folderId}/paywall`)
     }
-  }, [fileClass, folderId, navigate, isReadOnly, showAlert, onClick, t])
+  }, [fileClass, _folderId, navigate, isReadOnly, showAlert, onClick, t])
 
   const ClassIcon = useMemo(
     () => makeOnlyOfficeIconByClass(fileClass),
