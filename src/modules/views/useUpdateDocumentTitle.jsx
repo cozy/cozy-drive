@@ -1,47 +1,45 @@
 import { useMemo, useEffect } from 'react'
 
-import { useClient, models } from 'cozy-client'
+import { useClient, models, useQuery } from 'cozy-client'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { TRASH_DIR_PATH } from '@/constants/config'
-import { useFileWithPath } from '@/modules/views/hooks'
+import { makeParentFolderPath } from '@/modules/filelist/helpers'
+import { buildFileByIdQuery } from '@/queries'
 
-export const makeTitle = (fileWithPath, appFullName, t) => {
+export const makeTitle = (file, appFullName, t) => {
+  if (!file) return
+
   const fileName =
-    fileWithPath &&
-    fileWithPath.name &&
-    !TRASH_DIR_PATH.includes(fileWithPath.name)
-      ? `${fileWithPath.name} `
+    file && file.name && !TRASH_DIR_PATH.includes(file.name)
+      ? `${file.name} `
       : ''
 
+  const parentFolderPath = makeParentFolderPath(file)
+
   let path = ''
-  if (models.file.isDirectory(fileWithPath)) {
-    if (fileWithPath && fileWithPath.path) {
-      if (fileWithPath.path.startsWith(TRASH_DIR_PATH)) {
-        const trashSubDirectories = fileWithPath.path.split(
-          `${TRASH_DIR_PATH}/`
-        )[1]
+  if (models.file.isDirectory(file)) {
+    if (file && file.path) {
+      if (file.path.startsWith(TRASH_DIR_PATH)) {
+        const trashSubDirectories = file.path.split(`${TRASH_DIR_PATH}/`)[1]
         path = trashSubDirectories
           ? `(${t('Nav.item_trash')}/${trashSubDirectories}) `
           : `${t('Nav.item_trash')} `
-      } else if (
-        fileWithPath.path !== '/' &&
-        fileWithPath.path !== `/${fileWithPath.name}`
-      ) {
-        path = `(${fileWithPath.path.substring(1)}) `
+      } else if (file.path !== '/' && file.path !== `/${file.name}`) {
+        path = `(${file.path.substring(1)}) `
       }
     }
   } else {
-    if (fileWithPath && fileWithPath.displayedPath) {
-      if (fileWithPath.displayedPath.startsWith(TRASH_DIR_PATH)) {
-        const trashSubDirectories = fileWithPath.displayedPath.split(
+    if (file && parentFolderPath) {
+      if (parentFolderPath.startsWith(TRASH_DIR_PATH)) {
+        const trashSubDirectories = parentFolderPath.split(
           `${TRASH_DIR_PATH}/`
         )[1]
         path = trashSubDirectories
           ? `(${t('Nav.item_trash')}/${trashSubDirectories}) `
           : `(${t('Nav.item_trash')}) `
       } else {
-        path = `(${fileWithPath.displayedPath.substring(1)}) `
+        path = `(${parentFolderPath.substring(1)}) `
       }
     }
   }
@@ -54,7 +52,12 @@ export const makeTitle = (fileWithPath, appFullName, t) => {
 const useUpdateDocumentTitle = docId => {
   const { t } = useI18n()
   const client = useClient()
-  const { data: fileWithPath, fetchStatus } = useFileWithPath(docId)
+
+  const fileQuery = buildFileByIdQuery(docId)
+  const { data: file, fetchStatus } = useQuery(
+    fileQuery.definition,
+    fileQuery.options
+  )
 
   const appFullName = useMemo(
     () => `${client.appMetadata.prefix} ${client.appMetadata.name}`,
@@ -62,8 +65,8 @@ const useUpdateDocumentTitle = docId => {
   )
 
   const title = useMemo(
-    () => makeTitle(fileWithPath, appFullName, t),
-    [fileWithPath, appFullName, t]
+    () => makeTitle(file, appFullName, t),
+    [file, appFullName, t]
   )
 
   useEffect(() => {
