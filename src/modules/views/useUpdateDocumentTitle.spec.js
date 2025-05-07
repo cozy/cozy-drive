@@ -22,21 +22,21 @@ describe('makeTitle', () => {
     })
 
     it('should show the folder name and app name', () => {
-      expect(
-        makeTitle({ displayedPath: '/folder/subFolder' }, 'Cozy Drive', t)
-      ).toBe('(folder/subFolder) - Cozy Drive')
+      expect(makeTitle({ path: '/folder/subFolder' }, 'Cozy Drive', t)).toBe(
+        '(folder/subFolder) - Cozy Drive'
+      )
     })
 
     it('should not show the folder name and app name if inside an array', () => {
-      expect(
-        makeTitle([{ displayedPath: '/folder/subFolder' }], 'Cozy Drive', t)
-      ).toBe('Cozy Drive')
+      expect(makeTitle([{ path: '/folder/subFolder' }], 'Cozy Drive', t)).toBe(
+        'Cozy Drive'
+      )
     })
 
     it('should show the file name, folder name and app name', () => {
       expect(
         makeTitle(
-          { name: 'file.docx', displayedPath: '/folder/subFolder' },
+          { name: 'file.docx', path: '/folder/subFolder' },
           'Cozy Drive',
           t
         )
@@ -46,7 +46,7 @@ describe('makeTitle', () => {
     it('should show trash folder with human frendly name', () => {
       expect(
         makeTitle(
-          { name: 'file.docx', displayedPath: `${TRASH_DIR_PATH}/folder` },
+          { name: 'file.docx', path: `${TRASH_DIR_PATH}/folder` },
           'Cozy Drive',
           t
         )
@@ -55,11 +55,7 @@ describe('makeTitle', () => {
 
     it('should show trash folder with human frendly name even if no subdirectory', () => {
       expect(
-        makeTitle(
-          { name: 'file.docx', displayedPath: TRASH_DIR_PATH },
-          'Cozy Drive',
-          t
-        )
+        makeTitle({ name: 'file.docx', path: TRASH_DIR_PATH }, 'Cozy Drive', t)
       ).toBe('file.docx (Trash) - Cozy Drive')
     })
   })
