@@ -28,13 +28,13 @@ const Sharing = ({ file }) => {
       ) : (
         <>
           <SharedRecipients
-            docId={file.id}
+            docId={file._id}
             size={32}
             onClick={toggleShareModal}
           />
           <ShareButton
             data-testid="onlyoffice-sharing-button"
-            docId={file.id}
+            docId={file._id}
             onClick={toggleShareModal}
           />
         </>

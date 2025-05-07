@@ -39,7 +39,7 @@ const Toolbar = ({ sharingInfos }) => {
   const { data: files } = useQuery(fileQuery.definition, fileQuery.options)
   const file = files?.[0]
 
-  if (!files || !file) return null
+  if (!file) return null
 
   const {
     addSharingLink,
