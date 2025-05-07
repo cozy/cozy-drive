@@ -5,7 +5,7 @@ import { createMockClient, useQuery } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import AppLike from 'test/components/AppLike'
-import { officeDocParam } from 'test/data'
+import { officeDoc } from 'test/data'
 
 import * as hookHelpers from '@/hooks/helpers'
 import { OnlyOfficeContext } from '@/modules/views/OnlyOffice/OnlyOfficeProvider'
@@ -16,6 +16,13 @@ jest.mock('cozy-sharing', () => ({
   __esModule: true,
   OpenSharingLinkButton: () => <div data-testid="open-external-link-button" />
 }))
+
+jest.mock(
+  '@/modules/views/OnlyOffice/Toolbar/HomeLinker',
+  () =>
+    ({ children }) =>
+      <div data-testid="HomeLinker">{children}</div>
+)
 
 jest.mock('cozy-ui/transpiled/react/providers/Breakpoints', () => ({
   ...jest.requireActual('cozy-ui/transpiled/react/providers/Breakpoints'),
@@ -84,7 +91,7 @@ const setup = ({
     >
       <OnlyOfficeContext.Provider
         value={{
-          fileId: officeDocParam.id,
+          fileId: officeDoc.id,
           isPublic,
           isEditorModeView,
           isFromSharing,
@@ -103,6 +110,7 @@ const setup = ({
 describe('Toolbar', () => {
   beforeEach(() => {
     jest.spyOn(console, 'warn').mockImplementation()
+    jest.clearAllMocks()
   })
 
   describe('FileName', () => {
@@ -110,9 +118,7 @@ describe('Toolbar', () => {
       // TODO : analyse why BaseButton has incorrect props and remove this consoleSpy
       jest.spyOn(console, 'error').mockImplementation()
 
-      useQuery
-        .mockReturnValueOnce(officeDocParam)
-        .mockReturnValue({ ...officeDocParam, data: { path: '/path' } })
+      useQuery.mockReturnValue({ data: [officeDoc] })
 
       const { root } = setup({ isMobile: false })
       const { queryByTestId } = root
@@ -121,9 +127,7 @@ describe('Toolbar', () => {
     })
 
     it('should not show the path on mobile', () => {
-      useQuery
-        .mockReturnValueOnce(officeDocParam)
-        .mockReturnValue({ ...officeDocParam, data: { path: '/path' } })
+      useQuery.mockReturnValue({ data: [officeDoc] })
 
       const { root } = setup({ isMobile: true })
       const { queryByTestId } = root
@@ -134,34 +138,34 @@ describe('Toolbar', () => {
 
   describe('Renaming', () => {
     it('should be able to rename the file if not in readOnly mode', () => {
-      useQuery.mockReturnValue(officeDocParam)
+      useQuery.mockReturnValue({ data: [officeDoc] })
 
       const { root } = setup({ isReadOnly: false })
       const { getByText, getByRole } = root
 
-      fireEvent.click(getByText(officeDocParam.data.name))
-      expect(getByRole('textbox').value).toBe(officeDocParam.data.name)
+      fireEvent.click(getByText(officeDoc.name))
+      expect(getByRole('textbox').value).toBe(officeDoc.name)
     })
 
     it('should not be able to rename the file in readOnly mode', () => {
-      useQuery.mockReturnValue(officeDocParam)
+      useQuery.mockReturnValue({ data: [officeDoc] })
 
       const { root } = setup({ isReadOnly: true })
       const { getByText, queryByRole } = root
 
-      fireEvent.click(getByText(officeDocParam.data.name))
+      fireEvent.click(getByText(officeDoc.name))
       expect(queryByRole('textbox')).toBeFalsy()
     })
 
     describe('Renaming on mobile', () => {
       it('should be able to rename the file if not in readOnly mode', () => {
-        useQuery.mockReturnValue(officeDocParam)
+        useQuery.mockReturnValue({ data: [officeDoc] })
 
         const { root } = setup({ isReadOnly: false, isMobile: true })
         const { getByText, getByRole } = root
 
-        fireEvent.click(getByText(officeDocParam.data.name))
-        expect(getByRole('textbox').value).toBe(officeDocParam.data.name)
+        fireEvent.click(getByText(officeDoc.name))
+        expect(getByRole('textbox').value).toBe(officeDoc.name)
       })
     })
   })
@@ -169,7 +173,7 @@ describe('Toolbar', () => {
   describe('Sharing', () => {
     describe('Private view', () => {
       it('should show sharing button', () => {
-        useQuery.mockReturnValue(officeDocParam)
+        useQuery.mockReturnValue({ data: [officeDoc] })
 
         const { root } = setup({ isPublic: false })
         const { queryByTestId } = root
@@ -177,7 +181,7 @@ describe('Toolbar', () => {
         expect(queryByTestId('onlyoffice-sharing-button')).toBeTruthy()
       })
       it('should not show more menu', () => {
-        useQuery.mockReturnValue(officeDocParam)
+        useQuery.mockReturnValue({ data: [officeDoc] })
 
         const { root } = setup({ isPublic: false })
         const { queryByTestId } = root
@@ -187,7 +191,7 @@ describe('Toolbar', () => {
 
       describe('On mobile', () => {
         it('should show sharing icon', () => {
-          useQuery.mockReturnValue(officeDocParam)
+          useQuery.mockReturnValue({ data: [officeDoc] })
 
           const { root } = setup({ isPublic: false, isMobile: true })
           const { queryByTestId } = root
@@ -196,7 +200,7 @@ describe('Toolbar', () => {
           expect(queryByTestId('onlyoffice-sharing-icon')).toBeTruthy()
         })
         it('should not show more menu', () => {
-          useQuery.mockReturnValue(officeDocParam)
+          useQuery.mockReturnValue({ data: [officeDoc] })
 
           const { root } = setup({ isPublic: false, isMobile: true })
           const { queryByTestId } = root
@@ -209,7 +213,8 @@ describe('Toolbar', () => {
     describe('Public view', () => {
       describe('Cozy to Cozy', () => {
         it('should not show sharing button', () => {
-          useQuery.mockReturnValue(officeDocParam)
+          useQuery.mockReturnValue({ data: [officeDoc] })
+
           const sharingInfos = {
             isSharingShortcutCreated: false
           }
@@ -220,7 +225,8 @@ describe('Toolbar', () => {
         })
         describe("Sharing is not added to the recipient's Cozy", () => {
           it('should show "MoreMenu" button', () => {
-            useQuery.mockReturnValue(officeDocParam)
+            useQuery.mockReturnValue({ data: [officeDoc] })
+
             const sharingInfos = {
               isSharingShortcutCreated: false
             }
@@ -230,7 +236,8 @@ describe('Toolbar', () => {
             expect(queryByTestId('more-menu')).toBeTruthy()
           })
           it('should show "Add to my Cozy" button', () => {
-            useQuery.mockReturnValue(officeDocParam)
+            useQuery.mockReturnValue({ data: [officeDoc] })
+
             const sharingInfos = {
               isSharingShortcutCreated: false
             }
@@ -242,7 +249,8 @@ describe('Toolbar', () => {
 
           describe('On mobile', () => {
             it('should not show sharing icon and button', () => {
-              useQuery.mockReturnValue(officeDocParam)
+              useQuery.mockReturnValue({ data: [officeDoc] })
+
               const sharingInfos = {
                 isSharingShortcutCreated: false
               }
@@ -257,7 +265,8 @@ describe('Toolbar', () => {
               expect(queryByTestId('onlyoffice-sharing-icon')).toBeNull()
             })
             it('should show more menu', () => {
-              useQuery.mockReturnValue(officeDocParam)
+              useQuery.mockReturnValue({ data: [officeDoc] })
+
               const sharingInfos = {
                 isSharingShortcutCreated: false
               }
@@ -275,7 +284,8 @@ describe('Toolbar', () => {
 
         describe("Sharing is added to the recipient's Cozy (not sync)", () => {
           it('should not show sharing button', () => {
-            useQuery.mockReturnValue(officeDocParam)
+            useQuery.mockReturnValue({ data: [officeDoc] })
+
             const sharingInfos = {
               isSharingShortcutCreated: true
             }
@@ -285,7 +295,8 @@ describe('Toolbar', () => {
             expect(queryByTestId('onlyoffice-sharing-button')).toBeNull()
           })
           it('should show "MoreMenu" button', () => {
-            useQuery.mockReturnValue(officeDocParam)
+            useQuery.mockReturnValue({ data: [officeDoc] })
+
             const sharingInfos = {
               isSharingShortcutCreated: true
             }
@@ -295,7 +306,8 @@ describe('Toolbar', () => {
             expect(queryByTestId('more-menu')).toBeTruthy()
           })
           it('should not show "Add to my Cozy" button', () => {
-            useQuery.mockReturnValue(officeDocParam)
+            useQuery.mockReturnValue({ data: [officeDoc] })
+
             const sharingInfos = {
               isSharingShortcutCreated: true
             }
@@ -307,7 +319,8 @@ describe('Toolbar', () => {
 
           describe('On mobile', () => {
             it('should not show sharing icon and button', () => {
-              useQuery.mockReturnValue(officeDocParam)
+              useQuery.mockReturnValue({ data: [officeDoc] })
+
               const sharingInfos = {
                 isSharingShortcutCreated: true
               }
@@ -322,7 +335,8 @@ describe('Toolbar', () => {
               expect(queryByTestId('onlyoffice-sharing-icon')).toBeNull()
             })
             it('should show more menu', () => {
-              useQuery.mockReturnValue(officeDocParam)
+              useQuery.mockReturnValue({ data: [officeDoc] })
+
               const sharingInfos = {
                 isSharingShortcutCreated: true
               }
@@ -357,7 +371,7 @@ describe('Toolbar', () => {
 
     it('should hide without redirect link into searchParam', () => {
       makeNewLocation('#/onlyoffice/123')
-      useQuery.mockReturnValue(officeDocParam)
+      useQuery.mockReturnValue({ data: [officeDoc] })
 
       setup()
 
@@ -369,7 +383,7 @@ describe('Toolbar', () => {
 
     it('should redirect to previous folder with #/hash?searchParam ', async () => {
       makeNewLocation('#/onlyoffice/123?redirectLink=drive%23%2Ffolder%2F321')
-      useQuery.mockReturnValue(officeDocParam)
+      useQuery.mockReturnValue({ data: [officeDoc] })
 
       setup()
 
@@ -397,7 +411,7 @@ describe('Toolbar', () => {
           })
       })
       makeNewLocation('?redirectLink=drive%23%2Ffolder%2F321#/onlyoffice/123')
-      useQuery.mockReturnValue(officeDocParam)
+      useQuery.mockReturnValue({ data: [officeDoc] })
 
       setup({
         isPublic: true

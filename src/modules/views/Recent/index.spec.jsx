@@ -1,6 +1,7 @@
 import { render, fireEvent, act } from '@testing-library/react'
 import React from 'react'
 
+import { useQuery } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
 
 import RecentViewWithProvider from './index'
@@ -11,8 +12,6 @@ import {
 } from '../testUtils'
 import AppLike from 'test/components/AppLike'
 import { setupStoreAndClient } from 'test/setup'
-
-import { useFilesQueryWithPath } from '@/modules/views/hooks'
 
 const mockNavigate = jest.fn()
 
@@ -31,10 +30,6 @@ jest.mock('cozy-client/dist/hooks/useQuery', () =>
 )
 jest.mock('cozy-keys-lib', () => ({
   useVaultClient: jest.fn()
-}))
-jest.mock('modules/views/hooks', () => ({
-  ...jest.requireActual('modules/views/hooks'),
-  useFilesQueryWithPath: jest.fn()
 }))
 
 jest.mock('components/useHead', () => jest.fn())
@@ -92,7 +87,7 @@ describe('Recent View', () => {
         }
       })
     }
-    useFilesQueryWithPath.mockReturnValue(filesFixtureWithPath)
+    useQuery.mockReturnValue(filesFixtureWithPath)
 
     const { getByText } = setup({
       nbFiles,

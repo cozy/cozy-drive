@@ -1,6 +1,8 @@
 import { render, fireEvent, waitFor } from '@testing-library/react'
 import React from 'react'
 
+import { useQuery } from 'cozy-client'
+
 import { SharingsView } from './index'
 import {
   generateFileFixtures,
@@ -9,8 +11,6 @@ import {
 } from '../testUtils'
 import AppLike from 'test/components/AppLike'
 import { setupStoreAndClient } from 'test/setup'
-
-import { useFilesQueryWithPath } from '@/modules/views/hooks'
 
 const mockNavigate = jest.fn()
 const mockSharingContext = jest.fn()
@@ -34,10 +34,6 @@ jest.mock('cozy-client/dist/hooks/useQuery', () =>
 )
 jest.mock('cozy-keys-lib', () => ({
   useVaultClient: jest.fn()
-}))
-jest.mock('modules/views/hooks', () => ({
-  ...jest.requireActual('modules/views/hooks'),
-  useFilesQueryWithPath: jest.fn()
 }))
 jest.mock('cozy-client/dist/utils', () => ({
   ...jest.requireActual('cozy-client/dist/utils'),
@@ -109,7 +105,7 @@ describe('Sharings View', () => {
 
   it('should not display placeholder when all files are loaded', async () => {
     mockSharingContext.mockReturnValue({ byDocId: [], allLoaded: true })
-    useFilesQueryWithPath.mockReturnValue(filesFixtureWithPath)
+    useQuery.mockReturnValue(filesFixtureWithPath)
 
     const { container } = setup()
 
@@ -124,7 +120,7 @@ describe('Sharings View', () => {
     // TODO : Fix https://github.com/cozy/cozy-drive/issues/2913
     jest.spyOn(console, 'warn').mockImplementation()
 
-    useFilesQueryWithPath.mockReturnValue(filesFixtureWithPath)
+    useQuery.mockReturnValue(filesFixtureWithPath)
 
     const { getByText } = setup()
 
