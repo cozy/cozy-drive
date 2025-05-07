@@ -31,6 +31,8 @@ export const getFileNameAndExtension = (
     }
   }
 
+  // we can have ROOT_DIR_ID in some case, like in sharing view when fetching docs for the first time
+  // in that case we want to do the same trick as for SHARED_DRIVES_DIR_ID
   if (file._id === SHARED_DRIVES_DIR_ID || file._id === ROOT_DIR_ID) {
     return {
       title: t('FileName.sharedDrive'),
