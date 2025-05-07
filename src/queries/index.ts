@@ -76,7 +76,7 @@ export const buildRecentQuery: QueryBuilder = () => ({
       .partialIndex({
         type: 'file',
         trashed: false,
-        dir_id: { $ne: SHARED_DRIVES_DIR_ID }
+        dir_id: { $nin: [SHARED_DRIVES_DIR_ID, TRASH_DIR_ID] }
       })
       .indexFields(['updated_at'])
       .sortBy([{ updated_at: 'desc' }])
@@ -142,6 +142,10 @@ export const buildSharingsQuery: QueryBuilder<buildSharingsQueryParams> = ({
   definition: () =>
     Q('io.cozy.files')
       .getByIds(ids)
+      .partialIndex({
+        trashed: false,
+        dir_id: { $ne: TRASH_DIR_ID }
+      })
       .sortBy([{ type: 'asc' }, { name: 'asc' }]),
   options: {
     as: `sharings-by-ids-${ids.join('')}`,

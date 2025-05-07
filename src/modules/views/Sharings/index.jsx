@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate, useLocation, Outlet } from 'react-router-dom'
 
-import { useClient, hasQueryBeenLoaded } from 'cozy-client'
+import { useClient, hasQueryBeenLoaded, useQuery } from 'cozy-client'
 import {
   useSharingContext,
   useNativeFileSharing,
@@ -33,7 +33,6 @@ import FabWithAddMenuContext from '@/modules/drive/FabWithAddMenuContext'
 import Toolbar from '@/modules/drive/Toolbar'
 import FileListRowsPlaceholder from '@/modules/filelist/FileListRowsPlaceholder'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
-import { useFilesQueryWithPath } from '@/modules/views/hooks'
 import {
   buildSharingsQuery,
   buildSharingsWithMetadataAttributeQuery
@@ -73,7 +72,7 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
     () => buildSharingsQuery({ ids: sharedDocumentIds, enabled: allLoaded }),
     [sharedDocumentIds, allLoaded]
   )
-  const result = useFilesQueryWithPath(query)
+  const result = useQuery(query.definition, query.options)
 
   const actionsOptions = {
     client,

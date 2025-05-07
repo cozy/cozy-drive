@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate, Outlet, useLocation } from 'react-router-dom'
 
-import { useClient } from 'cozy-client'
+import { useClient, useQuery } from 'cozy-client'
 import {
   useSharingContext,
   useNativeFileSharing,
@@ -39,7 +39,6 @@ import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
 import FabWithAddMenuContext from '@/modules/drive/FabWithAddMenuContext'
 import Toolbar from '@/modules/drive/Toolbar'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
-import { useFilesQueryWithPath } from '@/modules/views/hooks'
 import {
   buildRecentQuery,
   buildRecentWithMetadataAttributeQuery
@@ -75,7 +74,7 @@ export const RecentView = () => {
   })
 
   const query = buildRecentQuery()
-  const result = useFilesQueryWithPath(query)
+  const result = useQuery(query.definition, query.options)
 
   const actionsOptions = {
     client,
