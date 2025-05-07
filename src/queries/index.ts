@@ -311,6 +311,19 @@ export const buildFileByIdQuery: QueryBuilder<string> = fileId => ({
   }
 })
 
+// this query should use `getById` instead of `where` as `buildFileByIdQuery` does.
+// But in this case, due to a stack limitation, the `file.path` is not returned.
+// As we need the `file.path` we do this trick until the stack is updated
+export const buildFileWhereByIdQuery: QueryBuilder<string> = fileId => ({
+  definition: () =>
+    Q('io.cozy.files').where({ _id: fileId }).indexFields(['_id']).limitBy(1),
+  options: {
+    as: `io.cozy.files/whereById/${fileId}`,
+    fetchPolicy: defaultFetchPolicy,
+    enabled: !!fileId
+  }
+})
+
 export const buildAppsQuery: QueryBuilder = () => ({
   definition: () => Q('io.cozy.apps'),
   options: {

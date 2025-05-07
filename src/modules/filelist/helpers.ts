@@ -1,8 +1,16 @@
 import { splitFilename } from 'cozy-client/dist/models/file'
 
 import type { File } from '@/components/FolderPicker/types'
-import { TRASH_DIR_ID } from '@/constants/config'
+import { TRASH_DIR_ID, ROOT_DIR_ID } from '@/constants/config'
 import { isNextcloudShortcut } from '@/modules/nextcloud/helpers'
+
+export const makeParentFolderPath = (file: File): string => {
+  if (!file.path) return ''
+
+  return file.dir_id === ROOT_DIR_ID
+    ? file.path.replace(file.name, '')
+    : file.path.replace(`/${file.name}`, '')
+}
 
 export const getFileNameAndExtension = (
   file: File,
