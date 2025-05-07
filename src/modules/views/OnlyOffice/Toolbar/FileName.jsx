@@ -13,6 +13,7 @@ import styles from './styles.styl'
 import filelistStyles from '@/styles/filelist.styl'
 
 import { RenameInput } from '@/modules/drive/RenameInput'
+import { makeParentFolderPath } from '@/modules/filelist/helpers'
 import { useOnlyOfficeContext } from '@/modules/views/OnlyOffice/OnlyOfficeProvider'
 
 const useStyles = makeStyles(theme => ({
@@ -29,11 +30,13 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const FileName = ({ fileWithPath, isPublic }) => {
+const FileName = ({ file, isPublic }) => {
   const muiStyles = useStyles()
   const { isMobile } = useBreakpoints()
   const { isReadOnly } = useOnlyOfficeContext()
   const [isRenaming, setIsRenaming] = useState(false)
+
+  const parentFolderPath = makeParentFolderPath(file)
 
   const onRename = useCallback(() => setIsRenaming(true), [setIsRenaming])
   const onRenameFinished = useCallback(
@@ -49,7 +52,7 @@ const FileName = ({ fileWithPath, isPublic }) => {
         <Typography variant="h6" noWrap>
           <RenameInput
             className={styles['filename-renameInput']}
-            file={fileWithPath}
+            file={file}
             withoutExtension
             refreshFolderContent={onRenameFinished}
             onAbort={onRenameFinished}
@@ -64,17 +67,17 @@ const FileName = ({ fileWithPath, isPublic }) => {
           noWrap
           onClick={!isReadOnly ? onRename : undefined}
         >
-          {fileWithPath.name}
+          {file.name}
         </Typography>
       )}
-      {fileWithPath.displayedPath && !isMobile && !isPublic && (
+      {parentFolderPath && !isMobile && !isPublic && (
         <Link
           data-testid="onlyoffice-filename-path"
-          to={`/folder/${fileWithPath.dir_id}`}
+          to={`/folder/${file.dir_id}`}
           className={filelistStyles['fil-file-path']}
         >
           <Typography variant="caption">
-            <MidEllipsis text={fileWithPath.displayedPath} />
+            <MidEllipsis text={parentFolderPath} />
           </Typography>
         </Link>
       )}
@@ -83,7 +86,7 @@ const FileName = ({ fileWithPath, isPublic }) => {
 }
 
 FileName.propTypes = {
-  fileWithPath: PropTypes.object.isRequired,
+  file: PropTypes.object.isRequired,
   isPublic: PropTypes.bool
 }
 

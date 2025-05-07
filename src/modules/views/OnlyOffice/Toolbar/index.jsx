@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSearchParams } from 'react-router-dom'
 
+import { useQuery } from 'cozy-client'
 import {
   addToCozySharingLink,
   createCozySharingLink,
@@ -24,7 +25,7 @@ import HomeLinker from '@/modules/views/OnlyOffice/Toolbar/HomeLinker'
 import Separator from '@/modules/views/OnlyOffice/Toolbar/Separator'
 import Sharing from '@/modules/views/OnlyOffice/Toolbar/Sharing'
 import { isOfficeEditingEnabled } from '@/modules/views/OnlyOffice/helpers'
-import { useFileWithPath } from '@/modules/views/hooks'
+import { buildFileWhereByIdQuery } from '@/queries'
 
 const Toolbar = ({ sharingInfos }) => {
   const { isMobile, isDesktop } = useBreakpoints()
@@ -32,6 +33,14 @@ const Toolbar = ({ sharingInfos }) => {
   const { isEditorReady, isReadOnly, isTrashed, fileId, isPublic } =
     useOnlyOfficeContext()
   const { t } = useI18n()
+  const { redirectBack, canRedirect } = useRedirectLink({ isPublic })
+
+  const fileQuery = buildFileWhereByIdQuery(fileId)
+  const { data: files } = useQuery(fileQuery.definition, fileQuery.options)
+  const file = files?.[0]
+
+  if (!files || !file) return null
+
   const {
     addSharingLink,
     syncSharingLink,
@@ -40,14 +49,12 @@ const Toolbar = ({ sharingInfos }) => {
     loading
   } = sharingInfos
 
-  const { data: fileWithPath } = useFileWithPath(fileId)
-  const { redirectBack, canRedirect } = useRedirectLink({ isPublic })
-
   const showBackButton = canRedirect
 
   const handleOnClick = () => {
     redirectBack()
   }
+
   // Check if the share shortcut has not yet been added
   const isShareNotAdded = !loading && !isSharingShortcutCreated
   // Check if you are sharing Cozy to Cozy (Link sharing is on the `/public` route)
@@ -99,10 +106,8 @@ const Toolbar = ({ sharingInfos }) => {
           </>
         )}
         {showBackButton && <BackButton onClick={handleOnClick} />}
-        {!isMobile && fileWithPath.class && (
-          <FileIcon fileClass={fileWithPath.class} />
-        )}
-        <FileName fileWithPath={fileWithPath} isPublic={isPublic} />
+        {!isMobile && file.class && <FileIcon fileClass={file.class} />}
+        <FileName file={file} isPublic={isPublic} />
       </div>
       {showSharingLinkButton && (
         <OpenSharingLinkButton
@@ -114,12 +119,12 @@ const Toolbar = ({ sharingInfos }) => {
       {showPublicEditButton && <EditButton />}
 
       {isPublic && !isCozyToCozySharingSynced && (
-        <PublicToolbarMoreMenu files={[fileWithPath]} actions={actions} />
+        <PublicToolbarMoreMenu files={[file]} actions={actions} />
       )}
 
       {!isPublic && isEditorReady && (
         <>
-          <Sharing fileWithPath={fileWithPath} />
+          <Sharing file={file} />
           <EditButton />
         </>
       )}

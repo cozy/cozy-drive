@@ -6,7 +6,7 @@ import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import ShareIcon from 'cozy-ui/transpiled/react/Icons/Share'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-const Sharing = ({ fileWithPath }) => {
+const Sharing = ({ file }) => {
   const [showShareModal, setShowShareModal] = useState(false)
   const { isMobile } = useBreakpoints()
 
@@ -28,22 +28,22 @@ const Sharing = ({ fileWithPath }) => {
       ) : (
         <>
           <SharedRecipients
-            docId={fileWithPath.id}
+            docId={file.id}
             size={32}
             onClick={toggleShareModal}
           />
           <ShareButton
             data-testid="onlyoffice-sharing-button"
-            docId={fileWithPath.id}
+            docId={file.id}
             onClick={toggleShareModal}
           />
         </>
       )}
       {showShareModal && (
         <ShareModal
-          document={fileWithPath}
+          document={file}
           documentType="Files"
-          sharingDesc={fileWithPath.name}
+          sharingDesc={file.name}
           onClose={toggleShareModal}
         />
       )}
