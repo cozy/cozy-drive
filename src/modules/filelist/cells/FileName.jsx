@@ -16,7 +16,10 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import styles from '@/styles/filelist.styl'
 
 import RenameInput from '@/modules/drive/RenameInput'
-import { getFileNameAndExtension } from '@/modules/filelist/helpers'
+import {
+  getFileNameAndExtension,
+  makeParentFolderPath
+} from '@/modules/filelist/helpers'
 import { isSharedDriveFolder } from '@/modules/shareddrives/helpers'
 
 export const CertificationsIcons = ({ attributes }) => {
@@ -94,6 +97,7 @@ const FileName = ({
   )
 
   const { title, filename, extension } = getFileNameAndExtension(attributes, t)
+  const parentFolderPath = makeParentFolderPath(attributes)
 
   return (
     <TableCell className={classes}>
@@ -119,7 +123,7 @@ const FileName = ({
             </div>
           </div>
           {withFilePath &&
-            attributes.displayedPath &&
+            parentFolderPath &&
             (isMobile ? (
               <div
                 className={styles['fil-file-description']}
@@ -127,7 +131,7 @@ const FileName = ({
               >
                 <MidEllipsis
                   className={styles['fil-file-description--path']}
-                  text={attributes.displayedPath}
+                  text={parentFolderPath}
                 />
                 <CertificationsIcons attributes={attributes} />
               </div>
@@ -137,7 +141,7 @@ const FileName = ({
                 // Please do not modify the className as it is used in event handling, see FileOpener#46
                 className={styles['fil-file-path']}
               >
-                <MidEllipsis text={attributes.displayedPath} />
+                <MidEllipsis text={parentFolderPath} />
               </Link>
             ))}
           {!withFilePath &&

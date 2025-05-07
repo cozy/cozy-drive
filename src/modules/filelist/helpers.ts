@@ -1,7 +1,11 @@
 import { splitFilename } from 'cozy-client/dist/models/file'
 
 import type { File } from '@/components/FolderPicker/types'
-import { TRASH_DIR_ID, ROOT_DIR_ID } from '@/constants/config'
+import {
+  TRASH_DIR_ID,
+  ROOT_DIR_ID,
+  SHARED_DRIVES_DIR_ID
+} from '@/constants/config'
 import { isNextcloudShortcut } from '@/modules/nextcloud/helpers'
 
 export const makeParentFolderPath = (file: File): string => {
@@ -20,8 +24,6 @@ export const getFileNameAndExtension = (
   filename: string
   extension?: string
 } => {
-  const { filename, extension } = splitFilename(file)
-
   if (file._id === TRASH_DIR_ID) {
     return {
       title: t('FileName.trash'),
@@ -29,12 +31,14 @@ export const getFileNameAndExtension = (
     }
   }
 
-  if (file._id === 'io.cozy.files.shared-drives-dir') {
+  if (file._id === SHARED_DRIVES_DIR_ID || file._id === ROOT_DIR_ID) {
     return {
       title: t('FileName.sharedDrive'),
       filename: t('FileName.sharedDrive')
     }
   }
+
+  const { filename, extension } = splitFilename(file)
 
   if (file._type === 'io.cozy.files' && isNextcloudShortcut(file)) {
     return {
