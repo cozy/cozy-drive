@@ -10,7 +10,6 @@ import { useSharingContext } from 'cozy-sharing'
 import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { Layout as LayoutUI } from 'cozy-ui/transpiled/react/Layout'
 import Sidebar from 'cozy-ui/transpiled/react/Sidebar'
-import { isTwakeTheme } from 'cozy-ui/transpiled/react/helpers/isTwakeTheme'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import StorageButton from '@/components/Storage/StorageButton'
@@ -83,7 +82,7 @@ const LayoutContent = () => {
           <Nav />
         </div>
         <div>
-          {isTwakeTheme() && isDesktop && (
+          {isDesktop && (
             <div className="u-p-1-half">
               <StorageProgress />
               <StorageButton className="u-mt-1" />

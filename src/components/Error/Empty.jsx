@@ -3,46 +3,27 @@ import React from 'react'
 
 import Empty from 'cozy-ui/transpiled/react/Empty'
 import Icon from 'cozy-ui/transpiled/react/Icon'
-import DriveIcon from 'cozy-ui/transpiled/react/Icons/FileTypeFolder'
-import PhotosIcon from 'cozy-ui/transpiled/react/Icons/FileTypeImage'
-import { isTwakeTheme } from 'cozy-ui/transpiled/react/helpers/isTwakeTheme'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import styles from './empty.styl'
 
 import FolderEmptyIllu from '@/assets/icons/illu-folder-empty.svg'
-import TrashIllustration from '@/assets/icons/illustration-empty-trash.svg'
-import EncryptedFolderIcon from '@/modules/views/Folder/EncryptedFolderIcon'
 
-const EmptyIcon = {
-  drive: DriveIcon,
-  encrypted: EncryptedFolderIcon,
-  photos: PhotosIcon,
-  trash: TrashIllustration
-}
-
-const EmptyCanvas = ({ type, canUpload, localeKey, hasTextMobileVersion }) => {
+const EmptyCanvas = ({ canUpload, localeKey, hasTextMobileVersion }) => {
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
 
-  let iconToShow = EmptyIcon[type]
-  if (isTwakeTheme()) {
-    iconToShow = (
-      <div className="u-w-100">
-        <Icon icon={FolderEmptyIllu} size={160} />
-      </div>
-    )
-  }
-
-  const otherProps = isTwakeTheme()
-    ? { iconSize: isMobile ? 'large' : 'medium' }
-    : {}
+  const otherProps = { iconSize: isMobile ? 'large' : 'medium' }
 
   return (
     <Empty
       data-testid="empty-folder"
-      icon={iconToShow}
+      icon={
+        <div className="u-w-100">
+          <Icon icon={FolderEmptyIllu} size={160} />
+        </div>
+      }
       title={localeKey ? t(`empty.${localeKey}_title`) : t('empty.title')}
       text={
         (hasTextMobileVersion &&
