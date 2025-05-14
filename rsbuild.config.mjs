@@ -2,7 +2,7 @@ import { defineConfig, mergeRsbuildConfig } from '@rsbuild/core'
 import { getRsbuildConfig } from 'rsbuild-config-cozy-app'
 
 const config = getRsbuildConfig({
-  title: 'Cozy Drive',
+  title: 'Twake Drive',
   hasServices: true,
   hasPublic: true,
   hasIntents: true
