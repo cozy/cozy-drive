@@ -51,7 +51,7 @@
     "@types/react-redux": "7.1.26",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
-    "@welldone-software/why-did-you-render": "6.1.4",
+    "@welldone-software/why-did-you-render": "^10.0.1",
     "babel-jest": "29.7.0",
     "babel-preset-cozy-app": "2.1.0",
     "bundlemon": "3.1.0",
