@@ -131,12 +131,13 @@ class FilenameInput extends Component {
 
   render() {
     const { value, working, error, isModalOpened } = this.state
-    const { t, className } = this.props
+    const { t, className, style } = this.props
 
     return (
       <div
         data-testid="name-input"
         className={cx(styles['fil-file-name-input'], className)}
+        style={style}
       >
         <input
           type="text"

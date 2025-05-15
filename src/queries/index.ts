@@ -1,5 +1,6 @@
 import CozyClient, { Q, QueryDefinition } from 'cozy-client'
 import { QueryOptions } from 'cozy-client/types/types'
+import flag from 'cozy-flags'
 
 import { SHARED_DRIVES_DIR_ID, TRASH_DIR_ID } from '@/constants/config'
 import {
@@ -65,27 +66,30 @@ export const buildDriveQuery: QueryBuilder<buildDriveQueryParams> = ({
   }
 })
 
-export const buildRecentQuery: QueryBuilder = () => ({
-  definition: () =>
-    Q('io.cozy.files')
-      .where({
-        updated_at: {
-          $gt: null
-        }
-      })
-      .partialIndex({
-        type: 'file',
-        trashed: false,
-        dir_id: { $nin: [SHARED_DRIVES_DIR_ID, TRASH_DIR_ID] }
-      })
-      .indexFields(['updated_at'])
-      .sortBy([{ updated_at: 'desc' }])
-      .limitBy(50),
-  options: {
-    as: 'recent-view-query',
-    fetchPolicy: defaultFetchPolicy
+export const buildRecentQuery: QueryBuilder = () => {
+  const limit = flag('drive.virtualization.enabled') ? 1000 : 50
+  return {
+    definition: () =>
+      Q('io.cozy.files')
+        .where({
+          updated_at: {
+            $gt: null
+          }
+        })
+        .partialIndex({
+          type: 'file',
+          trashed: false,
+          dir_id: { $nin: [SHARED_DRIVES_DIR_ID, TRASH_DIR_ID] }
+        })
+        .indexFields(['updated_at'])
+        .sortBy([{ updated_at: 'desc' }])
+        .limitBy(limit),
+    options: {
+      as: 'recent-view-query',
+      fetchPolicy: defaultFetchPolicy
+    }
   }
-})
+}
 
 interface buildRecentWithMetadataAttributeQueryParams {
   attribute: string
