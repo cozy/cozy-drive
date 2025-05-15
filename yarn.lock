@@ -3658,10 +3658,10 @@
   resolved "https://registry.yarnpkg.com/@ungap/structured-clone/-/structured-clone-1.2.0.tgz#756641adb587851b5ccb3e095daf27ae581c8406"
   integrity sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==
 
-"@welldone-software/why-did-you-render@6.1.4":
-  version "6.1.4"
-  resolved "https://registry.yarnpkg.com/@welldone-software/why-did-you-render/-/why-did-you-render-6.1.4.tgz#5a82ae7cb3e665851f945e71c1fd3cf2581e1732"
-  integrity sha512-DZ6vCjUdN4JvthDl4ejusDmIhz7LFZ4OgpOJtepQZWJN1JcNIM8nvFCwSiu+8yhVLcsBsGBurlVpsa4TpdVfJw==
+"@welldone-software/why-did-you-render@^10.0.1":
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/@welldone-software/why-did-you-render/-/why-did-you-render-10.0.1.tgz#4513c1883add0496b98bcdcdcd243ff10c0f5ece"
+  integrity sha512-tMgGkt30iVYeLMUKExNmtm019QgyjLtA7lwB0QAizYNEuihlCG2eoAWBBaz/bDeI7LeqAJ9msC6hY3vX+JB97g==
   dependencies:
     lodash "^4"
 
