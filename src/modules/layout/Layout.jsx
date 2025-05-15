@@ -81,16 +81,16 @@ const LayoutContent = () => {
           ) : null}
           <Nav />
         </div>
-        <div>
-          {isDesktop && (
+        {isDesktop && (
+          <div>
             <div className="u-p-1-half">
               <StorageProgress />
               <StorageButton className="u-mt-1" />
             </div>
-          )}
-          <SupportUs />
-          <ButtonClient />
-        </div>
+            <SupportUs />
+            <ButtonClient />
+          </div>
+        )}
       </Sidebar>
       <UploadQueue />
       <SelectionProvider>
