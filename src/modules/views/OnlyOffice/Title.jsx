@@ -15,7 +15,7 @@ import Toolbar from '@/modules/views/OnlyOffice/Toolbar'
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    height: '3.5rem',
+    height: '3rem',
     backgroundColor: theme.palette.background.paper
   }
 }))
