@@ -25,7 +25,7 @@ import HomeLinker from '@/modules/views/OnlyOffice/Toolbar/HomeLinker'
 import Separator from '@/modules/views/OnlyOffice/Toolbar/Separator'
 import Sharing from '@/modules/views/OnlyOffice/Toolbar/Sharing'
 import { isOfficeEditingEnabled } from '@/modules/views/OnlyOffice/helpers'
-import { buildFileWhereByIdQuery } from '@/queries'
+import { buildFileByIdQuery, buildFileWhereByIdQuery } from '@/queries'
 
 const Toolbar = ({ sharingInfos }) => {
   const { isMobile, isDesktop } = useBreakpoints()
@@ -35,9 +35,12 @@ const Toolbar = ({ sharingInfos }) => {
   const { t } = useI18n()
   const { redirectBack, canRedirect } = useRedirectLink({ isPublic })
 
-  const fileQuery = buildFileWhereByIdQuery(fileId)
-  const { data: files } = useQuery(fileQuery.definition, fileQuery.options)
-  const file = files?.[0]
+  const fileQuery = isPublic
+    ? buildFileByIdQuery(fileId) // do not return path but return correctly data in public context
+    : buildFileWhereByIdQuery(fileId) // return path but get a 403 in public context
+
+  const { data } = useQuery(fileQuery.definition, fileQuery.options)
+  const file = Array.isArray(data) ? data[0] : data
 
   if (!file) return null
 
