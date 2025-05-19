@@ -38,6 +38,14 @@ const SelectionProvider = ({ children }) => {
     }
   }
 
+  const selectAll = items => {
+    const newSelectedItems = items.reduce((acc, item) => {
+      acc[item.id] = item
+      return acc
+    }, {})
+    setSelectedItems(newSelectedItems)
+  }
+
   const showSelectionBar = () => setSelectionBarOpen(true)
   const hideSelectionBar = () => {
     setSelectedItems({})
@@ -64,6 +72,7 @@ const SelectionProvider = ({ children }) => {
         isSelectionBarVisible,
         selectedItems: Object.values(selectedItems),
         toggleSelectedItem,
+        selectAll,
         isItemSelected
       }}
     >
