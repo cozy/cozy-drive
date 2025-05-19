@@ -26,6 +26,7 @@ export const RenameInput = ({
   file,
   refreshFolderContent,
   className,
+  style,
   withoutExtension
 }) => {
   const client = useClient()
@@ -39,6 +40,7 @@ export const RenameInput = ({
   return (
     <FilenameInput
       className={className}
+      style={style}
       name={name}
       file={file}
       onSubmit={async newValue => {
