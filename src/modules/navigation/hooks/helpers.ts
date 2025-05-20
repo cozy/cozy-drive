@@ -100,6 +100,11 @@ export const computePath = (
     case 'shortcut':
       return `/external/${file._id}`
     case 'directory':
+      // On mobile, if we are in /favorites tab, we do not want it to appears in computed path
+      // so we redirect to root route for folders
+      if (pathname.startsWith('/favorites')) {
+        return `/folder/${file._id}`
+      }
       // paths with only one element correspond to the root of a page like /sharings
       // when we add id we want to keep the path before to make /sharings/id
       return paths.length === 1 ? file._id : `../${file._id}`
@@ -109,6 +114,13 @@ export const computePath = (
         fromPublicFolder: isPublic
       })
     default:
+      // On mobile, if we are in /favorites tab, we do not want it to appears in computed path
+      // so we redirect to root route for files
+      if (pathname.startsWith('/favorites')) {
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        return `/folder/${file.dir_id}/file/${file._id}`
+      }
+
       return `file/${file._id}`
   }
 }
