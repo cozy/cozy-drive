@@ -1,15 +1,14 @@
 import cx from 'classnames'
 import React, { Component } from 'react'
 import ReactDropzone from 'react-dropzone'
-import { connect } from 'react-redux'
-import { compose } from 'redux'
+import { useDispatch } from 'react-redux'
 
-import { withClient } from 'cozy-client'
-import { withVaultClient } from 'cozy-keys-lib'
-import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
+import { useClient } from 'cozy-client'
+import { useVaultClient } from 'cozy-keys-lib'
+import { useSharingContext } from 'cozy-sharing'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
-import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import styles from '@/styles/dropzone.styl'
 
@@ -76,29 +75,40 @@ export class Dropzone extends Component {
   }
 }
 
-const DropzoneWrapper = props => {
+const DropzoneWrapper = ({ role, displayedFolder, disabled, children }) => {
   const { showAlert } = useAlert()
   const { isMobile } = useBreakpoints()
+  const { t } = useI18n()
+  const client = useClient()
+  const sharingState = useSharingContext()
+  const vaultClient = useVaultClient()
+  const dispatch = useDispatch()
 
-  return <Dropzone {...props} isMobile={isMobile} showAlert={showAlert} />
+  return (
+    <Dropzone
+      role={role}
+      disabled={disabled}
+      displayedFolder={displayedFolder}
+      isMobile={isMobile}
+      showAlert={showAlert}
+      t={t}
+      client={client}
+      sharingState={sharingState}
+      vaultClient={vaultClient}
+      uploadFiles={(files, { client, vaultClient, showAlert, t }) =>
+        dispatch(
+          uploadFiles(files, displayedFolder.id, sharingState, () => null, {
+            client,
+            vaultClient,
+            showAlert,
+            t
+          })
+        )
+      }
+    >
+      {children}
+    </Dropzone>
+  )
 }
 
-const mapDispatchToProps = (dispatch, { displayedFolder, sharingState }) => ({
-  uploadFiles: (files, { client, vaultClient, showAlert, t }) =>
-    dispatch(
-      uploadFiles(files, displayedFolder.id, sharingState, () => null, {
-        client,
-        vaultClient,
-        showAlert,
-        t
-      })
-    )
-})
-
-export default compose(
-  translate(),
-  withSharingState,
-  withClient,
-  withVaultClient,
-  connect(null, mapDispatchToProps)
-)(DropzoneWrapper)
+export default DropzoneWrapper
