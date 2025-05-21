@@ -1,6 +1,6 @@
 import cx from 'classnames'
 import React, { Component } from 'react'
-import UIDropzone from 'react-dropzone'
+import ReactDropzone from 'react-dropzone'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 
@@ -15,6 +15,21 @@ import styles from '@/styles/dropzone.styl'
 
 import { uploadFiles } from '@/modules/navigation/duck'
 import DropzoneTeaser from '@/modules/upload/DropzoneTeaser'
+
+// DnD helpers for folder upload
+const canHandleFolders = evt => {
+  if (!evt.dataTransfer) return false
+  const dt = evt.dataTransfer
+  return dt.items && dt.items.length && dt.items[0].webkitGetAsEntry != null
+}
+
+const canDrop = evt => {
+  const items = evt.dataTransfer.items
+  for (let i = 0; i < items.length; i += 1) {
+    if (items[i].kind !== 'file') return false
+  }
+  return true
+}
 
 export class Dropzone extends Component {
   state = {
@@ -42,7 +57,7 @@ export class Dropzone extends Component {
     const { displayedFolder, isMobile, children, disabled, role } = this.props
 
     return (
-      <UIDropzone
+      <ReactDropzone
         disabled={disabled}
         role={role}
         className={cx(isMobile ? '' : 'u-pt-1', {
@@ -56,24 +71,16 @@ export class Dropzone extends Component {
       >
         {dropzoneActive && <DropzoneTeaser currentFolder={displayedFolder} />}
         {children}
-      </UIDropzone>
+      </ReactDropzone>
     )
   }
 }
 
-// DnD helpers for folder upload
-const canHandleFolders = evt => {
-  if (!evt.dataTransfer) return false
-  const dt = evt.dataTransfer
-  return dt.items && dt.items.length && dt.items[0].webkitGetAsEntry != null
-}
+const DropzoneWrapper = props => {
+  const { showAlert } = useAlert()
+  const { isMobile } = useBreakpoints()
 
-const canDrop = evt => {
-  const items = evt.dataTransfer.items
-  for (let i = 0; i < items.length; i += 1) {
-    if (items[i].kind !== 'file') return false
-  }
-  return true
+  return <Dropzone {...props} isMobile={isMobile} showAlert={showAlert} />
 }
 
 const mapDispatchToProps = (dispatch, { displayedFolder, sharingState }) => ({
@@ -87,13 +94,6 @@ const mapDispatchToProps = (dispatch, { displayedFolder, sharingState }) => ({
       })
     )
 })
-
-const DropzoneWrapper = props => {
-  const { showAlert } = useAlert()
-  const { isMobile } = useBreakpoints()
-
-  return <Dropzone {...props} isMobile={isMobile} showAlert={showAlert} />
-}
 
 export default compose(
   translate(),
