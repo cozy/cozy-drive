@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import ReactDropzone from 'react-dropzone'
 import { useDispatch } from 'react-redux'
 
@@ -30,85 +30,56 @@ const canDrop = evt => {
   return true
 }
 
-export class Dropzone extends Component {
-  state = {
-    dropzoneActive: false
-  }
-
-  onDragEnter = evt => {
-    if (!canDrop(evt)) return
-    this.setState(state => ({ ...state, dropzoneActive: true }))
-  }
-
-  onDragLeave = () =>
-    this.setState(state => ({ ...state, dropzoneActive: false }))
-
-  onDrop = async (files, _, evt) => {
-    const { uploadFiles, client, vaultClient, showAlert, t } = this.props
-    this.setState(state => ({ ...state, dropzoneActive: false }))
-    if (!canDrop(evt)) return
-    const filesToUpload = canHandleFolders(evt) ? evt.dataTransfer.items : files
-    uploadFiles(filesToUpload, { client, vaultClient, showAlert, t })
-  }
-
-  render() {
-    const { dropzoneActive } = this.state
-    const { displayedFolder, isMobile, children, disabled, role } = this.props
-
-    return (
-      <ReactDropzone
-        disabled={disabled}
-        role={role}
-        className={cx(isMobile ? '' : 'u-pt-1', {
-          [styles['fil-dropzone-active']]: dropzoneActive
-        })}
-        disableClick
-        style={{}}
-        onDrop={this.onDrop}
-        onDragEnter={this.onDragEnter}
-        onDragLeave={this.onDragLeave}
-      >
-        {dropzoneActive && <DropzoneTeaser currentFolder={displayedFolder} />}
-        {children}
-      </ReactDropzone>
-    )
-  }
-}
-
-const DropzoneWrapper = ({ role, displayedFolder, disabled, children }) => {
-  const { showAlert } = useAlert()
-  const { isMobile } = useBreakpoints()
-  const { t } = useI18n()
+export const Dropzone = ({ role, displayedFolder, disabled, children }) => {
   const client = useClient()
+  const { t } = useI18n()
+  const { isMobile } = useBreakpoints()
+  const { showAlert } = useAlert()
   const sharingState = useSharingContext()
   const vaultClient = useVaultClient()
   const dispatch = useDispatch()
+  const [dropzoneActive, setDropzoneActive] = useState(false)
+
+  const onDragEnter = evt => {
+    if (!canDrop(evt)) return
+    setDropzoneActive(true)
+  }
+
+  const onDragLeave = () => setDropzoneActive(false)
+
+  const onDrop = async (files, _, evt) => {
+    setDropzoneActive(false)
+
+    if (!canDrop(evt)) return
+
+    const filesToUpload = canHandleFolders(evt) ? evt.dataTransfer.items : files
+    dispatch(
+      uploadFiles(filesToUpload, displayedFolder.id, sharingState, () => null, {
+        client,
+        vaultClient,
+        showAlert,
+        t
+      })
+    )
+  }
 
   return (
-    <Dropzone
+    <ReactDropzone
       role={role}
       disabled={disabled}
-      displayedFolder={displayedFolder}
-      isMobile={isMobile}
-      showAlert={showAlert}
-      t={t}
-      client={client}
-      sharingState={sharingState}
-      vaultClient={vaultClient}
-      uploadFiles={(files, { client, vaultClient, showAlert, t }) =>
-        dispatch(
-          uploadFiles(files, displayedFolder.id, sharingState, () => null, {
-            client,
-            vaultClient,
-            showAlert,
-            t
-          })
-        )
-      }
+      className={cx(isMobile ? '' : 'u-pt-1', {
+        [styles['fil-dropzone-active']]: dropzoneActive
+      })}
+      disableClick
+      style={{}}
+      onDrop={onDrop}
+      onDragEnter={onDragEnter}
+      onDragLeave={onDragLeave}
     >
+      {dropzoneActive && <DropzoneTeaser currentFolder={displayedFolder} />}
       {children}
-    </Dropzone>
+    </ReactDropzone>
   )
 }
 
-export default DropzoneWrapper
+export default Dropzone
