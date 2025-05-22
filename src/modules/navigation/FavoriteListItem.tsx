@@ -3,13 +3,13 @@ import React, { FC } from 'react'
 import { splitFilename } from 'cozy-client/dist/models/file'
 import type { IOCozyFile } from 'cozy-client/types/types'
 import FileIcon from 'cozy-ui/transpiled/react/Icons/File'
+import FileTypeServerIcon from 'cozy-ui/transpiled/react/Icons/FileTypeServer'
 import FolderIcon from 'cozy-ui/transpiled/react/Icons/Folder'
 import { NavIcon, NavLink, NavItem } from 'cozy-ui/transpiled/react/Nav'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 
 import { FileLink } from './components/FileLink'
 
-import ServerIcon from '@/assets/icons/icon-server.svg'
 import { useFileLink } from '@/modules/navigation/hooks/useFileLink'
 import { isNextcloudShortcut } from '@/modules/nextcloud/helpers'
 
@@ -36,7 +36,7 @@ const FavoriteListItem: FC<FavoriteListItemProps> = ({
         <NavIcon
           icon={
             isNextcloudShortcut(file)
-              ? ServerIcon
+              ? FileTypeServerIcon
               : file.type === 'directory'
               ? FolderIcon
               : FileIcon

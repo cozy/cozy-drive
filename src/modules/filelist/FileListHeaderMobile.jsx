@@ -3,6 +3,8 @@ import React, { useState, useCallback } from 'react'
 
 import Button from 'cozy-ui/transpiled/react/Buttons'
 import Icon from 'cozy-ui/transpiled/react/Icon'
+import ListIcon from 'cozy-ui/transpiled/react/Icons/List'
+import ListMinIcon from 'cozy-ui/transpiled/react/Icons/ListMin'
 import {
   TableHead,
   TableHeader,
@@ -14,8 +16,6 @@ import MobileSortMenu from './MobileSortMenu'
 
 import styles from '@/styles/filelist.styl'
 
-import iconListMin from '@/assets/icons/icon-list-min.svg'
-import iconList from '@/assets/icons/icon-list.svg'
 import { DEFAULT_SORT } from '@/config/sort'
 
 const FileListHeaderMobile = ({
@@ -80,7 +80,7 @@ const FileListHeaderMobile = ({
             }}
             label={
               <Icon
-                icon={thumbnailSizeBig ? iconListMin : iconList}
+                icon={thumbnailSizeBig ? ListMinIcon : ListIcon}
                 size={17}
               />
             }

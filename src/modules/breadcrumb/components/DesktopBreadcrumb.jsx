@@ -4,6 +4,7 @@ import ActionsMenu from 'cozy-ui/transpiled/react/ActionsMenu'
 import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import BreadcrumbMui from 'cozy-ui/transpiled/react/Breadcrumbs'
 import Icon from 'cozy-ui/transpiled/react/Icon'
+import FileTypeServerIcon from 'cozy-ui/transpiled/react/Icons/FileTypeServer'
 import FolderIcon from 'cozy-ui/transpiled/react/Icons/Folder'
 import RightIcon from 'cozy-ui/transpiled/react/Icons/Right'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
@@ -11,7 +12,6 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import styles from '@/modules/breadcrumb/styles/breadcrumb.styl'
 
-import IconServer from '@/assets/icons/icon-server.svg'
 import { ROOT_DIR_ID } from '@/constants/config'
 import { DesktopBreadcrumbItem } from '@/modules/breadcrumb/components/DesktopBreadcrumbItem'
 
@@ -100,7 +100,7 @@ const DesktopBreadcrumb = ({ onBreadcrumbClick, path }) => {
                 onClick={onBreadcrumbClick}
                 item={breadcrumbPath}
                 isCurrent={index === pathToDisplay.length - 1}
-                icon={IconServer}
+                icon={FileTypeServerIcon}
               />
             )
           }
