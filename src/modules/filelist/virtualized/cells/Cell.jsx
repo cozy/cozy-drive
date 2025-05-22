@@ -82,27 +82,21 @@ const Cell = ({
     !isSharingContextEmpty &&
     isSharingShortcut(row) &&
     isReferencedByShareInSharingContext(row, sharingsValue)
-  const isRowDisabledOrInSyncFromSharing = isInSyncFromSharing
-  // We don't allow any action on shared drives and trash
-  // because they are magic folder created by the stack
-  const canInteractWithFile =
-    row._id !== 'io.cozy.files.shared-drives-dir' &&
-    !row._id.endsWith('.trash-dir')
-
-  const toggle = e => {
-    e.stopPropagation()
-    toggleSelectedItem(row)
-  }
 
   if (column.id === 'name') {
     if (!cell) {
       return '—'
     }
 
+    const toggle = e => {
+      e.stopPropagation()
+      toggleSelectedItem(row)
+    }
+
     return (
       <FileOpener
         file={row}
-        disabled={isRowDisabledOrInSyncFromSharing}
+        disabled={isInSyncFromSharing}
         actionMenuVisible={showActionMenu}
         selectionModeActive={isSelectionBarVisible}
         toggle={toggle}
@@ -111,7 +105,7 @@ const Cell = ({
         <FileName
           attributes={row}
           isRenaming={isRenaming}
-          interactive={!isRowDisabledOrInSyncFromSharing}
+          interactive={!isInSyncFromSharing}
           withFilePath={withFilePath}
           formattedSize={formattedSize}
           formattedUpdatedAt={formattedUpdatedAt}
@@ -144,15 +138,16 @@ const Cell = ({
       return '—'
     }
 
-    return (
-      <Share
-        row={row}
-        isRowDisabledOrInSyncFromSharing={isRowDisabledOrInSyncFromSharing}
-      />
-    )
+    return <Share row={row} isInSyncFromSharing={isInSyncFromSharing} />
   }
 
   if (column.id === 'menu') {
+    // We don't allow any action on shared drives and trash
+    // because they are magic folder created by the stack
+    const canInteractWithFile =
+      row._id !== 'io.cozy.files.shared-drives-dir' &&
+      !row._id.endsWith('.trash-dir')
+
     if (!actions || !canInteractWithFile) {
       return null
     }
@@ -162,7 +157,7 @@ const Cell = ({
         <FileAction
           file={row}
           ref={filerowMenuToggleRef}
-          disabled={isRowDisabledOrInSyncFromSharing}
+          disabled={isInSyncFromSharing}
           onClick={toggleShowActionMenu}
         />
         {actions && showActionMenu && (
