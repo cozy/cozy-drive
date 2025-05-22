@@ -118,6 +118,8 @@
     "prop-types": "15.8.1",
     "react": "16.14.0",
     "react-autosuggest": "10.1.0",
+    "react-dnd": "16.0.1",
+    "react-dnd-html5-backend": "16.0.1",
     "react-dom": "16.14.0",
     "react-dropzone": "5.1.1",
     "react-hot-loader": "4.13.1",
