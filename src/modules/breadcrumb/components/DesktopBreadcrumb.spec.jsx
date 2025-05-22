@@ -146,6 +146,7 @@ describe('DesktopBreadcrumb', () => {
       jest.spyOn(console, 'error').mockImplementation(() => {})
     })
     afterEach(() => {
+      // eslint-disable-next-line no-console
       console.error.mockRestore()
     })
     it('should hide menu displayed while navigating', async () => {

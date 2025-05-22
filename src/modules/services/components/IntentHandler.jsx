@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { useClient } from 'cozy-client'
 import Intents from 'cozy-interapp'
+import logger from 'cozy-logger'
 
 import Embeder from './Embeder'
 
@@ -39,7 +40,7 @@ const IntentHandler = ({ intentId }) => {
           intent
         })
       } catch (error) {
-        console.error(error)
+        logger.error(error)
         service.throw(error)
       }
     }

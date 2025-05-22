@@ -100,7 +100,7 @@ describe('FilesViewer', () => {
     )
   })
 
-  it.skip('should fetch more files if necessary', async () => {
+  it('should fetch more files if necessary', async () => {
     const client = new CozyClient({})
     client.query = jest.fn().mockResolvedValue({
       data: generateFile({ i: '51' })
