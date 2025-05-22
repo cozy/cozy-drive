@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { isDirectory } from 'cozy-client/dist/models/file'
 import Filename from 'cozy-ui/transpiled/react/Filename'
 import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
@@ -8,7 +9,10 @@ import styles from '@/styles/filelist.styl'
 
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
 import RenameInput from '@/modules/drive/RenameInput'
-import { getFileNameAndExtension } from '@/modules/filelist/helpers'
+import {
+  getFileNameAndExtension,
+  makeParentFolderPath
+} from '@/modules/filelist/helpers'
 import FileThumbnail from '@/modules/filelist/icons/FileThumbnail'
 import FileNamePath from '@/modules/filelist/virtualized/cells/FileNamePath'
 
@@ -25,6 +29,11 @@ const FileName = ({
   const { title, filename, extension } = getFileNameAndExtension(attributes, t)
   const { isBigThumbnail } = useThumbnailSizeContext()
   const { isMobile } = useBreakpoints()
+
+  const parentFolderPath = makeParentFolderPath(attributes)
+  const hidePath = withFilePath
+    ? !parentFolderPath
+    : isDirectory(attributes) || !isMobile
 
   if (isRenaming) {
     return (
@@ -73,12 +82,15 @@ const FileName = ({
         extension={extension}
         midEllipsis
         path={
-          <FileNamePath
-            attributes={attributes}
-            withFilePath={withFilePath}
-            formattedSize={formattedSize}
-            formattedUpdatedAt={formattedUpdatedAt}
-          />
+          hidePath ? undefined : (
+            <FileNamePath
+              attributes={attributes}
+              withFilePath={withFilePath}
+              formattedSize={formattedSize}
+              formattedUpdatedAt={formattedUpdatedAt}
+              parentFolderPath={parentFolderPath}
+            />
+          )
         }
       />
     </span>
