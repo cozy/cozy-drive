@@ -2,7 +2,11 @@ import React, { useCallback, useState, useEffect, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useClient } from 'cozy-client'
+import { useSharingContext } from 'cozy-sharing'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
+import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { makeColumns } from '../helpers'
 import { useSyncingFakeFile } from '../useSyncingFakeFile'
@@ -12,11 +16,12 @@ import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
 import FileListRowsPlaceholder from '@/modules/filelist/FileListRowsPlaceholder'
 import { isTypingNewFolderName } from '@/modules/filelist/duck'
 import { FolderUnlocker } from '@/modules/folder/components/FolderUnlocker'
+import { useCancelable } from '@/modules/move/hooks/useCancelable'
 import SelectionBar from '@/modules/selection/SelectionBar'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 import EmptyContent from '@/modules/views/Folder/virtualized/EmptyContent'
 import Table from '@/modules/views/Folder/virtualized/Table'
-import { makeRows } from '@/modules/views/Folder/virtualized/helpers'
+import { makeRows, onDrop } from '@/modules/views/Folder/virtualized/helpers'
 
 const FolderViewBody = ({
   currentFolderId,
@@ -24,13 +29,19 @@ const FolderViewBody = ({
   queryResults,
   actions,
   canUpload = true,
+  canDrag,
   withFilePath = false
 }) => {
+  const client = useClient()
   const { isDesktop } = useBreakpoints()
   const navigate = useNavigate()
   const IsAddingFolder = useSelector(isTypingNewFolderName)
   const { isBigThumbnail } = useThumbnailSizeContext()
   const { toggleSelectedItem, selectAll, selectedItems } = useSelectionContext()
+  const { sharedPaths } = useSharingContext()
+  const { registerCancelable } = useCancelable()
+  const { showAlert } = useAlert()
+  const { t } = useI18n()
 
   const isSelectedItem = file => {
     return selectedItems.some(item => item.id === file.id)
@@ -130,6 +141,18 @@ const FolderViewBody = ({
         <Table
           rows={rows}
           columns={columns}
+          dragProps={{
+            enabled: canDrag,
+            dragId: 'drag-drive',
+            onDrop: onDrop({
+              client,
+              showAlert,
+              selectAll,
+              registerCancelable,
+              sharedPaths,
+              t
+            })
+          }}
           fetchMore={fetchMore}
           selectAll={selectAll}
           toggleSelectedItem={toggleSelectedItem}
