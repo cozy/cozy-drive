@@ -9,8 +9,8 @@ import UINav from 'cozy-ui/transpiled/react/Nav'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { FavoriteList } from '@/modules/navigation/FavoriteList'
-import { NavItem } from '@/modules/navigation/NavItem'
 import { useNavContext } from '@/modules/navigation/NavContext'
+import { NavItem } from '@/modules/navigation/NavItem'
 import { SharingsNavItem } from '@/modules/navigation/SharingsNavItem'
 
 export const Nav = () => {
