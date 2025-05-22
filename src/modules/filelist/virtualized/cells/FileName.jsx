@@ -12,7 +12,10 @@ import styles from '@/styles/filelist.styl'
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
 import RenameInput from '@/modules/drive/RenameInput'
 import CertificationsIcons from '@/modules/filelist/cells/CertificationsIcons.jsx'
-import { getFileNameAndExtension } from '@/modules/filelist/helpers'
+import {
+  getFileNameAndExtension,
+  makeParentFolderPath
+} from '@/modules/filelist/helpers'
 import FileThumbnail from '@/modules/filelist/icons/FileThumbnail'
 
 const FileName = ({
@@ -28,6 +31,7 @@ const FileName = ({
   const { title, filename, extension } = getFileNameAndExtension(attributes, t)
   const { isBigThumbnail } = useThumbnailSizeContext()
   const { isMobile } = useBreakpoints()
+  const parentFolderPath = makeParentFolderPath(attributes)
 
   if (isRenaming) {
     return (
@@ -77,7 +81,7 @@ const FileName = ({
         midEllipsis
         path={
           withFilePath ? (
-            attributes.displayedPath &&
+            parentFolderPath &&
             (isMobile ? (
               <div
                 className={styles['fil-file-description']}
@@ -85,7 +89,7 @@ const FileName = ({
               >
                 <MidEllipsis
                   className={styles['fil-file-description--path']}
-                  text={attributes.displayedPath}
+                  text={parentFolderPath}
                 />
                 <CertificationsIcons attributes={attributes} />
               </div>
@@ -95,7 +99,7 @@ const FileName = ({
                 // Please do not modify the className as it is used in event handling, see FileOpener#46
                 className={styles['fil-file-path']}
               >
-                <MidEllipsis text={attributes.displayedPath} />
+                <MidEllipsis text={parentFolderPath} />
               </Link>
             ))
           ) : !isDirectory(attributes) && isMobile ? (
