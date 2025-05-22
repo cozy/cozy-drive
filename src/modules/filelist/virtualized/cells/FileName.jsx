@@ -1,9 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
-import { isDirectory } from 'cozy-client/dist/models/file'
 import Filename from 'cozy-ui/transpiled/react/Filename'
-import MidEllipsis from 'cozy-ui/transpiled/react/MidEllipsis'
 import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -11,12 +8,9 @@ import styles from '@/styles/filelist.styl'
 
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
 import RenameInput from '@/modules/drive/RenameInput'
-import CertificationsIcons from '@/modules/filelist/cells/CertificationsIcons.jsx'
-import {
-  getFileNameAndExtension,
-  makeParentFolderPath
-} from '@/modules/filelist/helpers'
+import { getFileNameAndExtension } from '@/modules/filelist/helpers'
 import FileThumbnail from '@/modules/filelist/icons/FileThumbnail'
+import FileNamePath from '@/modules/filelist/virtualized/cells/FileNamePath'
 
 const FileName = ({
   attributes,
@@ -31,7 +25,6 @@ const FileName = ({
   const { title, filename, extension } = getFileNameAndExtension(attributes, t)
   const { isBigThumbnail } = useThumbnailSizeContext()
   const { isMobile } = useBreakpoints()
-  const parentFolderPath = makeParentFolderPath(attributes)
 
   if (isRenaming) {
     return (
@@ -80,36 +73,12 @@ const FileName = ({
         extension={extension}
         midEllipsis
         path={
-          withFilePath ? (
-            parentFolderPath &&
-            (isMobile ? (
-              <div
-                className={styles['fil-file-description']}
-                title={filename + extension}
-              >
-                <MidEllipsis
-                  className={styles['fil-file-description--path']}
-                  text={parentFolderPath}
-                />
-                <CertificationsIcons attributes={attributes} />
-              </div>
-            ) : (
-              <Link
-                to={`/folder/${attributes.dir_id}`}
-                // Please do not modify the className as it is used in event handling, see FileOpener#46
-                className={styles['fil-file-path']}
-              >
-                <MidEllipsis text={parentFolderPath} />
-              </Link>
-            ))
-          ) : !isDirectory(attributes) && isMobile ? (
-            <div className={styles['fil-file-infos']}>
-              {`${formattedUpdatedAt}${
-                formattedSize ? ` - ${formattedSize}` : ''
-              }`}
-              <CertificationsIcons attributes={attributes} />
-            </div>
-          ) : undefined
+          <FileNamePath
+            attributes={attributes}
+            withFilePath={withFilePath}
+            formattedSize={formattedSize}
+            formattedUpdatedAt={formattedUpdatedAt}
+          />
         }
       />
     </span>
