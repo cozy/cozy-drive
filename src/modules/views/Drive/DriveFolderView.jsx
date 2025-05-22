@@ -44,6 +44,7 @@ import Toolbar from '@/modules/drive/Toolbar'
 import { useFolderSort } from '@/modules/navigation/duck'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 import Dropzone from '@/modules/upload/Dropzone'
+import DropzoneDnD from '@/modules/upload/DropzoneDnD'
 import { useTrashRedirect } from '@/modules/views/Drive/useTrashRedirect'
 import FolderView from '@/modules/views/Folder/FolderView'
 import FolderViewBody from '@/modules/views/Folder/FolderViewBody'
@@ -205,9 +206,12 @@ const DriveFolderView = () => {
     }
   }, [setIsFabDisplayed, isMobile, canWriteToCurrentFolder])
 
+  const DropzoneComp =
+    flag('drive.virtualization.enabled') && !isMobile ? DropzoneDnD : Dropzone
+
   return (
     <FolderView isNotFound={isNotFound}>
-      <Dropzone
+      <DropzoneComp
         role="main"
         disabled={!canWriteToCurrentFolder}
         displayedFolder={displayedFolder}
@@ -237,6 +241,7 @@ const DriveFolderView = () => {
             currentFolderId={currentFolderId}
             displayedFolder={displayedFolder}
             extraColumns={extraColumns}
+            canDrag
           />
         ) : (
           <FolderViewBody
@@ -262,7 +267,8 @@ const DriveFolderView = () => {
           </AddMenuProvider>
         )}
         <Outlet />
-      </Dropzone>
+      </DropzoneComp>
+      {/* </DnDProvider> */}
     </FolderView>
   )
 }

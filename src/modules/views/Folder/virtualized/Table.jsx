@@ -9,6 +9,7 @@ import Cell from '@/modules/filelist/virtualized/cells/Cell'
 const Table = ({
   rows,
   columns,
+  dragProps,
   selectAll,
   fetchMore,
   toggleSelectedItem,
@@ -22,6 +23,7 @@ const Table = ({
     <VirtuosoTable
       rows={rows}
       columns={columns}
+      dragProps={dragProps}
       endReached={fetchMore}
       defaultOrder={columns?.[0]?.id}
       secondarySort={secondarySort}
