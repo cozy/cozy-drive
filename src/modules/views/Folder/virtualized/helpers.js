@@ -7,7 +7,6 @@ export const makeRows = ({ queryResults, IsAddingFolder, syncingFakeFile }) => {
   if (IsAddingFolder) {
     rows.push({
       type: 'tempDirectory'
-      // isEncrypted: isEncryptedFolderFromState
     })
   }
   if (syncingFakeFile) {
