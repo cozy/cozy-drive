@@ -86,6 +86,7 @@ class BannerClient extends Component {
               component="a"
               variant="text"
               label={t('Nav.banner-btn-client')}
+              size="small"
               onClick={() => this.markAsSeen('banner')}
               startIcon={<Icon icon={DownloadIcon} />}
               target="_blank"
@@ -96,6 +97,7 @@ class BannerClient extends Component {
             <Button
               variant="text"
               label={t('SelectionBar.close')}
+              size="small"
               onClick={() => this.markAsSeen('close')}
             />
           }
