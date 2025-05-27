@@ -19,6 +19,7 @@ import { FolderUnlocker } from '@/modules/folder/components/FolderUnlocker'
 import { useCancelable } from '@/modules/move/hooks/useCancelable'
 import SelectionBar from '@/modules/selection/SelectionBar'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
+import AddFolderTable from '@/modules/views/Folder/virtualized/AddFolderTable'
 import EmptyContent from '@/modules/views/Folder/virtualized/EmptyContent'
 import Table from '@/modules/views/Folder/virtualized/Table'
 import { makeRows, onDrop } from '@/modules/views/Folder/virtualized/helpers'
@@ -125,6 +126,9 @@ const FolderViewBody = ({
       onDismiss={handleFolderUnlockerDismiss}
     >
       <SelectionBar actions={actions} />
+      {IsAddingFolder && !showTable && (
+        <AddFolderTable columns={columns} currentFolderId={currentFolderId} />
+      )}
       {isInError && <Oops />}
       {(needsToWait || isLoading) && <FileListRowsPlaceholder />}
       {/* TODO FolderViewBody should not have the responsability to chose
