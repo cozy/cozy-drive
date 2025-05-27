@@ -132,8 +132,6 @@ const AppRoute = () => (
         <Route path="file/:fileId/share" element={<ShareFileView />} />
         <Route path="file/:fileId/qualify" element={<QualifyFileView />} />
         <Route path="share" element={<ShareDisplayedFolderView />} />
-        <Route path="move" element={<MoveFilesView />} />
-        <Route path="duplicate" element={<FolderDuplicateView />} />
       </Route>
 
       <Route
@@ -164,7 +162,6 @@ const AppRoute = () => (
           <Route path="file/:fileId/revision" element={<FileHistory />} />
           <Route path="file/:fileId/share" element={<ShareFileView />} />
           <Route path="file/:fileId/qualify" element={<QualifyFileView />} />
-          <Route path="move" element={<MoveFilesView />} />
         </Route>
         {/* This route must be inside the /sharing path for the nav to have an activate state */}
         <Route path=":folderId" element={<SharingsFolderView />}>
@@ -174,7 +171,6 @@ const AppRoute = () => (
           <Route path="file/:fileId/share" element={<ShareFileView />} />
           <Route path="file/:fileId/qualify" element={<QualifyFileView />} />
           <Route path="share" element={<ShareDisplayedFolderView />} />
-          <Route path="move" element={<MoveFilesView />} />
         </Route>
       </Route>
 
