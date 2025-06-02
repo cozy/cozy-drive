@@ -85,7 +85,7 @@ export const computeApp = (type: string): string => {
       return 'notes'
     case 'docs':
     case 'public-docs-same-instance':
-      return 'cozy-lasuite-docs'
+      return 'docs'
     default:
       return 'drive'
   }
