@@ -23,6 +23,10 @@ interface ComputePathOptions {
   isPublic: boolean
 }
 
+const isDocs = file => {
+  return file?.name?.endsWith('.md')
+}
+
 export const computeFileType = (
   file: File,
   {
@@ -41,12 +45,23 @@ export const computeFileType = (
     // createdOn url ends with a trailing slash whereas cozyUrl does not joinPath fixes this
     const isSameInstance =
       joinPath(cozyUrl, '') === file.cozyMetadata?.createdOn
+
     if (isPublic && isSameInstance) {
       return 'public-note-same-instance'
     } else if (isSameInstance) {
       return 'note'
     } else {
       return 'public-note'
+    }
+  } else if (isDocs(file)) {
+    const isSameInstance =
+      joinPath(cozyUrl, '') === file.cozyMetadata?.createdOn
+    if (isPublic && isSameInstance) {
+      return 'public-docs-same-instance'
+    } else if (isSameInstance) {
+      return 'docs'
+    } else {
+      return 'public-docs'
     }
   } else if (shouldBeOpenedByOnlyOffice(file) && isOfficeEnabled) {
     return 'onlyoffice'
@@ -68,6 +83,9 @@ export const computeApp = (type: string): string => {
     case 'note':
     case 'public-note-same-instance':
       return 'notes'
+    case 'docs':
+    case 'public-docs-same-instance':
+      return 'cozy-lasuite-docs'
     default:
       return 'drive'
   }
@@ -97,6 +115,12 @@ export const computePath = (
       return `/?id=${file._id}`
     case 'public-note':
       return `/note/${file._id}`
+    case 'docs':
+      return `/bridge/docs/${file._id}`
+    case 'public-docs-same-instance':
+      return '' // `/bridge/docs/${file._id}`
+    case 'public-docs':
+      return '' // `/bridge/public/docs/${file._id}`
     case 'shortcut':
       return `/external/${file._id}`
     case 'directory':

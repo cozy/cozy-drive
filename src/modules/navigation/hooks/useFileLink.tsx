@@ -69,6 +69,7 @@ const useFileLink = (
     pathname,
     isPublic
   })
+
   const shouldBeOpenedInNewTab =
     type === 'shortcut' || type === 'nextcloud-file'
 
