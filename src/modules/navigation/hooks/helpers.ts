@@ -24,7 +24,7 @@ interface ComputePathOptions {
 }
 
 const isDocs = file => {
-  return file?.name?.endsWith('.md')
+  return file?.name?.endsWith('.md') && file?.metadata?.externalId
 }
 
 export const computeFileType = (
@@ -116,7 +116,7 @@ export const computePath = (
     case 'public-note':
       return `/note/${file._id}`
     case 'docs':
-      return `/bridge/docs/${file._id}`
+      return `/bridge/docs/${file.metadata.externalId}`
     case 'public-docs-same-instance':
       return '' // `/bridge/docs/${file._id}`
     case 'public-docs':
