@@ -48,14 +48,14 @@ const CreateDocsItem = ({
       return
     }
 
-    const url =
-      generateWebLink({
-        slug: 'docs',
-        cozyUrl: client.getStackClient().uri,
-        subDomainType: isFlatDomain ? 'flat' : 'nested',
-        pathname: '',
-        hash: `/bridge/docs/new/${_displayedFolder._id}`
-      }) & console.log('url : ', url)
+    const url = generateWebLink({
+      slug: 'cozy-lasuite-docs',
+      cozyUrl: client.getStackClient().uri,
+      subDomainType: isFlatDomain ? 'flat' : 'nested',
+      pathname: '',
+      hash: `/bridge/docs/new/${_displayedFolder._id}`,
+    })
+    console.log('url : ', url)
     // http://docs.cozy.localhost:8080/#/bridge/docs/new
 
     window.location.href = url
