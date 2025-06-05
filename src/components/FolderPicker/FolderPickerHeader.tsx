@@ -38,7 +38,7 @@ const FolderPickerHeader: React.FC<FolderPickerHeaderProps> = ({
   return (
     <Card inset style={specificCardStyle}>
       <FolderPickerHeaderIllustration entries={entries} />
-      <div>
+      <div className="u-ellipsis">
         <Typography variant="h6" noWrap>
           {entries.length !== 1 ? titleToUse : entries[0].name}
         </Typography>
