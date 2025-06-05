@@ -5,6 +5,7 @@ import { createStore } from 'redux'
 
 import { CozyProvider } from 'cozy-client'
 import { SharingContext, NativeFileSharingProvider } from 'cozy-sharing'
+import { Layout } from 'cozy-ui/transpiled/react/Layout'
 import AlertProvider from 'cozy-ui/transpiled/react/providers/Alert'
 import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
@@ -73,7 +74,9 @@ const AppLike = ({
                             <ModalContext.Provider
                               value={modalContextValue || mockModalContextValue}
                             >
-                              <FabProvider>{children}</FabProvider>
+                              <FabProvider>
+                                <Layout>{children}</Layout>
+                              </FabProvider>
                             </ModalContext.Provider>
                           </PushBannerProvider>
                         </AlertProvider>
