@@ -4,6 +4,8 @@ import React, { Component } from 'react'
 import { withClient } from 'cozy-client'
 import { isFlagshipApp } from 'cozy-device-helper'
 import Icon from 'cozy-ui/transpiled/react/Icon'
+import IconButton from 'cozy-ui/transpiled/react/IconButton'
+import CrossSmallIcon from 'cozy-ui/transpiled/react/Icons/CrossSmall'
 import DriveIcon from 'cozy-ui/transpiled/react/Icons/Drive'
 import ListItem from 'cozy-ui/transpiled/react/ListItem'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
@@ -14,6 +16,7 @@ import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import {
   getDesktopAppDownloadLink,
   isClientAlreadyInstalled,
+  DESKTOP_SMALL_BANNER,
   DESKTOP_BANNER
 } from '@/components/pushClient'
 import Config from '@/config/config.json'
@@ -36,10 +39,19 @@ class ButtonClient extends Component {
         this.props.client
       )
 
-      if (!hasClientBeenInstalled) {
+      const hasSmallBannerBeenClosed =
+        (await localforage.getItem(DESKTOP_SMALL_BANNER)) || false
+
+      if (!hasClientBeenInstalled && !hasSmallBannerBeenClosed) {
         this.setState(state => ({ ...state, mustShow: true }))
       }
     }
+  }
+
+  handleClick = ev => {
+    ev.stopPropagation()
+    this.setState(state => ({ ...state, mustShow: false }))
+    localforage.setItem(DESKTOP_SMALL_BANNER, true)
   }
 
   render() {
@@ -57,10 +69,18 @@ class ButtonClient extends Component {
     return (
       <Paper
         elevation={10}
-        className="u-mh-1-half u-mb-1-half u-c-pointer"
+        className="u-pos-relative u-mh-1-half u-mb-1-half u-c-pointer"
         style={{ backgroundColor: 'var(--defaultBackgroundColor)' }}
         onClick={() => window.open(link)}
       >
+        <IconButton
+          className="u-top-0 u-right-0"
+          style={{ position: 'absolute', zIndex: 1 }}
+          size="small"
+          onClick={this.handleClick}
+        >
+          <Icon icon={CrossSmallIcon} size={8} />
+        </IconButton>
         <ListItem component="div">
           <ListItemIcon>
             <Icon icon={DriveIcon} size={32} />
