@@ -19,6 +19,7 @@ export const isIOS = () =>
   /iPad|iPhone|iPod/.test(window.navigator.userAgent)
 
 export const DESKTOP_BANNER = 'desktop_banner'
+export const DESKTOP_SMALL_BANNER = 'desktop_small_banner'
 export const NOVIEWER_DESKTOP_CTA = 'noviewer_desktop_cta'
 
 export const isClientAlreadyInstalled = async client => {
