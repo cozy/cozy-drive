@@ -6,7 +6,7 @@
 .fil-content-row
     &:hover
         .fil-content-file-select
-            opacity 1
+            opacity .5
 
     &--center
         justify-content center
@@ -104,7 +104,7 @@ column-width-thumbnail-bigger = 7rem
         height 100%
 
     &.fil-content-file-select
-        padding .9375rem .5rem
+        padding 0
 
 .fil-content-row-bigger
     .fil-content-cell.fil-content-file
@@ -180,7 +180,7 @@ column-width-thumbnail-bigger = 7rem
 .fil-content-file-select
     flex       0 0 2rem
     opacity    0
-    padding    .9375rem .5rem
+    padding    0
     text-align center
     font-size  .875rem
     cursor     default
@@ -193,6 +193,14 @@ column-width-thumbnail-bigger = 7rem
     opacity     0
 
 .fil-content-body--selectable
+    .fil-content-file-select
+        opacity .5
+
+.fil-content-row-selected
+    &:hover
+        .fil-content-file-select
+            opacity 1
+
     .fil-content-file-select
         opacity 1
 
@@ -239,7 +247,7 @@ column-width-thumbnail-bigger = 7rem
     color var(--actionColorActive)
 
     &--separator
-        margin-left 0.25rem
+        margin-left .25rem
 
     &--icon
         width rem(10)
@@ -272,7 +280,7 @@ column-width-thumbnail-bigger = 7rem
     font-size .75rem
 
 .fil-file-shared-icon
-    margin-right 0.2rem
+    margin-right .2rem
 
 @keyframes placeHolderShimmer
     0%
@@ -414,7 +422,7 @@ column-width-thumbnail-bigger = 7rem
 
         &.fil-content-file-select
             display none
-            padding .9375rem 0 .9375rem .9375rem
+            padding 0 0 0 .25rem
 
     .fil-content-body--selectable
         .fil-content-file-select
@@ -423,6 +431,9 @@ column-width-thumbnail-bigger = 7rem
 
         .fil-content-file-action
             opacity 0
+
+        .fil-file-thumbnail
+            padding .875rem 1rem .875rem .25rem
 
     .fil-file-infos
         display flex
