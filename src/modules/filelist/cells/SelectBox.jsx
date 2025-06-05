@@ -1,6 +1,7 @@
 import cx from 'classnames'
 import React from 'react'
 
+import Checkbox from 'cozy-ui/transpiled/react/Checkbox'
 import { TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
 
 import styles from '@/styles/filelist.styl'
@@ -14,16 +15,12 @@ const SelectBox = ({ withSelectionCheckbox, selected, onClick, disabled }) => (
     {...(!disabled && { onClick })}
   >
     {withSelectionCheckbox && !disabled && (
-      <span data-input="checkbox">
-        <input
-          onChange={() => {
-            // handled by onClick on the <TableCell>
-          }}
-          type="checkbox"
-          checked={selected}
-        />
-        <label />
-      </span>
+      <Checkbox
+        checked={selected}
+        onChange={() => {
+          // handled by onClick on the <TableCell>
+        }}
+      />
     )}
   </TableCell>
 )
