@@ -212,7 +212,6 @@ const DriveFolderView = () => {
   return (
     <FolderView isNotFound={isNotFound}>
       <DropzoneComp
-        role="main"
         disabled={!canWriteToCurrentFolder}
         displayedFolder={displayedFolder}
       >
@@ -268,7 +267,6 @@ const DriveFolderView = () => {
         )}
         <Outlet />
       </DropzoneComp>
-      {/* </DnDProvider> */}
     </FolderView>
   )
 }
