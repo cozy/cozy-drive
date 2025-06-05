@@ -25,12 +25,18 @@ class ButtonClient extends Component {
 
   async UNSAFE_componentWillMount() {
     if (Config.promoteDesktop.isActivated !== true || isFlagshipApp()) return
-    const seen = (await localforage.getItem(DESKTOP_BANNER)) || false
+
+    const hasBannerBeenClosed =
+      (await localforage.getItem(DESKTOP_BANNER)) || false
+
     // we want to show the button if the banner has been marked as seen *and*
     // the client hasn't been already installed
-    if (seen) {
-      const mustSee = !(await isClientAlreadyInstalled(this.props.client))
-      if (mustSee) {
+    if (hasBannerBeenClosed) {
+      const hasClientBeenInstalled = await isClientAlreadyInstalled(
+        this.props.client
+      )
+
+      if (!hasClientBeenInstalled) {
         this.setState(state => ({ ...state, mustShow: true }))
       }
     }
