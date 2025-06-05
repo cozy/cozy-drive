@@ -1,11 +1,12 @@
 import cx from 'classnames'
-import React, { useState } from 'react'
-import ReactDropzone from 'react-dropzone'
+import React from 'react'
+import { useDropzone } from 'react-dropzone'
 import { useDispatch } from 'react-redux'
 
 import { useClient } from 'cozy-client'
 import { useVaultClient } from 'cozy-keys-lib'
 import { useSharingContext } from 'cozy-sharing'
+import { Content } from 'cozy-ui/transpiled/react/Layout'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
@@ -30,7 +31,7 @@ const canDrop = evt => {
   return true
 }
 
-export const Dropzone = ({ role, displayedFolder, disabled, children }) => {
+export const Dropzone = ({ displayedFolder, disabled, children }) => {
   const client = useClient()
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
@@ -38,18 +39,8 @@ export const Dropzone = ({ role, displayedFolder, disabled, children }) => {
   const sharingState = useSharingContext()
   const vaultClient = useVaultClient()
   const dispatch = useDispatch()
-  const [dropzoneActive, setDropzoneActive] = useState(false)
-
-  const onDragEnter = evt => {
-    if (!canDrop(evt)) return
-    setDropzoneActive(true)
-  }
-
-  const onDragLeave = () => setDropzoneActive(false)
 
   const onDrop = async (files, _, evt) => {
-    setDropzoneActive(false)
-
     if (!canDrop(evt)) return
 
     const filesToUpload = canHandleFolders(evt) ? evt.dataTransfer.items : files
@@ -63,22 +54,23 @@ export const Dropzone = ({ role, displayedFolder, disabled, children }) => {
     )
   }
 
+  const { getRootProps, isDragActive } = useDropzone({
+    onDrop,
+    disabled,
+    noClick: true,
+    noKeyboard: true
+  })
+
   return (
-    <ReactDropzone
-      role={role}
-      disabled={disabled}
+    <Content
       className={cx(isMobile ? '' : 'u-pt-1', {
-        [styles['fil-dropzone-active']]: dropzoneActive
+        [styles['fil-dropzone-active']]: isDragActive
       })}
-      disableClick
-      style={{}}
-      onDrop={onDrop}
-      onDragEnter={onDragEnter}
-      onDragLeave={onDragLeave}
+      {...getRootProps()}
     >
-      {dropzoneActive && <DropzoneTeaser currentFolder={displayedFolder} />}
+      {isDragActive && <DropzoneTeaser currentFolder={displayedFolder} />}
       {children}
-    </ReactDropzone>
+    </Content>
   )
 }
 
