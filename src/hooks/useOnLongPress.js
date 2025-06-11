@@ -11,6 +11,7 @@ export default function useLongPress({ onPress, selectionModeActive }) {
       onPress(e, 'press')
     }, 250)
   }
+
   function handleOnClick(e) {
     e.preventDefault()
     if (isLongPress.current) {
@@ -19,25 +20,31 @@ export default function useLongPress({ onPress, selectionModeActive }) {
 
     onPress(e, 'click')
   }
+
   function handleOnMouseDown(e) {
-    if (selectionModeActive) {
+    // button 0 is left click
+    if (selectionModeActive || e.button !== 0) {
       return
     }
     // We need to persist event in React <= 16
     e.persist()
     startPressTimer(e)
   }
+
   function handleOnMouseUp() {
     clearTimeout(timerRef.current)
   }
+
   function handleOnTouchStart(e) {
     // We need to persist event in React <= 16
     e.persist()
     startPressTimer(e)
   }
+
   function handleOnTouchEnd() {
     clearTimeout(timerRef.current)
   }
+
   return {
     handlers: {
       onClick: handleOnClick,
