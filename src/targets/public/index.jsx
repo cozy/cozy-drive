@@ -59,7 +59,7 @@ const init = async () => {
     token: sharecode,
     appMetadata,
     schema,
-    store: false
+    useCustomStore: true
   })
   registerClientPlugins(client)
 
