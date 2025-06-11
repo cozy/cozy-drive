@@ -10,6 +10,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import AddEncryptedFolderItem from '@/modules/drive/Toolbar/components/AddEncryptedFolderItem'
 import AddFolderItem from '@/modules/drive/Toolbar/components/AddFolderItem'
+import CreateDocsItem from '@/modules/drive/Toolbar/components/CreateDocsItem'
 import CreateNoteItem from '@/modules/drive/Toolbar/components/CreateNoteItem'
 import CreateOnlyOfficeItem from '@/modules/drive/Toolbar/components/CreateOnlyOfficeItem'
 import CreateShortcut from '@/modules/drive/Toolbar/components/CreateShortcut'
@@ -66,6 +67,13 @@ const AddMenuContent = ({
       )}
       {!isPublic && !isEncryptedFolder && (
         <CreateNoteItem
+          displayedFolder={displayedFolder}
+          isReadOnly={isReadOnly}
+          onClick={onClick}
+        />
+      )}
+      {!isPublic && !isEncryptedFolder && flag('drive.lasuitedocs.enabled') && (
+        <CreateDocsItem
           displayedFolder={displayedFolder}
           isReadOnly={isReadOnly}
           onClick={onClick}

@@ -14,6 +14,7 @@ import IconText from 'cozy-ui/transpiled/react/Icons/FileTypeText'
 import IconVideo from 'cozy-ui/transpiled/react/Icons/FileTypeVideo'
 import IconZip from 'cozy-ui/transpiled/react/Icons/FileTypeZip'
 
+import IconDocs from '@/assets/icons/icon-docs.svg'
 import { getFileMimetype } from '@/lib/getFileMimetype'
 import IconEncryptedFolder from '@/modules/views/Folder/EncryptedFolderIcon'
 
@@ -40,6 +41,8 @@ const getMimeTypeIcon = (
     return IconFolder
   } else if (/\.cozy-note$/.test(name)) {
     return IconNote
+  } else if (/\.docs-note$/.test(name)) {
+    return IconDocs
   } else {
     const iconsByMimeType = {
       audio: IconAudio,
