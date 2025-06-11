@@ -1,9 +1,11 @@
 import {
   isShortcut,
   isNote,
+  isDocs,
   shouldBeOpenedByOnlyOffice,
   isDirectory
 } from 'cozy-client/dist/models/file'
+import { IOCozyFile } from 'cozy-client/types/types'
 
 import type { File } from '@/components/FolderPicker/types'
 import { TRASH_DIR_ID } from '@/constants/config'
@@ -21,6 +23,13 @@ interface ComputePathOptions {
   type: string
   pathname: string
   isPublic: boolean
+}
+
+const isDocs = (file: File): boolean => {
+  return (
+    file.name?.endsWith('.docs-note') &&
+    !!(file as IOCozyFile).metadata.externalId
+  )
 }
 
 export const computeFileType = (
@@ -41,6 +50,7 @@ export const computeFileType = (
     // createdOn url ends with a trailing slash whereas cozyUrl does not joinPath fixes this
     const isSameInstance =
       joinPath(cozyUrl, '') === file.cozyMetadata?.createdOn
+
     if (isPublic && isSameInstance) {
       return 'public-note-same-instance'
     } else if (isSameInstance) {
@@ -48,6 +58,8 @@ export const computeFileType = (
     } else {
       return 'public-note'
     }
+  } else if (isDocs(file)) {
+    return 'docs'
   } else if (shouldBeOpenedByOnlyOffice(file) && isOfficeEnabled) {
     return 'onlyoffice'
   } else if (isNextcloudShortcut(file)) {
@@ -68,6 +80,8 @@ export const computeApp = (type: string): string => {
     case 'note':
     case 'public-note-same-instance':
       return 'notes'
+    case 'docs':
+      return 'docs'
     default:
       return 'drive'
   }
@@ -97,6 +111,9 @@ export const computePath = (
       return `/?id=${file._id}`
     case 'public-note':
       return `/note/${file._id}`
+    case 'docs':
+      // eslint-disable-next-line no-case-declarations, @typescript-eslint/restrict-template-expressions
+      return `/bridge/docs/${(file as IOCozyFile).metadata.externalId}`
     case 'shortcut':
       return `/external/${file._id}`
     case 'directory':
