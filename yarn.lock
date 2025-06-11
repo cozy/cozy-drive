@@ -5469,6 +5469,33 @@ cozy-client@^57.7.0:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
+cozy-client@^58.3.1:
+  version "58.3.1"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-58.3.1.tgz#30f706f0016341e35b481dd0c604544ddfcfc589"
+  integrity sha512-zbKzTH0RSpjRVX+8VsQFd6MV+zVXd9cYVWtt1ouWM7la0/XJcDQjEjqq2Xs0RPJGUO+BPIKsZTY9AxYQkgPGQA==
+  dependencies:
+    "@cozy/minilog" "1.0.0"
+    "@fastify/deepmerge" "^2.0.2"
+    "@types/jest" "^26.0.20"
+    "@types/lodash" "^4.14.170"
+    btoa "^1.2.1"
+    cozy-stack-client "^58.0.0"
+    date-fns "2.29.3"
+    fast-deep-equal "^3.1.3"
+    json-stable-stringify "^1.0.1"
+    lodash "^4.17.13"
+    microee "^0.0.6"
+    node-fetch "^2.6.1"
+    node-polyglot "2.4.2"
+    open "7.4.2"
+    prop-types "^15.6.2"
+    react-redux "^7.2.0"
+    redux "3 || 4"
+    redux-thunk "^2.3.0"
+    server-destroy "^1.0.1"
+    sift "^6.0.0"
+    url-search-params-polyfill "^8.0.0"
+
 cozy-dataproxy-lib@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/cozy-dataproxy-lib/-/cozy-dataproxy-lib-4.1.0.tgz#20d0a38e059fb5924d85f3b5a550d7d28ec9a477"
@@ -5774,6 +5801,15 @@ cozy-stack-client@^57.2.0:
   version "57.2.0"
   resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-57.2.0.tgz#837176d73561aa1983f6b2c0a9b0cbe1eb0a0d14"
   integrity sha512-k68fuNdfLXsskdgA0pd04Bk+CDUCqICCm5IZHJZiIEJkovvA6IqI/jU8vyNI7fNrCuRQasCjwatIRoT7Qq9O6g==
+  dependencies:
+    detect-node "^2.0.4"
+    mime "^2.4.0"
+    qs "^6.7.0"
+
+cozy-stack-client@^58.0.0:
+  version "58.0.0"
+  resolved "https://registry.yarnpkg.com/cozy-stack-client/-/cozy-stack-client-58.0.0.tgz#de9082686d00d6f4ba9bd2b463df93be6b8de1ad"
+  integrity sha512-y462sU1Monpp6qZrTSpW7nAf/vYRYnBEFiqoaNUXX2kE7Ti3svUu9A/SoEu1jaE86iV5a/DKLMLY5GoOMyiYCQ==
   dependencies:
     detect-node "^2.0.4"
     mime "^2.4.0"
