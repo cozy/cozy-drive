@@ -12,6 +12,11 @@ export const ErrorShare = ({ errorType }) => {
       icon={CloudBrokenIcon}
       title={t(`Error.${errorType}_title`)}
       text={t(`Error.${errorType}_text`)}
+      componentsProps={{
+        icon: {
+          style: { height: '2rem' }
+        }
+      }}
     />
   )
 }
