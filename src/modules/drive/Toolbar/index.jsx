@@ -1,6 +1,6 @@
 import cx from 'classnames'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useState, useRef } from 'react'
 
 import { SharedDocument, useSharingContext } from 'cozy-sharing'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -8,9 +8,14 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import styles from '@/styles/toolbar.styl'
 
 import { BarRightOnMobile } from '@/components/Bar'
+import { MoreButton } from '@/components/Button'
 import { useDisplayedFolder, useCurrentFolderId } from '@/hooks'
+import { ActionMenuWithHeader } from '@/modules/actionmenu/ActionMenuWithHeader'
 import InsideRegularFolder from '@/modules/drive/Toolbar/components/InsideRegularFolder'
-import MoreMenu from '@/modules/drive/Toolbar/components/MoreMenu'
+import MoreMenu, {
+  toggleMenu,
+  closeMenu
+} from '@/modules/drive/Toolbar/components/MoreMenu'
 import SearchButton from '@/modules/drive/Toolbar/components/SearchButton'
 import ViewSwitcher from '@/modules/drive/Toolbar/components/ViewSwitcher'
 import ShareButton from '@/modules/drive/Toolbar/share/ShareButton'
@@ -20,18 +25,25 @@ import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 const Toolbar = ({
   folderId,
   disabled,
+  actions,
   canUpload,
   canCreateFolder,
   hasWriteAccess,
   isSharedWithMe
 }) => {
+  const [actionsMenuIsVisible, setActionsMenuVisible] = useState(false)
   const { displayedFolder } = useDisplayedFolder()
   const { isMobile } = useBreakpoints()
   const { showSelectionBar, isSelectionBarVisible } = useSelectionContext()
   const { allLoaded } = useSharingContext() // We need to wait for the sharing context to be completely loaded to avoid race conditions
-
+  const anchorRef = useRef()
   const isDisabled = disabled || isSelectionBarVisible
   const isSharingDisabled = isDisabled || !allLoaded
+
+  const handleToggle = () =>
+    toggleMenu(actionsMenuIsVisible, setActionsMenuVisible)
+
+  const handleClose = () => closeMenu(setActionsMenuVisible)
 
   if (disabled) {
     return null
@@ -56,7 +68,23 @@ const Toolbar = ({
         <ShareButton isDisabled={isSharingDisabled} className="u-mr-half" />
       </InsideRegularFolder>
       <ViewSwitcher className="u-mr-half" />
-      <MoreMenu
+      {hasWriteAccess && (
+        <>
+          <div ref={anchorRef}>
+            <MoreButton onClick={handleToggle} disabled={isDisabled} />
+          </div>
+          {actionsMenuIsVisible && (
+            <ActionMenuWithHeader
+              anchorElRef={anchorRef}
+              file={displayedFolder}
+              actions={actions}
+              onClose={handleClose}
+            />
+          )}
+        </>
+      )}
+
+      {/* <MoreMenu
         isDisabled={isDisabled}
         hasWriteAccess={hasWriteAccess}
         isSharedWithMe={isSharedWithMe}
@@ -66,7 +94,7 @@ const Toolbar = ({
         displayedFolder={displayedFolder}
         showSelectionBar={showSelectionBar}
         isSelectionBarVisible={isSelectionBarVisible}
-      />
+      /> */}
       <BarRightOnMobile>{isMobile && <SearchButton />}</BarRightOnMobile>
     </div>
   )

@@ -223,6 +223,7 @@ const DriveFolderView = () => {
             />
           )}
           <Toolbar
+            actions={actions}
             canUpload={true}
             canCreateFolder={true}
             disabled={isLoading || isInError || isPending}
