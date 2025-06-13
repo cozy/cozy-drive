@@ -1,8 +1,8 @@
 {
   "name": "Drive",
-  "name_prefix": "Cozy",
+  "name_prefix": "Twake",
   "slug": "drive",
-  "version": "1.80.0",
+  "version": "1.81.0",
   "type": "webapp",
   "licence": "AGPL-3.0",
   "icon": "assets/app-icon.svg",
@@ -10,13 +10,13 @@
   "source": "https://github.com/cozy/cozy-drive",
   "editor": "Cozy",
   "developer": {
-    "name": "Cozy Cloud",
-    "url": "https://cozy.io"
+   "name": "Twake Workplace",
+    "url": "https://twake.app"
   },
   "locales": {
     "en": {
-      "short_description": "Cozy Drive helps you to save, sync and secure your files on your Cozy.",
-      "long_description": "With Cozy Drive, you can easily:\n- Store your important files and keep them secure in your Cozy\n- Access to all your documents online & offline, from your desktop, and on your smartphone or tablet\n- Share links to files ans folders with who you like;\n- Automatically retrieve bills, payrolls, tax notices and other data from your main online services (internet, energy, retail, mobile, energy, travel...)\n- Upload files to your Cozy from your Android",
+      "short_description": "Twake Drive helps you to save, sync and secure your files on your Twake.",
+      "long_description": "With Twake Drive, you can easily:\n- Store your important files and keep them secure in your Twake\n- Access to all your documents online & offline, from your desktop, and on your smartphone or tablet\n- Share links to files ans folders with who you like;\n- Automatically retrieve bills, payrolls, tax notices and other data from your main online services (internet, energy, retail, mobile, energy, travel...)\n- Upload files to your Twake from your Android",
       "screenshots": [
         "assets/screenshots/en/screenshot01.png",
         "assets/screenshots/en/screenshot02.png",
@@ -25,8 +25,8 @@
       ]
     },
     "fr": {
-      "short_description": "Cozy Drive est l’application de sauvegarde, de synchronisation et de sécurisation de tous vos fichiers sur Cozy.",
-      "long_description": "Avec Cozy Drive vous pourrez :\n- Sauvegarder et synchroniser gratuitement tous vos documents importants (carte d’identité, photos de vacances, avis d’imposition, fiches de salaires…);\n- Accéder à vos documents n’importe quand, n’importe ou même en mode avion depuis votre bureau, votre smartphone ou tablette;\n- Partager vos fichiers et dossiers par lien avec qui vous le souhaitez;\n- Récupérer automatiquement vos documents administratifs de vos principaux fournisseurs de service (opérateur mobile, fournisseur d’énergie, assureur, internet, santé…);\n- Rester synchronisé·e lors de vos voyages et déplacements professionnels avec nos applications mobiles.",
+      "short_description": "Twake Drive est l’application de sauvegarde, de synchronisation et de sécurisation de tous vos fichiers sur Twake.",
+      "long_description": "Avec Twake Drive vous pourrez :\n- Sauvegarder et synchroniser gratuitement tous vos documents importants (carte d’identité, photos de vacances, avis d’imposition, fiches de salaires…);\n- Accéder à vos documents n’importe quand, n’importe ou même en mode avion depuis votre bureau, votre smartphone ou tablette;\n- Partager vos fichiers et dossiers par lien avec qui vous le souhaitez;\n- Récupérer automatiquement vos documents administratifs de vos principaux fournisseurs de service (opérateur mobile, fournisseur d’énergie, assureur, internet, santé…);\n- Rester synchronisé·e lors de vos voyages et déplacements professionnels avec nos applications mobiles.",
       "screenshots": [
         "assets/screenshots/fr/screenshot01.png",
         "assets/screenshots/fr/screenshot02.png",
