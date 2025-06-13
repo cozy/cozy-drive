@@ -25,13 +25,6 @@ interface ComputePathOptions {
   isPublic: boolean
 }
 
-const isDocs = (file: File): boolean => {
-  return (
-    file.name?.endsWith('.docs-note') &&
-    !!(file as IOCozyFile).metadata.externalId
-  )
-}
-
 export const computeFileType = (
   file: File,
   {
