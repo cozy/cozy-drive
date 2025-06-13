@@ -86,6 +86,9 @@ declare module 'cozy-client/dist/models/file' {
   export const isNote: (
     file: import('components/FolderPicker/types').File
   ) => boolean
+  export const isDocs: (
+    file: import('components/FolderPicker/types').File
+  ) => boolean
   export const shouldBeOpenedByOnlyOffice: (
     file: import('components/FolderPicker/types').File
   ) => boolean
