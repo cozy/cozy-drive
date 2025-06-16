@@ -30,6 +30,7 @@ const AddMenuProvider = ({
   isPublic,
   displayedFolder,
   isSelectionBarVisible,
+  componentsProps,
   isReadOnly
 }) => {
   const [menuIsVisible, setMenuVisible] = useState(false)
@@ -99,6 +100,7 @@ const AddMenuProvider = ({
             isEncryptedFolder={isEncryptedDir}
             displayedFolder={displayedFolder}
             isReadOnly={isReadOnly}
+            {...componentsProps?.AddMenu}
           />
         )}
       </ScannerProvider>
