@@ -3,12 +3,12 @@ import { filesize } from 'filesize'
 import get from 'lodash/get'
 import PropTypes from 'prop-types'
 import React, { useState, useRef } from 'react'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import { isDirectory } from 'cozy-client/dist/models/file'
 import { TableRow, TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
-import withBreakpoints from 'cozy-ui/transpiled/react/helpers/withBreakpoints'
-import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import {
   SelectBox,
@@ -24,7 +24,10 @@ import styles from '@/styles/filelist.styl'
 
 import { ActionMenuWithHeader } from '@/modules/actionmenu/ActionMenuWithHeader'
 import { extraColumnsPropTypes } from '@/modules/certifications'
-import { isRenaming, getRenamingFile } from '@/modules/drive/rename'
+import {
+  isRenaming as isRenamingReducer,
+  getRenamingFile
+} from '@/modules/drive/rename'
 import FileOpener from '@/modules/filelist/FileOpener'
 import FileThumbnail from '@/modules/filelist/icons/FileThumbnail'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
@@ -213,12 +216,19 @@ File.propTypes = {
   disableSelection: PropTypes.bool
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  isRenaming:
-    isRenaming(state) &&
-    get(getRenamingFile(state), 'id') === ownProps.attributes.id
-})
+export const DumbFile = props => {
+  const { t, f } = useI18n()
+  const breakpoints = useBreakpoints()
 
-export const DumbFile = withBreakpoints()(translate()(File))
+  return <File t={t} f={f} breakpoints={breakpoints} {...props} />
+}
 
-export const FileWithSelection = connect(mapStateToProps)(DumbFile)
+export const FileWithSelection = props => {
+  const isRenaming = useSelector(
+    state =>
+      isRenamingReducer(state) &&
+      get(getRenamingFile(state), 'id') === props.attributes.id
+  )
+
+  return <DumbFile isRenaming={isRenaming} {...props} />
+}
