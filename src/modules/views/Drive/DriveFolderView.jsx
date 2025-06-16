@@ -68,7 +68,7 @@ const DriveFolderView = () => {
   const currentFolderId = useCurrentFolderId()
   useHead()
   const { isSelectionBarVisible } = useSelectionContext()
-  const { isMobile } = useBreakpoints()
+  const { isMobile, isDesktop } = useBreakpoints()
   const { t, lang } = useI18n()
   const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)
   const { isBigThumbnail, toggleThumbnailSize } = useThumbnailSizeContext()
@@ -198,13 +198,13 @@ const DriveFolderView = () => {
 
   useEffect(() => {
     if (canWriteToCurrentFolder) {
-      setIsFabDisplayed(isMobile)
+      setIsFabDisplayed(!isDesktop)
       return () => {
         // to not have this set to false on other views after using this view
         setIsFabDisplayed(false)
       }
     }
-  }, [setIsFabDisplayed, isMobile, canWriteToCurrentFolder])
+  }, [setIsFabDisplayed, isDesktop, canWriteToCurrentFolder])
 
   const DropzoneComp =
     flag('drive.virtualization.enabled') && !isMobile ? DropzoneDnD : Dropzone
