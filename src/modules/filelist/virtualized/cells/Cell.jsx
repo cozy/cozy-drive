@@ -10,6 +10,7 @@ import { useSharingContext } from 'cozy-sharing'
 import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import RightClickFileMenu from '@/components/RightClick/RightClickFileMenu'
 import AcceptingSharingContext from '@/lib/AcceptingSharingContext'
 import { ActionMenuWithHeader } from '@/modules/actionmenu/ActionMenuWithHeader'
 import {
@@ -175,4 +176,28 @@ const Cell = ({
   return <>{cell}</>
 }
 
-export default React.memo(Cell)
+const CellMemo = React.memo(Cell)
+
+const CellWrapper = ({
+  row,
+  column,
+  cell,
+  currentFolderId,
+  withFilePath,
+  actions
+}) => {
+  return (
+    <RightClickFileMenu docs={[row]} actions={actions}>
+      <CellMemo
+        row={row}
+        column={column}
+        cell={cell}
+        currentFolderId={currentFolderId}
+        withFilePath={withFilePath}
+        actions={actions}
+      />
+    </RightClickFileMenu>
+  )
+}
+
+export default CellWrapper
