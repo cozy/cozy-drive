@@ -12,6 +12,7 @@ import { makeColumns } from '../helpers'
 import { useSyncingFakeFile } from '../useSyncingFakeFile'
 
 import Oops from '@/components/Error/Oops'
+import RightClickAddMenu from '@/components/RightClick/RightClickAddMenu'
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
 import FileListRowsPlaceholder from '@/modules/filelist/FileListRowsPlaceholder'
 import { isTypingNewFolderName } from '@/modules/filelist/duck'
@@ -135,38 +136,40 @@ const FolderViewBody = ({
       which empty component to display. It should be done by the "view" itself.
       But adding a new prop like <FolderViewBody emptyComponent={}
       is not good enought too */}
-      <EmptyContent
-        displayedFolder={displayedFolder}
-        isEmpty={isEmpty}
-        currentFolderId={currentFolderId}
-        canUpload={canUpload}
-      />
-      {showTable && (
-        <Table
-          rows={rows}
-          columns={columns}
-          dragProps={{
-            enabled: canDrag,
-            dragId: 'drag-drive',
-            onDrop: onDrop({
-              client,
-              showAlert,
-              selectAll,
-              registerCancelable,
-              sharedPaths,
-              t
-            })
-          }}
-          fetchMore={fetchMore}
-          selectAll={selectAll}
-          toggleSelectedItem={toggleSelectedItem}
-          isSelectedItem={isSelectedItem}
-          selectedItems={selectedItems}
+      <RightClickAddMenu>
+        <EmptyContent
+          displayedFolder={displayedFolder}
+          isEmpty={isEmpty}
           currentFolderId={currentFolderId}
-          withFilePath={withFilePath}
-          actions={actions}
+          canUpload={canUpload}
         />
-      )}
+        {showTable && (
+          <Table
+            rows={rows}
+            columns={columns}
+            dragProps={{
+              enabled: canDrag,
+              dragId: 'drag-drive',
+              onDrop: onDrop({
+                client,
+                showAlert,
+                selectAll,
+                registerCancelable,
+                sharedPaths,
+                t
+              })
+            }}
+            fetchMore={fetchMore}
+            selectAll={selectAll}
+            toggleSelectedItem={toggleSelectedItem}
+            isSelectedItem={isSelectedItem}
+            selectedItems={selectedItems}
+            currentFolderId={currentFolderId}
+            withFilePath={withFilePath}
+            actions={actions}
+          />
+        )}
+      </RightClickAddMenu>
     </FolderUnlocker>
   )
 }
