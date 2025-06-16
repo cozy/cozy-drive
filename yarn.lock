@@ -5820,10 +5820,10 @@ cozy-tsconfig@^1.8.1:
   resolved "https://registry.yarnpkg.com/cozy-tsconfig/-/cozy-tsconfig-1.8.1.tgz#5f206f4e6e041a4afc6691098264ba630bdeb7e2"
   integrity sha512-/9QBxK8Tc12O2ojuyRpSMjPpXpqldVvzfNB1+/nPD+IkIBkU+mqxpHYJwKWjNYHGraCSy69mIwt9J3aiaJdz9w==
 
-cozy-ui@^126.1.0:
-  version "126.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-126.1.0.tgz#1a0e45622c15b19fe26962342b26e94fe3cd5b41"
-  integrity sha512-J+Hcteyt/4LsC7+bNSWr/9TLKnagiQJSCCy/+EduzMORkm+g8OkYvlerOgraNS1qEP9PQTCZJ2jzgMn5dYm7PA==
+cozy-ui@^126.2.0:
+  version "126.2.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-126.2.0.tgz#8ee46526c911477916fa21ed6a304f43a69cdf31"
+  integrity sha512-BVNzSlHBnT6UwC3ZyYJEtwHeOKzcad8M330evuDdusF8f0aupuOfIKCIs1DyeSs5AP2fWglxfE6WMq/U6wgvQA==
   dependencies:
     "@babel/runtime" "^7.3.4"
     "@date-io/date-fns" "1"
