@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 
 import flag from 'cozy-flags'
 import ActionsMenuMobileHeader from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuMobileHeader'
@@ -19,105 +19,113 @@ import { useScannerContext } from '@/modules/drive/Toolbar/components/Scanner/Sc
 import UploadItem from '@/modules/drive/Toolbar/components/UploadItem'
 import { isOfficeEditingEnabled } from '@/modules/views/OnlyOffice/helpers'
 
-const AddMenuContent = ({
-  isDisabled,
-  canCreateFolder,
-  canUpload,
-  refreshFolderContent,
-  isPublic,
-  isEncryptedFolder,
-  displayedFolder,
-  onClick,
-  isReadOnly
-}) => {
-  const { t } = useI18n()
-  const { isDesktop } = useBreakpoints()
-  const { hasScanner } = useScannerContext()
-  const { showAlert } = useAlert()
+const AddMenuContent = forwardRef(
+  ({
+    isDisabled,
+    canCreateFolder,
+    canUpload,
+    refreshFolderContent,
+    isPublic,
+    isEncryptedFolder,
+    displayedFolder,
+    onClick,
+    isReadOnly
+  }) => {
+    const { t } = useI18n()
+    const { isDesktop } = useBreakpoints()
+    const { hasScanner } = useScannerContext()
+    const { showAlert } = useAlert()
 
-  const handleReadOnlyClick = e => {
-    e.stopPropagation()
-    e.preventDefault()
-    showAlert(
-      t(
-        'AddMenu.readOnlyFolder',
-        'This is a read-only folder. You cannot perform this action.'
-      ),
-      'warning'
+    const handleReadOnlyClick = e => {
+      e.stopPropagation()
+      e.preventDefault()
+      showAlert(
+        t(
+          'AddMenu.readOnlyFolder',
+          'This is a read-only folder. You cannot perform this action.'
+        ),
+        'warning'
+      )
+      onClick()
+    }
+
+    const createActionOnClick = isReadOnly ? handleReadOnlyClick : onClick
+
+    return (
+      <>
+        <ActionsMenuMobileHeader>
+          <ListItemText
+            primary={t('toolbar.menu_create')}
+            primaryTypographyProps={{ variant: 'h6' }}
+          />
+        </ActionsMenuMobileHeader>
+
+        {canCreateFolder && !isEncryptedFolder && (
+          <AddFolderItem onClick={onClick} isReadOnly={isReadOnly} />
+        )}
+        {canCreateFolder && !isPublic && flag('drive.enable-encryption') && (
+          <AddEncryptedFolderItem onClick={onClick} isReadOnly={isReadOnly} />
+        )}
+        {!isPublic && !isEncryptedFolder && (
+          <CreateNoteItem
+            displayedFolder={displayedFolder}
+            isReadOnly={isReadOnly}
+            onClick={onClick}
+          />
+        )}
+        {!isPublic &&
+          !isEncryptedFolder &&
+          flag('drive.lasuitedocs.enabled') && (
+            <CreateDocsItem
+              displayedFolder={displayedFolder}
+              isReadOnly={isReadOnly}
+              onClick={onClick}
+            />
+          )}
+        {canUpload &&
+          isOfficeEditingEnabled(isDesktop) &&
+          !isEncryptedFolder && (
+            <>
+              <CreateOnlyOfficeItem
+                fileClass="text"
+                isReadOnly={isReadOnly}
+                onClick={onClick}
+              />
+              <CreateOnlyOfficeItem
+                fileClass="spreadsheet"
+                isReadOnly={isReadOnly}
+                onClick={onClick}
+              />
+              <CreateOnlyOfficeItem
+                fileClass="slide"
+                isReadOnly={isReadOnly}
+                onClick={onClick}
+              />
+            </>
+          )}
+        {!isEncryptedFolder && (
+          <CreateShortcut
+            onCreated={refreshFolderContent}
+            onClick={onClick}
+            isReadOnly={isReadOnly}
+          />
+        )}
+        {canUpload && <Divider className="u-mv-half" />}
+        {canUpload && (
+          <UploadItem
+            disabled={isDisabled}
+            onUploaded={refreshFolderContent}
+            displayedFolder={displayedFolder}
+            onClick={onClick}
+            isReadOnly={isReadOnly}
+          />
+        )}
+        {hasScanner && <ScannerMenuItem onClick={createActionOnClick} />}
+      </>
     )
-    onClick()
   }
+)
 
-  const createActionOnClick = isReadOnly ? handleReadOnlyClick : onClick
-
-  return (
-    <>
-      <ActionsMenuMobileHeader>
-        <ListItemText
-          primary={t('toolbar.menu_create')}
-          primaryTypographyProps={{ variant: 'h6' }}
-        />
-      </ActionsMenuMobileHeader>
-
-      {canCreateFolder && !isEncryptedFolder && (
-        <AddFolderItem onClick={onClick} isReadOnly={isReadOnly} />
-      )}
-      {canCreateFolder && !isPublic && flag('drive.enable-encryption') && (
-        <AddEncryptedFolderItem onClick={onClick} isReadOnly={isReadOnly} />
-      )}
-      {!isPublic && !isEncryptedFolder && (
-        <CreateNoteItem
-          displayedFolder={displayedFolder}
-          isReadOnly={isReadOnly}
-          onClick={onClick}
-        />
-      )}
-      {!isPublic && !isEncryptedFolder && flag('drive.lasuitedocs.enabled') && (
-        <CreateDocsItem
-          displayedFolder={displayedFolder}
-          isReadOnly={isReadOnly}
-          onClick={onClick}
-        />
-      )}
-      {canUpload && isOfficeEditingEnabled(isDesktop) && !isEncryptedFolder && (
-        <>
-          <CreateOnlyOfficeItem
-            fileClass="text"
-            isReadOnly={isReadOnly}
-            onClick={onClick}
-          />
-          <CreateOnlyOfficeItem
-            fileClass="spreadsheet"
-            isReadOnly={isReadOnly}
-            onClick={onClick}
-          />
-          <CreateOnlyOfficeItem
-            fileClass="slide"
-            isReadOnly={isReadOnly}
-            onClick={onClick}
-          />
-        </>
-      )}
-      {!isEncryptedFolder && (
-        <CreateShortcut
-          onCreated={refreshFolderContent}
-          onClick={onClick}
-          isReadOnly={isReadOnly}
-        />
-      )}
-      {canUpload && <Divider className="u-mv-half" />}
-      {canUpload && (
-        <UploadItem
-          disabled={isDisabled}
-          onUploaded={refreshFolderContent}
-          displayedFolder={displayedFolder}
-          onClick={onClick}
-          isReadOnly={isReadOnly}
-        />
-      )}
-      {hasScanner && <ScannerMenuItem onClick={createActionOnClick} />}
-    </>
-  )
-}
+AddMenuContent.displayName = 'AddMenuContent'
 
 export default AddMenuContent
