@@ -74,7 +74,7 @@ const PublicFolderView = () => {
   const { pathname } = useLocation()
   const client = useClient()
   const { t, lang } = useI18n()
-  const { isMobile } = useBreakpoints()
+  const { isMobile, isDesktop } = useBreakpoints()
   const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)
   const currentFolderId = useCurrentFolderId()
   const { displayedFolder } = useDisplayedFolder()
@@ -150,13 +150,13 @@ const PublicFolderView = () => {
 
   useEffect(() => {
     if (hasWritePermissions) {
-      setIsFabDisplayed(isMobile)
+      setIsFabDisplayed(!isDesktop)
       return () => {
         // to not have this set to false on other views after using this view
         setIsFabDisplayed(false)
       }
     }
-  }, [setIsFabDisplayed, isMobile, hasWritePermissions])
+  }, [setIsFabDisplayed, isDesktop, hasWritePermissions])
 
   const showNewBreadcrumbFlag = flag(
     'drive.breadcrumb.showCompleteBreadcrumbOnPublicPage'
