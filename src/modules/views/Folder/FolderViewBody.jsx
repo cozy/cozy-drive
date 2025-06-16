@@ -9,6 +9,8 @@ import { useSyncingFakeFile } from './useSyncingFakeFile'
 
 import { EmptyDrive, EmptyTrash } from '@/components/Error/Empty'
 import Oops from '@/components/Error/Oops'
+import RightClickAddMenu from '@/components/RightClick/RightClickAddMenu'
+import RightClickFileMenu from '@/components/RightClick/RightClickFileMenu'
 import { TRASH_DIR_ID } from '@/constants/config'
 import AcceptingSharingContext from '@/lib/AcceptingSharingContext'
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
@@ -137,80 +139,87 @@ const FolderViewBody = ({
             extraColumns={extraColumns}
           />
         )}
-        <FileListBody selectionModeActive={false}>
-          <AddFolder
-            vaultClient={vaultClient}
-            refreshFolderContent={refreshFolderContent}
-            extraColumns={extraColumns}
-            currentFolderId={currentFolderId}
-          />
-          {isInError && <Oops />}
-          {(needsToWait || isLoading) && <FileListRowsPlaceholder />}
-          {/* TODO FolderViewBody should not have the responsability to chose
+        <RightClickAddMenu>
+          <FileListBody selectionModeActive={false}>
+            <AddFolder
+              vaultClient={vaultClient}
+              refreshFolderContent={refreshFolderContent}
+              extraColumns={extraColumns}
+              currentFolderId={currentFolderId}
+            />
+            {isInError && <Oops />}
+            {(needsToWait || isLoading) && <FileListRowsPlaceholder />}
+            {/* TODO FolderViewBody should not have the responsability to chose
           which empty component to display. It should be done by the "view" itself.
           But adding a new prop like <FolderViewBody emptyComponent={}
           is not good enought too */}
-          {displayedFolder !== null &&
-            isEmpty &&
-            currentFolderId !== TRASH_DIR_ID && (
-              <EmptyDrive isEncrypted={isEncFolder} canUpload={canUpload} />
+            {displayedFolder !== null &&
+              isEmpty &&
+              currentFolderId !== TRASH_DIR_ID && (
+                <EmptyDrive isEncrypted={isEncFolder} canUpload={canUpload} />
+              )}
+            {displayedFolder !== null &&
+              isEmpty &&
+              currentFolderId === TRASH_DIR_ID && (
+                <EmptyTrash canUpload={canUpload} />
+              )}
+            {hasDataToShow && !needsToWait && (
+              <div className={!isDesktop ? 'u-ov-hidden' : ''}>
+                <>
+                  {syncingFakeFile && (
+                    <File
+                      attributes={syncingFakeFile}
+                      withSelectionCheckbox={false}
+                      actions={[]}
+                      isInSyncFromSharing={true}
+                      extraColumns={extraColumns}
+                      disableSelection={true}
+                    />
+                  )}
+                  {queryResults.map((query, queryIndex) => {
+                    if (query.data !== null && query.data.length > 0) {
+                      return (
+                        <React.Fragment key={queryIndex}>
+                          {query.data.map(file => {
+                            return (
+                              <RightClickFileMenu
+                                key={file._id}
+                                docs={[file]}
+                                actions={actions}
+                              >
+                                <File
+                                  attributes={file}
+                                  withSelectionCheckbox
+                                  withFilePath={withFilePath}
+                                  thumbnailSizeBig={isBigThumbnail}
+                                  actions={actions}
+                                  refreshFolderContent={refreshFolderContent}
+                                  isInSyncFromSharing={
+                                    !isSharingContextEmpty &&
+                                    isSharingShortcut(file) &&
+                                    isReferencedByShareInSharingContext(
+                                      file,
+                                      sharingsValue
+                                    )
+                                  }
+                                  extraColumns={extraColumns}
+                                />
+                              </RightClickFileMenu>
+                            )
+                          })}
+                          {query.hasMore && (
+                            <LoadMore fetchMore={query.fetchMore} />
+                          )}
+                        </React.Fragment>
+                      )
+                    }
+                    return null
+                  })}
+                </>
+              </div>
             )}
-          {displayedFolder !== null &&
-            isEmpty &&
-            currentFolderId === TRASH_DIR_ID && (
-              <EmptyTrash canUpload={canUpload} />
-            )}
-          {hasDataToShow && !needsToWait && (
-            <div className={!isDesktop ? 'u-ov-hidden' : ''}>
-              <>
-                {syncingFakeFile && (
-                  <File
-                    attributes={syncingFakeFile}
-                    withSelectionCheckbox={false}
-                    actions={[]}
-                    isInSyncFromSharing={true}
-                    extraColumns={extraColumns}
-                    disableSelection={true}
-                  />
-                )}
-                {queryResults.map((query, queryIndex) => {
-                  if (query.data !== null && query.data.length > 0) {
-                    return (
-                      <React.Fragment key={queryIndex}>
-                        {query.data.map(file => {
-                          return (
-                            <File
-                              key={file._id}
-                              attributes={file}
-                              withSelectionCheckbox
-                              withFilePath={withFilePath}
-                              thumbnailSizeBig={isBigThumbnail}
-                              actions={actions}
-                              refreshFolderContent={refreshFolderContent}
-                              isInSyncFromSharing={
-                                !isSharingContextEmpty &&
-                                isSharingShortcut(file) &&
-                                isReferencedByShareInSharingContext(
-                                  file,
-                                  sharingsValue
-                                )
-                              }
-                              extraColumns={extraColumns}
-                            />
-                          )
-                        })}
-                        {query.hasMore && (
-                          <LoadMore fetchMore={query.fetchMore} />
-                        )}
-                      </React.Fragment>
-                    )
-                  }
-                  return null
-                })}
-              </>
-            </div>
-          )}
-        </FileListBody>
+          </FileListBody>
+        </RightClickAddMenu>
       </FileList>
     </FolderUnlocker>
   )
