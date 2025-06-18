@@ -1,7 +1,5 @@
 import React, { useRef } from 'react'
 
-import flag from 'cozy-flags'
-
 import styles from './fileopener.styl'
 
 import useLongPress from '@/hooks/useOnLongPress'
@@ -48,8 +46,7 @@ export function handlePress(
     toggle
   }
 ) {
-  if (actionMenuVisible || disabled || flag('drive.virtualization.enabled'))
-    return
+  if (actionMenuVisible || disabled) return
 
   if (enableTouchEvents(ev)) {
     if (type === 'press' || selectionModeActive) {
