@@ -216,6 +216,14 @@ const PublicFolderView = () => {
         />
         {isFabDisplayed && (
           <AddMenuProvider
+            componentsProps={{
+              AddMenu: {
+                anchorOrigin: {
+                  vertical: 'top',
+                  horizontal: 'left'
+                }
+              }
+            }}
             canCreateFolder={hasWritePermissions}
             canUpload={hasWritePermissions}
             refreshFolderContent={refreshFolderContent}

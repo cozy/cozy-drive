@@ -254,6 +254,14 @@ const DriveFolderView = () => {
         )}
         {isFabDisplayed && (
           <AddMenuProvider
+            componentsProps={{
+              AddMenu: {
+                anchorOrigin: {
+                  vertical: 'top',
+                  horizontal: 'left'
+                }
+              }
+            }}
             canCreateFolder={true}
             canUpload={true}
             disabled={isLoading || isInError || isPending}
