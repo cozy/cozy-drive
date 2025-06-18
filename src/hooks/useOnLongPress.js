@@ -2,8 +2,6 @@ import { useRef } from 'react'
 
 import flag from 'cozy-flags'
 
-// flag('drive.virtualization.enabled')
-
 export default function useLongPress({ onPress, selectionModeActive }) {
   const timerRef = useRef()
   const isLongPress = useRef()
