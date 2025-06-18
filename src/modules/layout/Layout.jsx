@@ -57,7 +57,7 @@ const LayoutContent = () => {
     : false
 
   return (
-    <LayoutUI>
+    <LayoutUI onContextMenu={ev => ev.preventDefault()}>
       <BarComponent
         searchOptions={{ enabled: !isMobile }}
         disableInternalStore
