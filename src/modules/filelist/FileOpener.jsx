@@ -1,7 +1,6 @@
 import React, { useRef } from 'react'
 
 import flag from 'cozy-flags'
-import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import styles from './fileopener.styl'
 
@@ -49,7 +48,8 @@ export function handlePress(
     toggle
   }
 ) {
-  if (actionMenuVisible || disabled) return
+  if (actionMenuVisible || disabled || flag('drive.virtualization.enabled'))
+    return
 
   if (enableTouchEvents(ev)) {
     if (type === 'press' || selectionModeActive) {
@@ -71,7 +71,6 @@ const FileOpener = ({
   isRenaming,
   children
 }) => {
-  const { isMobile } = useBreakpoints()
   const rowRef = useRef()
   const { link, openLink } = useFileLink(file)
   const { handlers: longPressHandlers } = useLongPress({
@@ -87,15 +86,12 @@ const FileOpener = ({
       })
   })
 
-  const props =
-    flag('drive.virtualization.enabled') && !isMobile ? {} : longPressHandlers
-
   return (
     <FileLink
       ref={rowRef}
       link={link}
       className={`${styles['file-opener']} ${styles['file-opener__a']}`}
-      {...props}
+      {...longPressHandlers}
     >
       {children}
     </FileLink>
