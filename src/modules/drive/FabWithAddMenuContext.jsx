@@ -24,11 +24,9 @@ const FabWithAddMenuContext = ({ noSidebar }) => {
   })
 
   return (
-    <div
-      ref={anchorRef ? anchorRef : undefined}
-      onClick={isOffline ? handleOfflineClick : undefined}
-    >
+    <div onClick={isOffline ? handleOfflineClick : undefined}>
       <ExtendableFab
+        ref={anchorRef ? anchorRef : undefined}
         color="primary"
         label={t('button.create')}
         icon={PlusIcon}
