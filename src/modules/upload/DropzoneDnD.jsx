@@ -14,6 +14,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import styles from '@/styles/dropzone.styl'
 
+import RightClickAddMenu from '@/components/RightClick/RightClickAddMenu'
 import { uploadFiles } from '@/modules/navigation/duck'
 import DropzoneTeaser from '@/modules/upload/DropzoneTeaser'
 
@@ -76,15 +77,17 @@ export const Dropzone = ({ displayedFolder, children }) => {
   const isActive = canDrop && isOver
 
   return (
-    <Content
-      ref={dropRef}
-      className={cx(isMobile ? '' : 'u-pt-1', {
-        [styles['fil-dropzone-active']]: isActive
-      })}
-    >
-      {isActive && <DropzoneTeaser currentFolder={displayedFolder} />}
-      {children}
-    </Content>
+    <RightClickAddMenu>
+      <Content
+        ref={dropRef}
+        className={cx(isMobile ? '' : 'u-pt-1', {
+          [styles['fil-dropzone-active']]: isActive
+        })}
+      >
+        {isActive && <DropzoneTeaser currentFolder={displayedFolder} />}
+        {children}
+      </Content>
+    </RightClickAddMenu>
   )
 }
 

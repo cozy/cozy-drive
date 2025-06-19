@@ -9,6 +9,7 @@ import { useSyncingFakeFile } from './useSyncingFakeFile'
 
 import { EmptyDrive, EmptyTrash } from '@/components/Error/Empty'
 import Oops from '@/components/Error/Oops'
+import RightClickFileMenu from '@/components/RightClick/RightClickFileMenu'
 import { TRASH_DIR_ID } from '@/constants/config'
 import AcceptingSharingContext from '@/lib/AcceptingSharingContext'
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
@@ -179,24 +180,30 @@ const FolderViewBody = ({
                       <React.Fragment key={queryIndex}>
                         {query.data.map(file => {
                           return (
-                            <File
+                            <RightClickFileMenu
                               key={file._id}
-                              attributes={file}
-                              withSelectionCheckbox
-                              withFilePath={withFilePath}
-                              thumbnailSizeBig={isBigThumbnail}
+                              doc={file}
                               actions={actions}
-                              refreshFolderContent={refreshFolderContent}
-                              isInSyncFromSharing={
-                                !isSharingContextEmpty &&
-                                isSharingShortcut(file) &&
-                                isReferencedByShareInSharingContext(
-                                  file,
-                                  sharingsValue
-                                )
-                              }
-                              extraColumns={extraColumns}
-                            />
+                            >
+                              <File
+                                key={file._id}
+                                attributes={file}
+                                withSelectionCheckbox
+                                withFilePath={withFilePath}
+                                thumbnailSizeBig={isBigThumbnail}
+                                actions={actions}
+                                refreshFolderContent={refreshFolderContent}
+                                isInSyncFromSharing={
+                                  !isSharingContextEmpty &&
+                                  isSharingShortcut(file) &&
+                                  isReferencedByShareInSharingContext(
+                                    file,
+                                    sharingsValue
+                                  )
+                                }
+                                extraColumns={extraColumns}
+                              />
+                            </RightClickFileMenu>
                           )
                         })}
                         {query.hasMore && (
