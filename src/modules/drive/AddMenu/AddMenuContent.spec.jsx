@@ -45,6 +45,7 @@ const setup = async (
           isPublic={isPublic}
           isEncryptedFolder={isEncryptedFolder}
           displayedFolder={displayedFolder}
+          onClick={() => {}}
         />
       </ScannerProvider>
     </AppLike>
