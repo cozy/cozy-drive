@@ -1,4 +1,10 @@
-import React, { useContext, useState, createContext, useMemo } from 'react'
+import React, {
+  useContext,
+  useState,
+  createContext,
+  useMemo,
+  useCallback
+} from 'react'
 
 const initialPosition = {
   mouseX: null,
@@ -18,15 +24,30 @@ export const useRightClick = () => {
 
 const RightClickProvider = ({ children }) => {
   const [position, setPosition] = useState(initialPosition)
+  const [id, setId] = useState('')
+
+  const onOpen = useCallback((ev, eventId) => {
+    ev.preventDefault()
+    ev.stopPropagation()
+
+    setId(eventId)
+    setPosition({
+      mouseX: ev.clientX - 2,
+      mouseY: ev.clientY - 4
+    })
+  }, [])
+
+  const onClose = () => setPosition(initialPosition)
 
   const value = useMemo(
     () => ({
       position,
-      setPosition,
-      isOpen: position.mouseY !== null && position.mouseX !== null,
-      onClose: () => setPosition(initialPosition)
+      isOpen: attr =>
+        attr === id && position.mouseY !== null && position.mouseX !== null,
+      onOpen,
+      onClose
     }),
-    [position]
+    [position, id, onOpen]
   )
 
   return (
