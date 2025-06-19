@@ -48,7 +48,8 @@ const File = ({
   extraColumns,
   breakpoints: { isExtraLarge, isMobile },
   disableSelection = false,
-  canInteractWith
+  canInteractWith,
+  onContextMenu
 }) => {
   const [actionMenuVisible, setActionMenuVisible] = useState(false)
   const filerowMenuToggleRef = useRef()
@@ -106,7 +107,7 @@ const File = ({
   }
 
   return (
-    <TableRow className={filContentRowSelected}>
+    <TableRow className={filContentRowSelected} onContextMenu={onContextMenu}>
       <SelectBox
         withSelectionCheckbox={withSelectionCheckbox && actions?.length > 0}
         selected={selected}
