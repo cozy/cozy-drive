@@ -2,27 +2,37 @@ import React, { useContext } from 'react'
 
 import { useSharingContext } from 'cozy-sharing'
 
-import RightClickMenu from '@/components/RightClick/RightClickMenu'
-import RightClickProvider, {
-  useRightClick
-} from '@/components/RightClick/RightClickProvider'
+import { useRightClick } from '@/components/RightClick/RightClickProvider'
 import { useDisplayedFolder } from '@/hooks'
 import AddMenuProvider, {
   AddMenuContext
 } from '@/modules/drive/AddMenu/AddMenuProvider'
 
-const AddMenu = ({ children }) => {
+const AddMenu = ({ children, ...props }) => {
+  const { onOpen } = useRightClick()
   const { handleToggle, handleOfflineClick, isOffline } =
     useContext(AddMenuContext)
 
-  return (
-    <RightClickMenu onOpen={isOffline ? handleOfflineClick : handleToggle}>
-      {children}
-    </RightClickMenu>
+  if (!children) return null
+
+  return React.Children.map(children, child =>
+    React.isValidElement(child)
+      ? React.cloneElement(child, {
+          ...props,
+          onContextMenu: ev => {
+            if (isOffline) {
+              handleOfflineClick()
+            } else {
+              onOpen(ev, `AddMenu`)
+              handleToggle()
+            }
+          }
+        })
+      : null
   )
 }
 
-const AddMenuWrapper = ({ children }) => {
+const RightClickAddMenu = ({ children, ...props }) => {
   const { isOpen, position } = useRightClick()
   const { displayedFolder } = useDisplayedFolder()
   const { hasWriteAccess } = useSharingContext()
@@ -42,22 +52,14 @@ const AddMenuWrapper = ({ children }) => {
       componentsProps={{
         AddMenu: {
           anchorReference: 'anchorPosition',
-          anchorPosition: isOpen
+          anchorPosition: isOpen('AddMenu')
             ? { top: position.mouseY, left: position.mouseX }
             : undefined
         }
       }}
     >
-      <AddMenu>{children}</AddMenu>
+      <AddMenu {...props}>{children}</AddMenu>
     </AddMenuProvider>
-  )
-}
-
-const RightClickAddMenu = ({ children }) => {
-  return (
-    <RightClickProvider>
-      <AddMenuWrapper>{children}</AddMenuWrapper>
-    </RightClickProvider>
   )
 }
 

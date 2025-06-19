@@ -12,6 +12,7 @@ import CozyTheme from 'cozy-ui/transpiled/react/providers/CozyTheme'
 import { I18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import PushBannerProvider from '@/components/PushBanner/PushBannerProvider'
+import RightClickProvider from '@/components/RightClick/RightClickProvider'
 import { AcceptingSharingProvider } from '@/lib/AcceptingSharingContext'
 import FabProvider from '@/lib/FabProvider'
 import { ModalContext } from '@/lib/ModalContext'
@@ -75,7 +76,9 @@ const AppLike = ({
                               value={modalContextValue || mockModalContextValue}
                             >
                               <FabProvider>
-                                <Layout>{children}</Layout>
+                                <RightClickProvider>
+                                  <Layout>{children}</Layout>
+                                </RightClickProvider>
                               </FabProvider>
                             </ModalContext.Provider>
                           </PushBannerProvider>
