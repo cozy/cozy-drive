@@ -1,14 +1,16 @@
 import React from 'react'
 
 import ActionsMenu from 'cozy-ui/transpiled/react/ActionsMenu'
+import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { useRightClick } from '@/components/RightClick/RightClickProvider'
 
 const RightClickFileMenu = ({ doc, actions, disabled, children, ...props }) => {
   const { position, isOpen, onOpen, onClose } = useRightClick()
+  const { isDesktop } = useBreakpoints()
 
   if (!children) return null
-  if (disabled) return children
+  if (disabled || !isDesktop) return children
 
   return (
     <>
