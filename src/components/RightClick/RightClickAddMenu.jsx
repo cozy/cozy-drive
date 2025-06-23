@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 
 import { useSharingContext } from 'cozy-sharing'
+import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { useRightClick } from '@/components/RightClick/RightClickProvider'
 import { useDisplayedFolder } from '@/hooks'
@@ -9,11 +10,13 @@ import AddMenuProvider, {
 } from '@/modules/drive/AddMenu/AddMenuProvider'
 
 const AddMenu = ({ children, ...props }) => {
+  const { isDesktop } = useBreakpoints()
   const { onOpen } = useRightClick()
   const { handleToggle, handleOfflineClick, isOffline } =
     useContext(AddMenuContext)
 
   if (!children) return null
+  if (!isDesktop) return children
 
   return React.Children.map(children, child =>
     React.isValidElement(child)
