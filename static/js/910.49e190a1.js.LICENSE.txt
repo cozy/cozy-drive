@@ -11,6 +11,11 @@ https://github.com/mholt/PapaParse
 License: MIT
 */
 
+/* @preserve
+ * Leaflet 1.9.4, a JS library for interactive maps. https://leafletjs.com
+ * (c) 2010-2023 Vladimir Agafonkin, (c) 2010-2011 CloudMade
+ */
+
 /*!
     localForage -- Offline Storage, Improved
     Version 1.10.0
@@ -150,16 +155,6 @@ PERFORMANCE OF THIS SOFTWARE.
  * @license
  * Copyright 2019 Google LLC
  * SPDX-License-Identifier: Apache-2.0
- */
-
-/**
- * @license React
- * use-sync-external-store-shim.production.js
- *
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
  */
 
 /**
