@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react'
 
-import VirtuosoTable from 'cozy-ui/transpiled/react/Table/Virtualized'
+import VirtuosoTableDnd from 'cozy-ui/transpiled/react/Table/Virtualized/Dnd'
 import TableRowDnD from 'cozy-ui/transpiled/react/Table/Virtualized/Dnd/TableRow'
-import virtuosoComponents from 'cozy-ui/transpiled/react/Table/Virtualized/virtuosoComponents'
+import virtuosoComponentsDnd from 'cozy-ui/transpiled/react/Table/Virtualized/Dnd/virtuosoComponents'
 
 import { secondarySort } from '../helpers'
 
@@ -10,19 +10,9 @@ import RightClickFileMenu from '@/components/RightClick/RightClickFileMenu'
 import Cell from '@/modules/filelist/virtualized/cells/Cell'
 
 const TableRow = forwardRef(({ item, context, children, ...props }, ref) => {
-  const isSelected = context?.isSelectedItem(item)
-  const isDisabled = context?.itemsInDropProcess.includes(item._id)
-
   return (
     <RightClickFileMenu doc={item} actions={context.actions} {...props}>
-      <TableRowDnD
-        ref={ref}
-        item={item}
-        context={context}
-        selected={isSelected}
-        disabled={isDisabled}
-        hover
-      >
+      <TableRowDnD ref={ref} item={item} context={context}>
         {children}
       </TableRowDnD>
     </RightClickFileMenu>
@@ -32,6 +22,8 @@ const TableRow = forwardRef(({ item, context, children, ...props }, ref) => {
 TableRow.displayName = 'TableRow'
 
 const TableRowMemo = React.memo(TableRow)
+
+const components = { ...virtuosoComponentsDnd, TableRow: TableRowMemo }
 
 const Table = ({
   rows,
@@ -47,9 +39,9 @@ const Table = ({
   actions
 }) => {
   return (
-    <VirtuosoTable
+    <VirtuosoTableDnd
       context={{ actions }}
-      components={{ ...virtuosoComponents, TableRow: TableRowMemo }}
+      components={components}
       rows={rows}
       columns={columns}
       dragProps={dragProps}
