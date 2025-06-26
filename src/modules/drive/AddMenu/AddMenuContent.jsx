@@ -2,7 +2,6 @@ import React, { forwardRef } from 'react'
 
 import flag from 'cozy-flags'
 import ActionsMenuMobileHeader from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuMobileHeader'
-import ClickAwayListener from 'cozy-ui/transpiled/react/ClickAwayListener'
 import Divider from 'cozy-ui/transpiled/react/Divider'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
@@ -53,78 +52,76 @@ const AddMenuContent = forwardRef(
     const createActionOnClick = isReadOnly ? handleReadOnlyClick : onClick
 
     return (
-      <ClickAwayListener mouseEvent="onMouseUp" onClickAway={onClick}>
-        <span className="u-dc">
-          <ActionsMenuMobileHeader>
-            <ListItemText
-              primary={t('toolbar.menu_create')}
-              primaryTypographyProps={{ variant: 'h6' }}
-            />
-          </ActionsMenuMobileHeader>
+      <>
+        <ActionsMenuMobileHeader>
+          <ListItemText
+            primary={t('toolbar.menu_create')}
+            primaryTypographyProps={{ variant: 'h6' }}
+          />
+        </ActionsMenuMobileHeader>
 
-          {canCreateFolder && !isEncryptedFolder && (
-            <AddFolderItem onClick={onClick} isReadOnly={isReadOnly} />
-          )}
-          {canCreateFolder && !isPublic && flag('drive.enable-encryption') && (
-            <AddEncryptedFolderItem onClick={onClick} isReadOnly={isReadOnly} />
-          )}
-          {!isPublic && !isEncryptedFolder && (
-            <CreateNoteItem
+        {canCreateFolder && !isEncryptedFolder && (
+          <AddFolderItem onClick={onClick} isReadOnly={isReadOnly} />
+        )}
+        {canCreateFolder && !isPublic && flag('drive.enable-encryption') && (
+          <AddEncryptedFolderItem onClick={onClick} isReadOnly={isReadOnly} />
+        )}
+        {!isPublic && !isEncryptedFolder && (
+          <CreateNoteItem
+            displayedFolder={displayedFolder}
+            isReadOnly={isReadOnly}
+            onClick={onClick}
+          />
+        )}
+        {!isPublic &&
+          !isEncryptedFolder &&
+          flag('drive.lasuitedocs.enabled') && (
+            <CreateDocsItem
               displayedFolder={displayedFolder}
               isReadOnly={isReadOnly}
               onClick={onClick}
             />
           )}
-          {!isPublic &&
-            !isEncryptedFolder &&
-            flag('drive.lasuitedocs.enabled') && (
-              <CreateDocsItem
-                displayedFolder={displayedFolder}
+        {canUpload &&
+          isOfficeEditingEnabled(isDesktop) &&
+          !isEncryptedFolder && (
+            <>
+              <CreateOnlyOfficeItem
+                fileClass="text"
                 isReadOnly={isReadOnly}
                 onClick={onClick}
               />
-            )}
-          {canUpload &&
-            isOfficeEditingEnabled(isDesktop) &&
-            !isEncryptedFolder && (
-              <>
-                <CreateOnlyOfficeItem
-                  fileClass="text"
-                  isReadOnly={isReadOnly}
-                  onClick={onClick}
-                />
-                <CreateOnlyOfficeItem
-                  fileClass="spreadsheet"
-                  isReadOnly={isReadOnly}
-                  onClick={onClick}
-                />
-                <CreateOnlyOfficeItem
-                  fileClass="slide"
-                  isReadOnly={isReadOnly}
-                  onClick={onClick}
-                />
-              </>
-            )}
-          {!isEncryptedFolder && (
-            <CreateShortcut
-              onCreated={refreshFolderContent}
-              onClick={onClick}
-              isReadOnly={isReadOnly}
-            />
+              <CreateOnlyOfficeItem
+                fileClass="spreadsheet"
+                isReadOnly={isReadOnly}
+                onClick={onClick}
+              />
+              <CreateOnlyOfficeItem
+                fileClass="slide"
+                isReadOnly={isReadOnly}
+                onClick={onClick}
+              />
+            </>
           )}
-          {canUpload && <Divider className="u-mv-half" />}
-          {canUpload && (
-            <UploadItem
-              disabled={isDisabled}
-              onUploaded={refreshFolderContent}
-              displayedFolder={displayedFolder}
-              onClick={onClick}
-              isReadOnly={isReadOnly}
-            />
-          )}
-          {hasScanner && <ScannerMenuItem onClick={createActionOnClick} />}
-        </span>
-      </ClickAwayListener>
+        {!isEncryptedFolder && (
+          <CreateShortcut
+            onCreated={refreshFolderContent}
+            onClick={onClick}
+            isReadOnly={isReadOnly}
+          />
+        )}
+        {canUpload && <Divider className="u-mv-half" />}
+        {canUpload && (
+          <UploadItem
+            disabled={isDisabled}
+            onUploaded={refreshFolderContent}
+            displayedFolder={displayedFolder}
+            onClick={onClick}
+            isReadOnly={isReadOnly}
+          />
+        )}
+        {hasScanner && <ScannerMenuItem onClick={createActionOnClick} />}
+      </>
     )
   }
 )
