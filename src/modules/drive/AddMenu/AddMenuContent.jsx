@@ -10,6 +10,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import AddEncryptedFolderItem from '@/modules/drive/Toolbar/components/AddEncryptedFolderItem'
 import AddFolderItem from '@/modules/drive/Toolbar/components/AddFolderItem'
+import AddSharedDriveItem from '@/modules/drive/Toolbar/components/AddSharedDriveItem'
 import CreateDocsItem from '@/modules/drive/Toolbar/components/CreateDocsItem'
 import CreateNoteItem from '@/modules/drive/Toolbar/components/CreateNoteItem'
 import CreateOnlyOfficeItem from '@/modules/drive/Toolbar/components/CreateOnlyOfficeItem'
@@ -62,6 +63,9 @@ const AddMenuContent = forwardRef(
 
         {canCreateFolder && !isEncryptedFolder && (
           <AddFolderItem onClick={onClick} isReadOnly={isReadOnly} />
+        )}
+        {canCreateFolder && !isPublic && flag('drive.shared-drive.enabled') && (
+          <AddSharedDriveItem onClick={onClick} isReadOnly={isReadOnly} />
         )}
         {canCreateFolder && !isPublic && flag('drive.enable-encryption') && (
           <AddEncryptedFolderItem onClick={onClick} isReadOnly={isReadOnly} />
