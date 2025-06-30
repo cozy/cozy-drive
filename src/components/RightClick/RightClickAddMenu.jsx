@@ -16,7 +16,14 @@ const AddMenu = ({ children, ...props }) => {
     useContext(AddMenuContext)
 
   if (!children) return null
-  if (!isDesktop) return children
+  if (!isDesktop)
+    return React.Children.map(children, child =>
+      React.isValidElement(child)
+        ? React.cloneElement(child, {
+            ...props
+          })
+        : null
+    )
 
   return React.Children.map(children, child =>
     React.isValidElement(child)

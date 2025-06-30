@@ -10,7 +10,14 @@ const RightClickFileMenu = ({ doc, actions, disabled, children, ...props }) => {
   const { isDesktop } = useBreakpoints()
 
   if (!children) return null
-  if (disabled || !isDesktop) return children
+  if (disabled || !isDesktop)
+    return React.Children.map(children, child =>
+      React.isValidElement(child)
+        ? React.cloneElement(child, {
+            ...props
+          })
+        : null
+    )
 
   return (
     <>
