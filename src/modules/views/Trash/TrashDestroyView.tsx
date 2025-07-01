@@ -44,7 +44,11 @@ const TrashDestroyView: FC = () => {
     refresh()
   }
 
-  if (hasQueryBeenLoaded(fileResult) && fileResult.data) {
+  const hasData = Array.isArray(fileResult.data)
+    ? fileResult.data.length > 0
+    : fileResult.data
+
+  if (hasQueryBeenLoaded(fileResult) && hasData) {
     return (
       <DestroyConfirm
         files={fileResult.data}
