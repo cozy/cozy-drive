@@ -142,10 +142,6 @@ export const buildSharingsQuery: QueryBuilder<buildSharingsQueryParams> = ({
   definition: () =>
     Q('io.cozy.files')
       .getByIds(ids)
-      .partialIndex({
-        trashed: false,
-        dir_id: { $ne: TRASH_DIR_ID }
-      })
       .sortBy([{ type: 'asc' }, { name: 'asc' }]),
   options: {
     as: `sharings-by-ids-${ids.join('')}`,
