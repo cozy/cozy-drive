@@ -15,7 +15,6 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import StorageButton from '@/components/Storage/StorageButton'
 import StorageProgress from '@/components/Storage/StorageProgress'
 import ButtonClient from '@/components/pushClient/Button'
-import SupportUs from '@/components/pushClient/SupportUs'
 import { ROOT_DIR_ID } from '@/constants/config'
 import { useDisplayedFolder } from '@/hooks'
 import { initFlags } from '@/lib/flags'
@@ -87,7 +86,6 @@ const LayoutContent = () => {
               <StorageProgress />
               <StorageButton className="u-mt-1" />
             </div>
-            <SupportUs />
             <ButtonClient />
           </div>
         )}
