@@ -116,11 +116,7 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
 
   return (
     <FolderView isNotFound={isNotFound}>
-      <Dropzone
-        role="main"
-        disabled={!hasWrite}
-        displayedFolder={displayedFolder}
-      >
+      <Dropzone disabled={!hasWrite} displayedFolder={displayedFolder}>
         <FolderViewHeader>
           {currentFolderId && (
             <FolderViewBreadcrumb
