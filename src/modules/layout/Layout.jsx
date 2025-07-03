@@ -34,9 +34,8 @@ initFlags()
 const LayoutContent = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { isMobile } = useBreakpoints()
+  const { isMobile, isDesktop } = useBreakpoints()
   const { displayedFolder } = useDisplayedFolder()
-  const { isDesktop } = useBreakpoints()
   const { hasWriteAccess } = useSharingContext()
 
   const shouldRedirect = useSelector(wasOperationRedirected)
