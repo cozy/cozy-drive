@@ -32,7 +32,12 @@ const canDrop = evt => {
   return true
 }
 
-export const Dropzone = ({ displayedFolder, disabled, children }) => {
+export const Dropzone = ({
+  displayedFolder,
+  disabled,
+  refreshFolderContent = null,
+  children
+}) => {
   const client = useClient()
   const { t } = useI18n()
   const { isMobile } = useBreakpoints()
@@ -41,17 +46,27 @@ export const Dropzone = ({ displayedFolder, disabled, children }) => {
   const vaultClient = useVaultClient()
   const dispatch = useDispatch()
 
+  const fileUploadCallback = refreshFolderContent
+    ? refreshFolderContent
+    : () => null
+
   const onDrop = async (files, _, evt) => {
     if (!canDrop(evt)) return
 
     const filesToUpload = canHandleFolders(evt) ? evt.dataTransfer.items : files
     dispatch(
-      uploadFiles(filesToUpload, displayedFolder.id, sharingState, () => null, {
-        client,
-        vaultClient,
-        showAlert,
-        t
-      })
+      uploadFiles(
+        filesToUpload,
+        displayedFolder.id,
+        sharingState,
+        fileUploadCallback,
+        {
+          client,
+          vaultClient,
+          showAlert,
+          t
+        }
+      )
     )
   }
 
