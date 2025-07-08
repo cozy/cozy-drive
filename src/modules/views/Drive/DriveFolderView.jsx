@@ -58,7 +58,8 @@ import {
   buildMagicFolderQuery
 } from '@/queries'
 
-const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
+// Those extra columns names must match a metadata attribute name, e.g. carbonCopy or electronicSafe
+const desktopExtraColumnsNames = []
 const mobileExtraColumnsNames = []
 
 const DriveFolderView = () => {
