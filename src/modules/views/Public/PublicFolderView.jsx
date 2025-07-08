@@ -45,6 +45,7 @@ import FabWithAddMenuContext from '@/modules/drive/FabWithAddMenuContext'
 import Main from '@/modules/layout/Main'
 import PublicToolbar from '@/modules/public/PublicToolbar'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
+import Dropzone from '@/modules/upload/Dropzone'
 
 const getBreadcrumbPath = (t, displayedFolder, parentFolder) =>
   uniqBy(
@@ -181,62 +182,68 @@ const PublicFolderView = () => {
       <ModalManager />
       {isSharingBannerPluginDisplayed && <SharingBannerPlugin />}
       <Content className={isMobile ? '' : 'u-ml-1 u-pt-1'}>
-        <FolderViewHeader>
-          {currentFolderId && (
-            <>
-              {isOldBreadcrumb ? (
-                <OldFolderViewBreadcrumb
-                  currentFolderId={currentFolderId}
-                  getBreadcrumbPath={geTranslatedBreadcrumbPath}
-                />
-              ) : (
-                <FolderViewBreadcrumb
-                  rootBreadcrumbPath={rootBreadcrumbPath}
-                  currentFolderId={currentFolderId}
-                />
-              )}
-              <PublicToolbar
-                files={files}
-                hasWriteAccess={hasWritePermissions}
-                refreshFolderContent={refreshFolderContent}
-                sharingInfos={sharingInfos}
-              />
-            </>
-          )}
-        </FolderViewHeader>
-        <FolderViewBody
-          actions={actions}
-          queryResults={[filesResult]}
-          canSort={false}
-          currentFolderId={currentFolderId}
+        <Dropzone
+          disabled={!hasWritePermissions}
+          displayedFolder={displayedFolder}
           refreshFolderContent={refreshFolderContent}
-          canUpload={hasWritePermissions}
-          extraColumns={extraColumns}
-          isPublic={true}
-        />
-        {isFabDisplayed && (
-          <AddMenuProvider
-            componentsProps={{
-              AddMenu: {
-                anchorOrigin: {
-                  vertical: 'top',
-                  horizontal: 'left'
-                }
-              }
-            }}
-            canCreateFolder={hasWritePermissions}
-            canUpload={hasWritePermissions}
+        >
+          <FolderViewHeader>
+            {currentFolderId && (
+              <>
+                {isOldBreadcrumb ? (
+                  <OldFolderViewBreadcrumb
+                    currentFolderId={currentFolderId}
+                    getBreadcrumbPath={geTranslatedBreadcrumbPath}
+                  />
+                ) : (
+                  <FolderViewBreadcrumb
+                    rootBreadcrumbPath={rootBreadcrumbPath}
+                    currentFolderId={currentFolderId}
+                  />
+                )}
+                <PublicToolbar
+                  files={files}
+                  hasWriteAccess={hasWritePermissions}
+                  refreshFolderContent={refreshFolderContent}
+                  sharingInfos={sharingInfos}
+                />
+              </>
+            )}
+          </FolderViewHeader>
+          <FolderViewBody
+            actions={actions}
+            queryResults={[filesResult]}
+            canSort={false}
+            currentFolderId={currentFolderId}
             refreshFolderContent={refreshFolderContent}
+            canUpload={hasWritePermissions}
+            extraColumns={extraColumns}
             isPublic={true}
-            displayedFolder={displayedFolder}
-            isSelectionBarVisible={isSelectionBarVisible}
-          >
-            <FabWithAddMenuContext noSidebar={true} />
-          </AddMenuProvider>
-        )}
-        {isAddToMyCozyFabDisplayed && (
-          <OpenSharingLinkFabButton link={sharingInfos.addSharingLink} />
-        )}
+          />
+          {isFabDisplayed && (
+            <AddMenuProvider
+              componentsProps={{
+                AddMenu: {
+                  anchorOrigin: {
+                    vertical: 'top',
+                    horizontal: 'left'
+                  }
+                }
+              }}
+              canCreateFolder={hasWritePermissions}
+              canUpload={hasWritePermissions}
+              refreshFolderContent={refreshFolderContent}
+              isPublic={true}
+              displayedFolder={displayedFolder}
+              isSelectionBarVisible={isSelectionBarVisible}
+            >
+              <FabWithAddMenuContext noSidebar={true} />
+            </AddMenuProvider>
+          )}
+          {isAddToMyCozyFabDisplayed && (
+            <OpenSharingLinkFabButton link={sharingInfos.addSharingLink} />
+          )}
+        </Dropzone>
         <Outlet />
       </Content>
     </Main>
