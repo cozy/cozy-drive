@@ -15,7 +15,7 @@ import NestedSelectResponsive from 'cozy-ui/transpiled/react/NestedSelect/Nested
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { LoaderModal } from '@/components/LoaderModal'
-import { buildFileByIdQuery } from '@/queries'
+import { buildFileOrFolderByIdQuery } from '@/queries'
 
 const getThemesList = () =>
   flag('hide.healthTheme.enabled')
@@ -76,7 +76,7 @@ export const QualifyFileView = () => {
   const client = useClient()
   const scannerT = getBoundT(lang || 'en')
 
-  const fileQuery = buildFileByIdQuery(fileId)
+  const fileQuery = buildFileOrFolderByIdQuery(fileId)
   const { data: file, ...fileQueryResult } = useQuery(
     fileQuery.definition,
     fileQuery.options

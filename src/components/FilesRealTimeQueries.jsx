@@ -4,7 +4,7 @@ import { useClient, Mutations } from 'cozy-client'
 import { ensureFilePath } from 'cozy-client/dist/models/file'
 import { receiveMutationResult } from 'cozy-client/dist/store'
 
-import { buildFileByIdQuery } from '@/queries'
+import { buildFileOrFolderByIdQuery } from '@/queries'
 
 /**
  * Normalizes an object representing a CouchDB document
@@ -61,7 +61,7 @@ const dispatchChange = async (
 export const ensureFileHasPath = async (doc, client) => {
   if (doc.path) return doc
 
-  const parentQuery = buildFileByIdQuery(doc.dir_id)
+  const parentQuery = buildFileOrFolderByIdQuery(doc.dir_id)
   const parentResult = await client.fetchQueryAndGetFromState({
     definition: parentQuery.definition(),
     options: parentQuery.options

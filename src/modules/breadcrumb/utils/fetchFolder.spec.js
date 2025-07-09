@@ -1,6 +1,6 @@
 import { fetchFolder } from './fetchFolder'
 
-import { buildFolderQuery } from '@/queries'
+import { buildFileOrFolderByIdQuery } from '@/queries'
 
 jest.mock('queries')
 
@@ -14,7 +14,7 @@ describe('fetchFolder', () => {
   const definition = jest.fn().mockReturnValue('definition')
 
   beforeEach(() => {
-    buildFolderQuery.mockReturnValue({
+    buildFileOrFolderByIdQuery.mockReturnValue({
       definition: definition,
       options: 'options'
     })

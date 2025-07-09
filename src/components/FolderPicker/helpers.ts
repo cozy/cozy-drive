@@ -3,7 +3,10 @@ import { IOCozyFile, NextcloudFile } from 'cozy-client/types/types'
 
 import { FolderPickerEntry, File } from '@/components/FolderPicker/types'
 import { getParentPath } from '@/lib/path'
-import { buildOnlyFolderQuery, buildNextcloudFolderQuery } from '@/queries'
+import {
+  buildFileOrFolderByIdQuery,
+  buildNextcloudFolderQuery
+} from '@/queries'
 
 /**
  * Checks if the target is an invalid move target based on the subjects and target provided.
@@ -59,7 +62,7 @@ const getCozyParentFolder = async (
   client: CozyClient | null,
   id: string
 ): Promise<IOCozyFile> => {
-  const parentFolderQuery = buildOnlyFolderQuery(id)
+  const parentFolderQuery = buildFileOrFolderByIdQuery(id)
   const parentFolder = (await client?.fetchQueryAndGetFromState({
     definition: parentFolderQuery.definition(),
     options: parentFolderQuery.options

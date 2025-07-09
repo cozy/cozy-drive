@@ -12,7 +12,7 @@ import Badge from 'cozy-ui/transpiled/react/Badge'
 import { makeStyles } from 'cozy-ui/transpiled/react/styles'
 
 import { DOCTYPE_KONNECTORS } from '@/lib/doctypes'
-import { buildFileByIdQuery } from '@/queries'
+import { buildFileOrFolderByIdQuery } from '@/queries'
 
 const getKonnectorSlugFromFile = file => {
   const konnector = getReferencedBy(file, DOCTYPE_KONNECTORS)[0]
@@ -44,7 +44,7 @@ export const BadgeKonnector = ({ file, children }) => {
   const konnectorSlug = getKonnectorSlugFromFile(file)
 
   // Check if the parent folder is a konnector folder, because if have no file in your account folder, its considered as a konnector folder
-  const parentFolderQuery = buildFileByIdQuery(file.dir_id)
+  const parentFolderQuery = buildFileOrFolderByIdQuery(file.dir_id)
   const { data: parentFolder, ...parentFolderQueryLeft } = useQuery(
     parentFolderQuery.definition,
     parentFolderQuery.options
