@@ -248,26 +248,6 @@ export const buildMoveOrImportQuery: QueryBuilder<string> = dirId => ({
   }
 })
 
-export const buildFolderQuery: QueryBuilder<string> = folderId => ({
-  definition: () =>
-    Q('io.cozy.files').getById(folderId).include(['encryption', 'parent']),
-  options: {
-    as: 'folder-' + folderId,
-    singleDocData: true,
-    fetchPolicy: defaultFetchPolicy
-  }
-})
-
-export const buildOnlyFolderQuery: QueryBuilder<string | null> = folderId => ({
-  definition: () => Q('io.cozy.files').getById(folderId ?? 'unknown'),
-  options: {
-    as: 'onlyfolder-' + (folderId ?? 'unknown'),
-    fetchPolicy: defaultFetchPolicy,
-    singleDocData: true,
-    enabled: !!folderId
-  }
-})
-
 interface buildFileWithSpecificMetadataAttributeQueryParams {
   currentFolderId: string
   attribute: string
@@ -301,7 +281,7 @@ export const buildFileWithSpecificMetadataAttributeQuery: QueryBuilder<
   }
 })
 
-export const buildFileByIdQuery: QueryBuilder<string> = fileId => ({
+export const buildFileOrFolderByIdQuery: QueryBuilder<string> = fileId => ({
   definition: () => Q('io.cozy.files').getById(fileId),
   options: {
     as: `io.cozy.files/${fileId}`,
@@ -311,7 +291,7 @@ export const buildFileByIdQuery: QueryBuilder<string> = fileId => ({
   }
 })
 
-// this query should use `getById` instead of `where` as `buildFileByIdQuery` does.
+// this query should use `getById` instead of `where` as `buildFileOrFolderByIdQuery` does.
 // But in this case, due to a stack limitation, the `file.path` is not returned.
 // As we need the `file.path` we do this trick until the stack is updated
 export const buildFileWhereByIdQuery: QueryBuilder<string> = fileId => ({

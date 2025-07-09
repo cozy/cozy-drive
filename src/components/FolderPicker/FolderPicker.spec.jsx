@@ -48,7 +48,7 @@ describe('FolderPicker', () => {
   const setup = () => {
     const mockClient = createMockClient({
       queries: {
-        'onlyfolder-io.cozy.files.root-dir': {
+        'io.cozy.files/io.cozy.files.root-dir': {
           doctype: 'io.cozy.files',
           definition: {
             doctype: 'io.cozy.files',

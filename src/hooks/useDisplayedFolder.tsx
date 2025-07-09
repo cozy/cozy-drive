@@ -2,7 +2,7 @@ import { useQuery } from 'cozy-client'
 import { IOCozyFile } from 'cozy-client/types/types'
 
 import useCurrentFolderId from '@/hooks/useCurrentFolderId'
-import { buildOnlyFolderQuery } from '@/queries'
+import { buildFileOrFolderByIdQuery } from '@/queries'
 
 interface DisplayedFolderResult {
   isNotFound: boolean
@@ -13,7 +13,7 @@ interface DisplayedFolderResult {
 const useDisplayedFolder = (): DisplayedFolderResult => {
   const folderId = useCurrentFolderId()
 
-  const folderQuery = buildOnlyFolderQuery(folderId)
+  const folderQuery = buildFileOrFolderByIdQuery(folderId)
   const folderResult = useQuery(
     folderQuery.definition,
     folderQuery.options

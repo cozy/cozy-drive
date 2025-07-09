@@ -12,7 +12,7 @@ import { useClient, useQuery } from 'cozy-client'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { officeDefaultMode } from '@/modules/views/OnlyOffice/helpers'
-import { buildFileByIdQuery } from '@/queries'
+import { buildFileOrFolderByIdQuery } from '@/queries'
 
 const OnlyOfficeContext = createContext()
 
@@ -41,7 +41,7 @@ const OnlyOfficeProvider = ({
 
   const isEditorModeView = useMemo(() => editorMode === 'view', [editorMode])
 
-  const fileQuery = buildFileByIdQuery(fileId)
+  const fileQuery = buildFileOrFolderByIdQuery(fileId)
   const fileResult = useQuery(fileQuery.definition, fileQuery.options)
 
   const handleFileUpdated = useCallback(

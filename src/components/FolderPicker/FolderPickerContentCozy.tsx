@@ -18,7 +18,7 @@ import { isEncryptedFolder } from '@/lib/encryption'
 import { FolderUnlocker } from '@/modules/folder/components/FolderUnlocker'
 import {
   buildMoveOrImportQuery,
-  buildOnlyFolderQuery,
+  buildFileOrFolderByIdQuery,
   buildMagicFolderQuery
 } from '@/queries'
 
@@ -80,7 +80,7 @@ const FolderPickerContentCozy: React.FC<FolderPickerContentCozyProps> = ({
   }, [filesData, sharedFolderResult, folder, showNextcloudFolder])
 
   const handleFolderUnlockerDismiss = async (): Promise<void> => {
-    const parentFolderQuery = buildOnlyFolderQuery(folder.dir_id)
+    const parentFolderQuery = buildFileOrFolderByIdQuery(folder.dir_id)
     const parentFolder = (await client?.fetchQueryAndGetFromState({
       definition: parentFolderQuery.definition(),
       options: parentFolderQuery.options
