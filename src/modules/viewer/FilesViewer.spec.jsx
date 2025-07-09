@@ -109,13 +109,16 @@ describe('FilesViewer', () => {
       await sleep(10)
     })
 
+    const hasMore = jest.fn().mockReturnValue(true)
+
     setup({
       client,
       nbFiles: 50,
       totalCount: 100,
       fileId: 'file-foobar48',
       useQueryResultAttributes: {
-        fetchMore
+        fetchMore,
+        hasMore
       }
     })
 

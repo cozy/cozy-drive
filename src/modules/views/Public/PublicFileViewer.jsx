@@ -42,7 +42,13 @@ const PublicFileViewer = () => {
       setFetchingMore(true)
       try {
         const currentIndex = viewableFiles.findIndex(f => f.id === fileId)
-        if (currentIndex === -1 && filesResult.hasMore && isMounted) {
+
+        if (
+          (currentIndex === -1 ||
+            currentIndex === filesResult.data.length - 1) &&
+          filesResult.hasMore &&
+          isMounted
+        ) {
           await filesResult.fetchMore()
         }
       } finally {
