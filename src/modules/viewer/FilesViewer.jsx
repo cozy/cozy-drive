@@ -131,12 +131,11 @@ const FilesViewer = ({ filesQuery, files, onClose, onChange }) => {
 
       setFetchingMore(true)
       try {
-        const fileCount = filesQuery.count
-
         const currentIndex = files.findIndex(f => f.id === fileId)
+
         if (
-          files.length !== fileCount &&
-          files.length - currentIndex <= 5 &&
+          (filesQuery.data.length - currentIndex <= 5 || currentIndex === -1) &&
+          filesQuery.hasMore &&
           isMounted
         ) {
           await filesQuery.fetchMore()
