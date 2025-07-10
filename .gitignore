@@ -12,6 +12,7 @@ coverage/
 
 # Stack
 ./storage/
+storage/
 
 # Reports
 reports/
