@@ -57,7 +57,7 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
   const { isMobile } = useBreakpoints()
   const client = useClient()
   const { pushModal, popModal } = useModalContext()
-  const { isSelectionBarVisible, selectAll } = useSelectionContext()
+  const { isSelectionBarVisible, toggleSelectAllItems } = useSelectionContext()
   const { allLoaded, refresh } = useSharingContext()
   const { isNativeFileSharingAvailable, shareFilesNative } =
     useNativeFileSharing()
@@ -101,7 +101,7 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
     isMobile,
     isNativeFileSharingAvailable,
     shareFilesNative,
-    selectAll: () => selectAll(result.data)
+    selectAll: () => toggleSelectAllItems(result.data)
   }
 
   const actions = makeActions(

@@ -47,7 +47,8 @@
     "trash": "Suprimir",
     "leave": "Salir de la carpeta compartida & borrarla",
     "menu_onlyOffice": {},
-    "select_all": "Seleccionar todo"
+    "select_all": "Seleccionar todo",
+    "clear_selection": "Borrar selección"
   },
   "Share": {
     "create-cozy": "Crear mi Twake"

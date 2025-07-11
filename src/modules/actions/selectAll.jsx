@@ -3,6 +3,7 @@ import React, { forwardRef } from 'react'
 import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import CheckSquareIcon from 'cozy-ui/transpiled/react/Icons/CheckSquare'
+import CheckboxIcon from 'cozy-ui/transpiled/react/Icons/Checkbox'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 
@@ -22,9 +23,11 @@ const makeComponent = (label, icon) => {
   return Component
 }
 
-export const selectAllItems = ({ t, selectAll }) => {
-  const label = t('toolbar.select_all')
-  const icon = CheckSquareIcon
+export const selectAllItems = ({ t, selectAll, isSelectAll }) => {
+  const label = isSelectAll
+    ? t('toolbar.clear_selection')
+    : t('toolbar.select_all')
+  const icon = isSelectAll ? CheckSquareIcon : CheckboxIcon
 
   return {
     name: 'selectAllItems',

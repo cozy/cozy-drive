@@ -55,7 +55,7 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
   const { pushModal, popModal } = useModalContext()
   const dispatch = useDispatch()
   const { displayedFolder, isNotFound } = useDisplayedFolder()
-  const { selectAll } = useSelectionContext()
+  const { toggleSelectAllItems } = useSelectionContext()
   useHead()
 
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
@@ -105,7 +105,9 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
     isOwner,
     byDocId,
     selectAll: () =>
-      selectAll([foldersResult, filesResult].map(query => query.data).flat())
+      toggleSelectAllItems(
+        [foldersResult, filesResult].map(query => query.data).flat()
+      )
   }
   const actions = makeActions(
     [selectAllItems, share, download, trash, rename, moveTo, qualify, versions],

@@ -25,7 +25,8 @@
     "menu_select": "تحديد العناصر",
     "menu_download_folder": "مُجلّد التنزيل",
     "share": "شارك",
-    "select_all": "تحديد الكل"
+    "select_all": "تحديد الكل",
+    "clear_selection": "مسح التحديد"
   },
   "Files": {
     "share": {
