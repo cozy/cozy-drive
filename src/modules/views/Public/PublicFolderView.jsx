@@ -37,7 +37,13 @@ import {
 import { FabContext } from '@/lib/FabProvider'
 import { ModalStack, useModalContext } from '@/lib/ModalContext'
 import { ModalManager } from '@/lib/react-cozy-helpers'
-import { download, trash, rename, versions } from '@/modules/actions'
+import {
+  download,
+  trash,
+  rename,
+  versions,
+  selectAllItems
+} from '@/modules/actions'
 import { makeExtraColumnsNamesFromMedia } from '@/modules/certifications'
 import { useExtraColumns } from '@/modules/certifications/useExtraColumns'
 import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
@@ -81,7 +87,7 @@ const PublicFolderView = () => {
   const { displayedFolder } = useDisplayedFolder()
   const parentDirId = get(displayedFolder, 'dir_id')
   const parentFolder = useParentFolder(parentDirId)
-  const { isSelectionBarVisible } = useSelectionContext()
+  const { isSelectionBarVisible, selectAll } = useSelectionContext()
   const { hasWritePermissions } = usePublicWritePermissions()
   const { pushModal, popModal } = useModalContext()
   const { refresh, isOwner, byDocId } = useSharingContext()
@@ -132,10 +138,11 @@ const PublicFolderView = () => {
     canMove: false,
     isPublic: true,
     isOwner,
-    byDocId
+    byDocId,
+    selectAll: () => selectAll(filesResult.data)
   }
   const actions = makeActions(
-    [download, rename, versions, divider, trash],
+    [selectAllItems, download, rename, versions, divider, trash],
     actionOptions
   )
 

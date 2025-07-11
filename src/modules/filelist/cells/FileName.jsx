@@ -11,6 +11,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import styles from '@/styles/filelist.styl'
 
+import { useViewSwitcherContext } from '@/lib/ViewSwitcherContext'
 import RenameInput from '@/modules/drive/RenameInput'
 import CertificationsIcons from '@/modules/filelist/cells/CertificationsIcons'
 import {
@@ -31,11 +32,13 @@ const FileName = ({
   isInSyncFromSharing
 }) => {
   const { t } = useI18n()
+  const { viewType } = useViewSwitcherContext()
   const classes = cx(
     styles['fil-content-cell'],
     styles['fil-content-file'],
     { [styles['fil-content-file-openable']]: !isRenaming && interactive },
-    { [styles['fil-content-row-disabled']]: isInSyncFromSharing }
+    { [styles['fil-content-row-disabled']]: isInSyncFromSharing },
+    { [styles['fil-content-grid-view']]: viewType === 'grid' }
   )
 
   const { title, filename, extension } = getFileNameAndExtension(attributes, t)

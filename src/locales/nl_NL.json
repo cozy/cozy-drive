@@ -56,7 +56,8 @@
       "text": "Tekstdocumen",
       "spreadsheet": "Werkblad",
       "slide": "Presentatie"
-    }
+    },
+    "select_all": "Alles selecteren"
   },
   "Share": {
     "create-cozy": "Maak mijn Twake"

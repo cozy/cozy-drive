@@ -63,7 +63,8 @@
       "text": "Text document",
       "spreadsheet": "Spreadsheet",
       "slide": "Presentation"
-    }
+    },
+    "select_all": "Select all"
   },
   "Share": {
     "create-cozy": "Create my Twake"

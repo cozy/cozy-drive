@@ -16,7 +16,7 @@ import FolderViewBodyVz from '../Folder/virtualized/FolderViewBody'
 
 import useHead from '@/components/useHead'
 import { useCurrentFolderId, useDisplayedFolder } from '@/hooks'
-import { restore } from '@/modules/actions'
+import { restore, selectAllItems } from '@/modules/actions'
 import { makeExtraColumnsNamesFromMedia } from '@/modules/certifications'
 import { useExtraColumns } from '@/modules/certifications/useExtraColumns'
 import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
@@ -38,7 +38,7 @@ export const TrashFolderView = () => {
   const { isMobile } = useBreakpoints()
   const navigate = useNavigate()
   const { pathname } = useLocation()
-  const { isSelectionBarVisible } = useSelectionContext()
+  const { isSelectionBarVisible, selectAll } = useSelectionContext()
   const currentFolderId = useCurrentFolderId()
   const { t } = useI18n()
   const { refresh } = useSharingContext()
@@ -78,12 +78,14 @@ export const TrashFolderView = () => {
   const foldersResult = useQuery(folderQuery.definition, folderQuery.options)
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
 
-  const actions = makeActions([restore, destroy], {
+  const actions = makeActions([selectAllItems, restore, destroy], {
     client,
     t,
     refresh,
     navigate,
-    pathname
+    pathname,
+    selectAll: () =>
+      selectAll([foldersResult, filesResult].map(query => query.data).flat())
   })
 
   return (

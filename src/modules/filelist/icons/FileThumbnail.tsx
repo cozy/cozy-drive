@@ -15,6 +15,7 @@ import Spinner from 'cozy-ui/transpiled/react/Spinner'
 import styles from '@/styles/filelist.styl'
 
 import type { File, FolderPickerEntry } from '@/components/FolderPicker/types'
+import { useViewSwitcherContext } from '@/lib/ViewSwitcherContext'
 import { DOCTYPE_KONNECTORS } from '@/lib/doctypes'
 import { BadgeKonnector } from '@/modules/filelist/icons/BadgeKonnector'
 import FileIcon from '@/modules/filelist/icons/FileIcon'
@@ -47,6 +48,8 @@ const FileThumbnail: React.FC<FileThumbnailProps> = ({
     sharedBadge: {}
   }
 }) => {
+  const { viewType } = useViewSwitcherContext()
+
   if (isNextcloudFile(file)) {
     return <FileIconMime file={file} size={size} />
   }
@@ -90,14 +93,34 @@ const FileThumbnail: React.FC<FileThumbnailProps> = ({
           className="u-flex u-flex-items-center u-flex-justify-center u-bdrs-4"
           width={size}
           height={size}
-          bgcolor="var(--contrastBackgroundColor)"
+          bgcolor={viewType === 'list' ? 'var(--contrastBackgroundColor)' : ''}
         >
           {isKonnectorFolder ? (
             <BadgeKonnector file={file}>
-              <FileIcon file={file} size={48} isEncrypted={isEncrypted} />
+              <FileIcon file={file} size={size} isEncrypted={isEncrypted} />
+              {file.class !== 'shortcut' &&
+                showSharedBadge &&
+                viewType === 'grid' && (
+                  <SharedBadge
+                    docId={file._id}
+                    {...componentsProps.sharedBadge}
+                    xsmall
+                  />
+                )}
             </BadgeKonnector>
           ) : (
-            <FileIcon file={file} size={48} isEncrypted={isEncrypted} />
+            <>
+              <FileIcon file={file} size={size} isEncrypted={isEncrypted} />
+              {file.class !== 'shortcut' &&
+                showSharedBadge &&
+                viewType === 'grid' && (
+                  <SharedBadge
+                    docId={file._id}
+                    {...componentsProps.sharedBadge}
+                    xsmall
+                  />
+                )}
+            </>
           )}
         </Box>
       )

@@ -63,7 +63,8 @@
       "text": "Document texte",
       "spreadsheet": "Feuille de calcul",
       "slide": "Présentation"
-    }
+    },
+    "select_all": "Tout sélectionner"
   },
   "Share": {
     "create-cozy": "Créer mon Twake"

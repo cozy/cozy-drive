@@ -22,7 +22,10 @@ const driveActionsToSelectionBarActions = (
   })
 }
 
-const SelectionBar: React.FC<{ actions?: DriveAction[] }> = ({ actions }) => {
+const SelectionBar: React.FC<{
+  actions?: DriveAction[]
+  autoClose?: boolean
+}> = ({ actions, autoClose = false }) => {
   const { isSelectionBarVisible, hideSelectionBar, selectedItems } =
     useSelectionContext()
 
@@ -34,6 +37,7 @@ const SelectionBar: React.FC<{ actions?: DriveAction[] }> = ({ actions }) => {
         actions={convertedActions}
         docs={selectedItems}
         onClose={hideSelectionBar}
+        autoClose={autoClose}
       />
     )
   }

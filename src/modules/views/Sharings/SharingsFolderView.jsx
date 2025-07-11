@@ -24,13 +24,15 @@ import {
   trash,
   rename,
   qualify,
-  versions
+  versions,
+  selectAllItems
 } from '@/modules/actions'
 import { moveTo } from '@/modules/actions/components/moveTo'
 import { makeExtraColumnsNamesFromMedia } from '@/modules/certifications'
 import { useExtraColumns } from '@/modules/certifications/useExtraColumns'
 import Toolbar from '@/modules/drive/Toolbar'
 import { useFolderSort } from '@/modules/navigation/duck'
+import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 import Dropzone from '@/modules/upload/Dropzone'
 import {
   buildDriveQuery,
@@ -53,6 +55,7 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
   const { pushModal, popModal } = useModalContext()
   const dispatch = useDispatch()
   const { displayedFolder, isNotFound } = useDisplayedFolder()
+  const { selectAll } = useSelectionContext()
   useHead()
 
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
@@ -100,10 +103,12 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
     canMove: true,
     allLoaded,
     isOwner,
-    byDocId
+    byDocId,
+    selectAll: () =>
+      selectAll([foldersResult, filesResult].map(query => query.data).flat())
   }
   const actions = makeActions(
-    [share, download, trash, rename, moveTo, qualify, versions],
+    [selectAllItems, share, download, trash, rename, moveTo, qualify, versions],
     actionsOptions
   )
 

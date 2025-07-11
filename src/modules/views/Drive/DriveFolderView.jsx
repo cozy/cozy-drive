@@ -30,7 +30,8 @@ import {
   rename,
   infos,
   versions,
-  hr
+  hr,
+  selectAllItems
 } from '@/modules/actions'
 import { addToFavorites } from '@/modules/actions/components/addToFavorites'
 import { duplicateTo } from '@/modules/actions/components/duplicateTo'
@@ -68,7 +69,7 @@ const DriveFolderView = () => {
   const params = useParams()
   const currentFolderId = useCurrentFolderId()
   useHead()
-  const { isSelectionBarVisible } = useSelectionContext()
+  const { isSelectionBarVisible, selectAll } = useSelectionContext()
   const { isMobile, isDesktop } = useBreakpoints()
   const { t, lang } = useI18n()
   const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)
@@ -165,10 +166,12 @@ const DriveFolderView = () => {
     byDocId,
     isMobile,
     isNativeFileSharingAvailable,
-    shareFilesNative
+    shareFilesNative,
+    selectAll: () => selectAll(allResults.map(query => query.data).flat())
   }
   const actions = makeActions(
     [
+      selectAllItems,
       share,
       shareNative,
       download,
