@@ -38,7 +38,7 @@ export const TrashFolderView = () => {
   const { isMobile } = useBreakpoints()
   const navigate = useNavigate()
   const { pathname } = useLocation()
-  const { isSelectionBarVisible, selectAll } = useSelectionContext()
+  const { isSelectionBarVisible, toggleSelectAllItems } = useSelectionContext()
   const currentFolderId = useCurrentFolderId()
   const { t } = useI18n()
   const { refresh } = useSharingContext()
@@ -85,7 +85,9 @@ export const TrashFolderView = () => {
     navigate,
     pathname,
     selectAll: () =>
-      selectAll([foldersResult, filesResult].map(query => query.data).flat())
+      toggleSelectAllItems(
+        [foldersResult, filesResult].map(query => query.data).flat()
+      )
   })
 
   return (

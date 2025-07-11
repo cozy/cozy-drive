@@ -55,7 +55,8 @@
       "spreadsheet": "Tabellenkalkulation",
       "slide": "Präsentation"
     },
-    "select_all": "Alle auswählen"
+    "select_all": "Alle auswählen",
+    "clear_selection": "Auswahl aufheben"
   },
   "Share": {
     "create-cozy": "Meinen Twake erstellen"

@@ -40,7 +40,8 @@
     "share": "共有",
     "trash": "削除",
     "leave": "共有されたフォルダーから離れて削除する",
-    "select_all": "すべて選択"
+    "select_all": "すべて選択",
+    "clear_selection": "選択をクリア"
   },
   "Share": {
     "create-cozy": "自分の Twake を作成する"

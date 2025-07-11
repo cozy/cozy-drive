@@ -69,7 +69,8 @@ const DriveFolderView = () => {
   const params = useParams()
   const currentFolderId = useCurrentFolderId()
   useHead()
-  const { isSelectionBarVisible, selectAll } = useSelectionContext()
+  const { isSelectionBarVisible, toggleSelectAllItems, isSelectAll } =
+    useSelectionContext()
   const { isMobile, isDesktop } = useBreakpoints()
   const { t, lang } = useI18n()
   const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)
@@ -167,7 +168,9 @@ const DriveFolderView = () => {
     isMobile,
     isNativeFileSharingAvailable,
     shareFilesNative,
-    selectAll: () => selectAll(allResults.map(query => query.data).flat())
+    selectAll: () =>
+      toggleSelectAllItems(allResults.map(query => query.data).flat()),
+    isSelectAll
   }
   const actions = makeActions(
     [

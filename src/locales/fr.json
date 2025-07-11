@@ -64,7 +64,8 @@
       "spreadsheet": "Feuille de calcul",
       "slide": "Présentation"
     },
-    "select_all": "Tout sélectionner"
+    "select_all": "Tout sélectionner",
+    "clear_selection": "Effacer la sélection"
   },
   "Share": {
     "create-cozy": "Créer mon Twake"
