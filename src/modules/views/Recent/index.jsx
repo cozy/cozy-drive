@@ -56,7 +56,8 @@ export const RecentView = () => {
   const { isMobile } = useBreakpoints()
   const client = useClient()
   const { pushModal, popModal } = useModalContext()
-  const { isSelectionBarVisible, selectAll } = useSelectionContext()
+  const { isSelectionBarVisible, toggleSelectAllItems, isSelectAll } =
+    useSelectionContext()
   const { allLoaded, refresh, isOwner, byDocId } = useSharingContext()
   const { isNativeFileSharingAvailable, shareFilesNative } =
     useNativeFileSharing()
@@ -98,7 +99,8 @@ export const RecentView = () => {
     isMobile,
     isNativeFileSharingAvailable,
     shareFilesNative,
-    selectAll: () => selectAll(result.data)
+    selectAll: () => toggleSelectAllItems(result.data),
+    isSelectAll
   }
 
   const actions = makeActions(
