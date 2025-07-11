@@ -23,7 +23,15 @@ import FolderViewBodyVz from '../Folder/virtualized/FolderViewBody'
 
 import useHead from '@/components/useHead'
 import { useModalContext } from '@/lib/ModalContext'
-import { download, rename, infos, versions, share, hr } from '@/modules/actions'
+import {
+  download,
+  rename,
+  infos,
+  versions,
+  share,
+  hr,
+  selectAllItems
+} from '@/modules/actions'
 import { addToFavorites } from '@/modules/actions/components/addToFavorites'
 import { removeFromFavorites } from '@/modules/actions/components/removeFromFavorites'
 import { MobileAwareBreadcrumb as Breadcrumb } from '@/modules/breadcrumb/components/MobileAwareBreadcrumb'
@@ -49,7 +57,7 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
   const { isMobile } = useBreakpoints()
   const client = useClient()
   const { pushModal, popModal } = useModalContext()
-  const { isSelectionBarVisible } = useSelectionContext()
+  const { isSelectionBarVisible, selectAll } = useSelectionContext()
   const { allLoaded, refresh } = useSharingContext()
   const { isNativeFileSharingAvailable, shareFilesNative } =
     useNativeFileSharing()
@@ -92,11 +100,13 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
     showAlert,
     isMobile,
     isNativeFileSharingAvailable,
-    shareFilesNative
+    shareFilesNative,
+    selectAll: () => selectAll(result.data)
   }
 
   const actions = makeActions(
     [
+      selectAllItems,
       share,
       shareNative,
       download,

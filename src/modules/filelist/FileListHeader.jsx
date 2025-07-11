@@ -9,8 +9,7 @@ import { FileListHeaderMobile } from '@/modules/filelist/FileListHeaderMobile'
  * @property {boolean} props.canSort - Indicates whether sorting is allowed.
  * @property {Sort} [props.sort] - The current sorting option.
  * @property {Function} [props.onFolderSort] - The function to handle folder sorting.
- * @property {boolean} [props.thumbnailSizeBig] - Indicates whether the thumbnail size is big.
- * @property {Function} [props.toggleThumbnailSize] - The function to toggle the thumbnail size.
+ * @property {Function} [props.toggleViewType] - The function to toggle the view to list or grid.
  * @property {Array} [props.extraColumns] - An array of extra columns.
  */
 

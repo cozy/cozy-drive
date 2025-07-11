@@ -1,4 +1,5 @@
 @require 'components/table.styl'
+@require 'settings/z-index.styl'
 
 .fil-content-cell
     display flex
@@ -26,6 +27,60 @@
 
 .fil-content-row-bigger
     height rem(128)
+
+.fil-content-head-grid-view
+    display none
+
+.fil-content-column
+    border 0
+    position relative
+    margin .1rem auto
+    padding 1.2rem
+    text-align center
+    &:hover
+        background-color var(--contrastBackgroundColor)
+        .fil-content-file-select
+            opacity 1
+
+        .fil-content-file-action
+            opacity 1
+
+    .fil-content-file-select
+        position absolute
+        top -.2rem
+        left -.1rem
+        z-index $popover-index
+
+    .fil-content-status
+        position absolute
+        bottom 40%
+        right .1rem
+
+    .fil-content-file-action
+        position absolute
+        top 0
+        right -.3rem
+        padding 0
+        margin 0
+        transform rotate(-90deg) translateY(-100%)
+        transform-origin top right
+        opacity 0
+
+    &--center
+        align-items center
+
+.fil-content-column-selected
+    @extend $table-row-selected
+
+.fil-content-column-actioned
+    background-color var(--contrastBackgroundColor)
+
+.fil-content-column-disabled
+    opacity .4
+    cursor default
+
+    &:hover
+        background inherit
 
 .fil-content-ext
     color var(--secondaryTextColor)
@@ -112,6 +167,24 @@ column-width-thumbnail-bigger = 7rem
 
     .fil-content-file-action
         margin-right 0
+
+.fil-content-grid-view.fil-content-cell
+    white-space normal
+    height auto
+    padding-right 0
+    margin-top 0.6rem
+    text-align center
+
+    .fil-file-filename-and-ext
+        display -webkit-box
+        -webkit-line-clamp 2
+        -webkit-box-orient vertical
+
+        overflow hidden
+        text-overflow ellipsis
+        white-space normal
+
+        max-width 6rem
 
 .fil-file-thumbnail
     position relative
@@ -442,3 +515,22 @@ column-width-thumbnail-bigger = 7rem
         &:hover,
         &:focus
             text-decoration none
+
+    .fil-content-column
+        width -webkit-fill-available
+        display flex
+        flex-direction column
+        align-items center
+
+        &:nth-child(odd)
+            margin-right .3rem
+
+        .fil-content-file-select
+            top 0
+            left 0
+
+        .fil-content-file-action
+            opacity 1
+
+        .fil-file-infos
+            display none

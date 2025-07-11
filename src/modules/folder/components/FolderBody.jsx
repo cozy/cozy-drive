@@ -5,6 +5,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { EmptyDrive } from '@/components/Error/Empty'
 import Oops from '@/components/Error/Oops'
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
+import { useViewSwitcherContext } from '@/lib/ViewSwitcherContext'
 import { FileWithSelection as File } from '@/modules/filelist/File'
 import { FileList } from '@/modules/filelist/FileList'
 import FileListBody from '@/modules/filelist/FileListBody'
@@ -61,8 +62,10 @@ const FolderBody = ({
   const isEmpty = !isError && !isLoading && !hasData
   const needsToWait = useNeedsToWait({ isLoading })
 
-  const { isBigThumbnail, toggleThumbnailSize } = useThumbnailSizeContext()
+  const { isBigThumbnail } = useThumbnailSizeContext()
   const [sortOrder, setSortOrder] = useFolderSort(folderId)
+  const { viewType, switchView } = useViewSwitcherContext()
+
   const changeSortOrder = useCallback(
     (folderId_legacy, attribute, order) =>
       setSortOrder({ sortAttribute: attribute, sortOrder: order }),
@@ -79,8 +82,8 @@ const FolderBody = ({
             canSort={canSort}
             sort={sortOrder}
             onFolderSort={changeSortOrder}
-            thumbnailSizeBig={isBigThumbnail}
-            toggleThumbnailSize={toggleThumbnailSize}
+            switchViewType={switchView}
+            viewType={viewType}
           />
         ) : null}
         <FileListBody selectionModeActive={false}>

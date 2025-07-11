@@ -14,7 +14,7 @@ import PushBannerProvider from '@/components/PushBanner/PushBannerProvider'
 import { AcceptingSharingProvider } from '@/lib/AcceptingSharingContext'
 import DriveProvider from '@/lib/DriveProvider'
 import { ModalContextProvider } from '@/lib/ModalContext'
-import { ThumbnailSizeContextProvider } from '@/lib/ThumbnailSizeContext'
+import { ViewSwitcherContextProvider } from '@/lib/ViewSwitcherContext'
 import { DOCTYPE_APPS, DOCTYPE_CONTACTS, DOCTYPE_FILES } from '@/lib/doctypes'
 import { PublicProvider } from '@/modules/public/PublicProvider'
 import { onFileUploaded } from '@/modules/views/Upload/UploadUtils'
@@ -36,11 +36,11 @@ const Providers = ({ children }) => {
       <BarProvider>
         <PushBannerProvider>
           <AcceptingSharingProvider>
-            <ThumbnailSizeContextProvider>
+            <ViewSwitcherContextProvider>
               <ModalContextProvider>
                 <DnDProvider {...dnDProviderProps}>{children}</DnDProvider>
               </ModalContextProvider>
-            </ThumbnailSizeContextProvider>
+            </ViewSwitcherContextProvider>
           </AcceptingSharingProvider>
         </PushBannerProvider>
       </BarProvider>

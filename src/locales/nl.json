@@ -8,7 +8,8 @@
   },
   "toolbar": {
     "menu_select": "Selecteer items",
-    "empty_trash": "Leeg de prullenbak"
+    "empty_trash": "Leeg de prullenbak",
+    "select_all": "Alles selecteren"
   },
   "table": {
     "head_name": "Naam",

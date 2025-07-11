@@ -1,3 +1,4 @@
+import cx from 'classnames'
 import React, { useCallback, useContext, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -7,12 +8,15 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { useSyncingFakeFile } from './useSyncingFakeFile'
 
+import styles from '@/styles/folder-view.styl'
+
 import { EmptyDrive, EmptyTrash } from '@/components/Error/Empty'
 import Oops from '@/components/Error/Oops'
 import RightClickFileMenu from '@/components/RightClick/RightClickFileMenu'
 import { TRASH_DIR_ID } from '@/constants/config'
 import AcceptingSharingContext from '@/lib/AcceptingSharingContext'
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
+import { useViewSwitcherContext } from '@/lib/ViewSwitcherContext'
 import { isEncryptedFolder } from '@/lib/encryption'
 import AddFolder from '@/modules/filelist/AddFolder'
 import { FileWithSelection as File } from '@/modules/filelist/File'
@@ -68,7 +72,8 @@ const FolderViewBody = ({
     }
   }, [currentFolderId, isDesktop])
 
-  const { isBigThumbnail, toggleThumbnailSize } = useThumbnailSizeContext()
+  const { isBigThumbnail } = useThumbnailSizeContext()
+  const { viewType, switchView } = useViewSwitcherContext()
   const { sharingsValue } = useContext(AcceptingSharingContext)
   const [sortOrder, setSortOrder] = useFolderSort(currentFolderId)
   const vaultClient = useVaultClient()
@@ -133,8 +138,8 @@ const FolderViewBody = ({
             canSort={canSort}
             sort={sortOrder}
             onFolderSort={changeSortOrder}
-            thumbnailSizeBig={isBigThumbnail}
-            toggleThumbnailSize={toggleThumbnailSize}
+            viewType={viewType}
+            switchViewType={switchView}
             extraColumns={extraColumns}
           />
         )}
@@ -162,7 +167,12 @@ const FolderViewBody = ({
               <EmptyTrash canUpload={canUpload} />
             )}
           {hasDataToShow && !needsToWait && (
-            <div className={!isDesktop ? 'u-ov-hidden' : ''}>
+            <div
+              className={cx(
+                viewType === 'grid' ? styles['fil-folder-body-grid'] : '',
+                !isDesktop ? 'u-ov-hidden' : ''
+              )}
+            >
               <>
                 {syncingFakeFile && (
                   <File
@@ -183,7 +193,9 @@ const FolderViewBody = ({
                             <RightClickFileMenu
                               key={file._id}
                               doc={file}
-                              actions={actions}
+                              actions={actions.filter(
+                                action => !action.selectAllItems
+                              )}
                             >
                               <File
                                 key={file._id}

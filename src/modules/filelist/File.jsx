@@ -6,6 +6,7 @@ import React, { useState, useRef } from 'react'
 import { useSelector } from 'react-redux'
 
 import { isDirectory } from 'cozy-client/dist/models/file'
+import Card from 'cozy-ui/transpiled/react/Card'
 import { TableRow, TableCell } from 'cozy-ui/transpiled/react/deprecated/Table'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
@@ -22,6 +23,7 @@ import {
 
 import styles from '@/styles/filelist.styl'
 
+import { useViewSwitcherContext } from '@/lib/ViewSwitcherContext'
 import { ActionMenuWithHeader } from '@/modules/actionmenu/ActionMenuWithHeader'
 import { extraColumnsPropTypes } from '@/modules/certifications'
 import {
@@ -31,6 +33,20 @@ import {
 import FileOpener from '@/modules/filelist/FileOpener'
 import FileThumbnail from '@/modules/filelist/icons/FileThumbnail'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
+
+const FileWrapper = ({ children, viewType, className, onContextMenu }) =>
+  viewType === 'list' ? (
+    <TableRow className={className} onContextMenu={onContextMenu}>
+      {children}
+    </TableRow>
+  ) : (
+    <Card className={className} onContextMenu={onContextMenu}>
+      {children}
+    </Card>
+  )
+
+const ThumbnailWrapper = ({ children, viewType }) =>
+  viewType === 'list' ? <TableCell>{children}</TableCell> : <>{children}</>
 
 const File = ({
   t,
@@ -42,7 +58,6 @@ const File = ({
   withFilePath,
   disabled,
   styleDisabled,
-  thumbnailSizeBig,
   refreshFolderContent,
   isInSyncFromSharing,
   extraColumns,
@@ -51,6 +66,8 @@ const File = ({
   canInteractWith,
   onContextMenu
 }) => {
+  const { viewType } = useViewSwitcherContext()
+
   const [actionMenuVisible, setActionMenuVisible] = useState(false)
   const filerowMenuToggleRef = useRef()
   const { toggleSelectedItem, isItemSelected, isSelectionBarVisible } =
@@ -80,8 +97,13 @@ const File = ({
   const filContentRowSelected = cx(styles['fil-content-row'], {
     [styles['fil-content-row-selected']]: selected,
     [styles['fil-content-row-actioned']]: actionMenuVisible,
-    [styles['fil-content-row-disabled']]: styleDisabled,
-    [styles['fil-content-row-bigger']]: thumbnailSizeBig
+    [styles['fil-content-row-disabled']]: styleDisabled
+  })
+
+  const filContentColumnSelected = cx(styles['fil-content-column'], {
+    [styles['fil-content-column-selected']]: selected,
+    [styles['fil-content-column-actioned']]: actionMenuVisible,
+    [styles['fil-content-column-disabled']]: styleDisabled
   })
 
   const formattedSize =
@@ -107,8 +129,15 @@ const File = ({
   }
 
   return (
-    <TableRow className={filContentRowSelected} onContextMenu={onContextMenu}>
+    <FileWrapper
+      viewType={viewType}
+      className={
+        viewType === 'list' ? filContentRowSelected : filContentColumnSelected
+      }
+      onContextMenu={onContextMenu}
+    >
       <SelectBox
+        viewType={viewType}
         withSelectionCheckbox={withSelectionCheckbox && actions?.length > 0}
         selected={selected}
         onClick={e => toggle(e)}
@@ -126,7 +155,8 @@ const File = ({
         toggle={toggle}
         isRenaming={isRenaming}
       >
-        <TableCell
+        <ThumbnailWrapper
+          viewType={viewType}
           className={cx(
             styles['fil-content-cell'],
             styles['fil-file-thumbnail'],
@@ -137,7 +167,7 @@ const File = ({
         >
           <FileThumbnail
             file={attributes}
-            size={thumbnailSizeBig ? 96 : undefined}
+            size={viewType === 'grid' ? 96 : undefined}
             isInSyncFromSharing={isInSyncFromSharing}
             showSharedBadge={isMobile}
             componentsProps={{
@@ -146,7 +176,7 @@ const File = ({
               }
             }}
           />
-        </TableCell>
+        </ThumbnailWrapper>
         <FileName
           attributes={attributes}
           isRenaming={isRenaming}
@@ -158,15 +188,21 @@ const File = ({
           refreshFolderContent={refreshFolderContent}
           isInSyncFromSharing={isInSyncFromSharing}
         />
-        <LastUpdate
-          date={updatedAt}
-          formatted={isDirectory(attributes) ? undefined : formattedUpdatedAt}
-        />
-        <Size filesize={formattedSize} />
-        {extraColumns &&
-          extraColumns.map(column => (
-            <column.CellComponent key={column.label} file={attributes} />
-          ))}
+        {viewType === 'list' && (
+          <>
+            <LastUpdate
+              date={updatedAt}
+              formatted={
+                isDirectory(attributes) ? undefined : formattedUpdatedAt
+              }
+            />
+            <Size filesize={formattedSize} />
+            {extraColumns &&
+              extraColumns.map(column => (
+                <column.CellComponent key={column.label} file={attributes} />
+              ))}
+          </>
+        )}
         <Status
           file={attributes}
           disabled={isRowDisabledOrInSyncFromSharing}
@@ -189,11 +225,11 @@ const File = ({
         <ActionMenuWithHeader
           file={attributes}
           anchorElRef={filerowMenuToggleRef}
-          actions={actions}
+          actions={actions.filter(action => !action.selectAllItems)}
           onClose={hideActionMenu}
         />
       )}
-    </TableRow>
+    </FileWrapper>
   )
 }
 

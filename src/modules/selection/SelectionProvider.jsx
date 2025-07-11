@@ -15,6 +15,7 @@ import { useLocation } from 'react-router-dom'
  * @property {Array} selectedItems List of selected items
  * @property {Function} toggleSelectedItem Select an item if it is already selected, otherwise deselect it
  * @property {Function} isItemSelected Find out if an item is selected by its id
+ * @property {boolean} isSelectAll Whether all the items are selected or not
  */
 
 /** @type {import('react').Context<TSelectionContext>} */
@@ -27,6 +28,7 @@ const SelectionProvider = ({ children }) => {
   const location = useLocation()
   const [selectedItems, setSelectedItems] = useState({})
   const [isSelectionBarOpen, setSelectionBarOpen] = useState(false)
+  const [isSelectAll, setIsSelectAll] = useState(false)
 
   const toggleSelectedItem = item => {
     if (isItemSelected(item.id)) {
@@ -39,6 +41,7 @@ const SelectionProvider = ({ children }) => {
   }
 
   const selectAll = items => {
+    setIsSelectAll(true)
     const newSelectedItems = items.reduce((acc, item) => {
       acc[item.id] = item
       return acc
@@ -48,6 +51,7 @@ const SelectionProvider = ({ children }) => {
 
   const showSelectionBar = () => setSelectionBarOpen(true)
   const hideSelectionBar = () => {
+    setIsSelectAll(false)
     setSelectedItems({})
     setSelectionBarOpen(false)
   }
@@ -73,7 +77,8 @@ const SelectionProvider = ({ children }) => {
         selectedItems: Object.values(selectedItems),
         toggleSelectedItem,
         selectAll,
-        isItemSelected
+        isItemSelected,
+        isSelectAll
       }}
     >
       {children}

@@ -19,13 +19,18 @@ const FileListHeaderDesktop = ({
   canSort,
   sort,
   onFolderSort,
-  extraColumns
+  extraColumns,
+  viewType
 }) => {
   const { t } = useI18n()
   const actualSort = sort || DEFAULT_SORT
 
   return (
-    <TableHead className={styles['fil-content-head']}>
+    <TableHead
+      className={cx(styles['fil-content-head'], {
+        [styles['fil-content-head-grid-view']]: viewType === 'grid'
+      })}
+    >
       <TableRow className={styles['fil-content-row-head']}>
         <TableHeader
           className={cx(

@@ -50,7 +50,8 @@
       "text": "文本文件",
       "spreadsheet": "电子表格",
       "slide": "幻灯片"
-    }
+    },
+    "select_all": "全选"
   },
   "Share": {
     "create-cozy": "创建我的 Twake"

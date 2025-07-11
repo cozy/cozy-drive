@@ -7,7 +7,7 @@ import ToggleButton from 'cozy-ui/transpiled/react/ToggleButton'
 import ToggleButtonGroup from 'cozy-ui/transpiled/react/ToggleButtonGroup'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
+import { useViewSwitcherContext } from '@/lib/ViewSwitcherContext'
 
 /**
  * ViewSwitcher component for toggling between grid and list views
@@ -17,20 +17,14 @@ import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
  */
 const ViewSwitcher = ({ className }) => {
   const { t } = useI18n()
-  const { isBigThumbnail, toggleThumbnailSize } = useThumbnailSizeContext()
+  const { viewType, switchView } = useViewSwitcherContext()
 
   // Convert isBigThumbnail to value for ToggleButtonGroup
-  const value = isBigThumbnail ? 'grid' : 'list'
+  const value = viewType
 
   const handleChange = (event, newValue) => {
     if (newValue !== null) {
-      // If the new value is different from the current value, call toggleThumbnailSize
-      if (
-        (newValue === 'grid' && !isBigThumbnail) ||
-        (newValue === 'list' && isBigThumbnail)
-      ) {
-        toggleThumbnailSize()
-      }
+      switchView(newValue)
     }
   }
 

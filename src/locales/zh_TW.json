@@ -33,7 +33,8 @@
     "empty_trash": "清空垃圾桶",
     "share": "分享",
     "trash": "移除",
-    "leave": "離開分享資料夾並刪除"
+    "leave": "離開分享資料夾並刪除",
+    "select_all": "全選"
   },
   "Share": {
     "create-cozy": "建立我的 Twake"

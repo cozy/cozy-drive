@@ -6,12 +6,14 @@ import { SharedStatus, useSharingContext } from 'cozy-sharing'
 
 import styles from '@/styles/filelist.styl'
 
+import { useViewSwitcherContext } from '@/lib/ViewSwitcherContext'
 import { joinPath } from '@/lib/path'
 
 const ShareContent = ({ file, disabled, isInSyncFromSharing }) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const { byDocId } = useSharingContext()
+  const { viewType } = useViewSwitcherContext()
 
   const handleClick = e => {
     // Avoid to trigger row click from FileOpener
@@ -33,7 +35,9 @@ const ShareContent = ({ file, disabled, isInSyncFromSharing }) => {
       })}
     >
       {isInSyncFromSharing || !isShared ? (
-        <span data-testid="fil-content-sharestatus--noAvatar">—</span>
+        viewType === 'list' ? (
+          <span data-testid="fil-content-sharestatus--noAvatar">—</span>
+        ) : null
       ) : (
         <SharedStatus onClick={handleClick} docId={file.id} />
       )}

@@ -16,7 +16,7 @@ import RightClickProvider from '@/components/RightClick/RightClickProvider'
 import { AcceptingSharingProvider } from '@/lib/AcceptingSharingContext'
 import FabProvider from '@/lib/FabProvider'
 import { ModalContext } from '@/lib/ModalContext'
-import { ThumbnailSizeContextProvider } from '@/lib/ThumbnailSizeContext'
+import { ViewSwitcherContextProvider } from '@/lib/ViewSwitcherContext'
 import enLocale from '@/locales/en.json'
 import { SelectionProvider } from '@/modules/selection/SelectionProvider'
 
@@ -68,7 +68,7 @@ const AppLike = ({
               <NativeFileSharingProvider>
                 <HashRouter>
                   <SelectionProvider>
-                    <ThumbnailSizeContextProvider>
+                    <ViewSwitcherContextProvider>
                       <BreakpointsProvider>
                         <AlertProvider>
                           <PushBannerProvider>
@@ -84,7 +84,7 @@ const AppLike = ({
                           </PushBannerProvider>
                         </AlertProvider>
                       </BreakpointsProvider>
-                    </ThumbnailSizeContextProvider>
+                    </ViewSwitcherContextProvider>
                   </SelectionProvider>
                 </HashRouter>
               </NativeFileSharingProvider>

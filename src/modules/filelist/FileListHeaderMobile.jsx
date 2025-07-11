@@ -23,8 +23,8 @@ const FileListHeaderMobile = ({
   canSort,
   sort,
   onFolderSort,
-  thumbnailSizeBig,
-  toggleThumbnailSize
+  viewType,
+  switchViewType
 }) => {
   const { t } = useI18n()
   const [isShowingSortMenu, setIsShowingSortMenu] = useState(false)
@@ -76,11 +76,11 @@ const FileListHeaderMobile = ({
           <Button
             variant="text"
             onClick={() => {
-              toggleThumbnailSize()
+              switchViewType(viewType === 'list' ? 'grid' : 'list')
             }}
             label={
               <Icon
-                icon={thumbnailSizeBig ? ListMinIcon : ListIcon}
+                icon={viewType === 'list' ? ListMinIcon : ListIcon}
                 size={17}
               />
             }
