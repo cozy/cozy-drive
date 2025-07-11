@@ -5,13 +5,13 @@ import { hasQueryBeenLoaded, useQuery } from 'cozy-client'
 import { ShareModal } from 'cozy-sharing'
 
 import { LoaderModal } from '@/components/LoaderModal'
-import { buildFileByIdQuery } from '@/queries'
+import { buildFileOrFolderByIdQuery } from '@/queries'
 
 const ShareFileView = () => {
   const navigate = useNavigate()
   const { fileId } = useParams()
 
-  const fileQuery = buildFileByIdQuery(fileId)
+  const fileQuery = buildFileOrFolderByIdQuery(fileId)
   const fileResult = useQuery(fileQuery.definition, fileQuery.options)
 
   const handleExit = () => {

@@ -29,7 +29,8 @@
     "menu_download_folder": "Pobierz folder",
     "empty_trash": "Opróżnij kosz",
     "share": "Udostępnij",
-    "leave": "Opuść udostępniony folder i usuń go"
+    "leave": "Opuść udostępniony folder i usuń go",
+    "select_all": "Zaznacz wszystko"
   },
   "Files": {
     "share": {

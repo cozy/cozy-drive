@@ -57,7 +57,7 @@ describe('FolderPickerTopbar', () => {
   const setup = ({ canCreateFolder = false, folder } = {}) => {
     const mockClient = createMockClient({
       queries: {
-        'onlyfolder-io.cozy.files.root-dir': {
+        'io.cozy.files/io.cozy.files.root-dir': {
           doctype: 'io.cozy.files',
           definition: {
             doctype: 'io.cozy.files',
@@ -65,7 +65,7 @@ describe('FolderPickerTopbar', () => {
           },
           data: [rootCozyFolder]
         },
-        'onlyfolder-io.cozy.files.shared-drives-dir': {
+        'io.cozy.files/io.cozy.files.shared-drives-dir': {
           doctype: 'io.cozy.files',
           definition: {
             doctype: 'io.cozy.files',

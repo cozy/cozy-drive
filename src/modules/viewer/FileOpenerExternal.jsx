@@ -27,7 +27,7 @@ import {
   isOfficeEnabled,
   makeOnlyOfficeFileRoute
 } from '@/modules/views/OnlyOffice/helpers'
-import { buildFileByIdQuery } from '@/queries'
+import { buildFileOrFolderByIdQuery } from '@/queries'
 
 const FileNotFoundError = translate()(({ t }) => (
   <pre className="u-error">{t('FileOpenerExternal.fileNotFoundError')}</pre>
@@ -53,7 +53,7 @@ const FileOpener = props => {
     async id => {
       try {
         setState({ fileNotFound: false, loading: true })
-        const query = buildFileByIdQuery(id)
+        const query = buildFileOrFolderByIdQuery(id)
         const result = await client.query(query.definition(), query.options)
 
         const file = await ensureFileHasPath(result.data, client)

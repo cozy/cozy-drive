@@ -11,7 +11,7 @@ import { File, FolderPickerEntry } from '@/components/FolderPicker/types'
 import { ROOT_DIR_ID } from '@/constants/config'
 import { shouldRender } from '@/modules/views/Upload/UploadUtils'
 import { useUploadFromFlagship } from '@/modules/views/Upload/useUploadFromFlagship'
-import { buildOnlyFolderQuery } from '@/queries'
+import { buildFileOrFolderByIdQuery } from '@/queries'
 
 const UploaderComponent = (): JSX.Element | null => {
   const { t } = useI18n()
@@ -25,7 +25,7 @@ const UploaderComponent = (): JSX.Element | null => {
     uploadFilesFromFlagship(folder._id)
   }
 
-  const rootFolderQuery = buildOnlyFolderQuery(ROOT_DIR_ID)
+  const rootFolderQuery = buildFileOrFolderByIdQuery(ROOT_DIR_ID)
   const rootFolderResult = useQuery(
     rootFolderQuery.definition,
     rootFolderQuery.options

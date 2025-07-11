@@ -7,7 +7,10 @@ import Divider from 'cozy-ui/transpiled/react/Divider'
 import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import useDocument from '@/components/useDocument'
-import { buildTriggersQueryByAccountId, buildFileByIdQuery } from '@/queries'
+import {
+  buildTriggersQueryByAccountId,
+  buildFileOrFolderByIdQuery
+} from '@/queries'
 
 const HarvestBanner = ({ folderId }) => {
   const folder = useDocument('io.cozy.files', folderId)
@@ -17,7 +20,7 @@ const HarvestBanner = ({ folderId }) => {
   let accountId = undefined
 
   const fileId = folder?.relationships?.contents?.data?.[0]?.id
-  const fileQuery = buildFileByIdQuery(fileId)
+  const fileQuery = buildFileOrFolderByIdQuery(fileId)
   const file = useQuery(fileQuery.definition, {
     ...fileQuery.options,
     enabled: Boolean(fileId)

@@ -54,7 +54,8 @@
       "text": "Textdokument",
       "spreadsheet": "Tabellenkalkulation",
       "slide": "Präsentation"
-    }
+    },
+    "select_all": "Alle auswählen"
   },
   "Share": {
     "create-cozy": "Meinen Twake erstellen"

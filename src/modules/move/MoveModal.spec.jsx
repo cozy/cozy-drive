@@ -85,7 +85,7 @@ describe('MoveModal component', () => {
         doctype: 'io.cozy.files',
         data: []
       },
-      'onlyfolder-destinationFolder': {
+      'io.cozy.files/destinationFolder': {
         doctype: 'io.cozy.files',
         data: [
           {

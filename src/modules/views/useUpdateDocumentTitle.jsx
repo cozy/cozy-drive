@@ -5,7 +5,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { TRASH_DIR_PATH } from '@/constants/config'
 import { makeParentFolderPath } from '@/modules/filelist/helpers'
-import { buildFileByIdQuery } from '@/queries'
+import { buildFileOrFolderByIdQuery } from '@/queries'
 
 export const makeTitle = (file, appFullName, t) => {
   if (!file) return
@@ -53,7 +53,7 @@ const useUpdateDocumentTitle = docId => {
   const { t } = useI18n()
   const client = useClient()
 
-  const fileQuery = buildFileByIdQuery(docId)
+  const fileQuery = buildFileOrFolderByIdQuery(docId)
   const { data: file, fetchStatus } = useQuery(
     fileQuery.definition,
     fileQuery.options

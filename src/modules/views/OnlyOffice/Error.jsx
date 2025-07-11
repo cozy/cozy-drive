@@ -13,14 +13,14 @@ import Viewer, {
 
 import Oops from '@/components/Error/Oops'
 import { useOnlyOfficeContext } from '@/modules/views/OnlyOffice/OnlyOfficeProvider'
-import { buildFileByIdQuery } from '@/queries'
+import { buildFileOrFolderByIdQuery } from '@/queries'
 
 const Error = () => {
   const { t } = useI18n()
   const { fileId } = useOnlyOfficeContext()
   const handleOnClose = useCallback(() => window.history.back(), [])
 
-  const fileQuery = useMemo(() => buildFileByIdQuery(fileId), [fileId])
+  const fileQuery = useMemo(() => buildFileOrFolderByIdQuery(fileId), [fileId])
   const fileResult = useQuery(fileQuery.definition, fileQuery.options)
   const files = useMemo(() => [fileResult.data], [fileResult])
 

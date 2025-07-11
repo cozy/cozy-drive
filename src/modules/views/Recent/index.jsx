@@ -29,7 +29,8 @@ import {
   infos,
   versions,
   hr,
-  share
+  share,
+  selectAllItems
 } from '@/modules/actions'
 import { addToFavorites } from '@/modules/actions/components/addToFavorites'
 import { removeFromFavorites } from '@/modules/actions/components/removeFromFavorites'
@@ -55,7 +56,7 @@ export const RecentView = () => {
   const { isMobile } = useBreakpoints()
   const client = useClient()
   const { pushModal, popModal } = useModalContext()
-  const { isSelectionBarVisible } = useSelectionContext()
+  const { isSelectionBarVisible, selectAll } = useSelectionContext()
   const { allLoaded, refresh, isOwner, byDocId } = useSharingContext()
   const { isNativeFileSharingAvailable, shareFilesNative } =
     useNativeFileSharing()
@@ -96,11 +97,13 @@ export const RecentView = () => {
     byDocId,
     isMobile,
     isNativeFileSharingAvailable,
-    shareFilesNative
+    shareFilesNative,
+    selectAll: () => selectAll(result.data)
   }
 
   const actions = makeActions(
     [
+      selectAllItems,
       share,
       shareNative,
       download,

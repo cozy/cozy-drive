@@ -12,7 +12,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import logger from '@/lib/logger'
 import DestroyConfirm from '@/modules/trash/components/DestroyConfirm'
-import { buildFileByIdQuery } from '@/queries'
+import { buildFileOrFolderByIdQuery } from '@/queries'
 
 const TrashedBanner = ({ fileId, isPublic }) => {
   const { t } = useI18n()
@@ -21,7 +21,7 @@ const TrashedBanner = ({ fileId, isPublic }) => {
   const { showAlert } = useAlert()
   const { isMobile } = useBreakpoints()
 
-  const fileQuery = buildFileByIdQuery(fileId)
+  const fileQuery = buildFileOrFolderByIdQuery(fileId)
   const fileResult = useQuery(fileQuery.definition, fileQuery.options)
 
   const [isBusy, setBusy] = useState(false)

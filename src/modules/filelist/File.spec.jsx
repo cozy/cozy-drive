@@ -82,6 +82,26 @@ describe('File', () => {
       fireEvent.click(getByRole('button', { description: 'More' }))
       expect(await findByText('ActionsMenuItem'))
     })
+
+    it('should not show select all in actions menu when clicking the actionsMenu button', async () => {
+      const { root } = setup()
+      const { getByRole, queryByText } = root
+
+      fireEvent.click(getByRole('button', { description: 'More' }))
+      // "SelectAllMenuItem" should be filtered out by File before rendering
+      expect(queryByText('SelectAllMenuItem')).toBeNull()
+    })
+
+    it('should show select all in selection bar', () => {
+      const { root } = setup()
+      const { getByRole, queryByText } = root
+
+      const checkbox = getByRole('checkbox')
+
+      fireEvent.click(checkbox)
+
+      expect(queryByText('SelectAllMenuItem'))
+    })
   })
 
   describe('In sync from sharing behavior', () => {
