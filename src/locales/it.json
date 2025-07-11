@@ -50,13 +50,14 @@
     "trash": "Rimuovi",
     "leave": "Lascia la cartella condivisa ed eliminala",
     "menu_add": "Aggiungi",
-    "menu_create" : "Creare",
+    "menu_create": "Creare",
     "menu_onlyOffice": {
       "text": "Documento di testo",
       "spreadsheet": "Foglio di calcolo",
       "slide": "Presentazione"
     },
-    "select_all": "Seleziona tutto"
+    "select_all": "Seleziona tutto",
+    "clear_selection": "Cancella selezione"
   },
   "Share": {
     "create-cozy": "Crea il mio Twake"
