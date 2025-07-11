@@ -51,7 +51,8 @@
       "spreadsheet": "电子表格",
       "slide": "幻灯片"
     },
-    "select_all": "全选"
+    "select_all": "全选",
+    "clear_selection": "清晰的选择"
   },
   "Share": {
     "create-cozy": "创建我的 Twake"

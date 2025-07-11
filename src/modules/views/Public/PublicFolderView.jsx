@@ -87,7 +87,8 @@ const PublicFolderView = () => {
   const { displayedFolder } = useDisplayedFolder()
   const parentDirId = get(displayedFolder, 'dir_id')
   const parentFolder = useParentFolder(parentDirId)
-  const { isSelectionBarVisible, selectAll } = useSelectionContext()
+  const { isSelectionBarVisible, toggleSelectAllItems, isSelectAll } =
+    useSelectionContext()
   const { hasWritePermissions } = usePublicWritePermissions()
   const { pushModal, popModal } = useModalContext()
   const { refresh, isOwner, byDocId } = useSharingContext()
@@ -139,7 +140,8 @@ const PublicFolderView = () => {
     isPublic: true,
     isOwner,
     byDocId,
-    selectAll: () => selectAll(filesResult.data)
+    selectAll: () => toggleSelectAllItems(filesResult.data),
+    isSelectAll
   }
   const actions = makeActions(
     [selectAllItems, download, rename, versions, divider, trash],
