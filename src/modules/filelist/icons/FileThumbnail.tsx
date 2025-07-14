@@ -97,7 +97,12 @@ const FileThumbnail: React.FC<FileThumbnailProps> = ({
         >
           {isKonnectorFolder ? (
             <BadgeKonnector file={file}>
-              <FileIcon file={file} size={size} isEncrypted={isEncrypted} />
+              <FileIcon
+                file={file}
+                size={size}
+                isEncrypted={isEncrypted}
+                viewType={viewType}
+              />
               {file.class !== 'shortcut' &&
                 showSharedBadge &&
                 viewType === 'grid' && (
@@ -110,7 +115,12 @@ const FileThumbnail: React.FC<FileThumbnailProps> = ({
             </BadgeKonnector>
           ) : (
             <>
-              <FileIcon file={file} size={size} isEncrypted={isEncrypted} />
+              <FileIcon
+                file={file}
+                size={size}
+                isEncrypted={isEncrypted}
+                viewType={viewType}
+              />
               {file.class !== 'shortcut' &&
                 showSharedBadge &&
                 viewType === 'grid' && (
@@ -129,7 +139,12 @@ const FileThumbnail: React.FC<FileThumbnailProps> = ({
   if (isKonnectorFolder) {
     return (
       <BadgeKonnector file={file}>
-        <FileIcon file={file} size={size} isEncrypted={isEncrypted} />
+        <FileIcon
+          file={file}
+          size={size}
+          isEncrypted={isEncrypted}
+          viewType={viewType}
+        />
       </BadgeKonnector>
     )
   }
@@ -137,11 +152,21 @@ const FileThumbnail: React.FC<FileThumbnailProps> = ({
   return (
     <>
       {isSimpleFile && (
-        <FileIcon file={file} size={size} isEncrypted={isEncrypted} />
+        <FileIcon
+          file={file}
+          size={size}
+          isEncrypted={isEncrypted}
+          viewType={viewType}
+        />
       )}
       {isRegularShortcut && (
         <InfosBadge badgeContent={<Icon icon={LinkIcon} size={10} />}>
-          <FileIcon file={file} size={size} isEncrypted={isEncrypted} />
+          <FileIcon
+            file={file}
+            size={size}
+            isEncrypted={isEncrypted}
+            viewType={viewType}
+          />
         </InfosBadge>
       )}
       {isSharingShortcut && (

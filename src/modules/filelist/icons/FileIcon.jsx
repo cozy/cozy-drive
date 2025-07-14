@@ -7,14 +7,14 @@ import styles from '@/styles/filelist.styl'
 import FileIconMime from '@/modules/filelist/icons/FileIconMime'
 import FileIconShortcut from '@/modules/filelist/icons/FileIconShortcut'
 
-const FileIcon = ({ file, size, isEncrypted }) => {
+const FileIcon = ({ file, size, isEncrypted, viewType = 'list' }) => {
   const isImage = file.class === 'image'
   const isShortcut = file.class === 'shortcut'
   if (isImage || file.class === 'pdf')
     return (
       <FileImageLoader
         file={file}
-        linkType="tiny"
+        linkType={viewType === 'grid' ? 'small' : 'tiny'}
         render={src => (
           <img
             src={src}
