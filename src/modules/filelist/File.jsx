@@ -45,8 +45,12 @@ const FileWrapper = ({ children, viewType, className, onContextMenu }) =>
     </Card>
   )
 
-const ThumbnailWrapper = ({ children, viewType }) =>
-  viewType === 'list' ? <TableCell>{children}</TableCell> : <>{children}</>
+const ThumbnailWrapper = ({ children, viewType, className }) =>
+  viewType === 'list' ? (
+    <TableCell className={className}>{children}</TableCell>
+  ) : (
+    <div className={className}>{children}</div>
+  )
 
 const File = ({
   t,
@@ -161,7 +165,8 @@ const File = ({
             styles['fil-content-cell'],
             styles['fil-file-thumbnail'],
             {
-              'u-pl-0': !isMobile
+              'u-pl-0': !isMobile,
+              [styles['fil-content-grid-view']]: viewType === 'grid'
             }
           )}
         >
@@ -176,6 +181,13 @@ const File = ({
               }
             }}
           />
+          {viewType === 'grid' && (
+            <Status
+              file={attributes}
+              disabled={isRowDisabledOrInSyncFromSharing}
+              isInSyncFromSharing={isInSyncFromSharing}
+            />
+          )}
         </ThumbnailWrapper>
         <FileName
           attributes={attributes}
@@ -201,13 +213,13 @@ const File = ({
               extraColumns.map(column => (
                 <column.CellComponent key={column.label} file={attributes} />
               ))}
+            <Status
+              file={attributes}
+              disabled={isRowDisabledOrInSyncFromSharing}
+              isInSyncFromSharing={isInSyncFromSharing}
+            />
           </>
         )}
-        <Status
-          file={attributes}
-          disabled={isRowDisabledOrInSyncFromSharing}
-          isInSyncFromSharing={isInSyncFromSharing}
-        />
         <SharingShortcutBadge file={attributes} />
       </FileOpener>
       {actions && canInteractWithFile && (
