@@ -8,6 +8,8 @@ import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import { useViewSwitcherContext } from '@/lib/ViewSwitcherContext'
+import { AddFolderCard } from '@/modules/filelist/AddFolderCard'
 import { AddFolderRow } from '@/modules/filelist/AddFolderRow'
 import {
   isTypingNewFolderName,
@@ -27,13 +29,16 @@ const AddFolder = ({
   const { t } = useI18n()
   const { showAlert } = useAlert()
   const { isMobile } = useBreakpoints()
+  const { viewType } = useViewSwitcherContext()
 
   if (!visible) {
     return null
   }
 
   const Comp =
-    flag('drive.virtualization.enabled') && !isMobile
+    viewType === 'grid'
+      ? AddFolderCard
+      : flag('drive.virtualization.enabled') && !isMobile
       ? AddFolderRowVz
       : AddFolderRow
 
