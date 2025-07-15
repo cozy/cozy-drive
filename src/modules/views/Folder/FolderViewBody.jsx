@@ -125,6 +125,19 @@ const FolderViewBody = ({
     navigate('/folder')
   }, [navigate])
 
+  const FileListBodyWrapper = ({ viewType, isDesktop, children }) => {
+    return (
+      <div
+        className={cx(
+          viewType === 'grid' ? styles['fil-folder-body-grid'] : '',
+          !isDesktop ? 'u-ov-hidden' : ''
+        )}
+      >
+        {children}
+      </div>
+    )
+  }
+
   return (
     <FolderUnlocker
       folder={displayedFolder}
@@ -144,12 +157,16 @@ const FolderViewBody = ({
           />
         )}
         <FileListBody selectionModeActive={false}>
-          <AddFolder
-            vaultClient={vaultClient}
-            refreshFolderContent={refreshFolderContent}
-            extraColumns={extraColumns}
-            currentFolderId={currentFolderId}
-          />
+          {!hasDataToShow && !needsToWait && (
+            <FileListBodyWrapper viewType={viewType} isDesktop={isDesktop}>
+              <AddFolder
+                vaultClient={vaultClient}
+                refreshFolderContent={refreshFolderContent}
+                extraColumns={extraColumns}
+                currentFolderId={currentFolderId}
+              />
+            </FileListBodyWrapper>
+          )}
           {isInError && <Oops />}
           {(needsToWait || isLoading) && <FileListRowsPlaceholder />}
           {/* TODO FolderViewBody should not have the responsability to chose
@@ -167,12 +184,7 @@ const FolderViewBody = ({
               <EmptyTrash canUpload={canUpload} />
             )}
           {hasDataToShow && !needsToWait && (
-            <div
-              className={cx(
-                viewType === 'grid' ? styles['fil-folder-body-grid'] : '',
-                !isDesktop ? 'u-ov-hidden' : ''
-              )}
-            >
+            <FileListBodyWrapper viewType={viewType} isDesktop={isDesktop}>
               <>
                 {syncingFakeFile && (
                   <File
@@ -184,6 +196,12 @@ const FolderViewBody = ({
                     disableSelection={true}
                   />
                 )}
+                <AddFolder
+                  vaultClient={vaultClient}
+                  refreshFolderContent={refreshFolderContent}
+                  extraColumns={extraColumns}
+                  currentFolderId={currentFolderId}
+                />
                 {queryResults.map((query, queryIndex) => {
                   if (query.data !== null && query.data.length > 0) {
                     return (
@@ -227,7 +245,7 @@ const FolderViewBody = ({
                   return null
                 })}
               </>
-            </div>
+            </FileListBodyWrapper>
           )}
         </FileListBody>
       </FileList>
