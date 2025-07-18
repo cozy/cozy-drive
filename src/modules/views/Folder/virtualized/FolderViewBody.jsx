@@ -8,11 +8,13 @@ import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import Grid from './Grid'
 import { makeColumns } from '../helpers'
 import { useSyncingFakeFile } from '../useSyncingFakeFile'
 
 import Oops from '@/components/Error/Oops'
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
+import { useViewSwitcherContext } from '@/lib/ViewSwitcherContext'
 import FileListRowsPlaceholder from '@/modules/filelist/FileListRowsPlaceholder'
 import { isTypingNewFolderName } from '@/modules/filelist/duck'
 import { FolderUnlocker } from '@/modules/folder/components/FolderUnlocker'
@@ -42,6 +44,7 @@ const FolderViewBody = ({
   const { sharedPaths } = useSharingContext()
   const { registerCancelable } = useCancelable()
   const { showAlert } = useAlert()
+  const { viewType } = useViewSwitcherContext()
   const { t } = useI18n()
 
   const isSelectedItem = file => {
@@ -141,32 +144,52 @@ const FolderViewBody = ({
         currentFolderId={currentFolderId}
         canUpload={canUpload}
       />
-      {showTable && (
-        <Table
-          rows={rows}
-          columns={columns}
-          dragProps={{
-            enabled: canDrag,
-            dragId: 'drag-drive',
-            onDrop: onDrop({
-              client,
-              showAlert,
-              selectAll,
-              registerCancelable,
-              sharedPaths,
-              t
-            })
-          }}
-          fetchMore={fetchMore}
-          selectAll={selectAll}
-          toggleSelectedItem={toggleSelectedItem}
-          isSelectedItem={isSelectedItem}
-          selectedItems={selectedItems}
-          currentFolderId={currentFolderId}
-          withFilePath={withFilePath}
-          actions={actions}
-        />
-      )}
+      {showTable &&
+        (viewType === 'list' ? (
+          <Table
+            rows={rows}
+            columns={columns}
+            dragProps={{
+              enabled: canDrag,
+              dragId: 'drag-drive',
+              onDrop: onDrop({
+                client,
+                showAlert,
+                selectAll,
+                registerCancelable,
+                sharedPaths,
+                t
+              })
+            }}
+            fetchMore={fetchMore}
+            selectAll={selectAll}
+            toggleSelectedItem={toggleSelectedItem}
+            isSelectedItem={isSelectedItem}
+            selectedItems={selectedItems}
+            currentFolderId={currentFolderId}
+            withFilePath={withFilePath}
+            actions={actions}
+          />
+        ) : (
+          <Grid
+            items={rows}
+            withFilePath={withFilePath}
+            actions={actions}
+            fetchMore={fetchMore}
+            dragProps={{
+              enabled: canDrag,
+              dragId: 'drag-drive',
+              onDrop: onDrop({
+                client,
+                showAlert,
+                selectAll,
+                registerCancelable,
+                sharedPaths,
+                t
+              })
+            }}
+          />
+        ))}
     </FolderUnlocker>
   )
 }
