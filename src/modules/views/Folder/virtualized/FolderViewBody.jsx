@@ -173,6 +173,7 @@ const FolderViewBody = ({
         ) : (
           <Grid
             items={rows}
+            currentFolderId={currentFolderId}
             withFilePath={withFilePath}
             actions={actions}
             fetchMore={fetchMore}
