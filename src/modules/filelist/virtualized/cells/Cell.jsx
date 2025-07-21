@@ -145,6 +145,7 @@ const Cell = ({
     // We don't allow any action on shared drives and trash
     // because they are magic folder created by the stack
     const canInteractWithFile =
+      row._id &&
       row._id !== 'io.cozy.files.shared-drives-dir' &&
       !row._id.endsWith('.trash-dir')
 
