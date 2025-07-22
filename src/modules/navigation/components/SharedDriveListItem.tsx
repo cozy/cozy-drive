@@ -6,10 +6,10 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 
 import { FileLink } from '@/modules/navigation/components/FileLink'
 
-// import { useFileLink } from '@/modules/navigation/hooks/useFileLink'
+import { useSharedDriveLink } from '@/modules/navigation/hooks/useSharedDriveLink'
 
 interface SharedDriveListItemProps {
-  sharedDrive: any
+  sharedDrive: object
   clickState: [string, (value: string | undefined) => void]
 }
 
@@ -18,12 +18,12 @@ const SharedDriveListItem: FC<SharedDriveListItemProps> = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   clickState: [lastClicked, setLastClicked]
 }) => {
-  // const { link } = useFileLink(sharedDrive, { forceFolderPath: true })
+  const { link } = useSharedDriveLink(sharedDrive)
 
   return (
     <NavItem key={sharedDrive._id}>
       <FileLink
-        link="link"
+        link={link}
         className={NavLink.className}
         onClick={(): void => setLastClicked(undefined)}
       >
