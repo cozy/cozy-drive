@@ -2,6 +2,7 @@ import React, { FC, useMemo } from 'react'
 import { Outlet } from 'react-router-dom'
 
 import { useQuery } from 'cozy-client'
+import { Content } from 'cozy-ui/transpiled/react/Layout'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -72,18 +73,20 @@ const SharedDrivesFolderView: FC = () => {
 
   return (
     <FolderView isNotFound={isNotFound}>
-      <FolderViewHeader>
-        <FolderViewBreadcrumb
-          rootBreadcrumbPath={rootBreadcrumbPath}
-          currentFolderId="io.cozy.files.shared-drives-dir"
+      <Content className={isMobile ? '' : 'u-pt-1'}>
+        <FolderViewHeader>
+          <FolderViewBreadcrumb
+            rootBreadcrumbPath={rootBreadcrumbPath}
+            currentFolderId="io.cozy.files.shared-drives-dir"
+          />
+        </FolderViewHeader>
+        <FolderBody
+          folderId="io.cozy.files.shared-drives-dir"
+          queryResults={queryResults}
+          extraColumns={extraColumns}
         />
-      </FolderViewHeader>
-      <FolderBody
-        folderId="io.cozy.files.shared-drives-dir"
-        queryResults={queryResults}
-        extraColumns={extraColumns}
-      />
-      <Outlet />
+        <Outlet />
+      </Content>
     </FolderView>
   )
 }

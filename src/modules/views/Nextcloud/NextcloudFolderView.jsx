@@ -1,6 +1,8 @@
 import React from 'react'
 import { Outlet, useParams } from 'react-router-dom'
 
+import { Content } from 'cozy-ui/transpiled/react/Layout'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { NextcloudBanner } from '@/modules/nextcloud/components/NextcloudBanner'
@@ -13,6 +15,8 @@ import FolderView from '@/modules/views/Folder/FolderView'
 import FolderViewHeader from '@/modules/views/Folder/FolderViewHeader'
 
 const NextcloudFolderView = () => {
+  const { isMobile } = useBreakpoints()
+
   const { sourceAccount } = useParams()
   const path = useNextcloudPath()
   const { t } = useI18n()
@@ -45,13 +49,15 @@ const NextcloudFolderView = () => {
 
   return (
     <FolderView>
-      <FolderViewHeader>
-        <NextcloudBreadcrumb sourceAccount={sourceAccount} path={path} />
-        <NextcloudToolbar />
-      </FolderViewHeader>
-      <NextcloudBanner />
-      <NextcloudFolderBody path={path} queryResults={queryResults} />
-      <Outlet />
+      <Content className={isMobile ? '' : 'u-pt-1'}>
+        <FolderViewHeader>
+          <NextcloudBreadcrumb sourceAccount={sourceAccount} path={path} />
+          <NextcloudToolbar />
+        </FolderViewHeader>
+        <NextcloudBanner />
+        <NextcloudFolderBody path={path} queryResults={queryResults} />
+        <Outlet />
+      </Content>
     </FolderView>
   )
 }
