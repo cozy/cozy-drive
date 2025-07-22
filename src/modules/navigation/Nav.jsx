@@ -13,7 +13,7 @@ import { useNavContext } from '@/modules/navigation/NavContext'
 import { NavItem } from '@/modules/navigation/NavItem'
 import { SharingsNavItem } from '@/modules/navigation/SharingsNavItem'
 import { SharedDriveList } from '@/modules/navigation/components/SharedDriveList'
-import { useSharedDrives } from '@/modules/shareddrives/hooks'
+import { useSharedDrives } from '@/modules/shareddrives/hooks/useSharedDrives'
 
 export const Nav = () => {
   const clickState = useNavContext()
