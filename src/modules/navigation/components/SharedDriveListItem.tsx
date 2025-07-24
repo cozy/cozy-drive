@@ -5,11 +5,11 @@ import { NavIcon, NavLink, NavItem } from 'cozy-ui/transpiled/react/Nav'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 
 import { FileLink } from '@/modules/navigation/components/FileLink'
-
 import { useSharedDriveLink } from '@/modules/navigation/hooks/useSharedDriveLink'
+import { SharedDrive } from '@/modules/shareddrives/helpers'
 
 interface SharedDriveListItemProps {
-  sharedDrive: object
+  sharedDrive: SharedDrive
   clickState: [string, (value: string | undefined) => void]
 }
 
