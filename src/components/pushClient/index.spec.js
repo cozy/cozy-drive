@@ -8,9 +8,7 @@ describe('isClientAlreadyInstalled', () => {
     client.fetchQueryAndGetFromState = jest.fn().mockResolvedValue({
       data: {
         0: {
-          attributes: {
-            software_id: DESKTOP_SOFTWARE_ID
-          }
+          software_id: DESKTOP_SOFTWARE_ID
         }
       }
     })
@@ -22,9 +20,7 @@ describe('isClientAlreadyInstalled', () => {
     client.fetchQueryAndGetFromState = jest.fn().mockResolvedValue({
       data: {
         0: {
-          attributes: {
-            software_id: test
-          }
+          software_id: test
         }
       }
     })
