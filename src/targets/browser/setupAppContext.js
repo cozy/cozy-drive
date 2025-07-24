@@ -1,7 +1,8 @@
 import memoize from 'lodash/memoize'
 
-import CozyClient from 'cozy-client'
+import CozyClient, { DataProxyLink, StackLink } from 'cozy-client'
 import { Document } from 'cozy-doctypes'
+import flag from 'cozy-flags'
 import { initTranslation } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import appMetadata from '@/lib/appMetadata'
@@ -16,12 +17,24 @@ const setupApp = memoize(() => {
   const protocol = window.location ? window.location.protocol : 'https:'
   const cozyUrl = `${protocol}//${data.domain}`
 
+  const platform = {
+    isOnline: () => window?.navigator?.onLine
+  }
+
+  const links = [new StackLink({ platform })]
+  if (flag('dataproxy.queries.enabled')) {
+    // DataProxy link will be used for offline data queries
+    const dataproxyLink = new DataProxyLink()
+    links.push(dataproxyLink)
+  }
+
   const client = new CozyClient({
     uri: cozyUrl,
     token: data.token,
     appMetadata,
     schema,
-    useCustomStore: true
+    useCustomStore: true,
+    links
   })
 
   if (!Document.cozyClient) {

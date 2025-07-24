@@ -5496,7 +5496,7 @@ cozy-client@^60.1.1:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
-cozy-dataproxy-lib@^4.1.0:
+cozy-dataproxy-lib@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/cozy-dataproxy-lib/-/cozy-dataproxy-lib-4.6.0.tgz#0bd112c19cbf851cd3eb92ba328ca522bfc77fe9"
   integrity sha512-XjjHukXl6dIZ4CoTbNiVHMNzT0lgPFs+qlmTXFdHnXeAGb1sAWzG0LipIz73yomVED6iAIOt/qlVh9SG8pytRQ==
