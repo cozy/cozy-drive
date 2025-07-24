@@ -79,7 +79,7 @@ describe('cancelMove', () => {
       trashedFiles: ['trashed-1', 'trashed-2']
     })
 
-    expect(collectionSpy).toHaveBeenCalledWith('io.cozy.files')
+    expect(collectionSpy).toHaveBeenCalledWith('io.cozy.files', {})
     expect(restoreSpy).toHaveBeenCalledWith('trashed-1')
     expect(restoreSpy).toHaveBeenCalledWith('trashed-2')
     expect(refreshSpy).toHaveBeenCalled()
