@@ -5,7 +5,6 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import { Provider } from 'react-redux'
 
 import { BarProvider } from 'cozy-bar'
-import { DataProxyProvider } from 'cozy-dataproxy-lib'
 import flag from 'cozy-flags'
 import { WebviewIntentProvider } from 'cozy-intent'
 import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -15,7 +14,6 @@ import { AcceptingSharingProvider } from '@/lib/AcceptingSharingContext'
 import DriveProvider from '@/lib/DriveProvider'
 import { ModalContextProvider } from '@/lib/ModalContext'
 import { ViewSwitcherContextProvider } from '@/lib/ViewSwitcherContext'
-import { DOCTYPE_APPS, DOCTYPE_CONTACTS, DOCTYPE_FILES } from '@/lib/doctypes'
 import { PublicProvider } from '@/modules/public/PublicProvider'
 import { onFileUploaded } from '@/modules/views/Upload/UploadUtils'
 
@@ -28,23 +26,17 @@ const Providers = ({ children }) => {
       : [Fragment, {}]
 
   return (
-    <DataProxyProvider
-      options={{
-        doctypes: [DOCTYPE_FILES, DOCTYPE_CONTACTS, DOCTYPE_APPS]
-      }}
-    >
-      <BarProvider>
-        <PushBannerProvider>
-          <AcceptingSharingProvider>
-            <ViewSwitcherContextProvider>
-              <ModalContextProvider>
-                <DnDProvider {...dnDProviderProps}>{children}</DnDProvider>
-              </ModalContextProvider>
-            </ViewSwitcherContextProvider>
-          </AcceptingSharingProvider>
-        </PushBannerProvider>
-      </BarProvider>
-    </DataProxyProvider>
+    <BarProvider>
+      <PushBannerProvider>
+        <AcceptingSharingProvider>
+          <ViewSwitcherContextProvider>
+            <ModalContextProvider>
+              <DnDProvider {...dnDProviderProps}>{children}</DnDProvider>
+            </ModalContextProvider>
+          </ViewSwitcherContextProvider>
+        </AcceptingSharingProvider>
+      </PushBannerProvider>
+    </BarProvider>
   )
 }
 
