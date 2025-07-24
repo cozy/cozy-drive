@@ -3,7 +3,7 @@ import get from 'lodash/get'
 import { models } from 'cozy-client'
 import flag from 'cozy-flags'
 
-import { DOCTYPE_FILES, DOCTYPE_FILES_ENCRYPTION } from '@/lib/doctypes'
+import { DOCTYPE_FILES, DOCTYPE_FILES_ENCRYPTION, schema } from '@/lib/doctypes'
 import { buildEncryptionByIdQuery } from '@/queries'
 const { isEncrypted } = models.file
 
@@ -55,7 +55,9 @@ export const createEncryptedDir = async (
   })
 
   // Add the relationship
-  const hydratedDir = client.hydrateDocument(dir)
+  const hydratedDir = client.hydrateDocument(dir, schema, {
+    forceHydratation: true
+  })
   return hydratedDir.encryption.addById(encryption._id)
 }
 
