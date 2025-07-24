@@ -4,6 +4,8 @@ import { useResolvedPath, useNavigate } from 'react-router-dom'
 
 import { useClient, generateWebLink } from 'cozy-client'
 
+import { SharedDrive } from '@/modules/shareddrives/helpers'
+
 export interface LinkResult {
   app: string
   href: string
@@ -16,7 +18,7 @@ interface UseFileLinkResult {
   openLink: (evt: React.MouseEvent<HTMLElement>) => void
 }
 
-const useSharedDriveLink = (sharing: object): UseFileLinkResult => {
+const useSharedDriveLink = (sharing: SharedDrive): UseFileLinkResult => {
   const navigate = useNavigate()
   const client = useClient()
 

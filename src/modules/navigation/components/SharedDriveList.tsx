@@ -4,9 +4,10 @@ import List from 'cozy-ui/transpiled/react/List'
 import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
 
 import { SharedDriveListItem } from '@/modules/navigation/components/SharedDriveListItem'
+import { SharedDrive } from '@/modules/shareddrives/helpers'
 
 interface SharedDriveListProps {
-  sharedDrives: any[]
+  sharedDrives: SharedDrive[]
   className?: string
   clickState: [string, (value: string | undefined) => void]
 }
