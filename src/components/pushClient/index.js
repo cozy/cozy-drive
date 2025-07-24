@@ -1,5 +1,3 @@
-import get from 'lodash/get'
-
 import CozyClient, { Q } from 'cozy-client'
 import flag from 'cozy-flags'
 
@@ -32,8 +30,11 @@ export const isClientAlreadyInstalled = async client => {
     }
   }
   const { data } = await client.fetchQueryAndGetFromState(query)
+  if (!data) {
+    return false
+  }
   return Object.values(data).some(
-    device => get(device, 'attributes.software_id') === DESKTOP_SOFTWARE_ID
+    device => device?.software_id === DESKTOP_SOFTWARE_ID
   )
 }
 
