@@ -42,6 +42,7 @@ import { NextcloudMoveView } from '@/modules/views/Nextcloud/NextcloudMoveView'
 import { NextcloudTrashEmptyView } from '@/modules/views/Nextcloud/NextcloudTrashEmptyView'
 import { NextcloudTrashView } from '@/modules/views/Nextcloud/NextcloudTrashView'
 import SearchView from '@/modules/views/Search/SearchView'
+import { SharedDriveFolderView } from '@/modules/views/SharedDrive/SharedDriveFolderView'
 import { TrashDestroyView } from '@/modules/views/Trash/TrashDestroyView'
 import { TrashEmptyView } from '@/modules/views/Trash/TrashEmptyView'
 
@@ -115,6 +116,15 @@ const AppRoute = () => (
             <Route path="empty" element={<NextcloudTrashEmptyView />} />
             <Route path="destroy" element={<NextcloudDestroyView />} />
           </Route>
+        </>
+      ) : null}
+
+      {flag('drive.shared-drive.enabled') ? (
+        <>
+          <Route
+            path="shareddrive/:driveId/:folderId"
+            element={<SharedDriveFolderView />}
+          ></Route>
         </>
       ) : null}
 

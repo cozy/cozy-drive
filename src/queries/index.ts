@@ -537,3 +537,19 @@ export const getAppSettingQuery: QueryConfig = {
     as: DOCTYPE_FILES_SETTINGS
   }
 }
+
+interface buildSharedDriveFolderQueryParams {
+  driveId: string
+  folderId: string
+}
+
+export const buildSharedDriveFolderQuery: QueryBuilder<
+  buildSharedDriveFolderQueryParams
+> = ({ driveId, folderId }) => ({
+  definition: () => Q('io.cozy.files').getById(folderId).sharingById(driveId),
+  options: {
+    as: `io.cozy.files/driveId/${driveId}/folderId/${folderId}`,
+    fetchPolicy: defaultFetchPolicy,
+    enabled: !!driveId && !!folderId
+  }
+})
