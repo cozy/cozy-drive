@@ -53,7 +53,9 @@
       "slide": "幻灯片"
     },
     "select_all": "全选",
-    "clear_selection": "清晰的选择"
+    "clear_selection": "清晰的选择",
+    "sharings_tab_all": "全部",
+    "sharings_tab_drives": "驱动器"
   },
   "Share": {
     "create-cozy": "创建我的 Twake"

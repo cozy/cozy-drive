@@ -22,7 +22,9 @@
   "toolbar": {
     "item_more": "더보기",
     "menu_new_folder": "폴더",
-    "menu_download": "다운로드"
+    "menu_download": "다운로드",
+    "sharings_tab_all": "모두",
+    "sharings_tab_drives": "드라이브"
   },
   "Files": {
     "share": {

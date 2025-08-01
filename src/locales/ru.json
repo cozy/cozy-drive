@@ -37,7 +37,9 @@
     "delete_shared_drive": "Удалить общий диск",
     "leave": "Покинуть доступную папку и удалить ее.",
     "select_all": "Выбрать всё",
-    "clear_selection": "Очистить выбор"
+    "clear_selection": "Очистить выбор",
+    "sharings_tab_all": "Всё",
+    "sharings_tab_drives": "Диски"
   },
   "Share": {
     "create-cozy": "Создать мой Twake"

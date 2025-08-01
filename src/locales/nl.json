@@ -10,7 +10,9 @@
     "menu_select": "Selecteer items",
     "empty_trash": "Leeg de prullenbak",
     "select_all": "Alles selecteren",
-    "delete_shared_drive": "Gedeelde schijf verwijderen"
+    "delete_shared_drive": "Gedeelde schijf verwijderen",
+    "sharings_tab_all": "Alles",
+    "sharings_tab_drives": "Stations"
   },
   "table": {
     "head_name": "Naam",

@@ -30,7 +30,9 @@
     "empty_trash": "Opróżnij kosz",
     "share": "Udostępnij",
     "leave": "Opuść udostępniony folder i usuń go",
-    "select_all": "Zaznacz wszystko"
+    "select_all": "Zaznacz wszystko",
+    "sharings_tab_all": "Wszystko",
+    "sharings_tab_drives": "Dyski"
   },
   "Files": {
     "share": {

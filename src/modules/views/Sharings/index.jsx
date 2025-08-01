@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate, useLocation, Outlet } from 'react-router-dom'
 
@@ -15,6 +15,7 @@ import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import SharingTab from './SharingTab'
 import withSharedDocumentIds from './withSharedDocumentIds'
 import FolderView from '../Folder/FolderView'
 import FolderViewBody from '../Folder/FolderViewBody'
@@ -22,6 +23,11 @@ import FolderViewHeader from '../Folder/FolderViewHeader'
 import FolderViewBodyVz from '../Folder/virtualized/FolderViewBody'
 
 import useHead from '@/components/useHead'
+import {
+  SHARED_DRIVES_DIR_ID,
+  SHARING_TAB_ALL,
+  SHARING_TAB_DRIVES
+} from '@/constants/config'
 import { useModalContext } from '@/lib/ModalContext'
 import {
   download,
@@ -66,6 +72,8 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
   useHead()
   const { showAlert } = useAlert()
 
+  const [tab, setTab] = useState(SHARING_TAB_ALL)
+
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
     isMobile,
     desktopExtraColumnsNames,
@@ -83,6 +91,22 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
     [sharedDocumentIds, allLoaded]
   )
   const result = useQuery(query.definition, query.options)
+
+  const filteredResult = useMemo(
+    () => ({
+      ...result,
+      data:
+        tab === SHARING_TAB_DRIVES
+          ? result.data.filter(item => item.dir_id === SHARED_DRIVES_DIR_ID)
+          : result.data,
+      count:
+        tab === SHARING_TAB_DRIVES
+          ? result.data.filter(item => item.dir_id === SHARED_DRIVES_DIR_ID)
+              .length
+          : result.count
+    }),
+    [result, tab]
+  )
 
   const actionsOptions = {
     client,
@@ -130,6 +154,7 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
           <Breadcrumb path={[{ name: t('breadcrumb.title_sharings') }]} />
           <Toolbar canUpload={false} canCreateFolder={false} />
         </FolderViewHeader>
+        <SharingTab tab={tab} setTab={setTab} />
         {!allLoaded || !hasQueryBeenLoaded(result) ? (
           <FileListRowsPlaceholder />
         ) : (
@@ -137,14 +162,14 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
             {flag('drive.virtualization.enabled') && !isMobile ? (
               <FolderViewBodyVz
                 actions={actions}
-                queryResults={[result]}
+                queryResults={[filteredResult]}
                 withFilePath={true}
                 extraColumns={extraColumns}
               />
             ) : (
               <FolderViewBody
                 actions={actions}
-                queryResults={[result]}
+                queryResults={[filteredResult]}
                 canSort={false}
                 withFilePath={true}
                 extraColumns={extraColumns}

@@ -57,7 +57,9 @@
       "slide": "Präsentation"
     },
     "select_all": "Alle auswählen",
-    "clear_selection": "Auswahl aufheben"
+    "clear_selection": "Auswahl aufheben",
+    "sharings_tab_all": "Alle",
+    "sharings_tab_drives": "Laufwerke"
   },
   "Share": {
     "create-cozy": "Meinen Twake erstellen"
