@@ -58,7 +58,9 @@
       "slide": "Presentazione"
     },
     "select_all": "Seleziona tutto",
-    "clear_selection": "Cancella selezione"
+    "clear_selection": "Cancella selezione",
+    "sharings_tab_all": "Tutti",
+    "sharings_tab_drives": "Unità"
   },
   "Share": {
     "create-cozy": "Crea il mio Twake"

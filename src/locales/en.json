@@ -67,7 +67,9 @@
       "slide": "Presentation"
     },
     "select_all": "Select all",
-    "clear_selection": "Clear Selection"
+    "clear_selection": "Clear Selection",
+    "sharings_tab_all": "All",
+    "sharings_tab_drives": "Drives"
   },
   "Share": {
     "create-cozy": "Create my Twake"

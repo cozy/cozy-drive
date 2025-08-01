@@ -35,7 +35,9 @@
     "trash": "移除",
     "delete_shared_drive": "刪除共用磁碟機",
     "leave": "離開分享資料夾並刪除",
-    "select_all": "全選"
+    "select_all": "全選",
+    "sharings_tab_all": "全部",
+    "sharings_tab_drives": "磁碟機"
   },
   "Share": {
     "create-cozy": "建立我的 Twake"

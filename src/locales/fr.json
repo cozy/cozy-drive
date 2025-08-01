@@ -67,7 +67,9 @@
       "slide": "Présentation"
     },
     "select_all": "Tout sélectionner",
-    "clear_selection": "Effacer la sélection"
+    "clear_selection": "Effacer la sélection",
+    "sharings_tab_all": "Tout",
+    "sharings_tab_drives": "Lecteurs"
   },
   "Share": {
     "create-cozy": "Créer mon Twake"

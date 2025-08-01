@@ -49,7 +49,9 @@
     "leave": "Salir de la carpeta compartida & borrarla",
     "menu_onlyOffice": {},
     "select_all": "Seleccionar todo",
-    "clear_selection": "Borrar selección"
+    "clear_selection": "Borrar selección",
+    "sharings_tab_all": "Todo",
+    "sharings_tab_drives": "Unidades"
   },
   "Share": {
     "create-cozy": "Crear mi Twake"
