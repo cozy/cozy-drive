@@ -9,7 +9,8 @@
   "toolbar": {
     "menu_select": "Selecteer items",
     "empty_trash": "Leeg de prullenbak",
-    "select_all": "Alles selecteren"
+    "select_all": "Alles selecteren",
+    "delete_shared_drive": "Gedeelde schijf verwijderen"
   },
   "table": {
     "head_name": "Naam",

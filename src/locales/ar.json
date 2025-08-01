@@ -26,7 +26,8 @@
     "menu_download_folder": "مُجلّد التنزيل",
     "share": "شارك",
     "select_all": "تحديد الكل",
-    "clear_selection": "مسح التحديد"
+    "clear_selection": "مسح التحديد",
+    "delete_shared_drive": "حذف محرك الأقراص المشترك"
   },
   "Files": {
     "share": {
