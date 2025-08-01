@@ -58,7 +58,9 @@
       "spreadsheet": "Werkblad",
       "slide": "Presentatie"
     },
-    "select_all": "Alles selecteren"
+    "select_all": "Alles selecteren",
+    "sharings_tab_all": "Alles",
+    "sharings_tab_drives": "Stations"
   },
   "Share": {
     "create-cozy": "Maak mijn Twake"

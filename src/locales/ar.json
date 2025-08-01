@@ -27,7 +27,9 @@
     "share": "شارك",
     "select_all": "تحديد الكل",
     "clear_selection": "مسح التحديد",
-    "delete_shared_drive": "حذف محرك الأقراص المشترك"
+    "delete_shared_drive": "حذف محرك الأقراص المشترك",
+    "sharings_tab_all": "الكل",
+    "sharings_tab_drives": "محركات الأقراص"
   },
   "Files": {
     "share": {
