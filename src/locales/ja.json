@@ -39,6 +39,7 @@
     "empty_trash": "ゴミ箱を空にする",
     "share": "共有",
     "trash": "削除",
+    "delete_shared_drive": "共有ドライブを削除",
     "leave": "共有されたフォルダーから離れて削除する",
     "select_all": "すべて選択",
     "clear_selection": "選択をクリア"

@@ -33,6 +33,7 @@
     "empty_trash": "清空垃圾桶",
     "share": "分享",
     "trash": "移除",
+    "delete_shared_drive": "刪除共用磁碟機",
     "leave": "離開分享資料夾並刪除",
     "select_all": "全選"
   },
