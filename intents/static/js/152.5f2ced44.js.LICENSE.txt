@@ -133,12 +133,6 @@ PERFORMANCE OF THIS SOFTWARE.
  */
 
 /**
- * @license
- * Copyright 2019 Google LLC
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/**
  * @licstart The following is the entire license notice for the
  * Javascript code in this page
  *
@@ -215,12 +209,4 @@ PERFORMANCE OF THIS SOFTWARE.
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- */
-
-/**!
- * FlexSearch.js v0.7.41 (Bundle.module)
- * Author and Copyright: Thomas Wilkerling
- * Licence: Apache-2.0
- * Hosted by Nextapps GmbH
- * https://github.com/nextapps-de/flexsearch
  */
