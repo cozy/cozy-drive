@@ -39,7 +39,7 @@ const Grid = ({
       }}
       items={items}
       dragProps={dragProps}
-      itemRenderer={file => (
+      itemRenderer={(file, { isOver }) => (
         <>
           {file.type != 'tempDirectory' ? (
             <RightClickFileMenu
@@ -59,6 +59,7 @@ const Grid = ({
                   isSharingShortcut?.(file) &&
                   isReferencedByShareInSharingContext(file, sharingsValue)
                 }
+                isOver={isOver}
               />
             </RightClickFileMenu>
           ) : (
