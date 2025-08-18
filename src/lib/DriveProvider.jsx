@@ -25,11 +25,7 @@ const DriveProvider = ({ client, lang, polyglot, dictRequire, children }) => {
   return (
     <I18n lang={lang} polyglot={polyglot} dictRequire={dictRequire}>
       <CozyProvider client={client}>
-        <DataProxyProvider
-          options={{
-            doctypes: [DOCTYPE_FILES, DOCTYPE_CONTACTS, DOCTYPE_APPS]
-          }}
-        >
+        <DataProxyWrapper isPublic={isPublic}>
           <VaultProvider cozyClient={client}>
             <VaultUnlockProvider>
               <SharingProvider doctype="io.cozy.files" documentType="Files">
@@ -48,9 +44,25 @@ const DriveProvider = ({ client, lang, polyglot, dictRequire, children }) => {
               </SharingProvider>
             </VaultUnlockProvider>
           </VaultProvider>
-        </DataProxyProvider>
+        </DataProxyWrapper>
       </CozyProvider>
     </I18n>
+  )
+}
+
+const DataProxyWrapper = ({ children, isPublic }) => {
+  if (isPublic) {
+    // Do not include DataProxy for public sharings
+    return children
+  }
+  return (
+    <DataProxyProvider
+      options={{
+        doctypes: [DOCTYPE_FILES, DOCTYPE_CONTACTS, DOCTYPE_APPS]
+      }}
+    >
+      {children}
+    </DataProxyProvider>
   )
 }
 
