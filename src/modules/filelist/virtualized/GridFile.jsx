@@ -44,7 +44,8 @@ const GridFile = ({
   breakpoints: { isExtraLarge, isMobile },
   disableSelection = false,
   canInteractWith,
-  onContextMenu
+  onContextMenu,
+  isOver
 }) => {
   const [actionMenuVisible, setActionMenuVisible] = useState(false)
   const filerowMenuToggleRef = useRef()
@@ -102,7 +103,7 @@ const GridFile = ({
         styles['fil-content-column-virtualized'],
         {
           [styles['fil-content-column-selected']]: selected,
-          [styles['fil-content-column-actioned']]: actionMenuVisible,
+          [styles['fil-content-column-actioned']]: actionMenuVisible || isOver,
           [styles['fil-content-body--selectable']]: isSelectionBarVisible
         }
       )}
@@ -207,7 +208,8 @@ GridFile.propTypes = {
   isInSyncFromSharing: PropTypes.bool,
   extraColumns: extraColumnsPropTypes,
   /** Disables the ability to select a file */
-  disableSelection: PropTypes.bool
+  disableSelection: PropTypes.bool,
+  isOver: PropTypes.bool
 }
 
 export const DumbGridFile = props => {
