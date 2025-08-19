@@ -10,13 +10,7 @@ import Card from 'cozy-ui/transpiled/react/Card'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import {
-  SelectBox,
-  FileName,
-  Status,
-  FileAction,
-  SharingShortcutBadge
-} from '../cells'
+import { SelectBox, FileName, FileAction, SharingShortcutBadge } from '../cells'
 
 import styles from '@/styles/filelist.styl'
 
@@ -148,11 +142,6 @@ const GridFile = ({
                 className: styles['fil-content-shared']
               }
             }}
-          />
-          <Status
-            file={attributes}
-            disabled={isRowDisabledOrInSyncFromSharing}
-            isInSyncFromSharing={isInSyncFromSharing}
           />
         </div>
         <FileName
