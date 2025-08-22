@@ -125,12 +125,11 @@ const FolderViewBody = ({
     navigate('/folder')
   }, [navigate])
 
-  const FileListBodyWrapper = ({ viewType, isDesktop, children }) => {
+  const FileListBodyWrapper = ({ viewType, children }) => {
     return (
       <div
         className={cx(
-          viewType === 'grid' ? styles['fil-folder-body-grid'] : '',
-          !isDesktop ? 'u-ov-hidden' : ''
+          viewType === 'grid' ? styles['fil-folder-body-grid'] : ''
         )}
       >
         {children}
