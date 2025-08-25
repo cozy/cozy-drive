@@ -6,10 +6,12 @@ import { Query, Q } from 'cozy-client'
 import HistoryModal from './HistoryModal'
 
 const FileHistory = () => {
-  const { fileId } = useParams()
+  const { fileId, driveId } = useParams()
 
   return (
-    <Query query={() => Q('io.cozy.files').getById(fileId)}>
+    <Query
+      query={() => Q('io.cozy.files').getById(fileId).sharingById(driveId)}
+    >
       {({ data: file, fetchStatus: fileFetchStatus }) => {
         return (
           <Query
