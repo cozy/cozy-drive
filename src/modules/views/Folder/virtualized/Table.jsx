@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import React, { useEffect, forwardRef } from 'react'
 
 import VirtuosoTableDnd from 'cozy-ui/transpiled/react/Table/Virtualized/Dnd'
 import TableRowDnD from 'cozy-ui/transpiled/react/Table/Virtualized/Dnd/TableRow'
@@ -8,6 +8,7 @@ import { secondarySort } from '../helpers'
 
 import RightClickFileMenu from '@/components/RightClick/RightClickFileMenu'
 import Cell from '@/modules/filelist/virtualized/cells/Cell'
+import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 
 const TableRow = forwardRef(({ item, context, children, ...props }, ref) => {
   return (
@@ -23,7 +24,10 @@ TableRow.displayName = 'TableRow'
 
 const TableRowMemo = React.memo(TableRow)
 
-const components = { ...virtuosoComponentsDnd, TableRow: TableRowMemo }
+const components = {
+  ...virtuosoComponentsDnd,
+  TableRow: TableRowMemo
+}
 
 const Table = ({
   rows,
@@ -31,13 +35,34 @@ const Table = ({
   dragProps,
   selectAll,
   fetchMore,
-  toggleSelectedItem,
   isSelectedItem,
   selectedItems,
   currentFolderId,
   withFilePath,
   actions
 }) => {
+  const {
+    handleShiftClick,
+    handleShiftArrow,
+    setItemsList,
+    focusedIndex,
+    toggleSelectedItem,
+    isKeyboardNavigating
+  } = useSelectionContext()
+
+  useEffect(() => {
+    setItemsList(rows)
+  }, [rows, setItemsList])
+
+  const handleRowSelect = (event, row, visualIndex) => {
+    event.stopPropagation()
+    if (event.shiftKey && visualIndex !== undefined) {
+      handleShiftClick(row, visualIndex)
+    } else {
+      toggleSelectedItem(row, visualIndex)
+    }
+  }
+
   return (
     <VirtuosoTableDnd
       context={{ actions }}
@@ -49,9 +74,10 @@ const Table = ({
       defaultOrder={columns?.[0]?.id}
       secondarySort={secondarySort}
       onSelectAll={selectAll}
-      onSelect={toggleSelectedItem}
+      onSelect={handleRowSelect}
       isSelectedItem={isSelectedItem}
       selectedItems={selectedItems}
+      handleShiftArrow={handleShiftArrow}
       increaseViewportBy={200}
       componentsProps={{
         rowContent: {
@@ -60,6 +86,8 @@ const Table = ({
               currentFolderId={currentFolderId}
               withFilePath={withFilePath}
               actions={actions}
+              focusedIndex={focusedIndex}
+              isKeyboardNavigating={isKeyboardNavigating}
             />
           )
         }

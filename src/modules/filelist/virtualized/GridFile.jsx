@@ -45,12 +45,17 @@ const GridFile = ({
   disableSelection = false,
   canInteractWith,
   onContextMenu,
-  isOver
+  isOver,
+  fileIndex = null
 }) => {
   const [actionMenuVisible, setActionMenuVisible] = useState(false)
   const filerowMenuToggleRef = useRef()
-  const { toggleSelectedItem, isItemSelected, isSelectionBarVisible } =
-    useSelectionContext()
+  const {
+    toggleSelectedItem,
+    isItemSelected,
+    isSelectionBarVisible,
+    handleShiftClick
+  } = useSelectionContext()
 
   const toggleActionMenu = () => {
     if (actionMenuVisible) return hideActionMenu()
@@ -66,7 +71,11 @@ const GridFile = ({
 
   const toggle = e => {
     e.stopPropagation()
-    toggleSelectedItem(attributes)
+    if (e.shiftKey && fileIndex !== null) {
+      handleShiftClick(attributes, fileIndex)
+    } else {
+      toggleSelectedItem(attributes, fileIndex)
+    }
   }
 
   const isRowDisabledOrInSyncFromSharing = disabled || isInSyncFromSharing
