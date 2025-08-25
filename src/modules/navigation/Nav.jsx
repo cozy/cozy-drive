@@ -12,10 +12,13 @@ import { FavoriteList } from '@/modules/navigation/FavoriteList'
 import { useNavContext } from '@/modules/navigation/NavContext'
 import { NavItem } from '@/modules/navigation/NavItem'
 import { SharingsNavItem } from '@/modules/navigation/SharingsNavItem'
+import { SharedDriveList } from '@/modules/navigation/components/SharedDriveList'
+import { useSharedDrives } from '@/modules/shareddrives/hooks/useSharedDrives'
 
 export const Nav = () => {
   const clickState = useNavContext()
   const { isDesktop } = useBreakpoints()
+  const { isLoaded: isSharedDriveLoaded, sharedDrives } = useSharedDrives()
 
   return (
     <UINav>
@@ -52,6 +55,13 @@ export const Nav = () => {
       />
       {isDesktop ? (
         <FavoriteList clickState={clickState} className="u-mt-half" />
+      ) : null}
+      {isDesktop && isSharedDriveLoaded ? (
+        <SharedDriveList
+          clickState={clickState}
+          className="u-mt-half"
+          sharedDrives={sharedDrives}
+        />
       ) : null}
     </UINav>
   )
