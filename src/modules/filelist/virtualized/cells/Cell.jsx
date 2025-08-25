@@ -32,7 +32,9 @@ const Cell = ({
   cell,
   currentFolderId,
   withFilePath,
-  actions
+  actions,
+  focusedIndex,
+  isKeyboardNavigating
 }) => {
   const { f, t } = useI18n()
   const vaultClient = useVaultClient()
@@ -41,7 +43,8 @@ const Cell = ({
   const { sharingsValue } = useContext(AcceptingSharingContext)
   const { byDocId } = useSharingContext()
   const filerowMenuToggleRef = useRef()
-  const { toggleSelectedItem, isSelectionBarVisible } = useSelectionContext()
+  const { toggleSelectedItem, isSelectionBarVisible, handleShiftClick } =
+    useSelectionContext()
   const [showActionMenu, toggleShowActionMenu] = useReducer(
     state => !state,
     false
@@ -90,7 +93,11 @@ const Cell = ({
 
     const toggle = e => {
       e.stopPropagation()
-      toggleSelectedItem(row)
+      if (e.shiftKey && row.index !== undefined) {
+        handleShiftClick(row, row.index)
+      } else {
+        toggleSelectedItem(row, row.index)
+      }
     }
 
     return (
@@ -110,6 +117,7 @@ const Cell = ({
           formattedSize={formattedSize}
           formattedUpdatedAt={formattedUpdatedAt}
           isInSyncFromSharing={isInSyncFromSharing}
+          isFocused={isKeyboardNavigating && row.index === focusedIndex}
         />
       </FileOpener>
     )

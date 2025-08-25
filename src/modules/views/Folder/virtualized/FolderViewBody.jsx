@@ -13,6 +13,7 @@ import { makeColumns } from '../helpers'
 import { useSyncingFakeFile } from '../useSyncingFakeFile'
 
 import Oops from '@/components/Error/Oops'
+import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
 import { useViewSwitcherContext } from '@/lib/ViewSwitcherContext'
 import FileListRowsPlaceholder from '@/modules/filelist/FileListRowsPlaceholder'
@@ -40,7 +41,7 @@ const FolderViewBody = ({
   const navigate = useNavigate()
   const IsAddingFolder = useSelector(isTypingNewFolderName)
   const { isBigThumbnail } = useThumbnailSizeContext()
-  const { toggleSelectedItem, selectAll, selectedItems } = useSelectionContext()
+  const { selectAll, selectedItems } = useSelectionContext()
   const { sharedPaths } = useSharingContext()
   const { registerCancelable } = useCancelable()
   const { showAlert } = useAlert()
@@ -48,6 +49,9 @@ const FolderViewBody = ({
   const { t } = useI18n()
 
   const isSelectedItem = file => {
+    if (file._id === SHARED_DRIVES_DIR_ID) {
+      return false
+    }
     return selectedItems.some(item => item.id === file.id)
   }
 
@@ -163,7 +167,6 @@ const FolderViewBody = ({
             }}
             fetchMore={fetchMore}
             selectAll={selectAll}
-            toggleSelectedItem={toggleSelectedItem}
             isSelectedItem={isSelectedItem}
             selectedItems={selectedItems}
             currentFolderId={currentFolderId}

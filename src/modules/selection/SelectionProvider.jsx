@@ -3,9 +3,12 @@ import React, {
   useContext,
   useMemo,
   useState,
-  useEffect
+  useEffect,
+  useRef
 } from 'react'
 import { useLocation } from 'react-router-dom'
+
+import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
 
 /**
  * @typedef TSelectionContext
@@ -17,6 +20,12 @@ import { useLocation } from 'react-router-dom'
  * @property {Function} isItemSelected Find out if an item is selected by its id
  * @property {boolean} isSelectAll Whether all the items are selected or not
  * @property {Function} toggleSelectAllItems Toggle selects all items
+ * @property {Function} selectRange Select a range of items between two indices
+ * @property {Function} setItemsList Set the current list of items for range selection
+ * @property {Function} handleShiftClick Handle shift+click selection
+ * @property {Function} handleShiftArrow Handle keyboard navigation selection
+ * @property {number} focusedIndex Current focused item index
+ * @property {Function} setFocusedIndex Set the focused item index
  */
 
 /** @type {import('react').Context<TSelectionContext>} */
@@ -30,15 +39,90 @@ const SelectionProvider = ({ children }) => {
   const [selectedItems, setSelectedItems] = useState({})
   const [isSelectionBarOpen, setSelectionBarOpen] = useState(false)
   const [isSelectAll, setIsSelectAll] = useState(false)
+  const [focusedIndex, setFocusedIndex] = useState(0)
+  const [lastSelectedIndex, setLastSelectedIndex] = useState(null)
+  const [isKeyboardNavigating, setIsKeyboardNavigating] = useState(false)
+  const itemsListRef = useRef([])
 
-  const toggleSelectedItem = item => {
+  const setItemsList = items => {
+    itemsListRef.current = items
+  }
+
+  const toggleSelectedItem = (item, index = null) => {
+    if (item.id === SHARED_DRIVES_DIR_ID) {
+      return
+    }
+
     if (isItemSelected(item.id)) {
       // eslint-disable-next-line no-unused-vars
       const { [item.id]: _, ...stillSelected } = selectedItems
       setSelectedItems(stillSelected)
     } else {
       setSelectedItems({ ...selectedItems, [item.id]: item })
+      if (index !== null) {
+        setLastSelectedIndex(index)
+        setFocusedIndex(index)
+      }
     }
+  }
+
+  const selectExactRange = (items, startIndex, endIndex) => {
+    const start = Math.min(startIndex, endIndex)
+    const end = Math.max(startIndex, endIndex)
+    const newSelectedItems = {}
+    for (let i = start; i <= end; i++) {
+      const item = items[i]
+      if (item && item.id !== SHARED_DRIVES_DIR_ID) {
+        newSelectedItems[item.id] = item
+      }
+    }
+    setSelectedItems(newSelectedItems)
+  }
+
+  const selectRange = (startIndex, endIndex) => {
+    const start = Math.min(startIndex, endIndex)
+    const end = Math.max(startIndex, endIndex)
+
+    const newSelectedItems = {}
+    for (let i = start; i <= end; i++) {
+      const item = itemsListRef.current[i]
+      if (item) {
+        newSelectedItems[item.id] = item
+      }
+    }
+    setSelectedItems(prev => ({ ...prev, ...newSelectedItems }))
+  }
+
+  const handleShiftClick = (item, clickedIndex) => {
+    if (lastSelectedIndex !== null) {
+      selectRange(lastSelectedIndex, clickedIndex)
+    } else {
+      toggleSelectedItem(item, clickedIndex)
+    }
+    setLastSelectedIndex(clickedIndex)
+    setFocusedIndex(clickedIndex)
+  }
+
+  const handleShiftArrow = (direction, items = []) => {
+    const allItems = items.length === 0 ? itemsListRef.current : items
+
+    let newFocusedIndex = focusedIndex
+
+    if (direction === -1) {
+      newFocusedIndex = Math.max(0, focusedIndex - 1)
+    } else if (direction === 1) {
+      newFocusedIndex = Math.min(allItems.length - 1, focusedIndex + 1)
+    }
+
+    setFocusedIndex(newFocusedIndex)
+    setIsKeyboardNavigating(true)
+
+    const anchorIndex =
+      lastSelectedIndex !== null ? lastSelectedIndex : focusedIndex
+    if (lastSelectedIndex === null) {
+      setLastSelectedIndex(focusedIndex)
+    }
+    selectExactRange(allItems, anchorIndex, newFocusedIndex)
   }
 
   const selectAll = items => {
@@ -64,6 +148,8 @@ const SelectionProvider = ({ children }) => {
     setIsSelectAll(false)
     setSelectedItems({})
     setSelectionBarOpen(false)
+    setLastSelectedIndex(null)
+    setFocusedIndex(0)
   }
 
   const isSelectionBarVisible = useMemo(() => {
@@ -89,7 +175,14 @@ const SelectionProvider = ({ children }) => {
         selectAll,
         isItemSelected,
         isSelectAll,
-        toggleSelectAllItems
+        toggleSelectAllItems,
+        selectRange,
+        setItemsList,
+        handleShiftClick,
+        handleShiftArrow,
+        focusedIndex,
+        setFocusedIndex,
+        isKeyboardNavigating
       }}
     >
       {children}
