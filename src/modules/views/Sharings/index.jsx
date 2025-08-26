@@ -48,6 +48,7 @@ import FabWithAddMenuContext from '@/modules/drive/FabWithAddMenuContext'
 import Toolbar from '@/modules/drive/Toolbar'
 import FileListRowsPlaceholder from '@/modules/filelist/FileListRowsPlaceholder'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
+import { useSharedDrives } from '@/modules/shareddrives/hooks/useSharedDrives'
 import {
   buildSharingsQuery,
   buildSharingsWithMetadataAttributeQuery
@@ -68,6 +69,7 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
   const { allLoaded, refresh } = useSharingContext()
   const { isNativeFileSharingAvailable, shareFilesNative } =
     useNativeFileSharing()
+  const { sharedDrives } = useSharedDrives()
   const dispatch = useDispatch()
   useHead()
   const { showAlert } = useAlert()
@@ -92,21 +94,43 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
   )
   const result = useQuery(query.definition, query.options)
 
-  const filteredResult = useMemo(
-    () => ({
+  const filteredResult = useMemo(() => {
+    const transformedSharedDrives = (sharedDrives || []).map(sharing => {
+      const driveId = sharing.rules?.[0]?.values?.[0] || sharing.id
+      const driveName = sharing.rules?.[0]?.title
+
+      return {
+        ...sharing,
+        id: driveId,
+        _id: SHARED_DRIVES_DIR_ID,
+        _type: 'io.cozy.files',
+        type: 'directory',
+        name: driveName,
+        path: `/Drives/${driveName}`,
+        dir_id: SHARED_DRIVES_DIR_ID,
+        attributes: {
+          type: 'directory',
+          name: driveName,
+          dir_id: SHARED_DRIVES_DIR_ID,
+          driveId: sharing.id
+        }
+      }
+    })
+
+    const filteredResultData =
+      result.data?.filter(item => !(item.dir_id === SHARED_DRIVES_DIR_ID)) || []
+
+    const combinedData =
+      tab === SHARING_TAB_DRIVES
+        ? transformedSharedDrives
+        : [...transformedSharedDrives, ...filteredResultData]
+
+    return {
       ...result,
-      data:
-        tab === SHARING_TAB_DRIVES
-          ? result.data.filter(item => item.dir_id === SHARED_DRIVES_DIR_ID)
-          : result.data,
-      count:
-        tab === SHARING_TAB_DRIVES
-          ? result.data.filter(item => item.dir_id === SHARED_DRIVES_DIR_ID)
-              .length
-          : result.count
-    }),
-    [result, tab]
-  )
+      data: combinedData,
+      count: combinedData.length
+    }
+  }, [result, tab, sharedDrives])
 
   const actionsOptions = {
     client,
