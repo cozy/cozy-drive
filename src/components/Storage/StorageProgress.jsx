@@ -38,7 +38,9 @@ const StorageProgress = () => {
         value={parseInt(percentUsage)}
       />
       <Typography variant="caption">
-        {t('Storage.availability', humanDiskQuota - humanDiskUsage)}
+        {t('Storage.availability', {
+          smart_count: (humanDiskQuota - humanDiskUsage).toFixed(2)
+        })}
       </Typography>
     </>
   )
