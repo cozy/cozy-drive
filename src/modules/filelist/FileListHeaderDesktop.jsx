@@ -1,5 +1,6 @@
 import cx from 'classnames'
 import React from 'react'
+import flag from 'cozy-flags'
 
 import {
   TableHead,
@@ -12,7 +13,11 @@ import HeaderCell from './HeaderCell'
 
 import styles from '@/styles/filelist.styl'
 
-import { SORTABLE_ATTRIBUTES, DEFAULT_SORT } from '@/config/sort'
+import {
+  SORTABLE_ATTRIBUTES,
+  DEFAULT_SORT,
+  SORT_BY_UPDATE_DATE
+} from '@/config/sort'
 
 const FileListHeaderDesktop = ({
   folderId,
@@ -23,7 +28,11 @@ const FileListHeaderDesktop = ({
   viewType
 }) => {
   const { t } = useI18n()
-  const actualSort = sort || DEFAULT_SORT
+  const actualSort =
+    sort ||
+    (flag('drive.default-updated-at-sort.enabled')
+      ? SORT_BY_UPDATE_DATE
+      : DEFAULT_SORT)
 
   return (
     <TableHead
