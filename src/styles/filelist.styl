@@ -1,6 +1,10 @@
 @require 'components/table.styl'
 @require 'settings/z-index.styl'
 
+.fil-file-list-container
+    &:focus-visible
+        outline 0
+
 .fil-content-cell
     display flex
 
@@ -77,12 +81,17 @@
     .fil-content-file-select
         opacity 1
 
-.fil-content-column-actioned
-    background-color var(--contrastBackgroundColor)
-
 .fil-content-column-disabled
     opacity .4
     cursor default
+
+    &:hover
+        background inherit
+
+
+.fil-content-column-actioned
+    background-color var(--contrastBackgroundColor)
+
 
     &:hover
         background inherit

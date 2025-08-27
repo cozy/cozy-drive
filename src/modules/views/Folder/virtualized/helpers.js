@@ -12,7 +12,11 @@ export const makeRows = ({ queryResults, IsAddingFolder, syncingFakeFile }) => {
   if (syncingFakeFile) {
     rows.push(syncingFakeFile)
   }
-  return rows
+
+  return rows.map((row, index) => ({
+    ...row,
+    index
+  }))
 }
 
 export const onDrop =

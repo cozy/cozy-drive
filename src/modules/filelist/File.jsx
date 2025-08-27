@@ -68,14 +68,19 @@ const File = ({
   breakpoints: { isExtraLarge, isMobile },
   disableSelection = false,
   canInteractWith,
-  onContextMenu
+  onContextMenu,
+  fileIndex = null
 }) => {
   const { viewType } = useViewSwitcherContext()
 
   const [actionMenuVisible, setActionMenuVisible] = useState(false)
   const filerowMenuToggleRef = useRef()
-  const { toggleSelectedItem, isItemSelected, isSelectionBarVisible } =
-    useSelectionContext()
+  const {
+    toggleSelectedItem,
+    isItemSelected,
+    isSelectionBarVisible,
+    handleShiftClick
+  } = useSelectionContext()
 
   const toggleActionMenu = () => {
     if (actionMenuVisible) return hideActionMenu()
@@ -91,7 +96,11 @@ const File = ({
 
   const toggle = e => {
     e.stopPropagation()
-    toggleSelectedItem(attributes)
+    if (e.shiftKey && fileIndex !== null) {
+      handleShiftClick(attributes, fileIndex)
+    } else {
+      toggleSelectedItem(attributes, fileIndex)
+    }
   }
 
   const isRowDisabledOrInSyncFromSharing = disabled || isInSyncFromSharing
