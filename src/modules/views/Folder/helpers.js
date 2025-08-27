@@ -1,3 +1,4 @@
+import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
 import { getDriveI18n } from '@/locales'
 
 export const makeColumns = isBigThumbnail => {
@@ -57,6 +58,8 @@ export const secondarySort = file => {
       } else if (el.type === 'directory') {
         if (el.name === '.cozy_trash') {
           acc.trashFolder.push(el)
+        } else if (el._id === SHARED_DRIVES_DIR_ID) {
+          acc.folders.unshift(el)
         } else {
           acc.folders.push(el)
         }
