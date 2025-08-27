@@ -5,3 +5,4 @@ export const SORTABLE_ATTRIBUTES = [
   // { label: 'size', attr: 'size', css: 'size', defaultOrder: 'desc' }
 ]
 export const DEFAULT_SORT = { attribute: 'name', order: 'asc' }
+export const SORT_BY_UPDATE_DATE = { attribute: 'updated_at', order: 'desc' }

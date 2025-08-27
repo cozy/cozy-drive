@@ -1,5 +1,6 @@
 import cx from 'classnames'
 import React, { useState, useCallback } from 'react'
+import flag from 'cozy-flags'
 
 import Button from 'cozy-ui/transpiled/react/Buttons'
 import Icon from 'cozy-ui/transpiled/react/Icon'
@@ -16,7 +17,7 @@ import MobileSortMenu from './MobileSortMenu'
 
 import styles from '@/styles/filelist.styl'
 
-import { DEFAULT_SORT } from '@/config/sort'
+import { DEFAULT_SORT, SORT_BY_UPDATE_DATE } from '@/config/sort'
 
 const FileListHeaderMobile = ({
   folderId,
@@ -39,7 +40,12 @@ const FileListHeaderMobile = ({
   )
 
   if (!canSort) return null
-  const actualSort = sort || DEFAULT_SORT
+  const actualSort =
+    sort ||
+    (flag('drive.default-updated-at-sort.enabled')
+      ? SORT_BY_UPDATE_DATE
+      : DEFAULT_SORT)
+
   return (
     <TableHead className={styles['fil-content-mobile-head']}>
       <TableRow className={styles['fil-content-row-head']}>

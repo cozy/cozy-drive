@@ -1,10 +1,14 @@
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import flag from 'cozy-flags'
 
+import { DEFAULT_SORT, SORT_BY_UPDATE_DATE } from '@/config/sort'
 import { sortFolder, getSort } from '@/modules/navigation/duck'
 
 const useFolderSort = (folderId: string): [Sort, (props: Sort) => void] => {
-  const defaultSort: Sort = { attribute: 'name', order: 'asc' }
+  const defaultSort: Sort = flag('drive.default-updated-at-sort.enabled')
+    ? SORT_BY_UPDATE_DATE
+    : DEFAULT_SORT
   const dispatch = useDispatch()
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   const currentSort = (useSelector(state => getSort(state)) ||
