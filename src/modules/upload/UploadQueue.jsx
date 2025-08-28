@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import UIUploadQueue from 'cozy-ui/transpiled/react/UploadQueue'
@@ -14,6 +14,17 @@ import {
 import getMimeTypeIcon from '@/lib/getMimeTypeIcon'
 
 export const DumbUploadQueue = translate()(props => {
+  const { successCount, purgeQueue, queue, doneCount } = props
+
+  useEffect(() => {
+    if (successCount == doneCount && successCount === queue?.length) {
+      const timer = setTimeout(() => {
+        purgeQueue()
+      }, 5000)
+      return () => clearTimeout(timer)
+    }
+  }, [successCount, purgeQueue, queue, doneCount])
+
   return (
     <UIUploadQueue
       popover={true}
