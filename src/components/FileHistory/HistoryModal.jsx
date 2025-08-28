@@ -26,7 +26,9 @@ const HistoryModal = ({
   t,
   revisionsFetchStatus
 }) => {
-  const fileCollection = client.collection('io.cozy.files')
+  const fileCollection = client.collection('io.cozy.files', {
+    driveId: file.driveId
+  })
   const capabilities = useCapabilities(client)
   const isFileVersioningEnabled = get(
     capabilities,

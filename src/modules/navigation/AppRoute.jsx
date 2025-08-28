@@ -13,6 +13,7 @@ import OnlyOfficeCreateView from '../views/OnlyOffice/Create'
 import OnlyOfficePaywallView from '../views/OnlyOffice/OnlyOfficePaywallView'
 import RecentView from '../views/Recent'
 import FilesViewerRecent from '../views/Recent/FilesViewerRecent'
+import FilesViewerSharedDrive from '../views/SharedDrive/FilesViewerSharedDrive'
 import SharingsView from '../views/Sharings'
 import SharingsFilesViewer from '../views/Sharings/FilesViewerSharings'
 import SharingsFolderView from '../views/Sharings/SharingsFolderView'
@@ -124,7 +125,14 @@ const AppRoute = () => (
           <Route
             path="shareddrive/:driveId/:folderId"
             element={<SharedDriveFolderView />}
-          ></Route>
+          >
+            <Route
+              path="file/:fileId"
+              element={<OutletWrapper Component={FilesViewerSharedDrive} />}
+            />
+            <Route path="file/:fileId/revision" element={<FileHistory />} />
+            <Route path="file/:fileId/v/revision" element={<FileHistory />} />
+          </Route>
         </>
       ) : null}
 

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState, useMemo } from 'react'
 import { RemoveScroll } from 'react-remove-scroll'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { Q, useClient } from 'cozy-client'
 import { useVaultClient } from 'cozy-keys-lib'
@@ -36,7 +36,7 @@ import {
  * - If the file to show is not present in the query results, will call
  *   fetchMore() on the query
  */
-const FilesViewer = ({ filesQuery, files, onClose, onChange }) => {
+const FilesViewer = ({ filesQuery, files, onClose, onChange, viewerProps }) => {
   const [currentFile, setCurrentFile] = useState(null)
   const [currentDecryptedFileURL, setCurrentDecryptedFileURL] = useState(null)
   const [fetchingMore, setFetchingMore] = useState(false)
@@ -46,6 +46,7 @@ const FilesViewer = ({ filesQuery, files, onClose, onChange }) => {
   const { t } = useI18n()
   const vaultClient = useVaultClient()
   const navigate = useNavigate()
+  const { driveId } = useParams()
 
   const handleOnClose = useCallback(() => {
     if (onClose) {
@@ -85,7 +86,9 @@ const FilesViewer = ({ filesQuery, files, onClose, onChange }) => {
       }
 
       try {
-        const { data } = await client.query(Q('io.cozy.files').getById(fileId))
+        const { data } = await client.query(
+          Q('io.cozy.files').getById(fileId).sharingById(driveId)
+        )
         isMounted && setCurrentFile(data)
       } catch (e) {
         logger.warn("can't find the file")
@@ -177,7 +180,10 @@ const FilesViewer = ({ filesQuery, files, onClose, onChange }) => {
             isEnabled: isOfficeEnabled(isDesktop),
             opener: file => navigate(makeOnlyOfficeFileRoute(file.id))
           },
-          toolbarProps: { showFilePath: true }
+          toolbarProps: {
+            showFilePath: true
+          },
+          ...(viewerProps || {})
         }}
       >
         <ToolbarButtons>
