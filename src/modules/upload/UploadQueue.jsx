@@ -12,6 +12,7 @@ import {
 } from '.'
 
 import getMimeTypeIcon from '@/lib/getMimeTypeIcon'
+import { DEFAULT_UPLOAD_PROGRESS_HIDE_DELAY } from '@/constants/config'
 
 export const DumbUploadQueue = translate()(props => {
   const { successCount, purgeQueue, queue, doneCount } = props
@@ -20,7 +21,7 @@ export const DumbUploadQueue = translate()(props => {
     if (successCount == doneCount && successCount === queue?.length) {
       const timer = setTimeout(() => {
         purgeQueue()
-      }, 5000)
+      }, DEFAULT_UPLOAD_PROGRESS_HIDE_DELAY)
       return () => clearTimeout(timer)
     }
   }, [successCount, purgeQueue, queue, doneCount])
