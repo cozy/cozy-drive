@@ -30,7 +30,8 @@ const downloadFileError = error => {
 export const downloadFiles = async (
   client,
   files,
-  { vaultClient, showAlert, t } = {}
+  { vaultClient, showAlert, t } = {},
+  driveId
 ) => {
   const encryptionKey = await getEncryptionKeyFromDirId(client, files[0].dir_id)
 
@@ -44,7 +45,9 @@ export const downloadFiles = async (
           encryptionKey
         })
       } else {
-        return client.collection(DOCTYPE_FILES).download(file, null, filename)
+        return client
+          .collection(DOCTYPE_FILES, { driveId })
+          .download(file, null, filename)
       }
     } catch (error) {
       showAlert({ message: t(downloadFileError(error)), severity: 'error' })

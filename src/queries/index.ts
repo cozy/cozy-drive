@@ -222,6 +222,47 @@ export const buildTrashQuery: QueryBuilder<buildTrashQueryParams> = ({
   }
 })
 
+interface buildSharedDriveQueryParams {
+  currentFolderId: string
+  type: string
+  sortAttribute: string
+  sortOrder: string
+  driveId: string
+  fileId: string
+}
+
+export const buildSharedDriveQuery: QueryBuilder<
+  buildSharedDriveQueryParams
+> = ({ currentFolderId, type, sortAttribute, sortOrder, driveId }) => ({
+  definition: () =>
+    Q('io.cozy.files')
+      .where({
+        dir_id: currentFolderId,
+        driveId,
+        type,
+        [sortAttribute]: { $gt: null }
+      })
+      .indexFields(['dir_id', 'type', 'driveId', sortAttribute])
+      .sortBy([
+        { dir_id: sortOrder },
+        { driveId: sortOrder },
+        { type: sortOrder },
+        { [sortAttribute]: sortOrder }
+      ])
+      .include(['encryption'])
+      .limitBy(100),
+  options: {
+    as: formatFolderQueryId(
+      type,
+      currentFolderId,
+      sortAttribute,
+      sortOrder,
+      driveId
+    ),
+    fetchPolicy: defaultFetchPolicy
+  }
+})
+
 export const buildMoveOrImportQuery: QueryBuilder<string> = dirId => ({
   definition: () =>
     Q('io.cozy.files')
