@@ -48,6 +48,8 @@ export const useMoreMenuActions = file => {
   const isPDFDoc = file.mime === 'application/pdf'
   const showPrintAction = isPDFDoc && isPrintAvailable
   const isCozySharing = window.location.pathname === '/preview'
+  const isSharedDrive = window.location.href.includes('/shareddrive/')
+  const isDisplayInSharedDrive = !(isSharedDrive && !canWriteToCurrentFolder)
 
   const actions = makeActions(
     [
@@ -59,9 +61,9 @@ export const useMoreMenuActions = file => {
       showPrintAction && print,
       hr,
       moveTo,
-      duplicateTo,
-      addToFavorites,
-      removeFromFavorites,
+      isDisplayInSharedDrive && duplicateTo,
+      isDisplayInSharedDrive && addToFavorites,
+      isDisplayInSharedDrive && removeFromFavorites,
       hr,
       versions,
       hr,
@@ -77,7 +79,7 @@ export const useMoreMenuActions = file => {
       refresh: () => navigate('..'),
       navigate,
       hasWriteAccess: canWriteToCurrentFolder,
-      canMove: true,
+      canMove: isDisplayInSharedDrive,
       isPublic: false,
       allLoaded,
       showAlert,
@@ -89,7 +91,8 @@ export const useMoreMenuActions = file => {
       openSharingLinkDisplayed: isCozySharing,
       syncSharingLink,
       isMobile,
-      addSharingLink
+      addSharingLink,
+      driveId: file.driveId
     }
   )
 
