@@ -21,6 +21,7 @@ export interface LinkResult {
   href: string
   to: Path
   openInNewTab: boolean
+  isSharedDrive: boolean
 }
 
 interface UseFileLinkResult {

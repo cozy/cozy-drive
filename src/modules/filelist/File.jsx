@@ -176,7 +176,11 @@ const File = ({
             styles['fil-file-thumbnail'],
             {
               'u-pl-0': !isMobile,
-              [styles['fil-content-grid-view']]: viewType === 'grid'
+              [styles['fil-content-grid-view']]: viewType === 'grid',
+              'u-ml-half':
+                !canInteractWithFile ||
+                isRowDisabledOrInSyncFromSharing ||
+                disableSelection
             }
           )}
         >

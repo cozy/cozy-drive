@@ -8,7 +8,7 @@ import {
 import { IOCozyFile } from 'cozy-client/types/types'
 
 import type { File } from '@/components/FolderPicker/types'
-import { TRASH_DIR_ID } from '@/constants/config'
+import { TRASH_DIR_ID, SHARED_DRIVES_DIR_ID } from '@/constants/config'
 import { joinPath } from '@/lib/path'
 import { isNextcloudShortcut } from '@/modules/nextcloud/helpers'
 import { makeOnlyOfficeFileRoute } from '@/modules/views/OnlyOffice/helpers'
@@ -37,6 +37,8 @@ export const computeFileType = (
     return 'trash'
   } else if (file._id === 'io.cozy.remote.nextcloud.files.trash-dir') {
     return 'nextcloud-trash'
+  } else if (file.dir_id === SHARED_DRIVES_DIR_ID) {
+    return 'shared-drive'
   } else if (file._type === 'io.cozy.remote.nextcloud.files') {
     return isDirectory(file) ? 'nextcloud-directory' : 'nextcloud-file'
   } else if (isNote(file)) {
@@ -123,6 +125,9 @@ export const computePath = (
         fromPathname: pathname,
         fromPublicFolder: isPublic
       })
+    case 'shared-drive':
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      return `/shareddrive/${(file.attributes as unknown)?.driveId}/${file.id}`
     default:
       // On mobile, if we are in /favorites tab, we do not want it to appears in computed path
       // so we redirect to root route for files
