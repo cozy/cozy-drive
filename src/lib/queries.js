@@ -27,9 +27,10 @@ export const formatFolderQueryId = (
   type,
   folderId,
   sortAttribute,
-  sortOrder
+  sortOrder,
+  driveId = ''
 ) => {
-  return `${type} ${folderId} ${sortAttribute} ${sortOrder}`
+  return `${type} ${folderId} ${sortAttribute} ${sortOrder} ${driveId}`.trim()
 }
 
 /**
