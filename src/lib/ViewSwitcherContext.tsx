@@ -46,7 +46,7 @@ const ViewSwitcherContextProvider: React.FC = ({ children }) => {
       const { data } = (await client.query(
         Q(DOCTYPE_FILES_SETTINGS)
       )) as QueryResult
-      
+
       return data?.[0] || null
     } catch (error) {
       logger.error('Failed to fetch settings:', error)
