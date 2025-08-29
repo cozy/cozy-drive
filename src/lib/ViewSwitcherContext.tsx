@@ -1,15 +1,16 @@
-import React, { 
-  useState, 
-  useCallback, 
-  useContext, 
-  createContext, 
-  useEffect 
+import React, {
+  useState,
+  useCallback,
+  useContext,
+  createContext,
+  useEffect
 } from 'react'
 
 import { useClient, Q } from 'cozy-client'
 
-import { DOCTYPE_FILES_SETTINGS } from '@/lib/doctypes'
 import logger from './logger'
+
+import { DOCTYPE_FILES_SETTINGS } from '@/lib/doctypes'
 
 // Constants
 const DEFAULT_VIEW_TYPE = 'list'
@@ -19,9 +20,19 @@ interface ViewSwitcherContextProps {
   switchView: (viewTypeParam: string) => Promise<void>
 }
 
+interface QueryResult {
+  data: [
+    {
+      attributes: {
+        preferredDriveViewType: string
+      }
+    }
+  ]
+}
+
 const ViewSwitcherContext = createContext<ViewSwitcherContextProps>({
   viewType: DEFAULT_VIEW_TYPE,
-  switchView: async () => Promise.resolve() 
+  switchView: async () => Promise.resolve()
 })
 
 const ViewSwitcherContextProvider: React.FC = ({ children }) => {
@@ -32,7 +43,10 @@ const ViewSwitcherContextProvider: React.FC = ({ children }) => {
     if (!client) return null
 
     try {
-      const { data } = await client.query(Q(DOCTYPE_FILES_SETTINGS))
+      const { data } = (await client.query(
+        Q(DOCTYPE_FILES_SETTINGS)
+      )) as QueryResult
+      
       return data?.[0] || null
     } catch (error) {
       logger.error('Failed to fetch settings:', error)
