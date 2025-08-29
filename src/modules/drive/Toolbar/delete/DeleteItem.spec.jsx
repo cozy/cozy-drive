@@ -10,6 +10,10 @@ jest.mock('modules/actions/utils', () => ({
   trashFiles: jest.fn().mockResolvedValue()
 }))
 
+jest.mock('lib/logger', () => ({
+  error: jest.fn()
+}))
+
 describe('DeleteItem', () => {
   const setup = () => {
     const displayedFolder = {

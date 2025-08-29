@@ -6,6 +6,10 @@ import CozyClient from 'cozy-client'
 import { FolderPickerHeader } from './FolderPickerHeader'
 import AppLike from 'test/components/AppLike'
 
+jest.mock('lib/logger', () => ({
+  error: jest.fn()
+}))
+
 describe('FolderPickerHeader', () => {
   const setupComponent = ({ entries = [], title, subTitle }) => {
     const props = {

@@ -9,6 +9,10 @@ jest.mock('modules/navigation/duck/actions', () => ({
   createFolder: jest.fn(() => async () => {})
 }))
 
+jest.mock('lib/logger', () => ({
+  error: jest.fn()
+}))
+
 jest.mock('cozy-flags', () => jest.fn())
 jest.mock('cozy-keys-lib', () => ({
   withVaultClient: jest.fn().mockReturnValue({}),

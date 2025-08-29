@@ -23,6 +23,9 @@ jest.mock('cozy-ui/transpiled/react/providers/Alert', () => ({
   useAlert: jest.fn()
 }))
 
+jest.mock('lib/logger', () => ({
+  error: jest.fn()
+}))
 jest.mock('hooks/useDisplayedFolder')
 
 function createMatchMedia(width) {

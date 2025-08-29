@@ -7,6 +7,10 @@ import { setupStoreAndClient } from 'test/setup'
 
 const mockNavigate = jest.fn()
 
+jest.mock('lib/logger', () => ({
+  error: jest.fn()
+}))
+
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: () => mockNavigate
