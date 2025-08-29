@@ -15,6 +15,10 @@ jest.mock('cozy-keys-lib', () => ({
   useVaultClient: jest.fn()
 }))
 
+jest.mock('lib/logger', () => ({
+  error: jest.fn()
+}))
+
 jest.mock('lib/encryption', () => ({
   ...jest.requireActual('lib/encryption'),
   getEncryptionKeyFromDirId: jest.fn(),
