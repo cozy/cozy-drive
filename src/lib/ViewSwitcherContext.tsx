@@ -1,8 +1,15 @@
-import React, { useState, useCallback, useContext, createContext, useEffect} from 'react'
+import React, { 
+  useState, 
+  useCallback, 
+  useContext, 
+  createContext, 
+  useEffect 
+} from 'react'
 
 import { useClient, Q } from 'cozy-client'
-import logger from './logger'
+
 import { DOCTYPE_FILES_SETTINGS } from '@/lib/doctypes'
+import logger from './logger'
 
 // Constants
 const DEFAULT_VIEW_TYPE = 'list'
