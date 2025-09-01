@@ -1,4 +1,5 @@
 export { share } from './share'
+export { editSharedDrive } from './editSharedDrive'
 export { download } from './download'
 export { hr } from './divider'
 export { trash } from './trash'

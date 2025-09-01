@@ -38,6 +38,7 @@ import { FolderDuplicateView } from '@/modules/views/Folder/FolderDuplicateView'
 import { MoveFilesView } from '@/modules/views/Modal/MoveFilesView'
 import { QualifyFileView } from '@/modules/views/Modal/QualifyFileView'
 import { ShareDisplayedFolderView } from '@/modules/views/Modal/ShareDisplayedFolderView'
+import { ShareDriveEditView } from '@/modules/views/Modal/ShareDriveEditView'
 import { ShareFileView } from '@/modules/views/Modal/ShareFileView'
 import { NextcloudDeleteView } from '@/modules/views/Nextcloud/NextcloudDeleteView'
 import { NextcloudDestroyView } from '@/modules/views/Nextcloud/NextcloudDestroyView'
@@ -142,6 +143,10 @@ const AppRoute = () => (
             <Route path="file/:fileId/revision" element={<FileHistory />} />
             <Route path="file/:fileId/v/revision" element={<FileHistory />} />
           </Route>
+          <Route
+            path="shareddrive/edit/:driveId/:folderId"
+            element={<ShareDriveEditView />}
+          ></Route>
         </>
       ) : null}
 

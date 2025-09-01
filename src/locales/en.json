@@ -215,6 +215,7 @@
     "trash": "Remove",
     "destroy": "Delete permanently",
     "rename": "Rename",
+    "manageAccess": "Manage access",
     "restore": "Restore",
     "close": "Close",
     "openWith": "Open with...",
