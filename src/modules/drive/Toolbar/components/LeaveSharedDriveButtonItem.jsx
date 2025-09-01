@@ -22,7 +22,7 @@ const LeaveSharedDriveButtonItem = ({ files }) => {
       await client.collection('io.cozy.sharings').revokeSelf({ _id: sharingId })
       showAlert({
         message: t('Files.share.revokeSelf.success'),
-        severity: 'success',
+        severity: 'success'
       })
       navigate('/sharings')
     }
@@ -42,8 +42,6 @@ export default LeaveSharedDriveButtonItem
 
 function findSharingId(folder) {
   const references = folder.relationships.referenced_by.data
-  const sharingId = references.find(
-    (ref) => ref.type === 'io.cozy.sharings'
-  )?.id
+  const sharingId = references.find(ref => ref.type === 'io.cozy.sharings')?.id
   return sharingId
 }

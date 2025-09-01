@@ -32,6 +32,7 @@ const Toolbar = ({
 
   const isDisabled = disabled || isSelectionBarVisible
   const isSharingDisabled = isDisabled || !allLoaded
+  const isSharedDrive = displayedFolder && Boolean(displayedFolder?.driveId)
 
   if (disabled) {
     return null
@@ -47,13 +48,15 @@ const Toolbar = ({
         displayedFolder={displayedFolder}
         folderId={folderId}
       >
-        <SharedRecipients />
+        {!isSharedDrive && <SharedRecipients />}
       </InsideRegularFolder>
       <InsideRegularFolder
         displayedFolder={displayedFolder}
         folderId={folderId}
       >
-        <ShareButton isDisabled={isSharingDisabled} className="u-mr-half" />
+        {!isSharedDrive && (
+          <ShareButton isDisabled={isSharingDisabled} className="u-mr-half" />
+        )}
       </InsideRegularFolder>
       <ViewSwitcher className="u-mr-half" />
       <MoreMenu
@@ -66,6 +69,7 @@ const Toolbar = ({
         displayedFolder={displayedFolder}
         showSelectionBar={showSelectionBar}
         isSelectionBarVisible={isSelectionBarVisible}
+        isSharedDrive={isSharedDrive}
       />
       <BarRightOnMobile>{isMobile && <SearchButton />}</BarRightOnMobile>
     </div>
