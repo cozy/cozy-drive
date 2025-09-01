@@ -10,6 +10,7 @@ import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
 import AddMenuItem from '@/modules/drive/Toolbar/components/AddMenuItem'
 import DownloadButtonItem from '@/modules/drive/Toolbar/components/DownloadButtonItem'
 import InsideRegularFolder from '@/modules/drive/Toolbar/components/InsideRegularFolder'
+import LeaveSharedDriveButtonItem from '@/modules/drive/Toolbar/components/LeaveSharedDriveButtonItem'
 import DeleteItem from '@/modules/drive/Toolbar/delete/DeleteItem'
 import SelectableItem from '@/modules/drive/Toolbar/selectable/SelectableItem'
 import ShareItem from '@/modules/drive/Toolbar/share/ShareItem'
@@ -36,7 +37,8 @@ const MoreMenu = ({
   folderId,
   showSelectionBar,
   isSelectionBarVisible,
-  isSharedWithMe
+  isSharedWithMe,
+  isSharedDrive
 }) => {
   const [menuIsVisible, setMenuVisible] = useState(false)
   const anchorRef = useRef()
@@ -88,7 +90,9 @@ const MoreMenu = ({
               displayedFolder={displayedFolder}
               folderId={folderId}
             >
-              <DownloadButtonItem files={[displayedFolder]} />
+              {!isSharedDrive && (
+                <DownloadButtonItem files={[displayedFolder]} />
+              )}
             </InsideRegularFolder>
             {isMobile && hasWriteAccess && <AddMenuItem />}
             <SelectableItem onClick={showSelectionBar} />
@@ -103,6 +107,9 @@ const MoreMenu = ({
                   isSharedWithMe={isSharedWithMe}
                 />
               </InsideRegularFolder>
+            )}
+            {isSharedDrive && isSharedWithMe && (
+              <LeaveSharedDriveButtonItem files={[displayedFolder]} />
             )}
           </ActionsMenu>
         )}
