@@ -543,6 +543,10 @@ interface buildSharedDriveFolderQueryParams {
   folderId: string
 }
 
+interface buildSharedDriveIdQueryParams {
+  driveId: string
+}
+
 export const buildSharedDriveFolderQuery: QueryBuilder<
   buildSharedDriveFolderQueryParams
 > = ({ driveId, folderId }) => ({
@@ -551,5 +555,17 @@ export const buildSharedDriveFolderQuery: QueryBuilder<
     as: `io.cozy.files/driveId/${driveId}/folderId/${folderId}`,
     fetchPolicy: defaultFetchPolicy,
     enabled: !!driveId && !!folderId
+  }
+})
+
+export const buildSharedDriveIdQuery: QueryBuilder<
+  buildSharedDriveIdQueryParams
+> = ({ driveId }) => ({
+  definition: () => Q('io.cozy.sharings').getById(driveId),
+  options: {
+    as: `io.cozy.sharings/driveId/${driveId}`,
+    fetchPolicy: defaultFetchPolicy,
+    singleDocData: true,
+    enabled: !!driveId
   }
 })
