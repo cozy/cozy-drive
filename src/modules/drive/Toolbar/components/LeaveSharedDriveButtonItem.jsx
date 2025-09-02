@@ -10,6 +10,8 @@ import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import { getSharingIdFromRelationships } from '@/modules/shareddrives/helpers'
+
 const LeaveSharedDriveButtonItem = ({ files }) => {
   const { t } = useI18n()
   const client = useClient()
@@ -17,7 +19,7 @@ const LeaveSharedDriveButtonItem = ({ files }) => {
   const { showAlert } = useAlert()
   const handleClick = async () => {
     const file = files[0]
-    const sharingId = findSharingId(file)
+    const sharingId = getSharingIdFromRelationships(file)
     if (sharingId) {
       await client.collection('io.cozy.sharings').revokeSelf({ _id: sharingId })
       showAlert({
@@ -39,9 +41,3 @@ const LeaveSharedDriveButtonItem = ({ files }) => {
 }
 
 export default LeaveSharedDriveButtonItem
-
-function findSharingId(folder) {
-  const references = folder.relationships.referenced_by.data
-  const sharingId = references.find(ref => ref.type === 'io.cozy.sharings')?.id
-  return sharingId
-}
