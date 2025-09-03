@@ -1610,9 +1610,9 @@
     regenerator-runtime "^0.14.0"
 
 "@babel/runtime@^7.19.4":
-  version "7.28.3"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.28.3.tgz#75c5034b55ba868121668be5d5bb31cc64e6e61a"
-  integrity sha512-9uIQ10o0WGdpP6GDhXcdOJPJuDgFtIDtN/9+ArJQ2NAfAmiuhTQdzkaTGR33v43GYS2UrSA0eX2pPPHoFVvpxA==
+  version "7.28.4"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.28.4.tgz#a70226016fabe25c5783b2f22d3e1c9bc5ca3326"
+  integrity sha512-Q/N6JNWvIvPnLDvjlE1OUBLPQHH6l3CltCEsHIujp45zQUSSh8K+gHnaEX45yAT1nyngnINhvWtzN+Nb9D8RAQ==
 
 "@babel/runtime@^7.21.0":
   version "7.23.1"
@@ -5856,10 +5856,10 @@ cozy-tsconfig@^1.8.1:
   resolved "https://registry.yarnpkg.com/cozy-tsconfig/-/cozy-tsconfig-1.8.1.tgz#5f206f4e6e041a4afc6691098264ba630bdeb7e2"
   integrity sha512-/9QBxK8Tc12O2ojuyRpSMjPpXpqldVvzfNB1+/nPD+IkIBkU+mqxpHYJwKWjNYHGraCSy69mIwt9J3aiaJdz9w==
 
-cozy-ui@^128.7.0:
-  version "128.7.0"
-  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-128.7.0.tgz#03f5faaba2e83af4d68b7a97396010dcb2da9b2a"
-  integrity sha512-9UtTTRcEiFesFNjFXDAnSlvEHKnDx3tbCmfnZUEGJ7a5lMo6puh3Gwpd+6mh6ADor8/J/ipQuHbX5uZcqq5NJg==
+cozy-ui@^128.8.0:
+  version "128.8.0"
+  resolved "https://registry.yarnpkg.com/cozy-ui/-/cozy-ui-128.8.0.tgz#a9319596a29e1985dc1b996694117a452e7fb7fc"
+  integrity sha512-GOGrPuA6/xS3rhH4rCO/wf1hLGVzazV6iTU4vZY5qz5QHUe577XHSM2rpxIko422YwZ0fY0Re1JFIjCYyiXd8Q==
   dependencies:
     "@babel/runtime" "^7.3.4"
     "@date-io/date-fns" "1"
@@ -10786,9 +10786,9 @@ msgpack5@^4.0.2:
     readable-stream "^2.3.6"
     safe-buffer "^5.1.2"
 
-"mui-bottom-sheet@git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
+"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
   version "1.0.8"
-  resolved "git+https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
+  resolved "https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
     jest-environment-jsdom-sixteen "^1.0.3"
