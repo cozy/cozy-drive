@@ -74,7 +74,9 @@ const FileThumbnail: React.FC<FileThumbnailProps> = ({
     isNextcloudShortcut(file) ||
     isSharedDriveFolder(file)
   ) {
-    return <Icon icon={FileTypeServerIcon} size={size ?? 32} />
+    return (
+      <Icon className="u-mr-half" icon={FileTypeServerIcon} size={size ?? 32} />
+    )
   }
 
   const isSharingShortcut =
