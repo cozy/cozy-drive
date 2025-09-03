@@ -2,19 +2,17 @@ import React, { FC } from 'react'
 
 import { useQuery } from 'cozy-client'
 import { IOCozyFile } from 'cozy-client/types/types'
-import List from 'cozy-ui/transpiled/react/List'
-import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
+import { NavDesktopDropdown } from 'cozy-ui/transpiled/react/Nav'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { FavoriteListItem } from '@/modules/navigation/FavoriteListItem'
 import { buildFavoritesQuery } from '@/queries'
 
 interface FavoriteListProps {
-  className?: string
   clickState: [string, (value: string | undefined) => void]
 }
 
-const FavoriteList: FC<FavoriteListProps> = ({ className, clickState }) => {
+const FavoriteList: FC<FavoriteListProps> = ({ clickState }) => {
   const { t } = useI18n()
   const favoritesQuery = buildFavoritesQuery({
     sortAttribute: 'name',
@@ -29,10 +27,7 @@ const FavoriteList: FC<FavoriteListProps> = ({ className, clickState }) => {
 
   if (favoritesResult.data && favoritesResult.data.length > 0) {
     return (
-      <List
-        subheader={<ListSubheader>{t('Nav.item_favorites')}</ListSubheader>}
-        className={className}
-      >
+      <NavDesktopDropdown label={t('Nav.item_favorites')}>
         {favoritesResult.data.map(file => (
           <FavoriteListItem
             key={file._id}
@@ -40,7 +35,7 @@ const FavoriteList: FC<FavoriteListProps> = ({ className, clickState }) => {
             clickState={clickState}
           />
         ))}
-      </List>
+      </NavDesktopDropdown>
     )
   }
 

@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 
-import List from 'cozy-ui/transpiled/react/List'
-import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
+import { NavDesktopDropdown } from 'cozy-ui/transpiled/react/Nav'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { SharedDriveListItem } from '@/modules/navigation/components/SharedDriveListItem'
 import { SharedDrive } from '@/modules/shareddrives/helpers'
@@ -14,15 +14,12 @@ interface SharedDriveListProps {
 
 const SharedDriveList: FC<SharedDriveListProps> = ({
   sharedDrives,
-  className,
   clickState
 }) => {
+  const { t } = useI18n()
   if (sharedDrives.length > 0) {
     return (
-      <List
-        subheader={<ListSubheader>Shared drive</ListSubheader>}
-        className={className}
-      >
+      <NavDesktopDropdown label={t('Nav.item_shared_drives')}>
         {sharedDrives.map(sharedDrive => (
           <SharedDriveListItem
             key={sharedDrive._id}
@@ -30,7 +27,7 @@ const SharedDriveList: FC<SharedDriveListProps> = ({
             clickState={clickState}
           />
         ))}
-      </List>
+      </NavDesktopDropdown>
     )
   }
 
