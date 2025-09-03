@@ -137,6 +137,7 @@ const File = ({
   let canInteractWithFile =
     attributes._id &&
     attributes._id !== 'io.cozy.files.shared-drives-dir' &&
+    attributes.dir_id !== 'io.cozy.files.shared-drives-dir' &&
     !attributes._id.endsWith('.trash-dir')
   if (typeof canInteractWith === 'function') {
     canInteractWithFile &&= canInteractWith(attributes)
@@ -176,7 +177,11 @@ const File = ({
             styles['fil-file-thumbnail'],
             {
               'u-pl-0': !isMobile,
-              [styles['fil-content-grid-view']]: viewType === 'grid'
+              [styles['fil-content-grid-view']]: viewType === 'grid',
+              'u-ml-half':
+                !canInteractWithFile ||
+                isRowDisabledOrInSyncFromSharing ||
+                disableSelection
             }
           )}
         >
