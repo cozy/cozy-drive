@@ -115,8 +115,14 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
       const rootFolderId = sharing.rules?.[0]?.values?.[0]
       const driveName = sharing.rules?.[0]?.title
 
+      // Find the file from sharing section that has same `driveId` then override it into directory-like objects
+      const fileInSharingSection = result.data?.find(item => {
+        const driveId = item.relationships?.referenced_by?.data?.[0]?.id
+        return driveId === sharing.id
+      })
+
       return {
-        ...sharing,
+        ...fileInSharingSection,
         _id: rootFolderId,
         id: SHARED_DRIVES_DIR_ID,
         _type: 'io.cozy.files',
