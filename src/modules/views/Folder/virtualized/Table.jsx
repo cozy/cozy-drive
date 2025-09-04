@@ -70,7 +70,7 @@ const Table = ({
     tableRef
   )
 
-  const handleRowSelect = (event, row, visualIndex) => {
+  const handleRowSelect = (row, event, visualIndex) => {
     event.stopPropagation()
     if (event.shiftKey && visualIndex !== undefined) {
       handleShiftClick(row, visualIndex)
