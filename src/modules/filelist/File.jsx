@@ -196,13 +196,6 @@ const File = ({
               }
             }}
           />
-          {viewType === 'grid' && (
-            <Status
-              file={attributes}
-              disabled={isRowDisabledOrInSyncFromSharing}
-              isInSyncFromSharing={isInSyncFromSharing}
-            />
-          )}
         </ThumbnailWrapper>
         <FileName
           attributes={attributes}
