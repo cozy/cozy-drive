@@ -1,8 +1,9 @@
 import React, { FC } from 'react'
 
 import List from 'cozy-ui/transpiled/react/List'
-import ListSubheader from 'cozy-ui/transpiled/react/ListSubheader'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import { SideBarAccordion } from '@/components/SideBarAccordion.jsx'
 import { SharedDriveListItem } from '@/modules/navigation/components/SharedDriveListItem'
 import { SharedDrive } from '@/modules/shareddrives/helpers'
 
@@ -14,23 +15,25 @@ interface SharedDriveListProps {
 
 const SharedDriveList: FC<SharedDriveListProps> = ({
   sharedDrives,
-  className,
   clickState
 }) => {
+  const { t } = useI18n()
   if (sharedDrives.length > 0) {
     return (
-      <List
-        subheader={<ListSubheader>Shared drive</ListSubheader>}
-        className={className}
+      <SideBarAccordion
+        title={t('Nav.item_shared_drives')}
+        childrenCount={sharedDrives.length}
       >
-        {sharedDrives.map(sharedDrive => (
-          <SharedDriveListItem
-            key={sharedDrive._id}
-            sharedDrive={sharedDrive}
-            clickState={clickState}
-          />
-        ))}
-      </List>
+        <List className="u-p-0">
+          {sharedDrives.map(sharedDrive => (
+            <SharedDriveListItem
+              key={sharedDrive._id}
+              sharedDrive={sharedDrive}
+              clickState={clickState}
+            />
+          ))}
+        </List>
+      </SideBarAccordion>
     )
   }
 

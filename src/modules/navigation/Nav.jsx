@@ -53,15 +53,9 @@ export const Nav = () => {
         rx={/\/trash(\/.*)?/}
         clickState={clickState}
       />
-      {isDesktop ? (
-        <FavoriteList clickState={clickState} className="u-mt-half" />
-      ) : null}
+      {isDesktop ? <FavoriteList clickState={clickState} /> : null}
       {isDesktop && isSharedDriveLoaded ? (
-        <SharedDriveList
-          clickState={clickState}
-          className="u-mt-half"
-          sharedDrives={sharedDrives}
-        />
+        <SharedDriveList clickState={clickState} sharedDrives={sharedDrives} />
       ) : null}
     </UINav>
   )
