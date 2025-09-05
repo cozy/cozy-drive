@@ -23,6 +23,15 @@ describe('computeFileType', () => {
     expect(computeFileType(file)).toBe('nextcloud-trash')
   })
 
+  it('should return "shared-drive" for files in shared drives directory', () => {
+    const file = {
+      dir_id: SHARED_DRIVES_DIR_ID,
+      _type: 'io.cozy.files',
+      type: 'file'
+    }
+    expect(computeFileType(file)).toBe('shared-drive')
+  })
+
   it('should return "nextcloud-directory" for Nextcloud directories', () => {
     const file = { _type: 'io.cozy.remote.nextcloud.files', type: 'directory' }
     expect(computeFileType(file)).toBe('nextcloud-directory')
@@ -270,6 +279,20 @@ describe('computePath', () => {
       fromPathname: '/some/path',
       fromPublicFolder: true
     })
+  })
+
+  it('should return correct path for shared-drive', () => {
+    const file = { _id: 'file123', driveId: 'drive456' }
+    expect(computePath(file, { type: 'shared-drive', pathname: '/any' })).toBe(
+      '/shareddrive/drive456/file123'
+    )
+  })
+
+  it('should throw error for shared-drive without driveId', () => {
+    const file = { _id: 'file123' }
+    expect(() =>
+      computePath(file, { type: 'shared-drive', pathname: '/any' })
+    ).toThrow('Missing driveId in a shared drive')
   })
 
   it('should return correct path for default case', () => {
