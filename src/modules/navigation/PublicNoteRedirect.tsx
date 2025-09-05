@@ -14,7 +14,7 @@ import { DummyLayout } from '@/modules/layout/DummyLayout'
 
 const PublicNoteRedirect: FC = () => {
   const { t } = useI18n()
-  const { fileId } = useParams()
+  const { fileId, driveId } = useParams()
   const client = useClient()
 
   const [noteUrl, setNoteUrl] = useState<string | null>(null)
@@ -38,6 +38,7 @@ const PublicNoteRedirect: FC = () => {
             id: fileId
           },
           {
+            driveId,
             pathname
           }
         )
