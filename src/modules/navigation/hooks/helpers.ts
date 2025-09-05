@@ -94,6 +94,7 @@ export const computePath = (
   { type, pathname, isPublic }: ComputePathOptions
 ): string => {
   const paths = pathname.split('/').slice(1)
+  const driveId = file.driveId as string | undefined
 
   switch (type) {
     case 'trash':
@@ -112,7 +113,7 @@ export const computePath = (
     case 'public-note-same-instance':
       return `/?id=${file._id}`
     case 'public-note':
-      return `/note/${file._id}`
+      return driveId ? `/note/${driveId}/${file._id}` : `/note/${file._id}`
     case 'docs':
       // eslint-disable-next-line no-case-declarations, @typescript-eslint/restrict-template-expressions
       return `/bridge/docs/${(file as IOCozyFile).metadata.externalId}`
@@ -133,9 +134,7 @@ export const computePath = (
         fromPublicFolder: isPublic
       })
     case 'shared-drive':
-      return `/shareddrive/${(file.attributes as FileAttribute).driveId}/${
-        file._id
-      }`
+      return `/shareddrive/${driveId}/${file._id}`
     default:
       // On mobile, if we are in /favorites tab, we do not want it to appears in computed path
       // so we redirect to root route for files
