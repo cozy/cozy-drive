@@ -109,7 +109,7 @@ export const computePath = (
     case 'public-note-same-instance':
       return `/?id=${file._id}`
     case 'public-note':
-      return `/note/${file._id}`
+      return driveId ? `/note/${driveId}/${file._id}` : `/note/${file._id}`
     case 'docs':
       // eslint-disable-next-line no-case-declarations, @typescript-eslint/restrict-template-expressions
       return `/bridge/docs/${(file as IOCozyFile).metadata.externalId}`
