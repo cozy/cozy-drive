@@ -44,7 +44,10 @@ export const computeFileType = (
     return 'trash'
   } else if (file._id === 'io.cozy.remote.nextcloud.files.trash-dir') {
     return 'nextcloud-trash'
-  } else if (file.dir_id === SHARED_DRIVES_DIR_ID) {
+  } else if (
+    file.dir_id === SHARED_DRIVES_DIR_ID &&
+    !isNextcloudShortcut(file)
+  ) {
     return 'shared-drive'
   } else if (file._type === 'io.cozy.remote.nextcloud.files') {
     return isDirectory(file) ? 'nextcloud-directory' : 'nextcloud-file'

@@ -12,6 +12,7 @@ import { FavoriteList } from '@/modules/navigation/FavoriteList'
 import { useNavContext } from '@/modules/navigation/NavContext'
 import { NavItem } from '@/modules/navigation/NavItem'
 import { SharingsNavItem } from '@/modules/navigation/SharingsNavItem'
+import { ExternalDrives } from '@/modules/navigation/components/ExternalDrivesList'
 import { SharedDriveList } from '@/modules/navigation/components/SharedDriveList'
 import { useSharedDrives } from '@/modules/shareddrives/hooks/useSharedDrives'
 
@@ -62,6 +63,9 @@ export const Nav = () => {
           className="u-mt-half"
           sharedDrives={sharedDrives}
         />
+      ) : null}
+      {isDesktop ? (
+        <ExternalDrives clickState={clickState} className="u-mt-half" />
       ) : null}
     </UINav>
   )
