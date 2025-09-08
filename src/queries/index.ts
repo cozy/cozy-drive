@@ -530,6 +530,25 @@ export const buildFavoritesQuery: QueryBuilder<buildFavoritesQueryParams> = ({
   }
 })
 
+export const buildExternalDrivesQuery: QueryBuilder<
+  buildFavoritesQueryParams
+> = ({ sortAttribute, sortOrder }) => ({
+  definition: () =>
+    Q('io.cozy.files')
+      .where({
+        [sortAttribute]: { $gt: null }
+      })
+      .partialIndex({
+        'cozyMetadata.createdByApp': 'nextcloud'
+      })
+      .indexFields([sortAttribute])
+      .sortBy([{ [sortAttribute]: sortOrder }]),
+  options: {
+    as: 'io.cozy.files/metadata.createdByApp/nextcloud',
+    fetchPolicy: defaultFetchPolicy
+  }
+})
+
 interface buildMagicFolderQueryParams {
   id: string
   enabled?: boolean
