@@ -1,6 +1,6 @@
 import { computeFileType, computeApp, computePath } from './helpers'
 
-import { TRASH_DIR_ID } from '@/constants/config'
+import { TRASH_DIR_ID, SHARED_DRIVES_DIR_ID } from '@/constants/config'
 import { makeOnlyOfficeFileRoute } from '@/modules/views/OnlyOffice/helpers'
 
 jest.mock('modules/views/OnlyOffice/helpers', () => ({
@@ -232,6 +232,13 @@ describe('computePath', () => {
     expect(
       computePath(file, { type: 'public-note', pathname: '/public' })
     ).toBe('/note/note123')
+  })
+
+  it('should return correct path for public-note with driveId in shared drive', () => {
+    const file = { _id: 'note123', driveId: 'drive456' }
+    expect(
+      computePath(file, { type: 'public-note', pathname: '/public' })
+    ).toBe('/note/drive456/note123')
   })
 
   it('should return correct path for public-note-same-instance', () => {
