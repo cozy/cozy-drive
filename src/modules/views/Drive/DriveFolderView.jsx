@@ -55,8 +55,7 @@ import FolderViewBodyVz from '@/modules/views/Folder/virtualized/FolderViewBody'
 import { useResumeUploadFromFlagship } from '@/modules/views/Upload/useResumeFromFlagship'
 import {
   buildDriveQuery,
-  buildFileWithSpecificMetadataAttributeQuery,
-  buildMagicFolderQuery
+  buildFileWithSpecificMetadataAttributeQuery
 } from '@/queries'
 
 // Those extra columns names must match a metadata attribute name, e.g. carbonCopy or electronicSafe
@@ -117,28 +116,10 @@ const DriveFolderView = () => {
     sortOrder: sortOrder.order
   })
 
-  const sharedFolderQuery = buildMagicFolderQuery({
-    id: 'io.cozy.files.shared-drives-dir',
-    enabled: currentFolderId === ROOT_DIR_ID
-  })
-
   const foldersResult = useQuery(folderQuery.definition, folderQuery.options)
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
 
-  const sharedFolderResult = useQuery(
-    sharedFolderQuery.definition,
-    sharedFolderQuery.options
-  )
-
   let allResults = [foldersResult, filesResult]
-  if (currentFolderId === ROOT_DIR_ID) {
-    // The folder may not be found if the user has not configured shared drives
-    if (sharedFolderResult.fetchStatus === 'loaded') {
-      allResults = [sharedFolderResult, foldersResult, filesResult]
-    } else {
-      allResults = [foldersResult, filesResult]
-    }
-  }
 
   const isInError = allResults.some(result => result.fetchStatus === 'failed')
   const isLoading = allResults.some(
