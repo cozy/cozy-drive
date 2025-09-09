@@ -10,10 +10,9 @@ import { useSharingContext } from 'cozy-sharing'
 import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { Layout as LayoutUI } from 'cozy-ui/transpiled/react/Layout'
 import Sidebar from 'cozy-ui/transpiled/react/Sidebar'
+import Storage from 'cozy-ui/transpiled/react/Storage'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-import StorageButton from '@/components/Storage/StorageButton'
-import StorageProgress from '@/components/Storage/StorageProgress'
 import ButtonClient from '@/components/pushClient/Button'
 import { ROOT_DIR_ID } from '@/constants/config'
 import { useDisplayedFolder } from '@/hooks'
@@ -82,8 +81,7 @@ const LayoutContent = () => {
         {isDesktop && (
           <div>
             <div className="u-p-1-half">
-              <StorageProgress />
-              <StorageButton className="u-mt-1" />
+              <Storage />
             </div>
             <ButtonClient />
           </div>
