@@ -38,7 +38,6 @@ const SelectionProvider = ({ children }) => {
   const location = useLocation()
   const [selectedItems, setSelectedItems] = useState({})
   const [isSelectionBarOpen, setSelectionBarOpen] = useState(false)
-  const [isSelectAll, setIsSelectAll] = useState(false)
   const [focusedIndex, setFocusedIndex] = useState(0)
   const [lastSelectedIndex, setLastSelectedIndex] = useState(null)
   const [isKeyboardNavigating, setIsKeyboardNavigating] = useState(false)
@@ -182,7 +181,6 @@ const SelectionProvider = ({ children }) => {
   }
 
   const selectAll = items => {
-    setIsSelectAll(true)
     const newSelectedItems = items.reduce((acc, item) => {
       acc[item.id] = item
       return acc
@@ -192,7 +190,6 @@ const SelectionProvider = ({ children }) => {
 
   const toggleSelectAllItems = items => {
     if (isSelectAll) {
-      setIsSelectAll(false)
       setSelectedItems({})
       setFocusedIndex(0)
       setLastSelectedIndex(null)
@@ -203,7 +200,6 @@ const SelectionProvider = ({ children }) => {
 
   const showSelectionBar = () => setSelectionBarOpen(true)
   const hideSelectionBar = () => {
-    setIsSelectAll(false)
     setSelectedItems({})
     setSelectionBarOpen(false)
     setLastSelectedIndex(null)
@@ -213,6 +209,13 @@ const SelectionProvider = ({ children }) => {
   const isSelectionBarVisible = useMemo(() => {
     return Object.keys(selectedItems).length !== 0 || isSelectionBarOpen
   }, [isSelectionBarOpen, selectedItems])
+
+  const isSelectAll = useMemo(() => {
+    return (
+      itemsListRef.current.length > 0 &&
+      Object.keys(selectedItems).length === itemsListRef.current.length
+    )
+  }, [selectedItems])
 
   const isItemSelected = id => {
     return selectedItems[id] !== undefined
