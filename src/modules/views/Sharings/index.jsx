@@ -124,6 +124,7 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
         name: driveName,
         path: `/Drives/${driveName}`,
         dir_id: SHARED_DRIVES_DIR_ID,
+        driveId: sharing.id,
         attributes: {
           type: 'directory',
           name: driveName,
