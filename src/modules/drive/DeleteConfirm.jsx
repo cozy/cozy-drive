@@ -15,6 +15,7 @@ import { DOCTYPE_ALBUMS } from '@/lib/doctypes'
 import { getEntriesTypeTranslated } from '@/lib/entries'
 import { trashFiles } from '@/modules/actions/utils'
 import { buildAlbumByIdQuery } from '@/queries'
+import { useSelectionContext } from '../selection/SelectionProvider'
 
 const Message = ({ type, fileCount }) => {
   const icon =
@@ -48,6 +49,7 @@ export const DeleteConfirm = ({
   const [isDeleting, setDeleting] = useState(false)
   const [isReferencedByManualAlbum, setIsReferencedByManualAlbum] =
     useState(false)
+  const { setSelectedItems } = useSelectionContext()
 
   useEffect(() => {
     const fetchAlbums = async () => {
@@ -84,8 +86,24 @@ export const DeleteConfirm = ({
     setDeleting(true)
     await trashFiles(client, files, { showAlert, t })
     afterConfirmation()
+    setSelectedItems(prevSelectedItems => {
+      const fileIdsToRemove = files.map(file => file.id)
+      return Object.fromEntries(
+        Object.entries(prevSelectedItems).filter(
+          ([id]) => !fileIdsToRemove.includes(id)
+        )
+      )
+    })
     onClose()
-  }, [client, files, afterConfirmation, onClose, showAlert, t])
+  }, [
+    client,
+    files,
+    afterConfirmation,
+    onClose,
+    showAlert,
+    t,
+    setSelectedItems
+  ])
 
   const entriesType = getEntriesTypeTranslated(t, files)
 
