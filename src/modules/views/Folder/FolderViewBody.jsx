@@ -37,7 +37,6 @@ import { FolderUnlocker } from '@/modules/folder/components/FolderUnlocker'
 import { useFolderSort } from '@/modules/navigation/duck'
 import SelectionBar from '@/modules/selection/SelectionBar'
 import { isReferencedByShareInSharingContext } from '@/modules/views/Folder/syncHelpers'
-
 // TODO: extraColumns is then passed to 'FileListHeader', 'AddFolder',
 // and 'File' (this one from a 'syncingFakeFile' and a normal file).
 // It is easy to forget to update one of these components to pass 'extraColumns'.
