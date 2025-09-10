@@ -37,6 +37,7 @@ import { FolderUnlocker } from '@/modules/folder/components/FolderUnlocker'
 import { useFolderSort } from '@/modules/navigation/duck'
 import SelectionBar from '@/modules/selection/SelectionBar'
 import { isReferencedByShareInSharingContext } from '@/modules/views/Folder/syncHelpers'
+import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 
 // TODO: extraColumns is then passed to 'FileListHeader', 'AddFolder',
 // and 'File' (this one from a 'syncingFakeFile' and a normal file).
@@ -56,6 +57,7 @@ const FolderViewBody = ({
   const { isDesktop } = useBreakpoints()
   const navigate = useNavigate()
   const { viewType, switchView } = useViewSwitcherContext()
+  const { hideSelectionBar, isSelectionBarVisible } = useSelectionContext()
   const folderViewRef = useRef()
 
   const allFiles = useMemo(() => {
@@ -67,6 +69,12 @@ const FolderViewBody = ({
     })
     return files
   }, [queryResults])
+
+  useEffect(() => {
+    if (allFiles.length === 0 && isSelectionBarVisible) {
+      hideSelectionBar()
+    }
+  }, [allFiles.length, hideSelectionBar, isSelectionBarVisible])
 
   useShiftArrowsSelection({ items: allFiles, viewType }, folderViewRef)
 
