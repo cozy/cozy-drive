@@ -42,7 +42,8 @@ export const uploadFiles =
     dirId,
     sharingState,
     fileUploadedCallback = () => null,
-    { client, vaultClient, showAlert, t }
+    { client, vaultClient, showAlert, t },
+    driveId
   ) =>
   dispatch => {
     let targetDirId = dirId
@@ -82,7 +83,8 @@ export const uploadFiles =
               navigateAfterUpload
             )
           ),
-        { client, vaultClient }
+        { client, vaultClient },
+        driveId
       )
     )
   }
@@ -249,7 +251,8 @@ export const createFolder = (
   vaultClient,
   name,
   currentFolderId,
-  { isEncryptedFolder = false, showAlert, t } = {}
+  { isEncryptedFolder = false, showAlert, t } = {},
+  driveId
 ) => {
   return async (dispatch, getState) => {
     const state = getState()
@@ -280,16 +283,19 @@ export const createFolder = (
     let createdFolder = null
     try {
       if (!isTargetEncrypted) {
-        createdFolder = await client.create('io.cozy.files', {
-          name: name,
-          dirId: targetFolderId,
-          type: 'directory'
-        })
+        createdFolder = await client
+          .collection('io.cozy.files', { driveId })
+          .create({
+            name: name,
+            dirId: targetFolderId,
+            type: 'directory'
+          })
       } else {
         if (targetFolderId === currentFolderId) {
           createdFolder = await createEncryptedDir(client, vaultClient, {
             name,
-            dirID: targetFolderId
+            dirID: targetFolderId,
+            driveId
           })
         } else {
           logger.error(

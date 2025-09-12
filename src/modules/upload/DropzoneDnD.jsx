@@ -60,7 +60,8 @@ export const Dropzone = ({ displayedFolder, children }) => {
               vaultClient,
               showAlert,
               t
-            }
+            },
+            displayedFolder.driveId
           )
         )
       },

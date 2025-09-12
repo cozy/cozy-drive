@@ -70,7 +70,8 @@ const createFolderAfterSubmit =
           isEncryptedFolder: isEncryptedFolder(getState()),
           showAlert,
           t
-        }
+        },
+        ownProps.driveId
       )
     ).then(() => {
       // eslint-disable-next-line promise/always-return

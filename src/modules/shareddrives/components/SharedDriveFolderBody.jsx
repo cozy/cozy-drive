@@ -12,7 +12,11 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { download, infos, versions, hr } from '@/modules/actions'
 import { FolderBody } from '@/modules/folder/components/FolderBody'
 
-const SharedDriveFolderBody = ({ folderId, queryResults }) => {
+const SharedDriveFolderBody = ({
+  folderId,
+  queryResults,
+  refreshFolderContent
+}) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const client = useClient()
@@ -45,6 +49,8 @@ const SharedDriveFolderBody = ({ folderId, queryResults }) => {
       queryResults={queryResults}
       actions={actions}
       withFilePath={false}
+      driveId={driveId}
+      refreshFolderContent={refreshFolderContent}
     />
   )
 }

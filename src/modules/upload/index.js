@@ -169,7 +169,8 @@ export const processNextFile =
     queueCompletedCallback,
     dirID,
     sharingState,
-    { client, vaultClient }
+    { client, vaultClient },
+    driveId
   ) =>
   async (dispatch, getState) => {
     let error = null
@@ -190,10 +191,16 @@ export const processNextFile =
     try {
       dispatch({ type: UPLOAD_FILE, file })
       if (entry && isDirectory) {
-        const newDir = await uploadDirectory(client, entry, dirID, {
-          vaultClient,
-          encryptionKey
-        })
+        const newDir = await uploadDirectory(
+          client,
+          entry,
+          dirID,
+          {
+            vaultClient,
+            encryptionKey
+          },
+          driveId
+        )
         fileUploadedCallback(newDir)
       } else {
         const withProgress = {
@@ -202,11 +209,17 @@ export const processNextFile =
           }
         }
 
-        const uploadedFile = await uploadFile(client, file, dirID, {
-          vaultClient,
-          encryptionKey,
-          ...withProgress
-        })
+        const uploadedFile = await uploadFile(
+          client,
+          file,
+          dirID,
+          {
+            vaultClient,
+            encryptionKey,
+            ...withProgress
+          },
+          driveId
+        )
 
         fileUploadedCallback(uploadedFile)
       }
@@ -261,7 +274,8 @@ export const processNextFile =
         queueCompletedCallback,
         dirID,
         sharingState,
-        { client, vaultClient }
+        { client, vaultClient },
+        driveId
       )
     )
   }
@@ -272,9 +286,10 @@ const uploadDirectory = async (
   client,
   directory,
   dirID,
-  { vaultClient, encryptionKey }
+  { vaultClient, encryptionKey },
+  driveId
 ) => {
-  const newDir = await createFolder(client, directory.name, dirID)
+  const newDir = await createFolder(client, directory.name, dirID, driveId)
   const dirReader = directory.createReader()
   return new Promise(resolve => {
     const entriesReader = async entries => {
@@ -282,15 +297,27 @@ const uploadDirectory = async (
         const entry = entries[i]
         if (entry.isFile) {
           const file = await getFileFromEntry(entry)
-          await uploadFile(client, file, newDir.id, {
-            vaultClient,
-            encryptionKey
-          })
+          await uploadFile(
+            client,
+            file,
+            newDir.id,
+            {
+              vaultClient,
+              encryptionKey
+            },
+            driveId
+          )
         } else if (entry.isDirectory) {
-          await uploadDirectory(client, entry, newDir.id, {
-            vaultClient,
-            encryptionKey
-          })
+          await uploadDirectory(
+            client,
+            entry,
+            newDir.id,
+            {
+              vaultClient,
+              encryptionKey
+            },
+            driveId
+          )
         }
       }
       resolve(newDir)
@@ -299,14 +326,14 @@ const uploadDirectory = async (
   })
 }
 
-const createFolder = async (client, name, dirID) => {
+const createFolder = async (client, name, dirID, driveId) => {
   const resp = await client
-    .collection(DOCTYPE_FILES)
+    .collection(DOCTYPE_FILES, { driveId })
     .createDirectory({ name, dirId: dirID })
   return resp.data
 }
 
-const uploadFile = async (client, file, dirID, options = {}) => {
+const uploadFile = async (client, file, dirID, options = {}, driveId) => {
   /** We have a bug with Chrome returning SPDY_ERROR_PROTOCOL.
    * This is certainly caused by the couple HTTP2 / HAProxy / CozyStack
    * when something cut the HTTP connexion before the Stack
@@ -368,14 +395,15 @@ const uploadFile = async (client, file, dirID, options = {}) => {
         fileOptions: {
           name: file.name,
           dirID,
-          onUploadProgress
+          onUploadProgress,
+          driveId
         }
       })
     }
     fr.readAsArrayBuffer(file)
   } else {
     const resp = await client
-      .collection(DOCTYPE_FILES)
+      .collection(DOCTYPE_FILES, { driveId })
       .createFile(file, { dirId: dirID, onUploadProgress })
 
     return resp.data
@@ -411,7 +439,8 @@ export const addToUploadQueue =
     sharingState,
     fileUploadedCallback,
     queueCompletedCallback,
-    { client, vaultClient }
+    { client, vaultClient },
+    driveId
   ) =>
   async dispatch => {
     dispatch({
@@ -424,7 +453,8 @@ export const addToUploadQueue =
         queueCompletedCallback,
         dirID,
         sharingState,
-        { client, vaultClient }
+        { client, vaultClient },
+        driveId
       )
     )
   }

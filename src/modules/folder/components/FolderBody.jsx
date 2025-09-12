@@ -1,11 +1,13 @@
 import React, { useCallback } from 'react'
 
+import { useVaultClient } from 'cozy-keys-lib'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { EmptyDrive } from '@/components/Error/Empty'
 import Oops from '@/components/Error/Oops'
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
 import { useViewSwitcherContext } from '@/lib/ViewSwitcherContext'
+import AddFolder from '@/modules/filelist/AddFolder'
 import { FileWithSelection as File } from '@/modules/filelist/File'
 import { FileList } from '@/modules/filelist/FileList'
 import FileListBody from '@/modules/filelist/FileListBody'
@@ -45,8 +47,10 @@ const FolderBody = ({
   renderEmptyComponent = () => {
     return <EmptyDrive />
   },
-  canInteractWith
+  canInteractWith,
+  driveId
 }) => {
+  const vaultClient = useVaultClient()
   const { isDesktop } = useBreakpoints()
 
   useScrollToTop(folderId)
@@ -87,6 +91,17 @@ const FolderBody = ({
           />
         ) : null}
         <FileListBody selectionModeActive={false}>
+          {!needsToWait && (
+            <div className={!isDesktop ? 'u-ov-hidden' : ''}>
+              <AddFolder
+                vaultClient={vaultClient}
+                refreshFolderContent={refreshFolderContent}
+                extraColumns={extraColumns}
+                currentFolderId={folderId}
+                driveId={driveId}
+              />
+            </div>
+          )}
           {isError ? <Oops /> : null}
           {isLoading || needsToWait ? <FileListRowsPlaceholder /> : null}
           {isEmpty ? renderEmptyComponent() : null}

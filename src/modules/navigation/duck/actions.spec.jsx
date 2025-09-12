@@ -34,10 +34,14 @@ afterEach(() => {
 describe('createFolder', () => {
   beforeEach(() => {
     jest.spyOn(CozyClient.prototype, 'create').mockImplementation(() => {})
+    jest.spyOn(CozyClient.prototype, 'collection').mockReturnValue({
+      create: jest.fn().mockResolvedValue({})
+    })
   })
 
   afterEach(() => {
     CozyClient.prototype.create.mockRestore()
+    CozyClient.prototype.collection.mockRestore()
   })
 
   it('should not be possible to create a folder with a same name of an existing folder', async () => {
@@ -62,7 +66,11 @@ describe('createFolder', () => {
       createFolder(client, vaultClient, 'foobar5', folderId, { showAlert, t })
     )
 
-    expect(client.create).toHaveBeenCalledWith('io.cozy.files', {
+    expect(client.collection).toHaveBeenCalledWith('io.cozy.files', {
+      driveId: undefined
+    })
+    const mockCollection = client.collection.mock.results[0].value
+    expect(mockCollection.create).toHaveBeenCalledWith({
       dirId: 'folder123456',
       name: 'foobar5',
       type: 'directory'
