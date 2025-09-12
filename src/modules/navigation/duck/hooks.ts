@@ -4,11 +4,13 @@ import flag from 'cozy-flags'
 
 import { DEFAULT_SORT, SORT_BY_UPDATE_DATE } from '@/config/sort'
 import { sortFolder, getSort } from '@/modules/navigation/duck'
+import { TRASH_DIR_ID } from '@/constants/config'
 
 const useFolderSort = (folderId: string): [Sort, (props: Sort) => void] => {
-  const defaultSort: Sort = flag('drive.default-updated-at-sort.enabled')
-    ? SORT_BY_UPDATE_DATE
-    : DEFAULT_SORT
+  const defaultSort: Sort =
+    flag('drive.default-updated-at-sort.enabled') || folderId === TRASH_DIR_ID
+      ? SORT_BY_UPDATE_DATE
+      : DEFAULT_SORT
   const dispatch = useDispatch()
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   const currentSort = (useSelector(state => getSort(state)) ||
