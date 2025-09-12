@@ -34,7 +34,8 @@ const FolderViewBody = ({
   actions,
   canUpload = true,
   canDrag,
-  withFilePath = false
+  withFilePath = false,
+  sortOrder
 }) => {
   const client = useClient()
   const { isDesktop } = useBreakpoints()
@@ -172,6 +173,7 @@ const FolderViewBody = ({
             currentFolderId={currentFolderId}
             withFilePath={withFilePath}
             actions={actions}
+            sortOrder={sortOrder}
           />
         ) : (
           <Grid

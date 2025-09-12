@@ -1,4 +1,4 @@
-import React, { useRef, forwardRef, useEffect, useState } from 'react'
+import React, { useRef, forwardRef, useState, useMemo } from 'react'
 
 import VirtuosoTableDnd from 'cozy-ui/transpiled/react/Table/Virtualized/Dnd'
 import TableRowDnD from 'cozy-ui/transpiled/react/Table/Virtualized/Dnd/TableRow'
@@ -44,7 +44,8 @@ const Table = ({
   selectedItems,
   currentFolderId,
   withFilePath,
-  actions
+  actions,
+  sortOrder
 }) => {
   const {
     handleShiftClick,
@@ -55,20 +56,16 @@ const Table = ({
   } = useSelectionContext()
 
   const tableRef = useRef()
-  const rowsRef = useRef(rows)
-
-  const [order, setOrder] = useState('asc')
-  const [orderBy, setOrderBy] = useState(columns?.[0]?.id)
-
-  useEffect(() => {
-    const sortedData = stableSort(rows, getComparator(order, orderBy))
-    rowsRef.current = secondarySort(sortedData)
-  }, [columns, rows, order, orderBy])
-
-  useShiftArrowsSelection(
-    { items: rowsRef.current, viewType: 'list' },
-    tableRef
+  const [order, setOrder] = useState(sortOrder?.order || 'asc')
+  const [orderBy, setOrderBy] = useState(
+    sortOrder?.attribute || columns?.[0]?.id
   )
+  const sortedRow = useMemo(() => {
+    const sortedData = stableSort(rows, getComparator(order, orderBy))
+    return secondarySort(sortedData)
+  }, [rows, order, orderBy])
+
+  useShiftArrowsSelection({ items: sortedRow, viewType: 'list' }, tableRef)
 
   const handleRowSelect = (row, event, visualIndex) => {
     event.stopPropagation()
@@ -94,11 +91,11 @@ const Table = ({
       <VirtuosoTableDnd
         context={{ actions }}
         components={components}
-        rows={rows}
+        rows={sortedRow}
         columns={columns}
         dragProps={dragProps}
         endReached={fetchMore}
-        defaultOrder={columns?.[0]?.id}
+        defaultOrder={{ direction: order, by: orderBy }}
         secondarySort={secondarySort}
         onSelectAll={selectAll}
         onSelect={handleRowSelect}
