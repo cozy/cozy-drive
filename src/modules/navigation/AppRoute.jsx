@@ -21,14 +21,18 @@ import FilesViewerTrash from '../views/Trash/FilesViewerTrash'
 import TrashFolderView from '../views/Trash/TrashFolderView'
 
 import FileHistory from '@/components/FileHistory'
-import { ROOT_DIR_ID, TRASH_DIR_ID } from '@/constants/config'
+import {
+  ROOT_DIR_ID,
+  TRASH_DIR_ID,
+  SHARED_DRIVES_DIR_ID,
+  SHARING_TAB_DRIVES
+} from '@/constants/config'
 import { SentryRoutes } from '@/lib/sentry'
 import { UploaderComponent } from '@/modules//views/Upload/UploaderComponent'
 import Layout from '@/modules/layout/Layout'
 import { PublicNoteRedirect } from '@/modules/navigation/PublicNoteRedirect'
 import FileOpenerExternal from '@/modules/viewer/FileOpenerExternal'
 import { KonnectorRoutes } from '@/modules/views/Drive/KonnectorRoutes'
-import { SharedDrivesFolderView } from '@/modules/views/Drive/SharedDrivesFolderView'
 import { FavoritesView } from '@/modules/views/Favorites/FavoritesView'
 import { FolderDuplicateView } from '@/modules/views/Folder/FolderDuplicateView'
 import { MoveFilesView } from '@/modules/views/Modal/MoveFilesView'
@@ -50,6 +54,10 @@ import { TrashEmptyView } from '@/modules/views/Trash/TrashEmptyView'
 const FilesRedirect = () => {
   const { folderId } = useParams()
   return <Navigate to={`/folder/${folderId}`} replace={true} />
+}
+
+const SharedDrivesRedirect = () => {
+  return <Navigate to={`/sharings?tab=${SHARING_TAB_DRIVES}`} replace={true} />
 }
 
 const OutletWrapper = ({ Component }) => (
@@ -95,8 +103,8 @@ const AppRoute = () => (
       </Route>
 
       <Route
-        path="folder/io.cozy.files.shared-drives-dir"
-        element={<SharedDrivesFolderView />}
+        path={`folder/${SHARED_DRIVES_DIR_ID}`}
+        element={<SharedDrivesRedirect />}
       >
         <Route path="file/:fileId" element={<FilesViewerDrive />} />
       </Route>

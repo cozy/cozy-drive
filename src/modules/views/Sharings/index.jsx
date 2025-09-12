@@ -59,7 +59,9 @@ const mobileExtraColumnsNames = []
 
 export const SharingsView = ({ sharedDocumentIds = [] }) => {
   const navigate = useNavigate()
-  const { pathname } = useLocation()
+  const { pathname, search } = useLocation()
+  const searchParams = new URLSearchParams(search)
+  const tabParam = Number(searchParams.get('tab')) || SHARING_TAB_ALL
   const { t, lang } = useI18n()
   const { isMobile } = useBreakpoints()
   const client = useClient()
@@ -74,7 +76,7 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
   useHead()
   const { showAlert } = useAlert()
 
-  const [tab, setTab] = useState(SHARING_TAB_ALL)
+  const [tab, setTab] = useState(tabParam)
 
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
     isMobile,
