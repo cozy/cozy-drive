@@ -37,14 +37,15 @@ export const getEncryptionKeyFromDirId = async (client, dirId) => {
 export const createEncryptedDir = async (
   client,
   vaultClient,
-  { name, dirID }
+  { name, dirID, driveId }
 ) => {
-  // Create the directory
-  const { data: dir } = await client.create(DOCTYPE_FILES, {
-    name,
-    dirId: dirID,
-    type: 'directory'
-  })
+  const { data: dir } = await client
+    .collection(DOCTYPE_FILES, { driveId })
+    .create({
+      name,
+      dirId: dirID,
+      type: 'directory'
+    })
 
   // Create the encryption key
   const docId = `${DOCTYPE_FILES}/${dir._id}`
@@ -64,12 +65,12 @@ export const createEncryptedDir = async (
 export const encryptAndUploadNewFile = async (
   client,
   vaultClient,
-  { file, encryptionKey, fileOptions }
+  { file, encryptionKey, fileOptions, driveId }
 ) => {
   const { name, dirID, onUploadProgress } = fileOptions
   const encryptedFile = await vaultClient.encryptFile(file, encryptionKey)
   const resp = await client
-    .collection(DOCTYPE_FILES)
+    .collection(DOCTYPE_FILES, { driveId })
     .createFile(encryptedFile, {
       name,
       dirId: dirID,

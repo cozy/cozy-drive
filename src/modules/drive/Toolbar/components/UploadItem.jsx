@@ -17,7 +17,14 @@ import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 import { useDisplayedFolder } from '@/hooks'
 import { uploadFiles } from '@/modules/navigation/duck'
 
-const UploadItem = ({ t, isDisabled, onUpload, onClick, isReadOnly }) => {
+const UploadItem = ({
+  t,
+  isDisabled,
+  onUpload,
+  onClick,
+  isReadOnly,
+  displayedFolder
+}) => {
   const client = useClient()
   const vaultClient = useVaultClient()
   const { showAlert } = useAlert()
@@ -43,7 +50,14 @@ const UploadItem = ({ t, isDisabled, onUpload, onClick, isReadOnly }) => {
   const handleChange = files => {
     if (isReadOnly || !files || files.length === 0) return
 
-    onUpload(client, vaultClient, files, initialDirId, showAlert)
+    onUpload(
+      client,
+      vaultClient,
+      files,
+      initialDirId,
+      showAlert,
+      displayedFolder?.driveId
+    )
     onClick()
   }
 
@@ -67,14 +81,21 @@ const UploadItem = ({ t, isDisabled, onUpload, onClick, isReadOnly }) => {
 }
 
 const mapDispatchToProps = (dispatch, { sharingState, onUploaded, t }) => ({
-  onUpload: (client, vaultClient, files, initialDirId, showAlert) => {
+  onUpload: (client, vaultClient, files, initialDirId, showAlert, driveId) => {
     dispatch(
-      uploadFiles(files, initialDirId, sharingState, onUploaded, {
-        client,
-        vaultClient,
-        showAlert,
-        t
-      })
+      uploadFiles(
+        files,
+        initialDirId,
+        sharingState,
+        onUploaded,
+        {
+          client,
+          vaultClient,
+          showAlert,
+          t
+        },
+        driveId
+      )
     )
   }
 })
