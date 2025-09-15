@@ -40,6 +40,7 @@ import {
 } from '@/modules/actions'
 import { addToFavorites } from '@/modules/actions/components/addToFavorites'
 import { removeFromFavorites } from '@/modules/actions/components/removeFromFavorites'
+import { moveTo } from '@/modules/actions/components/moveTo'
 import { MobileAwareBreadcrumb as Breadcrumb } from '@/modules/breadcrumb/components/MobileAwareBreadcrumb'
 import { makeExtraColumnsNamesFromMedia } from '@/modules/certifications'
 import { useExtraColumns } from '@/modules/certifications/useExtraColumns'
@@ -194,6 +195,7 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
       download,
       hr,
       rename,
+      moveTo,
       addToFavorites,
       removeFromFavorites,
       infos,
