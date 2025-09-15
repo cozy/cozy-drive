@@ -295,11 +295,11 @@ describe('computePath', () => {
     )
   })
 
-  it('should throw error for shared-drive without driveId', () => {
+  it('should return correct for shared-drive in case user is owner', () => {
     const file = { _id: 'file123' }
-    expect(() =>
-      computePath(file, { type: 'shared-drive', pathname: '/any' })
-    ).toThrow('Missing driveId in a shared drive')
+    expect(computePath(file, { type: 'shared-drive', pathname: '/any' })).toBe(
+      '/folder/file123'
+    )
   })
 
   it('should return correct path for default case', () => {

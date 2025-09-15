@@ -26,7 +26,18 @@ const useSharedDriveLink = (sharing: SharedDrive): UseFileLinkResult => {
   const cozyUrl = client?.getStackClient().uri as string
 
   const app = 'drive'
-  const path = `shareddrive/${sharing._id}/${sharing.rules[0].values[0]}`
+
+  if (!sharing.rules[0].values[0]) {
+    throw new Error('Missing folder id in shared drive')
+  }
+
+  /** Set shared drive path
+   * if user is owner of this shared drive, the path should be `folder/:folderId`
+   * otherwise the path should be `shareddrive/:driveId/:folderId`
+   */
+  const path = sharing.owner
+    ? `folder/${sharing.rules[0].values[0]}`
+    : `shareddrive/${sharing._id}/${sharing.rules[0].values[0]}`
 
   const currentURL = new URL(window.location.href)
   const currentPathname = currentURL.pathname

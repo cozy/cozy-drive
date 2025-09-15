@@ -5902,14 +5902,14 @@ cozy-ui@^128.8.0:
     react-virtuoso "^4.13.0"
     rooks "7.14.1"
 
-cozy-viewer@^23.3.0:
-  version "23.3.0"
-  resolved "https://registry.yarnpkg.com/cozy-viewer/-/cozy-viewer-23.3.0.tgz#be4483a3723514ccfce0ff1e8f30322bc2c5eaa9"
-  integrity sha512-X3r7MWgE8LqfB6O0V0scO/w+wxNR/LlgqJh8E/7xC3DFuYe124AawmnWLk5yezaK3gcguJhn0lQR3Ntcz4Xg0w==
+cozy-viewer@^23.4.2:
+  version "23.4.2"
+  resolved "https://registry.yarnpkg.com/cozy-viewer/-/cozy-viewer-23.4.2.tgz#1371751c9974d3414f499f67b2e71da9417cbd50"
+  integrity sha512-NrhVWAgwu9T2Xx8NFvxjVSneFcsk90HOYwntgA/ceCef9duZkesH2AiD93QwQWpzO2ngtSv9lj9KRdZcupz6oA==
   dependencies:
-    classnames "^2.2.5"
+    classnames "^2.5.1"
     hammerjs "^2.0.8"
-    lodash "4.17.21"
+    lodash "^4.17.21"
     react-markdown "^4.0.8"
     react-pdf "^5.7.2"
 

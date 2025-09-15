@@ -68,7 +68,7 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
   const { pushModal, popModal } = useModalContext()
   const { isSelectionBarVisible, toggleSelectAllItems, isSelectAll } =
     useSelectionContext()
-  const { allLoaded, refresh } = useSharingContext()
+  const { allLoaded, refresh, isOwner } = useSharingContext()
   const { isNativeFileSharingAvailable, shareFilesNative } =
     useNativeFileSharing()
   const { sharedDrives } = useSharedDrives()
@@ -114,31 +114,34 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
      *   and opened consistently.
      */
     const transformedSharedDrives = (sharedDrives || []).map(sharing => {
-      const rootFolderId = sharing.rules?.[0]?.values?.[0]
-      const driveName = sharing.rules?.[0]?.title
+      const [rootFolderId, driveName] = [
+        sharing.rules?.[0]?.values?.[0],
+        sharing.rules?.[0]?.title
+      ]
 
       // Find the file from sharing section that has same `driveId` then override it into directory-like objects
-      const fileInSharingSection = result.data?.find(item => {
-        const driveId = item.relationships?.referenced_by?.data?.[0]?.id
-        return driveId === sharing.id
-      })
+      const fileInSharingSection = result.data?.find(
+        item => item.relationships?.referenced_by?.data?.[0]?.id === sharing.id
+      )
+
+      if (fileInSharingSection && isOwner(fileInSharingSection?.id))
+        return fileInSharingSection
+
+      const directoryData = {
+        type: 'directory',
+        name: driveName,
+        dir_id: SHARED_DRIVES_DIR_ID,
+        driveId: sharing.id
+      }
 
       return {
         ...fileInSharingSection,
         _id: rootFolderId,
         id: SHARED_DRIVES_DIR_ID,
         _type: 'io.cozy.files',
-        type: 'directory',
-        name: driveName,
         path: `/Drives/${driveName}`,
-        dir_id: SHARED_DRIVES_DIR_ID,
-        driveId: sharing.id,
-        attributes: {
-          type: 'directory',
-          name: driveName,
-          dir_id: SHARED_DRIVES_DIR_ID,
-          driveId: sharing.id
-        }
+        ...directoryData,
+        attributes: directoryData
       }
     })
 
@@ -159,7 +162,7 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
       data: combinedData,
       count: combinedData.length
     }
-  }, [result, tab, sharedDrives])
+  }, [sharedDrives, result, tab, isOwner])
 
   const actionsOptions = {
     client,
