@@ -5065,7 +5065,7 @@ classnames@2.3.1, classnames@^2.2.5, classnames@^2.2.6:
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.1.tgz#dfcfa3891e306ec1dad105d0e88f4417b8535e8e"
   integrity sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==
 
-classnames@2.5.1:
+classnames@2.5.1, classnames@^2.5.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.5.1.tgz#ba774c614be0f016da105c858e7159eae8e7687b"
   integrity sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==
@@ -5554,12 +5554,10 @@ cozy-device-helper@^3.7.1:
   dependencies:
     lodash "^4.17.19"
 
-cozy-device-helper@^3.8.0:
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-3.8.0.tgz#89b2947198c39b3b57dc6c6273243045eb470b40"
-  integrity sha512-c//90YvZ5uIxhyWJy/9g8XTHVsST5eW4Nsd6+BXg9LJ/YVt3RO2HMjd1Afxvbg1fOcRMr5y1nkiLoFhTeiM35Q==
-  dependencies:
-    lodash "^4.17.19"
+cozy-device-helper@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/cozy-device-helper/-/cozy-device-helper-4.0.0.tgz#690bcbf5f5720a90c8d71465aa43e584948ec204"
+  integrity sha512-vxNZqFtnBizvtP8EreOZzzOdaVd/fo+0f5/FqSeyFNz/epiiGtwW/1OZ0A8h06Q0wNesnhwDB/kZ9qvhay0/DA==
 
 cozy-devtools@^1.2.1:
   version "1.2.1"
@@ -5601,6 +5599,17 @@ cozy-doctypes@^1.97.2:
     date-fns "^1.30.1"
     es6-promise-pool "^2.5.0"
     lodash "^4.17.19"
+    prop-types "^15.7.2"
+
+cozy-doctypes@^1.98.0:
+  version "1.98.0"
+  resolved "https://registry.yarnpkg.com/cozy-doctypes/-/cozy-doctypes-1.98.0.tgz#104015cf8775fe5c265d330eaf53b9e8a0aa1450"
+  integrity sha512-lDRq2vzAtp6M/O8td3+XKZYvMMy0t4A2LJDoP/ov55B9mIT9PHzxXEttxJT5v7U1oLF/z6tXzgNviC7S0qdKlQ==
+  dependencies:
+    cozy-logger "^1.17.0"
+    date-fns "^1.30.1"
+    es6-promise-pool "^2.5.0"
+    lodash "^4.17.21"
     prop-types "^15.7.2"
 
 cozy-flags@^2.8.7:
@@ -5809,17 +5818,17 @@ cozy-search@^0.8.3:
     react-type-animation "3.2.0"
     rooks "7.14.1"
 
-cozy-sharing@^25.7.2:
-  version "25.7.2"
-  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-25.7.2.tgz#8ac07591434cbe5da1669186f4519e06e235add4"
-  integrity sha512-3Zs7ceX2PZG92gLFdnjhSDg6JAMy7RrrCBsDnwiRkedGh7LGV91DtUzCwxN7EJweYVao24AqiX7G67VxFhP62w==
+cozy-sharing@^26.1.1:
+  version "26.1.1"
+  resolved "https://registry.yarnpkg.com/cozy-sharing/-/cozy-sharing-26.1.1.tgz#a0015e13596e82d5d862a452e7f16a43c418311b"
+  integrity sha512-Ar1wtQ7oP2GJGioCQlpYt0C8Cz7Xjx7fNMDAAl64Cr/iwiFSaC/3oa0XOkxUiD8k9ki2PVQ8ie+KbGrg2lelTA==
   dependencies:
     "@cozy/minilog" "^1.0.0"
-    classnames "^2.2.6"
-    cozy-device-helper "^3.8.0"
-    cozy-doctypes "^1.97.2"
+    classnames "^2.5.1"
+    cozy-device-helper "^4.0.0"
+    cozy-doctypes "^1.98.0"
     date-fns "2.30.0"
-    lodash "^4.17.19"
+    lodash "^4.17.21"
     react-autosuggest "^10.1.0"
     react-tooltip "^3.11.1"
     snarkdown "^2.0.0"
