@@ -159,6 +159,7 @@ const AppRoute = () => (
         <Route path="file/:fileId/share" element={<ShareFileView />} />
         <Route path="file/:fileId/qualify" element={<QualifyFileView />} />
         <Route path="share" element={<ShareDisplayedFolderView />} />
+        <Route path="move" element={<MoveFilesView />} />
       </Route>
 
       <Route
@@ -199,6 +200,7 @@ const AppRoute = () => (
           <Route path="file/:fileId/qualify" element={<QualifyFileView />} />
           <Route path="share" element={<ShareDisplayedFolderView />} />
         </Route>
+        <Route path="move" element={<MoveFilesView />} />
       </Route>
 
       <Route path="onlyoffice/:fileId" element={<OnlyOfficeView />}>

@@ -33,6 +33,7 @@ import {
   selectAllItems
 } from '@/modules/actions'
 import { addToFavorites } from '@/modules/actions/components/addToFavorites'
+import { moveTo } from '@/modules/actions/components/moveTo'
 import { removeFromFavorites } from '@/modules/actions/components/removeFromFavorites'
 import { MobileAwareBreadcrumb as Breadcrumb } from '@/modules/breadcrumb/components/MobileAwareBreadcrumb'
 import { makeExtraColumnsNamesFromMedia } from '@/modules/certifications'
@@ -111,6 +112,7 @@ export const RecentView = () => {
       download,
       hr,
       rename,
+      moveTo,
       addToFavorites,
       removeFromFavorites,
       infos,

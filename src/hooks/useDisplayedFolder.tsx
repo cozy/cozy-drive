@@ -3,6 +3,7 @@ import { IOCozyFile } from 'cozy-client/types/types'
 
 import useCurrentFolderId from '@/hooks/useCurrentFolderId'
 import { buildFileOrFolderByIdQuery } from '@/queries'
+import { ROOT_DIR_ID } from '@/constants/config'
 
 interface DisplayedFolderResult {
   isNotFound: boolean
@@ -11,7 +12,7 @@ interface DisplayedFolderResult {
 }
 
 const useDisplayedFolder = (): DisplayedFolderResult => {
-  const folderId = useCurrentFolderId()
+  const folderId = useCurrentFolderId() ?? ROOT_DIR_ID
 
   const folderQuery = buildFileOrFolderByIdQuery(folderId)
   const folderResult = useQuery(
