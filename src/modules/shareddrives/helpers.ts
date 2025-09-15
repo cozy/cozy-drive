@@ -4,6 +4,7 @@ import type { File, FolderPickerEntry } from '@/components/FolderPicker/types'
 export interface SharedDrive {
   _id: string
   rules: Rule[]
+  owner?: boolean
 }
 
 export interface Rule {

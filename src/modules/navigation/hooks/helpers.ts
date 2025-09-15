@@ -130,8 +130,9 @@ export const computePath = (
         fromPublicFolder: isPublic
       })
     case 'shared-drive':
+      // Without driveId, we should use path `/folder/:folderId` because it's shared drive folder of owner
       if (!driveId) {
-        throw new Error('Missing driveId in a shared drive')
+        return `/folder/${file._id}`
       }
 
       return `/shareddrive/${driveId}/${file._id}`
