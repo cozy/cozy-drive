@@ -70,6 +70,7 @@ export const isOfficeEditingEnabled = isDesktop => {
 
 /**
  * @typedef {Object} OnlyOfficeFileRouteOptions
+ * @property {string} [driveId]
  * @property {boolean} [fromCreate] The document will be opened in edit mode
  * @property {string} [fromPathname] Hash to redirect the user when he back
  * @property {string} [fromRedirect] To forward existing redirectLink
@@ -87,6 +88,7 @@ export const isOfficeEditingEnabled = isDesktop => {
 export const makeOnlyOfficeFileRoute = (
   fileId,
   {
+    driveId,
     fromCreate = false,
     fromPathname,
     fromRedirect,
@@ -112,6 +114,11 @@ export const makeOnlyOfficeFileRoute = (
   }
 
   const searchParam = params.size > 0 ? `?${params.toString()}` : ''
+
+  if (driveId) {
+    return `/onlyoffice/${driveId}/${fileId}${searchParam}`
+  }
+
   return `/onlyoffice/${fileId}${searchParam}`
 }
 

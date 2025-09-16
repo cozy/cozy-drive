@@ -126,6 +126,7 @@ export const computePath = (
       return paths.length === 1 ? file._id : `../${file._id}`
     case 'onlyoffice':
       return makeOnlyOfficeFileRoute(file._id, {
+        driveId,
         fromPathname: pathname,
         fromPublicFolder: isPublic
       })

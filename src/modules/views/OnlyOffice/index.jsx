@@ -14,13 +14,14 @@ const OnlyOffice = ({
   username,
   isInSharedFolder
 }) => {
-  const { fileId } = useParams()
+  const { fileId, driveId } = useParams()
   useHead()
 
   return (
     <Dialog open={true} fullScreen transitionDuration={0}>
       <OnlyOfficeProvider
         fileId={fileId}
+        driveId={driveId}
         isPublic={isPublic}
         isReadOnly={isReadOnly}
         isFromSharing={isFromSharing}
