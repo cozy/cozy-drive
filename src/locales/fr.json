@@ -69,7 +69,9 @@
       "slide": "Présentation"
     },
     "select_all": "Tout sélectionner",
+    "select_all_mobile": "Tout",
     "clear_selection": "Effacer la sélection",
+    "clear_selection_mobile": "Annuler",
     "sharings_tab_all": "Tout",
     "sharings_tab_drives": "Lecteurs"
   },
