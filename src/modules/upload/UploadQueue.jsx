@@ -11,14 +11,18 @@ import {
   purgeUploadQueue
 } from '.'
 
-import getMimeTypeIcon from '@/lib/getMimeTypeIcon'
 import { DEFAULT_UPLOAD_PROGRESS_HIDE_DELAY } from '@/constants/config'
+import getMimeTypeIcon from '@/lib/getMimeTypeIcon'
 
 export const DumbUploadQueue = translate()(props => {
   const { successCount, purgeQueue, queue, doneCount } = props
 
   useEffect(() => {
-    if (successCount == doneCount && successCount === queue?.length) {
+    const hasItems = (queue?.length ?? 0) > 0
+    const allDone =
+      successCount === doneCount && successCount === (queue?.length ?? 0)
+
+    if (hasItems && allDone) {
       const timer = setTimeout(() => {
         purgeQueue()
       }, DEFAULT_UPLOAD_PROGRESS_HIDE_DELAY)
