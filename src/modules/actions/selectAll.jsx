@@ -23,10 +23,9 @@ const makeComponent = (label, icon) => {
   return Component
 }
 
-export const selectAllItems = ({ t, selectAll, isSelectAll }) => {
-  const label = isSelectAll
-    ? t('toolbar.clear_selection')
-    : t('toolbar.select_all')
+export const selectAllItems = ({ t, selectAll, isSelectAll, isMobile }) => {
+  const baseKey = isSelectAll ? 'clear_selection' : 'select_all'
+  const label = t(`toolbar.${baseKey}${isMobile ? '_mobile' : ''}`)
   const icon = isSelectAll ? CheckSquareIcon : CheckboxIcon
 
   return {

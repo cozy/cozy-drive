@@ -69,7 +69,9 @@
       "slide": "Presentation"
     },
     "select_all": "Select all",
+    "select_all_mobile": "all",
     "clear_selection": "Clear Selection",
+    "clear_selection_mobile": "Clear",
     "sharings_tab_all": "All",
     "sharings_tab_drives": "Drives"
   },
