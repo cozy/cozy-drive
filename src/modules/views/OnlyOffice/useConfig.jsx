@@ -15,6 +15,7 @@ import {
 const useConfig = () => {
   const {
     fileId,
+    driveId,
     setIsEditorReady,
     isPublic,
     username,
@@ -30,7 +31,12 @@ const useConfig = () => {
   const [config, setConfig] = useState()
   const [status, setStatus] = useState('loading')
 
-  const queryResult = useFetchJSON('GET', `/office/${fileId}/open`)
+  const queryResult = useFetchJSON(
+    'GET',
+    driveId
+      ? `/sharings/drives/${driveId}/office/${fileId}/open`
+      : `/office/${fileId}/open`
+  )
   const { data, fetchStatus } = queryResult
   const { isDesktop } = useBreakpoints()
 

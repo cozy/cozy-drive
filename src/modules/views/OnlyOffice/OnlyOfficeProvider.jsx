@@ -18,6 +18,7 @@ const OnlyOfficeContext = createContext()
 
 const OnlyOfficeProvider = ({
   fileId,
+  driveId,
   isPublic,
   isReadOnly,
   isFromSharing,
@@ -106,6 +107,7 @@ const OnlyOfficeProvider = ({
     <OnlyOfficeContext.Provider
       value={{
         fileId,
+        driveId,
         hasFileDiverged,
         setFileDiverged,
         hasFileDeleted,

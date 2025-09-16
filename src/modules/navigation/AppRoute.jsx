@@ -204,6 +204,9 @@ const AppRoute = () => (
       <Route path="onlyoffice/:fileId" element={<OnlyOfficeView />}>
         <Route path="paywall" element={<OnlyOfficePaywallView />} />
       </Route>
+      <Route path="onlyoffice/:driveId/:fileId" element={<OnlyOfficeView />}>
+        <Route path="paywall" element={<OnlyOfficePaywallView />} />
+      </Route>
 
       <Route
         path="onlyoffice/create/:folderId/:fileClass"
