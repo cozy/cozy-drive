@@ -176,3 +176,23 @@ declare module '*.styl' {
   const content: Record<string, string>
   export default content
 }
+
+declare module 'cozy-realtime' {
+  export default class CozyRealtime {
+    constructor(options: {
+      client: import('cozy-client').default
+      sharedDriveId?: string
+    })
+    subscribe: (
+      event: string,
+      doctype: string,
+      callback: () => void | Promise<void>
+    ) => void
+    unsubscribe: (
+      event: string,
+      doctype: string,
+      callback: () => void | Promise<void>
+    ) => void
+    stop: () => void
+  }
+}

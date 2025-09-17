@@ -1,7 +1,9 @@
+import debounce from 'lodash/debounce'
 import { useState, useEffect, useMemo } from 'react'
 
 import { useClient } from 'cozy-client'
 import { IOCozyFile } from 'cozy-client/types/types'
+import CozyRealtime from 'cozy-realtime'
 
 import { buildSharedDriveFolderQuery, QueryConfig } from '@/queries'
 
@@ -65,7 +67,26 @@ const useSharedDriveFolder = ({
     if (client) {
       void fetchSharedDriveFolder()
     }
-  }, [client, sharedDriveQuery])
+
+    const debouncedFetch = debounce(() => {
+      void fetchSharedDriveFolder()
+    }, 500)
+
+    let realtime: CozyRealtime | undefined
+    if (client) {
+      realtime = new CozyRealtime({ client, sharedDriveId: driveId })
+      realtime.subscribe('updated', 'io.cozy.files', debouncedFetch)
+      realtime.subscribe('created', 'io.cozy.files', debouncedFetch)
+      realtime.subscribe('deleted', 'io.cozy.files', debouncedFetch)
+    }
+
+    return () => {
+      if (realtime) {
+        realtime.stop()
+      }
+      debouncedFetch.cancel()
+    }
+  }, [client, driveId, sharedDriveQuery])
 
   return {
     sharedDriveQuery,
