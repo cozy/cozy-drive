@@ -2,6 +2,7 @@ import React from 'react'
 
 import { FolderPickerContentCozy } from '@/components/FolderPicker/FolderPickerContentCozy'
 import { FolderPickerContentNextcloud } from '@/components/FolderPicker/FolderPickerContentNextcloud'
+import { FolderPickerContentSharedDrive } from '@/components/FolderPicker/FolderPickerContentSharedDrive'
 import { File, FolderPickerEntry } from '@/components/FolderPicker/types'
 
 interface FolderPickerBodyProps {
@@ -11,6 +12,7 @@ interface FolderPickerBodyProps {
   isFolderCreationDisplayed: boolean
   hideFolderCreation: () => void
   showNextcloudFolder?: boolean
+  showSharedDriveFolder?: boolean
 }
 
 const FolderPickerBody: React.FC<FolderPickerBodyProps> = ({
@@ -19,12 +21,25 @@ const FolderPickerBody: React.FC<FolderPickerBodyProps> = ({
   navigateTo,
   isFolderCreationDisplayed,
   hideFolderCreation,
-  showNextcloudFolder
+  showNextcloudFolder,
+  showSharedDriveFolder
 }) => {
   if (folder._type === 'io.cozy.remote.nextcloud.files') {
     return (
       <FolderPickerContentNextcloud
         folder={folder}
+        entries={entries}
+        navigateTo={navigateTo}
+      />
+    )
+  }
+
+  if (folder.driveId) {
+    return (
+      <FolderPickerContentSharedDrive
+        folder={folder}
+        isFolderCreationDisplayed={isFolderCreationDisplayed}
+        hideFolderCreation={hideFolderCreation}
         entries={entries}
         navigateTo={navigateTo}
       />
@@ -39,6 +54,7 @@ const FolderPickerBody: React.FC<FolderPickerBodyProps> = ({
       entries={entries}
       navigateTo={navigateTo}
       showNextcloudFolder={showNextcloudFolder}
+      showSharedDriveFolder={showSharedDriveFolder}
     />
   )
 }

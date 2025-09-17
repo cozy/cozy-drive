@@ -26,7 +26,9 @@ const MoveModal = ({
   onClose,
   currentFolder,
   entries,
-  showNextcloudFolder
+  showNextcloudFolder,
+  showSharedDriveFolder,
+  driveId
 }) => {
   const client = useClient()
   const {
@@ -99,7 +101,8 @@ const MoveModal = ({
           const force = !sharedPaths.includes(folder.path)
           const moveResponse = await registerCancelable(
             move(client, entry, folder, {
-              force
+              force,
+              driveId: driveId ?? folder.driveId
             })
           )
           if (moveResponse.deleted) {
@@ -207,6 +210,7 @@ const MoveModal = ({
     <>
       <FolderPicker
         showNextcloudFolder={showNextcloudFolder}
+        showSharedDriveFolder={showSharedDriveFolder}
         currentFolder={currentFolder}
         entries={entries}
         onConfirm={handleConfirm}

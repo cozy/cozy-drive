@@ -14,6 +14,7 @@ interface SharedDriveFolderReturn {
   sharedDriveQuery: QueryConfig
   sharedDriveResult: {
     data?: IOCozyFile[] | null
+    included?: IOCozyFile[] | null
   }
 }
 

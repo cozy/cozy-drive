@@ -11,6 +11,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { download, infos, versions, hr } from '@/modules/actions'
 import { duplicateTo } from '@/modules/actions/components/duplicateTo'
+import { moveTo } from '@/modules/actions/components/moveTo'
 import { FolderBody } from '@/modules/folder/components/FolderBody'
 
 const SharedDriveFolderBody = ({
@@ -36,11 +37,12 @@ const SharedDriveFolderBody = ({
     isOwner,
     isMobile,
     driveId,
+    canMove: true,
     navigate,
     showAlert
   }
   const actions = makeActions(
-    [download, hr, duplicateTo, infos, hr, versions, hr],
+    [download, hr, moveTo, duplicateTo, infos, hr, versions, hr],
     actionsOptions
   )
 

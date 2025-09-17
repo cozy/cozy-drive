@@ -40,6 +40,7 @@ const MoveFilesView = () => {
         entries={fileResult.data}
         onClose={onClose}
         showNextcloudFolder={showNextcloudFolder}
+        showSharedDriveFolder={true}
       />
     )
   }

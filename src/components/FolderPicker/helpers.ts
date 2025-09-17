@@ -5,7 +5,8 @@ import { FolderPickerEntry, File } from '@/components/FolderPicker/types'
 import { getParentPath } from '@/lib/path'
 import {
   buildFileOrFolderByIdQuery,
-  buildNextcloudFolderQuery
+  buildNextcloudFolderQuery,
+  buildSharedDriveFileOrFolderByIdQuery
 } from '@/queries'
 
 /**
@@ -60,9 +61,12 @@ export const areTargetsInCurrentDir = (
  */
 const getCozyParentFolder = async (
   client: CozyClient | null,
-  id: string
+  id: string,
+  driveId?: string
 ): Promise<IOCozyFile> => {
-  const parentFolderQuery = buildFileOrFolderByIdQuery(id)
+  const parentFolderQuery = driveId
+    ? buildSharedDriveFileOrFolderByIdQuery({ fileId: id, driveId })
+    : buildFileOrFolderByIdQuery(id)
   const parentFolder = (await client?.fetchQueryAndGetFromState({
     definition: parentFolderQuery.definition(),
     options: parentFolderQuery.options
@@ -171,5 +175,7 @@ export const getParentFolder = async (
     }
   }
 
-  return await getCozyParentFolder(client, folder.dir_id)
+  const driveId =
+    folder.dir_id === 'io.cozy.files.shared-drives-dir' ? '' : folder.driveId
+  return await getCozyParentFolder(client, folder.dir_id, driveId)
 }

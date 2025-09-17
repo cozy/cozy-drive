@@ -40,7 +40,6 @@ const FolderPickerFooter: React.FC<FolderPickerFooterProps> = ({
 
   const isDisabled =
     isBusy ||
-    folder._id === 'io.cozy.files.shared-drives-dir' ||
     (!canPickEntriesParentFolder && areTargetsInCurrentDir(entries, folder))
 
   return (
