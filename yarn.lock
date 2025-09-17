@@ -5505,10 +5505,10 @@ cozy-client@^57.7.0:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
-cozy-client@^60.6.0:
-  version "60.6.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-60.6.0.tgz#dc7d23de9aee1412c70020af406fd9a10af96bbc"
-  integrity sha512-yPg79OJuYm1uVOgIm6hYj8ef2TUCGxVQ2E5RM0VwvsW6ZzfcYunln2enJzv8KJW2r4lsPSnBoF4yBCiUTToIpg==
+cozy-client@^60.7.0:
+  version "60.7.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-60.7.0.tgz#ddb77b7121d88d56e8ce67d00a2d206b058e0b10"
+  integrity sha512-m4NR6xT03X4nAHy0cCtXxg0Y81tqty4ZUddIRnGAM792sUc6Bo06ShT2umSUzL+XT+hyeGDNHtzSV/lrfe0O1g==
   dependencies:
     "@cozy/minilog" "1.0.0"
     "@fastify/deepmerge" "^2.0.2"
@@ -5516,7 +5516,7 @@ cozy-client@^60.6.0:
     "@types/lodash" "^4.14.170"
     btoa "^1.2.1"
     cozy-stack-client "^60.6.0"
-    date-fns "2.29.3"
+    date-fns "^2.30.0"
     fast-deep-equal "^3.1.3"
     json-stable-stringify "^1.0.1"
     lodash "^4.17.13"
@@ -6158,7 +6158,7 @@ date-fns@2.29.3:
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.29.3.tgz#27402d2fc67eb442b511b70bbdf98e6411cd68a8"
   integrity sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==
 
-date-fns@2.30.0, date-fns@^2.22.1:
+date-fns@2.30.0, date-fns@^2.22.1, date-fns@^2.30.0:
   version "2.30.0"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.30.0.tgz#f367e644839ff57894ec6ac480de40cae4b0f4d0"
   integrity sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==

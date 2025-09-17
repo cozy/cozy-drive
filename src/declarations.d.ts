@@ -75,7 +75,12 @@ declare module 'cozy-client/dist/models/file' {
   export const copy: (
     client: import('cozy-client/types/CozyClient').CozyClient,
     file: Partial<import('components/FolderPicker/types').File>,
-    destination: import('components/FolderPicker/types').File
+    destination: import('components/FolderPicker/types').File,
+    {
+      driveId
+    }?: {
+      driveId: string
+    }
   ) => Promise<void>
   export const isDirectory: (
     file: import('components/FolderPicker/types').File

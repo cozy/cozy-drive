@@ -18,13 +18,15 @@ interface DuplicateModalProps {
   currentFolder: File
   onClose: () => void | Promise<void>
   showNextcloudFolder?: boolean
+  driveId?: string
 }
 
 const DuplicateModal: FC<DuplicateModalProps> = ({
   entries,
   currentFolder,
   onClose,
-  showNextcloudFolder
+  showNextcloudFolder,
+  driveId
 }) => {
   const { t } = useI18n()
   const { showAlert } = useAlert()
@@ -39,7 +41,11 @@ const DuplicateModal: FC<DuplicateModalProps> = ({
       setBusy(true)
       await Promise.all(
         entries.map(async entry => {
-          await registerCancelable(copy(client, entry as Partial<File>, folder))
+          await registerCancelable(
+            copy(client, entry as Partial<File>, folder, {
+              driveId: driveId ?? ''
+            })
+          )
         })
       )
 
