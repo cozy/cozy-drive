@@ -29,7 +29,7 @@ const SharedDriveListItem: FC<SharedDriveListItemProps> = ({
       >
         <NavIcon icon={FileTypeServerIcon} />
         <Typography variant="inherit" color="inherit" noWrap>
-          {sharedDrive.rules[0].title}
+          {sharedDrive.description}
         </Typography>
       </FileLink>
     </NavItem>

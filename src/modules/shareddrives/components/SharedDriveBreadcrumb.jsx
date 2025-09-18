@@ -34,7 +34,7 @@ const SharedDriveBreadcrumb = ({ driveId }) => {
           id: SHARED_DRIVES_DIR_ID,
           name: t('breadcrumb.title_shared_drives')
         },
-        { id: driveId, name: sharedDrive?.rules[0]?.title }
+        { id: driveId, name: sharedDrive?.description }
       ]}
       onBreadcrumbClick={handleBreadcrumbClick}
       opening={false}

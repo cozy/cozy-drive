@@ -3,6 +3,7 @@ import type { File, FolderPickerEntry } from '@/components/FolderPicker/types'
 // Temporary type, need to be completed and then put in cozy-client
 export interface SharedDrive {
   _id: string
+  description: string
   rules: Rule[]
   owner?: boolean
 }
