@@ -10,6 +10,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { download, infos, versions, hr } from '@/modules/actions'
+import { moveTo } from '@/modules/actions/components/moveTo'
 import { FolderBody } from '@/modules/folder/components/FolderBody'
 
 const SharedDriveFolderBody = ({
@@ -35,11 +36,12 @@ const SharedDriveFolderBody = ({
     isOwner,
     isMobile,
     driveId,
+    canMove: true,
     navigate,
     showAlert
   }
   const actions = makeActions(
-    [download, hr, infos, hr, versions, hr],
+    [download, hr, moveTo, infos, hr, versions, hr],
     actionsOptions
   )
 
