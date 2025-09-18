@@ -11,11 +11,12 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import { useSelectionContext } from '../selection/SelectionProvider'
+
 import { DOCTYPE_ALBUMS } from '@/lib/doctypes'
 import { getEntriesTypeTranslated } from '@/lib/entries'
 import { trashFiles } from '@/modules/actions/utils'
 import { buildAlbumByIdQuery } from '@/queries'
-import { useSelectionContext } from '../selection/SelectionProvider'
 
 const Message = ({ type, fileCount }) => {
   const icon =
@@ -40,7 +41,8 @@ export const DeleteConfirm = ({
   files,
   afterConfirmation,
   onClose,
-  children
+  children,
+  driveId
 }) => {
   const { t } = useI18n()
   const { showAlert } = useAlert()
@@ -84,7 +86,7 @@ export const DeleteConfirm = ({
 
   const onDelete = useCallback(async () => {
     setDeleting(true)
-    await trashFiles(client, files, { showAlert, t })
+    await trashFiles(client, files, { showAlert, t, driveId })
     afterConfirmation()
     setSelectedItems(prevSelectedItems => {
       const fileIdsToRemove = files.map(file => file.id)
@@ -102,7 +104,8 @@ export const DeleteConfirm = ({
     onClose,
     showAlert,
     t,
-    setSelectedItems
+    setSelectedItems,
+    driveId
   ])
 
   const entriesType = getEntriesTypeTranslated(t, files)

@@ -40,7 +40,8 @@ export const trash = ({
   hasWriteAccess,
   refresh,
   byDocId,
-  isOwner
+  isOwner,
+  driveId
 }) => {
   const icon = TrashIcon
 
@@ -54,6 +55,7 @@ export const trash = ({
           files={files}
           afterConfirmation={refresh}
           onClose={popModal}
+          driveId={driveId}
         />
       )
     },
