@@ -93,14 +93,14 @@ const isAlreadyInTrash = err => {
  * @param {CozyClient} client
  * @param {array} files  One or more files to trash
  */
-export const trashFiles = async (client, files, { showAlert, t }) => {
+export const trashFiles = async (client, files, { showAlert, t, driveId }) => {
   try {
     for (const file of files) {
       // TODO we should not go through a FileCollection to destroy the file, but
       // only do client.destroy(), I do not know what it did not update the internal
       // store correctly when I tried
       const { data: updatedFile } = await client
-        .collection(DOCTYPE_FILES)
+        .collection(DOCTYPE_FILES, { driveId })
         .destroy(file)
       client.store.dispatch(
         receiveQueryResult(null, {

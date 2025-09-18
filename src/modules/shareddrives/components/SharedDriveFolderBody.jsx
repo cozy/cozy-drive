@@ -10,7 +10,8 @@ import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { download, infos, versions, rename, hr } from '@/modules/actions'
+import { useModalContext } from '@/lib/ModalContext'
+import { download, infos, versions, rename, trash, hr } from '@/modules/actions'
 import { FolderBody } from '@/modules/folder/components/FolderBody'
 
 const SharedDriveFolderBody = ({
@@ -24,10 +25,11 @@ const SharedDriveFolderBody = ({
   const vaultClient = useVaultClient()
   const { driveId } = useParams()
   const { t } = useI18n()
-  const { isOwner, hasWriteAccess } = useSharingContext()
+  const { isOwner, byDocId, hasWriteAccess, refresh } = useSharingContext()
   const { isMobile } = useBreakpoints()
   const { showAlert } = useAlert()
   const dispatch = useDispatch()
+  const { pushModal, popModal } = useModalContext()
 
   const canWriteToCurrentFolder = hasWriteAccess(folderId)
 
@@ -40,12 +42,16 @@ const SharedDriveFolderBody = ({
     isMobile,
     driveId,
     hasWriteAccess: canWriteToCurrentFolder,
+    byDocId,
     dispatch,
     navigate,
-    showAlert
+    showAlert,
+    pushModal,
+    popModal,
+    refresh
   }
   const actions = makeActions(
-    [download, hr, rename, infos, hr, versions, hr],
+    [download, hr, rename, infos, hr, versions, hr, trash],
     actionsOptions
   )
 
