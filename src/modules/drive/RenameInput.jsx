@@ -14,7 +14,7 @@ import FilenameInput from '@/modules/filelist/FilenameInput'
 // If we set the _rev then CozyClient tries to update. Else
 // it tries to create
 const updateFileNameQuery = async (client, file, newName) => {
-  return client.save({
+  return client.collection('io.cozy.files', { driveId: file.driveId }).update({
     ...file,
     name: newName,
     _rev: file._rev || file.meta.rev

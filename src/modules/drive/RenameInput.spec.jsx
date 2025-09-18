@@ -22,14 +22,25 @@ describe('RenameInput', () => {
   let client
   let onAbort
   let file
+  let mockCollection
 
   beforeEach(() => {
     jest.resetAllMocks()
-    client = createMockClient({})
+    mockCollection = {
+      update: jest.fn()
+    }
+    client = {
+      ...createMockClient({}),
+      collection: jest.fn().mockReturnValue(mockCollection)
+    }
     onAbort = jest.fn()
+    // Default file without driveId for backward compatibility
     file = {
       ...generateFile({ i: '10', type: 'file' }),
-      meta: { rev: '1' }
+      meta: { rev: '1' },
+      _id: 'file123',
+      _type: 'io.cozy.files'
+      // No driveId by default for backward compatibility
     }
     useAlert.mockReturnValue({ showAlert })
   })
@@ -49,7 +60,9 @@ describe('RenameInput', () => {
     fireEvent.change(inputNode, { target: { value: 'new Name.pdf' } })
     expect(inputNode.value).toBe('new Name.pdf')
     fireEvent.keyDown(inputNode, { key: 'Enter', code: 'Enter', keyCode: 13 })
-    expect(client.save).toHaveBeenCalledWith(
+    // For backward compatibility, don't expect driveId in the collection call
+    expect(client.collection).toHaveBeenCalledWith('io.cozy.files', {})
+    expect(mockCollection.update).toHaveBeenCalledWith(
       expect.objectContaining({
         name: 'new Name.pdf',
         _rev: '1'
@@ -64,7 +77,9 @@ describe('RenameInput', () => {
     await waitFor(() => screen.getByRole('dialog'))
 
     fireEvent.click(getByText('Continue'))
-    expect(client.save).toHaveBeenCalledWith(
+    // For backward compatibility, don't expect driveId in the collection call
+    expect(client.collection).toHaveBeenCalledWith('io.cozy.files', {})
+    expect(mockCollection.update).toHaveBeenCalledWith(
       expect.objectContaining({
         name: 'new Name.txt',
         _rev: '1'
@@ -74,15 +89,52 @@ describe('RenameInput', () => {
   })
 
   it('works without meta rev', async () => {
-    setup({ file })
+    // Test with file that doesn't have meta.rev but has _rev
+    const fileWithoutMetaRev = {
+      ...file,
+      _rev: '2',
+      meta: {}
+    }
+    setup({ file: fileWithoutMetaRev })
     const inputNode = document.getElementsByTagName('input')[0]
 
     fireEvent.change(inputNode, { target: { value: 'new Name.pdf' } })
     fireEvent.keyDown(inputNode, { key: 'Enter', code: 'Enter', keyCode: 13 })
-    expect(client.save).toHaveBeenCalledWith(
+    // For backward compatibility, don't expect driveId in the collection call
+    expect(client.collection).toHaveBeenCalledWith('io.cozy.files', {})
+    expect(mockCollection.update).toHaveBeenCalledWith(
       expect.objectContaining({
         name: 'new Name.pdf',
-        _rev: '1'
+        _rev: '2'
+      })
+    )
+  })
+
+  it('works with driveId', async () => {
+    // Test with explicit driveId
+    const fileWithDriveId = {
+      ...file,
+      driveId: 'special-drive-123',
+      _rev: '3',
+      meta: { rev: '3' }
+    }
+    setup({ file: fileWithDriveId })
+    const inputNode = document.getElementsByTagName('input')[0]
+
+    fireEvent.change(inputNode, { target: { value: 'drive-file.pdf' } })
+    fireEvent.keyDown(inputNode, { key: 'Enter', code: 'Enter', keyCode: 13 })
+
+    // Should include the driveId in the collection options
+    expect(client.collection).toHaveBeenCalledWith('io.cozy.files', {
+      driveId: 'special-drive-123'
+    })
+
+    // Should include the file in the update with the correct _rev
+    expect(mockCollection.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        name: 'drive-file.pdf',
+        _rev: '3',
+        driveId: 'special-drive-123'
       })
     )
   })
@@ -91,7 +143,7 @@ describe('RenameInput', () => {
     setup({ file })
     const inputNode = document.getElementsByTagName('input')[0]
 
-    client.save.mockRejectedValueOnce({
+    mockCollection.update.mockRejectedValueOnce({
       message: 'Invalid filename containing illegal character(s): /'
     })
 
@@ -110,7 +162,7 @@ describe('RenameInput', () => {
     setup({ file })
     const inputNode = document.getElementsByTagName('input')[0]
 
-    client.save.mockRejectedValueOnce({
+    mockCollection.update.mockRejectedValueOnce({
       message: 'Invalid filename: .'
     })
 
@@ -129,7 +181,7 @@ describe('RenameInput', () => {
     setup({ file })
     const inputNode = document.getElementsByTagName('input')[0]
 
-    client.save.mockRejectedValueOnce({
+    mockCollection.update.mockRejectedValueOnce({
       message: 'Missing name argument'
     })
 
@@ -164,7 +216,7 @@ describe('RenameInput', () => {
     setup({ file })
     const inputNode = document.getElementsByTagName('input')[0]
 
-    client.save.mockRejectedValueOnce({
+    mockCollection.update.mockRejectedValueOnce({
       message: 'NetworkError when attempting to fetch resource.'
     })
 

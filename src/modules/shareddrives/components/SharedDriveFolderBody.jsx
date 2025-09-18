@@ -1,4 +1,5 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import { useNavigate, useLocation, useParams } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
@@ -9,7 +10,7 @@ import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { download, infos, versions, hr } from '@/modules/actions'
+import { download, infos, versions, rename, hr } from '@/modules/actions'
 import { FolderBody } from '@/modules/folder/components/FolderBody'
 
 const SharedDriveFolderBody = ({
@@ -23,9 +24,12 @@ const SharedDriveFolderBody = ({
   const vaultClient = useVaultClient()
   const { driveId } = useParams()
   const { t } = useI18n()
-  const { isOwner } = useSharingContext()
+  const { isOwner, hasWriteAccess } = useSharingContext()
   const { isMobile } = useBreakpoints()
   const { showAlert } = useAlert()
+  const dispatch = useDispatch()
+
+  const canWriteToCurrentFolder = hasWriteAccess(folderId)
 
   const actionsOptions = {
     client,
@@ -35,11 +39,13 @@ const SharedDriveFolderBody = ({
     isOwner,
     isMobile,
     driveId,
+    hasWriteAccess: canWriteToCurrentFolder,
+    dispatch,
     navigate,
     showAlert
   }
   const actions = makeActions(
-    [download, hr, infos, hr, versions, hr],
+    [download, hr, rename, infos, hr, versions, hr],
     actionsOptions
   )
 
