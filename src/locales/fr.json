@@ -40,6 +40,7 @@
     "more": "Plus"
   },
   "toolbar": {
+    "menu_manage_access": "Gérer les accès",
     "menu_leave_shared_drive": "Quitter le drive partagé",
     "menu_upload": "Importer des fichiers",
     "item_more": "Plus",
