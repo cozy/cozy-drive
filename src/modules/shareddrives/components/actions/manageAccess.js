@@ -16,6 +16,7 @@ export const manageAccess = ({ sharedDrive, navigate, t }) => {
     name: 'manageAccess',
     label: label,
     icon,
+    displayCondition: () => sharedDrive.owner,
     action: () => {
       const folderId = getFolderIdFromSharing(sharedDrive)
       if (folderId) {
