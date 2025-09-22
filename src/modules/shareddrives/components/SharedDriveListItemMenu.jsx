@@ -1,21 +1,39 @@
 import React, { useRef } from 'react'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
+import { useClient } from 'cozy-client'
 import ActionsMenu from 'cozy-ui/transpiled/react/ActionsMenu'
-import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
+import {
+  divider,
+  makeActions
+} from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import DotsIcon from 'cozy-ui/transpiled/react/Icons/Dots'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import { deleteSharedDrive } from '@/modules/shareddrives/components/actions/deleteSharedDrive'
 import { manageAccess } from '@/modules/shareddrives/components/actions/manageAccess'
 
 const SharedDriveListItemMenu = ({ isOpen, toggleMenu, sharedDrive }) => {
   const anchorRef = useRef(null)
+  const client = useClient()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const { showAlert } = useAlert()
+
   const { t } = useI18n()
 
-  const actions = makeActions([manageAccess], { sharedDrive, navigate, t })
+  const actions = makeActions([manageAccess, divider, deleteSharedDrive], {
+    sharedDrive,
+    client,
+    dispatch,
+    navigate,
+    showAlert,
+    t
+  })
 
   return sharedDrive.owner ? (
     <>
