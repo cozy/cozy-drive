@@ -12,6 +12,7 @@ import { FileLink } from './components/FileLink'
 
 import { useFileLink } from '@/modules/navigation/hooks/useFileLink'
 import { isNextcloudShortcut } from '@/modules/nextcloud/helpers'
+import { isSharedDriveFolder } from '@/modules/shareddrives/helpers'
 
 interface FavoriteListItemProps {
   file: IOCozyFile
@@ -19,7 +20,7 @@ interface FavoriteListItemProps {
 }
 
 const makeIcon = (file: IOCozyFile): string | React.ComponentType =>
-  isNextcloudShortcut(file)
+  isNextcloudShortcut(file) || isSharedDriveFolder(file)
     ? FileTypeServerIcon
     : isDirectory(file)
     ? FolderIcon
@@ -30,10 +31,12 @@ const FavoriteListItem: FC<FavoriteListItemProps> = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   clickState: [lastClicked, setLastClicked]
 }) => {
-  const { link } = useFileLink(file, { forceFolderPath: true })
+  const { link } = useFileLink(file, {
+    forceFolderPath: isSharedDriveFolder(file) ? false : true
+  })
   const { filename } = splitFilename(file)
 
-  const Icon = makeIcon(file)
+  const ItemIcon = makeIcon(file)
 
   return (
     <NavItem key={file._id}>
@@ -42,7 +45,7 @@ const FavoriteListItem: FC<FavoriteListItemProps> = ({
         className={NavLink.className}
         onClick={(): void => setLastClicked(undefined)}
       >
-        <NavIcon icon={Icon} />
+        <NavIcon icon={ItemIcon} />
         <Typography variant="inherit" color="inherit" noWrap>
           {filename}
         </Typography>
