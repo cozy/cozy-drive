@@ -11,18 +11,20 @@ import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import deleteContainer from './delete'
 
-import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
-
-const DeleteItem = ({ t, isSharedWithMe, trashFolder, displayedFolder }) => {
+const DeleteItem = ({
+  t,
+  isSharedDriveOwner,
+  isSharedWithMe,
+  trashFolder,
+  displayedFolder
+}) => {
   const handleClick = () => {
     trashFolder(displayedFolder)
   }
 
-  const isSharedDrive = displayedFolder.dir_id === SHARED_DRIVES_DIR_ID
-
   const label = isSharedWithMe
     ? t('toolbar.leave')
-    : isSharedDrive
+    : isSharedDriveOwner
     ? t('toolbar.delete_shared_drive')
     : t('toolbar.trash')
 
