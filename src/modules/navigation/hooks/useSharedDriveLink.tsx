@@ -4,7 +4,10 @@ import { useResolvedPath, useNavigate } from 'react-router-dom'
 
 import { useClient, generateWebLink } from 'cozy-client'
 
-import { SharedDrive } from '@/modules/shareddrives/helpers'
+import {
+  SharedDrive,
+  getFolderIdFromSharing
+} from '@/modules/shareddrives/helpers'
 
 export interface LinkResult {
   app: string
@@ -27,7 +30,9 @@ const useSharedDriveLink = (sharing: SharedDrive): UseFileLinkResult => {
 
   const app = 'drive'
 
-  if (!sharing.rules[0].values[0]) {
+  const folderId = getFolderIdFromSharing(sharing)
+
+  if (!folderId) {
     throw new Error('Missing folder id in shared drive')
   }
 
@@ -36,8 +41,8 @@ const useSharedDriveLink = (sharing: SharedDrive): UseFileLinkResult => {
    * otherwise the path should be `shareddrive/:driveId/:folderId`
    */
   const path = sharing.owner
-    ? `folder/${sharing.rules[0].values[0]}`
-    : `shareddrive/${sharing._id}/${sharing.rules[0].values[0]}`
+    ? `folder/${folderId}`
+    : `shareddrive/${sharing._id}/${folderId}`
 
   const currentURL = new URL(window.location.href)
   const currentPathname = currentURL.pathname
