@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 
-import { splitFilename } from 'cozy-client/dist/models/file'
+import { splitFilename, isDirectory } from 'cozy-client/dist/models/file'
 import type { IOCozyFile } from 'cozy-client/types/types'
 import FileIcon from 'cozy-ui/transpiled/react/Icons/File'
 import FileTypeServerIcon from 'cozy-ui/transpiled/react/Icons/FileTypeServer'
@@ -18,6 +18,13 @@ interface FavoriteListItemProps {
   clickState: [string, (value: string | undefined) => void]
 }
 
+const makeIcon = (file: IOCozyFile): string | React.ComponentType =>
+  isNextcloudShortcut(file)
+    ? FileTypeServerIcon
+    : isDirectory(file)
+    ? FolderIcon
+    : FileIcon
+
 const FavoriteListItem: FC<FavoriteListItemProps> = ({
   file,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -26,6 +33,8 @@ const FavoriteListItem: FC<FavoriteListItemProps> = ({
   const { link } = useFileLink(file, { forceFolderPath: true })
   const { filename } = splitFilename(file)
 
+  const Icon = makeIcon(file)
+
   return (
     <NavItem key={file._id}>
       <FileLink
@@ -33,15 +42,7 @@ const FavoriteListItem: FC<FavoriteListItemProps> = ({
         className={NavLink.className}
         onClick={(): void => setLastClicked(undefined)}
       >
-        <NavIcon
-          icon={
-            isNextcloudShortcut(file)
-              ? FileTypeServerIcon
-              : file.type === 'directory'
-              ? FolderIcon
-              : FileIcon
-          }
-        />
+        <NavIcon icon={Icon} />
         <Typography variant="inherit" color="inherit" noWrap>
           {filename}
         </Typography>
