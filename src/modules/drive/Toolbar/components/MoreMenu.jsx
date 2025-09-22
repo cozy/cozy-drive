@@ -38,7 +38,7 @@ const MoreMenu = ({
   showSelectionBar,
   isSelectionBarVisible,
   isSharedWithMe,
-  isSharedDrive
+  isSharedDriveRecipient
 }) => {
   const [menuIsVisible, setMenuVisible] = useState(false)
   const anchorRef = useRef()
@@ -90,7 +90,7 @@ const MoreMenu = ({
               displayedFolder={displayedFolder}
               folderId={folderId}
             >
-              {!isSharedDrive && (
+              {!isSharedDriveRecipient && (
                 <DownloadButtonItem files={[displayedFolder]} />
               )}
             </InsideRegularFolder>
@@ -108,7 +108,7 @@ const MoreMenu = ({
                 />
               </InsideRegularFolder>
             )}
-            {isSharedDrive && isSharedWithMe && (
+            {isSharedDriveRecipient && isSharedWithMe && (
               <LeaveSharedDriveButtonItem files={[displayedFolder]} />
             )}
           </ActionsMenu>
