@@ -8,6 +8,7 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import styles from '@/styles/toolbar.styl'
 
 import { BarRightOnMobile } from '@/components/Bar'
+import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
 import { useDisplayedFolder, useCurrentFolderId } from '@/hooks'
 import InsideRegularFolder from '@/modules/drive/Toolbar/components/InsideRegularFolder'
 import MoreMenu from '@/modules/drive/Toolbar/components/MoreMenu'
@@ -34,6 +35,11 @@ const Toolbar = ({
   const isSharingDisabled = isDisabled || !allLoaded
   const isSharedDriveRecipient =
     displayedFolder && Boolean(displayedFolder?.driveId)
+  const isSharedDriveOwner =
+    displayedFolder &&
+    displayedFolder._type == 'io.cozy.files' &&
+    displayedFolder.dir_id === SHARED_DRIVES_DIR_ID &&
+    !isSharedDriveRecipient
 
   if (disabled) {
     return null
@@ -71,6 +77,7 @@ const Toolbar = ({
         showSelectionBar={showSelectionBar}
         isSelectionBarVisible={isSelectionBarVisible}
         isSharedDriveRecipient={isSharedDriveRecipient}
+        isSharedDriveOwner={isSharedDriveOwner}
       />
       <BarRightOnMobile>{isMobile && <SearchButton />}</BarRightOnMobile>
     </div>

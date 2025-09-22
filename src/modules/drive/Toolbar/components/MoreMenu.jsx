@@ -38,7 +38,8 @@ const MoreMenu = ({
   showSelectionBar,
   isSelectionBarVisible,
   isSharedWithMe,
-  isSharedDriveRecipient
+  isSharedDriveRecipient,
+  isSharedDriveOwner
 }) => {
   const [menuIsVisible, setMenuVisible] = useState(false)
   const anchorRef = useRef()
@@ -104,6 +105,7 @@ const MoreMenu = ({
                 <Divider className="u-mv-half" />
                 <DeleteItem
                   displayedFolder={displayedFolder}
+                  isSharedDriveOwner={isSharedDriveOwner}
                   isSharedWithMe={isSharedWithMe}
                 />
               </InsideRegularFolder>
