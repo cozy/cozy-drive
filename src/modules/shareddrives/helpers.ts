@@ -26,6 +26,16 @@ export const getSharingIdFromRelationships = (doc: {
     ref => ref.type === 'io.cozy.sharings'
   )?.id
 
+export const getFolderIdFromSharing = (
+  sharing: SharedDrive
+): string | undefined => {
+  try {
+    return sharing.rules[0].values[0]
+  } catch {
+    return undefined
+  }
+}
+
 export const isSharedDriveFolder = (
   file: File | FolderPickerEntry
 ): boolean => {
