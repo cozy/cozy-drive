@@ -15,6 +15,7 @@ import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { deleteSharedDrive } from '@/modules/shareddrives/components/actions/deleteSharedDrive'
+import { leaveSharedDrive } from '@/modules/shareddrives/components/actions/leaveSharedDrive'
 import { manageAccess } from '@/modules/shareddrives/components/actions/manageAccess'
 
 const SharedDriveListItemMenu = ({ isOpen, toggleMenu, sharedDrive }) => {
@@ -26,16 +27,24 @@ const SharedDriveListItemMenu = ({ isOpen, toggleMenu, sharedDrive }) => {
 
   const { t } = useI18n()
 
-  const actions = makeActions([manageAccess, divider, deleteSharedDrive], {
-    sharedDrive,
-    client,
-    dispatch,
-    navigate,
-    showAlert,
-    t
-  })
+  const actions = makeActions(
+    [
+      manageAccess, // owner
+      sharedDrive.owner && divider,
+      deleteSharedDrive, // owner
+      leaveSharedDrive // recipient
+    ],
+    {
+      sharedDrive,
+      client,
+      dispatch,
+      navigate,
+      showAlert,
+      t
+    }
+  )
 
-  return sharedDrive.owner ? (
+  return (
     <>
       <IconButton ref={anchorRef} onClick={toggleMenu} size="small">
         <Icon icon={DotsIcon} />
@@ -52,7 +61,7 @@ const SharedDriveListItemMenu = ({ isOpen, toggleMenu, sharedDrive }) => {
         onClose={toggleMenu}
       ></ActionsMenu>
     </>
-  ) : null
+  )
 }
 
 export { SharedDriveListItemMenu }
