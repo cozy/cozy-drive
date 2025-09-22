@@ -15,8 +15,14 @@ import { SharedDrive } from '@/modules/shareddrives/helpers'
 // right side of the item.
 const useStyles = makeStyles({
   withMenu: {
-    flex: 0,
-    width: 'calc(100% - 6.5rem)'
+    flex: 1,
+    minWidth: 0
+  },
+  menuContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    marginLeft: 'auto',
+    marginRight: '1.5rem'
   }
 })
 
@@ -55,11 +61,13 @@ const SharedDriveListItem: FC<SharedDriveListItemProps> = ({
         </Typography>
       </FileLink>
       {isMenuAvailable && (
-        <SharedDriveListItemMenu
-          isOpen={isMenuOpen}
-          toggleMenu={toggleMenu}
-          sharedDrive={sharedDrive}
-        />
+        <div className={cx(classes.menuContainer)}>
+          <SharedDriveListItemMenu
+            isOpen={isMenuOpen}
+            toggleMenu={toggleMenu}
+            sharedDrive={sharedDrive}
+          />
+        </div>
       )}
     </NavItem>
   )

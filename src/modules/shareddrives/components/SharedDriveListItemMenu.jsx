@@ -19,7 +19,7 @@ const SharedDriveListItemMenu = ({ isOpen, toggleMenu, sharedDrive }) => {
 
   return sharedDrive.owner ? (
     <>
-      <IconButton ref={anchorRef} onClick={toggleMenu}>
+      <IconButton ref={anchorRef} onClick={toggleMenu} size="small">
         <Icon icon={DotsIcon} />
       </IconButton>
       <ActionsMenu
