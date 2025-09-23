@@ -171,6 +171,11 @@ describe('processNextFile function', () => {
     expect(fileUploadedCallbackSpy).toHaveBeenCalledWith(file)
 
     expect(dispatchSpy).toHaveBeenNthCalledWith(2, {
+      type: 'ADD_NEW_ITEMS',
+      payload: [file]
+    })
+
+    expect(dispatchSpy).toHaveBeenNthCalledWith(3, {
       type: 'RECEIVE_UPLOAD_SUCCESS',
       file,
       isUpdate: true

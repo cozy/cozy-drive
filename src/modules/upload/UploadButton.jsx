@@ -11,9 +11,11 @@ import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { uploadFiles } from '@/modules/navigation/duck'
+import { useUploadContext } from '@/modules/upload/UploadProvider'
 
 const UploadButton = ({ label, disabled, onUpload, className }) => {
   const { showAlert } = useAlert()
+  const { addNewItems } = useUploadContext()
 
   return (
     <FileInput
@@ -21,7 +23,7 @@ const UploadButton = ({ label, disabled, onUpload, className }) => {
       label={label}
       disabled={disabled}
       multiple
-      onChange={files => onUpload(files, showAlert)}
+      onChange={files => onUpload(files, showAlert, addNewItems)} 
       data-testid="upload-btn"
       value={[]} // always erase the value to be able to re-upload the same file
     >
@@ -51,12 +53,20 @@ const mapDispatchToProps = (
   dispatch,
   { displayedFolder, sharingState, onUploaded, t }
 ) => ({
-  onUpload: (files, showAlert) => {
+  onUpload: (files, showAlert, addNewItems) => {
     dispatch(
-      uploadFiles(files, displayedFolder.id, sharingState, onUploaded, {
-        showAlert,
-        t
-      })
+      uploadFiles(
+        files,
+        displayedFolder.id,
+        sharingState,
+        onUploaded,
+        {
+          showAlert,
+          t
+        },
+        displayedFolder?.driveId,
+        addNewItems
+      )
     )
   }
 })

@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect, useMemo } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
@@ -26,6 +26,7 @@ import AddFolderTable from '@/modules/views/Folder/virtualized/AddFolderTable'
 import EmptyContent from '@/modules/views/Folder/virtualized/EmptyContent'
 import Table from '@/modules/views/Folder/virtualized/Table'
 import { makeRows, onDrop } from '@/modules/views/Folder/virtualized/helpers'
+import { useUploadContext } from '@/modules/upload/UploadProvider'
 
 const FolderViewBody = ({
   currentFolderId,
@@ -38,6 +39,7 @@ const FolderViewBody = ({
   sortOrder
 }) => {
   const client = useClient()
+  const dispatch = useDispatch()
   const { isDesktop } = useBreakpoints()
   const navigate = useNavigate()
   const IsAddingFolder = useSelector(isTypingNewFolderName)
@@ -48,6 +50,7 @@ const FolderViewBody = ({
   const { showAlert } = useAlert()
   const { viewType } = useViewSwitcherContext()
   const { t } = useI18n()
+  const { clearNewItems } = useUploadContext()
 
   const isSelectedItem = file => {
     if (file._id === SHARED_DRIVES_DIR_ID) {
@@ -96,6 +99,7 @@ const FolderViewBody = ({
     } else {
       window.scroll({ top: 0 })
     }
+    clearNewItems()
   }, [currentFolderId, isDesktop])
 
   /**

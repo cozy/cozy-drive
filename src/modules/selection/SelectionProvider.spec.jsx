@@ -1,5 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import React from 'react'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
 import {
   MemoryRouter,
   Routes,
@@ -14,6 +16,16 @@ import {
   SelectionProvider,
   useSelectionContext
 } from '@/modules/selection/SelectionProvider'
+
+// Create a mock store for testing
+const mockStore = createStore(() => ({
+  // Add any state that SelectionProvider needs
+  upload: {
+    queue: [],
+    newItems: []
+  }
+  // Add other state slices if needed
+}))
 
 const SelectionConsumer = ({ items }) => {
   const {
@@ -81,17 +93,19 @@ describe('SelectionProvider', () => {
 
   const setup = () => {
     return render(
-      <MemoryRouter initialEntries={['/']}>
-        <SelectionProvider>
-          <Routes>
-            <Route path="/" element={<SelectionConsumer items={items} />} />
-            <Route
-              path="/other"
-              element={<SelectionConsumer items={items} />}
-            />
-          </Routes>
-        </SelectionProvider>
-      </MemoryRouter>
+      <Provider store={mockStore}>
+        <MemoryRouter initialEntries={['/']}>
+          <SelectionProvider>
+            <Routes>
+              <Route path="/" element={<SelectionConsumer items={items} />} />
+              <Route
+                path="/other"
+                element={<SelectionConsumer items={items} />}
+              />
+            </Routes>
+          </SelectionProvider>
+        </MemoryRouter>
+      </Provider>
     )
   }
 
