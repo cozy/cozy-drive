@@ -10,6 +10,7 @@ import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { showModal } from '@/lib/react-cozy-helpers'
 import DeleteConfirm from '@/modules/drive/DeleteConfirm'
 import { getFolderIdFromSharing } from '@/modules/shareddrives/helpers'
+import { isFolderFromSharedDriveOwner } from '@/modules/shareddrives/helpers'
 
 export const deleteSharedDrive = ({
   sharedDrive,
@@ -25,9 +26,15 @@ export const deleteSharedDrive = ({
     name: 'deleteSharedDrive',
     label: label,
     icon,
-    displayCondition: () => sharedDrive.owner,
-    action: async () => {
-      const sharedDriveFolderId = getFolderIdFromSharing(sharedDrive)
+    // This action can be triggered with an io.cozy.sharing when called from sidebar
+    // or with an io.cozy.files when called from the sharing tab that's why we need to
+    // manage two kind of data
+    displayCondition: docs =>
+      sharedDrive ? sharedDrive.owner : isFolderFromSharedDriveOwner(docs[0]),
+    action: async docs => {
+      const sharedDriveFolderId = sharedDrive
+        ? getFolderIdFromSharing(sharedDrive)
+        : docs[0]._id
 
       if (!sharedDriveFolderId) {
         showAlert({
