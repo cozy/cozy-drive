@@ -301,6 +301,7 @@
     "try_again": "An error has occurred, please try again in a moment.",
     "restore_file_success": "The selection has been successfully restored.",
     "trash_file_success": "The selection has been moved to the Trash.",
+    "trash_shared_drive_success": "The shared drive has been moved to the Trash.",
     "destroy_file_success": "The selection has been deleted permanently.",
     "folder_name": "The element %{folderName} already exists, please choose a new name.",
     "file_name": "The element %{fileName} already exists, please choose a new name.",
