@@ -40,6 +40,7 @@ export const sortFolder = (folderId, sortAttribute, sortOrder = 'asc') => {
  *   - showAlert - A function to show an alert
  *   - t - A translation function
  * @param {string|undefined} driveId - The id of the drive in which we upload the files
+ * @param {function|undefined} addItems - Callback to add newly uploaded items to the context.
  */
 export const uploadFiles =
   (
@@ -48,7 +49,8 @@ export const uploadFiles =
     sharingState,
     fileUploadedCallback = () => null,
     { client, vaultClient, showAlert, t },
-    driveId
+    driveId,
+    addItems
   ) =>
   dispatch => {
     let targetDirId = dirId
@@ -85,11 +87,13 @@ export const uploadFiles =
               showAlert,
               t,
               fileTooLargeErrors,
-              navigateAfterUpload
+              navigateAfterUpload,
+              addItems
             )
           ),
         { client, vaultClient },
-        driveId
+        driveId,
+        addItems
       )
     )
   }
@@ -105,7 +109,8 @@ const uploadQueueProcessed =
     showAlert,
     t,
     fileTooLargeErrors,
-    navigateAfterUpload
+    navigateAfterUpload,
+    addItems
   ) =>
   dispatch => {
     const conflictCount = conflicts.length
@@ -116,6 +121,12 @@ const uploadQueueProcessed =
       ...updated,
       ...conflicts
     ])
+
+    // Add new items to the NewContext
+    const successfulUploads = [...created, ...updated]
+    if (successfulUploads.length > 0) {
+      addItems(successfulUploads)
+    }
 
     // Add logging to debug upload completion
     logger.debug('uploadQueueProcessed called with:', {
@@ -257,7 +268,8 @@ export const createFolder = (
   name,
   currentFolderId,
   { isEncryptedFolder = false, showAlert, t } = {},
-  driveId
+  driveId,
+  addItems = () => {}
 ) => {
   return async (dispatch, getState) => {
     const state = getState()
@@ -310,6 +322,11 @@ export const createFolder = (
             'Cannot create encrypted folder in root via redirection.'
           )
         }
+      }
+
+      // Add newly created folder to new items
+      if (createdFolder) {
+        addItems([createdFolder.data])
       }
 
       if (navigateAfterCreate && createdFolder) {

@@ -30,6 +30,7 @@ import {
 import FileOpener from '@/modules/filelist/FileOpener'
 import FileThumbnail from '@/modules/filelist/icons/FileThumbnail'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
+import { useNewItemHighlightContext } from '@/modules/upload/NewItemHighlightProvider'
 
 const GridFile = ({
   t,
@@ -58,6 +59,7 @@ const GridFile = ({
     handleShiftClick
   } = useSelectionContext()
   const { isItemCut } = useClipboardContext()
+  const { isNew } = useNewItemHighlightContext()
 
   const toggleActionMenu = () => {
     if (actionMenuVisible) return hideActionMenu()
@@ -114,7 +116,8 @@ const GridFile = ({
         styles['fil-content-column'],
         styles['fil-content-column-virtualized'],
         {
-          [styles['fil-content-column-selected']]: selected,
+          [styles['fil-content-column-selected']]:
+            selected || isNew(attributes),
           [styles['fil-content-column-actioned']]: actionMenuVisible || isOver,
           [styles['fil-content-body--selectable']]: isSelectionBarVisible,
           [styles['fil-content-row-disabled']]: isCut
