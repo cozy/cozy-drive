@@ -7,8 +7,10 @@ import React, {
   useRef
 } from 'react'
 import { useLocation } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
+import { getNewItems, clearNewItems } from '@/modules/upload'
 
 /**
  * @typedef TSelectionContext
@@ -36,6 +38,7 @@ const SelectionContext = createContext()
  */
 const SelectionProvider = ({ children }) => {
   const location = useLocation()
+  const dispatch = useDispatch()
   const [selectedItems, setSelectedItems] = useState({})
   const [isSelectionBarOpen, setSelectionBarOpen] = useState(false)
   const [focusedIndex, setFocusedIndex] = useState(0)
@@ -48,6 +51,10 @@ const SelectionProvider = ({ children }) => {
   }
 
   const toggleSelectedItem = (item, index = null) => {
+    if (getNewItems.length > 0) {
+      dispatch(clearNewItems())
+    }
+
     if (item.id === SHARED_DRIVES_DIR_ID) {
       return
     }

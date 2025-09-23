@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect, useMemo } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
@@ -26,6 +26,7 @@ import AddFolderTable from '@/modules/views/Folder/virtualized/AddFolderTable'
 import EmptyContent from '@/modules/views/Folder/virtualized/EmptyContent'
 import Table from '@/modules/views/Folder/virtualized/Table'
 import { makeRows, onDrop } from '@/modules/views/Folder/virtualized/helpers'
+import { clearNewItems } from '@/modules/upload'
 
 const FolderViewBody = ({
   currentFolderId,
@@ -38,6 +39,7 @@ const FolderViewBody = ({
   sortOrder
 }) => {
   const client = useClient()
+  const dispatch = useDispatch()
   const { isDesktop } = useBreakpoints()
   const navigate = useNavigate()
   const IsAddingFolder = useSelector(isTypingNewFolderName)
@@ -96,7 +98,8 @@ const FolderViewBody = ({
     } else {
       window.scroll({ top: 0 })
     }
-  }, [currentFolderId, isDesktop])
+    dispatch(clearNewItems())
+  }, [currentFolderId, isDesktop, dispatch])
 
   /**
    * When we mount the component when we already have data in cache,

@@ -10,7 +10,7 @@ import { getEntriesTypeTranslated } from '@/lib/entries'
 import logger from '@/lib/logger'
 import { showModal } from '@/lib/react-cozy-helpers'
 import { getFolderContent } from '@/modules/selectors'
-import { addToUploadQueue } from '@/modules/upload'
+import { addNewItems, addToUploadQueue } from '@/modules/upload'
 
 export const SORT_FOLDER = 'SORT_FOLDER'
 export const OPERATION_REDIRECTED = 'navigation/OPERATION_REDIRECTED'
@@ -111,6 +111,12 @@ const uploadQueueProcessed =
       ...updated,
       ...conflicts
     ])
+
+    // Add new items to the NewContext
+    const successfulUploads = [...created, ...updated]
+    if (successfulUploads.length > 0) {
+      dispatch(addNewItems(successfulUploads))
+    }
 
     // Add logging to debug upload completion
     logger.debug('uploadQueueProcessed called with:', {
@@ -305,6 +311,11 @@ export const createFolder = (
             'Cannot create encrypted folder in root via redirection.'
           )
         }
+      }
+
+      // Add newly created folder to new items
+      if (createdFolder) {
+        dispatch(addNewItems([createdFolder.data]))
       }
 
       if (navigateAfterCreate && createdFolder) {
