@@ -17,6 +17,7 @@ import {
 } from '@/modules/filelist/duck'
 import AddFolderRowVz from '@/modules/filelist/virtualized/AddFolderRow'
 import { createFolder } from '@/modules/navigation/duck'
+import { useNewItemHighlightContext } from '@/modules/upload/NewItemHighlightProvider'
 
 export const AddFolder = ({
   visible,
@@ -57,7 +58,8 @@ const AddFolderWithState = ({
   driveId,
   extraColumns,
   afterSubmit,
-  afterAbort
+  afterAbort,
+  addItems
 }) => {
   const client = useClient()
   const dispatch = useDispatch()
@@ -77,7 +79,8 @@ const AddFolderWithState = ({
             showAlert,
             t
           },
-          driveId
+          driveId,
+          addItems
         )
       ).then(() => {
         afterSubmit?.() // eslint-disable-line promise/always-return
@@ -108,6 +111,7 @@ const AddFolderWithState = ({
 
 const AddFolderWithAfter = ({ refreshFolderContent, ...props }) => {
   const dispatch = useDispatch()
+  const { addItems } = useNewItemHighlightContext()
 
   const handleAfterSubmit = () => {
     if (refreshFolderContent) {
@@ -124,6 +128,7 @@ const AddFolderWithAfter = ({ refreshFolderContent, ...props }) => {
     <AddFolderWithState
       afterSubmit={handleAfterSubmit}
       afterAbort={handleAfterAbort}
+      addItems={addItems}
       {...props}
     />
   )

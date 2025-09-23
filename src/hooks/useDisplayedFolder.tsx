@@ -1,9 +1,9 @@
 import { useQuery } from 'cozy-client'
 import { IOCozyFile } from 'cozy-client/types/types'
 
+import { ROOT_DIR_ID } from '@/constants/config'
 import useCurrentFolderId from '@/hooks/useCurrentFolderId'
 import { buildFileOrFolderByIdQuery } from '@/queries'
-import { ROOT_DIR_ID } from '@/constants/config'
 
 interface DisplayedFolderResult {
   isNotFound: boolean

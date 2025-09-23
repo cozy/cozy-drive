@@ -15,6 +15,7 @@ import { useClipboardContext } from '@/contexts/ClipboardProvider'
 import { useShiftArrowsSelection } from '@/hooks/useShiftArrowsSelection'
 import Cell from '@/modules/filelist/virtualized/cells/Cell'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
+import { useNewItemHighlightContext } from '@/modules/upload/NewItemHighlightProvider'
 
 const TableRow = forwardRef(({ item, context, children, ...props }, ref) => {
   const { isItemCut } = useClipboardContext()
@@ -68,6 +69,7 @@ const Table = ({
   const [orderBy, setOrderBy] = useState(
     sortOrder?.attribute || columns?.[0]?.id
   )
+  const { isNew } = useNewItemHighlightContext()
   const sortedRow = useMemo(() => {
     const sortedData = stableSort(rows, getComparator(order, orderBy))
     return secondarySort(sortedData)
@@ -111,6 +113,7 @@ const Table = ({
         selectedItems={selectedItems}
         increaseViewportBy={200}
         onSortChange={handleSort}
+        isNewItem={isNew}
         componentsProps={{
           rowContent: {
             children: (
