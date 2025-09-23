@@ -62,7 +62,7 @@ export const deleteSharedDrive = ({
             files={[folder]}
             afterConfirmation={() =>
               showAlert({
-                message: t('alert.trash_file_success'),
+                message: t('alert.trash_shared_drive_success'),
                 severity: 'success'
               })
             }

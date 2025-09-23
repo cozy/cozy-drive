@@ -302,6 +302,7 @@
     "try_again": "Une erreur est survenue, merci de réessayer dans un instant.",
     "restore_file_success": "La sélection a été restaurée avec succès.",
     "trash_file_success": "La sélection a été déplacée dans la Corbeille.",
+    "trash_shared_drive_success": "Le drive partagé a été déplacé dans la Corbeille.",
     "destroy_file_success": "La sélection a été supprimée définitivement.",
     "folder_name": "L'élément %{folderName} existe déjà, merci de choisir un nouveau nom.",
     "file_name": "L'élément %{fileName} existe déjà, utilisez un nouveau nom",
