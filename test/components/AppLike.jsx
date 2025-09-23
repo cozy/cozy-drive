@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
 import { createStore } from 'redux'
 
 import { CozyProvider } from 'cozy-client'
+import flag from 'cozy-flags'
 import { SharingContext, NativeFileSharingProvider } from 'cozy-sharing'
 import { Layout } from 'cozy-ui/transpiled/react/Layout'
 import AlertProvider from 'cozy-ui/transpiled/react/providers/Alert'
@@ -20,6 +21,7 @@ import { ModalContext } from '@/lib/ModalContext'
 import { ViewSwitcherContextProvider } from '@/lib/ViewSwitcherContext'
 import enLocale from '@/locales/en.json'
 import { SelectionProvider } from '@/modules/selection/SelectionProvider'
+import { NewItemHighlightProvider } from '@/modules/upload/NewItemHighlightProvider'
 
 const mockStore = createStore(() => ({
   mobile: {
@@ -51,6 +53,12 @@ const mockModalContextValue = {
   modalStack: []
 }
 
+const NewItemHighlightProviderWrapper = flag(
+  'drive.highlight-new-items.enabled'
+)
+  ? NewItemHighlightProvider
+  : Fragment
+
 const AppLike = ({
   children,
   store,
@@ -68,29 +76,31 @@ const AppLike = ({
             <AcceptingSharingProvider>
               <NativeFileSharingProvider>
                 <HashRouter>
-                  <SelectionProvider>
-                    <ViewSwitcherContextProvider>
-                      <BreakpointsProvider>
-                        <AlertProvider>
-                          <PushBannerProvider>
-                            <ClipboardProvider>
-                              <ModalContext.Provider
-                                value={
-                                  modalContextValue || mockModalContextValue
-                                }
-                              >
-                                <FabProvider>
-                                  <RightClickProvider>
-                                    <Layout>{children}</Layout>
-                                  </RightClickProvider>
-                                </FabProvider>
-                              </ModalContext.Provider>
-                            </ClipboardProvider>
-                          </PushBannerProvider>
-                        </AlertProvider>
-                      </BreakpointsProvider>
-                    </ViewSwitcherContextProvider>
-                  </SelectionProvider>
+                  <NewItemHighlightProviderWrapper>
+                    <SelectionProvider>
+                      <ViewSwitcherContextProvider>
+                        <BreakpointsProvider>
+                          <AlertProvider>
+                            <PushBannerProvider>
+                              <ClipboardProvider>
+                                <ModalContext.Provider
+                                  value={
+                                    modalContextValue || mockModalContextValue
+                                  }
+                                >
+                                  <FabProvider>
+                                    <RightClickProvider>
+                                      <Layout>{children}</Layout>
+                                    </RightClickProvider>
+                                  </FabProvider>
+                                </ModalContext.Provider>
+                              </ClipboardProvider>
+                            </PushBannerProvider>
+                          </AlertProvider>
+                        </BreakpointsProvider>
+                      </ViewSwitcherContextProvider>
+                    </SelectionProvider>
+                  </NewItemHighlightProviderWrapper>
                 </HashRouter>
               </NativeFileSharingProvider>
             </AcceptingSharingProvider>

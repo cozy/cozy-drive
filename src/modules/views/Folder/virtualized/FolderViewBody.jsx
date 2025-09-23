@@ -11,6 +11,7 @@ import Oops from '@/components/Error/Oops'
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
 import FileListRowsPlaceholder from '@/modules/filelist/FileListRowsPlaceholder'
 import { isTypingNewFolderName } from '@/modules/filelist/duck'
+import { useNewItemHighlightContext } from '@/modules/upload/NewItemHighlightProvider'
 import AddFolderWrapper from '@/modules/views/Folder/virtualized/AddFolderWrapper'
 
 const FolderViewBody = ({
@@ -26,6 +27,7 @@ const FolderViewBody = ({
   const { isDesktop } = useBreakpoints()
   const IsAddingFolder = useSelector(isTypingNewFolderName)
   const { isBigThumbnail } = useThumbnailSizeContext()
+  const { clearItems } = useNewItemHighlightContext()
 
   const isInError = queryResults.some(query => query.fetchStatus === 'failed')
   const hasDataToShow =
@@ -62,7 +64,9 @@ const FolderViewBody = ({
     } else {
       window.scroll({ top: 0 })
     }
-  }, [currentFolderId, isDesktop])
+
+    clearItems()
+  }, [currentFolderId, isDesktop, clearItems])
 
   /**
    * When we mount the component when we already have data in cache,

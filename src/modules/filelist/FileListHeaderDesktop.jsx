@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import React from 'react'
-import flag from 'cozy-flags'
 
+import flag from 'cozy-flags'
 import {
   TableHead,
   TableHeader,
