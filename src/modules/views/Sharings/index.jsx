@@ -39,8 +39,8 @@ import {
   selectAllItems
 } from '@/modules/actions'
 import { addToFavorites } from '@/modules/actions/components/addToFavorites'
-import { removeFromFavorites } from '@/modules/actions/components/removeFromFavorites'
 import { moveTo } from '@/modules/actions/components/moveTo'
+import { removeFromFavorites } from '@/modules/actions/components/removeFromFavorites'
 import { MobileAwareBreadcrumb as Breadcrumb } from '@/modules/breadcrumb/components/MobileAwareBreadcrumb'
 import { makeExtraColumnsNamesFromMedia } from '@/modules/certifications'
 import { useExtraColumns } from '@/modules/certifications/useExtraColumns'
@@ -49,12 +49,14 @@ import FabWithAddMenuContext from '@/modules/drive/FabWithAddMenuContext'
 import Toolbar from '@/modules/drive/Toolbar'
 import FileListRowsPlaceholder from '@/modules/filelist/FileListRowsPlaceholder'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
+import { deleteSharedDrive } from '@/modules/shareddrives/components/actions/deleteSharedDrive'
+import { leaveSharedDrive } from '@/modules/shareddrives/components/actions/leaveSharedDrive'
+import { manageAccess } from '@/modules/shareddrives/components/actions/manageAccess'
 import { useSharedDrives } from '@/modules/shareddrives/hooks/useSharedDrives'
 import {
   buildSharingsQuery,
   buildSharingsWithMetadataAttributeQuery
 } from '@/queries'
-
 const desktopExtraColumnsNames = ['carbonCopy', 'electronicSafe']
 const mobileExtraColumnsNames = []
 
@@ -200,7 +202,11 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
       removeFromFavorites,
       infos,
       hr,
-      versions
+      versions,
+      manageAccess,
+      hr,
+      deleteSharedDrive,
+      leaveSharedDrive
     ],
     actionsOptions
   )
