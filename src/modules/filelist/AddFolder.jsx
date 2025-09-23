@@ -18,6 +18,7 @@ import {
 } from '@/modules/filelist/duck'
 import AddFolderRowVz from '@/modules/filelist/virtualized/AddFolderRow'
 import { createFolder } from '@/modules/navigation/duck'
+import { useUploadContext } from '@/modules/upload/UploadProvider'
 
 const AddFolder = ({
   visible,
@@ -58,7 +59,7 @@ const mapStateToProps = state => ({
 })
 
 const createFolderAfterSubmit =
-  (ownProps, name, { showAlert, t }) =>
+  (ownProps, name, { showAlert, t, addNewItems }) =>
   async (dispatch, getState) => {
     return dispatch(
       createFolder(
@@ -71,7 +72,8 @@ const createFolderAfterSubmit =
           showAlert,
           t
         },
-        ownProps.driveId
+        ownProps.driveId,
+        addNewItems
       )
     ).then(() => {
       // eslint-disable-next-line promise/always-return
@@ -83,11 +85,17 @@ const createFolderAfterSubmit =
 
 export const addFolderDispatch = (dispatch, ownProps) => ({
   onSubmit: (name, showAlert, t) =>
-    dispatch(createFolderAfterSubmit(ownProps, name, { showAlert, t })),
+    dispatch(
+      createFolderAfterSubmit(ownProps, name, {
+        showAlert,
+        t,
+        addNewItems: ownProps.addNewItems
+      })
+    ),
   onAbort: (accidental, showAlert, t) => {
     if (accidental) {
       showAlert({
-        message: t('alert.folder_abort'), //
+        message: t('alert.folder_abort'),
         severity: 'secondary'
       })
     }
@@ -109,6 +117,7 @@ const AddFolderWithState = compose(
 
 const AddFolderWithAfter = ({ refreshFolderContent, ...props }) => {
   const dispatch = useDispatch()
+  const { addNewItems } = useUploadContext()
 
   const handleAfterSubmit = () => {
     if (refreshFolderContent) {
@@ -125,6 +134,7 @@ const AddFolderWithAfter = ({ refreshFolderContent, ...props }) => {
     <AddFolderWithState
       afterSubmit={handleAfterSubmit}
       afterAbort={handleAfterAbort}
+      addNewItems={addNewItems}
       {...props}
     />
   )

@@ -13,6 +13,7 @@ import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { uploadFiles } from '@/modules/navigation/duck'
+import { useUploadContext } from '@/modules/upload/UploadProvider'
 
 const UploadButton = ({
   label,
@@ -24,6 +25,7 @@ const UploadButton = ({
   onUploaded
 }) => {
   const { showAlert } = useAlert()
+  const { addNewItems } = useUploadContext()
   const { t } = useI18n()
   const dispatch = useDispatch()
   const client = useClient()
@@ -31,12 +33,20 @@ const UploadButton = ({
 
   const onUpload = files => {
     dispatch(
-      uploadFiles(files, displayedFolder.id, sharingState, onUploaded, {
-        client,
-        vaultClient,
-        showAlert,
-        t
-      })
+      uploadFiles(
+        files,
+        displayedFolder.id,
+        sharingState,
+        onUploaded,
+        {
+          client,
+          vaultClient,
+          showAlert,
+          t
+        },
+        null,
+        addNewItems
+      )
     )
   }
 

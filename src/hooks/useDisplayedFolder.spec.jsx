@@ -2,6 +2,7 @@ import { useQuery } from 'cozy-client'
 
 import useCurrentFolderId from './useCurrentFolderId'
 import useDisplayedFolder from './useDisplayedFolder'
+
 import { ROOT_DIR_ID } from '@/constants/config'
 
 jest.mock('cozy-client', () => ({

@@ -28,6 +28,7 @@ import {
 } from '@/modules/navigation/duck/reducer'
 import { SelectionProvider } from '@/modules/selection/SelectionProvider'
 import UploadButton from '@/modules/upload/UploadButton'
+import { UploadProvider } from '@/modules/upload/UploadProvider'
 import UploadQueue from '@/modules/upload/UploadQueue'
 
 initFlags()
@@ -58,50 +59,54 @@ const LayoutContent = () => {
 
   return (
     <LayoutUI onContextMenu={ev => ev.preventDefault()}>
-      <BarComponent
-        searchOptions={{ enabled: !isMobile }}
-        disableInternalStore
-      />
-      <FlagSwitcher />
-      <Sidebar className="u-flex-justify-between">
-        <div>
-          {isDesktop ? (
-            <div className="u-mh-1-half u-mt-1-half">
-              <UploadButton
-                componentsProps={{ button: { className: 'u-w-100 u-bdrs-6' } }}
-                label={t('upload.label')}
-                displayedFolder={displayedFolder}
-              />
-              <AddMenuProvider
-                canCreateFolder={true}
-                canUpload={true}
-                disabled={false}
-                displayedFolder={displayedFolder}
-                isSelectionBarVisible={false}
-                isReadOnly={isFolderReadOnly}
-                componentsProps={{ AddMenu: { isUploadDisabled: true } }}
-              >
-                <AddButton className="u-w-100 u-bdrs-6 u-mt-half" />
-              </AddMenuProvider>
-            </div>
-          ) : null}
-          <Nav />
-        </div>
-        {isDesktop && (
+      <UploadProvider>
+        <BarComponent
+          searchOptions={{ enabled: !isMobile }}
+          disableInternalStore
+        />
+        <FlagSwitcher />
+        <Sidebar className="u-flex-justify-between">
           <div>
-            <div className="u-p-1-half">
-              <Storage />
-            </div>
-            <ButtonClient />
+            {isDesktop ? (
+              <div className="u-mh-1-half u-mt-1-half">
+                <UploadButton
+                  componentsProps={{
+                    button: { className: 'u-w-100 u-bdrs-6' }
+                  }}
+                  label={t('upload.label')}
+                  displayedFolder={displayedFolder}
+                />
+                <AddMenuProvider
+                  canCreateFolder={true}
+                  canUpload={true}
+                  disabled={false}
+                  displayedFolder={displayedFolder}
+                  isSelectionBarVisible={false}
+                  isReadOnly={isFolderReadOnly}
+                  componentsProps={{ AddMenu: { isUploadDisabled: true } }}
+                >
+                  <AddButton className="u-w-100 u-bdrs-6 u-mt-half" />
+                </AddMenuProvider>
+              </div>
+            ) : null}
+            <Nav />
           </div>
-        )}
-      </Sidebar>
-      <UploadQueue />
-      <SelectionProvider>
-        <Outlet />
-      </SelectionProvider>
-      <Sprite />
-      {flag('debug') && <CozyDevtools />}
+          {isDesktop && (
+            <div>
+              <div className="u-p-1-half">
+                <Storage />
+              </div>
+              <ButtonClient />
+            </div>
+          )}
+        </Sidebar>
+        <UploadQueue />
+        <SelectionProvider>
+          <Outlet />
+        </SelectionProvider>
+        <Sprite />
+        {flag('debug') && <CozyDevtools />}
+      </UploadProvider>
     </LayoutUI>
   )
 }
