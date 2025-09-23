@@ -103,6 +103,7 @@ export const TrashFolderView = () => {
           <FolderViewBodyVz
             actions={actions}
             queryResults={[foldersResult, filesResult]}
+            currentFolderId={currentFolderId}
             withFilePath={true}
             extraColumns={extraColumns}
             sortOrder={sortOrder}
