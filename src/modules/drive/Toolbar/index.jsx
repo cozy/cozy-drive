@@ -8,7 +8,6 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import styles from '@/styles/toolbar.styl'
 
 import { BarRightOnMobile } from '@/components/Bar'
-import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
 import { useDisplayedFolder, useCurrentFolderId } from '@/hooks'
 import InsideRegularFolder from '@/modules/drive/Toolbar/components/InsideRegularFolder'
 import MoreMenu from '@/modules/drive/Toolbar/components/MoreMenu'
@@ -17,6 +16,10 @@ import ViewSwitcher from '@/modules/drive/Toolbar/components/ViewSwitcher'
 import ShareButton from '@/modules/drive/Toolbar/share/ShareButton'
 import SharedRecipients from '@/modules/drive/Toolbar/share/SharedRecipients'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
+import {
+  isFolderFromSharedDriveRecipient,
+  isFolderFromSharedDriveOwner
+} from '@/modules/shareddrives/helpers'
 
 const Toolbar = ({
   folderId,
@@ -34,12 +37,8 @@ const Toolbar = ({
   const isDisabled = disabled || isSelectionBarVisible
   const isSharingDisabled = isDisabled || !allLoaded
   const isSharedDriveRecipient =
-    displayedFolder && Boolean(displayedFolder?.driveId)
-  const isSharedDriveOwner =
-    displayedFolder &&
-    displayedFolder._type == 'io.cozy.files' &&
-    displayedFolder.dir_id === SHARED_DRIVES_DIR_ID &&
-    !isSharedDriveRecipient
+    isFolderFromSharedDriveRecipient(displayedFolder)
+  const isSharedDriveOwner = isFolderFromSharedDriveOwner(displayedFolder)
 
   if (disabled) {
     return null
