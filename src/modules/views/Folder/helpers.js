@@ -14,7 +14,7 @@ export const makeColumns = isBigThumbnail => {
     {
       id: 'updated_at',
       disablePadding: false,
-      width: 135,
+      width: 160,
       label: t('table.head_update'),
       textAlign: 'right'
     },
