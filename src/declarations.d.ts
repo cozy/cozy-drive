@@ -80,6 +80,9 @@ declare module 'cozy-client/dist/models/file' {
   export const isDirectory: (
     file: import('components/FolderPicker/types').File
   ) => boolean
+  export const isOnlyOfficeFile: (
+    file: import('components/FolderPicker/types').File
+  ) => boolean
   export const isShortcut: (
     file: import('components/FolderPicker/types').File
   ) => boolean
