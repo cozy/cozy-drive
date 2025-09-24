@@ -1,5 +1,6 @@
 import get from 'lodash/get'
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import {
   withClient,
@@ -32,8 +33,10 @@ const CreateNoteItem = ({
   const isFlatDomain = get(capabilities, 'flat_subdomains')
   const webviewIntent = useWebviewIntent()
   const { showAlert } = useAlert()
+  const navigate = useNavigate()
 
   const _displayedFolder = displayedFolderOrRootFolder(displayedFolder)
+  const { driveId, id: folderId } = _displayedFolder
 
   let notesAppUrl = undefined
   let notesAppIsInstalled = true
@@ -55,14 +58,16 @@ const CreateNoteItem = ({
       cozyUrl: client.getStackClient().uri,
       subDomainType: isFlatDomain ? 'flat' : 'nested',
       pathname: '',
-      hash: `/files/${_displayedFolder.id}`
+      hash: `/files/${folderId}`
     })
   } else {
     returnUrl = generateUniversalLink({
       slug: 'drive',
       cozyUrl: client.getStackClient().uri,
       subDomainType: isFlatDomain ? 'flat' : 'nested',
-      nativePath: `/files/${_displayedFolder.id}`
+      nativePath: driveId
+        ? `/shareddrive/${driveId}/files/${folderId}`
+        : `/files/${folderId}`
     })
   }
 
@@ -82,9 +87,16 @@ const CreateNoteItem = ({
     if (notesAppUrl === undefined) return
 
     if (notesAppIsInstalled) {
-      const { data: file } = await client.create('io.cozy.notes', {
-        dir_id: _displayedFolder.id
-      })
+      const { data: file } = await client
+        .collection('io.cozy.notes', { driveId })
+        .create({
+          dir_id: folderId
+        })
+
+      if (driveId) {
+        navigate(`/note/${driveId}/${file.id}`)
+        return
+      }
 
       const privateUrl = await models.note.generatePrivateUrl(
         notesAppUrl,
