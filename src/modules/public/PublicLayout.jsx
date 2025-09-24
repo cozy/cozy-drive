@@ -7,6 +7,7 @@ import Sprite from 'cozy-ui/transpiled/react/Icon/Sprite'
 import { Layout } from 'cozy-ui/transpiled/react/Layout'
 
 import { SelectionProvider } from '@/modules/selection/SelectionProvider'
+import { UploadProvider } from '@/modules/upload/UploadProvider'
 import UploadQueue from '@/modules/upload/UploadQueue'
 
 const PublicLayout = () => {

@@ -1,4 +1,5 @@
 import React, { useRef, forwardRef, useState, useMemo } from 'react'
+
 import VirtuosoTableDnd from 'cozy-ui/transpiled/react/Table/Virtualized/Dnd'
 import TableRowDnD from 'cozy-ui/transpiled/react/Table/Virtualized/Dnd/TableRow'
 import virtuosoComponentsDnd from 'cozy-ui/transpiled/react/Table/Virtualized/Dnd/virtuosoComponents'

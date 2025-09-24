@@ -267,7 +267,7 @@ export const createFolder = (
   currentFolderId,
   { isEncryptedFolder = false, showAlert, t } = {},
   driveId,
-  addNewItems
+  addNewItems = () => {}
 ) => {
   return async (dispatch, getState) => {
     const state = getState()

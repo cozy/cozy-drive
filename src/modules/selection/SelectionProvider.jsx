@@ -7,7 +7,6 @@ import React, {
   useRef
 } from 'react'
 import { useLocation } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 
 import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
 import { useUploadContext } from '@/modules/upload/UploadProvider'
@@ -38,7 +37,6 @@ const SelectionContext = createContext()
  */
 const SelectionProvider = ({ children }) => {
   const location = useLocation()
-  const dispatch = useDispatch()
   const [selectedItems, setSelectedItems] = useState({})
   const [isSelectionBarOpen, setSelectionBarOpen] = useState(false)
   const [focusedIndex, setFocusedIndex] = useState(0)
@@ -55,7 +53,7 @@ const SelectionProvider = ({ children }) => {
 
   const toggleSelectedItem = (item, index = null) => {
     // Use UploadProvider's newItems and clearNewItems
-    if (newItems.length > 0) {
+    if (newItems?.length > 0) {
       clearNewItems()
     }
 

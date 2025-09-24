@@ -1,7 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import React from 'react'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
 import {
   MemoryRouter,
   Routes,
@@ -9,6 +8,7 @@ import {
   Link,
   useLocation
 } from 'react-router-dom'
+import { createStore } from 'redux'
 
 import { generateFile } from 'test/generate'
 
@@ -16,6 +16,13 @@ import {
   SelectionProvider,
   useSelectionContext
 } from '@/modules/selection/SelectionProvider'
+
+jest.mock('modules/upload/UploadProvider', () => ({
+  ...jest.requireActual('modules/upload/UploadProvider'),
+  useUploadContext: () => ({
+    addNewItems: jest.fn()
+  })
+}))
 
 // Create a mock store for testing
 const mockStore = createStore(() => ({

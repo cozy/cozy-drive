@@ -1,9 +1,8 @@
-import logger from '@/lib/logger'
-import React, { createContext, useContext, useState, useCallback } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 
 const UploadContext = createContext()
 
-export const UploadProvider = ({ children }) => {
+const UploadProvider = ({ children }) => {
   const [newItems, setNewItems] = useState([])
 
   const addNewItems = items => {
@@ -19,8 +18,6 @@ export const UploadProvider = ({ children }) => {
   const clearNewItems = () => setNewItems([])
 
   const isNewItem = item => {
-    logger.info('item', item)
-    logger.info('newItems', newItems)
     return newItems.some(newItem => newItem._id === item._id)
   }
 
@@ -32,9 +29,7 @@ export const UploadProvider = ({ children }) => {
   }
 
   return (
-    <UploadContext.Provider value={value}>
-      {children}
-    </UploadContext.Provider>
+    <UploadContext.Provider value={value}>{children}</UploadContext.Provider>
   )
 }
 

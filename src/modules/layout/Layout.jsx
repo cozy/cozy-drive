@@ -26,8 +26,8 @@ import {
   RESET_OPERATION_REDIRECTED
 } from '@/modules/navigation/duck/reducer'
 import { SelectionProvider } from '@/modules/selection/SelectionProvider'
+import { UploadProvider } from '@/modules/upload/UploadProvider'
 import UploadQueue from '@/modules/upload/UploadQueue'
-import { UploadProvider } from '../upload/UploadProvider'
 
 initFlags()
 
@@ -91,7 +91,7 @@ const LayoutContent = () => {
       <UploadQueue />
       <UploadProvider>
         <SelectionProvider>
-          <Outlet /> 
+          <Outlet />
         </SelectionProvider>
       </UploadProvider>
       <Sprite />

@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect, useMemo } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
@@ -22,11 +22,11 @@ import { FolderUnlocker } from '@/modules/folder/components/FolderUnlocker'
 import { useCancelable } from '@/modules/move/hooks/useCancelable'
 import SelectionBar from '@/modules/selection/SelectionBar'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
+import { useUploadContext } from '@/modules/upload/UploadProvider'
 import AddFolderTable from '@/modules/views/Folder/virtualized/AddFolderTable'
 import EmptyContent from '@/modules/views/Folder/virtualized/EmptyContent'
 import Table from '@/modules/views/Folder/virtualized/Table'
 import { makeRows, onDrop } from '@/modules/views/Folder/virtualized/helpers'
-import { useUploadContext } from '@/modules/upload/UploadProvider'
 
 const FolderViewBody = ({
   currentFolderId,
@@ -39,7 +39,6 @@ const FolderViewBody = ({
   sortOrder
 }) => {
   const client = useClient()
-  const dispatch = useDispatch()
   const { isDesktop } = useBreakpoints()
   const navigate = useNavigate()
   const IsAddingFolder = useSelector(isTypingNewFolderName)
@@ -100,7 +99,7 @@ const FolderViewBody = ({
       window.scroll({ top: 0 })
     }
     clearNewItems()
-  }, [currentFolderId, isDesktop])
+  }, [currentFolderId, isDesktop, clearNewItems])
 
   /**
    * When we mount the component when we already have data in cache,
