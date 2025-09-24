@@ -15,9 +15,11 @@ const PublicLayout = () => {
       <BarComponent replaceTitleOnMobile isPublic disableInternalStore />
       <FlagSwitcher />
       <UploadQueue />
-      <SelectionProvider>
-        <Outlet />
-      </SelectionProvider>
+      <UploadProvider>
+        <SelectionProvider>
+          <Outlet />
+        </SelectionProvider>
+      </UploadProvider>
       <Sprite />
     </Layout>
   )

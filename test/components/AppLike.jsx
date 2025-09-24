@@ -19,6 +19,7 @@ import { ModalContext } from '@/lib/ModalContext'
 import { ViewSwitcherContextProvider } from '@/lib/ViewSwitcherContext'
 import enLocale from '@/locales/en.json'
 import { SelectionProvider } from '@/modules/selection/SelectionProvider'
+import { UploadProvider } from '@/modules/upload/UploadProvider'
 
 const mockStore = createStore(() => ({
   mobile: {
@@ -67,25 +68,27 @@ const AppLike = ({
             <AcceptingSharingProvider>
               <NativeFileSharingProvider>
                 <HashRouter>
-                  <SelectionProvider>
-                    <ViewSwitcherContextProvider>
-                      <BreakpointsProvider>
-                        <AlertProvider>
-                          <PushBannerProvider>
-                            <ModalContext.Provider
-                              value={modalContextValue || mockModalContextValue}
-                            >
-                              <FabProvider>
-                                <RightClickProvider>
-                                  <Layout>{children}</Layout>
-                                </RightClickProvider>
-                              </FabProvider>
-                            </ModalContext.Provider>
-                          </PushBannerProvider>
-                        </AlertProvider>
-                      </BreakpointsProvider>
-                    </ViewSwitcherContextProvider>
-                  </SelectionProvider>
+                  <UploadProvider>
+                    <SelectionProvider>
+                      <ViewSwitcherContextProvider>
+                        <BreakpointsProvider>
+                          <AlertProvider>
+                            <PushBannerProvider>
+                              <ModalContext.Provider
+                                value={modalContextValue || mockModalContextValue}
+                              >
+                                <FabProvider>
+                                  <RightClickProvider>
+                                    <Layout>{children}</Layout>
+                                  </RightClickProvider>
+                                </FabProvider>
+                              </ModalContext.Provider>
+                            </PushBannerProvider>
+                          </AlertProvider>
+                        </BreakpointsProvider>
+                      </ViewSwitcherContextProvider>
+                    </SelectionProvider>
+                  </UploadProvider>
                 </HashRouter>
               </NativeFileSharingProvider>
             </AcceptingSharingProvider>
