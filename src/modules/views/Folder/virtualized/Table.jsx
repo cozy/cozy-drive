@@ -1,5 +1,4 @@
 import React, { useRef, forwardRef, useState, useMemo } from 'react'
-import { useSelector } from 'react-redux'
 import VirtuosoTableDnd from 'cozy-ui/transpiled/react/Table/Virtualized/Dnd'
 import TableRowDnD from 'cozy-ui/transpiled/react/Table/Virtualized/Dnd/TableRow'
 import virtuosoComponentsDnd from 'cozy-ui/transpiled/react/Table/Virtualized/Dnd/virtuosoComponents'
@@ -14,7 +13,7 @@ import RightClickFileMenu from '@/components/RightClick/RightClickFileMenu'
 import { useShiftArrowsSelection } from '@/hooks/useShiftArrowsSelection'
 import Cell from '@/modules/filelist/virtualized/cells/Cell'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
-import { getNewItems } from '@/modules/upload'
+import { useUploadContext } from '@/modules/upload/UploadProvider'
 
 const TableRow = forwardRef(({ item, context, children, ...props }, ref) => {
   return (
@@ -61,7 +60,7 @@ const Table = ({
   const [orderBy, setOrderBy] = useState(
     sortOrder?.attribute || columns?.[0]?.id
   )
-  const newItems = useSelector(getNewItems)
+  const { isNewItem } = useUploadContext()
   const sortedRow = useMemo(() => {
     const sortedData = stableSort(rows, getComparator(order, orderBy))
     return secondarySort(sortedData)
@@ -81,10 +80,6 @@ const Table = ({
   const handleSort = ({ order, orderBy }) => {
     setOrder(order)
     setOrderBy(orderBy)
-  }
-
-  const isNewItem = item => {
-    return newItems.some(newItem => newItem._id === item._id)
   }
 
   return (

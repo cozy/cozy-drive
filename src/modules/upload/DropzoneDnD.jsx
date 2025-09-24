@@ -17,6 +17,7 @@ import styles from '@/styles/dropzone.styl'
 import RightClickAddMenu from '@/components/RightClick/RightClickAddMenu'
 import { uploadFiles } from '@/modules/navigation/duck'
 import DropzoneTeaser from '@/modules/upload/DropzoneTeaser'
+import { useUploadContext } from '@/modules/upload/UploadProvider'
 
 // DnD helpers for folder upload
 const canHandleFolders = evt => {
@@ -41,6 +42,7 @@ export const Dropzone = ({ displayedFolder, children }) => {
   const sharingState = useSharingContext()
   const vaultClient = useVaultClient()
   const dispatch = useDispatch()
+  const { addNewItems } = useUploadContext()
   const [{ canDrop, isOver }, dropRef] = useDrop(
     () => ({
       accept: [NativeTypes.FILE],
@@ -61,7 +63,8 @@ export const Dropzone = ({ displayedFolder, children }) => {
               showAlert,
               t
             },
-            displayedFolder.driveId
+            displayedFolder.driveId,
+            addNewItems
           )
         )
       },
