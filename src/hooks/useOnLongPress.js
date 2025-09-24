@@ -1,13 +1,13 @@
 import { useRef } from 'react'
-import { useDispatch } from 'react-redux'
 
 import flag from 'cozy-flags'
-import { clearNewItems } from '@/modules/upload'
+
+import { useUploadContext } from '@/modules/upload/UploadProvider' // <-- ADD THIS
 
 export default function useLongPress({ onPress, selectionModeActive }) {
   const timerRef = useRef()
   const isLongPress = useRef()
-  const dispatch = useDispatch()
+  const { clearNewItems } = useUploadContext() // <-- ADD THIS
 
   // used to create the longpress, i.e. delay on click
   function startPressTimer(e) {
@@ -24,7 +24,7 @@ export default function useLongPress({ onPress, selectionModeActive }) {
     // button 0 is left click
 
     // Clear any new items that could be in the upload state
-    dispatch(clearNewItems())
+    clearNewItems()
 
     if (
       selectionModeActive ||
