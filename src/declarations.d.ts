@@ -92,6 +92,12 @@ declare module 'cozy-client/dist/models/file' {
   export const shouldBeOpenedByOnlyOffice: (
     file: import('components/FolderPicker/types').File
   ) => boolean
+  export const getFullpath: (
+    client: import('cozy-client/types/CozyClient').CozyClient,
+    dirID: string,
+    filename: string,
+    driveId: string
+  ) => Promise<string>
 }
 
 declare module 'cozy-client/dist/models/note' {
