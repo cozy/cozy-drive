@@ -21,10 +21,6 @@ export const RECEIVE_UPLOAD_SUCCESS = 'RECEIVE_UPLOAD_SUCCESS'
 export const RECEIVE_UPLOAD_ERROR = 'RECEIVE_UPLOAD_ERROR'
 const PURGE_UPLOAD_QUEUE = 'PURGE_UPLOAD_QUEUE'
 
-// Add new action types
-export const ADD_NEW_ITEMS = 'ADD_NEW_ITEMS'
-export const CLEAR_NEW_ITEMS = 'CLEAR_NEW_ITEMS'
-
 const CANCEL = 'cancel'
 const PENDING = 'pending'
 const LOADING = 'loading'
@@ -158,26 +154,8 @@ export const queue = (state = [], action) => {
   }
 }
 
-// Add new items reducer
-const newItems = (state = [], action) => {
-  switch (action.type) {
-    case ADD_NEW_ITEMS: {
-      const existingIds = state.map(item => item.id)
-      const uniqueItems = action.payload.filter(
-        item => item && item.id && !existingIds.includes(item.id)
-      )
-      return [...state, ...uniqueItems]
-    }
-    case CLEAR_NEW_ITEMS:
-      return []
-    default:
-      return state
-  }
-}
-
 export default combineReducers({
-  queue,
-  newItems
+  queue
 })
 
 export const uploadProgress = (file, event, date) => ({
@@ -188,20 +166,6 @@ export const uploadProgress = (file, event, date) => ({
   date: date || Date.now()
 })
 
-export const addNewItems = items => {
-  const action = {
-    type: ADD_NEW_ITEMS,
-    payload: Array.isArray(items) ? items : [items]
-  }
-  return action
-}
-
-export const clearNewItems = () => {
-  return {
-    type: CLEAR_NEW_ITEMS
-  }
-}
-
 export const processNextFile =
   (
     fileUploadedCallback,
@@ -209,7 +173,8 @@ export const processNextFile =
     dirID,
     sharingState,
     { client, vaultClient },
-    driveId
+    driveId,
+    addNewItems
   ) =>
   async (dispatch, getState) => {
     let error = null
@@ -240,7 +205,7 @@ export const processNextFile =
           },
           driveId
         )
-        dispatch(addNewItems([newDir]))
+        if (addNewItems) addNewItems([newDir])
         fileUploadedCallback(newDir)
       } else {
         const withProgress = {
@@ -260,7 +225,7 @@ export const processNextFile =
           },
           driveId
         )
-        dispatch(addNewItems([uploadedFile]))
+        if (addNewItems) addNewItems([uploadedFile])
         fileUploadedCallback(uploadedFile)
       }
       dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file })
@@ -283,7 +248,7 @@ export const processNextFile =
             },
             driveId
           )
-          dispatch(addNewItems([uploadedFile]))
+          if (addNewItems) addNewItems([uploadedFile])
           fileUploadedCallback(uploadedFile)
           dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file, isUpdate: true })
           error = null
@@ -325,7 +290,8 @@ export const processNextFile =
         dirID,
         sharingState,
         { client, vaultClient },
-        driveId
+        driveId,
+        addNewItems
       )
     )
   }
@@ -499,7 +465,8 @@ export const addToUploadQueue =
     fileUploadedCallback,
     queueCompletedCallback,
     { client, vaultClient },
-    driveId
+    driveId,
+    addNewItems
   ) =>
   async dispatch => {
     dispatch({
@@ -513,7 +480,8 @@ export const addToUploadQueue =
         dirID,
         sharingState,
         { client, vaultClient },
-        driveId
+        driveId,
+        addNewItems
       )
     )
   }
@@ -539,12 +507,6 @@ export const onQueueEmpty = callback => (dispatch, getState) => {
     updated,
     fileTooLargeErrors
   )
-}
-
-// Add a selector to get new items with logging
-export const getNewItems = state => {
-  const newItems = state[SLUG]?.newItems || []
-  return newItems
 }
 
 // selectors
@@ -575,7 +537,6 @@ export const selectors = {
   getCreated,
   getUpdated,
   getProcessed,
-  getNewItems,
   getSuccessful
 }
 
