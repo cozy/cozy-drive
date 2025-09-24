@@ -15,7 +15,7 @@ import {
 } from '@/modules/views/OnlyOffice/helpers'
 
 const CreateOnlyOfficeItem = ({ fileClass, isReadOnly, onClick }) => {
-  const { folderId = ROOT_DIR_ID } = useParams()
+  const { folderId = ROOT_DIR_ID, driveId = undefined } = useParams()
   const { t } = useI18n()
   const navigate = useNavigate()
   const { showAlert } = useAlert()
@@ -36,11 +36,28 @@ const CreateOnlyOfficeItem = ({ fileClass, isReadOnly, onClick }) => {
     }
 
     if (canWriteOfficeDocument()) {
-      navigate(`/onlyoffice/create/${_folderId}/${fileClass}`)
+      navigate(
+        driveId
+          ? `/onlyoffice/create/${driveId}/${_folderId}/${fileClass}`
+          : `/onlyoffice/create/${_folderId}/${fileClass}`
+      )
     } else {
-      navigate(`/folder/${_folderId}/paywall`)
+      navigate(
+        driveId
+          ? `/onlyoffice/${driveId}/${_folderId}/paywall`
+          : `/folder/${_folderId}/paywall`
+      )
     }
-  }, [fileClass, _folderId, navigate, isReadOnly, showAlert, onClick, t])
+  }, [
+    isReadOnly,
+    showAlert,
+    t,
+    onClick,
+    navigate,
+    driveId,
+    _folderId,
+    fileClass
+  ])
 
   const ClassIcon = useMemo(
     () => makeOnlyOfficeIconByClass(fileClass),
