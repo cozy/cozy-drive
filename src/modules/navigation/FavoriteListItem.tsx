@@ -1,6 +1,10 @@
 import React, { FC } from 'react'
 
-import { splitFilename, isDirectory } from 'cozy-client/dist/models/file'
+import {
+  splitFilename,
+  isDirectory,
+  isOnlyOfficeFile
+} from 'cozy-client/dist/models/file'
 import type { IOCozyFile } from 'cozy-client/types/types'
 import FileIcon from 'cozy-ui/transpiled/react/Icons/File'
 import FileTypeServerIcon from 'cozy-ui/transpiled/react/Icons/FileTypeServer'
@@ -32,7 +36,8 @@ const FavoriteListItem: FC<FavoriteListItemProps> = ({
   clickState: [lastClicked, setLastClicked]
 }) => {
   const { link } = useFileLink(file, {
-    forceFolderPath: isSharedDriveFolder(file) ? false : true
+    forceFolderPath:
+      isSharedDriveFolder(file) || isOnlyOfficeFile(file) ? false : true
   })
   const { filename } = splitFilename(file)
 
