@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 
+import { getFullpath } from 'cozy-client/dist/models/file'
 import flag from 'cozy-flags'
 
 import { MAX_PAYLOAD_SIZE } from '@/constants/config'
@@ -228,12 +229,21 @@ export const processNextFile =
       error = uploadError
       if (uploadError.status === CONFLICT_ERROR) {
         try {
-          const path = await CozyFile.getFullpath(dirID, file.name)
-          const uploadedFile = await overwriteFile(client, file, path, {
-            onUploadProgress: event => {
-              dispatch(uploadProgress(file, event))
-            }
-          })
+          const path = driveId
+            ? await getFullpath(client, dirID, file.name, driveId)
+            : await CozyFile.getFullpath(dirID, file.name)
+
+          const uploadedFile = await overwriteFile(
+            client,
+            file,
+            path,
+            {
+              onUploadProgress: event => {
+                dispatch(uploadProgress(file, event))
+              }
+            },
+            driveId
+          )
           fileUploadedCallback(uploadedFile)
           dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file, isUpdate: true })
           error = null
@@ -416,13 +426,22 @@ const uploadFile = async (client, file, dirID, options = {}, driveId) => {
  * @param {Object} file - The uploaded javascript File object
  * @param {string} path - The file's path in the cozy
  * @param {{onUploadProgress}} options
+ * @param {string} driveId - The drive ID for shared drives
  * @return {Object} - The updated io.cozy.files
  */
-export const overwriteFile = async (client, file, path, options = {}) => {
-  const statResp = await client.collection(DOCTYPE_FILES).statByPath(path)
+export const overwriteFile = async (
+  client,
+  file,
+  path,
+  options = {},
+  driveId = null
+) => {
+  const statResp = await client
+    .collection(DOCTYPE_FILES, { driveId })
+    .statByPath(path)
   const { id: fileId, dir_id: dirId } = statResp.data
   const resp = await client
-    .collection(DOCTYPE_FILES)
+    .collection(DOCTYPE_FILES, { driveId })
     .updateFile(file, { dirId, fileId, options })
 
   return resp.data
