@@ -26,7 +26,7 @@ import AddFolderTable from '@/modules/views/Folder/virtualized/AddFolderTable'
 import EmptyContent from '@/modules/views/Folder/virtualized/EmptyContent'
 import Table from '@/modules/views/Folder/virtualized/Table'
 import { makeRows, onDrop } from '@/modules/views/Folder/virtualized/helpers'
-import { clearNewItems } from '@/modules/upload'
+import { useUploadContext } from '@/modules/upload/UploadProvider'
 
 const FolderViewBody = ({
   currentFolderId,
@@ -50,6 +50,7 @@ const FolderViewBody = ({
   const { showAlert } = useAlert()
   const { viewType } = useViewSwitcherContext()
   const { t } = useI18n()
+  const { clearNewItems } = useUploadContext()
 
   const isSelectedItem = file => {
     if (file._id === SHARED_DRIVES_DIR_ID) {
@@ -98,8 +99,8 @@ const FolderViewBody = ({
     } else {
       window.scroll({ top: 0 })
     }
-    dispatch(clearNewItems())
-  }, [currentFolderId, isDesktop, dispatch])
+    clearNewItems()
+  }, [currentFolderId, isDesktop])
 
   /**
    * When we mount the component when we already have data in cache,
