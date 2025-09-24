@@ -13,12 +13,20 @@ import useCreateFile from '@/modules/views/OnlyOffice/useCreateFile'
 
 const Create = ({ isPublic = false }) => {
   const navigate = useNavigate()
-  const { folderId, fileClass } = useParams()
-  const { status, fileId } = useCreateFile(folderId, fileClass)
+  const { folderId, fileClass, driveId = undefined } = useParams()
+  const { status, fileId } = useCreateFile(folderId, fileClass, driveId)
   const folderPath = `/folder/${folderId}`
 
   if (!canWriteOfficeDocument()) {
-    return <Navigate to={`${folderPath}/paywall`} />
+    return (
+      <Navigate
+        to={
+          driveId
+            ? `/onlyoffice/${driveId}/${folderId}/paywall`
+            : `${folderPath}/paywall`
+        }
+      />
+    )
   }
 
   if (status === 'error') {
@@ -28,8 +36,11 @@ const Create = ({ isPublic = false }) => {
   if (status === 'loaded' && fileId) {
     const url = makeOnlyOfficeFileRoute(fileId, {
       fromCreate: true,
-      fromPathname: folderPath,
-      fromPublicFolder: isPublic
+      fromPathname: driveId
+        ? `/shareddrive/${driveId}/${folderId}`
+        : folderPath,
+      fromPublicFolder: isPublic,
+      driveId
     })
     return navigate(url, {
       replace: true

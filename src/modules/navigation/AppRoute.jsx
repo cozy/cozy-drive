@@ -215,6 +215,11 @@ const AppRoute = () => (
         element={<OnlyOfficeCreateView />}
       />
 
+      <Route
+        path="onlyoffice/create/:driveId/:folderId/:fileClass"
+        element={<OnlyOfficeCreateView />}
+      />
+
       <Route path="file/:fileId" element={<FileOpenerExternal />} />
 
       <Route path="search" element={<SearchView />} />

@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from 'react'
 
-import { CozyFile } from 'cozy-doctypes'
+import { useClient } from 'cozy-client'
+import { uploadFileWithConflictStrategy } from 'cozy-client/dist/models/file'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import logger from '@/lib/logger'
@@ -9,10 +10,11 @@ import {
   makeMimeByClass
 } from '@/modules/views/OnlyOffice/helpers'
 
-const useCreateFile = (folderId, fileClass) => {
+const useCreateFile = (folderId, fileClass, driveId = undefined) => {
   const [status, setStatus] = useState('pending')
   const [fileId, setFileId] = useState(null)
   const { t } = useI18n()
+  const client = useClient()
 
   const fileExt = useMemo(() => makeExtByClass(fileClass), [fileClass])
   const fileMime = useMemo(() => makeMimeByClass(fileClass), [fileClass])
@@ -30,15 +32,17 @@ const useCreateFile = (folderId, fileClass) => {
       const reader = new FileReader()
       reader.onloadend = async () => {
         try {
-          const { data: createdFile } =
-            await CozyFile.uploadFileWithConflictStrategy(
-              fileName,
-              reader.result,
-              folderId,
-              'rename',
-              null,
-              fileMime
-            )
+          const { data: createdFile } = await uploadFileWithConflictStrategy(
+            client,
+            reader.result,
+            {
+              name: fileName,
+              dirId: folderId,
+              conflictStrategy: 'rename',
+              driveId,
+              contentType: fileMime
+            }
+          )
           setStatus('loaded')
           setFileId(createdFile.id)
         } catch (error) {
@@ -58,7 +62,7 @@ const useCreateFile = (folderId, fileClass) => {
     }
 
     doCreate()
-  }, [fileClass, fileUrl, folderId, fileMime, fileName])
+  }, [fileClass, fileUrl, folderId, fileMime, fileName, driveId, client])
 
   return { status, fileId }
 }
