@@ -272,6 +272,7 @@
     "preparing": "Preparando sus archivos..."
   },
   "upload": {
+    "label": "Subir",
     "documentType": {},
     "alert": {
       "network": "Usted no dispone de una conexión internet. Vuelva a ensayar cuando disponga de una."

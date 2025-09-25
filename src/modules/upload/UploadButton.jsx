@@ -3,6 +3,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 
 import withSharingState from 'cozy-sharing/dist/hoc/withSharingState'
+import Button from 'cozy-ui/transpiled/react/Buttons'
 import FileInput from 'cozy-ui/transpiled/react/FileInput'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import UploadIcon from 'cozy-ui/transpiled/react/Icons/Upload'
@@ -17,6 +18,7 @@ const UploadButton = ({
   className,
   displayedFolder,
   sharingState,
+  componentsProps,
   onUploaded
 }) => {
   const { showAlert } = useAlert()
@@ -42,10 +44,12 @@ const UploadButton = ({
       data-testid="upload-btn"
       value={[]} // always erase the value to be able to re-upload the same file
     >
-      <span>
-        <Icon icon={UploadIcon} />
-        <span>{label}</span>
-      </span>
+      <Button
+        {...componentsProps?.button}
+        component="span"
+        startIcon={<Icon icon={UploadIcon} />}
+        label={label}
+      />
     </FileInput>
   )
 }
@@ -53,9 +57,10 @@ const UploadButton = ({
 UploadButton.propTypes = {
   label: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
-  className: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  componentsProps: PropTypes.object,
   onUploaded: PropTypes.func,
-  displayedFolder: PropTypes.object.isRequired, // io.cozy.files
+  displayedFolder: PropTypes.object, // io.cozy.files
   // in case of upload conflicts, shared files are not overridden
   sharingState: PropTypes.object.isRequired
 }

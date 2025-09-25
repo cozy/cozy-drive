@@ -315,6 +315,7 @@
     "preparing": "Préparation de vos fichiers..."
   },
   "upload": {
+    "label": "Importer",
     "documentType": {
       "file": "fichier",
       "directory": "dossier",

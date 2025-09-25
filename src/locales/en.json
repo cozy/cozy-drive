@@ -314,6 +314,7 @@
     "preparing": "Preparing your files…"
   },
   "upload": {
+    "label": "Upload",
     "documentType": {
       "file": "file",
       "directory": "folder",

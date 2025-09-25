@@ -7,7 +7,7 @@ import AddMenuContent from '@/modules/drive/AddMenu/AddMenuContent'
 const AddMenu = ({
   anchorRef,
   handleClose,
-  isDisabled,
+  isUploadDisabled,
   canCreateFolder,
   canUpload,
   refreshFolderContent,
@@ -27,7 +27,7 @@ const AddMenu = ({
       {...actionMenuProps}
     >
       <AddMenuContent
-        isDisabled={isDisabled}
+        isUploadDisabled={isUploadDisabled}
         canCreateFolder={canCreateFolder}
         canUpload={canUpload}
         refreshFolderContent={refreshFolderContent}

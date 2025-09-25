@@ -310,6 +310,7 @@
     "preparing": "Подготовка файлов…"
   },
   "upload": {
+    "label": "Загрузить",
     "documentType": {
       "file": "файл",
       "directory": "папка",
