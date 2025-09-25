@@ -26,6 +26,7 @@ import {
   RESET_OPERATION_REDIRECTED
 } from '@/modules/navigation/duck/reducer'
 import { SelectionProvider } from '@/modules/selection/SelectionProvider'
+import { UploadProvider } from '@/modules/upload/UploadProvider'
 import UploadQueue from '@/modules/upload/UploadQueue'
 
 initFlags()
@@ -88,9 +89,11 @@ const LayoutContent = () => {
         )}
       </Sidebar>
       <UploadQueue />
-      <SelectionProvider>
-        <Outlet />
-      </SelectionProvider>
+      <UploadProvider>
+        <SelectionProvider>
+          <Outlet />
+        </SelectionProvider>
+      </UploadProvider>
       <Sprite />
       {flag('debug') && <CozyDevtools />}
     </LayoutUI>

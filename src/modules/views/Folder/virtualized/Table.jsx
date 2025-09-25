@@ -14,6 +14,7 @@ import RightClickFileMenu from '@/components/RightClick/RightClickFileMenu'
 import { useShiftArrowsSelection } from '@/hooks/useShiftArrowsSelection'
 import Cell from '@/modules/filelist/virtualized/cells/Cell'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
+import { useUploadContext } from '@/modules/upload/UploadProvider'
 
 const TableRow = forwardRef(({ item, context, children, ...props }, ref) => {
   return (
@@ -59,6 +60,7 @@ const Table = ({
   const [orderBy, setOrderBy] = useState(
     sortOrder?.attribute || columns?.[0]?.id
   )
+  const { isNewItem } = useUploadContext()
   const sortedRow = useMemo(() => {
     const sortedData = stableSort(rows, getComparator(order, orderBy))
     return secondarySort(sortedData)
@@ -102,6 +104,7 @@ const Table = ({
         selectedItems={selectedItems}
         increaseViewportBy={200}
         onSortChange={handleSort}
+        isNewItem={isNewItem}
         componentsProps={{
           rowContent: {
             children: (

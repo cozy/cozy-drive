@@ -19,6 +19,7 @@ import { ScannerMenuItem } from '@/modules/drive/Toolbar/components/Scanner/Scan
 import { useScannerContext } from '@/modules/drive/Toolbar/components/Scanner/ScannerProvider'
 import UploadItem from '@/modules/drive/Toolbar/components/UploadItem'
 import { isOfficeEditingEnabled } from '@/modules/views/OnlyOffice/helpers'
+import { UploadProvider } from '@/modules/upload/UploadProvider'
 
 const AddMenuContent = forwardRef(
   ({
@@ -116,13 +117,15 @@ const AddMenuContent = forwardRef(
         )}
         {canUpload && <Divider className="u-mv-half" />}
         {canUpload && (
-          <UploadItem
-            disabled={isDisabled}
-            onUploaded={refreshFolderContent}
-            displayedFolder={displayedFolder}
-            onClick={onClick}
-            isReadOnly={isReadOnly}
-          />
+          <UploadProvider>
+            <UploadItem
+              disabled={isDisabled}
+              onUploaded={refreshFolderContent}
+              displayedFolder={displayedFolder}
+              onClick={onClick}
+              isReadOnly={isReadOnly}
+            />
+          </UploadProvider>
         )}
         {hasScanner && <ScannerMenuItem onClick={createActionOnClick} />}
       </>

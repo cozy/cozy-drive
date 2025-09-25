@@ -29,12 +29,16 @@ export const sortFolder = (folderId, sortAttribute, sortOrder = 'asc') => {
 }
 
 /**
- * Upload files to the given directory
- * @param {Array} files - The list of File objects to upload
- * @param {string} dirId - The id of the directory in which we upload the files
- * @param {Object} sharingState - The sharing context (provided by SharingContext.Provider)
- * @param {function} fileUploadedCallback - A callback called when a file is uploaded
- * @returns {function} - A function that dispatches addToUploadQueue action
+ * Dispatches an action to upload files to a specified directory.
+ *
+ * @param {Array<File>} files - The files to upload.
+ * @param {string} dirId - The target directory ID for the upload.
+ * @param {Object} sharingState - Sharing context, if applicable.
+ * @param {function} fileUploadedCallback - Callback invoked after each file upload (optional).
+ * @param {Object} options - Additional options including client, vaultClient, showAlert, and t (translation function).
+ * @param {string} driveId - The drive ID where files are uploaded (optional).
+ * @param {function} addNewItems - Callback to add newly uploaded items to the context.
+ * @returns {function} Thunk action for Redux dispatch.
  */
 export const uploadFiles =
   (
@@ -43,7 +47,8 @@ export const uploadFiles =
     sharingState,
     fileUploadedCallback = () => null,
     { client, vaultClient, showAlert, t },
-    driveId
+    driveId,
+    addNewItems
   ) =>
   dispatch => {
     let targetDirId = dirId
@@ -80,11 +85,13 @@ export const uploadFiles =
               showAlert,
               t,
               fileTooLargeErrors,
-              navigateAfterUpload
+              navigateAfterUpload,
+              addNewItems
             )
           ),
         { client, vaultClient },
-        driveId
+        driveId,
+        addNewItems
       )
     )
   }
@@ -100,7 +107,8 @@ const uploadQueueProcessed =
     showAlert,
     t,
     fileTooLargeErrors,
-    navigateAfterUpload
+    navigateAfterUpload,
+    addNewItems
   ) =>
   dispatch => {
     const conflictCount = conflicts.length
@@ -111,6 +119,12 @@ const uploadQueueProcessed =
       ...updated,
       ...conflicts
     ])
+
+    // Add new items to the NewContext
+    const successfulUploads = [...created, ...updated]
+    if (successfulUploads.length > 0) {
+      addNewItems(successfulUploads)
+    }
 
     // Add logging to debug upload completion
     logger.debug('uploadQueueProcessed called with:', {
@@ -252,7 +266,8 @@ export const createFolder = (
   name,
   currentFolderId,
   { isEncryptedFolder = false, showAlert, t } = {},
-  driveId
+  driveId,
+  addNewItems = () => {}
 ) => {
   return async (dispatch, getState) => {
     const state = getState()
@@ -305,6 +320,11 @@ export const createFolder = (
             'Cannot create encrypted folder in root via redirection.'
           )
         }
+      }
+
+      // Add newly created folder to new items
+      if (createdFolder) {
+        addNewItems([createdFolder.data])
       }
 
       if (navigateAfterCreate && createdFolder) {

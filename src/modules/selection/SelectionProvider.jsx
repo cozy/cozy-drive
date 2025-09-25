@@ -9,6 +9,7 @@ import React, {
 import { useLocation } from 'react-router-dom'
 
 import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
+import { useUploadContext } from '@/modules/upload/UploadProvider'
 
 /**
  * @typedef TSelectionContext
@@ -43,11 +44,19 @@ const SelectionProvider = ({ children }) => {
   const [isKeyboardNavigating, setIsKeyboardNavigating] = useState(false)
   const itemsListRef = useRef([])
 
+  // Use UploadProvider context
+  const { newItems, clearNewItems } = useUploadContext()
+
   const setItemsList = items => {
     itemsListRef.current = items
   }
 
   const toggleSelectedItem = (item, index = null) => {
+    // Use UploadProvider's newItems and clearNewItems
+    if (newItems?.length > 0) {
+      clearNewItems()
+    }
+
     if (item.id === SHARED_DRIVES_DIR_ID) {
       return
     }
