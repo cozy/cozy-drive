@@ -1,7 +1,10 @@
+import cx from 'classnames'
 import React, { useCallback } from 'react'
 
 import { useVaultClient } from 'cozy-keys-lib'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+
+import styles from '@/styles/folder-view.styl'
 
 import { EmptyDrive } from '@/components/Error/Empty'
 import Oops from '@/components/Error/Oops'
@@ -91,8 +94,15 @@ const FolderBody = ({
           />
         ) : null}
         <FileListBody selectionModeActive={false}>
-          {!needsToWait && (
-            <div className={!isDesktop ? 'u-ov-hidden' : ''}>
+          {!hasData && !needsToWait && (
+            <div
+              className={cx(
+                viewType === 'grid' ? styles['fil-folder-body-grid'] : '',
+                {
+                  'u-ov-hidden': !isDesktop
+                }
+              )}
+            >
               <AddFolder
                 vaultClient={vaultClient}
                 refreshFolderContent={refreshFolderContent}
@@ -106,7 +116,21 @@ const FolderBody = ({
           {isLoading || needsToWait ? <FileListRowsPlaceholder /> : null}
           {isEmpty ? renderEmptyComponent() : null}
           {hasData && !needsToWait ? (
-            <div className={!isDesktop ? 'u-ov-hidden' : ''}>
+            <div
+              className={cx(
+                viewType === 'grid' ? styles['fil-folder-body-grid'] : '',
+                {
+                  'u-ov-hidden': !isDesktop
+                }
+              )}
+            >
+              <AddFolder
+                vaultClient={vaultClient}
+                refreshFolderContent={refreshFolderContent}
+                extraColumns={extraColumns}
+                currentFolderId={folderId}
+                driveId={driveId}
+              />
               {queryResults.map((query, queryIndex) => (
                 <React.Fragment key={queryIndex}>
                   {query.data.map(file => {
