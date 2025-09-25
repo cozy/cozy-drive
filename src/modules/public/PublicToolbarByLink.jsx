@@ -16,6 +16,7 @@ import AddButton from '@/modules/drive/Toolbar/components/AddButton'
 import { DownloadFilesButton } from '@/modules/public/DownloadFilesButton'
 import PublicToolbarMoreMenu from '@/modules/public/PublicToolbarMoreMenu'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
+import UploadButton from '@/modules/upload/UploadButton'
 
 const PublicToolbarByLink = ({
   files,
@@ -61,10 +62,20 @@ const PublicToolbarByLink = ({
         isPublic={true}
         displayedFolder={displayedFolder}
         isSelectionBarVisible={isSelectionBarVisible}
+        componentsProps={{ AddMenu: { isUploadDisabled: true } }}
       >
         {!isMobile && (
           <>
-            {hasWriteAccess && <AddButton className="u-mr-half" />}
+            {hasWriteAccess && (
+              <>
+                <UploadButton
+                  className="u-mr-half"
+                  label={t('upload.label')}
+                  displayedFolder={displayedFolder}
+                />
+                <AddButton className="u-mr-half" isPublic />
+              </>
+            )}
             {files.length > 0 && <DownloadFilesButton files={files} />}
           </>
         )}

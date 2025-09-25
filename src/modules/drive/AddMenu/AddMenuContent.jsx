@@ -22,7 +22,7 @@ import { isOfficeEditingEnabled } from '@/modules/views/OnlyOffice/helpers'
 
 const AddMenuContent = forwardRef(
   ({
-    isDisabled,
+    isUploadDisabled,
     canCreateFolder,
     canUpload,
     refreshFolderContent,
@@ -114,15 +114,16 @@ const AddMenuContent = forwardRef(
             isReadOnly={isReadOnly}
           />
         )}
-        {canUpload && <Divider className="u-mv-half" />}
-        {canUpload && (
-          <UploadItem
-            disabled={isDisabled}
-            onUploaded={refreshFolderContent}
-            displayedFolder={displayedFolder}
-            onClick={onClick}
-            isReadOnly={isReadOnly}
-          />
+        {canUpload && !isUploadDisabled && (
+          <>
+            <Divider className="u-mv-half" />
+            <UploadItem
+              onUploaded={refreshFolderContent}
+              displayedFolder={displayedFolder}
+              onClick={onClick}
+              isReadOnly={isReadOnly}
+            />
+          </>
         )}
         {hasScanner && <ScannerMenuItem onClick={createActionOnClick} />}
       </>

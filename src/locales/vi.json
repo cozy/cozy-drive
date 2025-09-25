@@ -303,13 +303,13 @@
     "file_name_missing": "Thiếu tên tệp, vui lòng đặt tên mới.",
     "file_name_illegal_name": "Tên %{fileName} không hợp lệ, vui lòng chọn tên khác.",
     "file_name_illegal_characters": "Tên %{fileName} chứa ký tự không hợp lệ: %{characters}",
-  "folder_generic": "Đã xảy ra lỗi, vui lòng thử lại",
-    "folder_generic": "An error occurred, please try again.",
+    "folder_generic": "Đã xảy ra lỗi, vui lòng thử lại",
     "folder_abort": "Bạn cần đặt tên cho thư mục mới để lưu. Dữ liệu hiện tại chưa được lưu.",
     "offline": "Tính năng này không khả dụng khi ngoại tuyến.",
     "preparing": "Đang chuẩn bị tệp của bạn…"
   },
   "upload": {
+    "label": "Tải lên",
     "documentType": {
       "file": "tệp",
       "directory": "thư mục",

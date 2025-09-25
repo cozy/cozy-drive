@@ -284,6 +284,7 @@
     "preparing": "Deine Dateien werden vorbereitet..."
   },
   "upload": {
+    "label": "Hochladen",
     "alert": {
       "network": "Du bist zurzeit offline. Bitte versuche es erneut, sobald du wieder verbunden bist."
     }

@@ -17,7 +17,6 @@ import { useDisplayedFolder } from '@/hooks'
 import { uploadFiles } from '@/modules/navigation/duck'
 
 const UploadItem = ({
-  isDisabled,
   onClick,
   isReadOnly,
   displayedFolder,
@@ -90,7 +89,6 @@ const UploadItem = ({
   return (
     <FileInput
       label={t('toolbar.menu_upload')}
-      disabled={isDisabled}
       multiple
       onChange={handleChange}
       data-testid="upload-btn"

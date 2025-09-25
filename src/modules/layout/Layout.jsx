@@ -12,6 +12,7 @@ import { Layout as LayoutUI } from 'cozy-ui/transpiled/react/Layout'
 import Sidebar from 'cozy-ui/transpiled/react/Sidebar'
 import Storage from 'cozy-ui/transpiled/react/Storage'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import ButtonClient from '@/components/pushClient/Button'
 import { ROOT_DIR_ID } from '@/constants/config'
@@ -26,6 +27,7 @@ import {
   RESET_OPERATION_REDIRECTED
 } from '@/modules/navigation/duck/reducer'
 import { SelectionProvider } from '@/modules/selection/SelectionProvider'
+import UploadButton from '@/modules/upload/UploadButton'
 import UploadQueue from '@/modules/upload/UploadQueue'
 
 initFlags()
@@ -36,6 +38,7 @@ const LayoutContent = () => {
   const { isMobile, isDesktop } = useBreakpoints()
   const { displayedFolder } = useDisplayedFolder()
   const { hasWriteAccess } = useSharingContext()
+  const { t } = useI18n()
 
   const shouldRedirect = useSelector(wasOperationRedirected)
   const [, setLastClicked] = useNavContext()
@@ -63,18 +66,24 @@ const LayoutContent = () => {
       <Sidebar className="u-flex-justify-between">
         <div>
           {isDesktop ? (
-            <AddMenuProvider
-              canCreateFolder={true}
-              canUpload={true}
-              disabled={false}
-              displayedFolder={displayedFolder}
-              isSelectionBarVisible={false}
-              isReadOnly={isFolderReadOnly}
-            >
-              <div className="u-mh-1-half u-mt-1-half">
-                <AddButton className="u-w-100 u-bdrs-6" />
-              </div>
-            </AddMenuProvider>
+            <div className="u-mh-1-half u-mt-1-half">
+              <UploadButton
+                componentsProps={{ button: { className: 'u-w-100 u-bdrs-6' } }}
+                label={t('upload.label')}
+                displayedFolder={displayedFolder}
+              />
+              <AddMenuProvider
+                canCreateFolder={true}
+                canUpload={true}
+                disabled={false}
+                displayedFolder={displayedFolder}
+                isSelectionBarVisible={false}
+                isReadOnly={isFolderReadOnly}
+                componentsProps={{ AddMenu: { isUploadDisabled: true } }}
+              >
+                <AddButton className="u-w-100 u-bdrs-6 u-mt-half" />
+              </AddMenuProvider>
+            </div>
           ) : null}
           <Nav />
         </div>
