@@ -31,7 +31,6 @@ const mockStore = createStore(() => ({
     queue: [],
     newItems: []
   }
-  // Add other state slices if needed
 }))
 
 const SelectionConsumer = ({ items }) => {

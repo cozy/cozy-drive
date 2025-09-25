@@ -23,7 +23,7 @@ const UploadButton = ({ label, disabled, onUpload, className }) => {
       label={label}
       disabled={disabled}
       multiple
-      onChange={files => onUpload(files, showAlert, addNewItems)} 
+      onChange={files => onUpload(files, showAlert, addNewItems)}
       data-testid="upload-btn"
       value={[]} // always erase the value to be able to re-upload the same file
     >

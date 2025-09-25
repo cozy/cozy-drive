@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useCallback } from 'react'
 
 const UploadContext = createContext()
 
-export const UploadProvider = ({ children }) => {
+const UploadProvider = ({ children }) => {
   const [newItems, setNewItems] = useState([])
 
   const addNewItems = useCallback(items => {
@@ -30,9 +30,7 @@ export const UploadProvider = ({ children }) => {
   }
 
   return (
-    <UploadContext.Provider value={value}>
-      {children}
-    </UploadContext.Provider>
+    <UploadContext.Provider value={value}>{children}</UploadContext.Provider>
   )
 }
 

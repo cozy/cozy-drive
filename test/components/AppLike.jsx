@@ -75,7 +75,9 @@ const AppLike = ({
                           <AlertProvider>
                             <PushBannerProvider>
                               <ModalContext.Provider
-                                value={modalContextValue || mockModalContextValue}
+                                value={
+                                  modalContextValue || mockModalContextValue
+                                }
                               >
                                 <FabProvider>
                                   <RightClickProvider>

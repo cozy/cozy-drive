@@ -84,7 +84,15 @@ const UploadItem = ({
 }
 
 const mapDispatchToProps = (dispatch, { sharingState, onUploaded, t }) => ({
-  onUpload: (client, vaultClient, files, initialDirId, showAlert, driveId, addNewItems) => {
+  onUpload: (
+    client,
+    vaultClient,
+    files,
+    initialDirId,
+    showAlert,
+    driveId,
+    addNewItems
+  ) => {
     dispatch(
       uploadFiles(
         files,

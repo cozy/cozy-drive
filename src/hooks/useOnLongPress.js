@@ -7,7 +7,7 @@ import { useUploadContext } from '@/modules/upload/UploadProvider'
 export default function useLongPress({ onPress, selectionModeActive }) {
   const timerRef = useRef()
   const isLongPress = useRef()
-  const { clearNewItems } = useUploadContext() 
+  const { clearNewItems } = useUploadContext()
 
   // used to create the longpress, i.e. delay on click
   function startPressTimer(e) {
@@ -20,9 +20,8 @@ export default function useLongPress({ onPress, selectionModeActive }) {
 
   // first event triggered on Desktop when clicking an item
   // if conditions are met, click is triggered after a certain amount of time
+  // button 0 is left click
   function handleOnMouseDown(e) {
-    // button 0 is left click
-
     // Clear any new items that could be in the upload state
     clearNewItems()
 

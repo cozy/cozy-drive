@@ -73,7 +73,7 @@ const createFolderAfterSubmit =
           t
         },
         ownProps.driveId,
-        addNewItems 
+        addNewItems
       )
     ).then(() => {
       // eslint-disable-next-line promise/always-return
@@ -86,7 +86,11 @@ const createFolderAfterSubmit =
 export const addFolderDispatch = (dispatch, ownProps) => ({
   onSubmit: (name, showAlert, t) =>
     dispatch(
-      createFolderAfterSubmit(ownProps, name, { showAlert, t, addNewItems: ownProps.addNewItems })
+      createFolderAfterSubmit(ownProps, name, {
+        showAlert,
+        t,
+        addNewItems: ownProps.addNewItems
+      })
     ),
   onAbort: (accidental, showAlert, t) => {
     if (accidental) {
@@ -113,7 +117,7 @@ const AddFolderWithState = compose(
 
 const AddFolderWithAfter = ({ refreshFolderContent, ...props }) => {
   const dispatch = useDispatch()
-  const { addNewItems } = useUploadContext() 
+  const { addNewItems } = useUploadContext()
 
   const handleAfterSubmit = () => {
     if (refreshFolderContent) {
@@ -130,7 +134,7 @@ const AddFolderWithAfter = ({ refreshFolderContent, ...props }) => {
     <AddFolderWithState
       afterSubmit={handleAfterSubmit}
       afterAbort={handleAfterAbort}
-      addNewItems={addNewItems} 
+      addNewItems={addNewItems}
       {...props}
     />
   )
