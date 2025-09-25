@@ -17,6 +17,10 @@ const EmptyCanvas = ({ type, canUpload, localeKey, hasTextMobileVersion }) => {
 
   const otherProps = { iconSize: isMobile ? 'large' : 'medium' }
   const IconToShow = type === 'trash' ? TrashIllustration : FolderEmptyIllu
+  const text =
+    (hasTextMobileVersion && isMobile && t(`empty.${localeKey}_mobile_text`)) ||
+    (localeKey && t(`empty.${localeKey}_text`)) ||
+    (canUpload && t('empty.text'))
 
   return (
     <Empty
@@ -27,13 +31,7 @@ const EmptyCanvas = ({ type, canUpload, localeKey, hasTextMobileVersion }) => {
         </div>
       }
       title={localeKey ? t(`empty.${localeKey}_title`) : t('empty.title')}
-      text={
-        (hasTextMobileVersion &&
-          isMobile &&
-          t(`empty.${localeKey}_mobile_text`)) ||
-        (localeKey && t(`empty.${localeKey}_text`)) ||
-        (canUpload && t('empty.text'))
-      }
+      text={text}
       className={cx(styles['empty'])}
       {...otherProps}
     />
