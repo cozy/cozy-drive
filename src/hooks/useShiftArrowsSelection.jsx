@@ -1,8 +1,12 @@
 import { useEffect, useRef } from 'react'
 
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
+
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 
 const useShiftArrowsSelection = ({ items, viewType = 'list' }, ref) => {
+  const { isMobile } = useBreakpoints()
+
   const { setItemsList, handleShiftArrow } = useSelectionContext()
   const viewTypeRef = useRef()
 
@@ -15,7 +19,10 @@ const useShiftArrowsSelection = ({ items, viewType = 'list' }, ref) => {
   }, [items, setItemsList])
 
   useEffect(() => {
+    if (isMobile) return
+
     if (!ref?.current) return
+
     const table = ref.current
     ref.current.focus()
 
@@ -38,7 +45,7 @@ const useShiftArrowsSelection = ({ items, viewType = 'list' }, ref) => {
     return () => {
       table.removeEventListener('keydown', handleKeyDown)
     }
-  }, [handleShiftArrow, ref])
+  }, [handleShiftArrow, isMobile, ref])
 }
 
 export { useShiftArrowsSelection }
