@@ -37,6 +37,17 @@ import { FolderUnlocker } from '@/modules/folder/components/FolderUnlocker'
 import { useFolderSort } from '@/modules/navigation/duck'
 import SelectionBar from '@/modules/selection/SelectionBar'
 import { isReferencedByShareInSharingContext } from '@/modules/views/Folder/syncHelpers'
+
+const FileListBodyWrapper = ({ viewType, children }) => {
+  return (
+    <div
+      className={cx(viewType === 'grid' ? styles['fil-folder-body-grid'] : '')}
+    >
+      {children}
+    </div>
+  )
+}
+
 // TODO: extraColumns is then passed to 'FileListHeader', 'AddFolder',
 // and 'File' (this one from a 'syncingFakeFile' and a normal file).
 // It is easy to forget to update one of these components to pass 'extraColumns'.
@@ -144,18 +155,6 @@ const FolderViewBody = ({
   const handleFolderUnlockerDismiss = useCallback(() => {
     navigate('/folder')
   }, [navigate])
-
-  const FileListBodyWrapper = ({ viewType, children }) => {
-    return (
-      <div
-        className={cx(
-          viewType === 'grid' ? styles['fil-folder-body-grid'] : ''
-        )}
-      >
-        {children}
-      </div>
-    )
-  }
 
   return (
     <FolderUnlocker
