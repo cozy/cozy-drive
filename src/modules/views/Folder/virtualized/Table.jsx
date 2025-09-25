@@ -49,7 +49,6 @@ const Table = ({
 }) => {
   const {
     handleShiftClick,
-    handleShiftArrow,
     focusedIndex,
     toggleSelectedItem,
     isKeyboardNavigating
@@ -101,7 +100,6 @@ const Table = ({
         onSelect={handleRowSelect}
         isSelectedItem={isSelectedItem}
         selectedItems={selectedItems}
-        handleShiftArrow={handleShiftArrow}
         increaseViewportBy={200}
         onSortChange={handleSort}
         componentsProps={{
