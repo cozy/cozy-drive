@@ -1,6 +1,9 @@
 @require 'settings/breakpoints'
 
-+small-screen() // @stylint ignore
-    .empty
-        margin-top calc(50vh - 6rem)
-        transform translateY(-50%)
+.empty
+    +medium-screen('min')
+        border 2px dashed var(--borderMainColor)
+        border-radius 1rem
+        margin-bottom 1.5rem
+        width 100%
+        max-width calc(100% - 7rem)

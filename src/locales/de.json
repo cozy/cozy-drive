@@ -245,6 +245,8 @@
   },
   "empty": {
     "title": "Du hast keine Dateien in diesem Ordner.",
+    "text": "Wählen Sie Dateien auf Ihrem Computer aus oder ziehen Sie sie hierher.",
+    "mobile_text": "Wählen Sie Dateien auf Ihrem Gerät aus.",
     "trash_title": "Du hast keine gelöschten Dateien.",
     "trash_text": "Verschiebe Dateien, die du nicht länger benötigst in den Papierkorb und lösche Elemente dauerhaft, um Speicherplatz freizumachen."
   },
