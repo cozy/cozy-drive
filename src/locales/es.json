@@ -238,6 +238,8 @@
   },
   "empty": {
     "title": "No hay archivos en esta carpeta.",
+    "text": "Selecciona archivos en tu computadora o arrástralos aquí.",
+    "mobile_text": "Selecciona archivos en tu dispositivo.",
     "trash_title": "Usted no tiene ningún archivo borrado.",
     "trash_text": "Los archivos que no necesita más échelos a la Papelera y suprímalos definitivamente para liberar espacio de almacenamiento."
   },

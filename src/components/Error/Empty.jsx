@@ -10,30 +10,50 @@ import styles from './empty.styl'
 
 import FolderEmptyIllu from '@/assets/icons/illu-folder-empty.svg'
 import TrashIllustration from '@/assets/icons/illu-trash-empty.svg'
+import { useDisplayedFolder } from '@/hooks'
+import UploadButton from '@/modules/upload/UploadButton'
 
 const EmptyCanvas = ({ type, canUpload, localeKey, hasTextMobileVersion }) => {
   const { t } = useI18n()
-  const { isMobile } = useBreakpoints()
+  const { isDesktop } = useBreakpoints()
+  const { displayedFolder } = useDisplayedFolder()
 
-  const otherProps = { iconSize: isMobile ? 'large' : 'medium' }
   const IconToShow = type === 'trash' ? TrashIllustration : FolderEmptyIllu
+  const showUploadLayout = type === 'drive' || type === 'encrypted'
+  const title = localeKey ? t(`empty.${type}_title`) : undefined
   const text =
-    (hasTextMobileVersion && isMobile && t(`empty.${localeKey}_mobile_text`)) ||
+    (hasTextMobileVersion && !isDesktop && t(`empty.mobile_text`)) ||
     (localeKey && t(`empty.${localeKey}_text`)) ||
     (canUpload && t('empty.text'))
 
   return (
     <Empty
+      className={cx({ [styles['empty']]: showUploadLayout })}
       data-testid="empty-folder"
       icon={
         <div className="u-w-100">
           <Icon icon={IconToShow} size={160} />
         </div>
       }
-      title={localeKey ? t(`empty.${localeKey}_title`) : t('empty.title')}
-      text={text}
-      className={cx(styles['empty'])}
-      {...otherProps}
+      iconSize={isDesktop ? 'medium' : 'large'}
+      centered={!isDesktop}
+      title={title}
+      text={
+        <>
+          {text}
+          {showUploadLayout && (
+            <span className="u-db u-mt-1">
+              <UploadButton
+                componentsProps={{
+                  button: { variant: 'secondary' }
+                }}
+                label={t('toolbar.menu_upload')}
+                displayedFolder={displayedFolder}
+              />
+            </span>
+          )}
+        </>
+      }
     />
   )
 }
@@ -43,9 +63,9 @@ export default EmptyCanvas
 export const EmptyDrive = props => {
   const { isEncrypted } = props
   if (isEncrypted) {
-    return <EmptyCanvas type="encrypted" {...props} />
+    return <EmptyCanvas type="encrypted" hasTextMobileVersion {...props} />
   }
-  return <EmptyCanvas type="drive" {...props} />
+  return <EmptyCanvas type="drive" hasTextMobileVersion {...props} />
 }
 export const EmptyPhotos = props => <EmptyCanvas type="photos" {...props} />
 

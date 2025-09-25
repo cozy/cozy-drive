@@ -247,7 +247,8 @@
   },
   "empty": {
     "title": "Deze map bevat geen bestanden.",
-    "text": "Klik op de knop ‘Toevoegen’ om bestanden toe te voegen.",
+    "text": "Selecteer bestanden op uw computer of sleep ze hierheen.",
+    "mobile_text": "Selecteer bestanden op je apparaat.",
     "trash_title": "Je hebt geen verwijderde bestanden.",
     "trash_text": "Verplaats bestanden die je niet langer nodig hebt naar de prullenbak en verwijder items permanent om ruimte vrij te maken."
   },

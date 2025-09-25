@@ -271,7 +271,8 @@
   },
   "empty": {
     "title": "Bạn chưa có tệp nào trong thư mục này.",
-    "text": "Nhấn vào nút \"Thêm\" để tải tệp lên.",
+    "text": "Chọn tệp trên máy tính của bạn hoặc kéo chúng vào đây.",
+    "mobile_text": "Chọn tệp trên thiết bị của bạn.",
     "trash_title": "Bạn chưa có tệp nào trong Thùng rác.",
     "trash_text": "Chuyển các tệp không cần thiết vào Thùng rác và xóa vĩnh viễn để giải phóng dung lượng."
   },
