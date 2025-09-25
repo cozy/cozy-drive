@@ -1,6 +1,5 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { compose } from 'redux'
+import { useDispatch } from 'react-redux'
 
 import { useClient } from 'cozy-client'
 import { useVaultClient } from 'cozy-keys-lib'
@@ -12,23 +11,50 @@ import UploadIcon from 'cozy-ui/transpiled/react/Icons/Upload'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
-import { translate } from 'cozy-ui/transpiled/react/providers/I18n'
+import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { useDisplayedFolder } from '@/hooks'
 import { uploadFiles } from '@/modules/navigation/duck'
 
 const UploadItem = ({
-  t,
   isDisabled,
-  onUpload,
   onClick,
   isReadOnly,
-  displayedFolder
+  displayedFolder,
+  sharingState,
+  onUploaded
 }) => {
   const client = useClient()
   const vaultClient = useVaultClient()
   const { showAlert } = useAlert()
   const { initialDirId } = useDisplayedFolder()
+  const { t } = useI18n()
+  const dispatch = useDispatch()
+
+  const onUpload = (
+    client,
+    vaultClient,
+    files,
+    initialDirId,
+    showAlert,
+    driveId
+  ) => {
+    dispatch(
+      uploadFiles(
+        files,
+        initialDirId,
+        sharingState,
+        onUploaded,
+        {
+          client,
+          vaultClient,
+          showAlert,
+          t
+        },
+        driveId
+      )
+    )
+  }
 
   const handleMenuItemClick = evt => {
     if (isReadOnly) {
@@ -80,28 +106,4 @@ const UploadItem = ({
   )
 }
 
-const mapDispatchToProps = (dispatch, { sharingState, onUploaded, t }) => ({
-  onUpload: (client, vaultClient, files, initialDirId, showAlert, driveId) => {
-    dispatch(
-      uploadFiles(
-        files,
-        initialDirId,
-        sharingState,
-        onUploaded,
-        {
-          client,
-          vaultClient,
-          showAlert,
-          t
-        },
-        driveId
-      )
-    )
-  }
-})
-
-export default compose(
-  withSharingState,
-  translate(),
-  connect(null, mapDispatchToProps)
-)(UploadItem)
+export default withSharingState(UploadItem)
