@@ -7,6 +7,7 @@ import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 
 import { navigateToModalWithMultipleFile } from '@/modules/actions/helpers'
+import { isSharedDriveFolder } from '@/modules/shareddrives/helpers'
 
 const moveTo = ({ t, canMove, pathname, navigate, isMobile, search }) => {
   const icon = MovetoIcon
@@ -18,7 +19,13 @@ const moveTo = ({ t, canMove, pathname, navigate, isMobile, search }) => {
     name: 'moveTo',
     label,
     icon,
-    displayCondition: docs => docs.length > 0 && canMove,
+    displayCondition: docs => {
+      return (
+        docs.length > 0 &&
+        canMove &&
+        docs.every(doc => !isSharedDriveFolder(doc))
+      )
+    },
     action: async files => {
       navigateToModalWithMultipleFile({
         files,
