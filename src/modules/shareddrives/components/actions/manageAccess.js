@@ -6,10 +6,11 @@ import PeopleIcon from 'cozy-ui/transpiled/react/Icons/People'
 import ListItemIcon from 'cozy-ui/transpiled/react/ListItemIcon'
 import ListItemText from 'cozy-ui/transpiled/react/ListItemText'
 
+import { navigateToModal } from '@/modules/actions/helpers'
 import { isFolderFromSharedDriveOwner } from '@/modules/shareddrives/helpers'
 import { getFolderIdFromSharing } from '@/modules/shareddrives/helpers'
 
-export const manageAccess = ({ sharedDrive, navigate, t }) => {
+export const manageAccess = ({ sharedDrive, navigate, pathname, t }) => {
   const label = t('toolbar.menu_manage_access')
   const icon = PeopleIcon
 
@@ -28,7 +29,11 @@ export const manageAccess = ({ sharedDrive, navigate, t }) => {
         : docs[0]._id
 
       if (folderId) {
-        navigate(`/folder/${folderId}/share`)
+        if (pathname === '/sharings') {
+          navigateToModal({ navigate, pathname, files: docs, path: 'share' })
+        } else {
+          navigate(`/folder/${folderId}/share`)
+        }
       } else {
         navigate('/sharings')
       }
