@@ -55,6 +55,10 @@ export default function useLongPress({ onPress, selectionModeActive }) {
     startPressTimer(e)
   }
 
+  function handleOnTouchMove() {
+    clearTimeout(timerRef.current)
+  }
+
   function handleOnTouchEnd() {
     clearTimeout(timerRef.current)
   }
@@ -65,7 +69,8 @@ export default function useLongPress({ onPress, selectionModeActive }) {
       onMouseDown: handleOnMouseDown,
       onMouseUp: handleOnMouseUp,
       onTouchStart: handleOnTouchStart,
-      onTouchEnd: handleOnTouchEnd
+      onTouchEnd: handleOnTouchEnd,
+      onTouchMove: handleOnTouchMove
     }
   }
 }
