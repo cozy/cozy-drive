@@ -53,7 +53,7 @@ const FolderViewBody = ({
     if (file._id === SHARED_DRIVES_DIR_ID) {
       return false
     }
-    return selectedItems.some(item => item.id === file.id)
+    return selectedItems.some(item => item._id === file._id)
   }
 
   const isInError = queryResults.some(query => query.fetchStatus === 'failed')
