@@ -67,7 +67,6 @@ export const EmptyDrive = props => {
   }
   return <EmptyCanvas type="drive" hasTextMobileVersion {...props} />
 }
-export const EmptyPhotos = props => <EmptyCanvas type="photos" {...props} />
 
 export const EmptyTrash = props => (
   <EmptyCanvas type="trash" localeKey="trash" {...props} />
