@@ -17,15 +17,13 @@ import { useSyncingFakeFile } from './useSyncingFakeFile'
 
 import styles from '@/styles/folder-view.styl'
 
-import { EmptyDrive, EmptyTrash } from '@/components/Error/Empty'
+import { EmptyWrapper } from '@/components/Error/Empty'
 import Oops from '@/components/Error/Oops'
 import RightClickFileMenu from '@/components/RightClick/RightClickFileMenu'
-import { TRASH_DIR_ID } from '@/constants/config'
 import { useShiftArrowsSelection } from '@/hooks/useShiftArrowsSelection'
 import AcceptingSharingContext from '@/lib/AcceptingSharingContext'
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
 import { useViewSwitcherContext } from '@/lib/ViewSwitcherContext'
-import { isEncryptedFolder } from '@/lib/encryption'
 import AddFolder from '@/modules/filelist/AddFolder'
 import { FileWithSelection as File } from '@/modules/filelist/File'
 import { FileList } from '@/modules/filelist/FileList'
@@ -126,7 +124,6 @@ const FolderViewBody = ({
   const isSharingContextEmpty = Object.keys(sharingsValue).length <= 0
 
   const { syncingFakeFile } = useSyncingFakeFile({ isEmpty, queryResults })
-  const isEncFolder = isEncryptedFolder(displayedFolder)
 
   /**
    * When we mount the component when we already have data in cache,
@@ -191,16 +188,13 @@ const FolderViewBody = ({
           which empty component to display. It should be done by the "view" itself.
           But adding a new prop like <FolderViewBody emptyComponent={}
           is not good enought too */}
-          {displayedFolder !== null &&
-            isEmpty &&
-            currentFolderId !== TRASH_DIR_ID && (
-              <EmptyDrive isEncrypted={isEncFolder} canUpload={canUpload} />
-            )}
-          {displayedFolder !== null &&
-            isEmpty &&
-            currentFolderId === TRASH_DIR_ID && (
-              <EmptyTrash canUpload={canUpload} />
-            )}
+          {displayedFolder !== null && isEmpty && (
+            <EmptyWrapper
+              currentFolderId={currentFolderId}
+              displayedFolder={displayedFolder}
+              canUpload={canUpload}
+            />
+          )}
           {hasDataToShow && !needsToWait && (
             <FileListBodyWrapper viewType={viewType} isDesktop={isDesktop}>
               <>

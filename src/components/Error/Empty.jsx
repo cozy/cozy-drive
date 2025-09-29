@@ -10,7 +10,9 @@ import styles from './empty.styl'
 
 import FolderEmptyIllu from '@/assets/icons/illu-folder-empty.svg'
 import TrashIllustration from '@/assets/icons/illu-trash-empty.svg'
+import { TRASH_DIR_ID } from '@/constants/config'
 import { useDisplayedFolder } from '@/hooks'
+import { isEncryptedFolder } from '@/lib/encryption'
 import UploadButton from '@/modules/upload/UploadButton'
 
 const EmptyCanvas = ({ type, canUpload, localeKey, hasTextMobileVersion }) => {
@@ -71,3 +73,20 @@ export const EmptyDrive = props => {
 export const EmptyTrash = props => (
   <EmptyCanvas type="trash" localeKey="trash" {...props} />
 )
+
+export const EmptyWrapper = ({
+  currentFolderId,
+  displayedFolder,
+  canUpload
+}) => {
+  if (currentFolderId !== TRASH_DIR_ID) {
+    return (
+      <EmptyDrive
+        isEncrypted={isEncryptedFolder(displayedFolder)}
+        canUpload={canUpload}
+      />
+    )
+  }
+
+  return <EmptyTrash canUpload={canUpload} />
+}
