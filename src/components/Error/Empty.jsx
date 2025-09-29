@@ -1,5 +1,6 @@
 import cx from 'classnames'
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 
 import Empty from 'cozy-ui/transpiled/react/Empty'
 import Icon from 'cozy-ui/transpiled/react/Icon'
@@ -14,6 +15,7 @@ import { TRASH_DIR_ID } from '@/constants/config'
 import { useDisplayedFolder } from '@/hooks'
 import { isEncryptedFolder } from '@/lib/encryption'
 import UploadButton from '@/modules/upload/UploadButton'
+import CreateSharedDriveButton from '@/modules/views/SharedDrive/CreateSharedDriveButton'
 
 const EmptyCanvas = ({ type, canUpload, localeKey, hasTextMobileVersion }) => {
   const { t } = useI18n()
@@ -22,11 +24,13 @@ const EmptyCanvas = ({ type, canUpload, localeKey, hasTextMobileVersion }) => {
 
   const IconToShow = type === 'trash' ? TrashIllustration : FolderEmptyIllu
   const showUploadLayout = type === 'drive' || type === 'encrypted'
+  const showSharedDriveLayout = type === 'sharing'
   const title = localeKey ? t(`empty.${type}_title`) : undefined
   const text =
     (hasTextMobileVersion && !isDesktop && t(`empty.mobile_text`)) ||
     (localeKey && t(`empty.${localeKey}_text`)) ||
-    (canUpload && t('empty.text'))
+    (canUpload && t('empty.text')) ||
+    (type === 'sharing' && t('empty.shared-drive_text'))
 
   return (
     <Empty
@@ -51,6 +55,14 @@ const EmptyCanvas = ({ type, canUpload, localeKey, hasTextMobileVersion }) => {
                 }}
                 label={t('toolbar.menu_upload')}
                 displayedFolder={displayedFolder}
+              />
+            </span>
+          )}
+          {showSharedDriveLayout && (
+            <span className="u-db u-mt-1">
+              <CreateSharedDriveButton
+                variant="secondary"
+                label={t('button.create')}
               />
             </span>
           )}
@@ -79,6 +91,11 @@ export const EmptyWrapper = ({
   displayedFolder,
   canUpload
 }) => {
+  const { pathname } = useLocation()
+
+  if (pathname === '/sharings') {
+    return <EmptyCanvas type="sharing" />
+  }
   if (currentFolderId !== TRASH_DIR_ID) {
     return (
       <EmptyDrive
