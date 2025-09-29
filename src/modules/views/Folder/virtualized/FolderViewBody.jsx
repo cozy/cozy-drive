@@ -12,6 +12,7 @@ import Grid from './Grid'
 import { makeColumns } from '../helpers'
 import { useSyncingFakeFile } from '../useSyncingFakeFile'
 
+import { EmptyWrapper } from '@/components/Error/Empty'
 import Oops from '@/components/Error/Oops'
 import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
@@ -23,7 +24,6 @@ import { useCancelable } from '@/modules/move/hooks/useCancelable'
 import SelectionBar from '@/modules/selection/SelectionBar'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 import AddFolderTable from '@/modules/views/Folder/virtualized/AddFolderTable'
-import EmptyContent from '@/modules/views/Folder/virtualized/EmptyContent'
 import Table from '@/modules/views/Folder/virtualized/Table'
 import { makeRows, onDrop } from '@/modules/views/Folder/virtualized/helpers'
 
@@ -143,12 +143,13 @@ const FolderViewBody = ({
       which empty component to display. It should be done by the "view" itself.
       But adding a new prop like <FolderViewBody emptyComponent={}
       is not good enought too */}
-      <EmptyContent
-        displayedFolder={displayedFolder}
-        isEmpty={isEmpty}
-        currentFolderId={currentFolderId}
-        canUpload={canUpload}
-      />
+      {displayedFolder !== null && isEmpty && (
+        <EmptyWrapper
+          currentFolderId={currentFolderId}
+          displayedFolder={displayedFolder}
+          canUpload={canUpload}
+        />
+      )}
       {showTable &&
         (viewType === 'list' ? (
           <Table
