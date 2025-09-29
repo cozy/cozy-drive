@@ -48,17 +48,17 @@ const SelectionProvider = ({ children }) => {
   }
 
   const toggleSelectedItem = (item, index = null) => {
-    if (item.id === SHARED_DRIVES_DIR_ID) {
+    if (item._id === SHARED_DRIVES_DIR_ID) {
       return
     }
 
-    if (isItemSelected(item.id)) {
+    if (isItemSelected(item._id)) {
       // eslint-disable-next-line no-unused-vars
-      const { [item.id]: _, ...stillSelected } = selectedItems
+      const { [item._id]: _, ...stillSelected } = selectedItems
       setSelectedItems(stillSelected)
       setLastSelectedIndex(null)
     } else {
-      setSelectedItems({ ...selectedItems, [item.id]: item })
+      setSelectedItems({ ...selectedItems, [item._id]: item })
       if (index !== null) {
         setLastSelectedIndex(index)
         setFocusedIndex(index)
@@ -74,12 +74,12 @@ const SelectionProvider = ({ children }) => {
 
     for (let i = start; i <= end; i++) {
       const item = itemsListRef.current[i]
-      if (!item || item.id === SHARED_DRIVES_DIR_ID) continue
+      if (!item || item._id === SHARED_DRIVES_DIR_ID) continue
 
-      if (newSelectedItems[item.id] && i !== start) {
-        delete newSelectedItems[item.id]
+      if (newSelectedItems[item._id] && i !== start) {
+        delete newSelectedItems[item._id]
       } else {
-        newSelectedItems[item.id] = item
+        newSelectedItems[item._id] = item
       }
     }
 
@@ -104,13 +104,13 @@ const SelectionProvider = ({ children }) => {
 
     if (lastSelectedIndex === null && Object.keys(selectedItems).length === 0) {
       let firstValidIndex = 0
-      if (allItems[0]?.id === SHARED_DRIVES_DIR_ID && allItems.length > 1) {
+      if (allItems[0]?._id === SHARED_DRIVES_DIR_ID && allItems.length > 1) {
         firstValidIndex = 1
       }
 
       const firstItem = allItems[firstValidIndex]
-      if (firstItem && firstItem.id !== SHARED_DRIVES_DIR_ID) {
-        const newSelectedItems = { [firstItem.id]: firstItem }
+      if (firstItem && firstItem._id !== SHARED_DRIVES_DIR_ID) {
+        const newSelectedItems = { [firstItem._id]: firstItem }
         setSelectedItems(newSelectedItems)
         setFocusedIndex(firstValidIndex)
         setLastSelectedIndex(firstValidIndex)
@@ -123,7 +123,7 @@ const SelectionProvider = ({ children }) => {
     const anchorIndex =
       lastSelectedIndex !== null ? lastSelectedIndex : prevFocused
     const startSelected =
-      !!allItems[anchorIndex] && isItemSelected(allItems[anchorIndex]?.id)
+      !!allItems[anchorIndex] && isItemSelected(allItems[anchorIndex]?._id)
 
     let nextFocused = clamp(prevFocused + (direction < 0 ? -1 : 1))
 
@@ -140,7 +140,7 @@ const SelectionProvider = ({ children }) => {
         while (
           nextFocused >= 0 &&
           nextFocused < allItems.length &&
-          isItemSelected(allItems[nextFocused]?.id)
+          isItemSelected(allItems[nextFocused]?._id)
         ) {
           const nf = nextFocused + step
           if (nf < 0 || nf >= allItems.length) break
@@ -150,8 +150,8 @@ const SelectionProvider = ({ children }) => {
         let i = prevFocused + step
         while (i >= 0 && i < allItems.length) {
           const it = allItems[i]
-          if (it && it.id !== SHARED_DRIVES_DIR_ID) {
-            newSelectedItems[it.id] = it
+          if (it && it._id !== SHARED_DRIVES_DIR_ID) {
+            newSelectedItems[it._id] = it
           }
           if (i === nextFocused) break
           i += step
@@ -160,7 +160,7 @@ const SelectionProvider = ({ children }) => {
         let i = prevFocused
         while (i >= 0 && i < allItems.length && i !== nextFocused) {
           const it = allItems[i]
-          if (it) delete newSelectedItems[it.id]
+          if (it) delete newSelectedItems[it._id]
           i -= step
         }
       }
@@ -168,7 +168,7 @@ const SelectionProvider = ({ children }) => {
       let i = prevFocused + step
       while (i >= 0 && i < allItems.length) {
         const it = allItems[i]
-        if (it) delete newSelectedItems[it.id]
+        if (it) delete newSelectedItems[it._id]
         if (i === nextFocused) break
         i += step
       }
@@ -182,7 +182,7 @@ const SelectionProvider = ({ children }) => {
 
   const selectAll = items => {
     const newSelectedItems = items.reduce((acc, item) => {
-      acc[item.id] = item
+      acc[item._id] = item
       return acc
     }, {})
     setSelectedItems(newSelectedItems)
