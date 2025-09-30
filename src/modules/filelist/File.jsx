@@ -105,7 +105,7 @@ const File = ({
 
   const isRowDisabledOrInSyncFromSharing = disabled || isInSyncFromSharing
 
-  const selected = isItemSelected(attributes.id)
+  const selected = isItemSelected(attributes._id)
 
   const filContentRowSelected = cx(styles['fil-content-row'], {
     [styles['fil-content-row-selected']]: selected,
@@ -291,7 +291,7 @@ export const FileWithSelection = props => {
   const isRenaming = useSelector(
     state =>
       isRenamingReducer(state) &&
-      get(getRenamingFile(state), 'id') === props.attributes.id
+      get(getRenamingFile(state), '_id') === props.attributes._id
   )
 
   return <DumbFile isRenaming={isRenaming} {...props} />
