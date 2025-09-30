@@ -2,75 +2,97 @@ import { useRef } from 'react'
 
 import flag from 'cozy-flags'
 
-export default function useLongPress({ onPress, selectionModeActive }) {
-  const timerRef = useRef()
-  const isLongPress = useRef()
+export const handlePress = ({
+  event,
+  actionMenuVisible,
+  disabled,
+  selectionModeActive,
+  isDesktop,
+  isLongPress,
+  isRenaming,
+  openLink,
+  toggle
+}) => {
+  // if default behavior is opening a file, it blocks that to force other bahavior
+  event.preventDefault()
 
-  // used to create the longpress, i.e. delay on click
-  function startPressTimer(e) {
+  // isLongPress is to prevent executing onPress twice while a longpress
+  // can happen if button is released quickly just after startPressTimer execution
+  if (actionMenuVisible || disabled || isLongPress || isRenaming) return
+
+  if (isDesktop || selectionModeActive) {
+    toggle(event)
+  } else {
+    if (!isRenaming) {
+      openLink(event)
+    }
+  }
+}
+
+export const useLongPress = ({
+  selectionModeActive,
+  isDesktop,
+  actionMenuVisible,
+  disabled,
+  isRenaming,
+  openLink,
+  toggle
+}) => {
+  const timerId = useRef()
+  const isLongPress = useRef(false)
+
+  // used to determine if it's a longpress
+  // i.e. delay onClick
+  const startPressTimer = e => {
+    e.persist()
     isLongPress.current = false
-    timerRef.current = setTimeout(() => {
+    timerId.current = setTimeout(() => {
       isLongPress.current = true
-      onPress(e, 'press')
+      if (!isRenaming) {
+        toggle(e)
+      }
     }, 250)
   }
 
-  // first event triggered on Desktop when clicking an item
   // if conditions are met, click is triggered after a certain amount of time
-  function handleOnMouseDown(e) {
-    // button 0 is left click
+  const startPressTimerConditionnaly = e => {
     if (
       selectionModeActive ||
-      e.button !== 0 ||
-      flag('drive.virtualization.enabled') // should be something like `isDragging` instead. Using flag is too implicit
+      e.button !== 0 // button 0 is left click or tap
     ) {
       return
     }
 
-    // We need to persist event in React <= 16
-    e.persist()
     startPressTimer(e)
-  }
-
-  // second event triggered on Desktop when clicking an item
-  function handleOnMouseUp() {
-    clearTimeout(timerRef.current)
-  }
-
-  // third event triggered on Desktop when clicking an item
-  function handleOnClick(e) {
-    e.preventDefault()
-    // if it's a longpress, do nothing
-    if (isLongPress.current) {
-      return
-    }
-
-    // if it's a simple short press, do clicking
-    onPress(e, 'click')
-  }
-
-  function handleOnTouchStart(e) {
-    // We need to persist event in React <= 16
-    e.persist()
-    startPressTimer(e)
-  }
-
-  function handleOnTouchMove() {
-    clearTimeout(timerRef.current)
-  }
-
-  function handleOnTouchEnd() {
-    clearTimeout(timerRef.current)
   }
 
   return {
     handlers: {
-      onClick: handleOnClick,
-      onMouseDown: handleOnMouseDown,
-      onMouseUp: handleOnMouseUp,
-      onTouchStart: handleOnTouchStart,
-      onTouchEnd: handleOnTouchEnd,
-      onTouchMove: handleOnTouchMove
+      // first event triggered on Mobile when clicking an item
+      onTouchStart: startPressTimer,
+      // second event triggered on Mobile when dragging an item
+      onTouchMove: clearTimeout(timerId.current),
+      // third event triggered on Mobile when clicking an item
+      onTouchEnd: clearTimeout(timerId.current),
+      // first event triggered on Desktop, fourth on Mobile when clicking an item
+      onMouseDown: flag('drive.virtualization.enabled') // should be something like `isDragging` instead. Using flag is too implicit
+        ? undefined
+        : startPressTimerConditionnaly,
+      // second event triggered on Desktop, fifth on Mobile when clicking an item
+      onMouseUp: clearTimeout(timerId.current),
+      // third event triggered on Desktop, sixth on Mobile when clicking an item
+      onClick: event =>
+        handlePress({
+          event,
+          actionMenuVisible,
+          disabled,
+          selectionModeActive,
+          isDesktop,
+          isLongPress: isLongPress.current,
+          isRenaming,
+          openLink,
+          toggle
+        })
     }
   }
 }
