@@ -1,5 +1,7 @@
 import React, { useRef } from 'react'
 
+import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
+
 import styles from './fileopener.styl'
 
 import useLongPress from '@/hooks/useOnLongPress'
@@ -41,6 +43,7 @@ export function handlePress(
     actionMenuVisible,
     disabled,
     selectionModeActive,
+    isDesktop,
     isRenaming,
     openLink,
     toggle
@@ -49,7 +52,7 @@ export function handlePress(
   if (actionMenuVisible || disabled) return
 
   if (enableTouchEvents(ev)) {
-    if (type === 'press' || selectionModeActive) {
+    if (type === 'press' || selectionModeActive || isDesktop) {
       toggle(ev)
     } else {
       if (!isRenaming) {
@@ -68,6 +71,7 @@ const FileOpener = ({
   isRenaming,
   children
 }) => {
+  const { isDesktop } = useBreakpoints()
   const rowRef = useRef()
   const { link, openLink } = useFileLink(file)
   const { handlers: longPressHandlers } = useLongPress({
@@ -77,6 +81,7 @@ const FileOpener = ({
         actionMenuVisible,
         disabled,
         selectionModeActive,
+        isDesktop,
         isRenaming,
         openLink,
         toggle
