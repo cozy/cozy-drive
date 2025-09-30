@@ -3,7 +3,7 @@ import React from 'react'
 
 import { createMockClient } from 'cozy-client'
 
-import FileOpener, { getParentLink, handlePress } from './FileOpener'
+import FileOpener from './FileOpener'
 import AppLike from 'test/components/AppLike'
 import { generateFile } from 'test/generate'
 
@@ -56,99 +56,5 @@ describe('FileOpener component', () => {
     expect(anchorElement.getAttribute('href')).toBe(
       'http://cozy.tools:8080/files/123'
     )
-  })
-})
-
-describe('handlePress function', () => {
-  const mockToggle = jest.fn()
-  const mockOpenLink = jest.fn()
-
-  const ev = {
-    target: {
-      nodeName: 'A',
-      className: ''
-    },
-    type: 'press'
-  }
-
-  const setupTest = ({
-    actionMenuVisible = false,
-    disabled = false,
-    selectionModeActive = false,
-    isRenaming = false
-  }) => {
-    return {
-      params: {
-        actionMenuVisible,
-        disabled,
-        selectionModeActive,
-        isRenaming,
-        openLink: mockOpenLink,
-        toggle: mockToggle
-      }
-    }
-  }
-
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
-  it('should do nothing if actionMenuVisible or disabled', () => {
-    const { params } = setupTest({ actionMenuVisible: true })
-    handlePress(ev, 'press', params)
-    expect(mockToggle).not.toHaveBeenCalled()
-    expect(mockOpenLink).not.toHaveBeenCalled()
-  })
-
-  it('should toggle if event type is press or selectionModeActive', () => {
-    const { params } = setupTest({ selectionModeActive: true })
-    handlePress(ev, 'press', params)
-    expect(mockToggle).toHaveBeenCalledWith(ev)
-    expect(mockOpenLink).not.toHaveBeenCalled()
-  })
-
-  it('should open link if not renaming and event type is click', () => {
-    const { params } = setupTest({ isRenaming: false })
-    handlePress(ev, 'click', params)
-    expect(mockToggle).not.toHaveBeenCalledWith()
-    expect(mockOpenLink).toHaveBeenCalledWith(ev)
-  })
-
-  it('should not open link if isRenaming and event type is click', () => {
-    const { params } = setupTest({ isRenaming: true })
-    handlePress(ev, 'click', params)
-    expect(mockToggle).not.toHaveBeenCalledWith()
-    expect(mockOpenLink).not.toHaveBeenCalled()
-  })
-
-  it('should not trigger actions if enableTouchEvents returns false', () => {
-    const customEv = { ...ev, target: { nodeName: 'INPUT' } }
-    const { params } = setupTest({})
-    handlePress(customEv, 'press', params)
-    expect(mockToggle).not.toHaveBeenCalled()
-    expect(mockOpenLink).not.toHaveBeenCalled()
-  })
-})
-
-describe('getParentLink function', () => {
-  it('should return the first link in the element ancestors', () => {
-    const div = document.createElement('div')
-    const link = document.createElement('a')
-    link.className = 'my-link'
-    const span = document.createElement('span')
-    const span2 = document.createElement('span')
-    div.appendChild(link)
-    link.appendChild(span)
-    span.appendChild(span2)
-    const result = getParentLink(span2)
-    expect(result).toEqual(link)
-  })
-
-  it('should return null if there is no link in the element ancestors', () => {
-    const div = document.createElement('div')
-    const span = document.createElement('span')
-    div.appendChild(span)
-    const result = getParentLink(span)
-    expect(result).toBeNull()
   })
 })
