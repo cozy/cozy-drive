@@ -1,6 +1,6 @@
 {
   "name": "cozy-drive",
-  "version": "1.82.0",
+  "version": "1.83.0",
   "main": "src/main.jsx",
   "scripts": {
     "build": "rsbuild build",
@@ -13,7 +13,7 @@
     "lint:styles": "stylint src --config ./node_modules/stylus-config-cozy-app/.stylintrc",
     "lint:js": "eslint '{src,test}/**/*.{js,jsx,ts,tsx}'",
     "test": "env NODE_ENV='test' jest",
-    "version": "yarn version:manifest",
+    "version": "1.83.0",
     "version:manifest": "replace '\\d+\\.\\d+\\.\\d+' $npm_package_version ./manifest.webapp",
     "service": "yarn cozy-konnector-dev -m ./manifest.webapp"
   },
