@@ -7,6 +7,7 @@ import React, {
   useMemo,
   useRef
 } from 'react'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { isSharingShortcut } from 'cozy-client/dist/models/file'
@@ -31,6 +32,7 @@ import FileListBody from '@/modules/filelist/FileListBody'
 import { FileListHeader } from '@/modules/filelist/FileListHeader'
 import FileListRowsPlaceholder from '@/modules/filelist/FileListRowsPlaceholder'
 import LoadMore from '@/modules/filelist/LoadMoreV2'
+import { isTypingNewFolderName } from '@/modules/filelist/duck'
 import { FolderUnlocker } from '@/modules/folder/components/FolderUnlocker'
 import { useFolderSort } from '@/modules/navigation/duck'
 import SelectionBar from '@/modules/selection/SelectionBar'
@@ -65,6 +67,7 @@ const FolderViewBody = ({
   const navigate = useNavigate()
   const { viewType, switchView } = useViewSwitcherContext()
   const folderViewRef = useRef()
+  const IsAddingFolder = useSelector(isTypingNewFolderName)
 
   const allFiles = useMemo(() => {
     const files = []
@@ -188,7 +191,7 @@ const FolderViewBody = ({
           which empty component to display. It should be done by the "view" itself.
           But adding a new prop like <FolderViewBody emptyComponent={}
           is not good enought too */}
-          {displayedFolder !== null && isEmpty && (
+          {displayedFolder !== null && !IsAddingFolder && isEmpty && (
             <EmptyWrapper
               currentFolderId={currentFolderId}
               displayedFolder={displayedFolder}
