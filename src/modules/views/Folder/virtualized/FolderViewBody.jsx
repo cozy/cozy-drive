@@ -67,6 +67,7 @@ const FolderViewBody = ({
     )
   const fetchMore = queryResults.find(query => query.hasMore)?.fetchMore
   const isEmpty = !isInError && !isLoading && !hasDataToShow
+  const showEmpty = displayedFolder !== null && !IsAddingFolder && isEmpty
   const { syncingFakeFile } = useSyncingFakeFile({ isEmpty, queryResults })
   const columns = useMemo(() => makeColumns(isBigThumbnail), [isBigThumbnail])
   const rows = useMemo(
@@ -143,7 +144,7 @@ const FolderViewBody = ({
       which empty component to display. It should be done by the "view" itself.
       But adding a new prop like <FolderViewBody emptyComponent={}
       is not good enought too */}
-      {displayedFolder !== null && !IsAddingFolder && isEmpty && (
+      {showEmpty && (
         <EmptyWrapper
           currentFolderId={currentFolderId}
           displayedFolder={displayedFolder}
