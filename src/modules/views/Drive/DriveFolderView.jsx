@@ -229,6 +229,7 @@ const DriveFolderView = () => {
             displayedFolder={displayedFolder}
             extraColumns={extraColumns}
             canDrag
+            canUpload={canWriteToCurrentFolder}
           />
         ) : (
           <FolderViewBody
@@ -238,6 +239,7 @@ const DriveFolderView = () => {
             currentFolderId={currentFolderId}
             displayedFolder={displayedFolder}
             extraColumns={extraColumns}
+            canUpload={canWriteToCurrentFolder}
           />
         )}
         {isFabDisplayed && (
