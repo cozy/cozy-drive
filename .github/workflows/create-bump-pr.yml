@@ -23,7 +23,9 @@ jobs:
           git config --global user.email 'actions@github.com'
           git checkout -b chore/bump-version-${{ inputs.version }}
       - name: Bump version
-        run: yarn version --new-version ${{ inputs.version }} --no-git-tag-version
+        run: |
+          sed -i 's/"version": "[^"]*"/"version": "${{ inputs.version }}"/g' package.json
+          sed -i 's/"version": "[^"]*"/"version": "${{ inputs.version }}"/g' manifest.webapp
       - name: Commit changes
         run: |
           git add package.json
