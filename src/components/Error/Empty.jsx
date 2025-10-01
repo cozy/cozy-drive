@@ -50,6 +50,7 @@ const EmptyCanvas = ({ type, canUpload, localeKey, hasTextMobileVersion }) => {
           {showUploadLayout && (
             <span className="u-db u-mt-1">
               <UploadButton
+                disabled={!canUpload}
                 componentsProps={{
                   button: { variant: 'secondary' }
                 }}

@@ -71,11 +71,12 @@ const LayoutContent = () => {
                 componentsProps={{ button: { className: 'u-w-100 u-bdrs-6' } }}
                 label={t('upload.label')}
                 displayedFolder={displayedFolder}
+                disabled={isFolderReadOnly}
               />
               <AddMenuProvider
                 canCreateFolder={true}
-                canUpload={true}
-                disabled={false}
+                canUpload={!isFolderReadOnly}
+                disabled={isFolderReadOnly}
                 displayedFolder={displayedFolder}
                 isSelectionBarVisible={false}
                 isReadOnly={isFolderReadOnly}
