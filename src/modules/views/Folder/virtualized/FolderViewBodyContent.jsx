@@ -10,7 +10,6 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import Grid from './Grid'
 import { useSyncingFakeFile } from '../useSyncingFakeFile'
 
-import Oops from '@/components/Error/Oops'
 import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
 import { useViewSwitcherContext } from '@/lib/ViewSwitcherContext'
 import { isTypingNewFolderName } from '@/modules/filelist/duck'
@@ -28,7 +27,6 @@ const FolderViewBodyContent = ({
   columns,
   queryResults,
   isEmpty,
-  isInError,
   canDrag,
   withFilePath,
   sortOrder
@@ -71,7 +69,6 @@ const FolderViewBodyContent = ({
       onDismiss={handleFolderUnlockerDismiss}
     >
       <SelectionBar actions={actions} />
-      {isInError && <Oops />}
       {viewType === 'list' ? (
         <Table
           rows={rows}
