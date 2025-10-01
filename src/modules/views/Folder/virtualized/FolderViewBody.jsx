@@ -7,6 +7,7 @@ import FolderViewBodyContent from './FolderViewBodyContent'
 import { makeColumns } from '../helpers'
 
 import { EmptyWrapper } from '@/components/Error/Empty'
+import Oops from '@/components/Error/Oops'
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
 import FileListRowsPlaceholder from '@/modules/filelist/FileListRowsPlaceholder'
 import { isTypingNewFolderName } from '@/modules/filelist/duck'
@@ -91,6 +92,10 @@ const FolderViewBody = ({
     return <FileListRowsPlaceholder />
   }
 
+  if (isInError) {
+    return <Oops />
+  }
+
   /* TODO FolderViewBody should not have the responsability to chose
       which empty component to display. It should be done by the "view" itself.
       But adding a new prop like <FolderViewBody emptyComponent={}
@@ -119,7 +124,6 @@ const FolderViewBody = ({
       columns={columns}
       queryResults={queryResults}
       isEmpty={isEmpty}
-      isInError={isInError}
       canDrag={canDrag}
       withFilePath={withFilePath}
       sortOrder={sortOrder}
