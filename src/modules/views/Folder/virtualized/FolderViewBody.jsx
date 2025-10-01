@@ -127,10 +127,29 @@ const FolderViewBody = ({
     navigate('/folder')
   }, [navigate])
 
-  const showLoading = needsToWait || isLoading
-  const showEmpty = isEmpty && displayedFolder !== null && !IsAddingFolder
-  const showTable = hasDataToShow && !needsToWait
-  const showAddFolder = IsAddingFolder && !showTable
+  if (needsToWait || isLoading) {
+    return <FileListRowsPlaceholder />
+  }
+
+  /* TODO FolderViewBody should not have the responsability to chose
+      which empty component to display. It should be done by the "view" itself.
+      But adding a new prop like <FolderViewBody emptyComponent={}
+      is not good enought too */
+  if (isEmpty) {
+    if (IsAddingFolder) {
+      return (
+        <AddFolderWrapper columns={columns} currentFolderId={currentFolderId} />
+      )
+    }
+
+    return (
+      <EmptyWrapper
+        currentFolderId={currentFolderId}
+        displayedFolder={displayedFolder}
+        canUpload={canUpload}
+      />
+    )
+  }
 
   return (
     <FolderUnlocker
@@ -138,69 +157,53 @@ const FolderViewBody = ({
       onDismiss={handleFolderUnlockerDismiss}
     >
       <SelectionBar actions={actions} />
-      {showAddFolder && (
-        <AddFolderWrapper columns={columns} currentFolderId={currentFolderId} />
-      )}
       {isInError && <Oops />}
-      {showLoading && <FileListRowsPlaceholder />}
-      {/* TODO FolderViewBody should not have the responsability to chose
-      which empty component to display. It should be done by the "view" itself.
-      But adding a new prop like <FolderViewBody emptyComponent={}
-      is not good enought too */}
-      {showEmpty && (
-        <EmptyWrapper
+      {viewType === 'list' ? (
+        <Table
+          rows={rows}
+          columns={columns}
+          dragProps={{
+            enabled: canDrag,
+            dragId: 'drag-drive',
+            onDrop: onDrop({
+              client,
+              showAlert,
+              selectAll,
+              registerCancelable,
+              sharedPaths,
+              t
+            })
+          }}
+          fetchMore={fetchMore}
+          selectAll={selectAll}
+          isSelectedItem={isSelectedItem}
+          selectedItems={selectedItems}
           currentFolderId={currentFolderId}
-          displayedFolder={displayedFolder}
-          canUpload={canUpload}
+          withFilePath={withFilePath}
+          actions={actions}
+          sortOrder={sortOrder}
+        />
+      ) : (
+        <Grid
+          items={rows}
+          currentFolderId={currentFolderId}
+          withFilePath={withFilePath}
+          actions={actions}
+          fetchMore={fetchMore}
+          dragProps={{
+            enabled: canDrag,
+            dragId: 'drag-drive',
+            onDrop: onDrop({
+              client,
+              showAlert,
+              selectAll,
+              registerCancelable,
+              sharedPaths,
+              t
+            })
+          }}
         />
       )}
-      {showTable &&
-        (viewType === 'list' ? (
-          <Table
-            rows={rows}
-            columns={columns}
-            dragProps={{
-              enabled: canDrag,
-              dragId: 'drag-drive',
-              onDrop: onDrop({
-                client,
-                showAlert,
-                selectAll,
-                registerCancelable,
-                sharedPaths,
-                t
-              })
-            }}
-            fetchMore={fetchMore}
-            selectAll={selectAll}
-            isSelectedItem={isSelectedItem}
-            selectedItems={selectedItems}
-            currentFolderId={currentFolderId}
-            withFilePath={withFilePath}
-            actions={actions}
-            sortOrder={sortOrder}
-          />
-        ) : (
-          <Grid
-            items={rows}
-            currentFolderId={currentFolderId}
-            withFilePath={withFilePath}
-            actions={actions}
-            fetchMore={fetchMore}
-            dragProps={{
-              enabled: canDrag,
-              dragId: 'drag-drive',
-              onDrop: onDrop({
-                client,
-                showAlert,
-                selectAll,
-                registerCancelable,
-                sharedPaths,
-                t
-              })
-            }}
-          />
-        ))}
     </FolderUnlocker>
   )
 }
