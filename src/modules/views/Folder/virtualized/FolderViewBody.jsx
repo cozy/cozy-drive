@@ -1,31 +1,16 @@
-import React, { useCallback, useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 
-import { useClient } from 'cozy-client'
-import { useSharingContext } from 'cozy-sharing'
-import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
-import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import Grid from './Grid'
+import FolderViewBodyContent from './FolderViewBodyContent'
 import { makeColumns } from '../helpers'
-import { useSyncingFakeFile } from '../useSyncingFakeFile'
 
 import { EmptyWrapper } from '@/components/Error/Empty'
-import Oops from '@/components/Error/Oops'
-import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
-import { useViewSwitcherContext } from '@/lib/ViewSwitcherContext'
 import FileListRowsPlaceholder from '@/modules/filelist/FileListRowsPlaceholder'
 import { isTypingNewFolderName } from '@/modules/filelist/duck'
-import { FolderUnlocker } from '@/modules/folder/components/FolderUnlocker'
-import { useCancelable } from '@/modules/move/hooks/useCancelable'
-import SelectionBar from '@/modules/selection/SelectionBar'
-import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 import AddFolderWrapper from '@/modules/views/Folder/virtualized/AddFolderWrapper'
-import Table from '@/modules/views/Folder/virtualized/Table'
-import { makeRows, onDrop } from '@/modules/views/Folder/virtualized/helpers'
 
 const FolderViewBody = ({
   currentFolderId,
@@ -37,24 +22,9 @@ const FolderViewBody = ({
   withFilePath = false,
   sortOrder
 }) => {
-  const client = useClient()
   const { isDesktop } = useBreakpoints()
-  const navigate = useNavigate()
   const IsAddingFolder = useSelector(isTypingNewFolderName)
   const { isBigThumbnail } = useThumbnailSizeContext()
-  const { selectAll, selectedItems } = useSelectionContext()
-  const { sharedPaths } = useSharingContext()
-  const { registerCancelable } = useCancelable()
-  const { showAlert } = useAlert()
-  const { viewType } = useViewSwitcherContext()
-  const { t } = useI18n()
-
-  const isSelectedItem = file => {
-    if (file._id === SHARED_DRIVES_DIR_ID) {
-      return false
-    }
-    return selectedItems.some(item => item._id === file._id)
-  }
 
   const isInError = queryResults.some(query => query.fetchStatus === 'failed')
   const hasDataToShow =
@@ -65,15 +35,9 @@ const FolderViewBody = ({
     queryResults.some(
       query => query.fetchStatus === 'loading' && !query.lastUpdate
     )
-  const fetchMore = queryResults.find(query => query.hasMore)?.fetchMore
   const isEmpty = !isInError && !isLoading && !hasDataToShow
-  const { syncingFakeFile } = useSyncingFakeFile({ isEmpty, queryResults })
 
   const columns = useMemo(() => makeColumns(isBigThumbnail), [isBigThumbnail])
-  const rows = useMemo(
-    () => makeRows({ queryResults, IsAddingFolder, syncingFakeFile }),
-    [queryResults, IsAddingFolder, syncingFakeFile]
-  )
 
   /**
    *  Since we are not able to restore the scroll correctly,
@@ -123,10 +87,6 @@ const FolderViewBody = ({
     return () => clearTimeout(timeout)
   }, [isLoading])
 
-  const handleFolderUnlockerDismiss = useCallback(() => {
-    navigate('/folder')
-  }, [navigate])
-
   if (needsToWait || isLoading) {
     return <FileListRowsPlaceholder />
   }
@@ -152,59 +112,18 @@ const FolderViewBody = ({
   }
 
   return (
-    <FolderUnlocker
-      folder={displayedFolder}
-      onDismiss={handleFolderUnlockerDismiss}
-    >
-      <SelectionBar actions={actions} />
-      {isInError && <Oops />}
-      {viewType === 'list' ? (
-        <Table
-          rows={rows}
-          columns={columns}
-          dragProps={{
-            enabled: canDrag,
-            dragId: 'drag-drive',
-            onDrop: onDrop({
-              client,
-              showAlert,
-              selectAll,
-              registerCancelable,
-              sharedPaths,
-              t
-            })
-          }}
-          fetchMore={fetchMore}
-          selectAll={selectAll}
-          isSelectedItem={isSelectedItem}
-          selectedItems={selectedItems}
-          currentFolderId={currentFolderId}
-          withFilePath={withFilePath}
-          actions={actions}
-          sortOrder={sortOrder}
-        />
-      ) : (
-        <Grid
-          items={rows}
-          currentFolderId={currentFolderId}
-          withFilePath={withFilePath}
-          actions={actions}
-          fetchMore={fetchMore}
-          dragProps={{
-            enabled: canDrag,
-            dragId: 'drag-drive',
-            onDrop: onDrop({
-              client,
-              showAlert,
-              selectAll,
-              registerCancelable,
-              sharedPaths,
-              t
-            })
-          }}
-        />
-      )}
-    </FolderUnlocker>
+    <FolderViewBodyContent
+      currentFolderId={currentFolderId}
+      displayedFolder={displayedFolder}
+      actions={actions}
+      columns={columns}
+      queryResults={queryResults}
+      isEmpty={isEmpty}
+      isInError={isInError}
+      canDrag={canDrag}
+      withFilePath={withFilePath}
+      sortOrder={sortOrder}
+    />
   )
 }
 
