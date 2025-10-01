@@ -143,7 +143,7 @@ const FolderViewBody = ({
       which empty component to display. It should be done by the "view" itself.
       But adding a new prop like <FolderViewBody emptyComponent={}
       is not good enought too */}
-      {displayedFolder !== null && isEmpty && (
+      {displayedFolder !== null && !IsAddingFolder && isEmpty && (
         <EmptyWrapper
           currentFolderId={currentFolderId}
           displayedFolder={displayedFolder}
