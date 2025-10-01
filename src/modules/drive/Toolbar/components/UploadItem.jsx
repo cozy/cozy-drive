@@ -15,6 +15,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { useDisplayedFolder } from '@/hooks'
 import { uploadFiles } from '@/modules/navigation/duck'
+import { useUploadContext } from '@/modules/upload/UploadProvider'
 
 const UploadItem = ({
   onClick,
@@ -27,6 +28,7 @@ const UploadItem = ({
   const vaultClient = useVaultClient()
   const { showAlert } = useAlert()
   const { initialDirId } = useDisplayedFolder()
+  const { addNewItems } = useUploadContext()
   const { t } = useI18n()
   const dispatch = useDispatch()
 
@@ -36,7 +38,8 @@ const UploadItem = ({
     files,
     initialDirId,
     showAlert,
-    driveId
+    driveId,
+    addNewItems
   ) => {
     dispatch(
       uploadFiles(
@@ -50,7 +53,8 @@ const UploadItem = ({
           showAlert,
           t
         },
-        driveId
+        driveId,
+        addNewItems
       )
     )
   }
@@ -81,7 +85,8 @@ const UploadItem = ({
       files,
       initialDirId,
       showAlert,
-      displayedFolder?.driveId
+      displayedFolder?.driveId,
+      addNewItems
     )
     onClick()
   }

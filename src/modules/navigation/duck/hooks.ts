@@ -1,10 +1,11 @@
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
 import flag from 'cozy-flags'
 
 import { DEFAULT_SORT, SORT_BY_UPDATE_DATE } from '@/config/sort'
-import { sortFolder, getSort } from '@/modules/navigation/duck'
 import { TRASH_DIR_ID } from '@/constants/config'
+import { sortFolder, getSort } from '@/modules/navigation/duck'
 
 const useFolderSort = (folderId: string): [Sort, (props: Sort) => void] => {
   const defaultSort: Sort =
