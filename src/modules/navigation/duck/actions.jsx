@@ -34,7 +34,12 @@ export const sortFolder = (folderId, sortAttribute, sortOrder = 'asc') => {
  * @param {string} dirId - The id of the directory in which we upload the files
  * @param {Object} sharingState - The sharing context (provided by SharingContext.Provider)
  * @param {function} fileUploadedCallback - A callback called when a file is uploaded
- * @returns {function} - A function that dispatches addToUploadQueue action
+ * @param {Object} options - An object containing the following properties:
+ *   - client - The cozy-client instance
+ *   - vaultClient - The vault client
+ *   - showAlert - A function to show an alert
+ *   - t - A translation function
+ * @param {string|undefined} driveId - The id of the drive in which we upload the files
  */
 export const uploadFiles =
   (
