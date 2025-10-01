@@ -31,12 +31,19 @@ const UploadButton = ({
 
   const onUpload = files => {
     dispatch(
-      uploadFiles(files, displayedFolder.id, sharingState, onUploaded, {
-        client,
-        vaultClient,
-        showAlert,
-        t
-      })
+      uploadFiles(
+        files,
+        displayedFolder.id,
+        sharingState,
+        onUploaded,
+        {
+          client,
+          vaultClient,
+          showAlert,
+          t
+        },
+        displayedFolder.driveId
+      )
     )
   }
 

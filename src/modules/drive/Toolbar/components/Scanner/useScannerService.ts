@@ -22,6 +22,7 @@ import { uploadFiles } from '@/modules/navigation/duck'
  */
 export const useScannerService = (displayedFolder: {
   id: string
+  driveId: string
 }): {
   hasScanner: boolean
   startScanner: () => Promise<void>
@@ -77,7 +78,8 @@ export const useScannerService = (displayedFolder: {
         displayedFolder.id,
         { isScanned: true },
         () => logger('info', `File uploaded successfully`),
-        { client, vaultClient: {}, showAlert, t }
+        { client, vaultClient: {}, showAlert, t },
+        displayedFolder.driveId
       )
 
       dispatch(payload)
