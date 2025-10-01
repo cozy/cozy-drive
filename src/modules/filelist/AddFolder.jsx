@@ -1,8 +1,7 @@
-import compose from 'lodash/flowRight'
 import React from 'react'
-import { connect, useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { withClient } from 'cozy-client'
+import { useClient } from 'cozy-client'
 import flag from 'cozy-flags'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -19,7 +18,7 @@ import {
 import AddFolderRowVz from '@/modules/filelist/virtualized/AddFolderRow'
 import { createFolder } from '@/modules/navigation/duck'
 
-const AddFolder = ({
+export const AddFolder = ({
   visible,
   isEncrypted,
   onSubmit,
@@ -52,60 +51,59 @@ const AddFolder = ({
   )
 }
 
-const mapStateToProps = state => ({
-  visible: isTypingNewFolderName(state),
-  isEncrypted: isEncryptedFolder(state)
-})
+const AddFolderWithState = ({
+  vaultClient,
+  currentFolderId,
+  driveId,
+  extraColumns,
+  afterSubmit,
+  afterAbort
+}) => {
+  const client = useClient()
+  const dispatch = useDispatch()
+  const visible = useSelector(isTypingNewFolderName)
+  const isEncrypted = useSelector(isEncryptedFolder)
 
-const createFolderAfterSubmit =
-  (ownProps, name, { showAlert, t }) =>
-  async (dispatch, getState) => {
-    return dispatch(
-      createFolder(
-        ownProps.client,
-        ownProps.vaultClient,
-        name,
-        ownProps.currentFolderId,
-        {
-          isEncryptedFolder: isEncryptedFolder(getState()),
-          showAlert,
-          t
-        },
-        ownProps.driveId
-      )
-    ).then(() => {
-      // eslint-disable-next-line promise/always-return
-      if (ownProps.afterSubmit) {
-        ownProps.afterSubmit()
-      }
-    })
-  }
+  const onSubmit = (name, showAlert, t) =>
+    dispatch(async dispatch =>
+      dispatch(
+        createFolder(
+          client,
+          vaultClient,
+          name,
+          currentFolderId,
+          {
+            isEncryptedFolder: isEncrypted,
+            showAlert,
+            t
+          },
+          driveId
+        )
+      ).then(() => {
+        afterSubmit?.() // eslint-disable-line promise/always-return
+      })
+    )
 
-export const addFolderDispatch = (dispatch, ownProps) => ({
-  onSubmit: (name, showAlert, t) =>
-    dispatch(createFolderAfterSubmit(ownProps, name, { showAlert, t })),
-  onAbort: (accidental, showAlert, t) => {
+  const onAbort = (accidental, showAlert, t) => {
     if (accidental) {
       showAlert({
-        message: t('alert.folder_abort'), //
+        message: t('alert.folder_abort'),
         severity: 'secondary'
       })
     }
-    if (ownProps.afterAbort) {
-      ownProps.afterAbort()
-    }
+    afterAbort?.()
   }
-})
 
-const AddFolderWithoutState = compose(
-  withClient,
-  connect(null, addFolderDispatch)
-)(AddFolder)
-
-const AddFolderWithState = compose(
-  withClient,
-  connect(mapStateToProps, addFolderDispatch)
-)(AddFolder)
+  return (
+    <AddFolder
+      visible={visible}
+      isEncrypted={isEncrypted}
+      extraColumns={extraColumns}
+      onSubmit={onSubmit}
+      onAbort={onAbort}
+    />
+  )
+}
 
 const AddFolderWithAfter = ({ refreshFolderContent, ...props }) => {
   const dispatch = useDispatch()
@@ -129,7 +127,5 @@ const AddFolderWithAfter = ({ refreshFolderContent, ...props }) => {
     />
   )
 }
-
-export { AddFolder, AddFolderWithoutState }
 
 export default AddFolderWithAfter
