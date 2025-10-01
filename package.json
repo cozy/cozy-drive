@@ -13,8 +13,6 @@
     "lint:styles": "stylint src --config ./node_modules/stylus-config-cozy-app/.stylintrc",
     "lint:js": "eslint '{src,test}/**/*.{js,jsx,ts,tsx}'",
     "test": "env NODE_ENV='test' jest",
-    "version": "yarn version:manifest",
-    "version:manifest": "replace '\\d+\\.\\d+\\.\\d+' $npm_package_version ./manifest.webapp",
     "service": "yarn cozy-konnector-dev -m ./manifest.webapp"
   },
   "repository": {
@@ -75,7 +73,6 @@
     "npm-run-all2": "5.0.0",
     "prettier": "2.8.8",
     "react-test-renderer": "16.14.0",
-    "replace": "1.2.1",
     "rsbuild-config-cozy-app": "^0.5.0",
     "stylint": "1.5.9",
     "stylus-config-cozy-app": "^0.1.0",
