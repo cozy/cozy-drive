@@ -67,8 +67,8 @@ const FolderViewBody = ({
     )
   const fetchMore = queryResults.find(query => query.hasMore)?.fetchMore
   const isEmpty = !isInError && !isLoading && !hasDataToShow
-  const showEmpty = displayedFolder !== null && !IsAddingFolder && isEmpty
   const { syncingFakeFile } = useSyncingFakeFile({ isEmpty, queryResults })
+
   const columns = useMemo(() => makeColumns(isBigThumbnail), [isBigThumbnail])
   const rows = useMemo(
     () => makeRows({ queryResults, IsAddingFolder, syncingFakeFile }),
@@ -127,7 +127,10 @@ const FolderViewBody = ({
     navigate('/folder')
   }, [navigate])
 
+  const showLoading = needsToWait || isLoading
+  const showEmpty = isEmpty && displayedFolder !== null && !IsAddingFolder
   const showTable = hasDataToShow && !needsToWait
+  const showAddFolder = IsAddingFolder && !showTable
 
   return (
     <FolderUnlocker
@@ -135,11 +138,11 @@ const FolderViewBody = ({
       onDismiss={handleFolderUnlockerDismiss}
     >
       <SelectionBar actions={actions} />
-      {IsAddingFolder && !showTable && (
+      {showAddFolder && (
         <AddFolderWrapper columns={columns} currentFolderId={currentFolderId} />
       )}
       {isInError && <Oops />}
-      {(needsToWait || isLoading) && <FileListRowsPlaceholder />}
+      {showLoading && <FileListRowsPlaceholder />}
       {/* TODO FolderViewBody should not have the responsability to chose
       which empty component to display. It should be done by the "view" itself.
       But adding a new prop like <FolderViewBody emptyComponent={}
