@@ -8,6 +8,7 @@ import styles from '@/styles/folder-view.styl'
 
 import { EmptyDrive } from '@/components/Error/Empty'
 import Oops from '@/components/Error/Oops'
+import RightClickFileMenu from '@/components/RightClick/RightClickFileMenu'
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
 import { useViewSwitcherContext } from '@/lib/ViewSwitcherContext'
 import AddFolder from '@/modules/filelist/AddFolder'
@@ -135,18 +136,26 @@ const FolderBody = ({
                 <React.Fragment key={queryIndex}>
                   {query.data.map(file => {
                     return (
-                      <File
+                      <RightClickFileMenu
                         key={file._id}
-                        attributes={file}
-                        withFilePath={withFilePath}
-                        thumbnailSizeBig={isBigThumbnail}
-                        actions={actions}
-                        refreshFolderContent={refreshFolderContent}
-                        isInSyncFromSharing={isInSyncFromSharing}
-                        extraColumns={extraColumns}
-                        withSelectionCheckbox
-                        canInteractWith={canInteractWith}
-                      />
+                        doc={file}
+                        actions={actions.filter(
+                          action => !action.selectAllItems
+                        )}
+                      >
+                        <File
+                          key={file._id}
+                          attributes={file}
+                          withFilePath={withFilePath}
+                          thumbnailSizeBig={isBigThumbnail}
+                          actions={actions}
+                          refreshFolderContent={refreshFolderContent}
+                          isInSyncFromSharing={isInSyncFromSharing}
+                          extraColumns={extraColumns}
+                          withSelectionCheckbox
+                          canInteractWith={canInteractWith}
+                        />
+                      </RightClickFileMenu>
                     )
                   })}
                   {query.hasMore && <LoadMore fetchMore={query.fetchMore} />}
