@@ -76,7 +76,7 @@ const LayoutContent = () => {
               <AddMenuProvider
                 canCreateFolder={true}
                 canUpload={!isFolderReadOnly}
-                disabled={isFolderReadOnly}
+                disabled={false}
                 displayedFolder={displayedFolder}
                 isSelectionBarVisible={false}
                 isReadOnly={isFolderReadOnly}
