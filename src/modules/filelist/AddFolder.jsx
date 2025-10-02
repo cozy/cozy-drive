@@ -88,7 +88,8 @@ const AddFolderWithState = ({
     if (accidental) {
       showAlert({
         message: t('alert.folder_abort'),
-        severity: 'secondary'
+        severity: 'secondary',
+        noClickAway: true
       })
     }
     afterAbort?.()
