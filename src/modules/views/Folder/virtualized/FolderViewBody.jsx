@@ -1,10 +1,8 @@
-import cx from 'classnames'
 import React, { useCallback, useState, useEffect, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
-import { useVaultClient } from 'cozy-keys-lib'
 import { useSharingContext } from 'cozy-sharing'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -14,21 +12,18 @@ import Grid from './Grid'
 import { makeColumns } from '../helpers'
 import { useSyncingFakeFile } from '../useSyncingFakeFile'
 
-import styles from '@/styles/folder-view.styl'
-
 import { EmptyWrapper } from '@/components/Error/Empty'
 import Oops from '@/components/Error/Oops'
 import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
 import { useViewSwitcherContext } from '@/lib/ViewSwitcherContext'
-import AddFolder from '@/modules/filelist/AddFolder'
 import FileListRowsPlaceholder from '@/modules/filelist/FileListRowsPlaceholder'
 import { isTypingNewFolderName } from '@/modules/filelist/duck'
 import { FolderUnlocker } from '@/modules/folder/components/FolderUnlocker'
 import { useCancelable } from '@/modules/move/hooks/useCancelable'
 import SelectionBar from '@/modules/selection/SelectionBar'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
-import AddFolderTable from '@/modules/views/Folder/virtualized/AddFolderTable'
+import AddFolderWrapper from '@/modules/views/Folder/virtualized/AddFolderWrapper'
 import Table from '@/modules/views/Folder/virtualized/Table'
 import { makeRows, onDrop } from '@/modules/views/Folder/virtualized/helpers'
 
@@ -53,7 +48,6 @@ const FolderViewBody = ({
   const { showAlert } = useAlert()
   const { viewType } = useViewSwitcherContext()
   const { t } = useI18n()
-  const vaultClient = useVaultClient()
 
   const isSelectedItem = file => {
     if (file._id === SHARED_DRIVES_DIR_ID) {
@@ -141,21 +135,7 @@ const FolderViewBody = ({
     >
       <SelectionBar actions={actions} />
       {IsAddingFolder && !showTable && (
-        <>
-          {viewType === 'grid' ? (
-            <div className={cx(styles['fil-folder-body-grid'])}>
-              <AddFolder
-                vaultClient={vaultClient}
-                currentFolderId={currentFolderId}
-              />
-            </div>
-          ) : (
-            <AddFolderTable
-              columns={columns}
-              currentFolderId={currentFolderId}
-            />
-          )}
-        </>
+        <AddFolderWrapper columns={columns} currentFolderId={currentFolderId} />
       )}
       {isInError && <Oops />}
       {(needsToWait || isLoading) && <FileListRowsPlaceholder />}
