@@ -7,10 +7,25 @@ import TableCell from 'cozy-ui/transpiled/react/TableCell'
 import TableHead from 'cozy-ui/transpiled/react/TableHead'
 import TableRow from 'cozy-ui/transpiled/react/TableRow'
 
+import styles from '@/styles/folder-view.styl'
+
+import { useViewSwitcherContext } from '@/lib/ViewSwitcherContext'
 import AddFolder from '@/modules/filelist/AddFolder'
 
 const AddFolderTable = ({ columns, currentFolderId }) => {
   const vaultClient = useVaultClient()
+  const { viewType } = useViewSwitcherContext()
+
+  if (viewType === 'grid') {
+    return (
+      <div className={styles['fil-folder-body-grid']}>
+        <AddFolder
+          vaultClient={vaultClient}
+          currentFolderId={currentFolderId}
+        />
+      </div>
+    )
+  }
 
   return (
     <Table>
