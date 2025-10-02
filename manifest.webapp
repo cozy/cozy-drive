@@ -80,6 +80,32 @@
       "href": "/intents"
     }
   ],
+  "entries": [
+    {
+     "title": {
+        "en": "Word",
+        "fr": "Texte"
+      },
+      "hash": "/onlyoffice/create/io.cozy.files.root-dir/text",
+      "icon": "assets/icons/new-file-type-text.svg"
+    },
+    {
+      "title": {
+        "en": "Spreadsheet",
+        "fr": "Tableur"
+      },
+      "hash": "/onlyoffice/create/io.cozy.files.root-dir/spreadsheet",
+      "icon": "assets/icons/new-file-type-sheet.svg"
+    },
+    {
+      "title": {
+        "fr": "Présentation",
+        "en": "Presentation"
+      },
+      "hash": "/onlyoffice/create/io.cozy.files.root-dir/slide",
+      "icon": "assets/icons/new-file-type-slide.svg"
+    }
+  ],
   "services": {
     "qualificationMigration": {
       "type": "node",
