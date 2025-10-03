@@ -11,14 +11,23 @@ import {
 import { secondarySort } from '../helpers'
 
 import RightClickFileMenu from '@/components/RightClick/RightClickFileMenu'
+import { useClipboardContext } from '@/contexts/ClipboardProvider'
 import { useShiftArrowsSelection } from '@/hooks/useShiftArrowsSelection'
 import Cell from '@/modules/filelist/virtualized/cells/Cell'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 
 const TableRow = forwardRef(({ item, context, children, ...props }, ref) => {
+  const { isItemCut } = useClipboardContext()
+  const isCut = isItemCut(item._id)
+
   return (
     <RightClickFileMenu doc={item} actions={context.actions} {...props}>
-      <TableRowDnD ref={ref} item={item} context={context}>
+      <TableRowDnD
+        ref={ref}
+        item={item}
+        context={context}
+        componentsProps={{ tableRow: { disabled: isCut } }}
+      >
         {children}
       </TableRowDnD>
     </RightClickFileMenu>

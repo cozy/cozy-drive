@@ -308,7 +308,20 @@
     "folder_generic": "Đã xảy ra lỗi, vui lòng thử lại",
     "folder_abort": "Bạn cần đặt tên cho thư mục mới để lưu. Dữ liệu hiện tại chưa được lưu.",
     "offline": "Tính năng này không khả dụng khi ngoại tuyến.",
-    "preparing": "Đang chuẩn bị tệp của bạn…"
+    "preparing": "Đang chuẩn bị tệp của bạn…",
+    "item_copied": "1 mục đã được sao chép",
+    "items_copied": "%{count} mục đã được sao chép",
+    "item_cut": "1 mục đã được cắt",
+    "items_cut": "%{count} mục đã được cắt",
+    "item_moved": "1 mục đã được di chuyển",
+    "items_moved": "%{count} mục đã được di chuyển",
+    "item_pasted": "1 mục đã được di chuyển",
+    "items_pasted": "%{count} mục đã được di chuyển",
+    "copy_files_only": "Không thể sao chép thư mục",
+    "copy_not_allowed": "Thao tác sao chép không được phép trong chế độ xem này.",
+    "paste_error": "Đã xảy ra lỗi khi dán tệp",
+    "paste_failed": "Dán tệp thất bại",
+    "paste_sharing_error": "Không thể dán tệp do hạn chế chia sẻ. Vui lòng sử dụng hành động Di chuyển thay thế."
   },
   "upload": {
     "label": "Tải lên",

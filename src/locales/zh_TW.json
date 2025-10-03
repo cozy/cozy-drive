@@ -155,6 +155,19 @@
     "public_unshared_title": "抱歉，但此連結已不可用。"
   },
   "alert": {
-    "could_not_open_file": "此檔案無法開啟"
+    "could_not_open_file": "此檔案無法開啟",
+    "item_copied": "1個項目已複製",
+    "items_copied": "%{count}個項目已複製",
+    "item_cut": "1個項目已剪下",
+    "items_cut": "%{count}個項目已剪下",
+    "item_moved": "1個項目已移動",
+    "items_moved": "%{count}個項目已移動",
+    "item_pasted": "1個項目已移動",
+    "items_pasted": "%{count}個項目已移動",
+    "copy_files_only": "無法複製資料夾",
+    "copy_not_allowed": "此檢視中不允許複製操作。",
+    "paste_error": "貼上檔案時發生錯誤",
+    "paste_failed": "貼上檔案失敗",
+    "paste_sharing_error": "由於分享限制，無法貼上檔案。請改用移動操作。"
   }
 }
