@@ -19,7 +19,9 @@ import HarvestBanner from './HarvestBanner'
 
 import useHead from '@/components/useHead'
 import { ROOT_DIR_ID } from '@/constants/config'
+import { useClipboardContext } from '@/contexts/ClipboardProvider'
 import { useCurrentFolderId, useDisplayedFolder } from '@/hooks'
+import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts'
 import { FabContext } from '@/lib/FabProvider'
 import { useModalContext } from '@/lib/ModalContext'
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
@@ -74,8 +76,9 @@ const DriveFolderView = () => {
   const { t, lang } = useI18n()
   const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)
   const { isBigThumbnail, toggleThumbnailSize } = useThumbnailSizeContext()
+  const sharingContext = useSharingContext()
   const { allLoaded, hasWriteAccess, refresh, isOwner, byDocId } =
-    useSharingContext()
+    sharingContext
   const { isNativeFileSharingAvailable, shareFilesNative } =
     useNativeFileSharing()
   const client = useClient()
@@ -88,6 +91,7 @@ const DriveFolderView = () => {
     mobileExtraColumnsNames
   })
   const { showAlert } = useAlert()
+  const { hasClipboardData } = useClipboardContext()
 
   const extraColumns = useExtraColumns({
     columnsNames: extraColumnsNames,
@@ -128,6 +132,14 @@ const DriveFolderView = () => {
   const isPending = allResults.some(result => result.fetchStatus === 'pending')
 
   const canWriteToCurrentFolder = hasWriteAccess(currentFolderId)
+
+  useKeyboardShortcuts({
+    canPaste: hasClipboardData && canWriteToCurrentFolder,
+    client,
+    items: [...(foldersResult.data || []), ...(filesResult.data || [])],
+    sharingContext
+  })
+
   const actionsOptions = {
     client,
     t,

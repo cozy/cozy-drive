@@ -20,6 +20,7 @@ import {
 
 import styles from '@/styles/filelist.styl'
 
+import { useClipboardContext } from '@/contexts/ClipboardProvider'
 import { ActionMenuWithHeader } from '@/modules/actionmenu/ActionMenuWithHeader'
 import { extraColumnsPropTypes } from '@/modules/certifications'
 import {
@@ -56,6 +57,7 @@ const GridFile = ({
     isSelectionBarVisible,
     handleShiftClick
   } = useSelectionContext()
+  const { isItemCut } = useClipboardContext()
 
   const toggleActionMenu = () => {
     if (actionMenuVisible) return hideActionMenu()
@@ -81,6 +83,7 @@ const GridFile = ({
   const isRowDisabledOrInSyncFromSharing = disabled || isInSyncFromSharing
 
   const selected = isItemSelected(attributes.id)
+  const isCut = isItemCut(attributes.id)
 
   const formattedSize =
     !isDirectory(attributes) && attributes.size
@@ -113,7 +116,8 @@ const GridFile = ({
         {
           [styles['fil-content-column-selected']]: selected,
           [styles['fil-content-column-actioned']]: actionMenuVisible || isOver,
-          [styles['fil-content-body--selectable']]: isSelectionBarVisible
+          [styles['fil-content-body--selectable']]: isSelectionBarVisible,
+          [styles['fil-content-row-disabled']]: isCut
         }
       )}
       onContextMenu={onContextMenu}
@@ -131,7 +135,7 @@ const GridFile = ({
       />
       <FileOpener
         file={attributes}
-        disabled={isRowDisabledOrInSyncFromSharing}
+        disabled={isRowDisabledOrInSyncFromSharing || isCut}
         actionMenuVisible={actionMenuVisible}
         selectionModeActive={isSelectionBarVisible}
         toggle={toggle}
@@ -181,7 +185,7 @@ const GridFile = ({
         <FileAction
           t={t}
           ref={filerowMenuToggleRef}
-          disabled={isRowDisabledOrInSyncFromSharing}
+          disabled={isRowDisabledOrInSyncFromSharing || isCut}
           isInSyncFromSharing={isInSyncFromSharing}
           onClick={() => {
             toggleActionMenu()

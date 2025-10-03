@@ -13,6 +13,7 @@ import { I18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import PushBannerProvider from '@/components/PushBanner/PushBannerProvider'
 import RightClickProvider from '@/components/RightClick/RightClickProvider'
+import ClipboardProvider from '@/contexts/ClipboardProvider'
 import { AcceptingSharingProvider } from '@/lib/AcceptingSharingContext'
 import FabProvider from '@/lib/FabProvider'
 import { ModalContext } from '@/lib/ModalContext'
@@ -72,15 +73,19 @@ const AppLike = ({
                       <BreakpointsProvider>
                         <AlertProvider>
                           <PushBannerProvider>
-                            <ModalContext.Provider
-                              value={modalContextValue || mockModalContextValue}
-                            >
-                              <FabProvider>
-                                <RightClickProvider>
-                                  <Layout>{children}</Layout>
-                                </RightClickProvider>
-                              </FabProvider>
-                            </ModalContext.Provider>
+                            <ClipboardProvider>
+                              <ModalContext.Provider
+                                value={
+                                  modalContextValue || mockModalContextValue
+                                }
+                              >
+                                <FabProvider>
+                                  <RightClickProvider>
+                                    <Layout>{children}</Layout>
+                                  </RightClickProvider>
+                                </FabProvider>
+                              </ModalContext.Provider>
+                            </ClipboardProvider>
                           </PushBannerProvider>
                         </AlertProvider>
                       </BreakpointsProvider>

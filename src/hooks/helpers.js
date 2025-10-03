@@ -19,3 +19,27 @@ export const displayedFolderOrRootFolder = displayedFolder =>
   !displayedFolder || displayedFolder._id === TRASH_DIR_ID
     ? { id: ROOT_DIR_ID }
     : displayedFolder
+
+/**
+ * Check if targeted element can editable
+ * @param {EventTarget | null} target
+ * @returns {boolean}
+ */
+export const isEditableTarget = target =>
+  target instanceof HTMLInputElement ||
+  target instanceof HTMLTextAreaElement ||
+  (target instanceof HTMLElement && target.isContentEditable)
+
+/**
+ * Normalize shortcut keys
+ * @param {KeyboardEvent} event
+ * @param {boolean} isApple
+ * @returns {string}
+ */
+export const normalizeKey = (event, isApple) => {
+  const keys = []
+
+  if (isApple ? event.metaKey : event.ctrlKey) keys.push('Ctrl')
+  keys.push(event.key.toLowerCase())
+  return keys.join('+')
+}

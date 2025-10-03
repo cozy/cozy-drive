@@ -24,7 +24,12 @@ jest.mock('cozy-sharing', () => ({
   ...jest.requireActual('cozy-sharing'),
   useSharingContext: () => mockSharingContext()
 }))
-jest.mock('components/pushClient')
+jest.mock('components/pushClient', () => ({
+  isMacOS: jest.fn(() => false),
+  isIOS: jest.fn(() => false),
+  isLinux: jest.fn(() => false),
+  isAndroid: jest.fn(() => false)
+}))
 jest.mock('components/pushClient/Banner', () => () => <div>Banner</div>)
 jest.mock('cozy-client/dist/hooks/useQuery', () =>
   jest.fn(() => ({

@@ -7,6 +7,8 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { moveNextcloud } from './actions/moveNextcloud'
 
+import { useClipboardContext } from '@/contexts/ClipboardProvider'
+import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts'
 import { hr } from '@/modules/actions'
 import { duplicateTo } from '@/modules/actions/components/duplicateTo'
 import { FolderBody } from '@/modules/folder/components/FolderBody'
@@ -22,6 +24,25 @@ const NextcloudFolderBody = ({ path, queryResults }) => {
   const { t } = useI18n()
   const { pathname } = useLocation()
   const navigate = useNavigate()
+  const { hasClipboardData } = useClipboardContext()
+
+  const allItems =
+    queryResults?.reduce((acc, result) => {
+      if (result.data) {
+        acc.push(...result.data)
+      }
+      return acc
+    }, []) || []
+
+  useKeyboardShortcuts({
+    onPaste: () => {},
+    canPaste: hasClipboardData,
+    client,
+    items: allItems,
+    sharingContext: null,
+    allowCopy: true,
+    isNextCloudFolder: true
+  })
 
   const fileActions = makeActions(
     [

@@ -314,7 +314,21 @@
     "folder_generic": "Une erreur est survenue, merci de réessayer.",
     "folder_abort": "Vous devez nommer votre dossier si vous voulez le sauvegarder. Vos informations n'ont pas été enregistrées.",
     "offline": "Cette fonctionnalité n’est pas disponible en mode hors-ligne.",
-    "preparing": "Préparation de vos fichiers..."
+    "preparing": "Préparation de vos fichiers...",
+    "item_copied": "1 élément copié",
+    "items_copied": "%{count} éléments copiés",
+    "item_cut": "1 élément coupé",
+    "items_cut": "%{count} éléments coupés",
+    "item_moved": "1 élément a été déplacé",
+    "items_moved": "%{count} éléments ont été déplacés",
+    "item_pasted": "1 élément a été déplacé",
+    "items_pasted": "%{count} éléments ont été déplacés",
+    "copy_files_only": "Impossible de copier les dossiers",
+    "copy_not_allowed": "L'opération de copie n'est pas autorisée dans cette vue.",
+    "paste_error": "Une erreur s'est produite lors du collage des fichiers",
+    "paste_failed": "Échec du collage des fichiers",
+    "paste_sharing_error": "Impossible de coller les fichiers en raison de restrictions de partage. Veuillez utiliser l'action Déplacer à la place.",
+    "paste_same_folder_skipped": "Impossible de déplacer les éléments dans le même dossier où ils se trouvent déjà."
   },
   "upload": {
     "label": "Importer",

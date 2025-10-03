@@ -81,6 +81,19 @@
     "folder_name": "Het element %{foldername} bestaat al, kies een andere naam.",
     "folder_generic": "Er is een fout opgetreden, probeer het opnieuw.",
     "folder_abort": "Je moet de nieuwe map een naam geven als je het wilt opslaan. De gegevens zijn niet opgeslagen.",
-    "offline": "Deze mogelijkheid is niet beschikbaar offline."
+    "offline": "Deze mogelijkheid is niet beschikbaar offline.",
+    "item_copied": "1 item gekopieerd",
+    "items_copied": "%{count} items gekopieerd",
+    "item_cut": "1 item geknipt",
+    "items_cut": "%{count} items geknipt",
+    "item_moved": "1 item is verplaatst",
+    "items_moved": "%{count} items zijn verplaatst",
+    "item_pasted": "1 item is verplaatst",
+    "items_pasted": "%{count} items zijn verplaatst",
+    "copy_files_only": "Mappen kunnen niet worden gekopieerd",
+    "copy_not_allowed": "Kopieerbewerking is niet toegestaan in deze weergave.",
+    "paste_error": "Er is een fout opgetreden bij het plakken van bestanden",
+    "paste_failed": "Plakken van bestanden mislukt",
+    "paste_sharing_error": "Kan bestanden niet plakken vanwege deelbeperkingen. Gebruik in plaats daarvan de actie Verplaatsen."
   }
 }
