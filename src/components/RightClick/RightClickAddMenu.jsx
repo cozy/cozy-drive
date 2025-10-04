@@ -48,7 +48,10 @@ const RightClickAddMenu = ({ children, ...props }) => {
   const { hasWriteAccess } = useSharingContext()
 
   const isFolderReadOnly = displayedFolder
-    ? !hasWriteAccess(displayedFolder._id)
+    ? !hasWriteAccess(
+        displayedFolder.driveId ?? displayedFolder._id,
+        !!displayedFolder.driveId
+      )
     : false
 
   return (
