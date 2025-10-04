@@ -7,7 +7,7 @@ import { ShareButton } from 'cozy-sharing'
 import { useDisplayedFolder } from '@/hooks'
 import { getPathToShareDisplayedFolder } from '@/modules/drive/Toolbar/share/helpers'
 
-const ShareButtonWithProps = ({ isDisabled, className }) => {
+const ShareButtonWithProps = ({ isDisabled, className, useShortLabel }) => {
   const { displayedFolder } = useDisplayedFolder()
   const navigate = useNavigate()
   const { pathname } = useLocation()
@@ -20,6 +20,7 @@ const ShareButtonWithProps = ({ isDisabled, className }) => {
     <ShareButton
       docId={displayedFolder.id}
       disabled={isDisabled}
+      useShortLabel={useShortLabel}
       className={cx('u-hide--mob', className)}
       onClick={() => share(displayedFolder)}
     />

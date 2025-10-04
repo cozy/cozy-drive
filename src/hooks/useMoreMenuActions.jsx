@@ -44,7 +44,10 @@ export const useMoreMenuActions = file => {
   const currentFolderId = useCurrentFolderId()
   const { isSharingShortcutCreated, addSharingLink, syncSharingLink } =
     useSharingInfos()
-  const canWriteToCurrentFolder = hasWriteAccess(currentFolderId)
+  const canWriteToCurrentFolder = hasWriteAccess(
+    file.driveId ?? currentFolderId,
+    !!file.driveId
+  )
   const isPDFDoc = file.mime === 'application/pdf'
   const showPrintAction = isPDFDoc && isPrintAvailable
   const isCozySharing = window.location.pathname === '/preview'

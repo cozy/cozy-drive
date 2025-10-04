@@ -27,7 +27,8 @@ const Toolbar = ({
   canUpload,
   canCreateFolder,
   hasWriteAccess,
-  isSharedWithMe
+  isSharedWithMe,
+  showShareButton = true
 }) => {
   const { displayedFolder } = useDisplayedFolder()
   const { isMobile } = useBreakpoints()
@@ -54,14 +55,18 @@ const Toolbar = ({
         displayedFolder={displayedFolder}
         folderId={folderId}
       >
-        {!isSharedDriveRecipient && <SharedRecipients />}
+        <SharedRecipients />
       </InsideRegularFolder>
       <InsideRegularFolder
         displayedFolder={displayedFolder}
         folderId={folderId}
       >
-        {!isSharedDriveRecipient && (
-          <ShareButton isDisabled={isSharingDisabled} className="u-mr-half" />
+        {hasWriteAccess && showShareButton && (
+          <ShareButton
+            isDisabled={isSharingDisabled}
+            useShortLabel={isSharedDriveRecipient}
+            className="u-mr-half"
+          />
         )}
       </InsideRegularFolder>
       <ViewSwitcher className="u-mr-half" />
@@ -105,11 +110,12 @@ Toolbar.defaultProps = {
  */
 const ToolbarWithSharingContext = props => {
   const folderId = useCurrentFolderId()
+  const { driveId } = props
 
   return !folderId ? (
     <Toolbar {...props} />
   ) : (
-    <SharedDocument docId={folderId}>
+    <SharedDocument docId={folderId} driveId={driveId}>
       {sharingProps => {
         const { hasWriteAccess, isSharedWithMe } = sharingProps
         return (
