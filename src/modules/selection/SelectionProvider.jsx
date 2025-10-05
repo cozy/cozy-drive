@@ -26,6 +26,8 @@ import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
  * @property {Function} handleShiftArrow Handle keyboard navigation selection
  * @property {number} focusedIndex Current focused item index
  * @property {Function} setFocusedIndex Set the focused item index
+ * @property {Function} selectAll Select all items
+ * @property {Function} clearSelection Clear all the selected items
  */
 
 /** @type {import('react').Context<TSelectionContext>} */
@@ -206,6 +208,12 @@ const SelectionProvider = ({ children }) => {
     setFocusedIndex(0)
   }
 
+  const clearSelection = () => {
+    setSelectedItems({})
+    setLastSelectedIndex(null)
+    setFocusedIndex(0)
+  }
+
   const isSelectionBarVisible = useMemo(() => {
     return Object.keys(selectedItems).length !== 0 || isSelectionBarOpen
   }, [isSelectionBarOpen, selectedItems])
@@ -230,6 +238,7 @@ const SelectionProvider = ({ children }) => {
       value={{
         showSelectionBar,
         hideSelectionBar,
+        clearSelection,
         isSelectionBarVisible,
         selectedItems: Object.values(selectedItems),
         toggleSelectedItem,

@@ -271,7 +271,21 @@
     "folder_generic": "Ha ocurrido un error, por favor vuelva a ensayar.",
     "folder_abort": "Se requiere poner un nombre a la nueva carpeta si desea guardarla. Su información no ha sido guardada.",
     "offline": "Esta función no esta disponible cuando usted está desconectado.",
-    "preparing": "Preparando sus archivos..."
+    "preparing": "Preparando sus archivos...",
+    "item_copied": "1 elemento copiado",
+    "items_copied": "%{count} elementos copiados",
+    "item_cut": "1 elemento cortado",
+    "items_cut": "%{count} elementos cortados",
+    "item_moved": "1 elemento ha sido movido",
+    "items_moved": "%{count} elementos han sido movidos",
+    "item_pasted": "1 elemento ha sido movido",
+    "items_pasted": "%{count} elementos han sido movidos",
+    "copy_files_only": "No se pueden copiar carpetas",
+    "copy_not_allowed": "La operación de copia no está permitida en esta vista.",
+    "paste_error": "Ha ocurrido un error al pegar los archivos",
+    "paste_failed": "Error al pegar los archivos",
+    "paste_sharing_error": "No se pueden pegar los archivos debido a restricciones de compartición. Por favor use la acción Mover en su lugar.",
+    "paste_same_folder_skipped": "No se pueden mover elementos a la misma carpeta en la que ya se encuentran."
   },
   "upload": {
     "label": "Subir",

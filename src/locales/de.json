@@ -283,7 +283,20 @@
     "folder_generic": " Ein Fehler ist aufgetreten, bitte versuche es noch einmal.",
     "folder_abort": "Du musst deinem neuen Ordner einen Namen hinzufügen, wenn du ihn speichern möchtest. Deine Daten wurden nicht gespeichert.",
     "offline": "Diese Funktion ist offline nicht verfügbar.",
-    "preparing": "Deine Dateien werden vorbereitet..."
+    "preparing": "Deine Dateien werden vorbereitet...",
+    "item_copied": "1 Element kopiert",
+    "items_copied": "%{count} Elemente kopiert",
+    "item_cut": "1 Element ausgeschnitten",
+    "items_cut": "%{count} Elemente ausgeschnitten",
+    "item_moved": "1 Element wurde verschoben",
+    "items_moved": "%{count} Elemente wurden verschoben",
+    "item_pasted": "1 Element wurde verschoben",
+    "items_pasted": "%{count} Elemente wurden verschoben",
+    "copy_files_only": "Ordner können nicht kopiert werden",
+    "copy_not_allowed": "Der Kopiervorgang ist in dieser Ansicht nicht erlaubt.",
+    "paste_error": "Beim Einfügen der Dateien ist ein Fehler aufgetreten",
+    "paste_failed": "Einfügen der Dateien fehlgeschlagen",
+    "paste_sharing_error": "Dateien können aufgrund von Freigabebeschränkungen nicht eingefügt werden. Bitte verwenden Sie stattdessen die Verschieben-Aktion."
   },
   "upload": {
     "label": "Hochladen",

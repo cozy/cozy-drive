@@ -63,5 +63,20 @@
     "empty": {
       "subtitle": "Brak wyników dla wyszukania \"%{query}\""
     }
+  },
+  "alert": {
+    "item_copied": "1 element skopiowany",
+    "items_copied": "%{count} elementów skopiowanych",
+    "item_cut": "1 element wycięty",
+    "items_cut": "%{count} elementów wyciętych",
+    "item_moved": "1 element został przeniesiony",
+    "items_moved": "%{count} elementów zostało przeniesionych",
+    "item_pasted": "1 element został przeniesiony",
+    "items_pasted": "%{count} elementów zostało przeniesionych",
+    "copy_files_only": "Nie można kopiować folderów",
+    "copy_not_allowed": "Operacja kopiowania nie jest dozwolona w tym widoku.",
+    "paste_error": "Wystąpił błąd podczas wklejania plików",
+    "paste_failed": "Wklejanie plików nie powiodło się",
+    "paste_sharing_error": "Nie można wkleić plików z powodu ograniczeń udostępniania. Użyj akcji Przenieś zamiast tego."
   }
 }

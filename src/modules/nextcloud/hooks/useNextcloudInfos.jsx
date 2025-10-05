@@ -28,7 +28,8 @@ const useNextcloudInfos = ({ sourceAccount }) => {
 
   if (
     hasQueryBeenLoaded(nextcloudShortcutsResult) &&
-    nextcloudShortcutsResult.data.length > 0
+    nextcloudShortcutsResult.data.length > 0 &&
+    nextcloudShortcutsResult.data[0].metadata
   ) {
     const instanceName = nextcloudShortcutsResult.data[0].metadata.instanceName
     return {

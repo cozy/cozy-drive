@@ -23,6 +23,7 @@ import {
 
 import styles from '@/styles/filelist.styl'
 
+import { useClipboardContext } from '@/contexts/ClipboardProvider'
 import { useViewSwitcherContext } from '@/lib/ViewSwitcherContext'
 import { ActionMenuWithHeader } from '@/modules/actionmenu/ActionMenuWithHeader'
 import { extraColumnsPropTypes } from '@/modules/certifications'
@@ -82,6 +83,8 @@ const File = ({
     handleShiftClick
   } = useSelectionContext()
 
+  const { isItemCut } = useClipboardContext()
+
   const toggleActionMenu = () => {
     if (actionMenuVisible) return hideActionMenu()
     else showActionMenu()
@@ -104,19 +107,20 @@ const File = ({
   }
 
   const isRowDisabledOrInSyncFromSharing = disabled || isInSyncFromSharing
+  const isCut = isItemCut(attributes._id)
 
   const selected = isItemSelected(attributes._id)
 
   const filContentRowSelected = cx(styles['fil-content-row'], {
     [styles['fil-content-row-selected']]: selected,
     [styles['fil-content-row-actioned']]: actionMenuVisible,
-    [styles['fil-content-row-disabled']]: styleDisabled
+    [styles['fil-content-row-disabled']]: styleDisabled || isCut
   })
 
   const filContentColumnSelected = cx(styles['fil-content-column'], {
     [styles['fil-content-column-selected']]: selected,
     [styles['fil-content-column-actioned']]: actionMenuVisible,
-    [styles['fil-content-column-disabled']]: styleDisabled
+    [styles['fil-content-column-disabled']]: styleDisabled || isCut
   })
 
   const formattedSize =
@@ -159,12 +163,13 @@ const File = ({
         disabled={
           !canInteractWithFile ||
           isRowDisabledOrInSyncFromSharing ||
-          disableSelection
+          disableSelection ||
+          isCut
         }
       />
       <FileOpener
         file={attributes}
-        disabled={isRowDisabledOrInSyncFromSharing}
+        disabled={isRowDisabledOrInSyncFromSharing || isCut}
         actionMenuVisible={actionMenuVisible}
         selectionModeActive={isSelectionBarVisible}
         toggle={toggle}
@@ -241,7 +246,7 @@ const File = ({
         <FileAction
           t={t}
           ref={filerowMenuToggleRef}
-          disabled={isRowDisabledOrInSyncFromSharing}
+          disabled={isRowDisabledOrInSyncFromSharing || isCut}
           isInSyncFromSharing={isInSyncFromSharing}
           onClick={() => {
             toggleActionMenu()

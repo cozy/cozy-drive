@@ -28,6 +28,8 @@ import {
   SHARING_TAB_ALL,
   SHARING_TAB_DRIVES
 } from '@/constants/config'
+import { useClipboardContext } from '@/contexts/ClipboardProvider'
+import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts'
 import { useModalContext } from '@/lib/ModalContext'
 import {
   download,
@@ -71,7 +73,9 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
   const { pushModal, popModal } = useModalContext()
   const { isSelectionBarVisible, toggleSelectAllItems, isSelectAll } =
     useSelectionContext()
-  const { allLoaded, refresh, isOwner } = useSharingContext()
+  const sharingContext = useSharingContext()
+  const { allLoaded, refresh, isOwner } = sharingContext
+  const { hasClipboardData } = useClipboardContext()
   const { isNativeFileSharingAvailable, shareFilesNative } =
     useNativeFileSharing()
   const { sharedDrives } = useSharedDrives()
@@ -179,6 +183,15 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
       count: combinedData.length
     }
   }, [sharedDrives, result, tab, isOwner, isEnabledSharedDrive])
+
+  useKeyboardShortcuts({
+    onPaste: () => refresh(),
+    canPaste: hasClipboardData,
+    client,
+    items: filteredResult?.data || [],
+    sharingContext,
+    allowCopy: false
+  })
 
   const actionsOptions = {
     client,
