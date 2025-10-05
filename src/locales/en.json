@@ -215,6 +215,9 @@
     "selected_count": "item selected |||| items selected",
     "share": "Share",
     "download": "Download",
+    "copy": "Copy",
+    "cut": "Cut",
+    "paste": "Paste",
     "trash": "Remove",
     "destroy": "Delete permanently",
     "rename": "Rename",
@@ -291,7 +294,8 @@
       "offline": "You should be connected to download this file",
       "missing": "This file is missing",
       "encryption_many": "You cannot download several encrypted files at once"
-    }
+    },
+    "paste_failed": "Failed to paste files. Please try again."
   },
   "Error": {
     "public_unshared_title": "Sorry, this link is no longer available.",
@@ -313,7 +317,21 @@
     "folder_generic": "An error occurred, please try again.",
     "folder_abort": "You need to add a name to your new folder if you would like to save it. Your information has not been saved.",
     "offline": "This feature is not available offline.",
-    "preparing": "Preparing your files…"
+    "preparing": "Preparing your files…",
+    "item_copied": "1 item copied",
+    "items_copied": "%{count} items copied",
+    "item_cut": "1 item cut",
+    "items_cut": "%{count} items cut",
+    "item_moved": "1 item was moved",
+    "items_moved": "%{count} items were moved",
+    "item_pasted": "1 item was moved",
+    "items_pasted": "%{count} items were moved",
+    "copy_files_only": "Cannot copy folders",
+    "copy_not_allowed": "Copy operation is not allowed in this view.",
+    "paste_error": "An error occurred while pasting files",
+    "paste_failed": "Failed to paste files",
+    "paste_sharing_error": "Cannot paste files due to sharing restrictions. Please use the Move action instead.",
+    "paste_same_folder_skipped": "Cannot move items to the same folder they are already in."
   },
   "upload": {
     "label": "Upload",
@@ -407,7 +425,7 @@
     "insideSharedFolder": {
       "title": "Move to a shared folder?",
       "content": "All members with access to %{destination} will also have access to %{source}. |||| All members with access to %{destination} will also have access to the selected %{type}.",
-      "cancel": "Annuler",
+      "cancel": "Cancel",
       "confirm": "Ok"
     },
     "sharedFolderInsideAnother": {

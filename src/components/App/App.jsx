@@ -9,7 +9,9 @@ import flag from 'cozy-flags'
 import { WebviewIntentProvider } from 'cozy-intent'
 import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
+import MoveValidationModals from '@/components/MoveValidationModals'
 import PushBannerProvider from '@/components/PushBanner/PushBannerProvider'
+import ClipboardProvider from '@/contexts/ClipboardProvider'
 import { AcceptingSharingProvider } from '@/lib/AcceptingSharingContext'
 import DriveProvider from '@/lib/DriveProvider'
 import { ModalContextProvider } from '@/lib/ModalContext'
@@ -28,13 +30,18 @@ const Providers = ({ children }) => {
   return (
     <BarProvider>
       <PushBannerProvider>
-        <AcceptingSharingProvider>
-          <ViewSwitcherContextProvider>
-            <ModalContextProvider>
-              <DnDProvider {...dnDProviderProps}>{children}</DnDProvider>
-            </ModalContextProvider>
-          </ViewSwitcherContextProvider>
-        </AcceptingSharingProvider>
+        <ClipboardProvider>
+          <AcceptingSharingProvider>
+            <ViewSwitcherContextProvider>
+              <ModalContextProvider>
+                <DnDProvider {...dnDProviderProps}>
+                  {children}
+                  <MoveValidationModals />
+                </DnDProvider>
+              </ModalContextProvider>
+            </ViewSwitcherContextProvider>
+          </AcceptingSharingProvider>
+        </ClipboardProvider>
       </PushBannerProvider>
     </BarProvider>
   )

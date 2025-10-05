@@ -212,7 +212,20 @@
     "could_not_open_file": "Il file non può essere aperto",
     "empty_trash_success": "Il cestino è stato svuotato",
     "folder_generic": "Si è verificato un errore, per favore riprova.",
-    "offline": "Questa caratteristica non è disponibile offline."
+    "offline": "Questa caratteristica non è disponibile offline.",
+    "item_copied": "1 elemento copiato",
+    "items_copied": "%{count} elementi copiati",
+    "item_cut": "1 elemento tagliato",
+    "items_cut": "%{count} elementi tagliati",
+    "item_moved": "1 elemento è stato spostato",
+    "items_moved": "%{count} elementi sono stati spostati",
+    "item_pasted": "1 elemento è stato spostato",
+    "items_pasted": "%{count} elementi sono stati spostati",
+    "copy_files_only": "Non è possibile copiare le cartelle",
+    "copy_not_allowed": "L'operazione di copia non è consentita in questa vista.",
+    "paste_error": "Si è verificato un errore durante l'incollaggio dei file",
+    "paste_failed": "Incollaggio dei file fallito",
+    "paste_sharing_error": "Impossibile incollare i file a causa di restrizioni di condivisione. Si prega di utilizzare l'azione Sposta invece."
   },
   "UploadQueue": {
     "close": "chiudi",

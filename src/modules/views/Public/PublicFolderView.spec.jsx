@@ -57,7 +57,12 @@ jest.mock('./usePublicWritePermissions', () => jest.fn().mockReturnValue(false))
 jest.mock('cozy-keys-lib', () => ({
   useVaultClient: jest.fn()
 }))
-jest.mock('components/pushClient')
+jest.mock('components/pushClient', () => ({
+  isMacOS: jest.fn(() => false),
+  isIOS: jest.fn(() => false),
+  isLinux: jest.fn(() => false),
+  isAndroid: jest.fn(() => false)
+}))
 
 useSharingContext.mockReturnValue({ byDocId: [] })
 
