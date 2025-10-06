@@ -1,7 +1,5 @@
 import React, { useRef } from 'react'
 
-import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
-
 import styles from './fileopener.styl'
 
 import { useLongPress } from '@/hooks/useOnLongPress'
@@ -13,16 +11,12 @@ const FileOpener = ({
   toggle,
   actionMenuVisible,
   disabled,
-  selectionModeActive,
   isRenaming,
   children
 }) => {
-  const { isDesktop } = useBreakpoints()
   const rowRef = useRef()
   const { link, openLink } = useFileLink(file)
   const { handlers: longPressHandlers } = useLongPress({
-    selectionModeActive,
-    isDesktop,
     actionMenuVisible,
     disabled,
     isRenaming,

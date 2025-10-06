@@ -137,7 +137,6 @@ const GridFile = ({
         file={attributes}
         disabled={isRowDisabledOrInSyncFromSharing || isCut}
         actionMenuVisible={actionMenuVisible}
-        selectionModeActive={isSelectionBarVisible}
         toggle={toggle}
         isRenaming={isRenaming}
       >

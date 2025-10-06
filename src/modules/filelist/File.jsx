@@ -76,12 +76,8 @@ const File = ({
 
   const [actionMenuVisible, setActionMenuVisible] = useState(false)
   const filerowMenuToggleRef = useRef()
-  const {
-    toggleSelectedItem,
-    isItemSelected,
-    isSelectionBarVisible,
-    handleShiftClick
-  } = useSelectionContext()
+  const { toggleSelectedItem, isItemSelected, handleShiftClick } =
+    useSelectionContext()
 
   const { isItemCut } = useClipboardContext()
 
@@ -171,7 +167,6 @@ const File = ({
         file={attributes}
         disabled={isRowDisabledOrInSyncFromSharing || isCut}
         actionMenuVisible={actionMenuVisible}
-        selectionModeActive={isSelectionBarVisible}
         toggle={toggle}
         isRenaming={isRenaming}
       >
