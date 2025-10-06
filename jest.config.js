@@ -36,27 +36,27 @@ module.exports = {
       {
         jsc: {
           experimental: {
-            plugins: [['swc_mut_cjs_exports', {}]],
+            plugins: [['swc_mut_cjs_exports', {}]]
           },
           parser: {
-            jsx: true,
-          },
-        },
-      },
+            jsx: true
+          }
+        }
+      }
     ],
     '\\.(ts|tsx)$': [
       '@swc/jest',
       {
         jsc: {
           experimental: {
-            plugins: [['swc_mut_cjs_exports', {}]],
+            plugins: [['swc_mut_cjs_exports', {}]]
           },
           parser: {
             syntax: 'typescript',
-            tsx: true,
-          },
-        },
-      },
+            tsx: true
+          }
+        }
+      }
     ],
     '^.+\\.webapp$': '<rootDir>/test/jestLib/json-transformer.js'
   },
