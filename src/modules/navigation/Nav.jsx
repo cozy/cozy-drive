@@ -1,5 +1,6 @@
 import React from 'react'
 
+import flag from 'cozy-flags'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import ClockIcon from 'cozy-ui/transpiled/react/Icons/Clock'
 import FolderIcon from 'cozy-ui/transpiled/react/Icons/Folder'
@@ -20,6 +21,7 @@ export const Nav = () => {
   const clickState = useNavContext()
   const { isDesktop } = useBreakpoints()
   const { isLoaded: isSharedDriveLoaded, sharedDrives } = useSharedDrives()
+  const isEnabledSharedDrive = flag('drive.shared-drive.enabled')
 
   return (
     <UINav>
@@ -55,7 +57,7 @@ export const Nav = () => {
         clickState={clickState}
       />
       {isDesktop ? <FavoriteList clickState={clickState} /> : null}
-      {isDesktop && isSharedDriveLoaded ? (
+      {isDesktop && isSharedDriveLoaded && isEnabledSharedDrive ? (
         <SharedDriveList clickState={clickState} sharedDrives={sharedDrives} />
       ) : null}
       {isDesktop ? (
