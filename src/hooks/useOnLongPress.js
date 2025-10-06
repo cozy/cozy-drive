@@ -1,6 +1,9 @@
 import { useRef, useState } from 'react'
 
 import flag from 'cozy-flags'
+import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
+
+import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 
 const DOUBLECLICKDELAY = 400
 
@@ -46,8 +49,6 @@ export const handlePress = ({
 }
 
 export const useLongPress = ({
-  selectionModeActive,
-  isDesktop,
   actionMenuVisible,
   disabled,
   isRenaming,
@@ -57,6 +58,8 @@ export const useLongPress = ({
   const timerId = useRef()
   const isLongPress = useRef(false)
   const [lastClickTime, setLastClickTime] = useState(0)
+  const { isDesktop } = useBreakpoints()
+  const { isSelectionBarVisible: selectionModeActive } = useSelectionContext()
 
   // used to determine if it's a longpress
   // i.e. delay onClick

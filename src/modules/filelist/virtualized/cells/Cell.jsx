@@ -43,8 +43,7 @@ const Cell = ({
   const { sharingsValue } = useContext(AcceptingSharingContext)
   const { byDocId } = useSharingContext()
   const filerowMenuToggleRef = useRef()
-  const { toggleSelectedItem, isSelectionBarVisible, handleShiftClick } =
-    useSelectionContext()
+  const { toggleSelectedItem, handleShiftClick } = useSelectionContext()
   const [showActionMenu, toggleShowActionMenu] = useReducer(
     state => !state,
     false
@@ -105,7 +104,6 @@ const Cell = ({
         file={row}
         disabled={isInSyncFromSharing}
         actionMenuVisible={showActionMenu}
-        selectionModeActive={isSelectionBarVisible}
         toggle={toggle}
         isRenaming={isRenaming}
       >
