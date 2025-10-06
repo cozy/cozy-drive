@@ -80,6 +80,41 @@
       "href": "/intents"
     }
   ],
+  "entrypoints": [
+    {
+      "name": "new-file-type-text",
+      "title": {
+          "en": "Word",
+          "fr": "Texte",
+          "ru": "Текст",
+          "vi": "Văn bản"
+        },
+        "hash": "/onlyoffice/create/io.cozy.files.root-dir/text",
+        "icon": "/assets/icons/new-file-type-text.svg"
+    },
+    {
+      "name": "new-file-type-sheet",
+      "title": {
+        "en": "Spreadsheet",
+        "fr": "Tableur",
+        "ru": "Электронная таблица",
+        "vi": "Bảng tính"
+      },
+      "hash": "/onlyoffice/create/io.cozy.files.root-dir/spreadsheet",
+      "icon": "/assets/icons/new-file-type-sheet.svg"
+    },
+    {
+      "name": "new-file-type-slide",
+      "title": {
+        "fr": "Présentation",
+        "en": "Presentation",
+        "ru": "Презентация",
+        "vi": "Giới thiệu"
+      },
+      "hash": "/onlyoffice/create/io.cozy.files.root-dir/slide",
+      "icon": "/assets/icons/new-file-type-slide.svg"
+    }
+  ],
   "services": {
     "qualificationMigration": {
       "type": "node",
