@@ -1,6 +1,8 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 import flag from 'cozy-flags'
+
+const DOUBLECLICKDELAY = 400
 
 export const handlePress = ({
   event,
@@ -11,6 +13,8 @@ export const handlePress = ({
   isLongPress,
   isRenaming,
   openLink,
+  lastClickTime,
+  setLastClickTime,
   toggle
 }) => {
   // if default behavior is opening a file, it blocks that to force other bahavior
@@ -20,13 +24,25 @@ export const handlePress = ({
   // can happen if button is released quickly just after startPressTimer execution
   if (actionMenuVisible || disabled || isLongPress || isRenaming) return
 
-  if (isDesktop || selectionModeActive) {
-    toggle(event)
-  } else {
+  const currentTime = Date.now()
+  const isDoubleClick =
+    isDesktop && currentTime - lastClickTime < DOUBLECLICKDELAY
+
+  if (isDoubleClick) {
     if (!isRenaming) {
       openLink(event)
     }
+  } else {
+    if (isDesktop || selectionModeActive) {
+      toggle(event)
+    } else {
+      if (!isRenaming) {
+        openLink(event)
+      }
+    }
   }
+
+  setLastClickTime(currentTime)
 }
 
 export const useLongPress = ({
@@ -40,6 +56,7 @@ export const useLongPress = ({
 }) => {
   const timerId = useRef()
   const isLongPress = useRef(false)
+  const [lastClickTime, setLastClickTime] = useState(0)
 
   // used to determine if it's a longpress
   // i.e. delay onClick
@@ -91,6 +108,8 @@ export const useLongPress = ({
           isLongPress: isLongPress.current,
           isRenaming,
           openLink,
+          lastClickTime,
+          setLastClickTime,
           toggle
         })
     }
