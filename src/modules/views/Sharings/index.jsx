@@ -81,6 +81,8 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
 
   const [tab, setTab] = useState(tabParam)
 
+  const isEnabledSharedDrive = flag('drive.shared-drive.enabled')
+
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
     isMobile,
     desktopExtraColumnsNames,
@@ -100,6 +102,17 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
   const result = useQuery(query.definition, query.options)
 
   const filteredResult = useMemo(() => {
+    if (!isEnabledSharedDrive) {
+      const filteredResultData =
+        result.data?.filter(item => !(item.dir_id === SHARED_DRIVES_DIR_ID)) ||
+        []
+      return {
+        ...result,
+        data: filteredResultData,
+        count: filteredResultData.length
+      }
+    }
+
     /**
      * Problem:
      * - In the recipient's Sharing section, shared drives appear only as shortcuts
@@ -165,7 +178,7 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
       data: combinedData,
       count: combinedData.length
     }
-  }, [sharedDrives, result, tab, isOwner])
+  }, [sharedDrives, result, tab, isOwner, isEnabledSharedDrive])
 
   const actionsOptions = {
     client,
@@ -218,7 +231,7 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
           <Breadcrumb path={[{ name: t('breadcrumb.title_sharings') }]} />
           <Toolbar canUpload={false} canCreateFolder={false} />
         </FolderViewHeader>
-        <SharingTab tab={tab} setTab={setTab} />
+        {isEnabledSharedDrive && <SharingTab tab={tab} setTab={setTab} />}
         {!allLoaded || !hasQueryBeenLoaded(result) ? (
           <FileListRowsPlaceholder />
         ) : (
