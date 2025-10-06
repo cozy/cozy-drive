@@ -21,17 +21,20 @@ import UploadItem from '@/modules/drive/Toolbar/components/UploadItem'
 import { isOfficeEditingEnabled } from '@/modules/views/OnlyOffice/helpers'
 
 const AddMenuContent = forwardRef(
-  ({
-    isUploadDisabled,
-    canCreateFolder,
-    canUpload,
-    refreshFolderContent,
-    isPublic,
-    isEncryptedFolder,
-    displayedFolder,
-    onClick,
-    isReadOnly
-  }) => {
+  (
+    {
+      isUploadDisabled,
+      canCreateFolder,
+      canUpload,
+      refreshFolderContent,
+      isPublic,
+      isEncryptedFolder,
+      displayedFolder,
+      onClick,
+      isReadOnly
+    },
+    ref // eslint-disable-line no-unused-vars
+  ) => {
     const { t } = useI18n()
     const { isDesktop } = useBreakpoints()
     const { hasScanner } = useScannerContext()
