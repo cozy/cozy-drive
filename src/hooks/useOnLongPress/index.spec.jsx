@@ -1,6 +1,6 @@
 import MockDate from 'mockdate'
 
-import { handlePress } from './useOnLongPress'
+import { handlePress } from '.'
 
 describe('handlePress function', () => {
   const mockToggle = jest.fn()
