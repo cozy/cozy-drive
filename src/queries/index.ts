@@ -520,7 +520,9 @@ export const buildFavoritesQuery: QueryBuilder<buildFavoritesQueryParams> = ({
         [sortAttribute]: { $gt: null }
       })
       .partialIndex({
-        'cozyMetadata.favorite': true
+        'cozyMetadata.favorite': true,
+        trashed: false,
+        dir_id: { $nin: [TRASH_DIR_ID] }
       })
       .indexFields([sortAttribute])
       .sortBy([{ [sortAttribute]: sortOrder }]),
