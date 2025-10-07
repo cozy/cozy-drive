@@ -5,6 +5,7 @@ import { useSharingContext } from 'cozy-sharing'
 import { Content } from 'cozy-ui/transpiled/react/Layout'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
+import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
 import { useDisplayedFolder } from '@/hooks'
 import Toolbar from '@/modules/drive/Toolbar'
 import { SharedDriveBreadcrumb } from '@/modules/shareddrives/components/SharedDriveBreadcrumb'
@@ -20,6 +21,7 @@ const SharedDriveFolderView = () => {
   const { driveId, folderId } = useParams()
   const { hasWriteAccess } = useSharingContext()
   const { displayedFolder } = useDisplayedFolder()
+  const isInRootOfSharedDrive = displayedFolder?.dir_id === SHARED_DRIVES_DIR_ID
 
   const { sharedDriveResult } = useSharedDriveFolder({
     driveId,
@@ -30,7 +32,7 @@ const SharedDriveFolderView = () => {
     ? [{ fetchStatus: 'loaded', data: sharedDriveResult.included }]
     : []
 
-  const canWriteToCurrentFolder = hasWriteAccess(folderId)
+  const canWriteToCurrentFolder = hasWriteAccess(folderId, driveId)
 
   const DropzoneComp = !isMobile ? DropzoneDnD : Dropzone
 
@@ -43,7 +45,12 @@ const SharedDriveFolderView = () => {
         <Content className={isMobile ? '' : 'u-pt-1'}>
           <FolderViewHeader>
             <SharedDriveBreadcrumb driveId={driveId} />
-            <Toolbar canUpload={false} canCreateFolder={false} />
+            <Toolbar
+              canUpload={false}
+              canCreateFolder={false}
+              driveId={driveId}
+              showShareButton={isInRootOfSharedDrive}
+            />
           </FolderViewHeader>
 
           <SharedDriveFolderBody

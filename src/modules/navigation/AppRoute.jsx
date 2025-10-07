@@ -141,6 +141,7 @@ const AppRoute = () => (
             />
             <Route path="file/:fileId/revision" element={<FileHistory />} />
             <Route path="file/:fileId/v/revision" element={<FileHistory />} />
+            <Route path="share" element={<ShareDisplayedFolderView />} />
           </Route>
         </>
       ) : null}

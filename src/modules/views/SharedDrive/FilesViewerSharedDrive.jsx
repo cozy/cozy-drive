@@ -47,7 +47,7 @@ const FilesViewerSharedDrive = () => {
         }
         viewerProps={{
           panel: {
-            sharing: { disabled: !hasWriteAccess(folderId) }
+            sharing: { disabled: !hasWriteAccess(folderId, driveId) }
           }
         }}
       />
