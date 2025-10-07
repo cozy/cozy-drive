@@ -102,8 +102,7 @@ const Cell = ({
     return (
       <FileOpener
         file={row}
-        disabled={isInSyncFromSharing}
-        actionMenuVisible={showActionMenu}
+        disabled={isInSyncFromSharing || showActionMenu}
         toggle={toggle}
         isRenaming={isRenaming}
       >
