@@ -31,7 +31,7 @@ const SharedDriveFolderBody = ({
   const dispatch = useDispatch()
   const { pushModal, popModal } = useModalContext()
 
-  const canWriteToCurrentFolder = hasWriteAccess(folderId)
+  const canWriteToCurrentFolder = hasWriteAccess(folderId, driveId)
 
   const actionsOptions = {
     client,

@@ -53,7 +53,7 @@ const LayoutContent = () => {
   }, [shouldRedirect, navigate, dispatch, setLastClicked])
 
   const isFolderReadOnly = displayedFolder
-    ? !hasWriteAccess(displayedFolder._id)
+    ? !hasWriteAccess(displayedFolder._id, displayedFolder.driveId)
     : false
 
   return (
