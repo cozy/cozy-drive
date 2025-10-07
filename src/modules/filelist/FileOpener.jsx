@@ -16,7 +16,7 @@ const FileOpener = ({
 }) => {
   const rowRef = useRef()
   const { link, openLink } = useFileLink(file)
-  const { handlers: longPressHandlers } = useLongPress({
+  const handlers = useLongPress({
     actionMenuVisible,
     disabled,
     isRenaming,
@@ -29,7 +29,7 @@ const FileOpener = ({
       ref={rowRef}
       link={link}
       className={`${styles['file-opener']} ${styles['file-opener__a']}`}
-      {...longPressHandlers}
+      {...handlers}
     >
       {children}
     </FileLink>
