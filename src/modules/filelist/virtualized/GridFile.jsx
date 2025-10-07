@@ -82,8 +82,8 @@ const GridFile = ({
 
   const isRowDisabledOrInSyncFromSharing = disabled || isInSyncFromSharing
 
-  const selected = isItemSelected(attributes.id)
-  const isCut = isItemCut(attributes.id)
+  const selected = isItemSelected(attributes._id)
+  const isCut = isItemCut(attributes._id)
 
   const formattedSize =
     !isDirectory(attributes) && attributes.size
