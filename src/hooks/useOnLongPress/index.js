@@ -7,7 +7,6 @@ import { makeDesktopHandlers, makeMobileHandlers } from './helpers'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 
 export const useLongPress = ({
-  actionMenuVisible,
   disabled,
   isRenaming,
   openLink,
@@ -22,7 +21,6 @@ export const useLongPress = ({
   if (isDesktop) {
     return makeDesktopHandlers({
       timerId,
-      actionMenuVisible,
       disabled,
       isRenaming,
       openLink,
@@ -34,7 +32,6 @@ export const useLongPress = ({
 
   return makeMobileHandlers({
     timerId,
-    actionMenuVisible,
     disabled,
     selectionModeActive,
     isRenaming,

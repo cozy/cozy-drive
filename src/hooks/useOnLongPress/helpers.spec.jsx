@@ -9,7 +9,6 @@ const ev = { preventDefault: jest.fn() }
 describe('handlePress', () => {
   const setup = ({
     event = ev,
-    actionMenuVisible = false,
     disabled = false,
     selectionModeActive = false,
     isLongPress = { current: false },
@@ -18,7 +17,6 @@ describe('handlePress', () => {
     return {
       params: {
         event,
-        actionMenuVisible,
         disabled,
         selectionModeActive,
         isLongPress,
@@ -50,14 +48,6 @@ describe('handlePress', () => {
   })
 
   describe('should do nothing if', () => {
-    it('actionMenuVisible is true', () => {
-      const { params } = setup({ actionMenuVisible: true })
-      handlePress(params)
-
-      expect(mockToggle).not.toHaveBeenCalled()
-      expect(mockOpenLink).not.toHaveBeenCalled()
-    })
-
     it('disabled is true', () => {
       const { params } = setup({ disabled: true })
       handlePress(params)
@@ -87,7 +77,6 @@ describe('handlePress', () => {
 describe('handleClick', () => {
   const setup = ({
     event = ev,
-    actionMenuVisible = false,
     disabled = false,
     isRenaming = false,
     lastClickTime = new Date('2025-01-01T12:00:00.000Z').getTime() // date of the first click
@@ -95,7 +84,6 @@ describe('handleClick', () => {
     return {
       params: {
         event,
-        actionMenuVisible,
         disabled,
         isRenaming,
         openLink: mockOpenLink,
@@ -120,14 +108,6 @@ describe('handleClick', () => {
   })
 
   describe('should do nothing if', () => {
-    it('actionMenuVisible is true', () => {
-      const { params } = setup({ actionMenuVisible: true })
-      handleClick(params)
-
-      expect(mockToggle).not.toHaveBeenCalled()
-      expect(mockOpenLink).not.toHaveBeenCalled()
-    })
-
     it('disabled is true', () => {
       const { params } = setup({ disabled: true })
       handleClick(params)

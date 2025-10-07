@@ -2,7 +2,6 @@ const DOUBLECLICKDELAY = 400
 
 export const handleClick = ({
   event,
-  actionMenuVisible,
   disabled,
   isRenaming,
   openLink,
@@ -13,7 +12,7 @@ export const handleClick = ({
   // if default behavior is opening a file, it blocks that to force other bahavior
   event.preventDefault()
 
-  if (actionMenuVisible || disabled || isRenaming) return
+  if (disabled || isRenaming) return
 
   const currentTime = Date.now()
   const isDoubleClick = currentTime - lastClickTime < DOUBLECLICKDELAY
@@ -29,7 +28,6 @@ export const handleClick = ({
 
 export const makeDesktopHandlers = ({
   timerId,
-  actionMenuVisible,
   disabled,
   isRenaming,
   openLink,
@@ -46,7 +44,6 @@ export const makeDesktopHandlers = ({
     onClick: event =>
       handleClick({
         event,
-        actionMenuVisible,
         disabled,
         isRenaming,
         openLink,
@@ -59,7 +56,6 @@ export const makeDesktopHandlers = ({
 
 export const handlePress = ({
   event,
-  actionMenuVisible,
   disabled,
   selectionModeActive,
   isLongPress,
@@ -72,7 +68,7 @@ export const handlePress = ({
 
   // isLongPress is to prevent executing onPress twice while a longpress
   // can happen if button is released quickly just after startPressTimer execution
-  if (actionMenuVisible || disabled || isLongPress.current || isRenaming) return
+  if (disabled || isLongPress.current || isRenaming) return
 
   if (selectionModeActive) {
     toggle(event)
@@ -83,7 +79,6 @@ export const handlePress = ({
 
 export const makeMobileHandlers = ({
   timerId,
-  actionMenuVisible,
   disabled,
   selectionModeActive,
   isRenaming,
@@ -115,7 +110,6 @@ export const makeMobileHandlers = ({
     onClick: event =>
       handlePress({
         event,
-        actionMenuVisible,
         disabled,
         selectionModeActive,
         isLongPress,

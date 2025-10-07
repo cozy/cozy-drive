@@ -165,8 +165,9 @@ const File = ({
       />
       <FileOpener
         file={attributes}
-        disabled={isRowDisabledOrInSyncFromSharing || isCut}
-        actionMenuVisible={actionMenuVisible}
+        disabled={
+          isRowDisabledOrInSyncFromSharing || isCut || actionMenuVisible
+        }
         toggle={toggle}
         isRenaming={isRenaming}
       >
