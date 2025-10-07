@@ -18,13 +18,17 @@ interface DuplicateModalProps {
   currentFolder: File
   onClose: () => void | Promise<void>
   showNextcloudFolder?: boolean
+  showSharedDriveFolder?: boolean
+  driveId?: string
 }
 
 const DuplicateModal: FC<DuplicateModalProps> = ({
   entries,
   currentFolder,
   onClose,
-  showNextcloudFolder
+  showNextcloudFolder,
+  showSharedDriveFolder,
+  driveId
 }) => {
   const { t } = useI18n()
   const { showAlert } = useAlert()
@@ -39,7 +43,11 @@ const DuplicateModal: FC<DuplicateModalProps> = ({
       setBusy(true)
       await Promise.all(
         entries.map(async entry => {
-          await registerCancelable(copy(client, entry as Partial<File>, folder))
+          await registerCancelable(
+            copy(client, entry as Partial<File>, folder, {
+              driveId: driveId ?? ''
+            })
+          )
         })
       )
 
@@ -88,6 +96,7 @@ const DuplicateModal: FC<DuplicateModalProps> = ({
   return (
     <FolderPicker
       showNextcloudFolder={showNextcloudFolder}
+      showSharedDriveFolder={showSharedDriveFolder}
       currentFolder={currentFolder}
       entries={entries}
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
