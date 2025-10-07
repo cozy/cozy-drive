@@ -50,6 +50,10 @@ const SelectionProvider = ({ children }) => {
     itemsListRef.current = items
   }
 
+  const isItemSelected = id => {
+    return selectedItems[id] !== undefined
+  }
+
   const toggleSelectedItem = (item, index = null) => {
     if (item._id === SHARED_DRIVES_DIR_ID) {
       return
@@ -221,10 +225,6 @@ const SelectionProvider = ({ children }) => {
       Object.keys(selectedItems).length === itemsListRef.current.length
     )
   }, [selectedItems])
-
-  const isItemSelected = id => {
-    return selectedItems[id] !== undefined
-  }
 
   useEffect(() => {
     hideSelectionBar()
