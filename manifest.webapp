@@ -84,10 +84,10 @@
     {
       "name": "new-file-type-text",
       "title": {
-          "en": "Word",
-          "fr": "Texte",
-          "ru": "Текст",
-          "vi": "Văn bản"
+          "en": "Doc",
+          "fr": "Doc",
+          "ru": "документ",
+          "vi": "Doc"
         },
         "hash": "/onlyoffice/create/io.cozy.files.root-dir/text",
         "icon": "/assets/icons/new-file-type-text.svg"
