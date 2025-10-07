@@ -4,7 +4,8 @@ import React, {
   useMemo,
   useState,
   useEffect,
-  useRef
+  useRef,
+  useCallback
 } from 'react'
 import { useLocation } from 'react-router-dom'
 
@@ -190,29 +191,25 @@ const SelectionProvider = ({ children }) => {
     setSelectedItems(newSelectedItems)
   }
 
+  const clearSelection = useCallback(() => {
+    setSelectedItems({})
+    setLastSelectedIndex(null)
+    setFocusedIndex(0)
+  }, [])
+
   const toggleSelectAllItems = items => {
     if (isSelectAll) {
-      setSelectedItems({})
-      setFocusedIndex(0)
-      setLastSelectedIndex(null)
+      clearSelection()
     } else {
       selectAll(items)
     }
   }
 
   const showSelectionBar = () => setSelectionBarOpen(true)
-  const hideSelectionBar = () => {
-    setSelectedItems({})
+  const hideSelectionBar = useCallback(() => {
+    clearSelection()
     setSelectionBarOpen(false)
-    setLastSelectedIndex(null)
-    setFocusedIndex(0)
-  }
-
-  const clearSelection = () => {
-    setSelectedItems({})
-    setLastSelectedIndex(null)
-    setFocusedIndex(0)
-  }
+  }, [clearSelection])
 
   const isSelectionBarVisible = useMemo(() => {
     return Object.keys(selectedItems).length !== 0 || isSelectionBarOpen
@@ -231,7 +228,7 @@ const SelectionProvider = ({ children }) => {
 
   useEffect(() => {
     hideSelectionBar()
-  }, [location])
+  }, [location, hideSelectionBar])
 
   return (
     <SelectionContext.Provider
