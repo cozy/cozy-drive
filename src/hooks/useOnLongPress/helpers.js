@@ -2,12 +2,15 @@ const DOUBLECLICKDELAY = 400
 
 export const handleClick = ({
   event,
+  file,
   disabled,
   isRenaming,
   openLink,
   lastClickTime,
   setLastClickTime,
-  toggle
+  setSelectedItems,
+  setLastSelectedIndex,
+  setFocusedIndex
 }) => {
   // if default behavior is opening a file, it blocks that to force other bahavior
   event.preventDefault()
@@ -20,20 +23,29 @@ export const handleClick = ({
   if (isDoubleClick) {
     openLink(event)
   } else {
-    toggle(event)
+    // we should not use file.index
+    // we should probablt not use index - 1
+    // we should use only one func to set things on click, and not 3 setters
+    setSelectedItems({ [file._id]: file })
+    setFocusedIndex(file.index - 1)
+    setLastSelectedIndex(file.index - 1)
   }
 
   setLastClickTime(currentTime)
 }
 
 export const makeDesktopHandlers = ({
+  file,
   timerId,
   disabled,
   isRenaming,
   openLink,
   lastClickTime,
   setLastClickTime,
-  toggle
+  clearSelection,
+  setSelectedItems,
+  setLastSelectedIndex,
+  setFocusedIndex
 }) => {
   return {
     // first event triggered on Desktop
@@ -44,12 +56,16 @@ export const makeDesktopHandlers = ({
     onClick: event =>
       handleClick({
         event,
+        file,
         disabled,
         isRenaming,
         openLink,
         lastClickTime,
         setLastClickTime,
-        toggle
+        clearSelection,
+        setSelectedItems,
+        setLastSelectedIndex,
+        setFocusedIndex
       })
   }
 }

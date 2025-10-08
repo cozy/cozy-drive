@@ -10,6 +10,7 @@ const FileOpener = ({ file, toggle, disabled, isRenaming, children }) => {
   const rowRef = useRef()
   const { link, openLink } = useFileLink(file)
   const handlers = useLongPress({
+    file,
     disabled,
     isRenaming,
     openLink,
