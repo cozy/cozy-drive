@@ -1,3 +1,5 @@
+import flag from 'cozy-flags'
+
 const DOUBLECLICKDELAY = 400
 
 export const handleClick = ({
@@ -6,6 +8,8 @@ export const handleClick = ({
   disabled,
   isRenaming,
   openLink,
+  toggle,
+  selectionModeActive,
   lastClickTime,
   setLastClickTime,
   setSelectedItems,
@@ -16,6 +20,16 @@ export const handleClick = ({
   event.preventDefault()
 
   if (disabled || isRenaming) return
+
+  // -- simply remove this peace of code when the flag is not necessary anymore
+  if (!flag('drive.doubleclick.enabled')) {
+    if (selectionModeActive) {
+      return toggle(event)
+    } else {
+      return openLink(event)
+    }
+  }
+  // --
 
   const currentTime = Date.now()
   const isDoubleClick = currentTime - lastClickTime < DOUBLECLICKDELAY
@@ -40,6 +54,8 @@ export const makeDesktopHandlers = ({
   disabled,
   isRenaming,
   openLink,
+  toggle,
+  selectionModeActive,
   lastClickTime,
   setLastClickTime,
   clearSelection,
@@ -60,6 +76,8 @@ export const makeDesktopHandlers = ({
         disabled,
         isRenaming,
         openLink,
+        toggle,
+        selectionModeActive,
         lastClickTime,
         setLastClickTime,
         clearSelection,

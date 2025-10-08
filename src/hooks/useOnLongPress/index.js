@@ -32,6 +32,8 @@ export const useLongPress = ({
       disabled,
       isRenaming,
       openLink,
+      toggle,
+      selectionModeActive,
       lastClickTime,
       setLastClickTime,
       clearSelection,
