@@ -21,7 +21,7 @@ export const handleClick = ({
 
   if (disabled || isRenaming) return
 
-  // -- simply remove this peace of code when the flag is not necessary anymore
+  // simply remove this "if" the flag is not necessary anymore
   if (!flag('drive.doubleclick.enabled')) {
     if (selectionModeActive) {
       return toggle(event)
@@ -29,7 +29,6 @@ export const handleClick = ({
       return openLink(event)
     }
   }
-  // --
 
   const currentTime = Date.now()
   const isDoubleClick = currentTime - lastClickTime < DOUBLECLICKDELAY
