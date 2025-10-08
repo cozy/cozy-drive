@@ -521,8 +521,8 @@ export const buildFavoritesQuery: QueryBuilder<buildFavoritesQueryParams> = ({
       })
       .partialIndex({
         'cozyMetadata.favorite': true,
-        trashed: false,
-        dir_id: { $nin: [TRASH_DIR_ID] }
+        path: { $or: [{ $exists: false }, { $regex: '^(?!/.cozy_trash)' }] },
+        trashed: { $or: [{ $exists: false }, { $eq: false }] }
       })
       .indexFields([sortAttribute])
       .sortBy([{ [sortAttribute]: sortOrder }]),
