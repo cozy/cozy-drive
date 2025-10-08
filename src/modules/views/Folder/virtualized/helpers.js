@@ -13,6 +13,7 @@ export const makeRows = ({ queryResults, IsAddingFolder, syncingFakeFile }) => {
     rows.push(syncingFakeFile)
   }
 
+  // TODO: we should not modify io.cozy.files for frontend purpose
   return rows.map((row, index) => ({
     ...row,
     index
