@@ -7,6 +7,7 @@ import { makeDesktopHandlers, makeMobileHandlers } from './helpers'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 
 export const useLongPress = ({
+  file,
   disabled,
   isRenaming,
   openLink,
@@ -16,17 +17,27 @@ export const useLongPress = ({
   const isLongPress = useRef(false)
   const [lastClickTime, setLastClickTime] = useState(0)
   const { isDesktop } = useBreakpoints()
-  const { isSelectionBarVisible: selectionModeActive } = useSelectionContext()
+  const {
+    setSelectedItems,
+    setFocusedIndex,
+    setLastSelectedIndex,
+    clearSelection,
+    isSelectionBarVisible: selectionModeActive
+  } = useSelectionContext()
 
   if (isDesktop) {
     return makeDesktopHandlers({
+      file,
       timerId,
       disabled,
       isRenaming,
       openLink,
       lastClickTime,
       setLastClickTime,
-      toggle
+      clearSelection,
+      setSelectedItems,
+      setLastSelectedIndex,
+      setFocusedIndex
     })
   }
 

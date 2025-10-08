@@ -250,6 +250,7 @@ const SelectionProvider = ({ children }) => {
         focusedIndex,
         setFocusedIndex,
         isKeyboardNavigating,
+        setLastSelectedIndex,
         setSelectedItems
       }}
     >
