@@ -14,12 +14,15 @@ export const handleClick = ({
   setLastClickTime,
   setSelectedItems,
   setLastSelectedIndex,
-  setFocusedIndex
+  setFocusedIndex,
+  clearHighlightedItems
 }) => {
   // if default behavior is opening a file, it blocks that to force other bahavior
   event.preventDefault()
 
   if (disabled || isRenaming) return
+
+  clearHighlightedItems?.()
 
   // simply remove this "if" the flag is not necessary anymore
   if (!flag('drive.doubleclick.enabled')) {
@@ -60,7 +63,8 @@ export const makeDesktopHandlers = ({
   clearSelection,
   setSelectedItems,
   setLastSelectedIndex,
-  setFocusedIndex
+  setFocusedIndex,
+  clearHighlightedItems
 }) => {
   return {
     // first event triggered on Desktop
@@ -82,7 +86,8 @@ export const makeDesktopHandlers = ({
         clearSelection,
         setSelectedItems,
         setLastSelectedIndex,
-        setFocusedIndex
+        setFocusedIndex,
+        clearHighlightedItems
       })
   }
 }
@@ -94,7 +99,8 @@ export const handlePress = ({
   isLongPress,
   isRenaming,
   openLink,
-  toggle
+  toggle,
+  clearHighlightedItems
 }) => {
   // if default behavior is opening a file, it blocks that to force other bahavior
   event.preventDefault()
@@ -108,6 +114,8 @@ export const handlePress = ({
   } else {
     openLink(event)
   }
+
+  clearHighlightedItems?.()
 }
 
 export const makeMobileHandlers = ({
@@ -117,7 +125,8 @@ export const makeMobileHandlers = ({
   isRenaming,
   isLongPress,
   openLink,
-  toggle
+  toggle,
+  clearHighlightedItems
 }) => {
   // used to determine if it's a longpress
   // i.e. delay onClick
@@ -148,7 +157,8 @@ export const makeMobileHandlers = ({
         isLongPress,
         isRenaming,
         openLink,
-        toggle
+        toggle,
+        clearHighlightedItems
       })
   }
 }

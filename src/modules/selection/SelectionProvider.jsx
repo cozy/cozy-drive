@@ -10,6 +10,7 @@ import React, {
 import { useLocation } from 'react-router-dom'
 
 import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
+import { useNewItemHighlightContext } from '@/modules/upload/NewItemHighlightProvider'
 
 /**
  * @typedef TSelectionContext
@@ -46,6 +47,8 @@ const SelectionProvider = ({ children }) => {
   const [isKeyboardNavigating, setIsKeyboardNavigating] = useState(false)
   const itemsListRef = useRef([])
 
+  const { highlightedItems, clearItems } = useNewItemHighlightContext()
+
   const setItemsList = items => {
     itemsListRef.current = items
   }
@@ -57,6 +60,10 @@ const SelectionProvider = ({ children }) => {
   const toggleSelectedItem = (item, index = null) => {
     if (item._id === SHARED_DRIVES_DIR_ID) {
       return
+    }
+
+    if (highlightedItems?.length > 0) {
+      clearItems()
     }
 
     if (isItemSelected(item._id)) {

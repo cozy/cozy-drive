@@ -5,6 +5,7 @@ import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { makeDesktopHandlers, makeMobileHandlers } from './helpers'
 
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
+import { useNewItemHighlightContext } from '@/modules/upload/NewItemHighlightProvider'
 
 export const useLongPress = ({
   file,
@@ -24,6 +25,7 @@ export const useLongPress = ({
     clearSelection,
     isSelectionBarVisible: selectionModeActive
   } = useSelectionContext()
+  const { clearItems: clearHighlightedItems } = useNewItemHighlightContext()
 
   if (isDesktop) {
     return makeDesktopHandlers({
@@ -39,7 +41,8 @@ export const useLongPress = ({
       clearSelection,
       setSelectedItems,
       setLastSelectedIndex,
-      setFocusedIndex
+      setFocusedIndex,
+      clearHighlightedItems
     })
   }
 
@@ -50,6 +53,7 @@ export const useLongPress = ({
     isRenaming,
     isLongPress,
     openLink,
-    toggle
+    toggle,
+    clearHighlightedItems
   })
 }

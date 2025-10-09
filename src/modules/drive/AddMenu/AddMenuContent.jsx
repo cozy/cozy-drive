@@ -18,6 +18,7 @@ import CreateShortcut from '@/modules/drive/Toolbar/components/CreateShortcut'
 import { ScannerMenuItem } from '@/modules/drive/Toolbar/components/Scanner/ScannerMenuItem'
 import { useScannerContext } from '@/modules/drive/Toolbar/components/Scanner/ScannerProvider'
 import UploadItem from '@/modules/drive/Toolbar/components/UploadItem'
+import { NewItemHighlightProvider } from '@/modules/upload/NewItemHighlightProvider'
 import { isOfficeEditingEnabled } from '@/modules/views/OnlyOffice/helpers'
 
 const AddMenuContent = forwardRef(
@@ -118,7 +119,7 @@ const AddMenuContent = forwardRef(
           />
         )}
         {canUpload && !isUploadDisabled && (
-          <>
+          <NewItemHighlightProvider>
             <Divider className="u-mv-half" />
             <UploadItem
               onUploaded={refreshFolderContent}
@@ -126,7 +127,7 @@ const AddMenuContent = forwardRef(
               onClick={onClick}
               isReadOnly={isReadOnly}
             />
-          </>
+          </NewItemHighlightProvider>
         )}
         {hasScanner && <ScannerMenuItem onClick={createActionOnClick} />}
       </>

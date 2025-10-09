@@ -154,7 +154,9 @@ export const queue = (state = [], action) => {
   }
 }
 
-export default combineReducers({ queue })
+export default combineReducers({
+  queue
+})
 
 export const uploadProgress = (file, event, date) => ({
   type: UPLOAD_PROGRESS,
@@ -171,7 +173,8 @@ export const processNextFile =
     dirID,
     sharingState,
     { client, vaultClient },
-    driveId
+    driveId,
+    addItems
   ) =>
   async (dispatch, getState) => {
     let error = null
@@ -202,6 +205,7 @@ export const processNextFile =
           },
           driveId
         )
+        addItems?.([newDir])
         fileUploadedCallback(newDir)
       } else {
         const withProgress = {
@@ -221,7 +225,7 @@ export const processNextFile =
           },
           driveId
         )
-
+        addItems?.([uploadedFile])
         fileUploadedCallback(uploadedFile)
       }
       dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file })
@@ -244,6 +248,7 @@ export const processNextFile =
             },
             driveId
           )
+          addItems?.([uploadedFile])
           fileUploadedCallback(uploadedFile)
           dispatch({ type: RECEIVE_UPLOAD_SUCCESS, file, isUpdate: true })
           error = null
@@ -285,7 +290,8 @@ export const processNextFile =
         dirID,
         sharingState,
         { client, vaultClient },
-        driveId
+        driveId,
+        addItems
       )
     )
   }
@@ -459,7 +465,8 @@ export const addToUploadQueue =
     fileUploadedCallback,
     queueCompletedCallback,
     { client, vaultClient },
-    driveId
+    driveId,
+    addItems
   ) =>
   async dispatch => {
     dispatch({
@@ -473,7 +480,8 @@ export const addToUploadQueue =
         dirID,
         sharingState,
         { client, vaultClient },
-        driveId
+        driveId,
+        addItems
       )
     )
   }
