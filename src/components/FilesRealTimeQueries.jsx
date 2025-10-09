@@ -119,15 +119,35 @@ const groupFilesByFolder = files => {
 }
 
 /**
+ * Normalizes an object representing a CouchDB document
+ *
+ * Ensures existence of `_type`
+ *
+ * @public
+ * @param {CouchDBDocument} couchDBDoc - object representing the document
+ * @returns {CozyClientDocument} full normalized document
+ */
+const normalizeDoc = (couchDBDoc, doctype) => {
+  return {
+    id: couchDBDoc._id,
+    _type: doctype,
+    ...couchDBDoc
+  }
+}
+
+/**
  * Component that subscribes to io.cozy.files document changes and keep the
  * internal store updated. This is a copy of RealTimeQueries from cozy-client
  * with a tweak to merge the changes with the existing document from the store.
  * You can have more detail on the problematic we are solving here:
  * https://github.com/cozy/cozy-client/issues/1412
  *
- * @param  {object} options - Options
- * @param  {Doctype} options.doctype - The doctype to watch
- * @returns {null} The component does not display anything.
+ * @param {object} options
+ * @param {string} options.doctype - The doctype to watch.
+ * @param {Function} [options.computeDocBeforeDispatchCreate]
+ * @param {Function} [options.computeDocBeforeDispatchUpdate]
+ * @param {Function} [options.computeDocBeforeDispatchDelete]
+ * @returns {null} The component does not render anything.
  */
 const FilesRealTimeQueries = ({
   doctype = 'io.cozy.files',
@@ -139,7 +159,7 @@ const FilesRealTimeQueries = ({
   const client = useClient()
 
   useEffect(() => {
-    const realtime = client.plugins.realtime
+    const { realtime } = client.plugins || {}
 
     if (!realtime) {
       throw new Error(
@@ -147,39 +167,42 @@ const FilesRealTimeQueries = ({
       )
     }
 
-    const dispatchCreate = couchDBDoc => {
-      bufferCreatedFiles.set(couchDBDoc._id, couchDBDoc)
-      debouncedDispatchEvents(client, 'created')
+    const makeHandler = (buffer, event) => couchDBDoc => {
+      const normalized = normalizeDoc(couchDBDoc, doctype)
+
+      buffer.set(couchDBDoc._id, normalized)
+      debouncedDispatchEvents(client, event)
     }
 
-    const dispatchUpdate = couchDBDoc => {
-      bufferUpdatedFiles.set(couchDBDoc._id, couchDBDoc)
-      debouncedDispatchEvents(client, 'updated')
+    const eventHandlers = {
+      created: makeHandler(bufferCreatedFiles, 'created'),
+      updated: makeHandler(bufferUpdatedFiles, 'updated'),
+      deleted: makeHandler(bufferDeletedFiles, 'deleted')
     }
 
-    const dispatchDelete = couchDBDoc => {
-      bufferDeletedFiles.set(couchDBDoc._id, couchDBDoc)
-      debouncedDispatchEvents(client, 'deleted')
+    const subscribeToEvents = async () => {
+      await Promise.all(
+        Object.entries(eventHandlers).map(([event, handler]) =>
+          realtime.subscribe(event, doctype, handler)
+        )
+      )
     }
 
-    const subscribe = async () => {
-      await realtime.subscribe('created', doctype, dispatchCreate)
-      await realtime.subscribe('updated', doctype, dispatchUpdate)
-      await realtime.subscribe('deleted', doctype, dispatchDelete)
-    }
-    subscribe()
+    subscribeToEvents().catch(err =>
+      console.error('Failed to subscribe to realtime events:', err)
+    )
 
     return () => {
-      realtime.unsubscribe('created', doctype, dispatchCreate)
-      realtime.unsubscribe('updated', doctype, dispatchUpdate)
-      realtime.unsubscribe('deleted', doctype, dispatchDelete)
+      Object.entries(eventHandlers).forEach(([event, handler]) =>
+        realtime.unsubscribe(event, doctype, handler)
+      )
     }
   }, [
     client,
+    doctype,
     computeDocBeforeDispatchCreate,
-    computeDocBeforeDispatchDelete,
     computeDocBeforeDispatchUpdate,
-    doctype
+    computeDocBeforeDispatchDelete
   ])
 
   return null
