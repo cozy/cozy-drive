@@ -2,6 +2,7 @@ import React from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { useQuery } from 'cozy-client'
+import flag from 'cozy-flags'
 import {
   addToCozySharingLink,
   createCozySharingLink,
@@ -92,6 +93,10 @@ const Toolbar = ({ sharingInfos }) => {
   const showSharingLinkButton =
     isPublic && !isMobile && isShareNotAdded && !isCozyToCozySharingSynced
 
+  const isEnabledDisplayEditButton = !flag(
+    'drive.onlyoffice.editor-mode-by-access.enabled'
+  )
+
   return (
     <>
       <FilesRealTimeQueries />
@@ -119,7 +124,7 @@ const Toolbar = ({ sharingInfos }) => {
           variant={showPublicEditButton ? 'secondary' : 'primary'}
         />
       )}
-      {showPublicEditButton && <EditButton />}
+      {showPublicEditButton && isEnabledDisplayEditButton && <EditButton />}
 
       {isPublic && !isCozyToCozySharingSynced && (
         <PublicToolbarMoreMenu files={[file]} actions={actions} />
@@ -128,7 +133,7 @@ const Toolbar = ({ sharingInfos }) => {
       {!isPublic && isEditorReady && (
         <>
           <Sharing file={file} />
-          <EditButton />
+          {isEnabledDisplayEditButton ? <EditButton /> : null}
         </>
       )}
     </>

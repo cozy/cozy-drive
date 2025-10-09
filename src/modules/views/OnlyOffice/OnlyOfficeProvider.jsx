@@ -9,6 +9,8 @@ import React, {
 import { useSearchParams } from 'react-router-dom'
 
 import { useClient, useQuery } from 'cozy-client'
+import flag from 'cozy-flags'
+import { useSharingContext } from 'cozy-sharing'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { officeDefaultMode } from '@/modules/views/OnlyOffice/helpers'
@@ -29,6 +31,7 @@ const OnlyOfficeProvider = ({
   const client = useClient()
   const { isDesktop, isMobile } = useBreakpoints()
   const [searchParam] = useSearchParams()
+  const { hasWriteAccess } = useSharingContext()
   const [isEditorReady, setIsEditorReady] = useState(false)
   const [editorMode, setEditorMode] = useState(
     officeDefaultMode(isDesktop, isMobile)
@@ -80,13 +83,20 @@ const OnlyOfficeProvider = ({
   }, [client, fileId, handleFileUpdated])
 
   useEffect(() => {
+    if (!hasWriteAccess(fileId, driveId)) return
+
+    if (flag('drive.onlyoffice.editor-mode-by-access.enabled')) {
+      setEditorMode('edit')
+      return
+    }
+
     if (
       searchParam.get('fromCreate') === 'true' ||
       searchParam.get('fromEdit') === 'true'
     ) {
       setEditorMode('edit')
     }
-  }, [searchParam])
+  }, [searchParam, fileId, driveId, hasWriteAccess])
 
   useEffect(() => {
     if (fileResult.data?.trashed) {
