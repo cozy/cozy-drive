@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useQuery } from 'cozy-client'
@@ -6,9 +6,10 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { SHARED_DRIVES_DIR_ID } from '@/constants/config.js'
 import { MobileAwareBreadcrumb as Breadcrumb } from '@/modules/breadcrumb/components/MobileAwareBreadcrumb'
+import { useBreadcrumbPath } from '@/modules/breadcrumb/hooks/useBreadcrumbPath.jsx'
 import { buildSharedDriveIdQuery } from '@/queries'
 
-const SharedDriveBreadcrumb = ({ driveId }) => {
+const SharedDriveBreadcrumb = ({ driveId, folderId }) => {
   const { t } = useI18n()
   const navigate = useNavigate()
 
@@ -18,13 +19,29 @@ const SharedDriveBreadcrumb = ({ driveId }) => {
     sharedDriveQuery.options
   )
 
+  const rootBreadcrumbPath = useMemo(
+    () => ({
+      id: sharedDrive?.rules?.[0]?.values?.[0],
+      name: sharedDrive?.description
+    }),
+    [sharedDrive]
+  )
+
+  const path = useBreadcrumbPath({
+    currentFolderId: folderId,
+    rootBreadcrumbPath,
+    driveId
+  })
+
   const handleBreadcrumbClick = useCallback(
     ({ id }) => {
       if (id === SHARED_DRIVES_DIR_ID) {
         navigate(`/folder/${SHARED_DRIVES_DIR_ID}`)
+        return
       }
+      navigate(`/shareddrive/${driveId}/${id}`)
     },
-    [navigate]
+    [driveId, navigate]
   )
 
   return (
@@ -34,7 +51,7 @@ const SharedDriveBreadcrumb = ({ driveId }) => {
           id: SHARED_DRIVES_DIR_ID,
           name: t('breadcrumb.title_shared_drives')
         },
-        { id: driveId, name: sharedDrive?.description }
+        ...path
       ]}
       onBreadcrumbClick={handleBreadcrumbClick}
       opening={false}

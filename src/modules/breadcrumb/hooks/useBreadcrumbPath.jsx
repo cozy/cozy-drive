@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useClient } from 'cozy-client'
 import log from 'cozy-logger'
 
+import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
 import { fetchFolder } from '@/modules/breadcrumb/utils/fetchFolder'
 
 /**
@@ -23,7 +24,8 @@ import { fetchFolder } from '@/modules/breadcrumb/utils/fetchFolder'
 export const useBreadcrumbPath = ({
   currentFolderId,
   rootBreadcrumbPath,
-  sharedDocumentIds
+  sharedDocumentIds,
+  driveId
 }) => {
   const client = useClient()
   const [paths, setPaths] = useState([])
@@ -39,8 +41,12 @@ export const useBreadcrumbPath = ({
 
     const fetchBreadcrumbs = async () => {
       let id = currentFolderId
-      while (!!id && id !== rootBreadcrumbPath.id) {
-        const folder = await fetchFolder({ client, folderId: id })
+      while (
+        !!id &&
+        id !== rootBreadcrumbPath.id &&
+        id !== SHARED_DRIVES_DIR_ID
+      ) {
+        const folder = await fetchFolder({ client, driveId, folderId: id })
         if (!folder) {
           id = undefined
         } else {
@@ -76,7 +82,7 @@ export const useBreadcrumbPath = ({
     return () => {
       isSubscribed = false
     }
-  }, [currentFolderId, client, sharedDocumentIds, rootBreadcrumbPath])
+  }, [currentFolderId, client, sharedDocumentIds, rootBreadcrumbPath, driveId])
 
   return paths
 }

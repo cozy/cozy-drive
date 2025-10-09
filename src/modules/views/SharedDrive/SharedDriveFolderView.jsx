@@ -44,7 +44,7 @@ const SharedDriveFolderView = () => {
       >
         <Content className={isMobile ? '' : 'u-pt-1'}>
           <FolderViewHeader>
-            <SharedDriveBreadcrumb driveId={driveId} />
+            <SharedDriveBreadcrumb driveId={driveId} folderId={folderId} />
             <Toolbar
               canUpload={false}
               canCreateFolder={false}
