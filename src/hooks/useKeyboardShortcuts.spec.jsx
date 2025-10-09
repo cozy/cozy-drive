@@ -60,7 +60,11 @@ import { isEditableTarget, normalizeKey } from './helpers'
 import { useKeyboardShortcuts } from './useKeyboardShortcuts.tsx'
 
 import { isMacOS } from '@/components/pushClient'
-import { useClipboardContext } from '@/contexts/ClipboardProvider'
+import {
+  OPERATION_COPY,
+  OPERATION_CUT,
+  useClipboardContext
+} from '@/contexts/ClipboardProvider'
 import { useDisplayedFolder } from '@/hooks'
 import { startRenamingAsync } from '@/modules/drive/rename'
 import { useNextcloudCurrentFolder } from '@/modules/nextcloud/hooks/useNextcloudCurrentFolder'
@@ -93,15 +97,11 @@ describe('useKeyboardShortcuts', () => {
   }
 
   beforeEach(() => {
-    mockDispatch = jest.fn()
-    mockShowAlert = jest.fn()
-    mockT = jest.fn((key, options) =>
-      options?.count ? `${key}_${options.count}` : key
-    )
-
-    flag.mockImplementation(flagName => {
-      if (flagName === 'drive.keyboard-shortcuts.enabled') return true
-      return false
+    mockT = jest.fn((key, options) => {
+      if (options && options.count !== undefined) {
+        return `${key}_${options.count}`
+      }
+      return key
     })
     mockCopyFiles = jest.fn()
     mockCutFiles = jest.fn()
@@ -111,6 +111,8 @@ describe('useKeyboardShortcuts', () => {
     mockHideSelectionBar = jest.fn()
     mockShowMoveValidationModal = jest.fn()
     mockOnPaste = jest.fn()
+    mockDispatch = jest.fn()
+    mockShowAlert = jest.fn()
 
     mockClient = {
       save: jest.fn(),
@@ -124,8 +126,18 @@ describe('useKeyboardShortcuts', () => {
     }
 
     mockSelectedItems = [
-      { _id: 'file1', name: 'test1.txt', type: 'file' },
-      { _id: 'file2', name: 'test2.txt', type: 'file' }
+      {
+        _id: 'file1',
+        name: 'test1.txt',
+        type: 'file',
+        dir_id: 'parent-folder-1'
+      },
+      {
+        _id: 'file2',
+        name: 'test2.txt',
+        type: 'file',
+        dir_id: 'parent-folder-2'
+      }
     ]
 
     mockItems = [
@@ -143,8 +155,8 @@ describe('useKeyboardShortcuts', () => {
     useClipboardContext.mockReturnValue({
       clipboardData: {
         files: [{ _id: 'clipboard-file', name: 'clipboard.txt' }],
-        operation: 'copy',
-        sourceFolderId: 'source-folder-id'
+        operation: OPERATION_COPY,
+        sourceFolderIds: new Set(['source-folder-id'])
       },
       copyFiles: mockCopyFiles,
       cutFiles: mockCutFiles,
@@ -177,10 +189,25 @@ describe('useKeyboardShortcuts', () => {
     })
     isMacOS.mockReturnValue(false)
     handlePasteOperation.mockResolvedValue([
-      { success: true, file: { _id: 'pasted-file' }, operation: 'copy' }
+      { success: true, file: { _id: 'pasted-file' }, operation: OPERATION_COPY }
     ])
 
-    jest.clearAllMocks()
+    flag.mockImplementation(flagName => {
+      if (flagName === 'drive.keyboard-shortcuts.enabled') return true
+      return false
+    })
+
+    mockCopyFiles.mockClear()
+    mockCutFiles.mockClear()
+    mockClearClipboard.mockClear()
+    mockSelectAll.mockClear()
+    mockClearSelection.mockClear()
+    mockHideSelectionBar.mockClear()
+    mockShowMoveValidationModal.mockClear()
+    mockOnPaste.mockClear()
+    mockDispatch.mockClear()
+    mockShowAlert.mockClear()
+    handlePasteOperation.mockClear()
   })
 
   describe('Copy Operations (Ctrl+C / Cmd+C)', () => {
@@ -208,7 +235,7 @@ describe('useKeyboardShortcuts', () => {
 
       expect(mockCopyFiles).toHaveBeenCalledWith(
         mockSelectedItems,
-        mockCurrentFolder._id
+        new Set(['parent-folder-1', 'parent-folder-2'])
       )
       expect(mockShowAlert).toHaveBeenCalledWith({
         message: 'alert.items_copied_2',
@@ -242,7 +269,7 @@ describe('useKeyboardShortcuts', () => {
       expect(mockCopyFiles).not.toHaveBeenCalled()
       expect(mockShowAlert).toHaveBeenCalledWith({
         message: 'alert.copy_not_allowed',
-        severity: 'info'
+        severity: 'secondary'
       })
     })
 
@@ -272,7 +299,7 @@ describe('useKeyboardShortcuts', () => {
 
       expect(mockCopyFiles).toHaveBeenCalledWith(
         mockSelectedItems.filter(item => item.type === 'file'),
-        mockCurrentFolder._id
+        new Set(['parent-folder-1', 'parent-folder-2'])
       )
     })
   })
@@ -301,7 +328,7 @@ describe('useKeyboardShortcuts', () => {
 
       expect(mockCutFiles).toHaveBeenCalledWith(
         mockSelectedItems,
-        mockCurrentFolder._id
+        new Set(['parent-folder-1', 'parent-folder-2'])
       )
       expect(mockShowAlert).toHaveBeenCalledWith({
         message: 'alert.items_cut_2',
@@ -338,7 +365,7 @@ describe('useKeyboardShortcuts', () => {
       expect(handlePasteOperation).toHaveBeenCalledWith(
         mockClient,
         [{ _id: 'clipboard-file', name: 'clipboard.txt' }],
-        'copy',
+        OPERATION_COPY,
         mockCurrentFolder,
         {
           showAlert: mockShowAlert,
@@ -358,8 +385,8 @@ describe('useKeyboardShortcuts', () => {
       useClipboardContext.mockReturnValue({
         clipboardData: {
           files: [{ _id: 'clipboard-file', name: 'clipboard.txt' }],
-          operation: 'cut',
-          sourceFolderId: 'source-folder-id'
+          operation: OPERATION_CUT,
+          sourceFolderIds: new Set(['source-folder-id'])
         },
         copyFiles: mockCopyFiles,
         cutFiles: mockCutFiles,
@@ -395,9 +422,14 @@ describe('useKeyboardShortcuts', () => {
     it('should skip paste when cutting and pasting in same folder', async () => {
       useClipboardContext.mockReturnValue({
         clipboardData: {
-          files: [{ _id: 'clipboard-file', name: 'clipboard.txt' }],
-          operation: 'cut',
-          sourceFolderId: mockCurrentFolder._id
+          files: [
+            {
+              _id: 'clipboard-file',
+              name: 'clipboard.txt'
+            }
+          ],
+          operation: OPERATION_CUT,
+          sourceFolderIds: new Set(['current-folder-id'])
         },
         copyFiles: mockCopyFiles,
         cutFiles: mockCutFiles,
@@ -427,11 +459,11 @@ describe('useKeyboardShortcuts', () => {
         document.dispatchEvent(event)
       })
 
-      expect(handlePasteOperation).not.toHaveBeenCalled()
       expect(mockShowAlert).toHaveBeenCalledWith({
         message: 'alert.paste_same_folder_skipped',
-        severity: 'info'
+        severity: 'secondary'
       })
+      expect(handlePasteOperation).not.toHaveBeenCalled()
     })
   })
 
@@ -462,7 +494,7 @@ describe('useKeyboardShortcuts', () => {
       expect(handlePasteOperation).toHaveBeenCalledWith(
         mockClient,
         expect.any(Array),
-        'copy',
+        OPERATION_COPY,
         mockCurrentFolder,
         expect.objectContaining({
           showMoveValidationModal: mockShowMoveValidationModal,

@@ -321,7 +321,11 @@
     "copy_not_allowed": "Thao tác sao chép không được phép trong chế độ xem này.",
     "paste_error": "Đã xảy ra lỗi khi dán tệp",
     "paste_failed": "Dán tệp thất bại",
-    "paste_sharing_error": "Không thể dán tệp do hạn chế chia sẻ. Vui lòng sử dụng hành động Di chuyển thay thế."
+    "paste_sharing_error": "Không thể dán tệp do hạn chế chia sẻ. Vui lòng sử dụng hành động Di chuyển thay thế.",
+    "paste_same_folder_skipped": "Không thể di chuyển các mục vào cùng một thư mục mà chúng đã có.",
+    "paste_not_allowed": "Bạn không thể dán vào thư mục này",
+    "cannot_move_shared_drive": "Bạn không thể di chuyển thư mục ổ đĩa chia sẻ",
+    "cannot_copy_shared_drive": "Bạn không thể sao chép thư mục ổ đĩa chia sẻ"
   },
   "upload": {
     "label": "Tải lên",

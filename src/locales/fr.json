@@ -328,7 +328,10 @@
     "paste_error": "Une erreur s'est produite lors du collage des fichiers",
     "paste_failed": "Échec du collage des fichiers",
     "paste_sharing_error": "Impossible de coller les fichiers en raison de restrictions de partage. Veuillez utiliser l'action Déplacer à la place.",
-    "paste_same_folder_skipped": "Impossible de déplacer les éléments dans le même dossier où ils se trouvent déjà."
+    "paste_same_folder_skipped": "Impossible de déplacer les éléments dans le même dossier où ils se trouvent déjà.",
+    "paste_not_allowed": "Vous ne pouvez pas coller dans ce dossier",
+    "cannot_move_shared_drive": "Vous ne pouvez pas déplacer le dossier de lecteur partagé",
+    "cannot_copy_shared_drive": "Vous ne pouvez pas copier le dossier du lecteur partagé"
   },
   "upload": {
     "label": "Importer",
