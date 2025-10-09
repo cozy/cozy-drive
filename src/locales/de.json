@@ -296,7 +296,11 @@
     "copy_not_allowed": "Der Kopiervorgang ist in dieser Ansicht nicht erlaubt.",
     "paste_error": "Beim Einfügen der Dateien ist ein Fehler aufgetreten",
     "paste_failed": "Einfügen der Dateien fehlgeschlagen",
-    "paste_sharing_error": "Dateien können aufgrund von Freigabebeschränkungen nicht eingefügt werden. Bitte verwenden Sie stattdessen die Verschieben-Aktion."
+    "paste_sharing_error": "Dateien können aufgrund von Freigabebeschränkungen nicht eingefügt werden. Bitte verwenden Sie stattdessen die Verschieben-Aktion.",
+    "paste_same_folder_skipped": "Elemente können nicht in denselben Ordner verschoben werden, in dem sie sich bereits befinden.",
+    "paste_not_allowed": "Sie können nicht in diesen Ordner einfügen",
+    "cannot_move_shared_drive": "Sie können den freigegebenen Laufwerksordner nicht verschieben",
+    "cannot_copy_shared_drive": "Du kannst keinen freigegebenen Laufwerksordner kopieren"
   },
   "upload": {
     "label": "Hochladen",

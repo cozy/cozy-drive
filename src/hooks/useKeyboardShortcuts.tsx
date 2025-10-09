@@ -11,7 +11,11 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import { isEditableTarget, normalizeKey } from './helpers'
 
 import { isMacOS } from '@/components/pushClient'
-import { useClipboardContext } from '@/contexts/ClipboardProvider'
+import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
+import {
+  useClipboardContext,
+  OPERATION_CUT
+} from '@/contexts/ClipboardProvider'
 import { useDisplayedFolder } from '@/hooks'
 import { startRenamingAsync } from '@/modules/drive/rename'
 import { useNextcloudCurrentFolder } from '@/modules/nextcloud/hooks/useNextcloudCurrentFolder'
@@ -72,7 +76,16 @@ export const useKeyboardShortcuts = ({
 
   const handleCopy = useCallback(() => {
     if (!allowCopy) {
-      showAlert({ message: t('alert.copy_not_allowed'), severity: 'info' })
+      showAlert({ message: t('alert.copy_not_allowed'), severity: 'secondary' })
+      return
+    }
+
+    const parentFolderIds = selectedItems.map(item => item.dir_id)
+    if (parentFolderIds.includes(SHARED_DRIVES_DIR_ID)) {
+      showAlert({
+        message: t('alert.cannot_copy_shared_drive'),
+        severity: 'secondary'
+      })
       return
     }
 
@@ -80,50 +93,60 @@ export const useKeyboardShortcuts = ({
 
     const filesToCopy = selectedItems.filter(isFile)
     if (filesToCopy.length === 0) {
-      showAlert({ message: t('alert.copy_files_only'), severity: 'info' })
+      showAlert({ message: t('alert.copy_files_only'), severity: 'secondary' })
       return
     }
 
-    copyFiles(filesToCopy, currentFolder?._id)
+    copyFiles(filesToCopy, new Set(parentFolderIds))
     const message =
       filesToCopy.length === 1
         ? t('alert.item_copied')
         : t('alert.items_copied', { count: filesToCopy.length })
     showAlert({ message, severity: 'success' })
     clearSelection()
-  }, [
-    allowCopy,
-    selectedItems,
-    copyFiles,
-    currentFolder,
-    showAlert,
-    t,
-    clearSelection
-  ])
+  }, [allowCopy, selectedItems, copyFiles, showAlert, t, clearSelection])
 
   const handleCut = useCallback(() => {
     if (!selectedItems.length) return
 
-    cutFiles(selectedItems, currentFolder?._id)
+    const parentFolderIds = selectedItems.map(item => item.dir_id)
+
+    if (parentFolderIds.includes(SHARED_DRIVES_DIR_ID)) {
+      showAlert({
+        message: t('alert.cannot_move_shared_drive'),
+        severity: 'secondary'
+      })
+      return
+    }
+
+    cutFiles(selectedItems, new Set(parentFolderIds))
     const message =
       selectedItems.length === 1
         ? t('alert.item_cut')
         : t('alert.items_cut', { count: selectedItems.length })
     showAlert({ message, severity: 'success' })
     clearSelection()
-  }, [selectedItems, cutFiles, showAlert, t, clearSelection, currentFolder])
+  }, [selectedItems, cutFiles, showAlert, t, clearSelection])
 
   const handlePaste = useCallback(async () => {
-    if (!hasClipboardData || !canPaste || !client || !currentFolder) return
+    if (!hasClipboardData || !client || !currentFolder) return
+
+    if (!canPaste) {
+      showAlert({
+        message: t('alert.paste_not_allowed'),
+        severity: 'secondary'
+      })
+      return
+    }
 
     // Skip operation if cutting and pasting in the same folder
     if (
-      clipboardData.operation === 'cut' &&
-      clipboardData.sourceFolderId === currentFolder._id
+      clipboardData.operation === OPERATION_CUT &&
+      clipboardData.sourceFolderIds?.has(currentFolder._id)
     ) {
       showAlert({
         message: t('alert.paste_same_folder_skipped'),
-        severity: 'info'
+        severity: 'secondary'
       })
       return
     }
@@ -158,7 +181,7 @@ export const useKeyboardShortcuts = ({
         })
       }
 
-      if (clipboardData.operation === 'cut') {
+      if (clipboardData.operation === OPERATION_CUT) {
         clearClipboard()
       }
 
