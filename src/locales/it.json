@@ -225,7 +225,11 @@
     "copy_not_allowed": "L'operazione di copia non è consentita in questa vista.",
     "paste_error": "Si è verificato un errore durante l'incollaggio dei file",
     "paste_failed": "Incollaggio dei file fallito",
-    "paste_sharing_error": "Impossibile incollare i file a causa di restrizioni di condivisione. Si prega di utilizzare l'azione Sposta invece."
+    "paste_sharing_error": "Impossibile incollare i file a causa di restrizioni di condivisione. Si prega di utilizzare l'azione Sposta invece.",
+    "paste_same_folder_skipped": "Impossibile spostare gli elementi nella stessa cartella in cui si trovano già.",
+    "paste_not_allowed": "Non puoi incollare in questa cartella",
+    "cannot_move_shared_drive": "Non puoi spostare la cartella dell'unità condivisa",
+    "cannot_copy_shared_drive": "Non puoi copiare la cartella dell’unità condivisa"
   },
   "UploadQueue": {
     "close": "chiudi",

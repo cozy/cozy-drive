@@ -298,7 +298,11 @@
     "copy_not_allowed": "Kopieerbewerking is niet toegestaan in deze weergave.",
     "paste_error": "Er is een fout opgetreden bij het plakken van bestanden",
     "paste_failed": "Plakken van bestanden mislukt",
-    "paste_sharing_error": "Kan bestanden niet plakken vanwege deelbeperkingen. Gebruik in plaats daarvan de actie Verplaatsen."
+    "paste_sharing_error": "Kan bestanden niet plakken vanwege deelbeperkingen. Gebruik in plaats daarvan de actie Verplaatsen.",
+    "paste_same_folder_skipped": "Kan items niet verplaatsen naar dezelfde map waar ze al in staan.",
+    "paste_not_allowed": "U kunt niet plakken in deze map",
+    "cannot_move_shared_drive": "U kunt de gedeelde schijfmap niet verplaatsen",
+    "cannot_copy_shared_drive": "Je kunt de gedeelde schijfmap niet kopiëren"
   },
   "upload": {
     "label": "Uploaden",

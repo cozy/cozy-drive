@@ -82,7 +82,9 @@ const TestComponent = (): JSX.Element => {
         {Array.from(clipboardData.cutItemIds).join(',')}
       </div>
       <div data-testid="source-folder-id">
-        {clipboardData.sourceFolderId ?? 'none'}
+        {clipboardData.sourceFolderIds && clipboardData.sourceFolderIds.size > 0
+          ? Array.from(clipboardData.sourceFolderIds).join(',')
+          : 'none'}
       </div>
       <div data-testid="modal-visible">
         {moveValidationModal.isVisible.toString()}
@@ -90,11 +92,15 @@ const TestComponent = (): JSX.Element => {
       <div data-testid="modal-type">{moveValidationModal.type ?? 'none'}</div>
 
       <button
-        onClick={(): void => copyFiles([mockFile1, mockFile2], 'source-folder')}
+        onClick={(): void =>
+          copyFiles([mockFile1, mockFile2], new Set(['source-folder']))
+        }
       >
         Copy Files
       </button>
-      <button onClick={(): void => cutFiles([mockFile1], 'source-folder')}>
+      <button
+        onClick={(): void => cutFiles([mockFile1], new Set(['source-folder']))}
+      >
         Cut Files
       </button>
       <button onClick={clearClipboard}>Clear Clipboard</button>
@@ -166,7 +172,7 @@ describe('ClipboardProvider', () => {
         result.current.copyFiles([mockFile1])
       })
 
-      expect(result.current.clipboardData.sourceFolderId).toBeNull()
+      expect(result.current.clipboardData.sourceFolderIds).toBeNull()
     })
   })
 
