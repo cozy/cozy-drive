@@ -5469,10 +5469,10 @@ cozy-app-publish@^0.40.1:
     tar "^6.1.11"
     verror "^1.10.1"
 
-cozy-bar@^23.1.0:
-  version "23.1.0"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-23.1.0.tgz#088247e2397fe2622ef81d62ed607ad95696dff8"
-  integrity sha512-fQyArlKfc2L8vZ7FM8kIM1W0skFDgJt4ItJ7f83OeCl78lFHAT+UUdP6gSL2+qW98uKIwtaDnD9uqQJJobJTmw==
+cozy-bar@^24.1.1:
+  version "24.1.1"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-24.1.1.tgz#352e7fa65c31a5e32d4aff762afadff4e6547fd6"
+  integrity sha512-7OVRF4QfbiH2IbRkGpNulpqfu7Wgu0Gm80Cue+Nq2icC+lWjZr6PEaiygHtEC/Ja+wr8kvBSf8ed1nVndW6P4g==
   dependencies:
     lodash.set "^4.3.2"
     lodash.unionwith "4.6.0"
@@ -5570,10 +5570,10 @@ cozy-client@^57.7.0:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
-cozy-client@^60.9.0:
-  version "60.9.0"
-  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-60.9.0.tgz#920a6db040334e3ae2962075017db251649bc31f"
-  integrity sha512-zo0FPKXaxFhK65u8x34nwwlNiK4EzQmxHpmY/6Bksqx2uykLhOyFXMvs9P/sofag7cSeezXVXn64vPpkrhDqsQ==
+cozy-client@^60.13.0:
+  version "60.13.0"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-60.13.0.tgz#d47ff9888ca364143670ad2c2ffdef9aa48ecdaf"
+  integrity sha512-1LxMEvumlxFksjAWjotaClRuyKkcvJBM04Bu+3LlMXyozN4GS6P6PT2n21YFkuJHAYuQJnJ2nGJ6rHgdIpqx2w==
   dependencies:
     "@cozy/minilog" "1.0.0"
     "@fastify/deepmerge" "^2.0.2"
@@ -10920,9 +10920,9 @@ msgpack5@^4.0.2:
     readable-stream "^2.3.6"
     safe-buffer "^5.1.2"
 
-"mui-bottom-sheet@git+https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
+"mui-bottom-sheet@https://github.com/cozy/mui-bottom-sheet.git#v1.0.9":
   version "1.0.8"
-  resolved "git+https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
+  resolved "https://github.com/cozy/mui-bottom-sheet.git#3dc4c2a245ab39079bc2f73546bccf80847be14c"
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
     jest-environment-jsdom-sixteen "^1.0.3"
