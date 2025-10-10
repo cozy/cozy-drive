@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react'
+import React, { useMemo } from 'react'
 import { RemoveScroll } from 'react-remove-scroll'
 
 import { isQueryLoading, useQuery } from 'cozy-client'
@@ -12,13 +12,14 @@ import Viewer, {
 } from 'cozy-viewer'
 
 import Oops from '@/components/Error/Oops'
+import { useRedirectLink } from '@/hooks/useRedirectLink'
 import { useOnlyOfficeContext } from '@/modules/views/OnlyOffice/OnlyOfficeProvider'
 import { buildFileOrFolderByIdQuery } from '@/queries'
 
 const Error = () => {
   const { t } = useI18n()
-  const { fileId } = useOnlyOfficeContext()
-  const handleOnClose = useCallback(() => window.history.back(), [])
+  const { fileId, isPublic } = useOnlyOfficeContext()
+  const { redirectBack } = useRedirectLink({ isPublic })
 
   const fileQuery = useMemo(() => buildFileOrFolderByIdQuery(fileId), [fileId])
   const fileResult = useQuery(fileQuery.definition, fileQuery.options)
@@ -39,7 +40,7 @@ const Error = () => {
 
   return (
     <RemoveScroll>
-      <Viewer files={files} currentIndex={0} onCloseRequest={handleOnClose}>
+      <Viewer files={files} currentIndex={0} onCloseRequest={redirectBack}>
         <ToolbarButtons>
           <SharingButton variant="iconButton" />
         </ToolbarButtons>
