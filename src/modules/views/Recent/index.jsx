@@ -21,7 +21,6 @@ import FolderViewHeader from '../Folder/FolderViewHeader'
 import FolderViewBodyVz from '../Folder/virtualized/FolderViewBody'
 
 import useHead from '@/components/useHead'
-import { useClipboardContext } from '@/contexts/ClipboardProvider'
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts'
 import { useModalContext } from '@/lib/ModalContext'
 import {
@@ -63,7 +62,6 @@ export const RecentView = () => {
     useSelectionContext()
   const sharingContext = useSharingContext()
   const { allLoaded, refresh, isOwner, byDocId } = sharingContext
-  const { hasClipboardData } = useClipboardContext()
   const { isNativeFileSharingAvailable, shareFilesNative } =
     useNativeFileSharing()
   const dispatch = useDispatch()
@@ -85,7 +83,6 @@ export const RecentView = () => {
   const result = useQuery(query.definition, query.options)
 
   useKeyboardShortcuts({
-    canPaste: hasClipboardData,
     client,
     items: result?.data || [],
     sharingContext,

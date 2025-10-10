@@ -258,7 +258,11 @@
     "copy_not_allowed": "このビューではコピー操作は許可されていません。",
     "paste_error": "ファイルの貼り付け中にエラーが発生しました",
     "paste_failed": "ファイルの貼り付けに失敗しました",
-    "paste_sharing_error": "共有制限のためファイルを貼り付けることができません。代わりに移動アクションを使用してください。"
+    "paste_sharing_error": "共有制限のためファイルを貼り付けることができません。代わりに移動アクションを使用してください。",
+    "paste_same_folder_skipped": "アイテムを既に存在する同じフォルダに移動することはできません。",
+    "paste_not_allowed": "このフォルダに貼り付けることはできません",
+    "cannot_move_shared_drive": "共有ドライブフォルダを移動することはできません",
+    "cannot_copy_shared_drive": "共有ドライブのフォルダをコピーできません"
   },
   "upload": {
     "label": "アップロード",

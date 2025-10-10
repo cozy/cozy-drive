@@ -331,7 +331,10 @@
     "paste_error": "An error occurred while pasting files",
     "paste_failed": "Failed to paste files",
     "paste_sharing_error": "Cannot paste files due to sharing restrictions. Please use the Move action instead.",
-    "paste_same_folder_skipped": "Cannot move items to the same folder they are already in."
+    "paste_same_folder_skipped": "Cannot move items to the same folder they are already in.",
+    "paste_not_allowed": "You cannot paste into this folder",
+    "cannot_move_shared_drive": "You cannot move shared drive folder",
+    "cannot_copy_shared_drive": "You cannot copy shared drive folder"
   },
   "upload": {
     "label": "Upload",

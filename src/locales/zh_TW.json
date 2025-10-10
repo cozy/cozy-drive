@@ -168,6 +168,10 @@
     "copy_not_allowed": "此檢視中不允許複製操作。",
     "paste_error": "貼上檔案時發生錯誤",
     "paste_failed": "貼上檔案失敗",
-    "paste_sharing_error": "由於分享限制，無法貼上檔案。請改用移動操作。"
+    "paste_sharing_error": "由於共享限制，無法貼上檔案。請改用移動操作。",
+    "paste_same_folder_skipped": "無法將項目移動到它們已經所在的同一資料夾。",
+    "paste_not_allowed": "您無法貼上到此資料夾",
+    "cannot_move_shared_drive": "您無法移動共享磁碟機資料夾",
+    "cannot_copy_shared_drive": "您無法複製共用雲端硬碟資料夾"
   }
 }
