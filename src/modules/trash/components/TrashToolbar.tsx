@@ -15,6 +15,7 @@ import { selectable } from '@/modules/actions/components/selectable'
 import SearchButton from '@/modules/drive/Toolbar/components/SearchButton'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 import { emptyTrash } from '@/modules/trash/components/actions/emptyTrash'
+import ViewSwitcher from '@/modules/drive/Toolbar/components/ViewSwitcher'
 
 const TrashToolbar: FC = () => {
   const { t } = useI18n()
@@ -47,6 +48,7 @@ const TrashToolbar: FC = () => {
       className={cx('u-flex', 'u-flex-items-center', 'u-ml-auto')}
       role="toolbar"
     >
+      <ViewSwitcher className="u-mr-half" />
       <Button
         variant="secondary"
         color="error"
