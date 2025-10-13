@@ -64,9 +64,9 @@ export const makeDesktopHandlers = ({
 }) => {
   return {
     // first event triggered on Desktop
-    onMouseDown: clearTimeout(timerId.current),
+    onMouseDown: () => clearTimeout(timerId.current),
     // second event triggered on Desktop
-    onMouseUp: clearTimeout(timerId.current),
+    onMouseUp: () => clearTimeout(timerId.current),
     // third event triggered on Desktop
     onClick: event =>
       handleClick({
@@ -136,9 +136,9 @@ export const makeMobileHandlers = ({
     // first event triggered on Mobile when taping an item
     onTouchStart: startPressTimer,
     // second event triggered on Mobile when dragging an item
-    onTouchMove: clearTimeout(timerId.current),
+    onTouchMove: () => clearTimeout(timerId.current),
     // third event triggered on Mobile when taping an item
-    onTouchEnd: clearTimeout(timerId.current),
+    onTouchEnd: () => clearTimeout(timerId.current),
     // fourth event triggered on Mobile
     onClick: event =>
       handlePress({
