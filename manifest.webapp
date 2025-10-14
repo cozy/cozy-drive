@@ -84,13 +84,13 @@
     {
       "name": "new-file-type-text",
       "title": {
-          "en": "Doc",
-          "fr": "Doc",
-          "ru": "документ",
-          "vi": "Doc"
-        },
-        "hash": "/onlyoffice/create/io.cozy.files.root-dir/text",
-        "icon": "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0ibm9uZSI+PHBhdGggZmlsbD0iIzAwNzZFRCIgZD0iTTguNCAwQTYuNCA2LjQgMCAwIDAgMiA2LjR2MTkuMkE2LjQgNi40IDAgMCAwIDguNCAzMmgxNmE2LjQgNi40IDAgMCAwIDYuNC02LjRWMTAuNEwyMC40IDBjLTQuMDEzIDAtNCAwIDAgMGgtMTJaIi8+PHJlY3Qgd2lkdGg9IjE2IiBoZWlnaHQ9IjIuOTA5IiB4PSI4IiB5PSIxMCIgZmlsbD0iI2ZmZiIgcng9IjEuNDU1Ii8+PHJlY3Qgd2lkdGg9IjE2IiBoZWlnaHQ9IjIuOTA5IiB4PSI4IiB5PSIxNS45MDkiIGZpbGw9IiNmZmYiIHJ4PSIxLjQ1NSIvPjxyZWN0IHdpZHRoPSIxNiIgaGVpZ2h0PSIyLjkwOSIgeD0iOCIgeT0iMjEuODE4IiBmaWxsPSIjZmZmIiByeD0iMS40NTUiLz48cGF0aCBmaWxsPSIjMDA2OEQyIiBkPSJNMzAuOCAxMC44IDIwIDB2NS41ODZjMCAyLjg4IDIuMjU3IDUuMjE0IDUuMDQgNS4yMTRoNS43NloiLz48L3N2Zz4="
+        "en": "Doc",
+        "fr": "Doc",
+        "ru": "документ",
+        "vi": "Doc"
+      },
+      "hash": "/onlyoffice/create/io.cozy.files.root-dir/text",
+      "icon": "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0ibm9uZSI+PHBhdGggZmlsbD0iIzAwNzZFRCIgZD0iTTguNCAwQTYuNCA2LjQgMCAwIDAgMiA2LjR2MTkuMkE2LjQgNi40IDAgMCAwIDguNCAzMmgxNmE2LjQgNi40IDAgMCAwIDYuNC02LjRWMTAuNEwyMC40IDBjLTQuMDEzIDAtNCAwIDAgMGgtMTJaIi8+PHJlY3Qgd2lkdGg9IjE2IiBoZWlnaHQ9IjIuOTA5IiB4PSI4IiB5PSIxMCIgZmlsbD0iI2ZmZiIgcng9IjEuNDU1Ii8+PHJlY3Qgd2lkdGg9IjE2IiBoZWlnaHQ9IjIuOTA5IiB4PSI4IiB5PSIxNS45MDkiIGZpbGw9IiNmZmYiIHJ4PSIxLjQ1NSIvPjxyZWN0IHdpZHRoPSIxNiIgaGVpZ2h0PSIyLjkwOSIgeD0iOCIgeT0iMjEuODE4IiBmaWxsPSIjZmZmIiByeD0iMS40NTUiLz48cGF0aCBmaWxsPSIjMDA2OEQyIiBkPSJNMzAuOCAxMC44IDIwIDB2NS41ODZjMCAyLjg4IDIuMjU3IDUuMjE0IDUuMDQgNS4yMTRoNS43NloiLz48L3N2Zz4="
     },
     {
       "name": "new-file-type-sheet",
