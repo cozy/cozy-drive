@@ -148,7 +148,7 @@ describe('handleShiftArrow', () => {
 
       const result = handleShiftArrow(params)
 
-      expect(result.newSelectedItems).toEqual({ '1': mockFiles[0] })
+      expect(result.newSelectedItems).toEqual({})
       expect(result.lastInteractedItemId).toBe('1')
     })
 
@@ -166,7 +166,7 @@ describe('handleShiftArrow', () => {
 
       const result = handleShiftArrow(params)
 
-      expect(result.newSelectedItems).toEqual({ '5': mockFiles[4] })
+      expect(result.newSelectedItems).toEqual({})
       expect(result.lastInteractedItemId).toBe('5')
     })
   })

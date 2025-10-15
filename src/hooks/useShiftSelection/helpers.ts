@@ -182,14 +182,6 @@ export const handleShiftArrow = ({
   const nextIdx = lastInteractedIdx + direction
   const currentIdx = clamp(items.length, nextIdx)
 
-  // If we hit a boundary (can't move further), keep current selection unchanged
-  if (currentIdx === lastInteractedIdx) {
-    return {
-      newSelectedItems: selectedItems,
-      lastInteractedItemId: items[lastInteractedIdx]._id
-    }
-  }
-
   const prevSelected = isItemSelected(items[lastInteractedIdx]?._id)
   const currSelected = isItemSelected(items[currentIdx]?._id)
   const isMovingToSelect = prevSelected && !currSelected
@@ -210,7 +202,7 @@ export const handleShiftArrow = ({
     direction,
     isMovingToSelect,
     isItemSelected,
-    isReturnCurrent: Object.keys(newSelectedItems).length < 1
+    isReturnCurrent: Object.keys(newSelectedItems).length <= 1
   })
 
   return {
