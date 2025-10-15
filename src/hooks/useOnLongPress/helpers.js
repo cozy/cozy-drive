@@ -13,8 +13,6 @@ export const handleClick = ({
   lastClickTime,
   setLastClickTime,
   setSelectedItems,
-  setLastSelectedIndex,
-  setFocusedIndex,
   clearHighlightedItems
 }) => {
   // if default behavior is opening a file, it blocks that to force other bahavior
@@ -43,8 +41,6 @@ export const handleClick = ({
     // we should probablt not use index - 1
     // we should use only one func to set things on click, and not 3 setters
     setSelectedItems({ [file._id]: file })
-    setFocusedIndex(file.index - 1)
-    setLastSelectedIndex(file.index - 1)
   }
 
   setLastClickTime(currentTime)
@@ -62,8 +58,6 @@ export const makeDesktopHandlers = ({
   setLastClickTime,
   clearSelection,
   setSelectedItems,
-  setLastSelectedIndex,
-  setFocusedIndex,
   clearHighlightedItems
 }) => {
   return {
@@ -85,8 +79,6 @@ export const makeDesktopHandlers = ({
         setLastClickTime,
         clearSelection,
         setSelectedItems,
-        setLastSelectedIndex,
-        setFocusedIndex,
         clearHighlightedItems
       })
   }

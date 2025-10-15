@@ -1,18 +1,13 @@
-import React, { useRef, forwardRef, useState, useMemo } from 'react'
+import React, { forwardRef } from 'react'
 
 import VirtuosoTableDnd from 'cozy-ui/transpiled/react/Table/Virtualized/Dnd'
 import TableRowDnD from 'cozy-ui/transpiled/react/Table/Virtualized/Dnd/TableRow'
 import virtuosoComponentsDnd from 'cozy-ui/transpiled/react/Table/Virtualized/Dnd/virtuosoComponents'
-import {
-  stableSort,
-  getComparator
-} from 'cozy-ui/transpiled/react/Table/Virtualized/helpers'
 
 import { secondarySort } from '../helpers'
 
 import RightClickFileMenu from '@/components/RightClick/RightClickFileMenu'
 import { useClipboardContext } from '@/contexts/ClipboardProvider'
-import { useShiftArrowsSelection } from '@/hooks/useShiftArrowsSelection'
 import Cell from '@/modules/filelist/virtualized/cells/Cell'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 import { useNewItemHighlightContext } from '@/modules/upload/NewItemHighlightProvider'
@@ -57,63 +52,29 @@ const Table = ({
   actions,
   sortOrder
 }) => {
-  const {
-    handleShiftClick,
-    focusedIndex,
-    toggleSelectedItem,
-    isKeyboardNavigating
-  } = useSelectionContext()
-
-  const tableRef = useRef()
-  const [order, setOrder] = useState(sortOrder?.order || 'asc')
-  const [orderBy, setOrderBy] = useState(
-    sortOrder?.attribute || columns?.[0]?.id
-  )
+  const { toggleSelectedItem } = useSelectionContext()
   const { isNew } = useNewItemHighlightContext()
-  const sortedRow = useMemo(() => {
-    const sortedData = stableSort(rows, getComparator(order, orderBy))
-    return secondarySort(sortedData)
-  }, [rows, order, orderBy])
-
-  useShiftArrowsSelection({ items: sortedRow, viewType: 'list' }, tableRef)
-
-  const handleRowSelect = (row, event, visualIndex) => {
-    event.stopPropagation()
-    if (event.shiftKey && visualIndex !== undefined) {
-      handleShiftClick(row, visualIndex)
-    } else {
-      toggleSelectedItem(row, visualIndex)
-    }
-  }
-
-  const handleSort = ({ order, orderBy }) => {
-    setOrder(order)
-    setOrderBy(orderBy)
-  }
 
   return (
-    <div
-      className="u-h-100"
-      ref={tableRef}
-      tabIndex={0}
-      style={{ outline: 'none' }}
-    >
+    <div className="u-h-100" tabIndex={0} style={{ outline: 'none' }}>
       <VirtuosoTableDnd
         context={{ actions }}
         components={components}
-        rows={sortedRow}
+        rows={rows}
         columns={columns}
         dragProps={dragProps}
         endReached={fetchMore}
-        defaultOrder={{ direction: order, by: orderBy }}
+        defaultOrder={{
+          direction: sortOrder?.order || 'asc',
+          by: sortOrder?.attribute || columns?.[0]?.id
+        }}
         secondarySort={secondarySort}
         onSelectAll={selectAll}
-        onSelect={handleRowSelect}
+        onSelect={toggleSelectedItem}
         isSelectedItem={isSelectedItem}
+        isNewItem={isNew}
         selectedItems={selectedItems}
         increaseViewportBy={200}
-        onSortChange={handleSort}
-        isNewItem={isNew}
         componentsProps={{
           rowContent: {
             children: (
@@ -121,8 +82,6 @@ const Table = ({
                 currentFolderId={currentFolderId}
                 withFilePath={withFilePath}
                 actions={actions}
-                focusedIndex={focusedIndex}
-                isKeyboardNavigating={isKeyboardNavigating}
               />
             )
           }
@@ -131,5 +90,7 @@ const Table = ({
     </div>
   )
 }
+
+Table.displayName = 'Table'
 
 export default React.memo(Table)
