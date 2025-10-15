@@ -47,17 +47,12 @@ const GridFile = ({
   disableSelection = false,
   canInteractWith,
   onContextMenu,
-  isOver,
-  fileIndex = null
+  isOver
 }) => {
   const [actionMenuVisible, setActionMenuVisible] = useState(false)
   const filerowMenuToggleRef = useRef()
-  const {
-    toggleSelectedItem,
-    isItemSelected,
-    isSelectionBarVisible,
-    handleShiftClick
-  } = useSelectionContext()
+  const { toggleSelectedItem, isItemSelected, isSelectionBarVisible } =
+    useSelectionContext()
   const { isItemCut } = useClipboardContext()
   const { isNew } = useNewItemHighlightContext()
 
@@ -73,13 +68,8 @@ const GridFile = ({
     setActionMenuVisible(false)
   }
 
-  const toggle = e => {
-    e.stopPropagation()
-    if (e.shiftKey && fileIndex !== null) {
-      handleShiftClick(attributes, fileIndex)
-    } else {
-      toggleSelectedItem(attributes, fileIndex)
-    }
+  const toggle = () => {
+    toggleSelectedItem(attributes)
   }
 
   const isRowDisabledOrInSyncFromSharing = disabled || isInSyncFromSharing

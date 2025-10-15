@@ -4,7 +4,6 @@ import React, {
   useContext,
   useState,
   useEffect,
-  useMemo,
   useRef
 } from 'react'
 import { useSelector } from 'react-redux'
@@ -21,7 +20,6 @@ import styles from '@/styles/folder-view.styl'
 import { EmptyWrapper } from '@/components/Error/Empty'
 import Oops from '@/components/Error/Oops'
 import RightClickFileMenu from '@/components/RightClick/RightClickFileMenu'
-import { useShiftArrowsSelection } from '@/hooks/useShiftArrowsSelection'
 import AcceptingSharingContext from '@/lib/AcceptingSharingContext'
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
 import { useViewSwitcherContext } from '@/lib/ViewSwitcherContext'
@@ -68,18 +66,6 @@ const FolderViewBody = ({
   const { viewType, switchView } = useViewSwitcherContext()
   const folderViewRef = useRef()
   const IsAddingFolder = useSelector(isTypingNewFolderName)
-
-  const allFiles = useMemo(() => {
-    const files = []
-    queryResults.forEach(query => {
-      if (query.data && query.data.length > 0) {
-        files.push(...query.data)
-      }
-    })
-    return files
-  }, [queryResults])
-
-  useShiftArrowsSelection({ items: allFiles, viewType }, folderViewRef)
 
   /**
    *  Since we are not able to restore the scroll correctly,
@@ -220,17 +206,9 @@ const FolderViewBody = ({
                 />
                 {queryResults.map((query, queryIndex) => {
                   if (query.data !== null && query.data.length > 0) {
-                    let fileIndex = 0
-                    for (let i = 0; i < queryIndex; i++) {
-                      if (queryResults[i].data) {
-                        fileIndex += queryResults[i].data.length
-                      }
-                    }
-
                     return (
                       <React.Fragment key={queryIndex}>
-                        {query.data.map((file, localIndex) => {
-                          const globalIndex = fileIndex + localIndex
+                        {query.data.map(file => {
                           return (
                             <RightClickFileMenu
                               key={file._id}
@@ -256,7 +234,6 @@ const FolderViewBody = ({
                                   )
                                 }
                                 extraColumns={extraColumns}
-                                fileIndex={globalIndex}
                               />
                             </RightClickFileMenu>
                           )

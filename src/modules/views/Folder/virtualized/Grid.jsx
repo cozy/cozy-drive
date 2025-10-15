@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import React, { useRef } from 'react'
+import React from 'react'
 
 import { useVaultClient } from 'cozy-keys-lib'
 import VirtualizedGridListDnd from 'cozy-ui/transpiled/react/GridList/Virtualized/Dnd'
@@ -9,7 +9,6 @@ import GridWrapper from './GridWrapper'
 import styles from '@/styles/filelist.styl'
 
 import RightClickFileMenu from '@/components/RightClick/RightClickFileMenu'
-import { useShiftArrowsSelection } from '@/hooks/useShiftArrowsSelection'
 import AddFolder from '@/modules/filelist/AddFolder'
 import { GridFileWithSelection as GridFile } from '@/modules/filelist/virtualized/GridFile'
 
@@ -27,16 +26,9 @@ const Grid = ({
   currentFolderId
 }) => {
   const vaultClient = useVaultClient()
-  const gridRef = useRef()
-  useShiftArrowsSelection({ items, viewType: 'grid' }, gridRef)
 
   return (
-    <div
-      className="u-h-100"
-      ref={gridRef}
-      tabIndex={0}
-      style={{ outline: 'none' }}
-    >
+    <div className="u-h-100" tabIndex={0} style={{ outline: 'none' }}>
       <VirtualizedGridListDnd
         components={{
           List: GridWrapper
@@ -48,7 +40,7 @@ const Grid = ({
         }}
         items={items}
         dragProps={dragProps}
-        itemRenderer={(file, { isOver }, index) => (
+        itemRenderer={(file, { isOver }) => (
           <>
             {file.type != 'tempDirectory' ? (
               <RightClickFileMenu
@@ -69,7 +61,6 @@ const Grid = ({
                     isReferencedByShareInSharingContext(file, sharingsValue)
                   }
                   isOver={isOver}
-                  fileIndex={file.index !== undefined ? file.index : index}
                 />
               </RightClickFileMenu>
             ) : (
@@ -86,5 +77,7 @@ const Grid = ({
     </div>
   )
 }
+
+Grid.displayName = 'Grid'
 
 export default React.memo(Grid)
