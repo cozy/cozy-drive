@@ -4,6 +4,7 @@ import React, {
   useContext,
   useState,
   useEffect,
+  useMemo,
   useRef
 } from 'react'
 import { useSelector } from 'react-redux'
@@ -20,6 +21,7 @@ import styles from '@/styles/folder-view.styl'
 import { EmptyWrapper } from '@/components/Error/Empty'
 import Oops from '@/components/Error/Oops'
 import RightClickFileMenu from '@/components/RightClick/RightClickFileMenu'
+import { useShiftSelection } from '@/hooks/useShiftSelection'
 import AcceptingSharingContext from '@/lib/AcceptingSharingContext'
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
 import { useViewSwitcherContext } from '@/lib/ViewSwitcherContext'
@@ -66,6 +68,21 @@ const FolderViewBody = ({
   const { viewType, switchView } = useViewSwitcherContext()
   const folderViewRef = useRef()
   const IsAddingFolder = useSelector(isTypingNewFolderName)
+
+  const allFiles = useMemo(() => {
+    const files = []
+    queryResults.forEach(query => {
+      if (query.data && query.data.length > 0) {
+        files.push(...query.data)
+      }
+    })
+    return files
+  }, [queryResults])
+
+  const { setLastInteractedItem, onShiftClick } = useShiftSelection(
+    { items: allFiles, viewType },
+    folderViewRef
+  )
 
   /**
    *  Since we are not able to restore the scroll correctly,
@@ -114,6 +131,11 @@ const FolderViewBody = ({
   const isSharingContextEmpty = Object.keys(sharingsValue).length <= 0
 
   const { syncingFakeFile } = useSyncingFakeFile({ isEmpty, queryResults })
+
+  const onToggleSelect = (fileId, e) => {
+    setLastInteractedItem(fileId)
+    onShiftClick(fileId, e)
+  }
 
   /**
    * When we mount the component when we already have data in cache,
@@ -234,6 +256,9 @@ const FolderViewBody = ({
                                   )
                                 }
                                 extraColumns={extraColumns}
+                                onToggleSelect={e => {
+                                  onToggleSelect(file?._id, e)
+                                }}
                               />
                             </RightClickFileMenu>
                           )

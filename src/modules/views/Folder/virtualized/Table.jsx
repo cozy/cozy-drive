@@ -39,57 +39,77 @@ const components = {
   TableRow: TableRowMemo
 }
 
-const Table = ({
-  rows,
-  columns,
-  dragProps,
-  selectAll,
-  fetchMore,
-  isSelectedItem,
-  selectedItems,
-  currentFolderId,
-  withFilePath,
-  actions,
-  sortOrder
-}) => {
-  const { toggleSelectedItem } = useSelectionContext()
-  const { isNew } = useNewItemHighlightContext()
+const Table = forwardRef(
+  (
+    {
+      rows,
+      columns,
+      dragProps,
+      selectAll,
+      fetchMore,
+      isSelectedItem,
+      selectedItems,
+      currentFolderId,
+      withFilePath,
+      actions,
+      orderProps,
+      onSelect
+    },
+    ref
+  ) => {
+    const { toggleSelectedItem } = useSelectionContext()
+    const { isNew } = useNewItemHighlightContext()
+    const { order, orderBy, setOrder, setOrderBy } = orderProps
 
-  return (
-    <div className="u-h-100" tabIndex={0} style={{ outline: 'none' }}>
-      <VirtuosoTableDnd
-        context={{ actions }}
-        components={components}
-        rows={rows}
-        columns={columns}
-        dragProps={dragProps}
-        endReached={fetchMore}
-        defaultOrder={{
-          direction: sortOrder?.order || 'asc',
-          by: sortOrder?.attribute || columns?.[0]?.id
-        }}
-        secondarySort={secondarySort}
-        onSelectAll={selectAll}
-        onSelect={toggleSelectedItem}
-        isSelectedItem={isSelectedItem}
-        isNewItem={isNew}
-        selectedItems={selectedItems}
-        increaseViewportBy={200}
-        componentsProps={{
-          rowContent: {
-            children: (
-              <Cell
-                currentFolderId={currentFolderId}
-                withFilePath={withFilePath}
-                actions={actions}
-              />
-            )
-          }
-        }}
-      />
-    </div>
-  )
-}
+    const handleRowSelect = (row, event) => {
+      toggleSelectedItem(row)
+      onSelect?.(row?._id, event)
+    }
+
+    const handleSort = ({ order, orderBy }) => {
+      setOrder(order)
+      setOrderBy(orderBy)
+    }
+
+    return (
+      <div
+        className="u-h-100"
+        ref={ref}
+        tabIndex={0}
+        style={{ outline: 'none' }}
+      >
+        <VirtuosoTableDnd
+          context={{ actions }}
+          components={components}
+          rows={rows}
+          columns={columns}
+          dragProps={dragProps}
+          endReached={fetchMore}
+          defaultOrder={{ direction: order, by: orderBy }}
+          secondarySort={secondarySort}
+          onSelectAll={selectAll}
+          onSelect={handleRowSelect}
+          isSelectedItem={isSelectedItem}
+          isNewItem={isNew}
+          selectedItems={selectedItems}
+          increaseViewportBy={200}
+          onSortChange={handleSort}
+          componentsProps={{
+            rowContent: {
+              children: (
+                <Cell
+                  currentFolderId={currentFolderId}
+                  withFilePath={withFilePath}
+                  actions={actions}
+                />
+              )
+            }
+          }}
+        />
+      </div>
+    )
+  }
+)
 
 Table.displayName = 'Table'
 
