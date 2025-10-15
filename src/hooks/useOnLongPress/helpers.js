@@ -13,6 +13,7 @@ export const handleClick = ({
   lastClickTime,
   setLastClickTime,
   setSelectedItems,
+  onInteractWithFile,
   clearHighlightedItems
 }) => {
   // if default behavior is opening a file, it blocks that to force other bahavior
@@ -43,6 +44,7 @@ export const handleClick = ({
     setSelectedItems({ [file._id]: file })
   }
 
+  onInteractWithFile(file._id, event)
   setLastClickTime(currentTime)
 }
 
@@ -58,7 +60,8 @@ export const makeDesktopHandlers = ({
   setLastClickTime,
   clearSelection,
   setSelectedItems,
-  clearHighlightedItems
+  clearHighlightedItems,
+  onInteractWithFile
 }) => {
   return {
     // first event triggered on Desktop
@@ -79,7 +82,8 @@ export const makeDesktopHandlers = ({
         setLastClickTime,
         clearSelection,
         setSelectedItems,
-        clearHighlightedItems
+        clearHighlightedItems,
+        onInteractWithFile
       })
   }
 }

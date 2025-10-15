@@ -6,7 +6,14 @@ import { useLongPress } from '@/hooks/useOnLongPress'
 import { FileLink } from '@/modules/navigation/components/FileLink'
 import { useFileLink } from '@/modules/navigation/hooks/useFileLink'
 
-const FileOpener = ({ file, toggle, disabled, isRenaming, children }) => {
+const FileOpener = ({
+  file,
+  toggle,
+  disabled,
+  isRenaming,
+  onInteractWithFile,
+  children
+}) => {
   const rowRef = useRef()
   const { link, openLink } = useFileLink(file)
   const handlers = useLongPress({
@@ -14,7 +21,8 @@ const FileOpener = ({ file, toggle, disabled, isRenaming, children }) => {
     disabled,
     isRenaming,
     openLink,
-    toggle
+    toggle,
+    onInteractWithFile
   })
 
   return (

@@ -134,6 +134,7 @@ const GridFile = ({
           isRowDisabledOrInSyncFromSharing || isCut || actionMenuVisible
         }
         toggle={toggle}
+        onInteractWithFile={onToggleSelect}
         isRenaming={isRenaming}
       >
         <div

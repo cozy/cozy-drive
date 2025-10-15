@@ -12,7 +12,8 @@ export const useLongPress = ({
   disabled,
   isRenaming,
   openLink,
-  toggle
+  toggle,
+  onInteractWithFile
 }) => {
   const timerId = useRef()
   const isLongPress = useRef(false)
@@ -38,6 +39,7 @@ export const useLongPress = ({
       setLastClickTime,
       clearSelection,
       setSelectedItems,
+      onInteractWithFile,
       clearHighlightedItems
     })
   }
