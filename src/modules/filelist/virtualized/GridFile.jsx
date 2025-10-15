@@ -48,7 +48,7 @@ const GridFile = ({
   canInteractWith,
   onContextMenu,
   isOver,
-  onToggleSelect
+  onInteractWithFile
 }) => {
   const [actionMenuVisible, setActionMenuVisible] = useState(false)
   const filerowMenuToggleRef = useRef()
@@ -71,7 +71,7 @@ const GridFile = ({
 
   const toggle = e => {
     toggleSelectedItem(attributes)
-    onToggleSelect?.(attributes?._id, e)
+    onInteractWithFile?.(attributes?._id, e)
   }
 
   const isRowDisabledOrInSyncFromSharing = disabled || isInSyncFromSharing
@@ -134,7 +134,7 @@ const GridFile = ({
           isRowDisabledOrInSyncFromSharing || isCut || actionMenuVisible
         }
         toggle={toggle}
-        onInteractWithFile={onToggleSelect}
+        onInteractWithFile={onInteractWithFile}
         isRenaming={isRenaming}
       >
         <div
