@@ -85,7 +85,7 @@ const FolderViewBodyContent = ({
     folderViewRef
   )
 
-  const onSelect = (itemId, event) => {
+  const onInteractWithFile = (itemId, event) => {
     setLastInteractedItem(itemId)
     onShiftClick(itemId, event)
   }
@@ -124,7 +124,7 @@ const FolderViewBodyContent = ({
           withFilePath={withFilePath}
           actions={actions}
           ref={folderViewRef}
-          onSelect={onSelect}
+          onInteractWithFile={onInteractWithFile}
           orderProps={{
             order,
             orderBy,
@@ -151,7 +151,7 @@ const FolderViewBodyContent = ({
               t
             })
           }}
-          onSelect={onSelect}
+          onInteractWithFile={onInteractWithFile}
           ref={folderViewRef}
         />
       )}
