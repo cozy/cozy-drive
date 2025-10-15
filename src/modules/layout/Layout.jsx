@@ -97,15 +97,15 @@ const LayoutContent = () => {
               </div>
             ) : null}
             <Nav />
-            {isDesktop && (
-              <div>
-                <div className="u-p-1-half">
-                  <Storage />
-                </div>
-                <ButtonClient />
-              </div>
-            )}
           </div>
+          {isDesktop && (
+            <div>
+              <div className="u-p-1-half">
+                <Storage />
+              </div>
+              <ButtonClient />
+            </div>
+          )}
         </Sidebar>
         <UploadQueue />
         <SelectionProvider>
