@@ -20,8 +20,6 @@ export const useLongPress = ({
   const { isDesktop } = useBreakpoints()
   const {
     setSelectedItems,
-    setFocusedIndex,
-    setLastSelectedIndex,
     clearSelection,
     isSelectionBarVisible: selectionModeActive
   } = useSelectionContext()
@@ -40,8 +38,6 @@ export const useLongPress = ({
       setLastClickTime,
       clearSelection,
       setSelectedItems,
-      setLastSelectedIndex,
-      setFocusedIndex,
       clearHighlightedItems
     })
   }

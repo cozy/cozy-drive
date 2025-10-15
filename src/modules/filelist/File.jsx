@@ -69,15 +69,13 @@ const File = ({
   breakpoints: { isExtraLarge, isMobile },
   disableSelection = false,
   canInteractWith,
-  onContextMenu,
-  fileIndex = null
+  onContextMenu
 }) => {
   const { viewType } = useViewSwitcherContext()
 
   const [actionMenuVisible, setActionMenuVisible] = useState(false)
   const filerowMenuToggleRef = useRef()
-  const { toggleSelectedItem, isItemSelected, handleShiftClick } =
-    useSelectionContext()
+  const { toggleSelectedItem, isItemSelected } = useSelectionContext()
 
   const { isItemCut } = useClipboardContext()
 
@@ -93,13 +91,8 @@ const File = ({
     setActionMenuVisible(false)
   }
 
-  const toggle = e => {
-    e.stopPropagation()
-    if (e.shiftKey && fileIndex !== null) {
-      handleShiftClick(attributes, fileIndex)
-    } else {
-      toggleSelectedItem(attributes, fileIndex)
-    }
+  const toggle = () => {
+    toggleSelectedItem(attributes)
   }
 
   const isRowDisabledOrInSyncFromSharing = disabled || isInSyncFromSharing
@@ -155,7 +148,7 @@ const File = ({
         viewType={viewType}
         withSelectionCheckbox={withSelectionCheckbox && actions?.length > 0}
         selected={selected}
-        onClick={e => toggle(e)}
+        onClick={toggle}
         disabled={
           !canInteractWithFile ||
           isRowDisabledOrInSyncFromSharing ||
