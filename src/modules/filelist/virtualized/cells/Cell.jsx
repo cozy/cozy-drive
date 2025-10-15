@@ -32,7 +32,8 @@ const Cell = ({
   cell,
   currentFolderId,
   withFilePath,
-  actions
+  actions,
+  onInteractWithFile
 }) => {
   const { f, t } = useI18n()
   const vaultClient = useVaultClient()
@@ -100,6 +101,7 @@ const Cell = ({
         disabled={isInSyncFromSharing || showActionMenu}
         toggle={toggle}
         isRenaming={isRenaming}
+        onInteractWithFile={onInteractWithFile}
       >
         <FileName
           attributes={row}
@@ -183,7 +185,8 @@ const CellWrapper = ({
   cell,
   currentFolderId,
   withFilePath,
-  actions
+  actions,
+  onInteractWithFile
 }) => {
   return (
     <CellMemo
@@ -193,6 +196,7 @@ const CellWrapper = ({
       currentFolderId={currentFolderId}
       withFilePath={withFilePath}
       actions={actions}
+      onInteractWithFile={onInteractWithFile}
     />
   )
 }

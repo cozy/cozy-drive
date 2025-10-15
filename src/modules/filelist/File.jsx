@@ -165,6 +165,7 @@ const File = ({
         }
         toggle={toggle}
         isRenaming={isRenaming}
+        onInteractWithFile={onToggleSelect}
       >
         <ThumbnailWrapper
           viewType={viewType}
