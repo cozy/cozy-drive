@@ -69,7 +69,8 @@ const File = ({
   breakpoints: { isExtraLarge, isMobile },
   disableSelection = false,
   canInteractWith,
-  onContextMenu
+  onContextMenu,
+  onToggleSelect
 }) => {
   const { viewType } = useViewSwitcherContext()
 
@@ -91,8 +92,9 @@ const File = ({
     setActionMenuVisible(false)
   }
 
-  const toggle = () => {
+  const toggle = e => {
     toggleSelectedItem(attributes)
+    onToggleSelect?.(attributes?._id, e)
   }
 
   const isRowDisabledOrInSyncFromSharing = disabled || isInSyncFromSharing
@@ -271,7 +273,8 @@ File.propTypes = {
   isInSyncFromSharing: PropTypes.bool,
   extraColumns: extraColumnsPropTypes,
   /** Disables the ability to select a file */
-  disableSelection: PropTypes.bool
+  disableSelection: PropTypes.bool,
+  onToggleSelect: PropTypes.func
 }
 
 export const DumbFile = props => {
