@@ -101,6 +101,7 @@ const Table = forwardRef(
                   currentFolderId={currentFolderId}
                   withFilePath={withFilePath}
                   actions={actions}
+                  onInteractWithFile={onSelect}
                 />
               )
             }

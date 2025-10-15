@@ -89,7 +89,8 @@ describe('handleClick', () => {
         openLink: mockOpenLink,
         toggle: mockToggle,
         lastClickTime,
-        setLastClickTime: jest.fn()
+        setLastClickTime: jest.fn(),
+        onInteractWithFile: jest.fn()
       }
     }
   }
