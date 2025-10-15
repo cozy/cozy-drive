@@ -26,15 +26,11 @@ const Grid = forwardRef(
       fetchMore,
       dragProps,
       currentFolderId,
-      onSelect
+      onInteractWithFile
     },
     ref
   ) => {
     const vaultClient = useVaultClient()
-
-    const onToggleSelect = (fileId, event) => {
-      onSelect?.(fileId, event)
-    }
 
     return (
       <div
@@ -54,7 +50,7 @@ const Grid = forwardRef(
           }}
           items={items}
           dragProps={dragProps}
-          itemRenderer={(file, { isOver }, index) => (
+          itemRenderer={(file, { isOver }) => (
             <>
               {file.type != 'tempDirectory' ? (
                 <RightClickFileMenu
@@ -75,8 +71,7 @@ const Grid = forwardRef(
                       isReferencedByShareInSharingContext(file, sharingsValue)
                     }
                     isOver={isOver}
-                    fileIndex={file.index !== undefined ? file.index : index}
-                    onToggleSelect={onToggleSelect}
+                    onInteractWithFile={onInteractWithFile}
                   />
                 </RightClickFileMenu>
               ) : (

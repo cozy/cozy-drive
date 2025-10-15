@@ -53,7 +53,7 @@ const Table = forwardRef(
       withFilePath,
       actions,
       orderProps,
-      onSelect
+      onInteractWithFile
     },
     ref
   ) => {
@@ -63,7 +63,7 @@ const Table = forwardRef(
 
     const handleRowSelect = (row, event) => {
       toggleSelectedItem(row)
-      onSelect?.(row?._id, event)
+      onInteractWithFile?.(row?._id, event)
     }
 
     const handleSort = ({ order, orderBy }) => {
@@ -101,7 +101,7 @@ const Table = forwardRef(
                   currentFolderId={currentFolderId}
                   withFilePath={withFilePath}
                   actions={actions}
-                  onInteractWithFile={onSelect}
+                  onInteractWithFile={onInteractWithFile}
                 />
               )
             }
