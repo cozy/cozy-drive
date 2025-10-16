@@ -1,3 +1,5 @@
+import cloneDeep from 'lodash/cloneDeep'
+
 import { IOCozyFile } from 'cozy-client/types/types'
 
 import type { SelectedItems } from '@/modules/selection/types'
@@ -41,21 +43,6 @@ export interface HandleShiftClickParams {
   endIdx: number
   selectedItems: SelectedItems
   items: IOCozyFile[]
-}
-
-/**
- * Returns a new selectedItems object without the removed key
- * @param {SelectedItems} selectedItems The current selected items object
- * @param {string} removedKey The key/ID of the item to remove from selection
- *
- * @returns {SelectedItems} A new SelectedItems object without the removed key
- */
-const returnValidSelections = (
-  selectedItems: SelectedItems,
-  removedKey: string
-): SelectedItems => {
-  const { [removedKey]: _, ...validSelections } = selectedItems
-  return validSelections
 }
 
 /**
@@ -128,8 +115,6 @@ const toggleSelection = ({
   isMovingToSelect,
   isItemSelected
 }: ToggleSelectionParams): SelectedItems => {
-  let newSelected = { ...selectedItems }
-
   // Identify which item to modify (depends on selection direction)
   const targetItem = isMovingToSelect
     ? items[currentIdx]
@@ -137,13 +122,20 @@ const toggleSelection = ({
     ? items[lastInteractedIdx]
     : items[currentIdx]
 
-  if (isMovingToSelect) {
-    newSelected[targetItem._id] = targetItem
-  } else {
-    newSelected = returnValidSelections(newSelected, targetItem._id)
-  }
-
-  return newSelected
+  return Object.entries(selectedItems).reduce<SelectedItems>(
+    (acc, [key, value]) => {
+      if (isMovingToSelect) {
+        acc[key] = value
+        acc[targetItem._id] = targetItem
+      } else {
+        if (key !== targetItem._id) {
+          acc[key] = value
+        }
+      }
+      return acc
+    },
+    {}
+  )
 }
 
 /**
@@ -232,20 +224,24 @@ export const handleShiftClick = ({
   selectedItems,
   items
 }: HandleShiftClickParams): HandleShiftSelectionResponse => {
-  let newSelectedItems = { ...selectedItems }
   const endItem = items[endIdx]
-  const isMovingToSelect = !Object.hasOwn(newSelectedItems, endItem._id)
+  const isMovingToSelect = !Object.hasOwn(selectedItems, endItem._id)
   const start = Math.min(startIdx, endIdx)
   const end = Math.max(startIdx, endIdx)
 
-  for (let i = start; i <= end; i++) {
+  const newSelectedItems = Array.from(
+    { length: end - start + 1 },
+    (_, i) => start + i
+  ).reduce((acc, i) => {
     const item = items[i]
     if (isMovingToSelect) {
-      newSelectedItems[item._id] = item
+      acc[item._id] = item
     } else {
-      newSelectedItems = returnValidSelections(newSelectedItems, item._id)
+      const { [item._id]: _, ...rest } = acc
+      return rest
     }
-  }
+    return acc
+  }, cloneDeep(selectedItems))
 
   return {
     newSelectedItems,
