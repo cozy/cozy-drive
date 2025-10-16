@@ -2,7 +2,7 @@ import cx from 'classnames'
 import { filesize } from 'filesize'
 import get from 'lodash/get'
 import PropTypes from 'prop-types'
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 
 import { isDirectory } from 'cozy-client/dist/models/file'
@@ -34,6 +34,8 @@ import {
 import FileOpener from '@/modules/filelist/FileOpener'
 import FileThumbnail from '@/modules/filelist/icons/FileThumbnail'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
+import { useLocation, useParams, useSearchParams } from 'react-router-dom'
+import { useShell } from '@/hooks/useShell'
 
 const FileWrapper = ({ children, viewType, className, onContextMenu }) =>
   viewType === 'list' ? (
@@ -73,6 +75,7 @@ const File = ({
   onToggleSelect
 }) => {
   const { viewType } = useViewSwitcherContext()
+  const { runsInShell, selectedFile } = useShell();
 
   const [actionMenuVisible, setActionMenuVisible] = useState(false)
   const filerowMenuToggleRef = useRef()
@@ -138,11 +141,14 @@ const File = ({
     canInteractWithFile &&= canInteractWith(attributes)
   }
 
+  const isSelectedInShell = runsInShell && selectedFile === attributes._id;
+
   return (
     <FileWrapper
       viewType={viewType}
       className={
-        viewType === 'list' ? filContentRowSelected : filContentColumnSelected
+        (viewType === 'list' ? filContentRowSelected : filContentColumnSelected) + " " +
+        (isSelectedInShell ? styles['fil-content-row-selected-in-shell'] : '')
       }
       onContextMenu={onContextMenu}
     >
