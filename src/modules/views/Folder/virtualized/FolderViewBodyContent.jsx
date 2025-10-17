@@ -134,7 +134,7 @@ const FolderViewBodyContent = ({
         />
       ) : (
         <Grid
-          items={rows}
+          items={sortedRows}
           currentFolderId={currentFolderId}
           withFilePath={withFilePath}
           actions={actions}
