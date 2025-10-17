@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
+import { BarRight } from 'cozy-bar'
+
 const ShellContext = createContext();
 
 export const ShellProvider = ({ children }) => {
@@ -23,8 +25,12 @@ export const ShellProvider = ({ children }) => {
     }
   }, [searchParams])
 
+  const openFileInParent = (file) => {
+    window.top.postMessage('openFile:' + file.metadata.externalId, '*')
+  }
+
   return (
-    <ShellContext.Provider value={{ runsInShell, setRunsInShell, selectedFile, setSelectedFile }}>
+    <ShellContext.Provider value={{ runsInShell, setRunsInShell, selectedFile, setSelectedFile, openFileInParent }}>
       {children}
     </ShellContext.Provider>
   );
