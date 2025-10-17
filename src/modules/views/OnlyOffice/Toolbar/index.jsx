@@ -2,7 +2,6 @@ import React from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { useQuery } from 'cozy-client'
-import flag from 'cozy-flags'
 import {
   addToCozySharingLink,
   createCozySharingLink,
@@ -25,7 +24,10 @@ import HomeIcon from '@/modules/views/OnlyOffice/Toolbar/HomeIcon'
 import HomeLinker from '@/modules/views/OnlyOffice/Toolbar/HomeLinker'
 import Separator from '@/modules/views/OnlyOffice/Toolbar/Separator'
 import Sharing from '@/modules/views/OnlyOffice/Toolbar/Sharing'
-import { isOfficeEditingEnabled } from '@/modules/views/OnlyOffice/helpers'
+import {
+  isOfficeEditingEnabled,
+  officeDefaultMode
+} from '@/modules/views/OnlyOffice/helpers'
 import { buildFileOrFolderByIdQuery, buildFileWhereByIdQuery } from '@/queries'
 
 const Toolbar = ({ sharingInfos }) => {
@@ -93,9 +95,8 @@ const Toolbar = ({ sharingInfos }) => {
   const showSharingLinkButton =
     isPublic && !isMobile && isShareNotAdded && !isCozyToCozySharingSynced
 
-  const isEnabledDisplayEditButton = !flag(
-    'drive.onlyoffice.editor-mode-by-access.enabled'
-  )
+  const showEditButton =
+    officeDefaultMode(isDesktop, isMobile) === 'edit' || showPublicEditButton
 
   return (
     <>
@@ -124,7 +125,7 @@ const Toolbar = ({ sharingInfos }) => {
           variant={showPublicEditButton ? 'secondary' : 'primary'}
         />
       )}
-      {showPublicEditButton && isEnabledDisplayEditButton && <EditButton />}
+      {showEditButton && <EditButton />}
 
       {isPublic && !isCozyToCozySharingSynced && (
         <PublicToolbarMoreMenu files={[file]} actions={actions} />
@@ -133,7 +134,7 @@ const Toolbar = ({ sharingInfos }) => {
       {!isPublic && isEditorReady && (
         <>
           <Sharing file={file} />
-          {isEnabledDisplayEditButton ? <EditButton /> : null}
+          {showEditButton ? <EditButton /> : null}
         </>
       )}
     </>
