@@ -4,10 +4,12 @@ import ActionsMenu from 'cozy-ui/transpiled/react/ActionsMenu'
 import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { useRightClick } from '@/components/RightClick/RightClickProvider'
+import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 
 const RightClickFileMenu = ({ doc, actions, disabled, children, ...props }) => {
   const { position, isOpen, onOpen, onClose } = useRightClick()
   const { isDesktop } = useBreakpoints()
+  const { selectedItems, isItemSelected } = useSelectionContext()
 
   if (!children) return null
   if (disabled || !isDesktop)
@@ -34,7 +36,7 @@ const RightClickFileMenu = ({ doc, actions, disabled, children, ...props }) => {
       {isOpen(`FileMenu-${doc._id}`) && (
         <ActionsMenu
           open
-          docs={[doc]}
+          docs={isItemSelected(doc._id) ? selectedItems : [doc]}
           actions={actions}
           anchorReference="anchorPosition"
           anchorPosition={{ top: position.mouseY, left: position.mouseX }}
