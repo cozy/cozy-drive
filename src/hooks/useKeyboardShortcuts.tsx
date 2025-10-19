@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { isFile } from 'cozy-client/dist/models/file'
@@ -18,6 +18,7 @@ import {
 } from '@/contexts/ClipboardProvider'
 import { useDisplayedFolder } from '@/hooks'
 import { startRenamingAsync } from '@/modules/drive/rename'
+import DeleteConfirm from '@/modules/drive/DeleteConfirm'
 import { useNextcloudCurrentFolder } from '@/modules/nextcloud/hooks/useNextcloudCurrentFolder'
 import { handlePasteOperation } from '@/modules/paste'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
@@ -30,6 +31,9 @@ interface UseKeyboardShortcutsProps {
   sharingContext?: unknown
   allowCopy?: boolean
   isNextCloudFolder?: boolean
+  pushModal?: (modal: React.ReactElement) => void
+  popModal?: () => void
+  refresh?: () => void
 }
 
 export const useKeyboardShortcuts = ({
@@ -39,7 +43,10 @@ export const useKeyboardShortcuts = ({
   items = [],
   sharingContext = null,
   allowCopy = true,
-  isNextCloudFolder = false
+  isNextCloudFolder = false,
+  pushModal,
+  popModal,
+  refresh
 }: UseKeyboardShortcutsProps): void => {
   const dispatch = useDispatch()
   const { t } = useI18n()
@@ -221,6 +228,18 @@ export const useKeyboardShortcuts = ({
     clearClipboard()
   }, [hideSelectionBar, clearClipboard])
 
+  const handleDelete = useCallback(() => {
+    if (!selectedItems.length || !pushModal || !popModal || !refresh) return
+
+    pushModal(
+      <DeleteConfirm
+        files={selectedItems}
+        afterConfirmation={refresh}
+        onClose={popModal}
+      />
+    )
+  }, [selectedItems, pushModal, popModal, refresh])
+
   useEffect(() => {
     if (!flag('drive.keyboard-shortcuts.enabled')) {
       return
@@ -233,7 +252,8 @@ export const useKeyboardShortcuts = ({
         'Ctrl+v': handlePaste,
         'Ctrl+a': handleSelectAll,
         f2: handleRename,
-        escape: handleEscape
+        escape: handleEscape,
+        delete: handleDelete
       }
 
     const handleKeyDown = (event: KeyboardEvent): void => {
@@ -258,6 +278,7 @@ export const useKeyboardShortcuts = ({
     handlePaste,
     handleSelectAll,
     handleRename,
-    handleEscape
+    handleEscape,
+    handleDelete
   ])
 }

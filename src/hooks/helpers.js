@@ -40,6 +40,14 @@ export const normalizeKey = (event, isApple) => {
   const keys = []
 
   if (isApple ? event.metaKey : event.ctrlKey) keys.push('Ctrl')
-  keys.push(event.key.toLowerCase())
+
+  const key = event.key.toLowerCase()
+
+  if (key === 'delete' || key === 'del') {
+    keys.push('delete')
+  } else {
+    keys.push(key)
+  }
+
   return keys.join('+')
 }
