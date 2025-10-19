@@ -187,7 +187,10 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
     client,
     items: filteredResult?.data || [],
     sharingContext,
-    allowCopy: false
+    allowCopy: false,
+    pushModal,
+    popModal,
+    refresh
   })
 
   const actionsOptions = {
