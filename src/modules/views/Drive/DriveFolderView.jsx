@@ -137,7 +137,10 @@ const DriveFolderView = () => {
     canPaste: hasClipboardData && canWriteToCurrentFolder,
     client,
     items: [...(foldersResult.data || []), ...(filesResult.data || [])],
-    sharingContext
+    sharingContext,
+    pushModal,
+    popModal,
+    refresh
   })
 
   const actionsOptions = {

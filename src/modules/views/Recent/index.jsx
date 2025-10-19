@@ -86,7 +86,10 @@ export const RecentView = () => {
     client,
     items: result?.data || [],
     sharingContext,
-    allowCopy: false
+    allowCopy: false,
+    pushModal,
+    popModal,
+    refresh
   })
 
   const actionsOptions = {
