@@ -13,7 +13,10 @@ jest.mock('cozy-ui/transpiled/react/providers/Alert', () => ({
 }))
 
 jest.mock('cozy-ui/transpiled/react/providers/I18n', () => ({
-  useI18n: jest.fn()
+  useI18n: jest.fn(),
+  translate: jest.fn(key => key),
+  createUseI18n: jest.fn(() => () => ({ t: key => key })),
+  I18nProvider: ({ children }) => children
 }))
 
 jest.mock('./helpers', () => ({
@@ -50,6 +53,13 @@ jest.mock('@/modules/selection/SelectionProvider', () => ({
 }))
 
 jest.mock('cozy-flags', () => jest.fn())
+
+jest.mock('cozy-sharing', () => ({
+  SharedDocument: ({ children }) =>
+    children({ isSharedByMe: false, link: null, recipients: [] }),
+  SharedRecipientsList: () => null,
+  withLocales: component => component
+}))
 
 import { isFile } from 'cozy-client/dist/models/file'
 import flag from 'cozy-flags'
@@ -185,6 +195,7 @@ describe('useKeyboardShortcuts', () => {
       if (ctrl && key === 'a') return 'Ctrl+a'
       if (key === 'f2') return 'f2'
       if (key === 'escape') return 'escape'
+      if (key === 'delete') return 'delete'
       return key
     })
     isMacOS.mockReturnValue(false)
@@ -618,6 +629,80 @@ describe('useKeyboardShortcuts', () => {
       })
 
       expect(mockDispatch).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('the delete shortcut key', () => {
+    it('should show delete confirmation when Delete key is pressed', () => {
+      const mockPushModal = jest.fn()
+      const mockPopModal = jest.fn()
+      const mockRefresh = jest.fn()
+
+      const wrapper = createWrapper()
+      renderHook(
+        () =>
+          useKeyboardShortcuts({
+            client: mockClient,
+            items: mockItems,
+            pushModal: mockPushModal,
+            popModal: mockPopModal,
+            refresh: mockRefresh
+          }),
+        { wrapper }
+      )
+
+      const event = new KeyboardEvent('keydown', {
+        key: 'Delete',
+        bubbles: true
+      })
+
+      act(() => {
+        document.dispatchEvent(event)
+      })
+
+      expect(mockPushModal).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: expect.any(Function)
+        })
+      )
+    })
+
+    it('should not show delete confirmation when no items are selected', () => {
+      useSelectionContext.mockReturnValue({
+        selectedItems: [],
+        selectAll: mockSelectAll,
+        hideSelectionBar: mockHideSelectionBar,
+        clearSelection: mockClearSelection,
+        isSelectAll: false
+      })
+
+      const mockPushModal = jest.fn()
+      const mockPopModal = jest.fn()
+      const mockRefresh = jest.fn()
+
+      const wrapper = createWrapper()
+      renderHook(
+        () =>
+          useKeyboardShortcuts({
+            client: mockClient,
+            items: mockItems,
+            pushModal: mockPushModal,
+            popModal: mockPopModal,
+            refresh: mockRefresh
+          }),
+        { wrapper }
+      )
+
+      const event = new KeyboardEvent('keydown', {
+        key: 'Delete',
+        bubbles: true
+      })
+
+      act(() => {
+        document.dispatchEvent(event)
+      })
+
+      expect(mockPushModal).not.toHaveBeenCalled()
     })
   })
 })
