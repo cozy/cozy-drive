@@ -219,6 +219,7 @@
     "cut": "Cut",
     "paste": "Paste",
     "trash": "Remove",
+    "trash_all": "Remove all",
     "destroy": "Delete permanently",
     "rename": "Rename",
     "restore": "Restore",
