@@ -13,6 +13,7 @@ const FileIcon = ({ file, size, isEncrypted, viewType = 'list' }) => {
   if (isImage || file.class === 'pdf')
     return (
       <FileImageLoader
+        key={file._id}
         file={file}
         linkType={viewType === 'grid' ? 'small' : 'tiny'}
         render={src => (
