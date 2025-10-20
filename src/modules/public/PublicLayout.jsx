@@ -11,13 +11,13 @@ import { SelectionProvider } from '@/modules/selection/SelectionProvider'
 import { NewItemHighlightProvider } from '@/modules/upload/NewItemHighlightProvider'
 import UploadQueue from '@/modules/upload/UploadQueue'
 
-const NewItemHighlightProviderWrapper = flag(
-  'drive.highlight-new-items.enabled'
-)
-  ? NewItemHighlightProvider
-  : Fragment
-
 const PublicLayout = () => {
+  const NewItemHighlightProviderWrapper = flag(
+    'drive.highlight-new-items.enabled'
+  )
+    ? NewItemHighlightProvider
+    : Fragment
+
   return (
     <Layout>
       <BarComponent replaceTitleOnMobile isPublic disableInternalStore />
