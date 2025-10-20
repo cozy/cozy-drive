@@ -88,7 +88,9 @@ const processEvents = async (client, mutationType) => {
   }
   // Remove processed files from buffer
   // Do not clear all at once in case pending events arrived during the processing
-  fileIdsToProcess.forEach(fileId => bufferFiles.delete(fileId))
+  for (const fileId of fileIdsToProcess) {
+    bufferFiles.delete(fileId)
+  }
 }
 
 const debouncedDispatchEvents = debounce(
