@@ -59,7 +59,7 @@ const processEvents = async (client, mutationType) => {
     mutationFn = Mutations.deleteDocument
     multipleMutationFn = Mutations.deleteDocuments
   }
-  if (bufferFiles.length === 0) return
+  if (bufferFiles.size === 0) return
 
   const fileIdsToProcess = bufferFiles.keys()
   const filesByFolder = groupFilesByFolder(bufferFiles)
