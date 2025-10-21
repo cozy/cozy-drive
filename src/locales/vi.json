@@ -668,7 +668,17 @@
     },
     "duplicateToMobile": {
       "label": "Nhân bản"
+    },
+    "personalizeFolder": {
+      "label": "Cá nhân hóa thư mục"
     }
+  },
+  "FolderCustomizer": {
+    "title": "Cá nhân hóa thư mục",
+    "description": "Chọn màu cụ thể cho thư mục của bạn",
+    "cancel": "Hủy",
+    "apply": "Áp dụng",
+    "error": "Đã xảy ra lỗi, vui lòng thử lại."
   },
   "DuplicateModal": {
     "subTitle": "Nhân bản đến:",

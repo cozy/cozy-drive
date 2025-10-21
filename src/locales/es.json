@@ -449,5 +449,17 @@
     "empty": {
       "subtitle": "No se ha encontrado ningún resultado para su consulta “%{query}”"
     }
+  },
+  "actions": {
+    "personalizeFolder": {
+      "label": "Personalizar carpeta"
+    }
+  },
+  "FolderCustomizer": {
+    "title": "Personalizar carpeta",
+    "description": "Elija un color específico para su carpeta",
+    "cancel": "Cancelar",
+    "apply": "Aplicar",
+    "error": "Se ha producido un error, por favor inténtelo de nuevo."
   }
 }

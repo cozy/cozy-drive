@@ -476,5 +476,17 @@
   "searchbar": {
     "placeholder": "Alle Dateien durchsuchen",
     "empty": "Es wurde kein Ergebnis für die Suche \"%{query}\" gefunden"
+  },
+  "actions": {
+    "personalizeFolder": {
+      "label": "Ordner personalisieren"
+    }
+  },
+  "FolderCustomizer": {
+    "title": "Ordner personalisieren",
+    "description": "Wählen Sie eine bestimmte Farbe für Ihren Ordner",
+    "cancel": "Abbrechen",
+    "apply": "Anwenden",
+    "error": "Ein Fehler ist aufgetreten, bitte versuchen Sie es erneut."
   }
 }
