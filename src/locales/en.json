@@ -678,6 +678,9 @@
     },
     "duplicateToMobile": {
       "label": "Duplicate"
+    },
+    "personalizeFolder": {
+      "label": "Personalize folder"
     }
   },
   "DuplicateModal": {
@@ -700,5 +703,12 @@
       "title": "Unable to access document",
       "subtitle": "The share link appears to be missing or invalid. Please ask the document owner to check access"
     }
+  },
+  "FolderCustomizer": {
+    "title": "Personalize folder",
+    "description": "Choose a specific color for your folder",
+    "cancel": "Cancel",
+    "apply": "Apply",
+    "error": "An error occurred, please try again."
   }
 }
