@@ -1,0 +1,14 @@
+.iconContainer
+    svg
+        // Keep only the gradient/lightness to combine nicely with overlay
+        filter grayscale(100%) brightness(.2) contrast(1.1)
+
+.iconOverlay
+    // The color is provided by the React component via CSS variable
+    background-color var(--folder-color)
+    mix-blend-mode screen
+
+    // Mask properties (image URL will be set via inline style)
+    mask-size 105% // avoids black border around folder icon
+    mask-repeat no-repeat
+    mask-position center
