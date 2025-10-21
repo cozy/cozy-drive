@@ -52,14 +52,18 @@ const Table = forwardRef(
       currentFolderId,
       withFilePath,
       actions,
-      orderProps,
+      orderProps = {
+        sortOrder: {},
+        setOrder: () => {}
+      },
       onInteractWithFile
     },
     ref
   ) => {
     const { toggleSelectedItem } = useSelectionContext()
     const { isNew } = useNewItemHighlightContext()
-    const { order, orderBy, setOrder, setOrderBy } = orderProps
+
+    const { sortOrder, setOrder } = orderProps
 
     const handleRowSelect = (row, event) => {
       toggleSelectedItem(row)
@@ -67,8 +71,10 @@ const Table = forwardRef(
     }
 
     const handleSort = ({ order, orderBy }) => {
-      setOrder(order)
-      setOrderBy(orderBy)
+      setOrder({
+        order,
+        attribute: orderBy
+      })
     }
 
     return (
@@ -85,7 +91,10 @@ const Table = forwardRef(
           columns={columns}
           dragProps={dragProps}
           endReached={fetchMore}
-          defaultOrder={{ direction: order, by: orderBy }}
+          defaultOrder={{
+            direction: sortOrder.order,
+            by: sortOrder.attribute
+          }}
           secondarySort={secondarySort}
           onSelectAll={selectAll}
           onSelect={handleRowSelect}

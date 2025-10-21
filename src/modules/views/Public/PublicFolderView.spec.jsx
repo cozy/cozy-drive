@@ -73,7 +73,7 @@ describe('Public View', () => {
       subscribe: jest.fn(),
       unsubscribe: jest.fn()
     }
-    client.query = jest.fn().mockReturnValue([])
+    client.query = jest.fn().mockReturnValue({ data: [] })
 
     return render(
       <AppLike client={client} store={store}>

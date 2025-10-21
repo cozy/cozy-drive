@@ -49,6 +49,7 @@ import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
 import FabWithAddMenuContext from '@/modules/drive/FabWithAddMenuContext'
 import Toolbar from '@/modules/drive/Toolbar'
 import FileListRowsPlaceholder from '@/modules/filelist/FileListRowsPlaceholder'
+import { useFolderSort } from '@/modules/navigation/duck'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 import { deleteSharedDrive } from '@/modules/shareddrives/components/actions/deleteSharedDrive'
 import { leaveSharedDrive } from '@/modules/shareddrives/components/actions/leaveSharedDrive'
@@ -80,6 +81,7 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
   const dispatch = useDispatch()
   useHead()
   const { showAlert } = useAlert()
+  const [sortOrder, setSortOrder] = useFolderSort('sharings')
 
   const [tab, setTab] = useState(tabParam)
 
@@ -255,6 +257,10 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
                 queryResults={[filteredResult]}
                 withFilePath={true}
                 extraColumns={extraColumns}
+                orderProps={{
+                  sortOrder,
+                  setOrder: setSortOrder
+                }}
               />
             ) : (
               <FolderViewBody

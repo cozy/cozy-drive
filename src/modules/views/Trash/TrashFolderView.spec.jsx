@@ -22,6 +22,7 @@ jest.mock('@/hooks', () => ({
 }))
 
 const client = createMockClient({})
+client.query = jest.fn().mockReturnValue({ data: [] })
 
 function TestComponent({ onResult }) {
   const currentFolderId = useCurrentFolderId()

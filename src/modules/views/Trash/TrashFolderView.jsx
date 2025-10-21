@@ -60,7 +60,7 @@ export const TrashFolderView = () => {
     currentFolderId
   })
 
-  const [sortOrder] = useFolderSort(currentFolderId)
+  const [sortOrder, setSortOrder] = useFolderSort(currentFolderId)
 
   const folderQuery = buildTrashQuery({
     currentFolderId,
@@ -106,8 +106,11 @@ export const TrashFolderView = () => {
             currentFolderId={currentFolderId}
             withFilePath={true}
             extraColumns={extraColumns}
-            sortOrder={sortOrder}
             canUpload={false}
+            orderProps={{
+              sortOrder,
+              setOrder: setSortOrder
+            }}
           />
         ) : (
           <FolderViewBody
