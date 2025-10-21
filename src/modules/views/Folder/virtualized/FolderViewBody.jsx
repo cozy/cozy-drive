@@ -22,7 +22,10 @@ const FolderViewBody = ({
   canUpload = true,
   canDrag,
   withFilePath = false,
-  sortOrder
+  orderProps = {
+    sortOrder: {},
+    setOrder: () => {}
+  }
 }) => {
   const { isDesktop } = useBreakpoints()
   const IsAddingFolder = useSelector(isTypingNewFolderName)
@@ -130,7 +133,7 @@ const FolderViewBody = ({
       isEmpty={isEmpty}
       canDrag={canDrag}
       withFilePath={withFilePath}
-      sortOrder={sortOrder}
+      orderProps={orderProps}
     />
   )
 }

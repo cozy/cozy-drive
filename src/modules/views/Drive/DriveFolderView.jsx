@@ -105,7 +105,7 @@ const DriveFolderView = () => {
 
   useTrashRedirect(displayedFolder)
 
-  const [sortOrder] = useFolderSort(currentFolderId)
+  const [sortOrder, setSortOrder] = useFolderSort(currentFolderId)
 
   const folderQuery = buildDriveQuery({
     currentFolderId,
@@ -245,6 +245,10 @@ const DriveFolderView = () => {
             extraColumns={extraColumns}
             canDrag
             canUpload={canWriteToCurrentFolder}
+            orderProps={{
+              sortOrder,
+              setOrder: setSortOrder
+            }}
           />
         ) : (
           <FolderViewBody
