@@ -669,17 +669,7 @@
     },
     "duplicateToMobile": {
       "label": "Дублировать"
-    },
-    "personalizeFolder": {
-      "label": "Персонализировать папку"
     }
-  },
-  "FolderCustomizer": {
-    "title": "Персонализировать папку",
-    "description": "Выберите определенный цвет для вашей папки",
-    "cancel": "Отмена",
-    "apply": "Применить",
-    "error": "Произошла ошибка, попробуйте ещё раз."
   },
   "DuplicateModal": {
     "subTitle": "Дублировать в:",

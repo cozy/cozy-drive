@@ -99,17 +99,5 @@
     "paste_not_allowed": "Je kunt niet plakken in deze map",
     "cannot_move_shared_drive": "Je kunt de gedeelde schijfmap niet verplaatsen",
     "cannot_copy_shared_drive": "Je kunt de gedeelde schijfmap niet kopiëren"
-  },
-  "actions": {
-    "personalizeFolder": {
-      "label": "Map personaliseren"
-    }
-  },
-  "FolderCustomizer": {
-    "title": "Map personaliseren",
-    "description": "Kies een specifieke kleur voor uw map",
-    "cancel": "Annuleren",
-    "apply": "Toepassen",
-    "error": "Er is een fout opgetreden, probeer het opnieuw."
   }
 }

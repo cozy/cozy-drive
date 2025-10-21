@@ -173,17 +173,5 @@
     "paste_not_allowed": "您無法貼上到此資料夾",
     "cannot_move_shared_drive": "您無法移動共享磁碟機資料夾",
     "cannot_copy_shared_drive": "您無法複製共用雲端硬碟資料夾"
-  },
-  "actions": {
-    "personalizeFolder": {
-      "label": "個性化資料夾"
-    }
-  },
-  "FolderCustomizer": {
-    "title": "個性化資料夾",
-    "description": "為您的資料夾選擇特定顏色",
-    "cancel": "取消",
-    "apply": "套用",
-    "error": "發生錯誤，請重試。"
   }
 }

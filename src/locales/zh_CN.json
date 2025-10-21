@@ -87,17 +87,5 @@
     "paste_not_allowed": "您无法粘贴到此文件夹",
     "cannot_move_shared_drive": "您无法移动共享驱动器文件夹",
     "cannot_copy_shared_drive": "您无法复制共享云端硬盘文件夹"
-  },
-  "actions": {
-    "personalizeFolder": {
-      "label": "个性化文件夹"
-    }
-  },
-  "FolderCustomizer": {
-    "title": "个性化文件夹",
-    "description": "为您的文件夹选择特定颜色",
-    "cancel": "取消",
-    "apply": "应用",
-    "error": "发生错误，请重试。"
   }
 }

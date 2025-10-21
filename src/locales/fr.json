@@ -675,17 +675,7 @@
     },
     "duplicateToMobile": {
       "label": "Dupliquer"
-    },
-    "personalizeFolder": {
-      "label": "Personnaliser le dossier"
     }
-  },
-  "FolderCustomizer": {
-    "title": "Personnaliser le dossier",
-    "description": "Choisissez une couleur spécifique pour votre dossier",
-    "cancel": "Annuler",
-    "apply": "Appliquer",
-    "error": "Une erreur est survenue, merci de réessayer."
   },
   "DuplicateModal": {
     "subTitle": "Dupliquer vers :",

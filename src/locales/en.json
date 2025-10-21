@@ -15,7 +15,7 @@
     "btn-client": "Get Twake Drive for desktop",
     "btn-client-web": "Get Twake",
     "btn-client-mobile": "Take your personnal cloud with you: install %{name} on all your devices!",
-    "banner-txt-client": "Get %{name} for toto and synchronise your files safely to make them accessible at all times.",
+    "banner-txt-client": "Get %{name} for Desktop and synchronise your files safely to make them accessible at all times.",
     "banner-btn-client": "Download",
     "link-client": "https://cozy.io/en/download/",
     "link-client-desktop": "https://nuts.cozycloud.cc/download/channel/stable/",
@@ -678,9 +678,6 @@
     },
     "duplicateToMobile": {
       "label": "Duplicate"
-    },
-    "personalizeFolder": {
-      "label": "Personalize folder"
     }
   },
   "DuplicateModal": {
@@ -703,12 +700,5 @@
       "title": "Unable to access document",
       "subtitle": "The share link appears to be missing or invalid. Please ask the document owner to check access"
     }
-  },
-  "FolderCustomizer": {
-    "title": "Personalize folder",
-    "description": "Choose a specific color for your folder",
-    "cancel": "Cancel",
-    "apply": "Apply",
-    "error": "An error occurred, please try again."
   }
 }

@@ -299,17 +299,5 @@
     "empty": {
       "subtitle": "Nessun risultato trovato per la richiesta “%{query}”"
     }
-  },
-  "actions": {
-    "personalizeFolder": {
-      "label": "Personalizza cartella"
-    }
-  },
-  "FolderCustomizer": {
-    "title": "Personalizza cartella",
-    "description": "Scegli un colore specifico per la tua cartella",
-    "cancel": "Annulla",
-    "apply": "Applica",
-    "error": "Si è verificato un errore, riprova."
   }
 }

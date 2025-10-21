@@ -82,17 +82,5 @@
     "paste_not_allowed": "Nie możesz wkleić do tego folderu",
     "cannot_move_shared_drive": "Nie możesz przenieść folderu dysku udostępnionego",
     "cannot_copy_shared_drive": "Nie możesz skopiować folderu dysku współdzielonego"
-  },
-  "actions": {
-    "personalizeFolder": {
-      "label": "Personalizuj folder"
-    }
-  },
-  "FolderCustomizer": {
-    "title": "Personalizuj folder",
-    "description": "Wybierz konkretny kolor dla swojego folderu",
-    "cancel": "Anuluj",
-    "apply": "Zastosuj",
-    "error": "Wystąpił błąd, spróbuj ponownie."
   }
 }

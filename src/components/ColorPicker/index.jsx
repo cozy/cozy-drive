@@ -1,2 +1,0 @@
-export { ColorPicker } from './ColorPicker'
-

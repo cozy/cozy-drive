@@ -517,17 +517,5 @@
     "file": "bestand |||| bestanden",
     "directory": "map |||| mappen",
     "element": "item |||| items"
-  },
-  "actions": {
-    "personalizeFolder": {
-      "label": "Map personaliseren"
-    }
-  },
-  "FolderCustomizer": {
-    "title": "Map personaliseren",
-    "description": "Kies een specifieke kleur voor uw map",
-    "cancel": "Annuleren",
-    "apply": "Toepassen",
-    "error": "Er is een fout opgetreden, probeer het opnieuw."
   }
 }
