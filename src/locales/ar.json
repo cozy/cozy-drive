@@ -144,5 +144,17 @@
     "loading": {
       "retry": "إعادة المحاولة"
     }
+  },
+  "actions": {
+    "personalizeFolder": {
+      "label": "تخصيص المجلد"
+    }
+  },
+  "FolderCustomizer": {
+    "title": "تخصيص المجلد",
+    "description": "اختر لونًا محددًا لمجلدك",
+    "cancel": "إلغاء",
+    "apply": "تطبيق",
+    "error": "حدث خطأ، يرجى المحاولة مرة أخرى."
   }
 }

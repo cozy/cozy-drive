@@ -411,5 +411,17 @@
   "searchbar": {
     "placeholder": "検索します",
     "empty": "問い合わせ “%{query}” の結果が見つかりません"
+  },
+  "actions": {
+    "personalizeFolder": {
+      "label": "フォルダをカスタマイズ"
+    }
+  },
+  "FolderCustomizer": {
+    "title": "フォルダをカスタマイズ",
+    "description": "フォルダの特定の色を選択します",
+    "cancel": "キャンセル",
+    "apply": "適用",
+    "error": "エラーが発生しました。もう一度お試しください。"
   }
 }
