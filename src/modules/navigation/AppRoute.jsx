@@ -84,7 +84,9 @@ const AppRoute = () => (
         element={<Navigate to={ROOT_DIR_ID} replace={true} />}
       />
       <Route path="folder/:folderId" element={<DriveFolderView />}>
-        <Route path="personalize" element={<FolderCustomizer />} />
+        {flag('drive.folder-personalization.enabled') && (
+          <Route path="personalize" element={<FolderCustomizer />} />
+        )}
         <Route
           path="file/:fileId"
           element={<OutletWrapper Component={FilesViewerDrive} />}
