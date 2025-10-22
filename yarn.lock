@@ -5469,10 +5469,10 @@ cozy-app-publish@^0.40.1:
     tar "^6.1.11"
     verror "^1.10.1"
 
-cozy-bar@^25.0.0:
-  version "25.0.0"
-  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-25.0.0.tgz#89745078307bd90171a83b4081d16f908726ec10"
-  integrity sha512-DWfRHD8TcN7uInPG7EEu2kGg7FW/UoTKwKJMvLLlCmeYI6KW5CbyWVqp4pzh1S5QKu90QGRIQ9CK1oH9sB/1eg==
+cozy-bar@^25.1.1:
+  version "25.1.1"
+  resolved "https://registry.yarnpkg.com/cozy-bar/-/cozy-bar-25.1.1.tgz#30aea7157105216b5ee446bdb682c1e94fe248d9"
+  integrity sha512-o+0fwCYHUO+bxmPC8i97nwVnJjNOTG2mQcSVLusZfd8q57cZlHoK4EgitpTPV7mtfgKndK7F1kqNN9Hiay/r5g==
   dependencies:
     lodash.set "^4.3.2"
     lodash.unionwith "4.6.0"
