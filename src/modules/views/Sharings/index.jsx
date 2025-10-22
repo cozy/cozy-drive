@@ -28,6 +28,7 @@ import {
   SHARING_TAB_ALL,
   SHARING_TAB_DRIVES
 } from '@/constants/config'
+import { useFolderSort } from '@/hooks'
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts'
 import { useModalContext } from '@/lib/ModalContext'
 import {
@@ -49,7 +50,6 @@ import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
 import FabWithAddMenuContext from '@/modules/drive/FabWithAddMenuContext'
 import Toolbar from '@/modules/drive/Toolbar'
 import FileListRowsPlaceholder from '@/modules/filelist/FileListRowsPlaceholder'
-import { useFolderSort } from '@/modules/navigation/duck'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 import { deleteSharedDrive } from '@/modules/shareddrives/components/actions/deleteSharedDrive'
 import { leaveSharedDrive } from '@/modules/shareddrives/components/actions/leaveSharedDrive'

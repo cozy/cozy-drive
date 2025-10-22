@@ -47,7 +47,8 @@ jest.mock('hooks', () => ({
     _id: 'displayed-folder-id',
     name: 'My Folder'
   }),
-  useParentFolder: jest.fn().mockReturnValue('5678')
+  useParentFolder: jest.fn().mockReturnValue('5678'),
+  useFolderSort: jest.fn(() => [{ attribute: 'name', order: 'asc' }, jest.fn()])
 }))
 
 jest.mock('./usePublicFilesQuery', () => {
