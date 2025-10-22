@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { isDirectory } from 'cozy-client/dist/models/file'
+import flag from 'cozy-flags'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 
 import { isEncryptedFolder } from '@/lib/encryption'
@@ -12,7 +13,11 @@ const FileIconMime = ({ file, size = 32, isEncrypted = false }) => {
   const isDir = isDirectory(file)
   const isDirEncrypted = isEncrypted || (isDirectory && isEncryptedFolder(file)) // use file.ref + file.type
 
-  if (isDir && file.metadata?.decorations?.color) {
+  if (
+    isDir &&
+    flag('drive.folder-personalization.enabled') &&
+    file.metadata?.decorations?.color
+  ) {
     return (
       <CustomizedIcon
         selectedColor={file.metadata?.decorations?.color}
