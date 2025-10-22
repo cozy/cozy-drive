@@ -16,7 +16,6 @@ const FileOpener = ({
 }) => {
   const rowRef = useRef()
   const { link, openLink } = useFileLink(file)
-
   const handlers = useLongPress({
     file,
     disabled,
@@ -25,8 +24,6 @@ const FileOpener = ({
     toggle,
     onInteractWithFile
   })
-
-  const fileExt = file.name.split(".")[file.name.split(".").length - 1];
 
   return (
     <FileLink
