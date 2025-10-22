@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react'
 
 import { IOCozyFile } from 'cozy-client/types/types'
+import flag from 'cozy-flags'
 import { Action } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import ActionsMenuItem from 'cozy-ui/transpiled/react/ActionsMenu/ActionsMenuItem'
 import Icon from 'cozy-ui/transpiled/react/Icon'
@@ -22,6 +23,7 @@ const personalizeFolder = ({ t, navigate }: personalizeFolderProps): Action => {
     label,
     icon,
     displayCondition: docs =>
+      flag('drive.folder-personalization.enabled') &&
       docs.length === 1 &&
       docs[0].type === 'directory',
     action: (docs: IOCozyFile[]): void => {
@@ -29,7 +31,7 @@ const personalizeFolder = ({ t, navigate }: personalizeFolderProps): Action => {
         navigate(`/folder/${docs[0]._id}/personalize`)
       }
     },
-    Component: forwardRef(function personalizeFolder(props, ref) {
+    Component: forwardRef(function PersonalizeFolder(props, ref) {
       return (
         <ActionsMenuItem {...props} ref={ref}>
           <ListItemIcon>
