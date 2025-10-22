@@ -40,7 +40,7 @@ describe('useFolderSort', () => {
     mockUseClient.mockReturnValue(mockClient)
 
     mockFlag.mockImplementation(flagName => {
-      if (flagName === 'drive.settings.save-sort-choice.enabled') {
+      if (flagName === 'drive.save-sort-choice.enabled') {
         return true
       }
       return false

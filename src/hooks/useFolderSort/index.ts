@@ -33,22 +33,22 @@ const useFolderSort = (folderId: string): [Sort, (props: Sort) => void] => {
 
   const driveSettingsResult = useQuery(Q(DOCTYPE_DRIVE_SETTINGS), {
     as: DOCTYPE_DRIVE_SETTINGS,
-    enabled: flag('drive.settings.save-sort-choice.enabled')
+    enabled: flag('drive.save-sort-choice.enabled')
   }) as QueryResult
 
   const settings = driveSettingsResult.data?.[0]?.attributes
   const currentSort =
     driveSettingsResult.fetchStatus === 'loaded' &&
-    flag('drive.settings.save-sort-choice.enabled') &&
+    flag('drive.save-sort-choice.enabled') &&
     settings
       ? settings
       : defaultSort
 
   const setSortOrder = useCallback(
     async ({ attribute, order }: Sort) => {
-      if (!flag('drive.settings.save-sort-choice.enabled')) {
+      if (!flag('drive.save-sort-choice.enabled')) {
         logger.warn(
-          'Cannot persist sort: flag drive.settings.save-sort-choice.enabled is not enabled'
+          'Cannot persist sort: flag drive.save-sort-choice.enabled is not enabled'
         )
         return
       }
