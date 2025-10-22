@@ -14,6 +14,7 @@ import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
+import { useFolderSort } from '@/hooks'
 import { useModalContext } from '@/lib/ModalContext'
 import {
   download,
@@ -37,7 +38,6 @@ import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
 import FabWithAddMenuContext from '@/modules/drive/FabWithAddMenuContext'
 import Toolbar from '@/modules/drive/Toolbar'
 import { FolderBody } from '@/modules/folder/components/FolderBody'
-import { useFolderSort } from '@/modules/navigation/duck'
 import { isNextcloudShortcut } from '@/modules/nextcloud/helpers'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 import FolderView from '@/modules/views/Folder/FolderView'

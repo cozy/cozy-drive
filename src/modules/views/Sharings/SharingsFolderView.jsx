@@ -16,7 +16,7 @@ import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
 import FolderViewHeader from '../Folder/FolderViewHeader'
 
 import useHead from '@/components/useHead'
-import { useCurrentFolderId, useDisplayedFolder } from '@/hooks'
+import { useCurrentFolderId, useDisplayedFolder, useFolderSort } from '@/hooks'
 import { useModalContext } from '@/lib/ModalContext'
 import {
   share,
@@ -31,7 +31,6 @@ import { moveTo } from '@/modules/actions/components/moveTo'
 import { makeExtraColumnsNamesFromMedia } from '@/modules/certifications'
 import { useExtraColumns } from '@/modules/certifications/useExtraColumns'
 import Toolbar from '@/modules/drive/Toolbar'
-import { useFolderSort } from '@/modules/navigation/duck'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 import Dropzone from '@/modules/upload/Dropzone'
 import {

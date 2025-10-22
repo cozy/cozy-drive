@@ -5,8 +5,7 @@ import { useQuery } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
 
 import { FilesViewerLoading } from '@/components/FilesViewerLoading'
-import { useCurrentFolderId } from '@/hooks'
-import { useFolderSort } from '@/modules/navigation/duck'
+import { useCurrentFolderId, useFolderSort } from '@/hooks'
 import {
   getSharedDrivePath,
   getSharedDriveViewerPath

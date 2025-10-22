@@ -22,6 +22,7 @@ import FolderViewBodyVz from '../Folder/virtualized/FolderViewBody'
 
 import useHead from '@/components/useHead'
 import { RECENT_FOLDER_ID } from '@/constants/config'
+import { useFolderSort } from '@/hooks'
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts'
 import { useModalContext } from '@/lib/ModalContext'
 import {
@@ -43,7 +44,6 @@ import { useExtraColumns } from '@/modules/certifications/useExtraColumns'
 import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
 import FabWithAddMenuContext from '@/modules/drive/FabWithAddMenuContext'
 import Toolbar from '@/modules/drive/Toolbar'
-import { useFolderSort } from '@/modules/navigation/duck'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 import {
   buildRecentQuery,
