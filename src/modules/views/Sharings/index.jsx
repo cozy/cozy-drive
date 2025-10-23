@@ -81,7 +81,7 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
   const dispatch = useDispatch()
   useHead()
   const { showAlert } = useAlert()
-  const [sortOrder, setSortOrder] = useFolderSort('sharings')
+  const [sortOrder, setSortOrder, isSettingsLoaded] = useFolderSort('sharings')
 
   const [tab, setTab] = useState(tabParam)
 
@@ -259,7 +259,8 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
                 extraColumns={extraColumns}
                 orderProps={{
                   sortOrder,
-                  setOrder: setSortOrder
+                  setOrder: setSortOrder,
+                  isSettingsLoaded
                 }}
               />
             ) : (

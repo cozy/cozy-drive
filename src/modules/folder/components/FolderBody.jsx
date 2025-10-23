@@ -59,6 +59,8 @@ const FolderBody = ({
 
   useScrollToTop(folderId)
 
+  const [sortOrder, setSortOrder, isSettingsLoaded] = useFolderSort(folderId)
+
   const isError = queryResults.some(query => query.fetchStatus === 'failed')
   const hasData =
     !isError && queryResults.some(query => query.data && query.data.length > 0)
@@ -66,12 +68,12 @@ const FolderBody = ({
     !hasData &&
     queryResults.some(
       query => query.fetchStatus === 'loading' && !query.lastUpdate
-    )
+    ) &&
+    !isSettingsLoaded
   const isEmpty = !isError && !isLoading && !hasData
   const needsToWait = useNeedsToWait({ isLoading })
 
   const { isBigThumbnail } = useThumbnailSizeContext()
-  const [sortOrder, setSortOrder] = useFolderSort(folderId)
   const { viewType, switchView } = useViewSwitcherContext()
 
   const changeSortOrder = useCallback(
