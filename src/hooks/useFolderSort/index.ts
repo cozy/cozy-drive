@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import { useClient, Q, useQuery } from 'cozy-client'
 import flag from 'cozy-flags'
@@ -23,7 +23,9 @@ interface QueryResult {
   fetchStatus?: string
 }
 
-const useFolderSort = (folderId: string): [Sort, (props: Sort) => void] => {
+const useFolderSort = (
+  folderId: string
+): [Sort, (props: Sort) => void, boolean] => {
   const client = useClient()
 
   const defaultSort: Sort =
@@ -36,13 +38,23 @@ const useFolderSort = (folderId: string): [Sort, (props: Sort) => void] => {
     enabled: flag('drive.save-sort-choice.enabled')
   }) as QueryResult
 
-  const settings = driveSettingsResult.data?.[0]?.attributes
-  const currentSort =
-    driveSettingsResult.fetchStatus === 'loaded' &&
-    flag('drive.save-sort-choice.enabled') &&
-    settings
-      ? settings
-      : defaultSort
+  const settings = useMemo(
+    () => driveSettingsResult.data?.[0]?.attributes,
+    [driveSettingsResult.data]
+  )
+
+  const isSettingsLoaded = useMemo(
+    () =>
+      (driveSettingsResult.fetchStatus !== 'loading' &&
+        driveSettingsResult.fetchStatus !== 'pending') ||
+      !flag('drive.save-sort-choice.enabled'),
+    [driveSettingsResult.fetchStatus]
+  )
+
+  const currentSort = useMemo(
+    () => (isSettingsLoaded && settings ? settings : defaultSort),
+    [isSettingsLoaded, settings, defaultSort]
+  )
 
   const setSortOrder = useCallback(
     async ({ attribute, order }: Sort) => {
@@ -80,7 +92,7 @@ const useFolderSort = (folderId: string): [Sort, (props: Sort) => void] => {
     [client, driveSettingsResult.data]
   )
 
-  return [currentSort, setSortOrder]
+  return [currentSort, setSortOrder, isSettingsLoaded]
 }
 
 export { useFolderSort }

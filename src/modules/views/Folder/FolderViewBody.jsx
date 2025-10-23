@@ -110,7 +110,8 @@ const FolderViewBody = ({
 
   const { isBigThumbnail } = useThumbnailSizeContext()
   const { sharingsValue } = useContext(AcceptingSharingContext)
-  const [sortOrder, setSortOrder] = useFolderSort(currentFolderId)
+  const [sortOrder, setSortOrder, isSettingsLoaded] =
+    useFolderSort(currentFolderId)
   const vaultClient = useVaultClient()
   const changeSortOrder = useCallback(
     (_, attribute, order) => setSortOrder({ attribute, order }),
@@ -125,7 +126,8 @@ const FolderViewBody = ({
     !hasDataToShow &&
     queryResults.some(
       query => query.fetchStatus === 'loading' && !query.lastUpdate
-    )
+    ) &&
+    !isSettingsLoaded
   const isEmpty = !isInError && !isLoading && !hasDataToShow
   const showEmpty = displayedFolder !== null && !IsAddingFolder && isEmpty
   const isSharingContextEmpty = Object.keys(sharingsValue).length <= 0

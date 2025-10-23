@@ -24,13 +24,15 @@ const FolderViewBody = ({
   withFilePath = false,
   orderProps = {
     sortOrder: {},
-    setOrder: () => {}
+    setOrder: () => {},
+    isSettingsLoaded: true
   }
 }) => {
   const { isDesktop } = useBreakpoints()
   const IsAddingFolder = useSelector(isTypingNewFolderName)
   const { isBigThumbnail } = useThumbnailSizeContext()
   const { clearItems } = useNewItemHighlightContext()
+  const { sortOrder, setOrder, isSettingsLoaded } = orderProps
 
   const isInError = queryResults.some(query => query.fetchStatus === 'failed')
   const hasDataToShow =
@@ -95,7 +97,7 @@ const FolderViewBody = ({
     return () => clearTimeout(timeout)
   }, [isLoading])
 
-  if (needsToWait || isLoading) {
+  if (needsToWait || isLoading || !isSettingsLoaded) {
     return <FileListRowsPlaceholder />
   }
 
@@ -133,7 +135,10 @@ const FolderViewBody = ({
       isEmpty={isEmpty}
       canDrag={canDrag}
       withFilePath={withFilePath}
-      orderProps={orderProps}
+      orderProps={{
+        sortOrder,
+        setOrder
+      }}
     />
   )
 }

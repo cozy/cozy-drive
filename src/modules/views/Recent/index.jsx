@@ -69,7 +69,8 @@ export const RecentView = () => {
   const dispatch = useDispatch()
   useHead()
   const { showAlert } = useAlert()
-  const [sortOrder, setSortOrder] = useFolderSort(RECENT_FOLDER_ID)
+  const [sortOrder, setSortOrder, isSettingsLoaded] =
+    useFolderSort(RECENT_FOLDER_ID)
 
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
     isMobile,
@@ -154,7 +155,8 @@ export const RecentView = () => {
             extraColumns={extraColumns}
             orderProps={{
               sortOrder,
-              setOrder: setSortOrder
+              setOrder: setSortOrder,
+              isSettingsLoaded
             }}
           />
         ) : (
