@@ -32,31 +32,31 @@ const useFolderSort = (
       : DEFAULT_SORT
 
   const client = useClient()
-  const [currentSettings, setCurrentSettings] = useState(defaultSort)
   const [isSettingsLoaded, setIsSettingsLoaded] = useState(false)
+  const [currentSort, setCurrentSort] = useState<Sort>(defaultSort)
+  const [isSaving, setIsSaving] = useState<boolean>(false)
 
   useEffect(() => {
     const load = async (): Promise<void> => {
       if (!client || !flag('drive.save-sort-choice.enabled')) return
 
       try {
-        const result = (await client.query(
+        const { data } = (await client.query(
           Q(DOCTYPE_DRIVE_SETTINGS)
         )) as QueryResult
 
-        if (!result.data) return
+        if (!data || !data.length) return
 
-        setCurrentSettings(result.data[0]?.attributes)
+        setCurrentSort(data[0]?.attributes)
       } catch (error) {
         logger.error('Failed to load settings:', error)
-        setCurrentSettings(defaultSort)
       } finally {
         setIsSettingsLoaded(true)
       }
     }
 
     void load()
-  }, [client, defaultSort, setCurrentSettings])
+  }, [client])
 
   const setSortOrder = useCallback(
     async ({ attribute, order }: Sort) => {
@@ -72,26 +72,41 @@ const useFolderSort = (
         return
       }
 
+      if (isSaving) {
+        logger.warn('Cannot persist sort: already saving')
+        return
+      }
+
+      setIsSaving(true)
+
       try {
-        const settingsToSave: DriveSettings = {
-          _type: DOCTYPE_DRIVE_SETTINGS,
-          attributes: {
-            ...currentSettings,
-            attribute,
-            order
-          }
-        }
+        const { data } = (await client.query(
+          Q(DOCTYPE_DRIVE_SETTINGS)
+        )) as QueryResult
+
+        const settingsToSave: DriveSettings =
+          data && data.length
+            ? {
+                ...data[0],
+                attributes: { attribute, order },
+              }
+            : {
+                _type: DOCTYPE_DRIVE_SETTINGS,
+                attributes: { attribute, order },
+              }
 
         await client.save(settingsToSave)
         logger.info('Sort settings persisted', { attribute, order })
       } catch (error) {
         logger.error('Failed to save sorting preference:', error)
+      } finally {
+        setIsSaving(false)
       }
     },
-    [client, currentSettings]
+    [client, isSaving, setIsSaving]
   )
 
-  return [currentSettings, setSortOrder, isSettingsLoaded]
+  return [currentSort, setSortOrder, isSettingsLoaded]
 }
 
 export { useFolderSort }
