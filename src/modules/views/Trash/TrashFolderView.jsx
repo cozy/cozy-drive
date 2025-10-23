@@ -63,17 +63,24 @@ export const TrashFolderView = () => {
   const [sortOrder, setSortOrder, isSettingsLoaded] =
     useFolderSort(currentFolderId)
 
+  // Sort by size does not work for directory, so in case sorting by size we will change to default sorting
   const folderQuery = buildTrashQuery({
     currentFolderId,
     type: 'directory',
-    sortAttribute: SORT_BY_UPDATE_DATE.attribute,
-    sortOrder: SORT_BY_UPDATE_DATE.order
+    sortAttribute:
+      sortOrder.attribute !== 'size'
+        ? sortOrder.attribute
+        : SORT_BY_UPDATE_DATE.attribute,
+    sortOrder:
+      sortOrder.attribute !== 'size'
+        ? sortOrder.order
+        : SORT_BY_UPDATE_DATE.order
   })
   const fileQuery = buildTrashQuery({
     currentFolderId,
     type: 'file',
-    sortAttribute: SORT_BY_UPDATE_DATE.attribute,
-    sortOrder: SORT_BY_UPDATE_DATE.order,
+    sortAttribute: sortOrder.attribute,
+    sortOrder: sortOrder.order,
     limit: 50
   })
 

@@ -108,17 +108,22 @@ const DriveFolderView = () => {
   const [sortOrder, setSortOrder, isSettingsLoaded] =
     useFolderSort(currentFolderId)
 
+  // Sort by size does not work for directory, so in case sorting by size we will change to default sorting
   const folderQuery = buildDriveQuery({
     currentFolderId,
     type: 'directory',
-    sortAttribute: DEFAULT_SORT.attribute,
-    sortOrder: DEFAULT_SORT.order
+    sortAttribute:
+      sortOrder.attribute !== 'size'
+        ? sortOrder.attribute
+        : DEFAULT_SORT.attribute,
+    sortOrder:
+      sortOrder.attribute !== 'size' ? sortOrder.order : DEFAULT_SORT.order
   })
   const fileQuery = buildDriveQuery({
     currentFolderId,
     type: 'file',
-    sortAttribute: DEFAULT_SORT.attribute,
-    sortOrder: DEFAULT_SORT.order
+    sortAttribute: sortOrder.attribute,
+    sortOrder: sortOrder.order
   })
 
   const foldersResult = useQuery(folderQuery.definition, folderQuery.options)
