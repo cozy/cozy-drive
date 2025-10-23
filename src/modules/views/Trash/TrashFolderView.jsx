@@ -15,6 +15,7 @@ import FolderViewHeader from '../Folder/FolderViewHeader'
 import FolderViewBodyVz from '../Folder/virtualized/FolderViewBody'
 
 import useHead from '@/components/useHead'
+import { SORT_BY_UPDATE_DATE } from '@/config/sort'
 import { useCurrentFolderId, useDisplayedFolder, useFolderSort } from '@/hooks'
 import { restore, selectAllItems } from '@/modules/actions'
 import { makeExtraColumnsNamesFromMedia } from '@/modules/certifications'
@@ -65,14 +66,14 @@ export const TrashFolderView = () => {
   const folderQuery = buildTrashQuery({
     currentFolderId,
     type: 'directory',
-    sortAttribute: sortOrder.attribute,
-    sortOrder: sortOrder.order
+    sortAttribute: SORT_BY_UPDATE_DATE.attribute,
+    sortOrder: SORT_BY_UPDATE_DATE.order
   })
   const fileQuery = buildTrashQuery({
     currentFolderId,
     type: 'file',
-    sortAttribute: sortOrder.attribute,
-    sortOrder: sortOrder.order,
+    sortAttribute: SORT_BY_UPDATE_DATE.attribute,
+    sortOrder: SORT_BY_UPDATE_DATE.order,
     limit: 50
   })
 

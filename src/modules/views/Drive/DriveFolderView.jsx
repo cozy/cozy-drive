@@ -18,6 +18,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 import HarvestBanner from './HarvestBanner'
 
 import useHead from '@/components/useHead'
+import { DEFAULT_SORT } from '@/config/sort'
 import { ROOT_DIR_ID } from '@/constants/config'
 import { useClipboardContext } from '@/contexts/ClipboardProvider'
 import { useCurrentFolderId, useDisplayedFolder, useFolderSort } from '@/hooks'
@@ -110,14 +111,14 @@ const DriveFolderView = () => {
   const folderQuery = buildDriveQuery({
     currentFolderId,
     type: 'directory',
-    sortAttribute: sortOrder.attribute,
-    sortOrder: sortOrder.order
+    sortAttribute: DEFAULT_SORT.attribute,
+    sortOrder: DEFAULT_SORT.order
   })
   const fileQuery = buildDriveQuery({
     currentFolderId,
     type: 'file',
-    sortAttribute: sortOrder.attribute,
-    sortOrder: sortOrder.order
+    sortAttribute: DEFAULT_SORT.attribute,
+    sortOrder: DEFAULT_SORT.order
   })
 
   const foldersResult = useQuery(folderQuery.definition, folderQuery.options)

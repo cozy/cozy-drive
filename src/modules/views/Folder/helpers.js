@@ -52,17 +52,17 @@ export const makeColumns = isBigThumbnail => {
 export const secondarySort = file => {
   const { tempFolder, folders, files, trashFolder } = file.reduce(
     (acc, el) => {
-      if (el.type === 'tempDirectory') {
+      if (el?.type === 'tempDirectory') {
         acc.tempFolder.push(el)
-      } else if (el.type === 'directory') {
-        if (el.name === '.cozy_trash') {
+      } else if (el?.type === 'directory') {
+        if (el?.name === '.cozy_trash') {
           acc.trashFolder.push(el)
-        } else if (el._id === SHARED_DRIVES_DIR_ID) {
+        } else if (el?._id === SHARED_DRIVES_DIR_ID) {
           acc.folders.unshift(el)
         } else {
           acc.folders.push(el)
         }
-      } else if (el.type === 'file') {
+      } else if (el?.type === 'file') {
         acc.files.push(el)
       }
       return acc
