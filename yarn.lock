@@ -5570,6 +5570,33 @@ cozy-client@^60.14.0:
     sift "^6.0.0"
     url-search-params-polyfill "^8.0.0"
 
+cozy-client@^60.15.2:
+  version "60.15.2"
+  resolved "https://registry.yarnpkg.com/cozy-client/-/cozy-client-60.15.2.tgz#bbde7f4410af62c04671ffc7a11bd0f85befd390"
+  integrity sha512-3OUsqglWkFyWQUFInY8TjFlpkSLHEUBIgrAvEsFTNkRUZ9O1X1hJPstFtVUcu+ifTxSCon8/XDgqrIXRWyeIhQ==
+  dependencies:
+    "@cozy/minilog" "1.0.0"
+    "@fastify/deepmerge" "^2.0.2"
+    "@types/jest" "^26.0.20"
+    "@types/lodash" "^4.14.170"
+    btoa "^1.2.1"
+    cozy-stack-client "^60.15.1"
+    date-fns "^2.30.0"
+    fast-deep-equal "^3.1.3"
+    json-stable-stringify "^1.0.1"
+    lodash "^4.17.13"
+    microee "^0.0.6"
+    node-fetch "^2.6.1"
+    node-polyglot "2.4.2"
+    open "7.4.2"
+    prop-types "^15.6.2"
+    react-redux "^7.2.0"
+    redux "3 || 4"
+    redux-thunk "^2.3.0"
+    server-destroy "^1.0.1"
+    sift "^6.0.0"
+    url-search-params-polyfill "^8.0.0"
+
 cozy-dataproxy-lib@^4.11.0:
   version "4.11.0"
   resolved "https://registry.yarnpkg.com/cozy-dataproxy-lib/-/cozy-dataproxy-lib-4.11.0.tgz#89cd935486517574ce1e648aab62209638afa4ab"
