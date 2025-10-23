@@ -1,6 +1,6 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
-import { useClient, Q, useQuery } from 'cozy-client'
+import { useClient, Q } from 'cozy-client'
 import flag from 'cozy-flags'
 
 import { DEFAULT_SORT, SORT_BY_UPDATE_DATE } from '@/config/sort'
@@ -26,35 +26,37 @@ interface QueryResult {
 const useFolderSort = (
   folderId: string
 ): [Sort, (props: Sort) => void, boolean] => {
-  const client = useClient()
-
   const defaultSort: Sort =
     folderId === TRASH_DIR_ID || folderId === RECENT_FOLDER_ID
       ? SORT_BY_UPDATE_DATE
       : DEFAULT_SORT
 
-  const driveSettingsResult = useQuery(Q(DOCTYPE_DRIVE_SETTINGS), {
-    as: DOCTYPE_DRIVE_SETTINGS,
-    enabled: flag('drive.save-sort-choice.enabled')
-  }) as QueryResult
+  const client = useClient()
+  const [currentSettings, setCurrentSettings] = useState(defaultSort)
+  const [isSettingsLoaded, setIsSettingsLoaded] = useState(false)
 
-  const settings = useMemo(
-    () => driveSettingsResult.data?.[0]?.attributes,
-    [driveSettingsResult.data]
-  )
+  useEffect(() => {
+    const load = async (): Promise<void> => {
+      if (!client || !flag('drive.save-sort-choice.enabled')) return
 
-  const isSettingsLoaded = useMemo(
-    () =>
-      (driveSettingsResult.fetchStatus !== 'loading' &&
-        driveSettingsResult.fetchStatus !== 'pending') ||
-      !flag('drive.save-sort-choice.enabled'),
-    [driveSettingsResult.fetchStatus]
-  )
+      try {
+        const result = (await client.query(
+          Q(DOCTYPE_DRIVE_SETTINGS)
+        )) as QueryResult
 
-  const currentSort = useMemo(
-    () => (isSettingsLoaded && settings ? settings : defaultSort),
-    [isSettingsLoaded, settings, defaultSort]
-  )
+        if (!result.data) return
+
+        setCurrentSettings(result.data[0]?.attributes)
+      } catch (error) {
+        logger.error('Failed to load settings:', error)
+        setCurrentSettings(defaultSort)
+      } finally {
+        setIsSettingsLoaded(true)
+      }
+    }
+
+    void load()
+  }, [client, defaultSort, setCurrentSettings])
 
   const setSortOrder = useCallback(
     async ({ attribute, order }: Sort) => {
@@ -71,17 +73,14 @@ const useFolderSort = (
       }
 
       try {
-        const existingSettings = driveSettingsResult.data?.[0]
-
-        const settingsToSave: DriveSettings = existingSettings
-          ? {
-              ...existingSettings,
-              attributes: { attribute, order }
-            }
-          : {
-              _type: DOCTYPE_DRIVE_SETTINGS,
-              attributes: { attribute, order }
-            }
+        const settingsToSave: DriveSettings = {
+          _type: DOCTYPE_DRIVE_SETTINGS,
+          attributes: {
+            ...currentSettings,
+            attribute,
+            order
+          }
+        }
 
         await client.save(settingsToSave)
         logger.info('Sort settings persisted', { attribute, order })
@@ -89,10 +88,10 @@ const useFolderSort = (
         logger.error('Failed to save sorting preference:', error)
       }
     },
-    [client, driveSettingsResult.data]
+    [client, currentSettings]
   )
 
-  return [currentSort, setSortOrder, isSettingsLoaded]
+  return [currentSettings, setSortOrder, isSettingsLoaded]
 }
 
 export { useFolderSort }

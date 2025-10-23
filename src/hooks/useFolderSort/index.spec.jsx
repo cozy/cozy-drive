@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react-hooks'
 
-import { useClient, useQuery } from 'cozy-client'
+import { useClient } from 'cozy-client'
 import flag from 'cozy-flags'
 
 import { useFolderSort } from './index'
@@ -25,17 +25,20 @@ jest.mock('@/lib/logger', () => ({
 }))
 
 const mockUseClient = useClient
-const mockUseQuery = useQuery
 const mockFlag = flag
 
 describe('useFolderSort', () => {
   let mockClient
+  let consoleErrorSpy
 
   beforeEach(() => {
     jest.clearAllMocks()
 
+    consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+
     mockClient = {
-      save: jest.fn().mockResolvedValue({})
+      save: jest.fn().mockResolvedValue({}),
+      query: jest.fn().mockResolvedValue({ data: [] })
     }
     mockUseClient.mockReturnValue(mockClient)
 
@@ -47,12 +50,15 @@ describe('useFolderSort', () => {
     })
   })
 
+  afterEach(() => {
+    consoleErrorSpy.mockRestore()
+  })
+
   describe('default sort behavior', () => {
     it('should use DEFAULT_SORT for regular folders', () => {
       const folderId = 'regular-folder-id'
-      mockUseQuery.mockReturnValue({
-        data: [],
-        fetchStatus: 'loading'
+      mockClient.query.mockResolvedValue({
+        data: []
       })
 
       const { result } = renderHook(() => useFolderSort(folderId))
@@ -63,9 +69,8 @@ describe('useFolderSort', () => {
 
     it('should use SORT_BY_UPDATE_DATE for trash folder', () => {
       const folderId = TRASH_DIR_ID
-      mockUseQuery.mockReturnValue({
-        data: [],
-        fetchStatus: 'loading'
+      mockClient.query.mockResolvedValue({
+        data: []
       })
 
       const { result } = renderHook(() => useFolderSort(folderId))
@@ -76,9 +81,8 @@ describe('useFolderSort', () => {
 
     it('should use SORT_BY_UPDATE_DATE for recent folder', () => {
       const folderId = 'recent'
-      mockUseQuery.mockReturnValue({
-        data: [],
-        fetchStatus: 'loading'
+      mockClient.query.mockResolvedValue({
+        data: []
       })
 
       const { result } = renderHook(() => useFolderSort(folderId))
@@ -89,7 +93,7 @@ describe('useFolderSort', () => {
   })
 
   describe('loading existing sorting settings', () => {
-    it('should load and apply existing sorting settings when available', () => {
+    it('should load and apply existing sorting settings when available', async () => {
       const folderId = 'test-folder'
       const existingSettings = {
         _id: 'settings-id',
@@ -100,12 +104,15 @@ describe('useFolderSort', () => {
         }
       }
 
-      mockUseQuery.mockReturnValue({
-        data: [existingSettings],
-        fetchStatus: 'loaded'
+      mockClient.query.mockResolvedValue({
+        data: [existingSettings]
       })
 
-      const { result } = renderHook(() => useFolderSort(folderId))
+      const { result, waitForNextUpdate } = renderHook(() =>
+        useFolderSort(folderId)
+      )
+
+      await waitForNextUpdate()
 
       const [currentSort] = result.current
       expect(currentSort).toEqual({
@@ -121,9 +128,8 @@ describe('useFolderSort', () => {
         _type: DOCTYPE_DRIVE_SETTINGS
       }
 
-      mockUseQuery.mockReturnValue({
-        data: [existingSettings],
-        fetchStatus: 'loaded'
+      mockClient.query.mockResolvedValue({
+        data: [existingSettings]
       })
 
       const { result } = renderHook(() => useFolderSort(folderId))
@@ -132,7 +138,7 @@ describe('useFolderSort', () => {
       expect(currentSort).toEqual(DEFAULT_SORT)
     })
 
-    it('should return consistent sort values on multiple renders', () => {
+    it('should return consistent sort values on multiple renders', async () => {
       const folderId = 'test-folder'
       const existingSettings = {
         _id: 'settings-id',
@@ -143,12 +149,15 @@ describe('useFolderSort', () => {
         }
       }
 
-      mockUseQuery.mockReturnValue({
-        data: [existingSettings],
-        fetchStatus: 'loaded'
+      mockClient.query.mockResolvedValue({
+        data: [existingSettings]
       })
 
-      const { result, rerender } = renderHook(() => useFolderSort(folderId))
+      const { result, rerender, waitForNextUpdate } = renderHook(() =>
+        useFolderSort(folderId)
+      )
+
+      await waitForNextUpdate()
 
       const [firstSort] = result.current
       expect(firstSort).toEqual({
@@ -171,9 +180,8 @@ describe('useFolderSort', () => {
       const folderId = 'test-folder'
       const newSort = { attribute: 'updated_at', order: 'desc' }
 
-      mockUseQuery.mockReturnValue({
-        data: [],
-        fetchStatus: 'loaded'
+      mockClient.query.mockResolvedValue({
+        data: []
       })
 
       const { result } = renderHook(() => useFolderSort(folderId))
@@ -185,7 +193,11 @@ describe('useFolderSort', () => {
 
       expect(mockClient.save).toHaveBeenCalledWith({
         _type: DOCTYPE_DRIVE_SETTINGS,
-        attributes: newSort
+        attributes: {
+          ...DEFAULT_SORT,
+          attribute: 'updated_at',
+          order: 'desc'
+        }
       })
 
       expect(logger.info).toHaveBeenCalledWith(
@@ -206,12 +218,16 @@ describe('useFolderSort', () => {
       }
       const newSort = { attribute: 'updated_at', order: 'desc' }
 
-      mockUseQuery.mockReturnValue({
-        data: [existingSettings],
-        fetchStatus: 'loaded'
+      mockClient.query.mockResolvedValue({
+        data: [existingSettings]
       })
 
-      const { result } = renderHook(() => useFolderSort(folderId))
+      const { result, waitForNextUpdate } = renderHook(() =>
+        useFolderSort(folderId)
+      )
+
+      // Wait for the settings to load
+      await waitForNextUpdate()
 
       const [, setSortOrder] = result.current
       await act(async () => {
@@ -219,8 +235,11 @@ describe('useFolderSort', () => {
       })
 
       expect(mockClient.save).toHaveBeenCalledWith({
-        ...existingSettings,
-        attributes: newSort
+        _type: DOCTYPE_DRIVE_SETTINGS,
+        attributes: {
+          attribute: 'updated_at',
+          order: 'desc'
+        }
       })
 
       expect(logger.info).toHaveBeenCalledWith(
@@ -235,9 +254,8 @@ describe('useFolderSort', () => {
       const saveError = new Error('Save failed')
 
       mockClient.save.mockRejectedValue(saveError)
-      mockUseQuery.mockReturnValue({
-        data: [],
-        fetchStatus: 'loaded'
+      mockClient.query.mockResolvedValue({
+        data: []
       })
 
       const { result } = renderHook(() => useFolderSort(folderId))
