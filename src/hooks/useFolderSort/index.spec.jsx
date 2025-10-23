@@ -235,7 +235,7 @@ describe('useFolderSort', () => {
       })
 
       expect(mockClient.save).toHaveBeenCalledWith({
-        _type: DOCTYPE_DRIVE_SETTINGS,
+        ...existingSettings,
         attributes: {
           attribute: 'updated_at',
           order: 'desc'

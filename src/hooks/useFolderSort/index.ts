@@ -45,7 +45,7 @@ const useFolderSort = (
           Q(DOCTYPE_DRIVE_SETTINGS)
         )) as QueryResult
 
-        if (!data || !data.length) return
+        if (!data?.length) return
 
         setCurrentSort(data[0]?.attributes)
       } catch (error) {
@@ -84,16 +84,15 @@ const useFolderSort = (
           Q(DOCTYPE_DRIVE_SETTINGS)
         )) as QueryResult
 
-        const settingsToSave: DriveSettings =
-          data && data.length
-            ? {
-                ...data[0],
-                attributes: { attribute, order },
-              }
-            : {
-                _type: DOCTYPE_DRIVE_SETTINGS,
-                attributes: { attribute, order },
-              }
+        const settingsToSave: DriveSettings = data?.length
+          ? {
+              ...data[0],
+              attributes: { attribute, order }
+            }
+          : {
+              _type: DOCTYPE_DRIVE_SETTINGS,
+              attributes: { attribute, order }
+            }
 
         await client.save(settingsToSave)
         logger.info('Sort settings persisted', { attribute, order })
