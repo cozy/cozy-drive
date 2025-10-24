@@ -9,10 +9,11 @@ import { DEFAULT_SORT, SORT_BY_UPDATE_DATE } from '@/config/sort'
 import { TRASH_DIR_ID } from '@/constants/config'
 import { DOCTYPE_DRIVE_SETTINGS } from '@/lib/doctypes'
 import logger from '@/lib/logger'
+import { usePublicContext } from '@/modules/public/PublicProvider'
 
 jest.mock('cozy-client', () => ({
   useClient: jest.fn(),
-  Q: jest.fn(),
+  Q: jest.fn().mockReturnValue('mocked-query'),
   useQuery: jest.fn()
 }))
 
@@ -24,8 +25,13 @@ jest.mock('@/lib/logger', () => ({
   error: jest.fn()
 }))
 
+jest.mock('@/modules/public/PublicProvider', () => ({
+  usePublicContext: jest.fn()
+}))
+
 const mockUseClient = useClient
 const mockFlag = flag
+const mockUsePublicContext = usePublicContext
 
 describe('useFolderSort', () => {
   let mockClient
@@ -47,6 +53,10 @@ describe('useFolderSort', () => {
         return true
       }
       return false
+    })
+
+    mockUsePublicContext.mockReturnValue({
+      isPublic: false
     })
   })
 
@@ -269,6 +279,60 @@ describe('useFolderSort', () => {
         'Failed to save sorting preference:',
         saveError
       )
+    })
+  })
+
+  describe('public context behavior', () => {
+    it('should not load settings in public view', async () => {
+      const folderId = 'test-folder'
+      const existingSettings = {
+        _id: 'settings-id',
+        _type: DOCTYPE_DRIVE_SETTINGS,
+        attributes: {
+          attribute: 'updated_at',
+          order: 'desc'
+        }
+      }
+
+      mockUsePublicContext.mockReturnValue({
+        isPublic: true
+      })
+
+      mockClient.query.mockResolvedValue({
+        data: [existingSettings]
+      })
+
+      const { result } = renderHook(() => useFolderSort(folderId))
+
+      const [currentSort] = result.current
+
+      expect(currentSort).toEqual(DEFAULT_SORT)
+
+      expect(mockClient.query).not.toHaveBeenCalled()
+    })
+
+    it('should not persist settings in public view', async () => {
+      const folderId = 'test-folder'
+      const newSort = { attribute: 'updated_at', order: 'desc' }
+
+      mockUsePublicContext.mockReturnValue({
+        isPublic: true
+      })
+
+      const { result } = renderHook(() => useFolderSort(folderId))
+
+      const [, setSortOrder] = result.current
+      await act(async () => {
+        await setSortOrder(newSort)
+      })
+
+      expect(logger.warn).toHaveBeenCalledWith(
+        'Cannot persist sort: in public view'
+      )
+
+      expect(mockClient.save).not.toHaveBeenCalled()
+
+      expect(mockClient.query).not.toHaveBeenCalled()
     })
   })
 })
