@@ -33,6 +33,14 @@ jest.mock('cozy-viewer', () => ({
   default: () => <div>Viewer</div>
 }))
 
+jest.mock('@/lib/ViewSwitcherContext', () => ({
+  ViewSwitcherContextProvider: ({ children }) => children,
+  useViewSwitcherContext: jest.fn(() => ({
+    viewType: 'list',
+    switchView: jest.fn()
+  }))
+}))
+
 const sleep = duration => new Promise(resolve => setTimeout(resolve, duration))
 
 describe('FilesViewer', () => {
