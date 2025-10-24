@@ -7,6 +7,7 @@ import { DEFAULT_SORT, SORT_BY_UPDATE_DATE } from '@/config/sort'
 import { RECENT_FOLDER_ID, TRASH_DIR_ID } from '@/constants/config'
 import { DOCTYPE_DRIVE_SETTINGS } from '@/lib/doctypes'
 import logger from '@/lib/logger'
+import { usePublicContext } from '@/modules/public/PublicProvider'
 
 export interface Sort {
   attribute: string
@@ -32,13 +33,17 @@ const useFolderSort = (
       : DEFAULT_SORT
 
   const client = useClient()
+  const { isPublic } = usePublicContext()
   const [isSettingsLoaded, setIsSettingsLoaded] = useState(false)
   const [currentSort, setCurrentSort] = useState<Sort>(defaultSort)
   const [isSaving, setIsSaving] = useState<boolean>(false)
 
   useEffect(() => {
     const load = async (): Promise<void> => {
-      if (!client || !flag('drive.save-sort-choice.enabled')) return
+      if (!client || !flag('drive.save-sort-choice.enabled') || isPublic) {
+        setIsSettingsLoaded(true)
+        return
+      }
 
       try {
         const { data } = (await client.query(
@@ -56,7 +61,7 @@ const useFolderSort = (
     }
 
     void load()
-  }, [client])
+  }, [client, isPublic])
 
   const setSortOrder = useCallback(
     async ({ attribute, order }: Sort) => {
@@ -69,6 +74,11 @@ const useFolderSort = (
 
       if (!client) {
         logger.warn('Cannot persist sort: client unavailable')
+        return
+      }
+
+      if (isPublic) {
+        logger.warn('Cannot persist sort: in public view')
         return
       }
 
@@ -102,7 +112,7 @@ const useFolderSort = (
         setIsSaving(false)
       }
     },
-    [client, isSaving, setIsSaving]
+    [client, isSaving, isPublic, setIsSaving]
   )
 
   return [currentSort, setSortOrder, isSettingsLoaded]
