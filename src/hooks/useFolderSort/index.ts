@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { useClient, Q } from 'cozy-client'
+import { useClient, useQuery } from 'cozy-client'
 import flag from 'cozy-flags'
 
 import { DEFAULT_SORT, SORT_BY_UPDATE_DATE } from '@/config/sort'
 import { RECENT_FOLDER_ID, TRASH_DIR_ID } from '@/constants/config'
-import { DOCTYPE_DRIVE_SETTINGS } from '@/lib/doctypes'
 import logger from '@/lib/logger'
+import { getDriveSettingQuery } from '@/queries'
 import { usePublicContext } from '@/modules/public/PublicProvider'
 
 export interface Sort {
@@ -17,11 +17,6 @@ export interface Sort {
 interface DriveSettings {
   _type?: string
   attributes: Sort
-}
-
-interface QueryResult {
-  data?: DriveSettings[]
-  fetchStatus?: string
 }
 
 const useFolderSort = (
@@ -38,30 +33,22 @@ const useFolderSort = (
   const [currentSort, setCurrentSort] = useState<Sort>(defaultSort)
   const [isSaving, setIsSaving] = useState<boolean>(false)
 
+  const settingsQuery = useQuery(getDriveSettingQuery.definition, {
+    ...getDriveSettingQuery.options,
+    enabled: flag('drive.save-sort-choice.enabled')
+  }) as {
+    data?: DriveSettings[]
+  }
+
   useEffect(() => {
-    const load = async (): Promise<void> => {
-      if (!client || !flag('drive.save-sort-choice.enabled') || isPublic) {
-        setIsSettingsLoaded(true)
-        return
-      }
+    if (!flag('drive.save-sort-choice.enabled') || isPublic) return
 
-      try {
-        const { data } = (await client.query(
-          Q(DOCTYPE_DRIVE_SETTINGS)
-        )) as QueryResult
-
-        if (!data?.length) return
-
-        setCurrentSort(data[0]?.attributes)
-      } catch (error) {
-        logger.error('Failed to load settings:', error)
-      } finally {
-        setIsSettingsLoaded(true)
-      }
+    if (settingsQuery.data?.length && settingsQuery.data[0]?.attributes) {
+      setCurrentSort(settingsQuery.data[0].attributes)
     }
 
-    void load()
-  }, [client, isPublic])
+    setIsSettingsLoaded(true)
+  }, [isPublic, settingsQuery.data])
 
   const setSortOrder = useCallback(
     async ({ attribute, order }: Sort) => {
@@ -90,17 +77,13 @@ const useFolderSort = (
       setIsSaving(true)
 
       try {
-        const { data } = (await client.query(
-          Q(DOCTYPE_DRIVE_SETTINGS)
-        )) as QueryResult
-
-        const settingsToSave: DriveSettings = data?.length
+        const settingsToSave: DriveSettings = settingsQuery.data?.length
           ? {
-              ...data[0],
+              ...settingsQuery.data[0],
               attributes: { attribute, order }
             }
           : {
-              _type: DOCTYPE_DRIVE_SETTINGS,
+              _type: 'io.cozy.drive.settings',
               attributes: { attribute, order }
             }
 
@@ -112,7 +95,7 @@ const useFolderSort = (
         setIsSaving(false)
       }
     },
-    [client, isSaving, isPublic, setIsSaving]
+    [client, isSaving, setIsSaving, isPublic, settingsQuery.data]
   )
 
   return [currentSort, setSortOrder, isSettingsLoaded]
