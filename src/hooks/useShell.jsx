@@ -56,10 +56,6 @@ export const ShellProvider = ({ children }) => {
     window.top.postMessage('openFile:' + file.metadata.externalId, '*')
   }
 
-  if(!runsInShell) {
-    return children;
-  }
-
   return (
     <ShellContext.Provider value={{ runsInShell, setRunsInShell, selectedFile, setSelectedFile, openFileInParent }}>
       {runsInShell && (
