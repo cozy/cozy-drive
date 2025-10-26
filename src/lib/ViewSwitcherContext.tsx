@@ -3,8 +3,8 @@ import React, { useState, useContext, createContext, useEffect } from 'react'
 import { useClient, useQuery } from 'cozy-client'
 
 import logger from './logger'
-import { getAppSettingQuery } from '@/queries'
-import { DOCTYPE_FILES_SETTINGS } from '@/lib/doctypes'
+import { getDriveSettingQuery } from '@/queries'
+import { DOCTYPE_DRIVE_SETTINGS } from '@/lib/doctypes'
 
 interface QueryResult {
   data: [
@@ -32,8 +32,8 @@ const ViewSwitcherContextProvider: React.FC = ({ children }) => {
   const client = useClient()
   const [viewType, setViewType] = useState(DEFAULT_VIEW_TYPE)
   const settingsQuery = useQuery(
-    getAppSettingQuery.definition,
-    getAppSettingQuery.options
+    getDriveSettingQuery.definition,
+    getDriveSettingQuery.options
   ) as QueryResult
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const ViewSwitcherContextProvider: React.FC = ({ children }) => {
       const existing = settingsQuery.data?.[0]
 
       await client.save({
-        ...(existing || { _type: DOCTYPE_FILES_SETTINGS }),
+        ...(existing || { _type: DOCTYPE_DRIVE_SETTINGS }),
         attributes: {
           ...(existing?.attributes || {}),
           preferredDriveViewType: viewTypeParam
