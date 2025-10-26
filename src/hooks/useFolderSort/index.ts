@@ -77,15 +77,15 @@ const useFolderSort = (
       setIsSaving(true)
 
       try {
-        const settingsToSave: DriveSettings = settingsQuery.data?.length
-          ? {
-              ...settingsQuery.data[0],
-              attributes: { attribute, order }
-            }
-          : {
-              _type: 'io.cozy.drive.settings',
-              attributes: { attribute, order }
-            }
+        const existing = settingsQuery.data?.[0]
+        const settingsToSave = {
+          ...(existing || { _type: 'io.cozy.drive.settings' }),
+          attributes: {
+            ...(existing?.attributes || {}),
+            attribute,
+            order
+          }
+        }
 
         await client.save(settingsToSave)
         logger.info('Sort settings persisted', { attribute, order })

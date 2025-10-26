@@ -242,6 +242,40 @@ describe('useFolderSort', () => {
       )
     })
 
+    it('should preserve other attributes when updating sorting settings', async () => {
+      const folderId = 'test-folder'
+      const existingSettings = {
+        _id: 'settings-id',
+        _type: 'io.cozy.drive.settings',
+        attributes: {
+          attribute: 'name',
+          order: 'asc',
+          preferredDriveViewType: 'grid'
+        }
+      }
+      const newSort = { attribute: 'updated_at', order: 'desc' }
+
+      mockUseQuery.mockReturnValue({
+        data: [existingSettings]
+      })
+
+      const { result } = renderHook(() => useFolderSort(folderId))
+
+      const [, setSortOrder] = result.current
+      await act(async () => {
+        await setSortOrder(newSort)
+      })
+
+      expect(mockClient.save).toHaveBeenCalledWith({
+        ...existingSettings,
+        attributes: {
+          attribute: 'updated_at',
+          order: 'desc',
+          preferredDriveViewType: 'grid'
+        }
+      })
+    })
+
     it('should handle save errors gracefully', async () => {
       const folderId = 'test-folder'
       const newSort = { attribute: 'updated_at', order: 'desc' }
