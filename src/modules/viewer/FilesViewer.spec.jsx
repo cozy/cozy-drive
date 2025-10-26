@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, act } from '@testing-library/react'
 import React from 'react'
 
 import CozyClient, { useQuery } from 'cozy-client'
@@ -123,15 +123,17 @@ describe('FilesViewer', () => {
 
     const hasMore = jest.fn().mockReturnValue(true)
 
-    setup({
-      client,
-      nbFiles: 50,
-      totalCount: 100,
-      fileId: 'file-foobar48',
-      useQueryResultAttributes: {
-        fetchMore,
-        hasMore
-      }
+    await act(async () => {
+      setup({
+        client,
+        nbFiles: 50,
+        totalCount: 100,
+        fileId: 'file-foobar48',
+        useQueryResultAttributes: {
+          fetchMore,
+          hasMore
+        }
+      })
     })
 
     const viewer = await screen.findByText('Viewer')
