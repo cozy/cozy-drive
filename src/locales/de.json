@@ -487,6 +487,13 @@
     "description": "Wählen Sie eine bestimmte Farbe für Ihren Ordner",
     "cancel": "Abbrechen",
     "apply": "Anwenden",
-    "error": "Ein Fehler ist aufgetreten, bitte versuchen Sie es erneut."
+    "error": "Ein Fehler ist aufgetreten, bitte versuchen Sie es erneut.",
+    "tabs": {
+      "colors": "Farben",
+      "icons": "Symbole"
+    },
+    "iconPicker": {
+      "chooseCustomIcon": "Wählen Sie ein benutzerdefiniertes Symbol"
+    }
   }
 }

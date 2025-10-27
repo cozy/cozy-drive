@@ -687,7 +687,14 @@
     "description": "Choisissez une couleur spécifique pour votre dossier",
     "cancel": "Annuler",
     "apply": "Appliquer",
-    "error": "Une erreur est survenue, merci de réessayer."
+    "error": "Une erreur est survenue, merci de réessayer.",
+    "tabs": {
+      "colors": "Couleurs",
+      "icons": "Icônes"
+    },
+    "iconPicker": {
+      "chooseCustomIcon": "Choisir une icône personnalisée"
+    }
   },
   "DuplicateModal": {
     "subTitle": "Dupliquer vers :",

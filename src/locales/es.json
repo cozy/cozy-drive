@@ -460,6 +460,13 @@
     "description": "Elija un color específico para su carpeta",
     "cancel": "Cancelar",
     "apply": "Aplicar",
-    "error": "Se ha producido un error, por favor inténtelo de nuevo."
+    "error": "Se ha producido un error, por favor inténtelo de nuevo.",
+    "tabs": {
+      "colors": "Colores",
+      "icons": "Iconos"
+    },
+    "iconPicker": {
+      "chooseCustomIcon": "Elegir un icono personalizado"
+    }
   }
 }
