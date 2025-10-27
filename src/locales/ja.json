@@ -422,6 +422,13 @@
     "description": "フォルダの特定の色を選択します",
     "cancel": "キャンセル",
     "apply": "適用",
-    "error": "エラーが発生しました。もう一度お試しください。"
+    "error": "エラーが発生しました。もう一度お試しください。",
+    "tabs": {
+      "colors": "色",
+      "icons": "アイコン"
+    },
+    "iconPicker": {
+      "chooseCustomIcon": "カスタムアイコンを選択"
+    }
   }
 }

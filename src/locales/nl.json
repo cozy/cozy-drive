@@ -110,6 +110,13 @@
     "description": "Kies een specifieke kleur voor uw map",
     "cancel": "Annuleren",
     "apply": "Toepassen",
-    "error": "Er is een fout opgetreden, probeer het opnieuw."
+    "error": "Er is een fout opgetreden, probeer het opnieuw.",
+    "tabs": {
+      "colors": "Kleuren",
+      "icons": "Pictogrammen"
+    },
+    "iconPicker": {
+      "chooseCustomIcon": "Kies een aangepast pictogram"
+    }
   }
 }

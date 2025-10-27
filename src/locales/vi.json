@@ -678,7 +678,14 @@
     "description": "Chọn màu cụ thể cho thư mục của bạn",
     "cancel": "Hủy",
     "apply": "Áp dụng",
-    "error": "Đã xảy ra lỗi, vui lòng thử lại."
+    "error": "Đã xảy ra lỗi, vui lòng thử lại.",
+    "tabs": {
+      "colors": "Màu sắc",
+      "icons": "Biểu tượng"
+    },
+    "iconPicker": {
+      "chooseCustomIcon": "Chọn biểu tượng tùy chỉnh"
+    }
   },
   "DuplicateModal": {
     "subTitle": "Nhân bản đến:",

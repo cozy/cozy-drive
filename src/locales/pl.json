@@ -93,6 +93,13 @@
     "description": "Wybierz konkretny kolor dla swojego folderu",
     "cancel": "Anuluj",
     "apply": "Zastosuj",
-    "error": "Wystąpił błąd, spróbuj ponownie."
+    "error": "Wystąpił błąd, spróbuj ponownie.",
+    "tabs": {
+      "colors": "Kolory",
+      "icons": "Ikony"
+    },
+    "iconPicker": {
+      "chooseCustomIcon": "Wybierz niestandardową ikonę"
+    }
   }
 }

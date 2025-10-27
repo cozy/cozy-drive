@@ -310,6 +310,13 @@
     "description": "Scegli un colore specifico per la tua cartella",
     "cancel": "Annulla",
     "apply": "Applica",
-    "error": "Si è verificato un errore, riprova."
+    "error": "Si è verificato un errore, riprova.",
+    "tabs": {
+      "colors": "Colori",
+      "icons": "Icone"
+    },
+    "iconPicker": {
+      "chooseCustomIcon": "Scegli un'icona personalizzata"
+    }
   }
 }
