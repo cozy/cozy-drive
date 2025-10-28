@@ -85,7 +85,7 @@ const Table = forwardRef(
         style={{ outline: 'none' }}
       >
         <VirtuosoTableDnd
-          context={{ actions }}
+          context={{ actions, selectedItems, isSelectedItem }}
           components={components}
           rows={rows}
           columns={columns}
