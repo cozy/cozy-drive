@@ -6,12 +6,14 @@ import { hasQueryBeenLoaded, useQuery } from 'cozy-client'
 import { LoaderModal } from '@/components/LoaderModal'
 import useDisplayedFolder from '@/hooks/useDisplayedFolder'
 import MoveModal from '@/modules/move/MoveModal'
+import { useSharedDrives } from '@/modules/shareddrives/hooks/useSharedDrives'
 import { buildParentsByIdsQuery } from '@/queries'
 
 const MoveFilesView = ({ isOpenInViewer }) => {
   const navigate = useNavigate()
   const { state } = useLocation()
   const { displayedFolder } = useDisplayedFolder()
+  const { sharedDrives } = useSharedDrives()
 
   const hasFileIds = state?.fileIds != undefined
 
@@ -49,6 +51,7 @@ const MoveFilesView = ({ isOpenInViewer }) => {
         onClose={onClose}
         onMovingSuccess={onMovingSuccess}
         showNextcloudFolder={showNextcloudFolder}
+        showSharedDriveFolder={sharedDrives?.length > 0}
       />
     )
   }

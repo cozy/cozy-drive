@@ -3,6 +3,7 @@ import React, { useMemo } from 'react'
 import { useQuery, useClient } from 'cozy-client'
 import { isDirectory } from 'cozy-client/dist/models/file'
 import { IOCozyFile } from 'cozy-client/types/types'
+import { useSharingContext } from 'cozy-sharing'
 import List from 'cozy-ui/transpiled/react/List'
 
 import { FolderPickerListItem } from './FolderPickerListItem'
@@ -13,34 +14,33 @@ import { FolderPickerContentLoader } from '@/components/FolderPicker/FolderPicke
 import { isInvalidMoveTarget } from '@/components/FolderPicker/helpers'
 import { computeNextcloudRootFolder } from '@/components/FolderPicker/helpers'
 import type { File, FolderPickerEntry } from '@/components/FolderPicker/types'
-import { ROOT_DIR_ID } from '@/constants/config'
+import { useTransformFolderListHasSharedDriveShortcuts } from '@/hooks/useTransformFolderListHasSharedDriveShortcuts'
 import { isEncryptedFolder } from '@/lib/encryption'
 import { FolderUnlocker } from '@/modules/folder/components/FolderUnlocker'
-import {
-  buildMoveOrImportQuery,
-  buildFileOrFolderByIdQuery,
-  buildMagicFolderQuery
-} from '@/queries'
+import { buildMoveOrImportQuery, buildFileOrFolderByIdQuery } from '@/queries'
 
-interface FolderPickerContentCozyProps {
+interface FolderPickerContentSharedDriveRootProps {
   folder: IOCozyFile
   isFolderCreationDisplayed: boolean
   hideFolderCreation: () => void
   entries: FolderPickerEntry[]
   navigateTo: (folder: import('./types').File) => void
   showNextcloudFolder?: boolean
-  showSharedDriveFolder?: boolean
 }
 
-const FolderPickerContentCozy: React.FC<FolderPickerContentCozyProps> = ({
+const FolderPickerContentSharedDriveRoot: React.FC<
+  FolderPickerContentSharedDriveRootProps
+> = ({
   folder,
   isFolderCreationDisplayed,
   hideFolderCreation,
   entries,
   navigateTo,
-  showNextcloudFolder,
-  showSharedDriveFolder
+  showNextcloudFolder
 }) => {
+  const { hasWriteAccess } = useSharingContext() as unknown as {
+    hasWriteAccess: (folderId: string, driveId?: string) => boolean
+  }
   const client = useClient()
   const contentQuery = buildMoveOrImportQuery(folder._id)
   const {
@@ -55,41 +55,20 @@ const FolderPickerContentCozy: React.FC<FolderPickerContentCozyProps> = ({
     fetchMore: () => void
   }
 
-  const sharedFolderQuery = buildMagicFolderQuery({
-    id: 'io.cozy.files.shared-drives-dir',
-    enabled: folder._id === ROOT_DIR_ID
-  })
-  const sharedFolderResult = useQuery(
-    sharedFolderQuery.definition,
-    sharedFolderQuery.options
-  ) as unknown as {
-    fetchStatus: string
-    data?: IOCozyFile[]
-  }
+  const { sharedDrives, nonSharedDriveList } =
+    useTransformFolderListHasSharedDriveShortcuts(
+      filesData,
+      showNextcloudFolder
+    ) as {
+      sharedDrives: IOCozyFile[]
+      nonSharedDriveList: IOCozyFile[]
+    }
 
   const isEncrypted = isEncryptedFolder(folder)
 
   const files: IOCozyFile[] = useMemo(() => {
-    if (
-      folder._id === ROOT_DIR_ID &&
-      (showNextcloudFolder || showSharedDriveFolder)
-    ) {
-      return [
-        ...(sharedFolderResult.fetchStatus === 'loaded'
-          ? sharedFolderResult.data ?? []
-          : []),
-        ...(filesData ?? [])
-      ]
-    }
-    return [...(filesData ?? [])]
-  }, [
-    folder._id,
-    showNextcloudFolder,
-    showSharedDriveFolder,
-    filesData,
-    sharedFolderResult.fetchStatus,
-    sharedFolderResult.data
-  ])
+    return [...sharedDrives, ...nonSharedDriveList]
+  }, [sharedDrives, nonSharedDriveList])
 
   const handleFolderUnlockerDismiss = async (): Promise<void> => {
     const parentFolderQuery = buildFileOrFolderByIdQuery(folder.dir_id)
@@ -142,7 +121,10 @@ const FolderPickerContentCozy: React.FC<FolderPickerContentCozyProps> = ({
             <FolderPickerListItem
               key={file._id}
               file={file}
-              disabled={isInvalidMoveTarget(entries, file)}
+              disabled={
+                isInvalidMoveTarget(entries, file) ||
+                !hasWriteAccess(file._id, file.driveId)
+              }
               onClick={handleClick}
               showDivider={index !== files.length - 1}
             />
@@ -154,4 +136,4 @@ const FolderPickerContentCozy: React.FC<FolderPickerContentCozyProps> = ({
   )
 }
 
-export { FolderPickerContentCozy }
+export { FolderPickerContentSharedDriveRoot }
