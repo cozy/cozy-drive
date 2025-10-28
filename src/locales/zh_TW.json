@@ -190,6 +190,7 @@
       "icons": "圖示"
     },
     "iconPicker": {
+      "recents": "最近使用",
       "chooseCustomIcon": "選擇自訂圖示"
     }
   }

@@ -19,6 +19,7 @@ import styles from '@/styles/folder-customizer.styl'
 import { ColorPicker } from '@/components/ColorPicker/ColorPicker'
 import { COLORS } from '@/components/ColorPicker/constants'
 import { IconPicker } from '@/components/IconPicker/index.jsx'
+import { addRecentIcon } from '@/hooks'
 import logger from '@/lib/logger'
 import { buildFileOrFolderByIdQuery } from '@/queries'
 
@@ -77,6 +78,10 @@ const DumbFolderCustomizer = ({ folder, onClose }) => {
           }
         }
       })
+
+      if (selectedIcon) {
+        addRecentIcon(selectedIcon)
+      }
     } catch (error) {
       logger.error(`Error while updating folder decoration`, error)
       showAlert({

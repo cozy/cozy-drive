@@ -466,6 +466,7 @@
       "icons": "Iconos"
     },
     "iconPicker": {
+      "recents": "Recientes",
       "chooseCustomIcon": "Elegir un icono personalizado"
     }
   }

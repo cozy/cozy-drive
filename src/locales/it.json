@@ -316,6 +316,7 @@
       "icons": "Icone"
     },
     "iconPicker": {
+      "recents": "Recenti",
       "chooseCustomIcon": "Scegli un'icona personalizzata"
     }
   }
