@@ -26,7 +26,9 @@ const Grid = forwardRef(
       fetchMore,
       dragProps,
       currentFolderId,
-      onInteractWithFile
+      onInteractWithFile,
+      selectedItems,
+      isSelectedItem
     },
     ref
   ) => {
@@ -83,7 +85,7 @@ const Grid = forwardRef(
             </>
           )}
           endReached={fetchMore}
-          context={actions}
+          context={{ actions, selectedItems, isSelectedItem }}
         />
       </div>
     )
