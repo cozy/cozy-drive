@@ -14,7 +14,7 @@ import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 
 import { CustomizedIcon } from './CustomizedIcon'
 
-import styles from '@/styles/foldercustomizer.styl'
+import styles from '@/styles/folder-customizer.styl'
 
 import { ColorPicker } from '@/components/ColorPicker/ColorPicker'
 import { COLORS } from '@/components/ColorPicker/constants'
@@ -47,6 +47,9 @@ const DumbFolderCustomizer = ({ folder, onClose }) => {
   const [selectedIcon, setSelectedIcon] = useState(
     folder.metadata?.decorations?.icon || null
   )
+  const [selectedIconColor, setSelectedIconColor] = useState(
+    folder.metadata?.decorations?.icon_color
+  )
   const { showAlert } = useAlert()
   const client = useClient()
 
@@ -55,6 +58,9 @@ const DumbFolderCustomizer = ({ folder, onClose }) => {
   }
   const handleIconSelect = iconName => {
     setSelectedIcon(iconName)
+  }
+  const handleIconColorSelect = color => {
+    setSelectedIconColor(color)
   }
 
   const handleApply = async () => {
@@ -66,7 +72,8 @@ const DumbFolderCustomizer = ({ folder, onClose }) => {
           decorations: {
             ...folder.metadata?.decorations,
             color: selectedColor,
-            icon: selectedIcon
+            icon: selectedIcon,
+            icon_color: selectedIconColor
           }
         }
       })
@@ -103,6 +110,7 @@ const DumbFolderCustomizer = ({ folder, onClose }) => {
             <CustomizedIcon
               selectedColor={selectedColor}
               selectedIcon={selectedIcon}
+              selectedIconColor={selectedIconColor}
               size={52}
             />
           </Grid>
@@ -149,7 +157,9 @@ const DumbFolderCustomizer = ({ folder, onClose }) => {
               <Grid item className={styles['foldercustomizer-icons-container']}>
                 <IconPicker
                   selectedIcon={selectedIcon}
+                  selectedIconColor={selectedIconColor}
                   onIconSelect={handleIconSelect}
+                  onIconColorSelect={handleIconColorSelect}
                 />
               </Grid>
             )}

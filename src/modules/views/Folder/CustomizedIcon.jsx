@@ -12,6 +12,7 @@ import { getIcon } from '@/components/IconPicker/IconIndex'
 export const CustomizedIcon = ({
   selectedColor = '#46a2ff',
   selectedIcon,
+  selectedIconColor,
   size
 }) => {
   const encoded = `url('data:image/svg+xml;utf8,${encodeURIComponent(
@@ -47,7 +48,7 @@ export const CustomizedIcon = ({
         foregroundIcon={
           <Icon
             icon={getIcon(selectedIcon)}
-            color="#555556"
+            color={selectedIconColor}
             size={size / 3 || 16}
           />
         }
