@@ -134,6 +134,8 @@ const FolderViewBodyContent = ({
           withFilePath={withFilePath}
           actions={actions}
           fetchMore={fetchMore}
+          selectedItems={selectedItems}
+          isSelectedItem={isSelectedItem}
           dragProps={{
             enabled: canDrag,
             dragId: 'drag-drive',
