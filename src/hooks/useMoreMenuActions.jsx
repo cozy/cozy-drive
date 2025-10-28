@@ -60,7 +60,7 @@ export const useMoreMenuActions = file => {
       download,
       showPrintAction && print,
       hr,
-      !isSharedDrive && moveTo, // TO DO: Remove condtion when moving is available in shared drive
+      moveTo,
       !isSharedDrive && duplicateTo, // TO DO: Remove condtion when duplicating is available in shared drive
       addToFavorites,
       removeFromFavorites,
