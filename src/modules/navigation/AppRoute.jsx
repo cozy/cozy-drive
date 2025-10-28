@@ -35,6 +35,7 @@ import FileOpenerExternal from '@/modules/viewer/FileOpenerExternal'
 import { KonnectorRoutes } from '@/modules/views/Drive/KonnectorRoutes'
 import { FavoritesView } from '@/modules/views/Favorites/FavoritesView'
 import { FolderDuplicateView } from '@/modules/views/Folder/FolderDuplicateView'
+import { SharedDriveDuplicateView } from '@/modules/views/Folder/SharedDriveDuplicateView'
 import { MoveFilesView } from '@/modules/views/Modal/MoveFilesView'
 import { MoveSharedDriveFilesView } from '@/modules/views/Modal/MoveSharedDriveFilesView'
 import { QualifyFileView } from '@/modules/views/Modal/QualifyFileView'
@@ -144,6 +145,7 @@ const AppRoute = () => (
             <Route path="file/:fileId/v/revision" element={<FileHistory />} />
             <Route path="share" element={<ShareDisplayedFolderView />} />
             <Route path="move" element={<MoveSharedDriveFilesView />} />
+            <Route path="duplicate" element={<SharedDriveDuplicateView />} />
           </Route>
         </>
       ) : null}

@@ -101,6 +101,21 @@ declare module 'cozy-client/dist/models/file' {
     filename: string,
     driveId: string
   ) => Promise<string>
+  export const moveRelateToSharedDrive: (
+    client: import('cozy-client/types/CozyClient').CozyClient,
+    source: {
+      instance?: string
+      sharing_id?: string
+      file_id?: string
+      dir_id?: string
+    },
+    dest: {
+      instance?: string
+      sharing_id?: string
+      dir_id: string
+    },
+    isCopy?: boolean
+  ) => Promise<void>
 }
 
 declare module 'cozy-client/dist/models/note' {
