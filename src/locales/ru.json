@@ -685,6 +685,7 @@
       "icons": "Иконки"
     },
     "iconPicker": {
+      "recents": "Недавние",
       "chooseCustomIcon": "Выберите пользовательскую иконку"
     }
   },

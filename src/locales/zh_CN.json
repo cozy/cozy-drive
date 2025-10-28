@@ -104,6 +104,7 @@
       "icons": "图标"
     },
     "iconPicker": {
+      "recents": "最近使用",
       "chooseCustomIcon": "选择自定义图标"
     }
   }

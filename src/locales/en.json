@@ -717,6 +717,7 @@
       "icons": "Icons"
     },
     "iconPicker": {
+      "recents": "Recents",
       "chooseCustomIcon": "Choose a custom icon"
     }
   }

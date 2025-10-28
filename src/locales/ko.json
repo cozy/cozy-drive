@@ -102,6 +102,7 @@
       "icons": "아이콘"
     },
     "iconPicker": {
+      "recents": "최근 항목",
       "chooseCustomIcon": "사용자 지정 아이콘 선택"
     }
   }

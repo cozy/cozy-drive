@@ -493,6 +493,7 @@
       "icons": "Symbole"
     },
     "iconPicker": {
+      "recents": "Zuletzt verwendet",
       "chooseCustomIcon": "Wählen Sie ein benutzerdefiniertes Symbol"
     }
   }

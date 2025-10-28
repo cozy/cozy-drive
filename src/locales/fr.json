@@ -693,6 +693,7 @@
       "icons": "Icônes"
     },
     "iconPicker": {
+      "recents": "Récents",
       "chooseCustomIcon": "Choisir une icône personnalisée"
     }
   },

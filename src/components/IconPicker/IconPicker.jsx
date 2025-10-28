@@ -1,16 +1,20 @@
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 
+import Backdrop from 'cozy-ui/transpiled/react/Backdrop'
 import GridList from 'cozy-ui/transpiled/react/GridList'
 import GridListTile from 'cozy-ui/transpiled/react/GridListTile'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconButton from 'cozy-ui/transpiled/react/IconButton'
+import { Spinner } from 'cozy-ui/transpiled/react/Spinner'
 import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { IconColorPicker, ICON_COLORS } from './IconColorPicker'
 import { getIcon, getIconList } from './IconIndex'
+
+import { useRecentIcons } from '@/hooks'
 
 const NB_COLUMNS_MOBILE = 6
 const NB_COLUMNS_DESKTOP = 8
@@ -34,6 +38,7 @@ export const IconPicker = ({
 }) => {
   const { isMobile } = useBreakpoints()
   const { t } = useI18n()
+  const recentIcons = useRecentIcons()
   const icons = getIconList()
   const [anchorEl, setAnchorEl] = useState(null)
 
@@ -51,9 +56,47 @@ export const IconPicker = ({
     setAnchorEl(null)
   }
 
+  if (!recentIcons) {
+    return (
+      <Backdrop isOver open>
+        <Spinner size="xxlarge" middle noMargin color="var(--white)" />
+      </Backdrop>
+    )
+  }
+
   return (
     <>
-      <Typography className="u-ml-half u-mb-1 u-mt-2" variant="h6" noWrap>
+      {recentIcons.length > 0 && (
+        <>
+          <Typography className="u-ml-half u-mb-1" variant="h6" noWrap>
+            {t('FolderCustomizer.iconPicker.recents')}
+          </Typography>
+          <GridList
+            cols={isMobile ? NB_COLUMNS_MOBILE : NB_COLUMNS_DESKTOP}
+            cellHeight={isMobile ? CELL_HEIGHT_MOBILE : CELL_HEIGHT_DESKTOP}
+          >
+            {recentIcons.map((iconName, index) => (
+              <GridListTile key={`recent-${index}`} className="u-ta-center">
+                <IconButton
+                  onClick={() => onIconSelect(iconName)}
+                  size={isMobile ? ICON_SIZE_MOBILE : ICON_SIZE_DESKTOP}
+                >
+                  <Icon
+                    size={isMobile ? ICON_SIZE_MOBILE : ICON_SIZE_DESKTOP}
+                    icon={getIcon(iconName)}
+                    color="#555556"
+                  />
+                </IconButton>
+              </GridListTile>
+            ))}
+          </GridList>
+        </>
+      )}
+      <Typography
+        className="u-ml-half u-mb-1 u-mt-1 u-mt-0-t"
+        variant="h6"
+        noWrap
+      >
         {t('FolderCustomizer.iconPicker.chooseCustomIcon')}
       </Typography>
       <GridList

@@ -99,6 +99,7 @@
       "icons": "Ikony"
     },
     "iconPicker": {
+      "recents": "Ostatnie",
       "chooseCustomIcon": "Wybierz niestandardową ikonę"
     }
   }
