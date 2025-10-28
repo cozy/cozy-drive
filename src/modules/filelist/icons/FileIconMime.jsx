@@ -22,6 +22,7 @@ const FileIconMime = ({ file, size = 32, isEncrypted = false }) => {
       <CustomizedIcon
         selectedColor={file.metadata.decorations.color}
         selectedIcon={file.metadata.decorations.icon}
+        selectedIconColor={file.metadata.decorations.icon_color}
         size={size}
       />
     )
