@@ -1,4 +1,9 @@
-import { isFile, copy, move } from 'cozy-client/dist/models/file'
+import {
+  isFile,
+  copy,
+  move,
+  moveRelateToSharedDrive
+} from 'cozy-client/dist/models/file'
 
 import { resolveNameConflictsForCut } from './utils'
 
@@ -9,10 +14,59 @@ import { joinPath } from '@/lib/path'
 import { hasOneOfEntriesShared } from '@/modules/move/helpers'
 import { computeNextcloudFolderQueryId } from '@/modules/nextcloud/helpers'
 
+const generateMoveOrCopySharedDriveApi = async (
+  client,
+  entry,
+  sourceDirectory,
+  destDirectory,
+  isCopy = false
+) => {
+  return await moveRelateToSharedDrive(
+    client,
+    {
+      instance: entry.driveId
+        ? sourceDirectory.attributes?.cozyMetadata?.createdOn
+        : '',
+      file_id: isFile(entry) ? entry._id : '',
+      dir_id: !isFile(entry) ? entry._id : '',
+      sharing_id: entry.driveId
+    },
+    {
+      instance: destDirectory.driveId
+        ? destDirectory.cozyMetadata?.createdOn
+        : '',
+      sharing_id: destDirectory.driveId,
+      dir_id: destDirectory._id
+    },
+    isCopy
+  )
+}
+
+export const buildMoveApi = async (
+  client,
+  entry,
+  sourceDirectory,
+  destDirectory,
+  force = false
+) => {
+  if (entry.driveId || destDirectory.driveId) {
+    return await generateMoveOrCopySharedDriveApi(
+      client,
+      entry,
+      sourceDirectory,
+      destDirectory
+    )
+  }
+  return await move(client, entry, destDirectory, {
+    force
+  })
+}
+
 export const handlePasteOperation = async (
   client,
   files,
   operation,
+  sourceDirectory,
   targetFolder,
   options = {}
 ) => {
@@ -45,6 +99,7 @@ export const handlePasteOperation = async (
         const result = await handleMoveWithValidation(
           client,
           file,
+          sourceDirectory,
           targetFolder,
           {
             sharingContext,
@@ -96,6 +151,7 @@ const handleDuplicateWithValidation = async (
 const handleMoveWithValidation = async (
   client,
   file,
+  sourceDirectory,
   targetFolder,
   options = {}
 ) => {
@@ -129,7 +185,12 @@ const handleMoveWithValidation = async (
                 targetFolder,
                 async () => {
                   try {
-                    const result = await move(client, file, targetFolder)
+                    const result = await buildMoveApi(
+                      client,
+                      file,
+                      sourceDirectory,
+                      targetFolder
+                    )
                     resolve(result)
                   } catch (error) {
                     reject(error)
@@ -148,7 +209,12 @@ const handleMoveWithValidation = async (
                 targetFolder,
                 async () => {
                   try {
-                    const result = await move(client, file, targetFolder)
+                    const result = await buildMoveApi(
+                      client,
+                      file,
+                      sourceDirectory,
+                      targetFolder
+                    )
                     resolve(result)
                   } catch (error) {
                     reject(error)
@@ -167,7 +233,12 @@ const handleMoveWithValidation = async (
                 targetFolder,
                 async () => {
                   try {
-                    const result = await move(client, file, targetFolder)
+                    const result = await buildMoveApi(
+                      client,
+                      file,
+                      sourceDirectory,
+                      targetFolder
+                    )
                     resolve(result)
                   } catch (error) {
                     reject(error)
@@ -191,7 +262,7 @@ const handleMoveWithValidation = async (
       _rev: file._rev || file.meta.rev
     })
   }
-  const result = await move(client, file, targetFolder)
+  const result = await buildMoveApi(client, file, sourceDirectory, targetFolder)
 
   const isMovingInsideNextcloud = targetFolder._type === NEXTCLOUD_FILE_ID
   const isMovingOutsideNextcloud =
