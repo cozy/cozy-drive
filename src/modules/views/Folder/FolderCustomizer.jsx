@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
 
 import { useClient, useQuery } from 'cozy-client'
 import Backdrop from 'cozy-ui/transpiled/react/Backdrop'
@@ -17,9 +16,7 @@ import { ColorPicker, COLORS } from '@/components/ColorPicker/ColorPicker'
 import logger from '@/lib/logger'
 import { buildFileOrFolderByIdQuery } from '@/queries'
 
-export const FolderCustomizer = () => {
-  const { folderId } = useParams()
-
+export const FolderCustomizerModal = ({ folderId, onClose }) => {
   const folderQuery = buildFileOrFolderByIdQuery(folderId)
   const result = useQuery(folderQuery.definition, folderQuery.options)
   const { fetchStatus, data: folder } = result
@@ -29,15 +26,15 @@ export const FolderCustomizer = () => {
       <Spinner size="xxlarge" middle noMargin color="var(--white)" />
     </Backdrop>
   ) : (
-    <DumbFolderCustomizer folder={folder} />
+    <DumbFolderCustomizer folder={folder} onClose={onClose} />
   )
 }
 
-FolderCustomizer.displayName = 'FolderCustomizer'
+FolderCustomizerModal.displayName = 'FolderCustomizerModal'
 
-const DumbFolderCustomizer = ({ folder }) => {
-  const navigate = useNavigate()
+const DumbFolderCustomizer = ({ folder, onClose }) => {
   const { t } = useI18n()
+
   const [selectedColor, setSelectedColor] = useState(
     folder.metadata?.decorations?.color || COLORS[9]
   )
@@ -67,7 +64,7 @@ const DumbFolderCustomizer = ({ folder }) => {
         severity: 'error'
       })
     } finally {
-      navigate(`/folder/${folder.dir_id}`)
+      onClose()
     }
   }
 
@@ -78,7 +75,7 @@ const DumbFolderCustomizer = ({ folder }) => {
   return (
     <FixedDialog
       size="small"
-      onClose={() => navigate(`/folder/${folder.dir_id}`)}
+      onClose={onClose}
       open={true}
       title={t('FolderCustomizer.title')}
       content={
@@ -109,7 +106,7 @@ const DumbFolderCustomizer = ({ folder }) => {
         <>
           <Buttons
             label={t('FolderCustomizer.cancel')}
-            onClick={() => navigate(`/folder/${folder.dir_id}`)}
+            onClick={onClose}
             variant="secondary"
           />
           <Buttons label={t('FolderCustomizer.apply')} onClick={handleApply} />
