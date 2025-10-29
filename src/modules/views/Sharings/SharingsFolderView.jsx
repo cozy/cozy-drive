@@ -28,6 +28,7 @@ import {
   selectAllItems
 } from '@/modules/actions'
 import { moveTo } from '@/modules/actions/components/moveTo'
+import { personalizeFolder } from '@/modules/actions/components/personalizeFolder'
 import { makeExtraColumnsNamesFromMedia } from '@/modules/certifications'
 import { useExtraColumns } from '@/modules/certifications/useExtraColumns'
 import Toolbar from '@/modules/drive/Toolbar'
@@ -110,7 +111,17 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
     isSelectAll
   }
   const actions = makeActions(
-    [selectAllItems, share, download, trash, rename, moveTo, qualify, versions],
+    [
+      selectAllItems,
+      share,
+      download,
+      trash,
+      rename,
+      moveTo,
+      qualify,
+      versions,
+      personalizeFolder
+    ],
     actionsOptions
   )
 

@@ -8,7 +8,6 @@ import ExternalRedirect from './ExternalRedirect'
 import Index from './Index'
 import { DriveFolderView } from '../views/Drive/DriveFolderView'
 import FilesViewerDrive from '../views/Drive/FilesViewerDrive'
-import { FolderCustomizer } from '../views/Folder/FolderCustomizer'
 import OnlyOfficeView from '../views/OnlyOffice'
 import OnlyOfficeCreateView from '../views/OnlyOffice/Create'
 import OnlyOfficePaywallView from '../views/OnlyOffice/OnlyOfficePaywallView'
@@ -84,9 +83,6 @@ const AppRoute = () => (
         element={<Navigate to={ROOT_DIR_ID} replace={true} />}
       />
       <Route path="folder/:folderId" element={<DriveFolderView />}>
-        {flag('drive.folder-personalization.enabled') && (
-          <Route path="personalize" element={<FolderCustomizer />} />
-        )}
         <Route
           path="file/:fileId"
           element={<OutletWrapper Component={FilesViewerDrive} />}
