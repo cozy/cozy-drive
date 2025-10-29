@@ -7,6 +7,7 @@ import GridListTile from 'cozy-ui/transpiled/react/GridListTile'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import CheckIcon from 'cozy-ui/transpiled/react/Icons/Check'
+import CrossIcon from 'cozy-ui/transpiled/react/Icons/Cross'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import {
@@ -20,6 +21,8 @@ import {
   ICON_SIZE_MOBILE,
   ICON_SIZE_DESKTOP
 } from './constants'
+
+import styles from '@/styles/folder-customizer.styl'
 
 /**
  * ColorPicker component - displays a grid of colors and allows the user to select one
@@ -35,6 +38,21 @@ export const ColorPicker = ({ selectedColor, onColorSelect }) => {
         cols={isMobile ? NB_COLUMNS_MOBILE : NB_COLUMNS_DESKTOP}
         cellHeight={isMobile ? CELL_HEIGHT_MOBILE : CELL_HEIGHT_DESKTOP}
       >
+        <GridListTile className="u-ta-center">
+          <Circle
+            size={isMobile ? CIRCLE_SIZE_MOBILE : CIRCLE_SIZE_DESKTOP}
+            backgroundColor="var(--papeBackgroundColor)"
+            className={styles.noneIconFrame}
+          >
+            <IconButton onClick={() => onColorSelect()}>
+              <Icon
+                size={isMobile ? ICON_SIZE_MOBILE : ICON_SIZE_DESKTOP}
+                icon={CrossIcon}
+                color="textSecondary"
+              />
+            </IconButton>
+          </Circle>
+        </GridListTile>
         {COLORS.map(color => (
           <GridListTile key={color} className="u-ta-center">
             <Circle

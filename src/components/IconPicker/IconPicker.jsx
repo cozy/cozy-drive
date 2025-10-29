@@ -13,6 +13,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { IconColorPicker, ICON_COLORS } from './IconColorPicker'
 import { getIcon, getIconList } from './IconIndex'
+import { NoneIcon } from './NoneIcon'
 
 import { useRecentIcons } from '@/hooks'
 
@@ -84,7 +85,6 @@ export const IconPicker = ({
                   <Icon
                     size={isMobile ? ICON_SIZE_MOBILE : ICON_SIZE_DESKTOP}
                     icon={getIcon(iconName)}
-                    color="#555556"
                   />
                 </IconButton>
               </GridListTile>
@@ -103,6 +103,12 @@ export const IconPicker = ({
         cols={isMobile ? NB_COLUMNS_MOBILE : NB_COLUMNS_DESKTOP}
         cellHeight={isMobile ? CELL_HEIGHT_MOBILE : CELL_HEIGHT_DESKTOP}
       >
+        <GridListTile key="none" className="u-ta-center">
+          <IconButton onClick={e => handleIconClick(e, 'none')} size={iconSize}>
+            <NoneIcon size={iconSize} />
+          </IconButton>
+        </GridListTile>
+
         {icons.map((iconName, index) => (
           <GridListTile key={index} className="u-ta-center">
             <IconButton

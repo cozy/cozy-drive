@@ -31,7 +31,7 @@ export const useRecentIcons = () => {
  * @param {string} iconName - Name of the icon to add
  */
 export const addRecentIcon = iconName => {
-  if (!iconName) return
+  if (!iconName || iconName === 'none') return
 
   try {
     const stored = localStorage.getItem(STORAGE_KEY)
