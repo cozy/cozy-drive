@@ -94,6 +94,7 @@ const MoveModal = ({
     try {
       setMoveInProgress(true)
       const trashedFiles = []
+      const force = !sharedPaths.includes(folder.path)
       await Promise.all(
         entries.map(async entry => {
           const force = !sharedPaths.includes(folder.path)
