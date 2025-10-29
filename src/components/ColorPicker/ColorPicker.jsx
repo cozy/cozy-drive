@@ -9,41 +9,17 @@ import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import CheckIcon from 'cozy-ui/transpiled/react/Icons/Check'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
-export const COLORS = [
-  '#696c6f',
-  '#d3bfa4',
-  '#e1e3e6',
-  '#ff4d5e',
-  '#ff7750',
-  '#f5ac00',
-  '#ffd54c',
-  '#ffe082',
-  '#006bd8',
-  '#46a2ff',
-  '#91cef6',
-  '#afffeb',
-  '#2dd4ab',
-  '#66e49a',
-  '#6ad049',
-  '#00bf62',
-  '#713fa5',
-  '#a777e8',
-  '#ad95ff',
-  '#bfa9ff',
-  '#fba0b8',
-  '#e694e0',
-  '#e375cd',
-  '#dbcac9'
-]
-
-const NB_COLUMNS_MOBILE = 6
-const NB_COLUMNS_DESKTOP = 8
-const CELL_HEIGHT_MOBILE = 56
-const CELL_HEIGHT_DESKTOP = 40
-const CIRCLE_SIZE_MOBILE = 40
-const CIRCLE_SIZE_DESKTOP = 36
-const ICON_SIZE_MOBILE = 18
-const ICON_SIZE_DESKTOP = 12
+import {
+  COLORS,
+  NB_COLUMNS_MOBILE,
+  NB_COLUMNS_DESKTOP,
+  CELL_HEIGHT_MOBILE,
+  CELL_HEIGHT_DESKTOP,
+  CIRCLE_SIZE_MOBILE,
+  CIRCLE_SIZE_DESKTOP,
+  ICON_SIZE_MOBILE,
+  ICON_SIZE_DESKTOP
+} from './constants'
 
 /**
  * ColorPicker component - displays a grid of colors and allows the user to select one

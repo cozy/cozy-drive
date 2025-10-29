@@ -12,7 +12,8 @@ import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 
 import { CustomizedIcon } from './CustomizedIcon'
 
-import { ColorPicker, COLORS } from '@/components/ColorPicker/ColorPicker'
+import { ColorPicker } from '@/components/ColorPicker/ColorPicker'
+import { COLORS } from '@/components/ColorPicker/constants'
 import logger from '@/lib/logger'
 import { buildFileOrFolderByIdQuery } from '@/queries'
 
