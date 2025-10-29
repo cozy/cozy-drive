@@ -43,7 +43,7 @@ const DumbFolderCustomizer = ({ folder, onClose }) => {
   const { t } = useI18n()
   const tabItems = ['colors', 'icons']
   const [selectedColor, setSelectedColor] = useState(
-    folder.metadata?.decorations?.color || COLORS[9]
+    folder.metadata?.decorations?.color || COLORS[8]
   )
   const [selectedIcon, setSelectedIcon] = useState(
     folder.metadata?.decorations?.icon || null
@@ -66,20 +66,32 @@ const DumbFolderCustomizer = ({ folder, onClose }) => {
 
   const handleApply = async () => {
     try {
+      // Prepare decorations object
+      const decorations = {
+        ...folder.metadata?.decorations,
+        color: selectedColor
+      }
+
+      // Only add icon and icon_color if an actual icon is selected (not "none")
+      if (selectedIcon && selectedIcon !== 'none') {
+        decorations.icon = selectedIcon
+        if (selectedIconColor) {
+          decorations.icon_color = selectedIconColor
+        }
+      } else {
+        delete decorations.icon
+        delete decorations.icon_color
+      }
+
       await client.save({
         ...folder,
         metadata: {
           ...folder.metadata,
-          decorations: {
-            ...folder.metadata?.decorations,
-            color: selectedColor,
-            icon: selectedIcon,
-            icon_color: selectedIconColor
-          }
+          decorations
         }
       })
 
-      if (selectedIcon) {
+      if (selectedIcon && selectedIcon !== 'none') {
         addRecentIcon(selectedIcon)
       }
     } catch (error) {
