@@ -2,12 +2,6 @@ import React, { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
-import {
-  copy,
-  isDirectory,
-  moveRelateToSharedDrive
-} from 'cozy-client/dist/models/file'
-import { IOCozyFile } from 'cozy-client/types/types'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -17,6 +11,7 @@ import { File, FolderPickerEntry } from '@/components/FolderPicker/types'
 import { ROOT_DIR_ID } from '@/constants/config'
 import { useCancelable } from '@/modules/move/hooks/useCancelable'
 import { computeNextcloudFolderQueryId } from '@/modules/nextcloud/helpers'
+import { buildCopyApi } from '@/modules/paste'
 
 interface DuplicateModalProps {
   entries: FolderPickerEntry[]
@@ -25,7 +20,6 @@ interface DuplicateModalProps {
   showNextcloudFolder?: boolean
   isPublic?: boolean
   showSharedDriveFolder?: boolean
-  driveId?: string
 }
 
 const DuplicateModal: FC<DuplicateModalProps> = ({
@@ -34,8 +28,7 @@ const DuplicateModal: FC<DuplicateModalProps> = ({
   onClose,
   showNextcloudFolder,
   isPublic,
-  showSharedDriveFolder,
-  driveId
+  showSharedDriveFolder
 }) => {
   const { t } = useI18n()
   const { showAlert } = useAlert()
@@ -50,7 +43,9 @@ const DuplicateModal: FC<DuplicateModalProps> = ({
       setBusy(true)
       await Promise.all(
         entries.map(async entry => {
-          await registerCancelable(handleCopyApi(client, entry, folder))
+          await registerCancelable(
+            buildCopyApi(client, entry, currentFolder, folder)
+          )
         })
       )
 
@@ -82,35 +77,6 @@ const DuplicateModal: FC<DuplicateModalProps> = ({
       setBusy(false)
       await onClose()
     }
-  }
-
-  const handleCopyApi = async (
-    client: unknown,
-    entry: FolderPickerEntry,
-    folder: File
-  ): Promise<void> => {
-    if (driveId || entry.driveId || (folder as IOCozyFile).driveId) {
-      return await moveRelateToSharedDrive(
-        client,
-        {
-          instance: entry.driveId
-            ? currentFolder.attributes?.cozyMetadata?.createdOn
-            : '',
-          file_id: !isDirectory(entry) ? entry._id : '',
-          dir_id: isDirectory(entry) ? entry._id : '',
-          sharing_id: entry.driveId
-        },
-        {
-          instance: (folder as IOCozyFile).driveId
-            ? folder.cozyMetadata?.createdOn
-            : '',
-          sharing_id: (folder as IOCozyFile).driveId,
-          dir_id: folder._id
-        },
-        true
-      )
-    }
-    return await copy(client, entry, folder)
   }
 
   /**
