@@ -8,7 +8,7 @@ import flag from 'cozy-flags'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { isEditableTarget, normalizeKey } from './helpers'
+import { isEditableButNotCheckbox, normalizeKey } from './helpers'
 
 import { isMacOS } from '@/components/pushClient'
 import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
@@ -136,14 +136,26 @@ export const useKeyboardShortcuts = ({
       return
     }
 
-    cutFiles(selectedItems, new Set(parentFolderIds))
+    cutFiles(
+      selectedItems,
+      new Set(parentFolderIds),
+      currentFolder as IOCozyFile
+    )
     const message =
       selectedItems.length === 1
         ? t('alert.item_cut')
         : t('alert.items_cut', { count: selectedItems.length })
     showAlert({ message, severity: 'success' })
     clearSelection()
-  }, [selectedItems, allowCut, cutFiles, showAlert, t, clearSelection])
+  }, [
+    selectedItems,
+    allowCut,
+    currentFolder,
+    cutFiles,
+    t,
+    showAlert,
+    clearSelection
+  ])
 
   const handlePaste = useCallback(async () => {
     if (!hasClipboardData || !client || !currentFolder) return
@@ -173,6 +185,7 @@ export const useKeyboardShortcuts = ({
         client,
         clipboardData.files,
         clipboardData.operation,
+        clipboardData.sourceDirectory,
         currentFolder,
         {
           showAlert,
@@ -267,7 +280,7 @@ export const useKeyboardShortcuts = ({
       }
 
     const handleKeyDown = (event: KeyboardEvent): void => {
-      if (!event.target || isEditableTarget(event.target)) return
+      if (!event.target || isEditableButNotCheckbox(event.target)) return
 
       const combo = normalizeKey(event, isApple)
       const handler = shortcuts[combo]
