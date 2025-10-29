@@ -28,6 +28,7 @@ import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
 import FolderViewHeader from '../Folder/FolderViewHeader'
 import OldFolderViewBreadcrumb from '../Folder/OldFolderViewBreadcrumb'
 
+import useHead from '@/components/useHead'
 import { ROOT_DIR_ID } from '@/constants/config'
 import {
   useCurrentFolderId,
@@ -100,6 +101,7 @@ const PublicFolderView = () => {
     sharingInfos.sharing?.rules?.some(rule =>
       rule.values.includes(currentFolderId)
     )
+  useHead()
 
   const filesResult = usePublicFilesQuery(currentFolderId)
   const files = filesResult.data
