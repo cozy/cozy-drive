@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { useClient, Q } from 'cozy-client'
 import flag from 'cozy-flags'
+import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { DEFAULT_SORT, SORT_BY_UPDATE_DATE } from '@/config/sort'
 import { RECENT_FOLDER_ID, TRASH_DIR_ID } from '@/constants/config'
@@ -34,6 +35,7 @@ const useFolderSort = (
 
   const client = useClient()
   const { isPublic } = usePublicContext()
+  const { isMobile } = useBreakpoints()
   const [isSettingsLoaded, setIsSettingsLoaded] = useState(false)
   const [currentSort, setCurrentSort] = useState<Sort>(defaultSort)
   const [isSaving, setIsSaving] = useState<boolean>(false)
@@ -65,6 +67,16 @@ const useFolderSort = (
 
   const setSortOrder = useCallback(
     async ({ attribute, order }: Sort) => {
+      /**
+       * Since mobile view does not use vituralized folder view, so we don't have frontend sort
+       * The sort in mobile only work when fetching API again
+       * To keep sorting behavior in mobile view, we need to update currentSort
+       */
+      if (isMobile) {
+        setIsSettingsLoaded(!flag('drive.save-sort-choice.enabled'))
+        setCurrentSort({ attribute, order })
+      }
+
       if (!flag('drive.save-sort-choice.enabled')) {
         logger.warn(
           'Cannot persist sort: flag drive.save-sort-choice.enabled is not enabled'
@@ -110,9 +122,13 @@ const useFolderSort = (
         logger.error('Failed to save sorting preference:', error)
       } finally {
         setIsSaving(false)
+
+        if (isMobile) {
+          setIsSettingsLoaded(true)
+        }
       }
     },
-    [client, isSaving, isPublic, setIsSaving]
+    [client, isPublic, isSaving, isMobile]
   )
 
   return [currentSort, setSortOrder, isSettingsLoaded]

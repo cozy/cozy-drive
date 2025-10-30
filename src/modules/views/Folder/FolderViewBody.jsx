@@ -21,7 +21,6 @@ import styles from '@/styles/folder-view.styl'
 import { EmptyWrapper } from '@/components/Error/Empty'
 import Oops from '@/components/Error/Oops'
 import RightClickFileMenu from '@/components/RightClick/RightClickFileMenu'
-import { useFolderSort } from '@/hooks'
 import { useShiftSelection } from '@/hooks/useShiftSelection'
 import AcceptingSharingContext from '@/lib/AcceptingSharingContext'
 import { useThumbnailSizeContext } from '@/lib/ThumbnailSizeContext'
@@ -61,7 +60,12 @@ const FolderViewBody = ({
   canUpload = true,
   withFilePath = false,
   refreshFolderContent = null,
-  extraColumns
+  extraColumns,
+  orderProps = {
+    sortOrder: {},
+    setOrder: () => {},
+    isSettingsLoaded: true
+  }
 }) => {
   const { isDesktop } = useBreakpoints()
   const navigate = useNavigate()
@@ -110,12 +114,12 @@ const FolderViewBody = ({
 
   const { isBigThumbnail } = useThumbnailSizeContext()
   const { sharingsValue } = useContext(AcceptingSharingContext)
-  const [sortOrder, setSortOrder, isSettingsLoaded] =
-    useFolderSort(currentFolderId)
+  const { sortOrder, setOrder, isSettingsLoaded } = orderProps
   const vaultClient = useVaultClient()
+
   const changeSortOrder = useCallback(
-    (_, attribute, order) => setSortOrder({ attribute, order }),
-    [setSortOrder]
+    (_, attribute, order) => setOrder({ attribute, order }),
+    [setOrder]
   )
 
   const isInError = queryResults.some(query => query.fetchStatus === 'failed')
@@ -126,8 +130,7 @@ const FolderViewBody = ({
     !hasDataToShow &&
     queryResults.some(
       query => query.fetchStatus === 'loading' && !query.lastUpdate
-    ) &&
-    !isSettingsLoaded
+    )
   const isEmpty = !isInError && !isLoading && !hasDataToShow
   const showEmpty = displayedFolder !== null && !IsAddingFolder && isEmpty
   const isSharingContextEmpty = Object.keys(sharingsValue).length <= 0
@@ -197,7 +200,9 @@ const FolderViewBody = ({
             </FileListBodyWrapper>
           )}
           {isInError && <Oops />}
-          {(needsToWait || isLoading) && <FileListRowsPlaceholder />}
+          {(needsToWait || isLoading || !isSettingsLoaded) && (
+            <FileListRowsPlaceholder />
+          )}
           {/* TODO FolderViewBody should not have the responsability to chose
           which empty component to display. It should be done by the "view" itself.
           But adding a new prop like <FolderViewBody emptyComponent={}

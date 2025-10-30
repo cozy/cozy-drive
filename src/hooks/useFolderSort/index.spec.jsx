@@ -1,7 +1,9 @@
 import { renderHook, act } from '@testing-library/react-hooks'
+import React from 'react'
 
 import { useClient } from 'cozy-client'
 import flag from 'cozy-flags'
+import { BreakpointsProvider } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { useFolderSort } from './index'
 
@@ -29,6 +31,12 @@ jest.mock('@/modules/public/PublicProvider', () => ({
   usePublicContext: jest.fn()
 }))
 
+jest.mock('cozy-ui/transpiled/react/providers/Breakpoints', () => ({
+  __esModule: true,
+  default: jest.fn(() => ({ isMobile: false })),
+  BreakpointsProvider: ({ children }) => children
+}))
+
 const mockUseClient = useClient
 const mockFlag = flag
 const mockUsePublicContext = usePublicContext
@@ -36,6 +44,10 @@ const mockUsePublicContext = usePublicContext
 describe('useFolderSort', () => {
   let mockClient
   let consoleErrorSpy
+
+  const wrapper = ({ children }) => (
+    <BreakpointsProvider>{children}</BreakpointsProvider>
+  )
 
   beforeEach(() => {
     jest.clearAllMocks()
@@ -71,7 +83,7 @@ describe('useFolderSort', () => {
         data: []
       })
 
-      const { result } = renderHook(() => useFolderSort(folderId))
+      const { result } = renderHook(() => useFolderSort(folderId), { wrapper })
 
       const [currentSort] = result.current
       expect(currentSort).toEqual(DEFAULT_SORT)
@@ -83,7 +95,7 @@ describe('useFolderSort', () => {
         data: []
       })
 
-      const { result } = renderHook(() => useFolderSort(folderId))
+      const { result } = renderHook(() => useFolderSort(folderId), { wrapper })
 
       const [currentSort] = result.current
       expect(currentSort).toEqual(SORT_BY_UPDATE_DATE)
@@ -95,7 +107,7 @@ describe('useFolderSort', () => {
         data: []
       })
 
-      const { result } = renderHook(() => useFolderSort(folderId))
+      const { result } = renderHook(() => useFolderSort(folderId), { wrapper })
 
       const [currentSort] = result.current
       expect(currentSort).toEqual(SORT_BY_UPDATE_DATE)
@@ -118,8 +130,9 @@ describe('useFolderSort', () => {
         data: [existingSettings]
       })
 
-      const { result, waitForNextUpdate } = renderHook(() =>
-        useFolderSort(folderId)
+      const { result, waitForNextUpdate } = renderHook(
+        () => useFolderSort(folderId),
+        { wrapper }
       )
 
       await waitForNextUpdate()
@@ -142,7 +155,7 @@ describe('useFolderSort', () => {
         data: [existingSettings]
       })
 
-      const { result } = renderHook(() => useFolderSort(folderId))
+      const { result } = renderHook(() => useFolderSort(folderId), { wrapper })
 
       const [currentSort] = result.current
       expect(currentSort).toEqual(DEFAULT_SORT)
@@ -163,8 +176,9 @@ describe('useFolderSort', () => {
         data: [existingSettings]
       })
 
-      const { result, rerender, waitForNextUpdate } = renderHook(() =>
-        useFolderSort(folderId)
+      const { result, rerender, waitForNextUpdate } = renderHook(
+        () => useFolderSort(folderId),
+        { wrapper }
       )
 
       await waitForNextUpdate()
@@ -194,7 +208,7 @@ describe('useFolderSort', () => {
         data: []
       })
 
-      const { result } = renderHook(() => useFolderSort(folderId))
+      const { result } = renderHook(() => useFolderSort(folderId), { wrapper })
 
       const [, setSortOrder] = result.current
       await act(async () => {
@@ -204,7 +218,6 @@ describe('useFolderSort', () => {
       expect(mockClient.save).toHaveBeenCalledWith({
         _type: DOCTYPE_DRIVE_SETTINGS,
         attributes: {
-          ...DEFAULT_SORT,
           attribute: 'updated_at',
           order: 'desc'
         }
@@ -232,8 +245,9 @@ describe('useFolderSort', () => {
         data: [existingSettings]
       })
 
-      const { result, waitForNextUpdate } = renderHook(() =>
-        useFolderSort(folderId)
+      const { result, waitForNextUpdate } = renderHook(
+        () => useFolderSort(folderId),
+        { wrapper }
       )
 
       // Wait for the settings to load
@@ -268,7 +282,7 @@ describe('useFolderSort', () => {
         data: []
       })
 
-      const { result } = renderHook(() => useFolderSort(folderId))
+      const { result } = renderHook(() => useFolderSort(folderId), { wrapper })
 
       const [, setSortOrder] = result.current
       await act(async () => {
@@ -302,7 +316,7 @@ describe('useFolderSort', () => {
         data: [existingSettings]
       })
 
-      const { result } = renderHook(() => useFolderSort(folderId))
+      const { result } = renderHook(() => useFolderSort(folderId), { wrapper })
 
       const [currentSort] = result.current
 
@@ -319,7 +333,7 @@ describe('useFolderSort', () => {
         isPublic: true
       })
 
-      const { result } = renderHook(() => useFolderSort(folderId))
+      const { result } = renderHook(() => useFolderSort(folderId), { wrapper })
 
       const [, setSortOrder] = result.current
       await act(async () => {

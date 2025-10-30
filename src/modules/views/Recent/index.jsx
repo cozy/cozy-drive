@@ -166,6 +166,11 @@ export const RecentView = () => {
             canSort={false}
             withFilePath={true}
             extraColumns={extraColumns}
+            orderProps={{
+              sortOrder,
+              setOrder: setSortOrder,
+              isSettingsLoaded
+            }}
           />
         )}
         <Outlet />
