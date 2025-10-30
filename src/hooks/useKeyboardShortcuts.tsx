@@ -8,7 +8,7 @@ import flag from 'cozy-flags'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { isEditableButNotCheckbox, normalizeKey } from './helpers'
+import { shouldBlockKeyboardShortcuts, normalizeKey } from './helpers'
 
 import { isMacOS } from '@/components/pushClient'
 import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
@@ -280,7 +280,7 @@ export const useKeyboardShortcuts = ({
       }
 
     const handleKeyDown = (event: KeyboardEvent): void => {
-      if (!event.target || isEditableButNotCheckbox(event.target)) return
+      if (!event.target || shouldBlockKeyboardShortcuts(event.target)) return
 
       const combo = normalizeKey(event, isApple)
       const handler = shortcuts[combo]

@@ -2,11 +2,6 @@ import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 
 import { useClient } from 'cozy-client'
-import {
-  isDirectory,
-  move,
-  moveRelateToSharedDrive
-} from 'cozy-client/dist/models/file'
 import { useSharingContext } from 'cozy-sharing'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
@@ -22,6 +17,7 @@ import { MoveSharedFolderInsideAnotherModal } from '@/modules/move/MoveSharedFol
 import { hasOneOfEntriesShared } from '@/modules/move/helpers'
 import { useCancelable } from '@/modules/move/hooks/useCancelable'
 import { computeNextcloudFolderQueryId } from '@/modules/nextcloud/helpers'
+import { executeMove } from '@/modules/paste'
 
 /**
  * Modal to move a folder to an other
@@ -71,8 +67,12 @@ const MoveModal = ({
 
     const areMovedFilesShared = hasOneOfEntriesShared(entries, byDocId)
     const isOriginParentShared = hasSharedParent(entries[0].path) || !!driveId
-    const isTargetShared = hasSharedParent(targetPath) || !!folder.driveId
-    const isInsideSameSharedFolder = targetPath.startsWith(sharedParentPath)
+    const isTargetShared =
+      hasSharedParent(targetPath) ||
+      (!!folder.driveId && folder.driveId !== driveId)
+    const isInsideSameSharedFolder =
+      (sharedParentPath && targetPath.startsWith(sharedParentPath)) ||
+      (!!folder.driveId && !!driveId && folder.driveId === driveId)
 
     if (isInsideSameSharedFolder) {
       moveEntries(folder)
@@ -101,10 +101,11 @@ const MoveModal = ({
     try {
       setMoveInProgress(true)
       const trashedFiles = []
+      const force = !sharedPaths.includes(folder.path)
       await Promise.all(
         entries.map(async entry => {
           const moveResponse = await registerCancelable(
-            handleMoveApi(client, entry, folder)
+            executeMove(client, entry, currentFolder, folder, force)
           )
           if (moveResponse.deleted) {
             trashedFiles.push(moveResponse.deleted)
@@ -145,31 +146,6 @@ const MoveModal = ({
       setMoveInProgress(false)
       onClose()
     }
-  }
-
-  const handleMoveApi = async (client, entry, folder) => {
-    if (driveId || entry.driveId || folder.driveId) {
-      return await moveRelateToSharedDrive(
-        client,
-        {
-          instance: entry.driveId
-            ? currentFolder.attributes.cozyMetadata.createdOn
-            : '',
-          file_id: !isDirectory(entry) ? entry._id : '',
-          dir_id: isDirectory(entry) ? entry._id : '',
-          sharing_id: entry.driveId
-        },
-        {
-          instance: folder.driveId ? folder.cozyMetadata.createdOn : '',
-          sharing_id: folder.driveId,
-          dir_id: folder._id
-        }
-      )
-    }
-    const force = !sharedPaths.includes(folder.path)
-    return await move(client, entry, folder, {
-      force
-    })
   }
 
   /**

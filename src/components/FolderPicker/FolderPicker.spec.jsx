@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, fireEvent, screen } from '@testing-library/react'
 import React from 'react'
 
 import { createMockClient } from 'cozy-client'
@@ -8,7 +8,6 @@ import AppLike from 'test/components/AppLike'
 
 import { FolderPicker } from '@/components/FolderPicker/FolderPicker'
 
-// Mock dependencies
 jest.mock('cozy-keys-lib', () => ({
   useVaultClient: jest.fn()
 }))
@@ -23,13 +22,19 @@ jest.mock('cozy-sharing', () => ({
 
 useSharingContext.mockReturnValue({ byDocId: [] })
 
-// Mock the FolderPickerBody component to avoid complex rendering issues
 jest.mock('@/components/FolderPicker/FolderPickerBody', () => ({
-  FolderPickerBody: jest.fn().mockImplementation(() => (
-    <div data-testid="folder-picker-body">
-      <div>Mocked Folder Picker Body</div>
-    </div>
-  ))
+  FolderPickerBody: jest
+    .fn()
+    .mockImplementation(({ isFolderCreationDisplayed }) => (
+      <div data-testid="folder-picker-body">
+        <div>Mocked Folder Picker Body</div>
+        {isFolderCreationDisplayed && (
+          <div data-testid="name-input">
+            <input placeholder="Folder name" />
+          </div>
+        )}
+      </div>
+    ))
 }))
 
 describe('FolderPicker', () => {
@@ -83,6 +88,36 @@ describe('FolderPicker', () => {
       </AppLike>
     )
   }
+
+  it('should be able to move inside another folder', async () => {
+    setup()
+
+    expect(screen.getByText('Photos')).toBeInTheDocument()
+
+    const backButton = screen.getByRole('button', {
+      name: 'Back'
+    })
+    fireEvent.click(backButton)
+    await screen.findByText('Files')
+
+    const moveButton = screen.queryByRole('button', {
+      name: 'Move'
+    })
+    fireEvent.click(moveButton)
+    expect(onConfirmSpy).toHaveBeenCalledWith(rootCozyFolder)
+  })
+
+  it('should display the folder creation input', async () => {
+    setup()
+
+    const addFolderButton = screen.queryByRole('button', {
+      name: 'Add a folder'
+    })
+    fireEvent.click(addFolderButton)
+
+    const filenameInput = await screen.findByTestId('name-input')
+    expect(filenameInput).toBeInTheDocument()
+  })
 
   it('should render with the provided folder', async () => {
     setup()

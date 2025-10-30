@@ -37,7 +37,6 @@ const FolderPickerBody: React.FC<FolderPickerBodyProps> = ({
     )
   }
 
-  // Display content of recipient's shared drive folder
   if (folder.driveId) {
     return (
       <FolderPickerContentSharedDrive
@@ -50,7 +49,6 @@ const FolderPickerBody: React.FC<FolderPickerBodyProps> = ({
     )
   }
 
-  // Display content of `Drives` folder
   if (
     folder.dir_id === ROOT_DIR_ID &&
     folder._id === SHARED_DRIVES_DIR_ID &&

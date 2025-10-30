@@ -35,7 +35,7 @@ export const isEditableTarget = target =>
  * @param {EventTarget | null} target
  * @returns {boolean}
  */
-export const isEditableButNotCheckbox = target => {
+export const shouldBlockKeyboardShortcuts = target => {
   if (!target || !(target instanceof HTMLElement)) return false
 
   const tag = target.tagName.toLowerCase()
