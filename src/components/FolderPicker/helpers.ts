@@ -2,6 +2,7 @@ import CozyClient from 'cozy-client/types/CozyClient'
 import { IOCozyFile, NextcloudFile } from 'cozy-client/types/types'
 
 import { FolderPickerEntry, File } from '@/components/FolderPicker/types'
+import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
 import { getParentPath } from '@/lib/path'
 import {
   buildFileOrFolderByIdQuery,
@@ -160,10 +161,7 @@ export const getParentFolder = async (
 ): Promise<File> => {
   if (folder._type === 'io.cozy.remote.nextcloud.files') {
     if (folder.path === '/') {
-      return await getCozyParentFolder(
-        client,
-        'io.cozy.files.shared-drives-dir'
-      )
+      return await getCozyParentFolder(client, SHARED_DRIVES_DIR_ID)
     }
     if (folder.parentPath === '/') {
       return computeNextcloudRootFolder({
@@ -175,7 +173,6 @@ export const getParentFolder = async (
     }
   }
 
-  const driveId =
-    folder.dir_id === 'io.cozy.files.shared-drives-dir' ? '' : folder.driveId
+  const driveId = folder.dir_id === SHARED_DRIVES_DIR_ID ? '' : folder.driveId
   return await getCozyParentFolder(client, folder.dir_id, driveId)
 }

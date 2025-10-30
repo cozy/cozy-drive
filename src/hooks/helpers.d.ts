@@ -6,7 +6,7 @@ export declare function displayedFolderOrRootFolder(displayedFolder: unknow): {
 
 export declare function isEditableTarget(target: EventTarget | null): boolean
 
-export declare function isEditableButNotCheckbox(
+export declare function shouldBlockKeyboardShortcuts(
   target: EventTarget | null
 ): boolean
 
