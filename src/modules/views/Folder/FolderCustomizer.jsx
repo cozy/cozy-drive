@@ -92,7 +92,7 @@ const DumbFolderCustomizer = ({ folder, onClose }) => {
             className="u-mt-1 u-mb-1-t u-mb-1-half"
           >
             <Grid item>
-              <Typography variant="h6" noWrap>
+              <Typography variant="h6">
                 {t('FolderCustomizer.description')}
               </Typography>
             </Grid>
