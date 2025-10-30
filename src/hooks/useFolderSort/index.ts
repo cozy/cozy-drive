@@ -65,6 +65,8 @@ const useFolderSort = (
 
   const setSortOrder = useCallback(
     async ({ attribute, order }: Sort) => {
+      setCurrentSort({ attribute, order })
+
       if (!flag('drive.save-sort-choice.enabled')) {
         logger.warn(
           'Cannot persist sort: flag drive.save-sort-choice.enabled is not enabled'

@@ -61,7 +61,8 @@ const FolderViewBody = ({
   canUpload = true,
   withFilePath = false,
   refreshFolderContent = null,
-  extraColumns
+  extraColumns,
+  orderProps
 }) => {
   const { isDesktop } = useBreakpoints()
   const navigate = useNavigate()
@@ -110,8 +111,13 @@ const FolderViewBody = ({
 
   const { isBigThumbnail } = useThumbnailSizeContext()
   const { sharingsValue } = useContext(AcceptingSharingContext)
-  const [sortOrder, setSortOrder, isSettingsLoaded] =
+  const [internalSortOrder, internalSetSortOrder, internalIsSettingsLoaded] =
     useFolderSort(currentFolderId)
+  const sortOrder = orderProps?.sortOrder ?? internalSortOrder
+  const setSortOrder = orderProps?.setOrder ?? internalSetSortOrder
+  const isSettingsLoaded =
+    orderProps?.isSettingsLoaded ?? internalIsSettingsLoaded
+
   const vaultClient = useVaultClient()
   const changeSortOrder = useCallback(
     (_, attribute, order) => setSortOrder({ attribute, order }),

@@ -268,6 +268,11 @@ const DriveFolderView = () => {
             displayedFolder={displayedFolder}
             extraColumns={extraColumns}
             canUpload={canWriteToCurrentFolder}
+            orderProps={{
+              sortOrder,
+              setOrder: setSortOrder,
+              isSettingsLoaded
+            }}
           />
         )}
         {isFabDisplayed && (
