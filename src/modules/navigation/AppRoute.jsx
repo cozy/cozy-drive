@@ -143,7 +143,9 @@ const AppRoute = () => (
             <Route path="file/:fileId/revision" element={<FileHistory />} />
             <Route path="file/:fileId/v/revision" element={<FileHistory />} />
             <Route path="share" element={<ShareDisplayedFolderView />} />
-            <Route path="move" element={<MoveSharedDriveFilesView />} />
+            {flag('drive.move-in-shared-drive.enabled') ? (
+              <Route path="move" element={<MoveSharedDriveFilesView />} />
+            ) : null}
           </Route>
         </>
       ) : null}

@@ -2,6 +2,7 @@ import React from 'react'
 import { Outlet, useParams } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
+import flag from 'cozy-flags'
 import { useSharingContext } from 'cozy-sharing'
 import { Content } from 'cozy-ui/transpiled/react/Layout'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -44,11 +45,15 @@ const SharedDriveFolderView = () => {
   const { hasClipboardData } = useClipboardContext()
 
   useKeyboardShortcuts({
-    canPaste: hasClipboardData && canWriteToCurrentFolder,
+    canPaste:
+      hasClipboardData &&
+      canWriteToCurrentFolder &&
+      flag('drive.move-in-shared-drive.enabled'),
     client,
     items: sharedDriveResult?.included || [],
     sharingContext,
-    allowCut: canWriteToCurrentFolder,
+    allowCut:
+      canWriteToCurrentFolder && flag('drive.move-in-shared-drive.enabled'),
     allowCopy: false,
     pushModal,
     popModal,
