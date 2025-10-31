@@ -16,11 +16,13 @@ const FileIconMime = ({ file, size = 32, isEncrypted = false }) => {
   if (
     isDir &&
     flag('drive.folder-personalization.enabled') &&
-    file.metadata?.decorations?.color
+    (file.metadata?.decorations?.color || file.metadata?.decorations?.icon)
   ) {
     return (
       <CustomizedIcon
         selectedColor={file.metadata.decorations.color}
+        selectedIcon={file.metadata.decorations.icon}
+        selectedIconColor={file.metadata.decorations.icon_color}
         size={size}
       />
     )

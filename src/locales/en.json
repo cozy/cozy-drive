@@ -711,6 +711,14 @@
     "description": "Choose a specific color for your folder",
     "cancel": "Cancel",
     "apply": "Apply",
-    "error": "An error occurred, please try again."
+    "error": "An error occurred, please try again.",
+    "tabs": {
+      "colors": "Colors",
+      "icons": "Icons"
+    },
+    "iconPicker": {
+      "recents": "Recents",
+      "chooseCustomIcon": "Choose a custom icon"
+    }
   }
 }

@@ -184,6 +184,14 @@
     "description": "為您的資料夾選擇特定顏色",
     "cancel": "取消",
     "apply": "套用",
-    "error": "發生錯誤，請重試。"
+    "error": "發生錯誤，請重試。",
+    "tabs": {
+      "colors": "顏色",
+      "icons": "圖示"
+    },
+    "iconPicker": {
+      "recents": "最近使用",
+      "chooseCustomIcon": "選擇自訂圖示"
+    }
   }
 }
