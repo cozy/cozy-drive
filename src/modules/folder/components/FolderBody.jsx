@@ -77,8 +77,7 @@ const FolderBody = ({
   const { viewType, switchView } = useViewSwitcherContext()
 
   const changeSortOrder = useCallback(
-    (folderId_legacy, attribute, order) =>
-      setSortOrder({ sortAttribute: attribute, sortOrder: order }),
+    (folderId_legacy, attribute, order) => setSortOrder({ attribute, order }),
     [setSortOrder]
   )
 

@@ -130,6 +130,11 @@ export const TrashFolderView = () => {
             canSort
             extraColumns={extraColumns}
             canUpload={false}
+            orderProps={{
+              sortOrder,
+              setOrder: setSortOrder,
+              isSettingsLoaded
+            }}
           />
         )}
         <Outlet />
