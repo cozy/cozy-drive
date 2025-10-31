@@ -1,6 +1,8 @@
 import React from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 
+import flag from 'cozy-flags'
+
 import { LoaderModal } from '@/components/LoaderModal'
 import useDisplayedFolder from '@/hooks/useDisplayedFolder'
 import MoveModal from '@/modules/move/MoveModal'
@@ -36,7 +38,7 @@ const MoveSharedDriveFilesView = () => {
         entries={entries}
         onClose={onClose}
         showNextcloudFolder={showNextcloudFolder}
-        showSharedDriveFolder={true}
+        showSharedDriveFolder={flag('drive.move-in-shared-drive.enabled')}
         driveId={displayedFolder.driveId}
       />
     )

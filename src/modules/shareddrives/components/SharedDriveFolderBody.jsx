@@ -14,6 +14,7 @@ import { useModalContext } from '@/lib/ModalContext'
 import { download, infos, versions, rename, trash, hr } from '@/modules/actions'
 import { moveTo } from '@/modules/actions/components/moveTo'
 import { FolderBody } from '@/modules/folder/components/FolderBody'
+import flag from 'cozy-flags'
 
 const SharedDriveFolderBody = ({
   folderId,
@@ -45,7 +46,7 @@ const SharedDriveFolderBody = ({
     hasWriteAccess: canWriteToCurrentFolder,
     byDocId,
     dispatch,
-    canMove: true,
+    canMove: flag('drive.move-in-shared-drive.enabled'),
     navigate,
     showAlert,
     pushModal,
