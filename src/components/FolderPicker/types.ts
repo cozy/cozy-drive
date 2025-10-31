@@ -1,6 +1,15 @@
 import { IOCozyFile, NextcloudFile } from 'cozy-client/types/types'
 
-export type File = IOCozyFile | NextcloudFile
+export type File = (IOCozyFile | NextcloudFile) & {
+  cozyMetadata?: {
+    createdOn?: string
+  }
+  attributes?: {
+    cozyMetadata?: {
+      createdOn?: string
+    }
+  }
+}
 
 export interface FolderPickerEntry {
   _id?: string
@@ -11,4 +20,5 @@ export interface FolderPickerEntry {
   dir_id?: string
   class?: string
   path?: string
+  driveId?: string
 }
