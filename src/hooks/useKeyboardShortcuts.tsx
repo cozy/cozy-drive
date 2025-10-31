@@ -8,7 +8,7 @@ import flag from 'cozy-flags'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { isEditableTarget, normalizeKey } from './helpers'
+import { shouldBlockKeyboardShortcuts, normalizeKey } from './helpers'
 
 import { isMacOS } from '@/components/pushClient'
 import { SHARED_DRIVES_DIR_ID } from '@/constants/config'
@@ -17,8 +17,8 @@ import {
   OPERATION_CUT
 } from '@/contexts/ClipboardProvider'
 import { useDisplayedFolder } from '@/hooks'
-import { startRenamingAsync } from '@/modules/drive/rename'
 import DeleteConfirm from '@/modules/drive/DeleteConfirm'
+import { startRenamingAsync } from '@/modules/drive/rename'
 import { useNextcloudCurrentFolder } from '@/modules/nextcloud/hooks/useNextcloudCurrentFolder'
 import { handlePasteOperation } from '@/modules/paste'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
@@ -30,6 +30,7 @@ interface UseKeyboardShortcutsProps {
   items?: IOCozyFile[]
   sharingContext?: unknown
   allowCopy?: boolean
+  allowCut?: boolean
   isNextCloudFolder?: boolean
   pushModal?: (modal: React.ReactElement) => void
   popModal?: () => void
@@ -43,6 +44,7 @@ export const useKeyboardShortcuts = ({
   items = [],
   sharingContext = null,
   allowCopy = true,
+  allowCut = true,
   isNextCloudFolder = false,
   pushModal,
   popModal,
@@ -116,6 +118,14 @@ export const useKeyboardShortcuts = ({
   const handleCut = useCallback(() => {
     if (!selectedItems.length) return
 
+    if (!allowCut) {
+      showAlert({
+        message: t('alert.cut_not_allowed'),
+        severity: 'secondary'
+      })
+      return
+    }
+
     const parentFolderIds = selectedItems.map(item => item.dir_id)
 
     if (parentFolderIds.includes(SHARED_DRIVES_DIR_ID)) {
@@ -126,14 +136,26 @@ export const useKeyboardShortcuts = ({
       return
     }
 
-    cutFiles(selectedItems, new Set(parentFolderIds))
+    cutFiles(
+      selectedItems,
+      new Set(parentFolderIds),
+      currentFolder as IOCozyFile
+    )
     const message =
       selectedItems.length === 1
         ? t('alert.item_cut')
         : t('alert.items_cut', { count: selectedItems.length })
     showAlert({ message, severity: 'success' })
     clearSelection()
-  }, [selectedItems, cutFiles, showAlert, t, clearSelection])
+  }, [
+    selectedItems,
+    allowCut,
+    currentFolder,
+    cutFiles,
+    t,
+    showAlert,
+    clearSelection
+  ])
 
   const handlePaste = useCallback(async () => {
     if (!hasClipboardData || !client || !currentFolder) return
@@ -163,6 +185,7 @@ export const useKeyboardShortcuts = ({
         client,
         clipboardData.files,
         clipboardData.operation,
+        clipboardData.sourceDirectory,
         currentFolder,
         {
           showAlert,
@@ -257,7 +280,7 @@ export const useKeyboardShortcuts = ({
       }
 
     const handleKeyDown = (event: KeyboardEvent): void => {
-      if (!event.target || isEditableTarget(event.target)) return
+      if (!event.target || shouldBlockKeyboardShortcuts(event.target)) return
 
       const combo = normalizeKey(event, isApple)
       const handler = shortcuts[combo]

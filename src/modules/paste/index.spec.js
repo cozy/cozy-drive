@@ -26,7 +26,7 @@ const { resolveNameConflictsForCut } = require('./utils')
 const { hasOneOfEntriesShared } = require('../move/helpers')
 
 describe('handlePasteOperation', () => {
-  let mockClient, mockFiles, mockTargetFolder, mockOptions
+  let mockClient, mockFiles, mockTargetFolder, mockSourceDirectory, mockOptions
 
   beforeEach(() => {
     mockClient = {
@@ -59,6 +59,12 @@ describe('handlePasteOperation', () => {
       path: '/Target Folder'
     }
 
+    mockSourceDirectory = {
+      _id: 'source-folder',
+      name: 'Source Folder',
+      path: '/Source Folder'
+    }
+
     mockOptions = {
       showAlert: jest.fn(),
       t: jest.fn(key => key),
@@ -81,6 +87,7 @@ describe('handlePasteOperation', () => {
         mockClient,
         mockFiles,
         'copy',
+        null, // sourceDirectory
         mockTargetFolder,
         mockOptions
       )
@@ -116,6 +123,7 @@ describe('handlePasteOperation', () => {
         mockClient,
         mockFiles,
         'copy',
+        null, // sourceDirectory
         mockTargetFolder,
         mockOptions
       )
@@ -130,6 +138,7 @@ describe('handlePasteOperation', () => {
         mockClient,
         mockFiles,
         'cut',
+        mockSourceDirectory,
         mockTargetFolder,
         mockOptions
       )
@@ -144,12 +153,14 @@ describe('handlePasteOperation', () => {
       expect(move).toHaveBeenCalledWith(
         mockClient,
         mockFiles[0],
-        mockTargetFolder
+        mockTargetFolder,
+        { force: false }
       )
       expect(move).toHaveBeenCalledWith(
         mockClient,
         mockFiles[1],
-        mockTargetFolder
+        mockTargetFolder,
+        { force: false }
       )
 
       expect(result).toEqual([
@@ -190,6 +201,7 @@ describe('handlePasteOperation', () => {
         mockClient,
         mockFiles,
         'cut',
+        mockSourceDirectory,
         mockTargetFolder,
         mockOptions
       )
@@ -198,12 +210,14 @@ describe('handlePasteOperation', () => {
       expect(move).toHaveBeenCalledWith(
         mockClient,
         resolvedFiles[0],
-        mockTargetFolder
+        mockTargetFolder,
+        { force: false }
       )
       expect(move).toHaveBeenCalledWith(
         mockClient,
         resolvedFiles[1],
-        mockTargetFolder
+        mockTargetFolder,
+        { force: false }
       )
     })
   })
@@ -223,6 +237,7 @@ describe('handlePasteOperation', () => {
         mockClient,
         mockFiles,
         'cut',
+        mockSourceDirectory,
         mockTargetFolder,
         mockOptions
       )
@@ -241,6 +256,7 @@ describe('handlePasteOperation', () => {
         mockClient,
         mockFiles,
         'cut',
+        mockSourceDirectory,
         mockTargetFolder,
         mockOptions
       )
@@ -267,6 +283,7 @@ describe('handlePasteOperation', () => {
         mockClient,
         nextcloudFiles,
         'copy',
+        null, // sourceDirectory
         mockTargetFolder,
         mockOptions
       )
@@ -285,6 +302,7 @@ describe('handlePasteOperation', () => {
         mockClient,
         [],
         'copy',
+        null, // sourceDirectory
         mockTargetFolder,
         mockOptions
       )
@@ -300,6 +318,7 @@ describe('handlePasteOperation', () => {
           mockClient,
           null,
           'copy',
+          null, // sourceDirectory
           mockTargetFolder,
           mockOptions
         )
@@ -313,6 +332,7 @@ describe('handlePasteOperation', () => {
         mockClient,
         mockFiles,
         'invalid-operation',
+        null, // sourceDirectory
         mockTargetFolder,
         mockOptions
       )
@@ -328,7 +348,8 @@ describe('handlePasteOperation', () => {
         mockClient,
         mockFiles,
         'copy',
-        null,
+        null, // sourceDirectory
+        null, // targetFolder
         mockOptions
       )
 
@@ -346,6 +367,7 @@ describe('handlePasteOperation', () => {
         mockClient,
         mockFiles,
         'copy',
+        null, // sourceDirectory
         mockTargetFolder
       )
 
@@ -378,6 +400,7 @@ describe('handlePasteOperation', () => {
         mockClient,
         mixedFiles,
         'copy',
+        null, // sourceDirectory
         mockTargetFolder,
         mockOptions
       )

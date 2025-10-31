@@ -337,7 +337,8 @@
     "paste_same_folder_skipped": "Cannot move items to the same folder they are already in.",
     "paste_not_allowed": "You cannot paste into this folder",
     "cannot_move_shared_drive": "You cannot move shared drive folder",
-    "cannot_copy_shared_drive": "You cannot copy shared drive folder"
+    "cannot_copy_shared_drive": "You cannot copy shared drive folder",
+    "cut_not_allowed": "Cut operation is not allowed in this view"
   },
   "upload": {
     "label": "Upload",
