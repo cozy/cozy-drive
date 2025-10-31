@@ -10,23 +10,9 @@ import Paper from 'cozy-ui/transpiled/react/Paper'
 import Popper from 'cozy-ui/transpiled/react/Popper'
 
 import { getIcon } from './IconIndex'
+import { ICON_COLORS } from './constants'
 
 import styles from '@/styles/folder-customizer.styl'
-
-export const ICON_COLORS = [
-  '#2c2c2c',
-  '#9aa0a6',
-  '#e0e0e0',
-  '#8d5e3c',
-  '#ffb300',
-  '#66e49a',
-  '#00a6ff',
-  '#1976d2',
-  '#e53935',
-  '#f48fb1',
-  '#ab47bc',
-  '#6a1b9a'
-]
 
 export const IconColorPicker = ({
   anchorEl,

@@ -11,18 +11,20 @@ import Typography from 'cozy-ui/transpiled/react/Typography'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
-import { IconColorPicker, ICON_COLORS } from './IconColorPicker'
+import { IconColorPicker } from './IconColorPicker'
 import { getIcon, getIconList } from './IconIndex'
 import { NoneIcon } from './NoneIcon'
+import {
+  ICON_COLORS,
+  NB_COLUMNS_MOBILE,
+  NB_COLUMNS_DESKTOP,
+  CELL_HEIGHT_MOBILE,
+  CELL_HEIGHT_DESKTOP,
+  ICON_SIZE_MOBILE,
+  ICON_SIZE_DESKTOP
+} from './constants'
 
 import { useRecentIcons } from '@/hooks'
-
-const NB_COLUMNS_MOBILE = 6
-const NB_COLUMNS_DESKTOP = 8
-const CELL_HEIGHT_MOBILE = 56
-const CELL_HEIGHT_DESKTOP = 42
-const ICON_SIZE_MOBILE = 20
-const ICON_SIZE_DESKTOP = 18
 
 /**
  * IconPicker component - displays a grid of icons and allows the user to select one
