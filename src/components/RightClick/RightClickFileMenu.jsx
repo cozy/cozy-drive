@@ -6,7 +6,14 @@ import { useBreakpoints } from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useRightClick } from '@/components/RightClick/RightClickProvider'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 
-const RightClickFileMenu = ({ doc, actions, disabled, children, ...props }) => {
+const RightClickFileMenu = ({
+  doc,
+  actions,
+  disabled,
+  children,
+  prefixMenuId,
+  ...props
+}) => {
   const { position, isOpen, onOpen, onClose } = useRightClick()
   const { isDesktop } = useBreakpoints()
   const { selectedItems, isItemSelected } = useSelectionContext()
@@ -28,12 +35,14 @@ const RightClickFileMenu = ({ doc, actions, disabled, children, ...props }) => {
           ? React.cloneElement(child, {
               ...props,
               onContextMenu: ev => {
-                onOpen(ev, `FileMenu-${doc._id}`)
+                onOpen(ev, `${prefixMenuId ?? 'FileMenu'}-${doc._id}}`)
+                ev.preventDefault()
+                ev.stopPropagation()
               }
             })
           : null
       )}
-      {isOpen(`FileMenu-${doc._id}`) && (
+      {isOpen(`${prefixMenuId ?? 'FileMenu'}-${doc._id}}`) && (
         <ActionsMenu
           open
           docs={isItemSelected(doc._id) ? selectedItems : [doc]}
