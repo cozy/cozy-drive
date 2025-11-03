@@ -24,10 +24,7 @@ import HomeIcon from '@/modules/views/OnlyOffice/Toolbar/HomeIcon'
 import HomeLinker from '@/modules/views/OnlyOffice/Toolbar/HomeLinker'
 import Separator from '@/modules/views/OnlyOffice/Toolbar/Separator'
 import Sharing from '@/modules/views/OnlyOffice/Toolbar/Sharing'
-import {
-  isOfficeEditingEnabled,
-  officeDefaultMode
-} from '@/modules/views/OnlyOffice/helpers'
+import { isOfficeEditingEnabled } from '@/modules/views/OnlyOffice/helpers'
 import { buildFileOrFolderByIdQuery, buildFileWhereByIdQuery } from '@/queries'
 
 const Toolbar = ({ sharingInfos }) => {
@@ -84,19 +81,16 @@ const Toolbar = ({ sharingInfos }) => {
       isSharingShortcutCreated
     }
   )
-  const showPublicEditButton =
-    isPublic &&
-    !isMobile &&
+  const canEdit =
     isEditorReady &&
     !isReadOnly &&
     !isTrashed &&
     isOfficeEditingEnabled(isDesktop)
 
+  const showPublicEditButton = isPublic && !isMobile && canEdit
+
   const showSharingLinkButton =
     isPublic && !isMobile && isShareNotAdded && !isCozyToCozySharingSynced
-
-  const showEditButton =
-    officeDefaultMode(isDesktop, isMobile) === 'edit' || showPublicEditButton
 
   return (
     <>
@@ -125,7 +119,7 @@ const Toolbar = ({ sharingInfos }) => {
           variant={showPublicEditButton ? 'secondary' : 'primary'}
         />
       )}
-      {showEditButton && <EditButton />}
+      {showPublicEditButton && <EditButton />}
 
       {isPublic && !isCozyToCozySharingSynced && (
         <PublicToolbarMoreMenu files={[file]} actions={actions} />
@@ -134,7 +128,7 @@ const Toolbar = ({ sharingInfos }) => {
       {!isPublic && isEditorReady && (
         <>
           <Sharing file={file} />
-          {showEditButton ? <EditButton /> : null}
+          {canEdit && <EditButton />}
         </>
       )}
     </>
