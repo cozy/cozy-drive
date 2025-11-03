@@ -67,6 +67,7 @@
     "items_pasted": "%{count}개 항목이 이동되었습니다",
     "copy_files_only": "폴더는 복사할 수 없습니다",
     "copy_not_allowed": "이 보기에서는 복사 작업이 허용되지 않습니다.",
+    "cut_not_allowed": "이 보기에서는 잘라내기 작업이 허용되지 않습니다.",
     "paste_error": "파일 붙여넣기 중 오류가 발생했습니다",
     "paste_failed": "파일 붙여넣기에 실패했습니다",
     "paste_sharing_error": "공유 제한으로 인해 파일을 붙여넣을 수 없습니다. 대신 이동 작업을 사용하십시오.",

@@ -80,6 +80,7 @@
     "items_pasted": "%{count}个项目已移动",
     "copy_files_only": "无法复制文件夹",
     "copy_not_allowed": "此视图中不允许复制操作。",
+    "cut_not_allowed": "此视图中不允许剪切操作。",
     "paste_error": "粘贴文件时出错",
     "paste_failed": "粘贴文件失败",
     "paste_sharing_error": "由于共享限制，无法粘贴文件。请改用移动操作。",

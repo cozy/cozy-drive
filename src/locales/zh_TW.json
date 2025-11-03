@@ -166,6 +166,7 @@
     "items_pasted": "%{count}個項目已移動",
     "copy_files_only": "無法複製資料夾",
     "copy_not_allowed": "此檢視中不允許複製操作。",
+    "cut_not_allowed": "此檢視中不允許剪下操作。",
     "paste_error": "貼上檔案時發生錯誤",
     "paste_failed": "貼上檔案失敗",
     "paste_sharing_error": "由於共享限制，無法貼上檔案。請改用移動操作。",
