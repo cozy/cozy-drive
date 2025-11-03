@@ -27,6 +27,7 @@ import FolderViewBody from '../Folder/FolderViewBody'
 import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
 import FolderViewHeader from '../Folder/FolderViewHeader'
 import OldFolderViewBreadcrumb from '../Folder/OldFolderViewBreadcrumb'
+import FolderViewBodyVz from '../Folder/virtualized/FolderViewBody'
 
 import useHead from '@/components/useHead'
 import { ROOT_DIR_ID } from '@/constants/config'
@@ -35,6 +36,7 @@ import {
   useDisplayedFolder,
   useParentFolder
 } from '@/hooks'
+import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts'
 import { FabContext } from '@/lib/FabProvider'
 import { ModalStack, useModalContext } from '@/lib/ModalContext'
 import { ModalManager } from '@/lib/react-cozy-helpers'
@@ -105,6 +107,16 @@ const PublicFolderView = () => {
 
   const filesResult = usePublicFilesQuery(currentFolderId)
   const files = filesResult.data
+
+  useKeyboardShortcuts({
+    onPaste: () => {},
+    canPaste: false,
+    client,
+    items: filesResult.data,
+    sharingContext: null,
+    allowCopy: false,
+    allowCut: false
+  })
 
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
     isMobile,
@@ -221,16 +233,28 @@ const PublicFolderView = () => {
               </>
             )}
           </FolderViewHeader>
-          <FolderViewBody
-            actions={actions}
-            queryResults={[filesResult]}
-            canSort={false}
-            currentFolderId={currentFolderId}
-            refreshFolderContent={refreshFolderContent}
-            canUpload={hasWritePermissions}
-            extraColumns={extraColumns}
-            isPublic={true}
-          />
+          {flag('drive.virtualization.enabled') && !isMobile ? (
+            <FolderViewBodyVz
+              actions={actions}
+              queryResults={[filesResult]}
+              currentFolderId={currentFolderId}
+              displayedFolder={displayedFolder}
+              extraColumns={extraColumns}
+              canDrag
+              canUpload={hasWritePermissions}
+            />
+          ) : (
+            <FolderViewBody
+              actions={actions}
+              queryResults={[filesResult]}
+              canSort={false}
+              currentFolderId={currentFolderId}
+              refreshFolderContent={refreshFolderContent}
+              canUpload={hasWritePermissions}
+              extraColumns={extraColumns}
+              isPublic={true}
+            />
+          )}
           {isFabDisplayed && (
             <AddMenuProvider
               componentsProps={{
