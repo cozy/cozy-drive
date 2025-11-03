@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { isDirectory } from 'cozy-client/dist/models/file'
-import { QuotaPaywall } from 'cozy-ui/transpiled/react/Paywall'
+import { QuotaPaywall } from 'cozy-ui-plus/dist/Paywall'
 
 import { ROOT_DIR_ID, TRASH_DIR_ID } from '@/constants/config'
 import { MAX_PAYLOAD_SIZE_IN_GB } from '@/constants/config'

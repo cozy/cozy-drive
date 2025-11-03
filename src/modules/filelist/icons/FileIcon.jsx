@@ -1,6 +1,6 @@
 import React from 'react'
 
-import FileImageLoader from 'cozy-ui/transpiled/react/FileImageLoader'
+import FileImageLoader from 'cozy-ui-plus/dist/FileImageLoader'
 
 import styles from '@/styles/filelist.styl'
 

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
+import { fetchBlobFileById, isFile } from 'cozy-client/dist/models/file'
 import { useWebviewIntent } from 'cozy-intent'
 import { useVaultClient } from 'cozy-keys-lib'
 import {
@@ -91,6 +92,8 @@ export const useMoreMenuActions = file => {
       openSharingLinkDisplayed: isCozySharing,
       syncSharingLink,
       isMobile,
+      fetchBlobFileById,
+      isFile,
       addSharingLink,
       driveId: file.driveId
     }
