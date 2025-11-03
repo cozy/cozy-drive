@@ -92,6 +92,7 @@
     "items_pasted": "%{count} items zijn verplaatst",
     "copy_files_only": "Mappen kunnen niet worden gekopieerd",
     "copy_not_allowed": "Kopieerbewerking is niet toegestaan in deze weergave.",
+    "cut_not_allowed": "Knipbewerking is niet toegestaan in deze weergave.",
     "paste_error": "Er is een fout opgetreden bij het plakken van bestanden",
     "paste_failed": "Plakken van bestanden mislukt",
     "paste_sharing_error": "Kan bestanden niet plakken vanwege deelbeperkingen. Gebruik in plaats daarvan de actie Verplaatsen.",

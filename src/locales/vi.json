@@ -319,6 +319,7 @@
     "items_pasted": "%{count} mục đã được di chuyển",
     "copy_files_only": "Không thể sao chép thư mục",
     "copy_not_allowed": "Thao tác sao chép không được phép trong chế độ xem này.",
+    "cut_not_allowed": "Thao tác cắt không được phép trong chế độ xem này.",
     "paste_error": "Đã xảy ra lỗi khi dán tệp",
     "paste_failed": "Dán tệp thất bại",
     "paste_sharing_error": "Không thể dán tệp do hạn chế chia sẻ. Vui lòng sử dụng hành động Di chuyển thay thế.",

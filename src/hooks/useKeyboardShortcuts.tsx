@@ -17,8 +17,8 @@ import {
   OPERATION_CUT
 } from '@/contexts/ClipboardProvider'
 import { useDisplayedFolder } from '@/hooks'
-import { startRenamingAsync } from '@/modules/drive/rename'
 import DeleteConfirm from '@/modules/drive/DeleteConfirm'
+import { startRenamingAsync } from '@/modules/drive/rename'
 import { useNextcloudCurrentFolder } from '@/modules/nextcloud/hooks/useNextcloudCurrentFolder'
 import { handlePasteOperation } from '@/modules/paste'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
@@ -30,6 +30,7 @@ interface UseKeyboardShortcutsProps {
   items?: IOCozyFile[]
   sharingContext?: unknown
   allowCopy?: boolean
+  allowCut?: boolean
   isNextCloudFolder?: boolean
   pushModal?: (modal: React.ReactElement) => void
   popModal?: () => void
@@ -43,6 +44,7 @@ export const useKeyboardShortcuts = ({
   items = [],
   sharingContext = null,
   allowCopy = true,
+  allowCut = true,
   isNextCloudFolder = false,
   pushModal,
   popModal,
@@ -116,6 +118,14 @@ export const useKeyboardShortcuts = ({
   const handleCut = useCallback(() => {
     if (!selectedItems.length) return
 
+    if (!allowCut) {
+      showAlert({
+        message: t('alert.cut_not_allowed'),
+        severity: 'secondary'
+      })
+      return
+    }
+
     const parentFolderIds = selectedItems.map(item => item.dir_id)
 
     if (parentFolderIds.includes(SHARED_DRIVES_DIR_ID)) {
@@ -133,7 +143,7 @@ export const useKeyboardShortcuts = ({
         : t('alert.items_cut', { count: selectedItems.length })
     showAlert({ message, severity: 'success' })
     clearSelection()
-  }, [selectedItems, cutFiles, showAlert, t, clearSelection])
+  }, [selectedItems, allowCut, cutFiles, showAlert, t, clearSelection])
 
   const handlePaste = useCallback(async () => {
     if (!hasClipboardData || !client || !currentFolder) return
