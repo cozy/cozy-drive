@@ -1,4 +1,6 @@
 import React, { Fragment } from 'react'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
 import { createStore } from 'redux'
@@ -88,11 +90,13 @@ const AppLike = ({
                                     modalContextValue || mockModalContextValue
                                   }
                                 >
-                                  <FabProvider>
-                                    <RightClickProvider>
-                                      <Layout>{children}</Layout>
-                                    </RightClickProvider>
-                                  </FabProvider>
+                                  <DndProvider backend={HTML5Backend}>
+                                    <FabProvider>
+                                      <RightClickProvider>
+                                        <Layout>{children}</Layout>
+                                      </RightClickProvider>
+                                    </FabProvider>
+                                  </DndProvider>
                                 </ModalContext.Provider>
                               </ClipboardProvider>
                             </PushBannerProvider>
