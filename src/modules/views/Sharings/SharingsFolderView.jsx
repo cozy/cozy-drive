@@ -9,9 +9,11 @@ import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
+import flag from 'cozy-flags'
 
 import FolderView from '../Folder/FolderView'
 import FolderViewBody from '../Folder/FolderViewBody'
+import FolderViewBodyVz from '@/modules/views/Folder/virtualized/FolderViewBody'
 import FolderViewBreadcrumb from '../Folder/FolderViewBreadcrumb'
 import FolderViewHeader from '../Folder/FolderViewHeader'
 
@@ -70,7 +72,8 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
     currentFolderId
   })
 
-  const [sortOrder] = useFolderSort(currentFolderId)
+  const [sortOrder, setSortOrder, isSettingsLoaded] =
+    useFolderSort(currentFolderId)
 
   const folderQuery = buildDriveQuery({
     currentFolderId,
@@ -86,6 +89,8 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
   })
   const foldersResult = useQuery(folderQuery.definition, folderQuery.options)
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
+
+  const allResults = [foldersResult, filesResult]
 
   const hasWrite = hasWriteAccess(currentFolderId)
 
@@ -145,13 +150,30 @@ const SharingsFolderView = ({ sharedDocumentIds }) => {
           )}
           <Toolbar canUpload={hasWrite} canCreateFolder={hasWrite} />
         </FolderViewHeader>
-        <FolderViewBody
-          actions={actions}
-          queryResults={[foldersResult, filesResult]}
-          canSort
-          extraColumns={extraColumns}
-          currentFolderId={currentFolderId}
-        />
+        {flag('drive.virtualization.enabled') && !isMobile ? (
+          <FolderViewBodyVz
+            actions={actions}
+            queryResults={allResults}
+            currentFolderId={currentFolderId}
+            displayedFolder={displayedFolder}
+            extraColumns={extraColumns}
+            canDrag
+            canUpload={hasWrite}
+            orderProps={{
+              sortOrder,
+              setOrder: setSortOrder,
+              isSettingsLoaded
+            }}
+          />
+        ) : (
+          <FolderViewBody
+            actions={actions}
+            queryResults={allResults}
+            canSort
+            extraColumns={extraColumns}
+            currentFolderId={currentFolderId}
+          />
+        )}
         <Outlet />
       </Dropzone>
     </FolderView>
