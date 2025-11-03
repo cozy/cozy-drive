@@ -55,6 +55,7 @@ import Main from '@/modules/layout/Main'
 import PublicToolbar from '@/modules/public/PublicToolbar'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 import Dropzone from '@/modules/upload/Dropzone'
+import DropzoneDnD from '@/modules/upload/DropzoneDnD'
 
 const getBreadcrumbPath = (t, displayedFolder, parentFolder) =>
   uniqBy(
@@ -199,13 +200,16 @@ const PublicFolderView = () => {
 
   const isAddToMyCozyFabDisplayed = isMobile && isPreview && isShareNotAdded
 
+  const DropzoneComp =
+    flag('drive.virtualization.enabled') && !isMobile ? DropzoneDnD : Dropzone
+
   return (
     <Main isPublic={true}>
       <ModalStack />
       <ModalManager />
       {isSharingBannerPluginDisplayed && <SharingBannerPlugin />}
       <Content className={isMobile ? '' : 'u-ml-1 u-pt-1'}>
-        <Dropzone
+        <DropzoneComp
           disabled={!hasWritePermissions}
           displayedFolder={displayedFolder}
           refreshFolderContent={refreshFolderContent}
@@ -278,7 +282,7 @@ const PublicFolderView = () => {
           {isAddToMyCozyFabDisplayed && (
             <OpenSharingLinkFabButton link={sharingInfos.addSharingLink} />
           )}
-        </Dropzone>
+        </DropzoneComp>
         <Outlet />
       </Content>
     </Main>
