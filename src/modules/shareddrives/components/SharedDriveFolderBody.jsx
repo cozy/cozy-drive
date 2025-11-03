@@ -12,6 +12,7 @@ import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
 import { useModalContext } from '@/lib/ModalContext'
 import { download, infos, versions, rename, trash, hr } from '@/modules/actions'
+import { duplicateTo } from '@/modules/actions/components/duplicateTo'
 import { FolderBody } from '@/modules/folder/components/FolderBody'
 
 const SharedDriveFolderBody = ({
@@ -51,7 +52,7 @@ const SharedDriveFolderBody = ({
     refresh
   }
   const actions = makeActions(
-    [download, hr, rename, infos, hr, versions, hr, trash],
+    [download, hr, rename, duplicateTo, infos, hr, versions, hr, trash],
     actionsOptions
   )
 

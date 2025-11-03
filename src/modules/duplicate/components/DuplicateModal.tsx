@@ -2,7 +2,6 @@ import React, { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
-import { copy } from 'cozy-client/dist/models/file'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -12,19 +11,23 @@ import { File, FolderPickerEntry } from '@/components/FolderPicker/types'
 import { ROOT_DIR_ID } from '@/constants/config'
 import { useCancelable } from '@/modules/move/hooks/useCancelable'
 import { computeNextcloudFolderQueryId } from '@/modules/nextcloud/helpers'
+import { buildCopyApi } from '@/modules/paste'
 
 interface DuplicateModalProps {
   entries: FolderPickerEntry[]
   currentFolder: File
   onClose: () => void | Promise<void>
   showNextcloudFolder?: boolean
+  showSharedDriveFolder?: boolean
+  driveId?: string
 }
 
 const DuplicateModal: FC<DuplicateModalProps> = ({
   entries,
   currentFolder,
   onClose,
-  showNextcloudFolder
+  showNextcloudFolder,
+  showSharedDriveFolder
 }) => {
   const { t } = useI18n()
   const { showAlert } = useAlert()
@@ -39,7 +42,9 @@ const DuplicateModal: FC<DuplicateModalProps> = ({
       setBusy(true)
       await Promise.all(
         entries.map(async entry => {
-          await registerCancelable(copy(client, entry as Partial<File>, folder))
+          await registerCancelable(
+            buildCopyApi(client, entry, currentFolder, folder)
+          )
         })
       )
 
@@ -88,6 +93,7 @@ const DuplicateModal: FC<DuplicateModalProps> = ({
   return (
     <FolderPicker
       showNextcloudFolder={showNextcloudFolder}
+      showSharedDriveFolder={showSharedDriveFolder}
       currentFolder={currentFolder}
       entries={entries}
       // eslint-disable-next-line @typescript-eslint/no-misused-promises

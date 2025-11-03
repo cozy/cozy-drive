@@ -34,6 +34,20 @@ const SharedDriveFolderView = () => {
 
   const canWriteToCurrentFolder = hasWriteAccess(folderId, driveId)
 
+  const { hasClipboardData } = useClipboardContext()
+
+  useKeyboardShortcuts({
+    canPaste: hasClipboardData && canWriteToCurrentFolder,
+    client,
+    items: sharedDriveResult?.included || [],
+    sharingContext,
+    allowCut: canWriteToCurrentFolder,
+    allowCopy: canWriteToCurrentFolder,
+    pushModal,
+    popModal,
+    refresh
+  })
+
   const DropzoneComp = !isMobile ? DropzoneDnD : Dropzone
 
   return (

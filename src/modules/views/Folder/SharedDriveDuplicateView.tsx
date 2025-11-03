@@ -1,39 +1,32 @@
 import React, { FC } from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 
-import { hasQueryBeenLoaded, useQuery } from 'cozy-client'
-import { IOCozyFile } from 'cozy-client/types/types'
 import flag from 'cozy-flags'
 
 import { LoaderModal } from '@/components/LoaderModal'
 import useDisplayedFolder from '@/hooks/useDisplayedFolder'
 import { DuplicateModal } from '@/modules/duplicate/components/DuplicateModal'
-import { useSharedDrives } from '@/modules/shareddrives/hooks/useSharedDrives'
-import { buildParentsByIdsQuery } from '@/queries'
+import { useQueryMultipleSharedDriveFolders } from '@/modules/shareddrives/hooks/useQueryMultipleSharedDriveFolders'
 
-const FolderDuplicateView: FC = () => {
+const SharedDriveDuplicateView: FC = () => {
   const navigate = useNavigate()
   const { state } = useLocation() as {
     state: { fileIds?: string[] }
   }
   const { displayedFolder } = useDisplayedFolder()
-  const { sharedDrives } = useSharedDrives()
 
   const hasFileIds = state.fileIds != undefined
 
-  const fileQuery = buildParentsByIdsQuery(state.fileIds ?? [])
-  const fileResult = useQuery(fileQuery.definition, {
-    ...fileQuery.options,
-    enabled: hasFileIds
-  }) as {
-    data?: IOCozyFile[] | null
-  }
+  const { sharedDriveResults } = useQueryMultipleSharedDriveFolders({
+    folderIds: state.fileIds ?? [],
+    driveId: displayedFolder?.driveId ?? ''
+  })
 
   if (!hasFileIds) {
     return <Navigate to=".." replace={true} />
   }
 
-  if (hasQueryBeenLoaded(fileResult) && fileResult.data && displayedFolder) {
+  if (sharedDriveResults && displayedFolder) {
     const onClose = (): void => {
       navigate('..', { replace: true })
     }
@@ -41,10 +34,11 @@ const FolderDuplicateView: FC = () => {
     return (
       <DuplicateModal
         showNextcloudFolder={!flag('drive.hide-nextcloud-dev')}
-        showSharedDriveFolder={sharedDrives.length > 0}
+        showSharedDriveFolder={true}
         currentFolder={displayedFolder}
-        entries={fileResult.data}
+        entries={sharedDriveResults}
         onClose={onClose}
+        driveId={displayedFolder.driveId}
       />
     )
   }
@@ -52,4 +46,4 @@ const FolderDuplicateView: FC = () => {
   return <LoaderModal />
 }
 
-export { FolderDuplicateView }
+export { SharedDriveDuplicateView }
