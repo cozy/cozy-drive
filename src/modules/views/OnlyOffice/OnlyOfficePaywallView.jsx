@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { OnlyOfficePaywall } from 'cozy-ui/transpiled/react/Paywall'
+import { OnlyOfficePaywall } from 'cozy-ui-plus/dist/Paywall'
 
 const OnlyOfficePaywallView = ({ isPublic = false }) => {
   const navigate = useNavigate()
