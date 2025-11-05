@@ -243,9 +243,7 @@ const FolderViewBody = ({
                             <RightClickFileMenu
                               key={file._id}
                               doc={file}
-                              actions={actions.filter(
-                                action => !action.selectAllItems
-                              )}
+                              actions={actions}
                             >
                               <File
                                 key={file._id}

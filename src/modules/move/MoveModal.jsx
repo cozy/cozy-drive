@@ -26,7 +26,8 @@ const MoveModal = ({
   onClose,
   currentFolder,
   entries,
-  showNextcloudFolder
+  showNextcloudFolder,
+  onMovingSuccess
 }) => {
   const client = useClient()
   const {
@@ -129,6 +130,8 @@ const MoveModal = ({
       })
 
       if (refreshSharing) refreshSharing()
+
+      onMovingSuccess?.()
     } catch (e) {
       logger.warn(e)
       showAlert({

@@ -89,7 +89,7 @@ const AppRoute = () => (
         >
           <Route path="v/revision" element={<FileHistory />} />
           <Route path="v/share" element={<ShareFileView />} />
-          <Route path="v/move" element={<MoveFilesView />} />
+          <Route path="v/move" element={<MoveFilesView isOpenInViewer />} />
           <Route path="v/duplicate" element={<FolderDuplicateView />} />
         </Route>
         <Route path="file/:fileId/revision" element={<FileHistory />} />
@@ -153,7 +153,7 @@ const AppRoute = () => (
         >
           <Route path="v/revision" element={<FileHistory />} />
           <Route path="v/share" element={<ShareFileView />} />
-          <Route path="v/move" element={<MoveFilesView />} />
+          <Route path="v/move" element={<MoveFilesView isOpenInViewer />} />
           <Route path="v/duplicate" element={<FolderDuplicateView />} />
         </Route>
         <Route path="file/:fileId/revision" element={<FileHistory />} />
@@ -184,7 +184,7 @@ const AppRoute = () => (
           >
             <Route path="v/revision" element={<FileHistory />} />
             <Route path="v/share" element={<ShareFileView />} />
-            <Route path="v/move" element={<MoveFilesView />} />
+            <Route path="v/move" element={<MoveFilesView isOpenInViewer />} />
             <Route path="v/duplicate" element={<FolderDuplicateView />} />
           </Route>
           {/* This route must be a child of SharingsView so the modal opens on top of the sharing view */}

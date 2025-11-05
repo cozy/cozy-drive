@@ -15,9 +15,10 @@ import { useNewItemHighlightContext } from '@/modules/upload/NewItemHighlightPro
 const TableRow = forwardRef(({ item, context, children, ...props }, ref) => {
   const { isItemCut } = useClipboardContext()
   const isCut = isItemCut(item._id)
+  const { actions } = context
 
   return (
-    <RightClickFileMenu doc={item} actions={context.actions} {...props}>
+    <RightClickFileMenu doc={item} actions={actions} {...props}>
       <TableRowDnD
         ref={ref}
         item={item}
