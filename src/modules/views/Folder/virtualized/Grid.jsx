@@ -58,7 +58,7 @@ const Grid = forwardRef(
                 <RightClickFileMenu
                   key={file?._id}
                   doc={file}
-                  actions={actions.filter(action => !action.selectAllItems)}
+                  actions={actions}
                 >
                   <GridFile
                     key={file?._id}
