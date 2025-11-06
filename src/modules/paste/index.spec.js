@@ -137,7 +137,8 @@ describe('handlePasteOperation', () => {
       expect(resolveNameConflictsForCut).toHaveBeenCalledWith(
         mockClient,
         mockFiles,
-        mockTargetFolder
+        mockTargetFolder,
+        undefined
       )
 
       expect(move).toHaveBeenCalledTimes(2)

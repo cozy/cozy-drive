@@ -14,10 +14,12 @@ jest.mock('cozy-client/dist/hooks/useCapabilities', () =>
 )
 
 const mockNavigate = jest.fn()
+const mockUseLocation = jest.fn()
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockNavigate
+  useNavigate: () => mockNavigate,
+  useLocation: () => mockUseLocation()
 }))
 
 jest.mock('cozy-intent', () => ({
@@ -100,6 +102,15 @@ describe('Public View', () => {
     )
   }
 
+  // Set default mock return value for useLocation
+  beforeEach(() => {
+    mockUseLocation.mockReturnValue({
+      pathname: '/folder/123',
+      search: '',
+      state: null
+    })
+  })
+
   const updated_at = '2020-05-14T10:33:31.365224+02:00'
 
   beforeEach(() => {
@@ -163,5 +174,125 @@ describe('Public View', () => {
     expect(
       screen.getByTestId('FolderViewBreadcrumb').getAttribute('data-folder-id')
     ).toEqual('1234')
+  })
+
+  describe('Refresh functionality after move/copy operations', () => {
+    let mockForceRefetch
+
+    beforeEach(() => {
+      mockForceRefetch = jest.fn()
+      usePublicFilesQuery.mockReturnValue({
+        data: generateFileFixtures({
+          nbFiles: 2,
+          path: '/test',
+          dir_id: 'dirIdParent',
+          updated_at: '2020-05-14T10:33:31.365224+02:00'
+        }),
+        fetchStatus: 'loaded',
+        forceRefetch: mockForceRefetch,
+        hasMore: false,
+        fetchMore: jest.fn()
+      })
+
+      // Reset mocks
+      mockNavigate.mockClear()
+      mockUseLocation.mockClear()
+    })
+
+    it('should refresh folder content when navigation state contains refresh=true', async () => {
+      // Given
+      mockUseLocation.mockReturnValue({
+        pathname: '/folder/123',
+        search: '',
+        state: { refresh: true }
+      })
+
+      const { store, client } = setupStoreAndClient()
+      client.plugins.realtime = {
+        subscribe: jest.fn(),
+        unsubscribe: jest.fn()
+      }
+      client.query = jest.fn().mockReturnValue({ data: [] })
+
+      // Mock console methods to suppress logs during test
+      jest.spyOn(console, 'warn').mockImplementation()
+      jest.spyOn(console, 'error').mockImplementation()
+      jest.spyOn(console, 'log').mockImplementation()
+
+      // When - render with navigation state containing refresh signal
+      render(
+        <AppLike client={client} store={store}>
+          <PublicFolderView />
+        </AppLike>
+      )
+
+      // Then - forceRefetch should be called
+      expect(mockForceRefetch).toHaveBeenCalledTimes(1)
+    })
+
+    it('should not refresh folder content when navigation state does not contain refresh signal', async () => {
+      // Given
+      mockUseLocation.mockReturnValue({
+        pathname: '/folder/123',
+        search: '',
+        state: null
+      })
+
+      const { store, client } = setupStoreAndClient()
+      client.plugins.realtime = {
+        subscribe: jest.fn(),
+        unsubscribe: jest.fn()
+      }
+      client.query = jest.fn().mockReturnValue({ data: [] })
+
+      // Mock console methods to suppress logs during test
+      jest.spyOn(console, 'warn').mockImplementation()
+      jest.spyOn(console, 'error').mockImplementation()
+      jest.spyOn(console, 'log').mockImplementation()
+
+      // When - render without refresh signal in navigation state
+      render(
+        <AppLike client={client} store={store}>
+          <PublicFolderView />
+        </AppLike>
+      )
+
+      // Then - forceRefetch should not be called
+      expect(mockForceRefetch).not.toHaveBeenCalled()
+    })
+
+    it('should clear navigation state after refreshing to prevent repeated refreshes', async () => {
+      // Given
+      mockUseLocation.mockReturnValue({
+        pathname: '/folder/123',
+        search: '',
+        state: { refresh: true }
+      })
+
+      const { store, client } = setupStoreAndClient()
+      client.plugins.realtime = {
+        subscribe: jest.fn(),
+        unsubscribe: jest.fn()
+      }
+      client.query = jest.fn().mockReturnValue({ data: [] })
+
+      // Mock console methods to suppress logs during test
+      jest.spyOn(console, 'warn').mockImplementation()
+      jest.spyOn(console, 'error').mockImplementation()
+      jest.spyOn(console, 'log').mockImplementation()
+
+      // When - render with navigation state containing refresh signal
+      render(
+        <AppLike client={client} store={store}>
+          <PublicFolderView />
+        </AppLike>
+      )
+
+      // Then - navigate should be called to clear the state
+      expect(mockNavigate).toHaveBeenCalledWith('/folder/123', {
+        replace: true,
+        state: null
+      })
+    })
   })
 })

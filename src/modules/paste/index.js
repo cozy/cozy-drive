@@ -16,7 +16,7 @@ export const handlePasteOperation = async (
   targetFolder,
   options = {}
 ) => {
-  const { showAlert, t, sharingContext } = options
+  const { showAlert, t, sharingContext, isPublic } = options
   const results = []
 
   // For cut operations, resolve name conflicts first
@@ -25,7 +25,8 @@ export const handlePasteOperation = async (
     processedFiles = await resolveNameConflictsForCut(
       client,
       files,
-      targetFolder
+      targetFolder,
+      isPublic
     )
   }
 

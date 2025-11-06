@@ -31,6 +31,7 @@ import FolderViewBodyVz from '../Folder/virtualized/FolderViewBody'
 
 import useHead from '@/components/useHead'
 import { ROOT_DIR_ID } from '@/constants/config'
+import { useClipboardContext } from '@/contexts/ClipboardProvider'
 import {
   useCurrentFolderId,
   useDisplayedFolder,
@@ -47,6 +48,8 @@ import {
   versions,
   selectAllItems
 } from '@/modules/actions'
+import { duplicateTo } from '@/modules/actions/components/duplicateTo'
+import { moveTo } from '@/modules/actions/components/moveTo'
 import { makeExtraColumnsNamesFromMedia } from '@/modules/certifications'
 import { useExtraColumns } from '@/modules/certifications/useExtraColumns'
 import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
@@ -82,7 +85,7 @@ const mobileExtraColumnsNames = []
 
 const PublicFolderView = () => {
   const navigate = useNavigate()
-  const { pathname } = useLocation()
+  const { pathname, state } = useLocation()
   const client = useClient()
   const { t, lang } = useI18n()
   const { isMobile, isDesktop } = useBreakpoints()
@@ -105,19 +108,10 @@ const PublicFolderView = () => {
       rule.values.includes(currentFolderId)
     )
   useHead()
+  const { hasClipboardData } = useClipboardContext()
 
   const filesResult = usePublicFilesQuery(currentFolderId)
   const files = filesResult.data
-
-  useKeyboardShortcuts({
-    onPaste: () => {},
-    canPaste: false,
-    client,
-    items: filesResult.data,
-    sharingContext: null,
-    allowCopy: false,
-    allowCut: false
-  })
 
   const extraColumnsNames = makeExtraColumnsNamesFromMedia({
     isMobile,
@@ -132,12 +126,40 @@ const PublicFolderView = () => {
     files
   })
 
-  const refreshFolderContent = () => filesResult.forceRefetch() // We don't have enough permissions to rely on the realtime notifications or on a cozy-client query to update the view when something changes, so we relaod the view instead
+  // We don't have enough permissions to rely on the realtime notifications or on a cozy-client query to update the view when something changes, so we relaod the view instead
+  const refreshFolderContent = useCallback(
+    () => filesResult.forceRefetch(),
+    [filesResult]
+  )
 
   const refreshAfterChange = () => {
     refresh()
     refreshFolderContent()
   }
+
+  useKeyboardShortcuts({
+    onPaste: refreshAfterChange,
+    canPaste:
+      hasWritePermissions &&
+      hasClipboardData &&
+      flag('drive.copy-cut-in-public-view.enabled'),
+    client,
+    items: filesResult.data,
+    sharingContext: null,
+    allowCopy:
+      hasWritePermissions && flag('drive.copy-cut-in-public-view.enabled'),
+    allowCut:
+      hasWritePermissions && flag('drive.copy-cut-in-public-view.enabled'),
+    isPublic: true
+  })
+
+  useEffect(() => {
+    if (state?.refresh === true) {
+      refreshFolderContent()
+      // Clear the state to prevent repeated refreshes
+      navigate(pathname, { replace: true, state: null })
+    }
+  }, [state, refreshFolderContent, navigate, pathname])
 
   const actionOptions = {
     client,
@@ -151,15 +173,29 @@ const PublicFolderView = () => {
     showAlert,
     pathname,
     hasWriteAccess: hasWritePermissions,
-    canMove: false,
+    canMove:
+      hasWritePermissions && flag('drive.copy-cut-in-public-view.enabled'),
+    canDuplicate:
+      hasWritePermissions && flag('drive.copy-cut-in-public-view.enabled'),
     isPublic: true,
     isOwner,
     byDocId,
     selectAll: () => toggleSelectAllItems(filesResult.data),
-    isSelectAll
+    isSelectAll,
+    isMobile
   }
   const actions = makeActions(
-    [selectAllItems, download, rename, versions, divider, trash],
+    [
+      selectAllItems,
+      download,
+      moveTo,
+      duplicateTo,
+      divider,
+      rename,
+      versions,
+      divider,
+      trash
+    ],
     actionOptions
   )
 

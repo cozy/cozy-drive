@@ -27,7 +27,8 @@ const MoveModal = ({
   currentFolder,
   entries,
   showNextcloudFolder,
-  onMovingSuccess
+  onMovingSuccess,
+  isPublic
 }) => {
   const client = useClient()
   const {
@@ -66,7 +67,8 @@ const MoveModal = ({
     const areMovedFilesShared = hasOneOfEntriesShared(entries, byDocId)
     const isOriginParentShared = hasSharedParent(entries[0].path)
     const isTargetShared = hasSharedParent(targetPath)
-    const isInsideSameSharedFolder = targetPath.startsWith(sharedParentPath)
+    const isInsideSameSharedFolder =
+      targetPath.startsWith(sharedParentPath) || isPublic
 
     if (isInsideSameSharedFolder) {
       moveEntries(folder)
@@ -97,7 +99,7 @@ const MoveModal = ({
       const trashedFiles = []
       await Promise.all(
         entries.map(async entry => {
-          const force = !sharedPaths.includes(folder.path)
+          const force = !sharedPaths?.includes(folder.path)
           const moveResponse = await registerCancelable(
             move(client, entry, folder, {
               force
@@ -214,7 +216,8 @@ const MoveModal = ({
         entries={entries}
         onConfirm={handleConfirm}
         onClose={onClose}
-        isBusy={isMoveInProgress || !allLoaded}
+        isBusy={isMoveInProgress || (!isPublic && !allLoaded)}
+        isPublic={isPublic}
       />
       {isMovingOutsideSharedFolder ? (
         <MoveOutsideSharedFolderModal

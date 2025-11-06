@@ -382,7 +382,8 @@ describe('useKeyboardShortcuts', () => {
           showAlert: mockShowAlert,
           t: mockT,
           sharingContext: null,
-          showMoveValidationModal: mockShowMoveValidationModal
+          showMoveValidationModal: mockShowMoveValidationModal,
+          isPublic: false
         }
       )
       expect(mockShowAlert).toHaveBeenCalledWith({
