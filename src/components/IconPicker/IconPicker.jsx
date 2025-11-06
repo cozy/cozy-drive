@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Backdrop from 'cozy-ui/transpiled/react/Backdrop'
 import GridList from 'cozy-ui/transpiled/react/GridList'
@@ -37,7 +37,8 @@ export const IconPicker = ({
   selectedIcon,
   onIconSelect,
   selectedIconColor,
-  onIconColorSelect
+  onIconColorSelect,
+  scrollContainerRef
 }) => {
   const { isMobile } = useBreakpoints()
   const { t } = useI18n()
@@ -46,6 +47,22 @@ export const IconPicker = ({
   const [anchorEl, setAnchorEl] = useState(null)
 
   const iconSize = isMobile ? ICON_SIZE_MOBILE : ICON_SIZE_DESKTOP
+
+  // Close color picker when scrolling
+  useEffect(() => {
+    const container = scrollContainerRef?.current
+    if (!anchorEl || !container) return
+
+    const handleScroll = () => {
+      setAnchorEl(null)
+    }
+
+    container.addEventListener('scroll', handleScroll, true)
+
+    return () => {
+      container.removeEventListener('scroll', handleScroll, true)
+    }
+  }, [anchorEl, scrollContainerRef])
 
   const handleIconClick = (event, iconName) => {
     if (onIconColorSelect && iconName !== 'none') {
@@ -145,7 +162,9 @@ export const IconPicker = ({
 
 IconPicker.propTypes = {
   selectedIcon: PropTypes.string,
-  onIconSelect: PropTypes.func.isRequired
+  onIconSelect: PropTypes.func.isRequired,
+  onIconColorSelect: PropTypes.func,
+  scrollContainerRef: PropTypes.shape({ current: PropTypes.any })
 }
 
 IconPicker.displayName = 'IconPicker'
