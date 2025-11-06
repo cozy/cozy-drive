@@ -1,11 +1,9 @@
 import React from 'react'
 
-import foldersvg from 'cozy-ui/assets/icons/ui/folder.svg?raw'
 import Icon from 'cozy-ui/transpiled/react/Icon'
 import IconStack from 'cozy-ui/transpiled/react/IconStack'
-import FolderIcon from 'cozy-ui/transpiled/react/Icons/Files'
 
-import styles from '@/styles/folder-customizer.styl'
+import ColoredFolder from './ColoredFolder'
 
 import { getIcon } from '@/components/IconPicker/IconIndex'
 
@@ -15,34 +13,24 @@ export const CustomizedIcon = ({
   selectedIconColor,
   size
 }) => {
-  const encoded = `url('data:image/svg+xml;utf8,${encodeURIComponent(
-    foldersvg
-  )}')`
-  const maskStyle = {
-    maskImage: encoded,
-    WebkitMaskImage: encoded
-  }
-
+  console.log('CustomizedIcon selectedColor', selectedColor)
   return (
     <div>
       <IconStack
         offset={{ vertical: '3%' }}
         backgroundIcon={
           <div
-            className={`${styles.iconContainer} u-pos-relative u-dib`}
+            className="u-pos-relative u-dib"
             style={{
-              ['--folder-color']: selectedColor,
               width: size,
               height: size
             }}
           >
-            <Icon icon={FolderIcon} size={size || 32} />
-            {maskStyle && (
-              <div
-                className={`${styles.iconOverlay} u-pos-absolute u-top-0 u-left-0 u-w-100 u-h-100`}
-                style={maskStyle}
-              />
-            )}
+            <ColoredFolder
+              color={selectedColor}
+              width={size || 32}
+              height={size || 32}
+            />
           </div>
         }
         foregroundIcon={
