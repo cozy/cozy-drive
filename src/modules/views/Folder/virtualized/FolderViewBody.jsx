@@ -22,6 +22,7 @@ const FolderViewBody = ({
   canUpload = true,
   canDrag,
   withFilePath = false,
+  refreshFolderContent = null,
   orderProps = {
     sortOrder: {},
     setOrder: () => {},
@@ -112,7 +113,11 @@ const FolderViewBody = ({
   if (isEmpty) {
     if (IsAddingFolder) {
       return (
-        <AddFolderWrapper columns={columns} currentFolderId={currentFolderId} />
+        <AddFolderWrapper
+          columns={columns}
+          currentFolderId={currentFolderId}
+          refreshFolderContent={refreshFolderContent}
+        />
       )
     }
 
@@ -139,6 +144,7 @@ const FolderViewBody = ({
         sortOrder,
         setOrder
       }}
+      refreshFolderContent={refreshFolderContent}
     />
   )
 }

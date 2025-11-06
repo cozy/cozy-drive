@@ -245,7 +245,8 @@ const MoveModal = ({
 
 MoveModal.propTypes = {
   /** List of files or folder to move */
-  entries: PropTypes.array
+  entries: PropTypes.array,
+  onMovingSuccess: PropTypes.func
 }
 
 export { MoveModal }

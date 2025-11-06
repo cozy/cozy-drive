@@ -246,6 +246,7 @@ const PublicFolderView = () => {
               extraColumns={extraColumns}
               canDrag
               canUpload={hasWritePermissions}
+              refreshFolderContent={refreshFolderContent}
             />
           ) : (
             <FolderViewBody
