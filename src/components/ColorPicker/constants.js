@@ -21,8 +21,7 @@ export const COLORS = [
   '#bfa9ff',
   '#fba0b8',
   '#e694e0',
-  '#e375cd',
-  '#dbcac9'
+  '#e375cd'
 ]
 
 export const NB_COLUMNS_MOBILE = 6
