@@ -30,6 +30,7 @@ interface FolderPickerProps {
   slotProps?: FolderPickerSlotProps
   showNextcloudFolder?: boolean
   canPickEntriesParentFolder?: boolean
+  isPublic?: boolean
 }
 
 const useStyles = makeStyles({
@@ -53,7 +54,8 @@ const FolderPicker: React.FC<FolderPickerProps> = ({
   canCreateFolder = true,
   slotProps,
   showNextcloudFolder = false,
-  canPickEntriesParentFolder = false
+  canPickEntriesParentFolder = false,
+  isPublic = false
 }) => {
   const [folder, setFolder] = useState<File>(currentFolder)
 
@@ -101,6 +103,7 @@ const FolderPicker: React.FC<FolderPickerProps> = ({
           isFolderCreationDisplayed={isFolderCreationDisplayed}
           hideFolderCreation={hideFolderCreation}
           showNextcloudFolder={showNextcloudFolder}
+          isPublic={isPublic}
         />
       }
       actions={

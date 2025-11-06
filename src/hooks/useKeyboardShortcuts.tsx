@@ -32,6 +32,7 @@ interface UseKeyboardShortcutsProps {
   allowCopy?: boolean
   allowCut?: boolean
   isNextCloudFolder?: boolean
+  isPublic?: boolean
   pushModal?: (modal: React.ReactElement) => void
   popModal?: () => void
   refresh?: () => void
@@ -46,6 +47,7 @@ export const useKeyboardShortcuts = ({
   allowCopy = true,
   allowCut = true,
   isNextCloudFolder = false,
+  isPublic = false,
   pushModal,
   popModal,
   refresh
@@ -178,7 +180,8 @@ export const useKeyboardShortcuts = ({
           showAlert,
           t,
           sharingContext,
-          showMoveValidationModal
+          showMoveValidationModal,
+          isPublic
         }
       )
 
@@ -211,16 +214,19 @@ export const useKeyboardShortcuts = ({
     }
   }, [
     hasClipboardData,
-    canPaste,
     client,
     currentFolder,
-    clipboardData,
+    canPaste,
+    clipboardData.operation,
+    clipboardData.sourceFolderIds,
+    clipboardData.files,
     showAlert,
     t,
     sharingContext,
     showMoveValidationModal,
-    clearClipboard,
-    onPaste
+    isPublic,
+    onPaste,
+    clearClipboard
   ])
 
   const handleSelectAll = useCallback(() => {

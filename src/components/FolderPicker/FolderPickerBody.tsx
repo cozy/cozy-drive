@@ -2,6 +2,7 @@ import React from 'react'
 
 import { FolderPickerContentCozy } from '@/components/FolderPicker/FolderPickerContentCozy'
 import { FolderPickerContentNextcloud } from '@/components/FolderPicker/FolderPickerContentNextcloud'
+import { FolderPickerContentPublic } from '@/components/FolderPicker/FolderPickerContentPublic'
 import { File, FolderPickerEntry } from '@/components/FolderPicker/types'
 
 interface FolderPickerBodyProps {
@@ -11,6 +12,7 @@ interface FolderPickerBodyProps {
   isFolderCreationDisplayed: boolean
   hideFolderCreation: () => void
   showNextcloudFolder?: boolean
+  isPublic?: boolean
 }
 
 const FolderPickerBody: React.FC<FolderPickerBodyProps> = ({
@@ -19,7 +21,8 @@ const FolderPickerBody: React.FC<FolderPickerBodyProps> = ({
   navigateTo,
   isFolderCreationDisplayed,
   hideFolderCreation,
-  showNextcloudFolder
+  showNextcloudFolder,
+  isPublic
 }) => {
   if (folder._type === 'io.cozy.remote.nextcloud.files') {
     return (
@@ -27,6 +30,19 @@ const FolderPickerBody: React.FC<FolderPickerBodyProps> = ({
         folder={folder}
         entries={entries}
         navigateTo={navigateTo}
+      />
+    )
+  }
+
+  if (isPublic) {
+    return (
+      <FolderPickerContentPublic
+        folder={folder}
+        isFolderCreationDisplayed={isFolderCreationDisplayed}
+        hideFolderCreation={hideFolderCreation}
+        entries={entries}
+        navigateTo={navigateTo}
+        showNextcloudFolder={showNextcloudFolder}
       />
     )
   }

@@ -60,11 +60,23 @@ export const generateUniqueNameWithSuffix = (
  * Gets all existing items in a target folder to check for conflicts
  * @param {Object} client - The cozy client
  * @param {Object} targetFolder - The target folder object
+ * @param {boolean} [targetFolder] - Wherether using in public view or not
  * @returns {Promise<Set<string>>} - Set of existing item names
  */
-export const getExistingItems = async (client, targetFolder) => {
+export const getExistingItems = async (
+  client,
+  targetFolder,
+  isPublic = false
+) => {
   if (!targetFolder || !targetFolder._id) {
     throw new Error('Invalid targetFolder: missing _id')
+  }
+
+  if (isPublic) {
+    const { included } = await client
+      .collection('io.cozy.files')
+      .statById(targetFolder._id)
+    return new Set(included?.map(item => item.name))
   }
 
   const query = Q('io.cozy.files')
@@ -84,18 +96,20 @@ export const getExistingItems = async (client, targetFolder) => {
  * @param {Object} client - The cozy client
  * @param {Array} files - Array of files/folders to be moved
  * @param {Object} targetFolder - The target folder object
+ * * @param {boolean} [targetFolder] - Wherether using in public view or not
  * @returns {Promise<Array>} - Array of files with resolved names
  */
 export const resolveNameConflictsForCut = async (
   client,
   files,
-  targetFolder
+  targetFolder,
+  isPublic = false
 ) => {
   if (!Array.isArray(files)) {
     throw new Error('files must be an array')
   }
 
-  const existingNames = await getExistingItems(client, targetFolder)
+  const existingNames = await getExistingItems(client, targetFolder, isPublic)
 
   const resolvedFiles = files.map(file => {
     const isFileItem = isFile(file)
