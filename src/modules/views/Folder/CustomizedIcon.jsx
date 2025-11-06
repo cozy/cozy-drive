@@ -26,7 +26,7 @@ export const CustomizedIcon = ({
   return (
     <div>
       <IconStack
-        offset={{ vertical: `${size / 20}px` }}
+        offset={{ vertical: '3%' }}
         backgroundIcon={
           <div
             className={`${styles.iconContainer} u-pos-relative u-dib`}
@@ -49,7 +49,7 @@ export const CustomizedIcon = ({
           <Icon
             icon={getIcon(selectedIcon)}
             color={selectedIconColor}
-            size={size / 3 || 16}
+            size={size / 2.5 || 16}
           />
         }
       />
