@@ -72,6 +72,7 @@ const PublicToolbarByLink = ({
                   className="u-mr-half"
                   label={t('upload.label')}
                   displayedFolder={displayedFolder}
+                  onUploaded={refreshFolderContent}
                 />
                 <AddButton className="u-mr-half" isPublic />
               </>

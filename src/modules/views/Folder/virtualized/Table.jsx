@@ -57,7 +57,8 @@ const Table = forwardRef(
         sortOrder: {},
         setOrder: () => {}
       },
-      onInteractWithFile
+      onInteractWithFile,
+      refreshFolderContent
     },
     ref
   ) => {
@@ -112,6 +113,7 @@ const Table = forwardRef(
                   withFilePath={withFilePath}
                   actions={actions}
                   onInteractWithFile={onInteractWithFile}
+                  refreshFolderContent={refreshFolderContent}
                 />
               )
             }

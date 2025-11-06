@@ -80,6 +80,7 @@ const Grid = forwardRef(
                 <AddFolder
                   vaultClient={vaultClient}
                   currentFolderId={currentFolderId}
+                  refreshFolderContent={refreshFolderContent}
                 />
               )}
             </>

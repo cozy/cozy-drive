@@ -38,7 +38,8 @@ const FolderViewBodyContent = ({
   orderProps = {
     sortOrder: {},
     setOrder: () => {}
-  }
+  },
+  refreshFolderContent
 }) => {
   const folderViewRef = useRef()
 
@@ -126,6 +127,7 @@ const FolderViewBodyContent = ({
           ref={folderViewRef}
           onInteractWithFile={onInteractWithFile}
           orderProps={orderProps}
+          refreshFolderContent={refreshFolderContent}
         />
       ) : (
         <Grid
@@ -150,6 +152,7 @@ const FolderViewBodyContent = ({
           }}
           onInteractWithFile={onInteractWithFile}
           ref={folderViewRef}
+          refreshFolderContent={refreshFolderContent}
         />
       )}
     </FolderUnlocker>

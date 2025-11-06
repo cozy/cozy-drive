@@ -34,7 +34,8 @@ const Cell = ({
   currentFolderId,
   withFilePath,
   actions,
-  onInteractWithFile
+  onInteractWithFile,
+  refreshFolderContent
 }) => {
   const { f, t } = useI18n()
   const vaultClient = useVaultClient()
@@ -60,6 +61,7 @@ const Cell = ({
         <AddFolder
           vaultClient={vaultClient}
           currentFolderId={currentFolderId}
+          refreshFolderContent={refreshFolderContent}
         />
       )
     }
@@ -189,7 +191,8 @@ const CellWrapper = ({
   currentFolderId,
   withFilePath,
   actions,
-  onInteractWithFile
+  onInteractWithFile,
+  refreshFolderContent
 }) => {
   return (
     <CellMemo
@@ -200,6 +203,7 @@ const CellWrapper = ({
       withFilePath={withFilePath}
       actions={actions}
       onInteractWithFile={onInteractWithFile}
+      refreshFolderContent={refreshFolderContent}
     />
   )
 }
