@@ -179,7 +179,6 @@ const DumbFolderCustomizer = ({ folder, onClose }) => {
               >
                 <IconPicker
                   selectedIcon={selectedIcon}
-                  selectedIconColor={selectedIconColor}
                   onIconSelect={handleIconSelect}
                   onIconColorSelect={handleIconColorSelect}
                   scrollContainerRef={iconContainerRef}
