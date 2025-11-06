@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 
 import { useClient, useQuery } from 'cozy-client'
 import Backdrop from 'cozy-ui/transpiled/react/Backdrop'
@@ -105,6 +105,7 @@ const DumbFolderCustomizer = ({ folder, onClose }) => {
     }
   }
   const [selectedTab, setSelectedTab] = useState(0)
+  const iconContainerRef = useRef(null)
 
   const handleTabChange = (_, newValue) => {
     setSelectedTab(newValue)
@@ -171,12 +172,17 @@ const DumbFolderCustomizer = ({ folder, onClose }) => {
               </Grid>
             )}
             {tabItems[selectedTab] === 'icons' && (
-              <Grid item className={styles['foldercustomizer-icons-container']}>
+              <Grid
+                item
+                ref={iconContainerRef}
+                className={styles['foldercustomizer-icons-container']}
+              >
                 <IconPicker
                   selectedIcon={selectedIcon}
                   selectedIconColor={selectedIconColor}
                   onIconSelect={handleIconSelect}
                   onIconColorSelect={handleIconColorSelect}
+                  scrollContainerRef={iconContainerRef}
                 />
               </Grid>
             )}
