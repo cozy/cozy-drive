@@ -36,7 +36,6 @@ import { useRecentIcons } from '@/hooks'
 export const IconPicker = ({
   selectedIcon,
   onIconSelect,
-  selectedIconColor,
   onIconColorSelect,
   scrollContainerRef
 }) => {
@@ -138,9 +137,7 @@ export const IconPicker = ({
               <Icon
                 size={iconSize}
                 icon={getIcon(iconName)}
-                color={
-                  selectedIcon === iconName ? selectedIconColor : ICON_COLORS[0]
-                }
+                color={ICON_COLORS[0]}
               />
             </IconButton>
             {selectedIcon === iconName && Boolean(anchorEl) && (
