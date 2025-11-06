@@ -36,7 +36,7 @@ export const IconColorPicker = ({
             {ICON_COLORS.map(color => (
               <GridListTile key={color} className="u-ta-center">
                 <IconButton
-                  className="u-p-half"
+                  className="u-p-0"
                   onClick={() => onPickColor(color)}
                 >
                   <Icon
