@@ -22,7 +22,11 @@ export const NoneIcon = ({ size }) => {
       }}
       aria-hidden
     >
-      <Cross width={iconSize} height={iconSize} color="textSecondary" />
+      <Cross
+        width={iconSize}
+        height={iconSize}
+        fill="var(--secondaryTextColor)"
+      />
     </span>
   )
 }

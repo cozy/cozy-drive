@@ -134,11 +134,7 @@ export const IconPicker = ({
               size={iconSize}
               className={selectedIcon === iconName ? 'u-bg-silver' : ''}
             >
-              <Icon
-                size={iconSize}
-                icon={getIcon(iconName)}
-                color={ICON_COLORS[0]}
-              />
+              <Icon size={iconSize} icon={getIcon(iconName)} />
             </IconButton>
             {selectedIcon === iconName && Boolean(anchorEl) && (
               <IconColorPicker
