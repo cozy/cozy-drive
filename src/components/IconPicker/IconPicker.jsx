@@ -15,7 +15,6 @@ import { IconColorPicker } from './IconColorPicker'
 import { getIcon, getIconList } from './IconIndex'
 import { NoneIcon } from './NoneIcon'
 import {
-  ICON_COLORS,
   NB_COLUMNS_MOBILE,
   NB_COLUMNS_DESKTOP,
   CELL_HEIGHT_MOBILE,
