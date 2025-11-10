@@ -77,7 +77,7 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
   const { allLoaded, refresh, isOwner } = sharingContext
   const { isNativeFileSharingAvailable, shareFilesNative } =
     useNativeFileSharing()
-  const { sharedDrives } = useSharedDrives()
+  const { sharedDrives, isLoaded: sharedDrivesLoaded } = useSharedDrives()
   const dispatch = useDispatch()
   useHead()
   const { showAlert } = useAlert()
@@ -100,7 +100,11 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
   })
 
   const query = useMemo(
-    () => buildSharingsQuery({ ids: sharedDocumentIds, enabled: allLoaded }),
+    () =>
+      buildSharingsQuery({
+        ids: sharedDocumentIds,
+        enabled: allLoaded && sharedDocumentIds?.length > 0
+      }),
     [sharedDocumentIds, allLoaded]
   )
   const result = useQuery(query.definition, query.options)
@@ -112,6 +116,11 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
         []
       return {
         ...result,
+        // If there are no shared documents, we consider the data is loaded by setting fetchStatus to 'loaded' and lastFetch to now.
+        fetchStatus:
+          sharedDocumentIds?.length > 0 ? result.fetchStatus : 'loaded',
+        lastFetch:
+          sharedDocumentIds?.length > 0 ? result.lastFetch : Date.now(),
         data: filteredResultData,
         count: filteredResultData.length
       }
@@ -179,10 +188,20 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
 
     return {
       ...result,
+      fetchStatus:
+        sharedDocumentIds?.length > 0 ? result.fetchStatus : 'loaded',
+      lastFetch: sharedDocumentIds?.length > 0 ? result.lastFetch : Date.now(),
       data: combinedData,
       count: combinedData.length
     }
-  }, [sharedDrives, result, tab, isOwner, isEnabledSharedDrive])
+  }, [
+    isEnabledSharedDrive,
+    sharedDrives,
+    result,
+    tab,
+    sharedDocumentIds?.length,
+    isOwner
+  ])
 
   useKeyboardShortcuts({
     onPaste: () => refresh(),
@@ -247,7 +266,9 @@ export const SharingsView = ({ sharedDocumentIds = [] }) => {
           <Toolbar canUpload={false} canCreateFolder={false} />
         </FolderViewHeader>
         {isEnabledSharedDrive && <SharingTab tab={tab} setTab={setTab} />}
-        {!allLoaded || !hasQueryBeenLoaded(result) ? (
+        {!allLoaded ||
+        !sharedDrivesLoaded ||
+        !hasQueryBeenLoaded(filteredResult) ? (
           <FileListRowsPlaceholder />
         ) : (
           <>
