@@ -1,5 +1,6 @@
 import CozyClient, { Q, QueryDefinition } from 'cozy-client'
 import { QueryOptions } from 'cozy-client/types/types'
+import flag from 'cozy-flags'
 
 import {
   SHARED_DRIVES_DIR_ID,
@@ -41,23 +42,34 @@ export const buildDriveQuery: QueryBuilder<buildDriveQueryParams> = ({
   sortAttribute,
   sortOrder
 }) => ({
-  definition: () =>
-    Q('io.cozy.files')
+  definition: (): QueryDefinition => {
+    const shouldHideSettingsFolder = flag(
+      'home.wallpaper-personalization.enabled'
+    )
+    const partialIndexFilters: {
+      _id: { $nin: string[] }
+      path?: { $nin: string[] }
+    } = {
+      // This is to avoid fetching shared drives
+      // They are hidden clientside
+      _id: {
+        $nin: [TRASH_DIR_ID, 'io.cozy.files.shared-drives-dir']
+      }
+    }
+
+    if (shouldHideSettingsFolder) {
+      partialIndexFilters.path = {
+        $nin: [SETTINGS_DIR_PATH as string]
+      }
+    }
+
+    return Q('io.cozy.files')
       .where({
         dir_id: currentFolderId,
         type,
         [sortAttribute]: { $gt: null }
       })
-      .partialIndex({
-        // This is to avoid fetching shared drives
-        // They are hidden clientside
-        _id: {
-          $nin: [TRASH_DIR_ID, 'io.cozy.files.shared-drives-dir']
-        },
-        path: {
-          $nin: [SETTINGS_DIR_PATH]
-        }
-      })
+      .partialIndex(partialIndexFilters)
       .indexFields(['dir_id', 'type', sortAttribute, 'path'])
       .sortBy([
         { dir_id: sortOrder },
@@ -66,7 +78,8 @@ export const buildDriveQuery: QueryBuilder<buildDriveQueryParams> = ({
         { path: sortOrder }
       ])
       .include(['encryption'])
-      .limitBy(100),
+      .limitBy(100)
+  },
   options: {
     as: formatFolderQueryId(type, currentFolderId, sortAttribute, sortOrder),
     fetchPolicy: defaultFetchPolicy
