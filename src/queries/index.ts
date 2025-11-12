@@ -1,7 +1,11 @@
 import CozyClient, { Q, QueryDefinition } from 'cozy-client'
 import { QueryOptions } from 'cozy-client/types/types'
 
-import { SHARED_DRIVES_DIR_ID, TRASH_DIR_ID } from '@/constants/config'
+import {
+  SHARED_DRIVES_DIR_ID,
+  TRASH_DIR_ID,
+  SETTINGS_DIR_PATH
+} from '@/constants/config'
 import {
   DOCTYPE_FILES_ENCRYPTION,
   DOCTYPE_ALBUMS,
@@ -49,13 +53,17 @@ export const buildDriveQuery: QueryBuilder<buildDriveQueryParams> = ({
         // They are hidden clientside
         _id: {
           $nin: [TRASH_DIR_ID, 'io.cozy.files.shared-drives-dir']
+        },
+        path: {
+          $nin: [SETTINGS_DIR_PATH]
         }
       })
-      .indexFields(['dir_id', 'type', sortAttribute])
+      .indexFields(['dir_id', 'type', sortAttribute, 'path'])
       .sortBy([
         { dir_id: sortOrder },
         { type: sortOrder },
-        { [sortAttribute]: sortOrder }
+        { [sortAttribute]: sortOrder },
+        { path: sortOrder }
       ])
       .include(['encryption'])
       .limitBy(100),
