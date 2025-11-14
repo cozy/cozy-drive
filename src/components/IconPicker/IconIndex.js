@@ -51,8 +51,6 @@ import Cloud from 'cozy-ui/transpiled/react/Icons/Cloud'
 import Cloud2 from 'cozy-ui/transpiled/react/Icons/Cloud2'
 import CloudHappy from 'cozy-ui/transpiled/react/Icons/CloudHappy'
 import CloudPlusOutlined from 'cozy-ui/transpiled/react/Icons/CloudPlusOutlined'
-import CloudRainbow from 'cozy-ui/transpiled/react/Icons/CloudRainbow'
-import CloudSync from 'cozy-ui/transpiled/react/Icons/CloudSync'
 import Cocktail from 'cozy-ui/transpiled/react/Icons/Cocktail'
 import Collect from 'cozy-ui/transpiled/react/Icons/Collect'
 import Comment from 'cozy-ui/transpiled/react/Icons/Comment'
@@ -66,7 +64,6 @@ import Copy from 'cozy-ui/transpiled/react/Icons/Copy'
 import CozyCircle from 'cozy-ui/transpiled/react/Icons/CozyCircle'
 import CozyLaugh from 'cozy-ui/transpiled/react/Icons/CozyLaugh'
 import CozyLock from 'cozy-ui/transpiled/react/Icons/CozyLock'
-import CozyRelease from 'cozy-ui/transpiled/react/Icons/CozyRelease'
 import CozyText from 'cozy-ui/transpiled/react/Icons/CozyText'
 import Credit from 'cozy-ui/transpiled/react/Icons/Credit'
 import CreditCard from 'cozy-ui/transpiled/react/Icons/CreditCard'
@@ -247,7 +244,6 @@ import Subway from 'cozy-ui/transpiled/react/Icons/Subway'
 import Support from 'cozy-ui/transpiled/react/Icons/Support'
 import Swap from 'cozy-ui/transpiled/react/Icons/Swap'
 import Sync from 'cozy-ui/transpiled/react/Icons/Sync'
-import SyncCozy from 'cozy-ui/transpiled/react/Icons/SyncCozy'
 import Tab from 'cozy-ui/transpiled/react/Icons/Tab'
 import Tag from 'cozy-ui/transpiled/react/Icons/Tag'
 import Target from 'cozy-ui/transpiled/react/Icons/Target'
@@ -334,9 +330,7 @@ const icons = {
   Cloud,
   Cloud2,
   CloudHappy,
-  CloudRainbow,
   CloudPlusOutlined,
-  CloudSync,
   Cocktail,
   Collect,
   Comment,
@@ -350,7 +344,6 @@ const icons = {
   CozyCircle,
   CozyLaugh,
   CozyLock,
-  CozyRelease,
   CozyText,
   Credit,
   CreditCard,
@@ -531,7 +524,6 @@ const icons = {
   Support,
   Swap,
   Sync,
-  SyncCozy,
   Tab,
   Tag,
   Target,
