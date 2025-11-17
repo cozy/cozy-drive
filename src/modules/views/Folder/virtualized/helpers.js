@@ -17,7 +17,15 @@ export const makeRows = ({ queryResults, IsAddingFolder, syncingFakeFile }) => {
 }
 
 export const onDrop =
-  ({ client, showAlert, selectAll, registerCancelable, sharedPaths, t }) =>
+  ({
+    client,
+    showAlert,
+    selectAll,
+    registerCancelable,
+    sharedPaths,
+    t,
+    refreshFolderContent
+  }) =>
   async (draggedItems, itemHovered, selectedItems) => {
     if (
       itemHovered.type !== 'directory' ||
@@ -51,6 +59,9 @@ export const onDrop =
           smart_count: draggedItems.length
         })
       })
+      if (refreshFolderContent) {
+        refreshFolderContent()
+      }
     } catch (error) {
       logger.warn(`Error while dragging files:`, error)
       showAlert({

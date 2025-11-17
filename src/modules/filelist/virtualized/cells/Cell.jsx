@@ -113,6 +113,7 @@ const Cell = ({
           withFilePath={withFilePath}
           formattedSize={formattedSize}
           formattedUpdatedAt={formattedUpdatedAt}
+          refreshFolderContent={refreshFolderContent}
           isInSyncFromSharing={isInSyncFromSharing}
         />
       </FileOpener>
