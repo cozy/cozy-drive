@@ -33,7 +33,9 @@ export const onDrop =
     try {
       await Promise.all(
         draggedItems.map(async draggedItem => {
-          const force = !sharedPaths.includes(itemHovered.path)
+          const force =
+            Array.isArray(sharedPaths) &&
+            !sharedPaths.includes(itemHovered.path)
           await registerCancelable(
             move(client, draggedItem, itemHovered, {
               force
