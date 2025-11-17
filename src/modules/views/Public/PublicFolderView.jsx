@@ -142,14 +142,12 @@ const PublicFolderView = () => {
     canPaste:
       hasWritePermissions &&
       hasClipboardData &&
-      flag('drive.copy-cut-in-public-view.enabled'),
+      flag('drive.keyboard-shortcuts.enabled'),
     client,
     items: filesResult.data,
     sharingContext: null,
-    allowCopy:
-      hasWritePermissions && flag('drive.copy-cut-in-public-view.enabled'),
-    allowCut:
-      hasWritePermissions && flag('drive.copy-cut-in-public-view.enabled'),
+    allowCopy: hasWritePermissions && flag('drive.keyboard-shortcuts.enabled'),
+    allowCut: hasWritePermissions && flag('drive.keyboard-shortcuts.enabled'),
     isPublic: true
   })
 
@@ -173,10 +171,9 @@ const PublicFolderView = () => {
     showAlert,
     pathname,
     hasWriteAccess: hasWritePermissions,
-    canMove:
-      hasWritePermissions && flag('drive.copy-cut-in-public-view.enabled'),
+    canMove: hasWritePermissions && flag('drive.keyboard-shortcuts.enabled'),
     canDuplicate:
-      hasWritePermissions && flag('drive.copy-cut-in-public-view.enabled'),
+      hasWritePermissions && flag('drive.keyboard-shortcuts.enabled'),
     isPublic: true,
     isOwner,
     byDocId,
