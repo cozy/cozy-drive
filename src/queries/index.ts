@@ -48,7 +48,7 @@ export const buildDriveQuery: QueryBuilder<buildDriveQueryParams> = ({
     )
     const partialIndexFilters: {
       _id: { $nin: string[] }
-      path?: { $nin: string[] }
+      path?: Record<string, unknown>
     } = {
       // This is to avoid fetching shared drives
       // They are hidden clientside
@@ -59,7 +59,7 @@ export const buildDriveQuery: QueryBuilder<buildDriveQueryParams> = ({
 
     if (shouldHideSettingsFolder) {
       partialIndexFilters.path = {
-        $nin: [SETTINGS_DIR_PATH as string]
+        $or: [{ $exists: false }, { $nin: [SETTINGS_DIR_PATH] }]
       }
     }
 
@@ -70,12 +70,11 @@ export const buildDriveQuery: QueryBuilder<buildDriveQueryParams> = ({
         [sortAttribute]: { $gt: null }
       })
       .partialIndex(partialIndexFilters)
-      .indexFields(['dir_id', 'type', sortAttribute, 'path'])
+      .indexFields(['dir_id', 'type', sortAttribute])
       .sortBy([
         { dir_id: sortOrder },
         { type: sortOrder },
-        { [sortAttribute]: sortOrder },
-        { path: sortOrder }
+        { [sortAttribute]: sortOrder }
       ])
       .include(['encryption'])
       .limitBy(100)
