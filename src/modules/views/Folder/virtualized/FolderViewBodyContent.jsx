@@ -114,7 +114,8 @@ const FolderViewBodyContent = ({
               selectAll,
               registerCancelable,
               sharedPaths,
-              t
+              t,
+              refreshFolderContent
             })
           }}
           fetchMore={fetchMore}
@@ -147,7 +148,8 @@ const FolderViewBodyContent = ({
               selectAll,
               registerCancelable,
               sharedPaths,
-              t
+              t,
+              refreshFolderContent
             })
           }}
           onInteractWithFile={onInteractWithFile}
