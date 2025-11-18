@@ -12,10 +12,7 @@ import {
   useSharingInfos,
   OpenSharingLinkFabButton
 } from 'cozy-sharing'
-import {
-  divider,
-  makeActions
-} from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
+import { makeActions } from 'cozy-ui/transpiled/react/ActionsMenu/Actions'
 import { Content } from 'cozy-ui/transpiled/react/Layout'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
@@ -46,7 +43,8 @@ import {
   trash,
   rename,
   versions,
-  selectAllItems
+  selectAllItems,
+  hr
 } from '@/modules/actions'
 import { duplicateTo } from '@/modules/actions/components/duplicateTo'
 import { moveTo } from '@/modules/actions/components/moveTo'
@@ -187,10 +185,10 @@ const PublicFolderView = () => {
       download,
       moveTo,
       duplicateTo,
-      divider,
+      hr,
       rename,
       versions,
-      divider,
+      hr,
       trash
     ],
     actionOptions
