@@ -112,7 +112,7 @@ export const TrashFolderView = () => {
             actions={actions}
             queryResults={[foldersResult, filesResult]}
             currentFolderId={currentFolderId}
-            withFilePath={true}
+            withFilePath={false}
             extraColumns={extraColumns}
             canUpload={false}
             orderProps={{
@@ -127,6 +127,7 @@ export const TrashFolderView = () => {
             displayedFolder={displayedFolder}
             actions={actions}
             queryResults={[foldersResult, filesResult]}
+            withFilePath={false}
             canSort
             extraColumns={extraColumns}
             canUpload={false}
