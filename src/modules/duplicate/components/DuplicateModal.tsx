@@ -11,7 +11,7 @@ import { File, FolderPickerEntry } from '@/components/FolderPicker/types'
 import { ROOT_DIR_ID } from '@/constants/config'
 import { useCancelable } from '@/modules/move/hooks/useCancelable'
 import { computeNextcloudFolderQueryId } from '@/modules/nextcloud/helpers'
-import { buildCopyApi } from '@/modules/paste'
+import { executeDuplicate } from '@/modules/paste'
 
 interface DuplicateModalProps {
   entries: FolderPickerEntry[]
@@ -44,7 +44,7 @@ const DuplicateModal: FC<DuplicateModalProps> = ({
       await Promise.all(
         entries.map(async entry => {
           await registerCancelable(
-            buildCopyApi(client, entry, currentFolder, folder)
+            executeDuplicate(client, entry as File, currentFolder, folder)
           )
         })
       )

@@ -38,7 +38,6 @@ const SharedDriveDuplicateView: FC = () => {
         currentFolder={displayedFolder}
         entries={sharedDriveResults}
         onClose={onClose}
-        driveId={displayedFolder.driveId}
       />
     )
   }
