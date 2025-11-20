@@ -22,6 +22,20 @@ import { startRenamingAsync } from '@/modules/drive/rename'
 import { useNextcloudCurrentFolder } from '@/modules/nextcloud/hooks/useNextcloudCurrentFolder'
 import { handlePasteOperation } from '@/modules/paste'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
+import { useNewItemHighlightContext } from '@/modules/upload/NewItemHighlightProvider'
+
+// Type for the result returned by copy/move operations from cozy-client
+interface PasteResultFile {
+  data?: IOCozyFile
+  moved?: IOCozyFile
+}
+
+interface PasteOperationResult {
+  success: boolean
+  file: PasteResultFile | IOCozyFile
+  error?: Error
+  operation: string
+}
 
 interface UseKeyboardShortcutsProps {
   onPaste?: (() => void) | null
@@ -76,6 +90,9 @@ export const useKeyboardShortcuts = ({
     hasClipboardData,
     showMoveValidationModal
   } = useClipboardContext()
+  const { addItems } = useNewItemHighlightContext() as {
+    addItems: (items: IOCozyFile[]) => void
+  }
 
   const { displayedFolder } = useDisplayedFolder()
   const currentNextCloudFolder = useNextcloudCurrentFolder()
@@ -183,7 +200,7 @@ export const useKeyboardShortcuts = ({
     }
 
     try {
-      const results = await handlePasteOperation(
+      const results = (await handlePasteOperation(
         client,
         clipboardData.files,
         clipboardData.operation,
@@ -196,7 +213,7 @@ export const useKeyboardShortcuts = ({
           showMoveValidationModal,
           isPublic
         }
-      )
+      )) as PasteOperationResult[]
 
       const successCount = results.filter(r => r.success).length
       const failureCount = results.filter(r => !r.success).length
@@ -207,6 +224,24 @@ export const useKeyboardShortcuts = ({
             ? t('alert.item_pasted')
             : t('alert.items_pasted', { count: successCount })
         showAlert({ message, severity: 'success' })
+
+        const successfulFiles = results
+          .filter(r => r.success)
+          .map(r => {
+            const file = r.file
+            if ('data' in file && file.data) {
+              return file.data
+            }
+            if ('moved' in file && file.moved) {
+              return file.moved
+            }
+            return null
+          })
+          .filter((file): file is IOCozyFile => file !== null)
+
+        if (successfulFiles.length > 0) {
+          addItems(successfulFiles)
+        }
       } else if (failureCount > 0) {
         showAlert({
           message: t('alert.paste_failed'),
@@ -240,7 +275,8 @@ export const useKeyboardShortcuts = ({
     showMoveValidationModal,
     isPublic,
     onPaste,
-    clearClipboard
+    clearClipboard,
+    addItems
   ])
 
   const handleSelectAll = useCallback(() => {

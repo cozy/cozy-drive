@@ -16,7 +16,6 @@ const NewItemHighlightProvider = ({ children }) => {
     }
 
     const lastItem = [...newItems].reverse().find(item => item && item._id)
-
     if (!lastItem) return
 
     setHighlightedItems([lastItem])
