@@ -1,8 +1,9 @@
-import React, { forwardRef } from 'react'
+import React, { forwardRef, useMemo, useRef, useState } from 'react'
 
-import VirtuosoTableDnd from 'cozy-ui/transpiled/react/Table/Virtualized/Dnd'
+import VirtualizedTable from 'cozy-ui/transpiled/react/Table/Virtualized'
 import TableRowDnD from 'cozy-ui/transpiled/react/Table/Virtualized/Dnd/TableRow'
 import virtuosoComponentsDnd from 'cozy-ui/transpiled/react/Table/Virtualized/Dnd/virtuosoComponents'
+import CustomDragLayer from 'cozy-ui/transpiled/react/utils/Dnd/CustomDrag/CustomDragLayer'
 
 import { secondarySort } from '../helpers'
 
@@ -11,6 +12,7 @@ import { useClipboardContext } from '@/contexts/ClipboardProvider'
 import Cell from '@/modules/filelist/virtualized/cells/Cell'
 import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 import { useNewItemHighlightContext } from '@/modules/upload/NewItemHighlightProvider'
+import useScrollToHighlightedItem from '@/modules/views/Folder/virtualized/useScrollToHighlightedItem'
 
 const TableRow = forwardRef(({ item, context, children, ...props }, ref) => {
   const { isItemCut } = useClipboardContext()
@@ -64,6 +66,8 @@ const Table = forwardRef(
   ) => {
     const { toggleSelectedItem } = useSelectionContext()
     const { isNew } = useNewItemHighlightContext()
+    const virtuosoRef = useRef(null)
+    const [itemsInDropProcess, setItemsInDropProcess] = useState([])
 
     const { sortOrder, setOrder } = orderProps
 
@@ -79,6 +83,20 @@ const Table = forwardRef(
       })
     }
 
+    const tableContext = useMemo(
+      () => ({
+        actions,
+        selectedItems,
+        isSelectedItem,
+        dragProps,
+        itemsInDropProcess,
+        setItemsInDropProcess
+      }),
+      [actions, selectedItems, isSelectedItem, dragProps, itemsInDropProcess]
+    )
+
+    useScrollToHighlightedItem(virtuosoRef, rows)
+
     return (
       <div
         className="u-h-100"
@@ -86,12 +104,13 @@ const Table = forwardRef(
         tabIndex={0}
         style={{ outline: 'none' }}
       >
-        <VirtuosoTableDnd
-          context={{ actions, selectedItems, isSelectedItem }}
+        {dragProps?.dragId && <CustomDragLayer dragId={dragProps.dragId} />}
+        <VirtualizedTable
+          ref={virtuosoRef}
+          context={tableContext}
           components={components}
           rows={rows}
           columns={columns}
-          dragProps={dragProps}
           endReached={fetchMore}
           defaultOrder={{
             direction: sortOrder.order,

@@ -29,19 +29,22 @@ jest.mock('cozy-intent', () => ({
 
 jest.mock('cozy-flags', () => () => true)
 
-// Mock VirtuosoTableDnd to render items in tests
-jest.mock('cozy-ui/transpiled/react/Table/Virtualized/Dnd', () =>
-  // eslint-disable-next-line react/display-name
-  ({ rows }) => (
-    <div data-testid="virtuoso-table-dnd">
-      {rows?.map((row, index) => (
-        <div key={row._id || index} className="fil-content-row">
-          <span>{row.name}</span>
-        </div>
-      ))}
-    </div>
-  )
-)
+// Mock VirtualizedTable to render items in tests
+jest.mock('cozy-ui/transpiled/react/Table/Virtualized', () => {
+  const React = require('react')
+  return React.forwardRef(({ rows, data }, ref) => {
+    const items = data || rows || []
+    return (
+      <div data-testid="virtuoso-table-dnd" ref={ref}>
+        {items?.map((row, index) => (
+          <div key={row._id || row.id || index} className="fil-content-row">
+            <span>{row.name}</span>
+          </div>
+        ))}
+      </div>
+    )
+  })
+})
 
 // Remove the FolderViewBody mock - let the real component run with mocked VirtuosoTableDnd
 
