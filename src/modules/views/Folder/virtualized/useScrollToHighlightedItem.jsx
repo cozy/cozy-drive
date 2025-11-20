@@ -42,11 +42,14 @@ const useScrollToHighlightedItem = (virtuosoRef, items) => {
       }
     }
 
-    const targetItem = [...highlightedItems]
-      .reverse()
-      .find(item => item?._id && indexById.has(item._id))
+    const targetItem = highlightedItems[0]
 
-    if (!targetItem || targetItem._id === lastScrolledIdRef.current) return
+    if (
+      !targetItem?._id ||
+      !indexById.has(targetItem._id) ||
+      targetItem._id === lastScrolledIdRef.current
+    )
+      return
 
     const targetIndex = indexById.get(targetItem._id)
     const virtuosoHandle = virtuosoRef?.current

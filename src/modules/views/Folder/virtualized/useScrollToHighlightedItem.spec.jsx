@@ -40,8 +40,8 @@ describe('useScrollToHighlightedItem', () => {
     }))
   }
 
-  it('scrolls to the latest highlighted item present in the dataset', async () => {
-    setHighlightedItems([{ _id: 'missing' }, { _id: 'match' }])
+  it('scrolls to the highlighted item present in the dataset', async () => {
+    setHighlightedItems([{ _id: 'match' }])
     const items = [{ _id: 'foo' }, { _id: 'match' }, { _id: 'bar' }]
 
     const { waitFor } = renderHook(() =>
