@@ -84,8 +84,11 @@ const DuplicateModal: FC<DuplicateModalProps> = ({
    * This is only a proxy to Nextcloud queries so we don't have real-time or mutations updates
    */
   const refreshNextcloudQueries = (folder: File): void => {
+    const sourceAccount = folder.cozyMetadata?.sourceAccount
+    if (!sourceAccount || !folder.path) return
+
     const queryId = computeNextcloudFolderQueryId({
-      sourceAccount: folder.cozyMetadata?.sourceAccount,
+      sourceAccount,
       path: folder.path
     })
     void client?.resetQuery(queryId)

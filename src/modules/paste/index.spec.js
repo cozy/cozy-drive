@@ -360,7 +360,7 @@ describe('handlePasteOperation', () => {
       expect(result[1].success).toBe(false)
       expect(result[0].error).toBeInstanceOf(Error)
       expect(result[1].error).toBeInstanceOf(Error)
-      expect(copy).toHaveBeenCalledTimes(2)
+      expect(copy).not.toHaveBeenCalled()
     })
 
     it('should handle missing options', async () => {
