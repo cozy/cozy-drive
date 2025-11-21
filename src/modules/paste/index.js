@@ -86,6 +86,36 @@ export const executeMove = async (
 }
 
 /**
+ * Executes a duplicate operation for files or folders.
+ * Automatically detects if it's a shared drive operation and uses the appropriate API.
+ *
+ * @param {CozyClient} client - The cozy client instance
+ * @param {import('@/components/FolderPicker/types').File} entry - The file or folder to move
+ * @param {import('@/components/FolderPicker/types').File} sourceDirectory - The source directory containing the entry
+ * @param {import('@/components/FolderPicker/types').File} destDirectory - The destination directory
+ * @param {boolean} [force=false] - Whether to force the move operation
+ * @returns {Promise<Object>} The result of the move operation
+ */
+export const executeDuplicate = async (
+  client,
+  entry,
+  sourceDirectory,
+  destDirectory
+) => {
+  const isSharedDriveOperation = entry.driveId || destDirectory.driveId
+  if (isSharedDriveOperation) {
+    return await executeSharedDriveMoveOrCopy(
+      client,
+      entry,
+      sourceDirectory,
+      destDirectory,
+      'copy'
+    )
+  }
+  return await copy(client, entry, destDirectory)
+}
+
+/**
  * Handles paste operations (copy or cut) for multiple files/folders.
  * Processes each file individually and handles validation, conflicts, and sharing permissions.
  *
@@ -137,6 +167,7 @@ export const handlePasteOperation = async (
         const result = await handleDuplicateWithValidation(
           client,
           file,
+          sourceDirectory,
           targetFolder,
           { showAlert, t }
         )
@@ -184,12 +215,18 @@ export const handlePasteOperation = async (
 const handleDuplicateWithValidation = async (
   client,
   file,
+  sourceDirectory,
   targetFolder,
   options = {}
 ) => {
   const { showAlert, t } = options
 
-  const result = await copy(client, file, targetFolder)
+  const result = await executeDuplicate(
+    client,
+    file,
+    sourceDirectory,
+    targetFolder
+  )
 
   const isCopyingInsideNextcloud = targetFolder._type === NEXTCLOUD_FILE_ID
   if (isCopyingInsideNextcloud) {

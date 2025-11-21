@@ -125,14 +125,26 @@ export const useKeyboardShortcuts = ({
       return
     }
 
-    copyFiles(filesToCopy, new Set(parentFolderIds))
+    copyFiles(
+      filesToCopy,
+      new Set(parentFolderIds),
+      currentFolder as IOCozyFile
+    )
     const message =
       filesToCopy.length === 1
         ? t('alert.item_copied')
         : t('alert.items_copied', { count: filesToCopy.length })
     showAlert({ message, severity: 'success' })
     clearSelection()
-  }, [allowCopy, selectedItems, copyFiles, showAlert, t, clearSelection])
+  }, [
+    allowCopy,
+    selectedItems,
+    currentFolder,
+    copyFiles,
+    showAlert,
+    t,
+    clearSelection
+  ])
 
   const handleCut = useCallback(() => {
     if (!selectedItems.length) return

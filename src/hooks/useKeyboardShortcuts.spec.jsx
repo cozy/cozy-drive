@@ -247,7 +247,8 @@ describe('useKeyboardShortcuts', () => {
 
       expect(mockCopyFiles).toHaveBeenCalledWith(
         mockSelectedItems,
-        new Set(['parent-folder-1', 'parent-folder-2'])
+        new Set(['parent-folder-1', 'parent-folder-2']),
+        mockCurrentFolder
       )
       expect(mockShowAlert).toHaveBeenCalledWith({
         message: 'alert.items_copied_2',
@@ -311,7 +312,8 @@ describe('useKeyboardShortcuts', () => {
 
       expect(mockCopyFiles).toHaveBeenCalledWith(
         mockSelectedItems.filter(item => item.type === 'file'),
-        new Set(['parent-folder-1', 'parent-folder-2'])
+        new Set(['parent-folder-1', 'parent-folder-2']),
+        mockCurrentFolder
       )
     })
   })
@@ -761,7 +763,8 @@ describe('useKeyboardShortcuts', () => {
 
       expect(mockCopyFiles).toHaveBeenCalledWith(
         sharedDriveFiles,
-        new Set(['shared-folder-1'])
+        new Set(['shared-folder-1']),
+        sharedDriveFolder
       )
       expect(mockShowAlert).toHaveBeenCalledWith({
         message: 'alert.item_copied',

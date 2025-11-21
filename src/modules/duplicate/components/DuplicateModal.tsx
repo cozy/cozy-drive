@@ -2,7 +2,6 @@ import React, { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useClient } from 'cozy-client'
-import { copy } from 'cozy-client/dist/models/file'
 import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'cozy-ui/transpiled/react/providers/I18n'
 
@@ -12,6 +11,7 @@ import { File, FolderPickerEntry } from '@/components/FolderPicker/types'
 import { ROOT_DIR_ID } from '@/constants/config'
 import { useCancelable } from '@/modules/move/hooks/useCancelable'
 import { computeNextcloudFolderQueryId } from '@/modules/nextcloud/helpers'
+import { executeDuplicate } from '@/modules/paste'
 
 interface DuplicateModalProps {
   entries: FolderPickerEntry[]
@@ -19,6 +19,7 @@ interface DuplicateModalProps {
   onClose: () => void | Promise<void>
   showNextcloudFolder?: boolean
   isPublic?: boolean
+  showSharedDriveFolder?: boolean
 }
 
 const DuplicateModal: FC<DuplicateModalProps> = ({
@@ -26,7 +27,8 @@ const DuplicateModal: FC<DuplicateModalProps> = ({
   currentFolder,
   onClose,
   showNextcloudFolder,
-  isPublic
+  isPublic,
+  showSharedDriveFolder
 }) => {
   const { t } = useI18n()
   const { showAlert } = useAlert()
@@ -41,7 +43,9 @@ const DuplicateModal: FC<DuplicateModalProps> = ({
       setBusy(true)
       await Promise.all(
         entries.map(async entry => {
-          await registerCancelable(copy(client, entry as Partial<File>, folder))
+          await registerCancelable(
+            executeDuplicate(client, entry as File, currentFolder, folder)
+          )
         })
       )
 
@@ -80,8 +84,11 @@ const DuplicateModal: FC<DuplicateModalProps> = ({
    * This is only a proxy to Nextcloud queries so we don't have real-time or mutations updates
    */
   const refreshNextcloudQueries = (folder: File): void => {
+    const sourceAccount = folder.cozyMetadata?.sourceAccount
+    if (!sourceAccount || !folder.path) return
+
     const queryId = computeNextcloudFolderQueryId({
-      sourceAccount: folder.cozyMetadata?.sourceAccount,
+      sourceAccount,
       path: folder.path
     })
     void client?.resetQuery(queryId)
@@ -90,6 +97,7 @@ const DuplicateModal: FC<DuplicateModalProps> = ({
   return (
     <FolderPicker
       showNextcloudFolder={showNextcloudFolder}
+      showSharedDriveFolder={showSharedDriveFolder}
       currentFolder={currentFolder}
       entries={entries}
       // eslint-disable-next-line @typescript-eslint/no-misused-promises

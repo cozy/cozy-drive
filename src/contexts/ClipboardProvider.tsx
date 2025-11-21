@@ -32,7 +32,11 @@ interface ClipboardState {
 
 interface ClipboardContextValue {
   clipboardData: ClipboardState
-  copyFiles: (files: IOCozyFile[], sourceFolderIds?: Set<string>) => void
+  copyFiles: (
+    files: IOCozyFile[],
+    sourceFolderIds?: Set<string>,
+    sourceDirectory?: IOCozyFile
+  ) => void
   cutFiles: (
     files: IOCozyFile[],
     sourceFolderIds?: Set<string>,
@@ -170,10 +174,14 @@ const ClipboardProvider: React.FC<ClipboardProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(clipboardReducer, initialState)
 
   const copyFiles = useCallback(
-    (files: IOCozyFile[], sourceFolderIds?: Set<string>) => {
+    (
+      files: IOCozyFile[],
+      sourceFolderIds?: Set<string>,
+      sourceDirectory?: IOCozyFile
+    ) => {
       dispatch({
         type: COPY_FILES,
-        payload: { files, sourceFolderIds }
+        payload: { files, sourceFolderIds, sourceDirectory }
       })
     },
     []
