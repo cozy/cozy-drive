@@ -42,7 +42,7 @@ const useScrollToHighlightedItem = (virtuosoRef, items) => {
       }
     }
 
-    const targetItem = highlightedItems[0]
+    const targetItem = highlightedItems[highlightedItems.length - 1]
 
     if (
       !targetItem?._id ||
