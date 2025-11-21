@@ -21,6 +21,31 @@ import AddFolder from '@/modules/filelist/AddFolder'
 import { GridFileWithSelection as GridFile } from '@/modules/filelist/virtualized/GridFile'
 import useScrollToHighlightedItem from '@/modules/views/Folder/virtualized/useScrollToHighlightedItem'
 
+const GridItem = forwardRef(({ item, context, ...props }, ref) => {
+  const { componentProps } = context
+  const DefaultItem = virtuosoComponents.Item
+
+  return (
+    <DefaultItem
+      ref={ref}
+      item={item}
+      context={context}
+      {...props}
+      {...componentProps?.Item}
+    />
+  )
+})
+
+GridItem.displayName = 'GridItem'
+
+const GridItemMemo = React.memo(GridItem)
+
+const mergedComponents = {
+  ...virtuosoComponents,
+  List: GridWrapper,
+  Item: GridItemMemo
+}
+
 const Grid = forwardRef(
   (
     {
@@ -50,14 +75,6 @@ const Grid = forwardRef(
         Item: {
           className: cx(styles['fil-content-grid-item'])
         }
-      }),
-      []
-    )
-
-    const mergedComponents = useMemo(
-      () => ({
-        ...virtuosoComponents,
-        List: GridWrapper
       }),
       []
     )

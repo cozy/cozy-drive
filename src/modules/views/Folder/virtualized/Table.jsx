@@ -95,6 +95,31 @@ const Table = forwardRef(
       [actions, selectedItems, isSelectedItem, dragProps, itemsInDropProcess]
     )
 
+    // Memoize componentsProps to avoid recreating the Cell component on every render
+    // This follows Virtuoso's recommendation to not define custom components inline
+    const componentsProps = useMemo(
+      () => ({
+        rowContent: {
+          children: (
+            <Cell
+              currentFolderId={currentFolderId}
+              withFilePath={withFilePath}
+              actions={actions}
+              onInteractWithFile={onInteractWithFile}
+              refreshFolderContent={refreshFolderContent}
+            />
+          )
+        }
+      }),
+      [
+        currentFolderId,
+        withFilePath,
+        actions,
+        onInteractWithFile,
+        refreshFolderContent
+      ]
+    )
+
     useScrollToHighlightedItem(virtuosoRef, rows)
 
     return (
@@ -124,19 +149,7 @@ const Table = forwardRef(
           selectedItems={selectedItems}
           increaseViewportBy={200}
           onSortChange={handleSort}
-          componentsProps={{
-            rowContent: {
-              children: (
-                <Cell
-                  currentFolderId={currentFolderId}
-                  withFilePath={withFilePath}
-                  actions={actions}
-                  onInteractWithFile={onInteractWithFile}
-                  refreshFolderContent={refreshFolderContent}
-                />
-              )
-            }
-          }}
+          componentsProps={componentsProps}
         />
       </div>
     )
