@@ -865,7 +865,8 @@
       "ITEM_NOT_FOUND": "Không tìm thấy tệp đã chọn.",
       "DESTINATION_UNAVAILABLE": "Không thể tải thư mục đích.",
       "SHARING_LINK_FAILED": "Không thể tạo liên kết chia sẻ.",
-      "DOWNLOAD_LINK_FAILED": "Không thể tạo liên kết tải xuống."
+      "DOWNLOAD_LINK_FAILED": "Không thể tạo liên kết tải xuống.",
+      "CONSTRAINT_VIOLATION": "Các mục đã chọn không đáp ứng các điều kiện của thao tác này."
     }
   }
 }

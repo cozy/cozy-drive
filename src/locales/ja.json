@@ -458,5 +458,10 @@
     "accept": "承諾",
     "decline": "辞退",
     "close": "閉じる"
+  },
+  "FilePicker": {
+    "errors": {
+      "CONSTRAINT_VIOLATION": "選択した項目はこの操作の条件を満たしていません。"
+    }
   }
 }

@@ -130,5 +130,10 @@
     "accept": "Akceptuj",
     "decline": "Odrzuć",
     "close": "Zamknij"
+  },
+  "FilePicker": {
+    "errors": {
+      "CONSTRAINT_VIOLATION": "Wybrane elementy nie spełniają wymagań tej czynności."
+    }
   }
 }

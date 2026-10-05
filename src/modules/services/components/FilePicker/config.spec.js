@@ -3,6 +3,59 @@ import { defaultFilePickerConfig } from './constants'
 
 describe('FilePicker config', () => {
   describe('getFilePickerConfig', () => {
+    it('keeps Documents opt-in without changing the historical action defaults', () => {
+      expect(getFilePickerConfig(null).documents).toBe(null)
+      const config = getFilePickerConfig(null, {
+        documents: { accept: ['folder'] }
+      })
+      expect(config.documents).toEqual({ accept: ['folder'] })
+      expect(config.sharingLink).toEqual({ allowFolder: true })
+      expect(config.downloadLink).toEqual({ allowFolder: false })
+      expect(getFilePickerConfig(null, { documents: null }).documents).toBe(
+        null
+      )
+    })
+
+    it('merges intent data over handshake data while ignoring unrelated keys', () => {
+      const config = getFilePickerConfig(
+        {
+          attributes: {
+            data: {
+              multiple: false,
+              documents: null,
+              defaultDirId: 'intent-folder'
+            }
+          }
+        },
+        {
+          multiple: true,
+          documents: {},
+          defaultDirId: 'service-folder',
+          tabs: ['recents'],
+          unknown: true
+        }
+      )
+      expect(config).toEqual(
+        expect.objectContaining({
+          multiple: false,
+          documents: null,
+          defaultDirId: 'intent-folder',
+          tabs: ['recents']
+        })
+      )
+      expect(config).not.toHaveProperty('unknown')
+    })
+
+    it('defaults to Drive alone under restriction without silently replacing explicit tabs', () => {
+      expect(
+        getFilePickerConfig(null, { restrictToDefaultDir: true }).tabs
+      ).toEqual(['drive'])
+      expect(
+        getFilePickerConfig(null, { restrictToDefaultDir: true, tabs: [] }).tabs
+      ).toEqual([])
+      expect(getFilePickerConfig(null, { tabs: null }).tabs).toBe(null)
+    })
+
     it('returns the default config when intent has no data', () => {
       expect(getFilePickerConfig(null)).toBe(defaultFilePickerConfig)
       expect(getFilePickerConfig(undefined)).toBe(defaultFilePickerConfig)
@@ -108,6 +161,40 @@ describe('FilePicker config', () => {
 
       expect(config.sharingLink).toBe(defaultFilePickerConfig.sharingLink)
       expect(config.downloadLink).toBeNull()
+    })
+
+    it('enables documented defaults when actions are set to true', () => {
+      expect(getFilePickerConfig(null, { documents: true }).documents).toEqual(
+        {}
+      )
+      expect(
+        getFilePickerConfig(null, { sharingLink: true }).sharingLink
+      ).toEqual({ allowFolder: true })
+      expect(
+        getFilePickerConfig(null, { downloadLink: true }).downloadLink
+      ).toEqual({ allowFolder: false })
+    })
+
+    it('disables actions when explicitly set to false', () => {
+      expect(
+        getFilePickerConfig(null, { documents: false }).documents
+      ).toBeNull()
+      expect(
+        getFilePickerConfig(null, { sharingLink: false }).sharingLink
+      ).toBeNull()
+      expect(
+        getFilePickerConfig(null, { downloadLink: false }).downloadLink
+      ).toBeNull()
+    })
+
+    it('preserves allowFolder overrides on action objects', () => {
+      const config = getFilePickerConfig(null, {
+        sharingLink: { allowFolder: false },
+        downloadLink: { allowFolder: true }
+      })
+
+      expect(config.sharingLink.allowFolder).toBe(false)
+      expect(config.downloadLink.allowFolder).toBe(true)
     })
 
     it('falls back to defaults for actions the client did not mention', () => {

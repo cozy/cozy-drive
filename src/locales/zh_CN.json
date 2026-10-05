@@ -133,5 +133,10 @@
     "accept": "接受",
     "decline": "拒绝",
     "close": "关闭"
+  },
+  "FilePicker": {
+    "errors": {
+      "CONSTRAINT_VIOLATION": "所选项目不符合此操作的要求。"
+    }
   }
 }
