@@ -5,7 +5,10 @@ import logger from 'cozy-logger'
 
 import IntentHandler from './IntentHandler'
 
-import { buildContentFolderQuery } from '@/components/FilePicker/queries'
+import {
+  buildContentFolderQuery,
+  buildCurrentFolderQuery
+} from '@/components/FilePicker/queries'
 
 const mockClient = { query: jest.fn() }
 const mockCreateService = jest.fn()
@@ -16,9 +19,13 @@ const mockRootFolderOptions = {
   fetchPolicy: jest.fn()
 }
 
-jest.mock('cozy-client', () => ({
-  useClient: () => mockClient
-}))
+jest.mock('cozy-client', () => {
+  const actual = jest.requireActual('cozy-client')
+  return {
+    ...actual,
+    useClient: () => mockClient
+  }
+})
 
 jest.mock('cozy-interapp', () =>
   jest.fn().mockImplementation(() => ({
@@ -28,7 +35,8 @@ jest.mock('cozy-interapp', () =>
 )
 
 jest.mock('@/components/FilePicker/queries', () => ({
-  buildContentFolderQuery: jest.fn()
+  buildContentFolderQuery: jest.fn(),
+  buildCurrentFolderQuery: jest.fn()
 }))
 
 jest.mock('cozy-logger', () => ({
@@ -69,6 +77,10 @@ describe('IntentHandler', () => {
       definition: () => mockRootFolderDefinition,
       options: mockRootFolderOptions
     })
+    buildCurrentFolderQuery.mockReturnValue({
+      definition: () => ({ doctype: 'io.cozy.files' }),
+      options: {}
+    })
   })
 
   afterEach(() => {
@@ -103,7 +115,7 @@ describe('IntentHandler', () => {
     }
   )
 
-  it('prefetches the root folder while the intent handshake is pending', async () => {
+  it('waits for the final handshake configuration before prefetching the initial folder', async () => {
     const handshake = makeDeferredPromise()
     const rootFolderPrefetch = makeDeferredPromise()
     mockCreateService.mockReturnValue(handshake.promise)
@@ -114,15 +126,9 @@ describe('IntentHandler', () => {
     )
 
     expect(mockCreateService).toHaveBeenCalledWith('intent-id', window)
-    await waitFor(() =>
-      expect(buildContentFolderQuery).toHaveBeenCalledWith(
-        'io.cozy.files.root-dir'
-      )
-    )
-    expect(mockClient.query).toHaveBeenCalledWith(
-      mockRootFolderDefinition,
-      mockRootFolderOptions
-    )
+    await act(async () => {})
+    expect(buildContentFolderQuery).not.toHaveBeenCalled()
+    expect(queryByTestId('picker')).toBe(null)
 
     const service = {
       getIntent: () => ({
@@ -134,6 +140,9 @@ describe('IntentHandler', () => {
     })
 
     expect(queryByTestId('picker')).toBe(null)
+    expect(buildContentFolderQuery).toHaveBeenCalledWith(
+      'io.cozy.files.root-dir'
+    )
 
     rootFolderPrefetch.resolve({ data: [] })
 
@@ -147,6 +156,37 @@ describe('IntentHandler', () => {
       getIntent: () => ({
         attributes: { action: 'PICK', type: 'io.cozy.files' }
       })
+    })
+
+    const { getByTestId } = render(<IntentHandler intentId="intent-id" />)
+
+    await waitFor(() => expect(getByTestId('picker')).toBeInTheDocument())
+  })
+
+  it('shows the picker when a restricted starting folder prefetch fails', async () => {
+    mockClient.fetchQueryAndGetFromState = jest.fn().mockResolvedValue({
+      data: {
+        _id: 'folder-1',
+        _type: 'io.cozy.files',
+        name: 'Folder',
+        type: 'directory'
+      }
+    })
+    mockClient.query.mockRejectedValue(new Error('prefetch failed'))
+    mockCreateService.mockResolvedValue({
+      getIntent: () => ({
+        attributes: {
+          action: 'PICK',
+          type: 'io.cozy.files',
+          data: {
+            defaultDirId: 'folder-1',
+            restrictToDefaultDir: true,
+            tabs: ['drive']
+          }
+        }
+      }),
+      getData: () => ({}),
+      throw: jest.fn()
     })
 
     const { getByTestId } = render(<IntentHandler intentId="intent-id" />)

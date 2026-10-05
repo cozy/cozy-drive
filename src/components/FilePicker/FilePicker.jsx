@@ -69,6 +69,7 @@ function useCurrentFolderResolver({
     FILE_PICKER_RECENTS_ROOT_ID,
     FILE_PICKER_SHARINGS_ROOT_ID
   ].includes(location.folderId)
+  // Parent folder updates can rerender the picker; do not report them again.
   const lastReportedState = useRef(null)
   const query = useMemo(
     () => buildCurrentFolderQuery(location.folderId, location.driveId),
@@ -97,6 +98,7 @@ function useCurrentFolderResolver({
       : queriedFolder
   }, [hasMatchingFolder, location.driveId, queriedFolder, status])
 
+  // Report resolved folders after commit, never while rendering a parent update.
   useEffect(() => {
     if (!enabled) return
 
@@ -129,13 +131,16 @@ const FilePickerController = ({
   isNavigationDisabled,
   beforeItems,
   filterReceivedShares,
-  additionalItems
+  additionalItems,
+  restrictedRoot,
+  canNavigateTo
 }) => {
   const { clearSelection } = useSelectionContext()
   const [sortOrder] = useFolderSort(ROOT_DIR_ID)
   const initialSection = availableSections.includes(initialLocation.section)
     ? initialLocation.section
     : availableSections[0]
+  // Keep the folder and pending section transition until the new content settles.
   const [location, setLocation] = useState({
     section: initialSection,
     folderId:
@@ -148,10 +153,16 @@ const FilePickerController = ({
         : null
   })
   const [isSectionChanging, setIsSectionChanging] = useState(false)
+  // A slower ancestry check must not override a more recent navigation request.
+  const navigationRequestRef = useRef(0)
 
   const navigateTo = useCallback(
-    folder => {
+    async folder => {
       if (isNavigationDisabled) return
+      const request = ++navigationRequestRef.current
+      if (restrictedRoot && !canNavigateTo) return
+      if (canNavigateTo && !(await canNavigateTo(folder))) return
+      if (request !== navigationRequestRef.current) return
       const folderId = folder.id ?? folder._id
       const nextLocation =
         folderId === FILE_PICKER_SHARINGS_ROOT_ID
@@ -172,12 +183,20 @@ const FilePickerController = ({
       onLocationChange?.(nextLocation)
       clearSelection()
     },
-    [clearSelection, isNavigationDisabled, location, onLocationChange]
+    [
+      canNavigateTo,
+      clearSelection,
+      isNavigationDisabled,
+      location,
+      onLocationChange,
+      restrictedRoot
+    ]
   )
 
   const handleSectionChange = section => {
     if (
       isNavigationDisabled ||
+      restrictedRoot ||
       !availableSections.includes(section) ||
       section === location.section
     ) {
@@ -205,6 +224,7 @@ const FilePickerController = ({
     setIsSectionChanging(false)
   }, [])
 
+  // Section bodies remount; readiness belongs to the whole picker lifetime.
   const readyNotifiedRef = useRef(false)
   const handleReadyToUse = useCallback(() => {
     if (readyNotifiedRef.current) return
@@ -241,7 +261,12 @@ const FilePickerController = ({
           error={error}
           onReadyToUse={handleReadyToUse}
           onFileDoubleClick={onFileDoubleClick}
-          isItemIncluded={isItemIncluded}
+          restrictedRoot={restrictedRoot}
+          isItemIncluded={item =>
+            isItemIncluded(item) &&
+            (!restrictedRoot ||
+              (!item.driveId && item.dir_id === location.folderId))
+          }
           isItemDisabled={isItemDisabled}
           getItemDisabledReason={getItemDisabledReason}
           beforeItems={beforeItems}
@@ -281,7 +306,12 @@ FilePickerController.propTypes = {
   isNavigationDisabled: PropTypes.bool,
   beforeItems: PropTypes.node,
   filterReceivedShares: PropTypes.bool,
-  additionalItems: PropTypes.arrayOf(PropTypes.object)
+  additionalItems: PropTypes.arrayOf(PropTypes.object),
+  restrictedRoot: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string
+  }),
+  canNavigateTo: PropTypes.func
 }
 
 export const FilePicker = ({ selectedItems, onSelectionChange, ...props }) => {
@@ -330,7 +360,12 @@ FilePicker.propTypes = {
   isNavigationDisabled: PropTypes.bool,
   beforeItems: PropTypes.node,
   filterReceivedShares: PropTypes.bool,
-  additionalItems: PropTypes.arrayOf(PropTypes.object)
+  additionalItems: PropTypes.arrayOf(PropTypes.object),
+  restrictedRoot: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string
+  }),
+  canNavigateTo: PropTypes.func
 }
 
 FilePicker.defaultProps = {
