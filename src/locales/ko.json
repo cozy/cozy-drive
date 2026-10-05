@@ -130,5 +130,10 @@
     "accept": "수락",
     "decline": "거절",
     "close": "닫기"
+  },
+  "FilePicker": {
+    "errors": {
+      "CONSTRAINT_VIOLATION": "선택한 항목이 이 작업의 조건을 충족하지 않습니다."
+    }
   }
 }

@@ -549,5 +549,10 @@
     "accept": "Accepteren",
     "decline": "Weigeren",
     "close": "Sluiten"
+  },
+  "FilePicker": {
+    "errors": {
+      "CONSTRAINT_VIOLATION": "De geselecteerde items voldoen niet aan de vereisten voor deze actie."
+    }
   }
 }

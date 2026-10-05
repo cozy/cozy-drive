@@ -865,7 +865,8 @@
       "ITEM_NOT_FOUND": "Le fichier sélectionné est introuvable.",
       "DESTINATION_UNAVAILABLE": "Impossible de charger le dossier de destination.",
       "SHARING_LINK_FAILED": "Impossible de générer le lien de partage.",
-      "DOWNLOAD_LINK_FAILED": "Impossible de générer le lien de téléchargement."
+      "DOWNLOAD_LINK_FAILED": "Impossible de générer le lien de téléchargement.",
+      "CONSTRAINT_VIOLATION": "Les éléments sélectionnés ne respectent pas les contraintes de cette action."
     }
   }
 }

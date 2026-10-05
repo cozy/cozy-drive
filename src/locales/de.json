@@ -865,7 +865,8 @@
       "ITEM_NOT_FOUND": "Die ausgewählte Datei wurde nicht gefunden.",
       "DESTINATION_UNAVAILABLE": "Der Zielordner konnte nicht geladen werden.",
       "SHARING_LINK_FAILED": "Es konnte kein Freigabelink erstellt werden.",
-      "DOWNLOAD_LINK_FAILED": "Es konnte kein Download-Link erstellt werden."
+      "DOWNLOAD_LINK_FAILED": "Es konnte kein Download-Link erstellt werden.",
+      "CONSTRAINT_VIOLATION": "Die ausgewählten Elemente erfüllen die Anforderungen für diese Aktion nicht."
     }
   }
 }

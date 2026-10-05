@@ -220,5 +220,10 @@
     "accept": "接受",
     "decline": "拒絕",
     "close": "關閉"
+  },
+  "FilePicker": {
+    "errors": {
+      "CONSTRAINT_VIOLATION": "所選項目不符合此操作的要求。"
+    }
   }
 }

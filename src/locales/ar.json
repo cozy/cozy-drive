@@ -190,5 +190,10 @@
     "accept": "قبول",
     "decline": "رفض",
     "close": "إغلاق"
+  },
+  "FilePicker": {
+    "errors": {
+      "CONSTRAINT_VIOLATION": "العناصر المحددة لا تستوفي شروط هذا الإجراء."
+    }
   }
 }

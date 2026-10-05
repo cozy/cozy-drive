@@ -865,7 +865,8 @@
       "ITEM_NOT_FOUND": "Impossibile trovare il file selezionato.",
       "DESTINATION_UNAVAILABLE": "Impossibile caricare la cartella di destinazione.",
       "SHARING_LINK_FAILED": "Impossibile generare un link di condivisione.",
-      "DOWNLOAD_LINK_FAILED": "Impossibile generare un link di download."
+      "DOWNLOAD_LINK_FAILED": "Impossibile generare un link di download.",
+      "CONSTRAINT_VIOLATION": "Gli elementi selezionati non soddisfano i requisiti per questa azione."
     }
   }
 }

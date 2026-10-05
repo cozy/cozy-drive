@@ -53,11 +53,7 @@ jest.mock('cozy-client', () => {
       olderThan: () => () => true
     },
     generateWebLink,
-    models: {
-      file: {
-        isFile: item => item?.type === 'file'
-      }
-    },
+    models: jest.requireActual('cozy-client').models,
     useClient: () => ({
       query: mockQuery,
       getStackClient: mockGetStackClient,
@@ -651,6 +647,46 @@ describe('Picker', () => {
       expect(service.terminate).not.toHaveBeenCalled()
       expect(mockBuildFileOrFolderByIdQuery).not.toHaveBeenCalled()
     })
+  })
+
+  it.each([
+    filePickerLinkModes.PUBLIC_LINK,
+    filePickerLinkModes.TEMPORARY_DOWNLOAD_LINK
+  ])(
+    'returns a constraint error for an incompatible %s selection',
+    async linkMode => {
+      mockQuery.mockResolvedValue({ data: { ...mockFile, mime: 'image/png' } })
+      const { service } = setup({
+        intent: {
+          attributes: {
+            data: {
+              sharingLink: { accept: ['application/pdf'] },
+              downloadLink: { accept: ['application/pdf'] }
+            }
+          }
+        }
+      })
+
+      const result = await callOnChange(mockFile, linkMode)
+
+      expect(result).toBe(filePickerErrorCodes.CONSTRAINT_VIOLATION)
+      expect(service.terminate).not.toHaveBeenCalled()
+      expect(makeSharingLink).not.toHaveBeenCalled()
+      expect(mockGetDownloadLinkById).not.toHaveBeenCalled()
+    }
+  )
+
+  it('rejects sharing preflight with a constraint error instead of a missing-file error', async () => {
+    mockQuery.mockResolvedValue({ data: { ...mockFile, size: '100' } })
+    setup({
+      intent: {
+        attributes: { data: { sharingLink: { maxFileSize: 50 } } }
+      }
+    })
+
+    await expect(
+      mockFilePickerProps.validateSharingSelection([mockFile])
+    ).rejects.toThrow(filePickerErrorCodes.CONSTRAINT_VIOLATION)
   })
 
   it('should return an ITEM_NOT_FOUND error code when metadata loading fails', async () => {
