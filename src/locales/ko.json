@@ -132,8 +132,14 @@
     "close": "닫기"
   },
   "FilePicker": {
+    "footer": {
+      "buttons": {
+        "documents": "선택"
+      }
+    },
     "errors": {
-      "CONSTRAINT_VIOLATION": "선택한 항목이 이 작업의 조건을 충족하지 않습니다."
+      "CONSTRAINT_VIOLATION": "선택한 항목이 이 작업의 조건을 충족하지 않습니다.",
+      "DOCUMENTS_FAILED": "선택한 문서와 경로를 가져올 수 없습니다."
     }
   }
 }

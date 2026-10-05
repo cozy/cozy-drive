@@ -845,7 +845,8 @@
       "buttons": {
         "cancel": "Cancelar",
         "publicLink": "Añadir como enlace",
-        "temporaryDownloadLink": "Añadir como adjunto"
+        "temporaryDownloadLink": "Añadir como adjunto",
+        "documents": "Seleccionar"
       }
     },
     "constraints": {
@@ -866,7 +867,8 @@
       "DESTINATION_UNAVAILABLE": "No se ha podido cargar la carpeta de destino.",
       "SHARING_LINK_FAILED": "No se ha podido generar un enlace para compartir.",
       "DOWNLOAD_LINK_FAILED": "No se ha podido generar un enlace de descarga.",
-      "CONSTRAINT_VIOLATION": "Los elementos seleccionados no cumplen los requisitos de esta acción."
+      "CONSTRAINT_VIOLATION": "Los elementos seleccionados no cumplen los requisitos de esta acción.",
+      "DOCUMENTS_FAILED": "No se pudieron recuperar los documentos seleccionados y sus rutas."
     }
   }
 }

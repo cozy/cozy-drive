@@ -17,6 +17,7 @@ import {
 import {
   fetchPickerDocument,
   isWithinPickerRoot,
+  fetchPickerDocumentWithPath,
   isTrashedDocument
 } from './FilePicker/documents'
 import { makeFilePickerFileEntry } from './FilePicker/payload'
@@ -153,6 +154,25 @@ const Picker = ({
       return filePickerErrorCodes.ITEM_NOT_FOUND
     }
 
+    if (linkMode === filePickerLinkModes.DOCUMENTS) {
+      try {
+        if (
+          !filePickerConfig.documents ||
+          getActionDisabledState(filePickerConfig.documents, files).disabled
+        ) {
+          return filePickerErrorCodes.DOCUMENTS_FAILED
+        }
+        const documents = await Promise.all(
+          files.map(file => fetchPickerDocumentWithPath(client, file))
+        )
+        service.terminate(documents)
+        return null
+      } catch (error) {
+        logger.warn('FilePicker document resolution failed', error)
+        return filePickerErrorCodes.DOCUMENTS_FAILED
+      }
+    }
+
     const linkAction =
       linkMode === filePickerLinkModes.TEMPORARY_DOWNLOAD_LINK
         ? filePickerConfig.downloadLink
@@ -202,7 +222,12 @@ const Picker = ({
   }
 
   const handleFileDoubleClick = async (file, linkMode) => {
-    if (linkMode === filePickerLinkModes.TEMPORARY_DOWNLOAD_LINK) {
+    if (
+      [
+        filePickerLinkModes.DOCUMENTS,
+        filePickerLinkModes.TEMPORARY_DOWNLOAD_LINK
+      ].includes(linkMode)
+    ) {
       return handlePick([file], linkMode)
     }
 

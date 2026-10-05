@@ -192,8 +192,14 @@
     "close": "إغلاق"
   },
   "FilePicker": {
+    "footer": {
+      "buttons": {
+        "documents": "اختيار"
+      }
+    },
     "errors": {
-      "CONSTRAINT_VIOLATION": "العناصر المحددة لا تستوفي شروط هذا الإجراء."
+      "CONSTRAINT_VIOLATION": "العناصر المحددة لا تستوفي شروط هذا الإجراء.",
+      "DOCUMENTS_FAILED": "تعذّر استرداد المستندات المحددة ومساراتها."
     }
   }
 }

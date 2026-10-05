@@ -222,8 +222,14 @@
     "close": "關閉"
   },
   "FilePicker": {
+    "footer": {
+      "buttons": {
+        "documents": "選取"
+      }
+    },
     "errors": {
-      "CONSTRAINT_VIOLATION": "所選項目不符合此操作的要求。"
+      "CONSTRAINT_VIOLATION": "所選項目不符合此操作的要求。",
+      "DOCUMENTS_FAILED": "無法取得所選文件及其路徑。"
     }
   }
 }
