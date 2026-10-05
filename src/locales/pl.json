@@ -132,8 +132,14 @@
     "close": "Zamknij"
   },
   "FilePicker": {
+    "footer": {
+      "buttons": {
+        "documents": "Wybierz"
+      }
+    },
     "errors": {
-      "CONSTRAINT_VIOLATION": "Wybrane elementy nie spełniają wymagań tej czynności."
+      "CONSTRAINT_VIOLATION": "Wybrane elementy nie spełniają wymagań tej czynności.",
+      "DOCUMENTS_FAILED": "Nie udało się pobrać wybranych dokumentów i ich ścieżek."
     }
   }
 }

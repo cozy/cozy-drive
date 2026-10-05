@@ -50,10 +50,12 @@ const FilePicker = ({
   canNavigateTo,
   validateSharingSelection
 }) => {
+  // Selection, action progress and business errors change the visible picker UI.
   const [error, setError] = useState(null)
   const [isLinkAccessOpen, setIsLinkAccessOpen] = useState(false)
   const [selectedItems, setSelectedItems] = useState([])
   const { showAlert } = useAlert()
+  // Lock immediately: repeated double clicks can arrive before a state rerender.
   const isProcessingRef = useRef(false)
   const [busyLinkMode, setBusyLinkMode] = useState(null)
   const itemsIdsSelected = useMemo(
@@ -64,6 +66,7 @@ const FilePicker = ({
   const config = filePickerConfig || defaultFilePickerConfig
   const publicLinkAction = config.sharingLink ?? null
   const downloadLinkAction = config.downloadLink ?? null
+  const documentsAction = config.documents ?? null
 
   const clearSelection = () => setSelectedItems([])
   const handleLocationChange = useCallback(() => setError(null), [])
@@ -141,6 +144,9 @@ const FilePicker = ({
   const downloadLinkState = hasSelection
     ? getDownloadLinkDisabledState(downloadLinkAction, selectedItems)
     : { disabled: true, reasonKey: null }
+  const documentsState = hasSelection
+    ? getActionDisabledState(documentsAction, selectedItems)
+    : { disabled: true, reasonKey: null }
 
   const handleFileDoubleClick = useCallback(
     async item => {
@@ -157,11 +163,18 @@ const FilePicker = ({
         ? getDownloadLinkDisabledState(downloadLinkAction, [item])
         : { disabled: true }
       const useDownload = sharingState.disabled && !downloadState.disabled
-      if (sharingState.disabled && downloadState.disabled) return
+      const useDocuments = sharingState.disabled && downloadState.disabled
+      if (
+        useDocuments &&
+        getActionDisabledState(documentsAction, [item]).disabled
+      )
+        return
 
-      const linkMode = useDownload
-        ? filePickerLinkModes.TEMPORARY_DOWNLOAD_LINK
-        : filePickerLinkModes.PUBLIC_LINK
+      const linkMode = useDocuments
+        ? filePickerLinkModes.DOCUMENTS
+        : useDownload
+          ? filePickerLinkModes.TEMPORARY_DOWNLOAD_LINK
+          : filePickerLinkModes.PUBLIC_LINK
 
       isProcessingRef.current = true
       setError(null)
@@ -176,9 +189,11 @@ const FilePicker = ({
         }
       } catch {
         setError(
-          useDownload
-            ? filePickerErrorCodes.DOWNLOAD_LINK_FAILED
-            : filePickerErrorCodes.SHARING_LINK_FAILED
+          useDocuments
+            ? filePickerErrorCodes.DOCUMENTS_FAILED
+            : useDownload
+              ? filePickerErrorCodes.DOWNLOAD_LINK_FAILED
+              : filePickerErrorCodes.SHARING_LINK_FAILED
         )
       } finally {
         isProcessingRef.current = false
@@ -187,6 +202,7 @@ const FilePicker = ({
     [
       publicLinkAction,
       downloadLinkAction,
+      documentsAction,
       itemTypesAccepted,
       onFileDoubleClick,
       setSelectedItems,
@@ -248,6 +264,8 @@ const FilePicker = ({
             downloadLinkState={downloadLinkState}
             publicLinkAction={publicLinkAction}
             downloadLinkAction={downloadLinkAction}
+            documentsAction={documentsAction}
+            documentsState={documentsState}
             busyLinkMode={busyLinkMode}
             selectedItems={selectedItems}
             onClearSelection={clearSelection}
@@ -280,12 +298,16 @@ FilePicker.propTypes = {
     }),
     multiple: PropTypes.bool,
     sharingLink: PropTypes.object,
-    downloadLink: PropTypes.object
+    downloadLink: PropTypes.object,
+    documents: PropTypes.object,
+    tabs: PropTypes.arrayOf(PropTypes.string),
+    initialLocation: PropTypes.object,
+    restrictedRoot: PropTypes.object
   }),
+  canNavigateTo: PropTypes.func,
   validateSharingSelection: PropTypes.func,
   onReadyToUse: PropTypes.func,
-  onFileDoubleClick: PropTypes.func,
-  canNavigateTo: PropTypes.func
+  onFileDoubleClick: PropTypes.func
 }
 
 FilePicker.defaultProps = {

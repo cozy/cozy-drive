@@ -845,7 +845,8 @@
       "buttons": {
         "cancel": "Hủy",
         "publicLink": "Thêm dưới dạng liên kết",
-        "temporaryDownloadLink": "Thêm dưới dạng tệp đính kèm"
+        "temporaryDownloadLink": "Thêm dưới dạng tệp đính kèm",
+        "documents": "Chọn"
       }
     },
     "constraints": {
@@ -866,7 +867,8 @@
       "DESTINATION_UNAVAILABLE": "Không thể tải thư mục đích.",
       "SHARING_LINK_FAILED": "Không thể tạo liên kết chia sẻ.",
       "DOWNLOAD_LINK_FAILED": "Không thể tạo liên kết tải xuống.",
-      "CONSTRAINT_VIOLATION": "Các mục đã chọn không đáp ứng các điều kiện của thao tác này."
+      "CONSTRAINT_VIOLATION": "Các mục đã chọn không đáp ứng các điều kiện của thao tác này.",
+      "DOCUMENTS_FAILED": "Không thể lấy các tài liệu đã chọn và đường dẫn của chúng."
     }
   }
 }

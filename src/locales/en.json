@@ -845,7 +845,8 @@
       "buttons": {
         "cancel": "Cancel",
         "publicLink": "Add as link",
-        "temporaryDownloadLink": "Add as attachment"
+        "temporaryDownloadLink": "Add as attachment",
+        "documents": "Select"
       }
     },
     "constraints": {
@@ -866,7 +867,8 @@
       "DESTINATION_UNAVAILABLE": "The destination folder could not be loaded.",
       "SHARING_LINK_FAILED": "Could not generate a sharing link.",
       "DOWNLOAD_LINK_FAILED": "Could not generate a download link.",
-      "CONSTRAINT_VIOLATION": "The selected items do not meet the requirements for this action."
+      "CONSTRAINT_VIOLATION": "The selected items do not meet the requirements for this action.",
+      "DOCUMENTS_FAILED": "Could not retrieve the selected documents and their paths."
     }
   }
 }

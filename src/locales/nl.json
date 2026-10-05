@@ -148,8 +148,14 @@
     "close": "Sluiten"
   },
   "FilePicker": {
+    "footer": {
+      "buttons": {
+        "documents": "Selecteren"
+      }
+    },
     "errors": {
-      "CONSTRAINT_VIOLATION": "De geselecteerde items voldoen niet aan de vereisten voor deze actie."
+      "CONSTRAINT_VIOLATION": "De geselecteerde items voldoen niet aan de vereisten voor deze actie.",
+      "DOCUMENTS_FAILED": "De geselecteerde documenten en hun paden konden niet worden opgehaald."
     }
   }
 }

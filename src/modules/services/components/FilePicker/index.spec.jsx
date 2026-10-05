@@ -1,6 +1,7 @@
 import { fireEvent, render, waitFor } from '@testing-library/react'
 import React from 'react'
 
+import { getFilePickerConfig } from './config'
 import { filePickerDoubleClickResults, filePickerLinkModes } from './constants'
 import FilePicker from './index'
 
@@ -196,10 +197,22 @@ jest.mock(
       onConfirm,
       publicLinkState,
       downloadLinkState,
+      documentsState,
       publicLinkAction,
-      downloadLinkAction
+      downloadLinkAction,
+      documentsAction
     }) => (
       <div>
+        {documentsAction && (
+          <button
+            type="button"
+            data-testid="documents-btn"
+            disabled={documentsState?.disabled}
+            onClick={() => onConfirm('documents')}
+          >
+            {documentsAction.label || 'Documents'}
+          </button>
+        )}
         {publicLinkAction && (
           <button
             type="button"
@@ -311,6 +324,37 @@ describe('FilePicker', () => {
     expect(queryByTestId('temporary-download-link-btn')).toBeNull()
     expect(getByTestId('public-link-btn')).toBeInTheDocument()
   })
+
+  it.each([
+    ['documents', { documents: true }, 'documents-btn', true],
+    ['documents', { documents: false }, 'documents-btn', false],
+    ['sharingLink', { sharingLink: true }, 'public-link-btn', true],
+    ['sharingLink', { sharingLink: false }, 'public-link-btn', false],
+    [
+      'downloadLink',
+      { downloadLink: true },
+      'temporary-download-link-btn',
+      true
+    ],
+    [
+      'downloadLink',
+      { downloadLink: false },
+      'temporary-download-link-btn',
+      false
+    ]
+  ])(
+    'controls observable %s action availability with boolean option %j',
+    (_, data, testId, isVisible) => {
+      const filePickerConfig = getFilePickerConfig(null, data)
+      const { queryByTestId, getByTestId } = setup({ filePickerConfig })
+
+      if (isVisible) {
+        expect(getByTestId(testId)).toBeInTheDocument()
+      } else {
+        expect(queryByTestId(testId)).toBe(null)
+      }
+    }
+  )
 
   it('should collect link access before confirming a public link', async () => {
     const { getByTestId, findByTestId } = setup()

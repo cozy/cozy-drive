@@ -11,6 +11,7 @@
 export const TEMPORARY_LINK_TTL = '5m'
 
 export const filePickerLinkModes = {
+  DOCUMENTS: 'documents',
   PUBLIC_LINK: 'public-link',
   TEMPORARY_DOWNLOAD_LINK: 'temporary-download-link'
 }
@@ -35,7 +36,8 @@ export const filePickerErrorCodes = {
   ITEM_NOT_FOUND: 'ITEM_NOT_FOUND',
   CONSTRAINT_VIOLATION: 'CONSTRAINT_VIOLATION',
   SHARING_LINK_FAILED: 'SHARING_LINK_FAILED',
-  DOWNLOAD_LINK_FAILED: 'DOWNLOAD_LINK_FAILED'
+  DOWNLOAD_LINK_FAILED: 'DOWNLOAD_LINK_FAILED',
+  DOCUMENTS_FAILED: 'DOCUMENTS_FAILED'
 }
 
 /**

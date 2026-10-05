@@ -460,8 +460,14 @@
     "close": "閉じる"
   },
   "FilePicker": {
+    "footer": {
+      "buttons": {
+        "documents": "選択"
+      }
+    },
     "errors": {
-      "CONSTRAINT_VIOLATION": "選択した項目はこの操作の条件を満たしていません。"
+      "CONSTRAINT_VIOLATION": "選択した項目はこの操作の条件を満たしていません。",
+      "DOCUMENTS_FAILED": "選択したドキュメントとそのパスを取得できませんでした。"
     }
   }
 }
