@@ -16,6 +16,9 @@
       }
     }
   },
+  "Assistant": {
+    "open": "المساعد"
+  },
   "Nav": {
     "item_drive": "القرص",
     "item_recent": "الحديثة",

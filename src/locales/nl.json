@@ -16,6 +16,9 @@
       }
     }
   },
+  "Assistant": {
+    "open": "Assistent"
+  },
   "breadcrumb": {
     "title_drive": "Schijf",
     "title_recent": "Recent",
