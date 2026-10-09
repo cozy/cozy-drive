@@ -107,7 +107,10 @@ const SpaceRootRedirect = () => {
   const sharingQuery = buildSharedDriveIdQuery({ driveId })
   const sharingResult = useQuery(sharingQuery.definition, sharingQuery.options)
 
-  if (!hasQueryBeenLoaded(sharingResult)) {
+  if (
+    !hasQueryBeenLoaded(sharingResult) &&
+    sharingResult.fetchStatus !== 'failed'
+  ) {
     return (
       <FolderView>
         <FileListRowsPlaceholder />
