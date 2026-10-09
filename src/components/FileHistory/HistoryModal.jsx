@@ -50,7 +50,7 @@ export const HistoryModal = ({ file, revisions, revisionsFetchStatus }) => {
   return (
     <>
       <Dialog
-        onClose={() => navigate('../')}
+        onClose={() => navigate('..')}
         open={true}
         title={file.name}
         content={
