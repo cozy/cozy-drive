@@ -289,4 +289,46 @@ describe('ScribeProvider', () => {
     expect(plugin.postMessage).not.toHaveBeenCalled()
     expect(logger.warn).toHaveBeenCalledTimes(1)
   })
+
+  it('asks the plugin to add the chart the assistant has made, in a spreadsheet', () => {
+    const { plugin, receive } = setup({
+      documentType: 'cell',
+      results: [
+        {
+          capability: 'insert_chart',
+          params: { type: 'Pie', range: 'a1:b5', title: ' Ventes 2025 ' }
+        }
+      ]
+    })
+    receive({ type: 'twake-scribe:ready' })
+
+    fireEvent.click(screen.getByText('result 0'))
+
+    expect(plugin.postMessage).toHaveBeenCalledWith(
+      {
+        type: 'twake-scribe:insertChart',
+        chartType: 'pie',
+        range: 'A1:B5',
+        title: 'Ventes 2025'
+      },
+      SERVER_ORIGIN
+    )
+  })
+
+  it('ignores a chart of an unknown type, or outside of a spreadsheet', () => {
+    const chart = { capability: 'insert_chart', params: { type: 'bar' } }
+    const { plugin, receive } = setup({
+      documentType: 'cell',
+      results: [{ capability: 'insert_chart', params: { type: 'treemap' } }]
+    })
+    receive({ type: 'twake-scribe:ready' })
+    fireEvent.click(screen.getByText('result 0'))
+    expect(plugin.postMessage).not.toHaveBeenCalled()
+
+    const other = setup({ results: [chart] })
+    other.receive({ type: 'twake-scribe:ready' })
+    fireEvent.click(screen.getAllByText('result 0')[1])
+    expect(other.plugin.postMessage).not.toHaveBeenCalled()
+    expect(logger.warn).toHaveBeenCalledTimes(2)
+  })
 })

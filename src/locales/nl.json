@@ -9,6 +9,7 @@
       "replace": "Vervangen",
       "apply": "Toepassen",
       "insertSlide": "Dia invoegen",
+      "insertChart": "Grafiek invoegen",
       "suggestions": {
         "newSlide": "Nieuwe dia",
         "newSlideMessage": "Voeg na deze dia een nieuwe dia over de tekst toe",
@@ -19,7 +20,9 @@
         "cleanUp": "Opschonen",
         "cleanUpMessage": "Verbeter de typfouten en maak de spelling, het hoofdlettergebruik en de opmaak van deze cellen consistent",
         "totals": "Totalen toevoegen",
-        "totalsMessage": "Voeg onder de gegevens een rij met totalen toe, met formules"
+        "totalsMessage": "Voeg onder de gegevens een rij met totalen toe, met formules",
+        "chart": "Grafiek maken",
+        "chartMessage": "Maak een grafiek van deze cellen"
       }
     }
   },

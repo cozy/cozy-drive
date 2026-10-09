@@ -633,6 +633,7 @@
       "replace": "Sostituisci",
       "apply": "Applica",
       "insertSlide": "Inserisci la diapositiva",
+      "insertChart": "Inserisci il grafico",
       "suggestions": {
         "newSlide": "Nuova diapositiva",
         "newSlideMessage": "Aggiungi una nuova diapositiva dopo questa, sul testo",
@@ -643,7 +644,9 @@
         "cleanUp": "Ripulisci",
         "cleanUpMessage": "Correggi i refusi e uniforma l'ortografia, le maiuscole e il formato di queste celle",
         "totals": "Aggiungi i totali",
-        "totalsMessage": "Aggiungi una riga dei totali sotto i dati, con le formule"
+        "totalsMessage": "Aggiungi una riga dei totali sotto i dati, con le formule",
+        "chart": "Crea un grafico",
+        "chartMessage": "Crea un grafico di queste celle"
       }
     }
   },

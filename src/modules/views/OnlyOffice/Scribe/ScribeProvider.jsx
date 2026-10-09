@@ -8,9 +8,11 @@ import React, {
 
 import logger from '@/lib/logger'
 import {
+  INSERT_CHART,
   INSERT_SLIDE,
   INSERT_TABLE,
   makeTableMarkdown,
+  normalizeChart,
   normalizeSlide,
   normalizeTable
 } from '@/modules/views/OnlyOffice/Scribe/capabilities'
@@ -54,6 +56,12 @@ export const ScribeProvider = ({ serverUrl, documentType, children }) => {
         return slide === null
           ? null
           : { type: 'twake-scribe:insertSlide', ...slide }
+      }
+      if (capability === INSERT_CHART && documentType === 'cell') {
+        const chart = normalizeChart(params)
+        return chart === null
+          ? null
+          : { type: 'twake-scribe:insertChart', ...chart }
       }
       if (capability === INSERT_TABLE && documentType === 'word') {
         const table = normalizeTable(params)

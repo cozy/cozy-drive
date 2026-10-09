@@ -633,6 +633,7 @@
       "replace": "Ersetzen",
       "apply": "Übernehmen",
       "insertSlide": "Folie einfügen",
+      "insertChart": "Diagramm einfügen",
       "suggestions": {
         "newSlide": "Neue Folie",
         "newSlideMessage": "Füge nach dieser Folie eine neue Folie zum Text hinzu",
@@ -643,7 +644,9 @@
         "cleanUp": "Bereinigen",
         "cleanUpMessage": "Korrigiere die Tippfehler und vereinheitliche Schreibweise, Groß- und Kleinschreibung und Format dieser Zellen",
         "totals": "Summen hinzufügen",
-        "totalsMessage": "Füge unter den Daten eine Summenzeile mit Formeln hinzu"
+        "totalsMessage": "Füge unter den Daten eine Summenzeile mit Formeln hinzu",
+        "chart": "Diagramm erstellen",
+        "chartMessage": "Erstelle ein Diagramm aus diesen Zellen"
       }
     }
   },

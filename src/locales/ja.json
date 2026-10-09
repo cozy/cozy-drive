@@ -9,6 +9,7 @@
       "replace": "置換",
       "apply": "適用",
       "insertSlide": "スライドを挿入",
+      "insertChart": "グラフを挿入",
       "suggestions": {
         "newSlide": "新しいスライド",
         "newSlideMessage": "このスライドの後に、テキストについての新しいスライドを追加して",
@@ -19,7 +20,9 @@
         "cleanUp": "整える",
         "cleanUpMessage": "誤字を直し、これらのセルの表記・大文字小文字・書式をそろえて",
         "totals": "合計を追加",
-        "totalsMessage": "データの下に数式で合計行を追加して"
+        "totalsMessage": "データの下に数式で合計行を追加して",
+        "chart": "グラフを作成",
+        "chartMessage": "これらのセルのグラフを作成して"
       }
     }
   },
