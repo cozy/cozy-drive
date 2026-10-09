@@ -634,6 +634,7 @@
       "apply": "Apply",
       "insertSlide": "Insert the slide",
       "insertChart": "Insert the chart",
+      "notApplied": "This answer has no cells to write in the sheet",
       "suggestions": {
         "newSlide": "New slide",
         "newSlideMessage": "Add a new slide after this one, about the text",

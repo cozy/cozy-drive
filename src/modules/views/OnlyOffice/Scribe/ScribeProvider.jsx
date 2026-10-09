@@ -6,6 +6,9 @@ import React, {
   useState
 } from 'react'
 
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
+import { useI18n } from 'twake-i18n'
+
 import logger from '@/lib/logger'
 import {
   INSERT_CHART,
@@ -29,6 +32,8 @@ export const ScribeProvider = ({ serverUrl, documentType, children }) => {
   const serverOrigin = new URL(serverUrl).origin
   const [plugin, setPlugin] = useState(null)
   const [text, setText] = useState(null)
+  const { showAlert } = useAlert()
+  const { t } = useI18n()
 
   useEffect(() => {
     const handleMessage = event => {
@@ -41,11 +46,17 @@ export const ScribeProvider = ({ serverUrl, documentType, children }) => {
       if (type === 'twake-scribe:selection') {
         setText(current => (current === null ? null : text))
       }
+      if (type === 'twake-scribe:notApplied') {
+        showAlert({
+          message: t('OnlyOffice.scribe.notApplied'),
+          severity: 'secondary'
+        })
+      }
     }
 
     window.addEventListener('message', handleMessage)
     return () => window.removeEventListener('message', handleMessage)
-  }, [serverOrigin])
+  }, [serverOrigin, showAlert, t])
 
   const value = useMemo(() => {
     // The plugin has no message for a table: it goes in as a Markdown

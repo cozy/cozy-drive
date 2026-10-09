@@ -7,7 +7,14 @@ import {
   useScribe
 } from '@/modules/views/OnlyOffice/Scribe/ScribeProvider'
 
+const mockShowAlert = jest.fn()
+const mockT = key => key
+
 jest.mock('@/lib/logger', () => ({ warn: jest.fn() }))
+jest.mock('cozy-ui/transpiled/react/providers/Alert', () => ({
+  useAlert: () => ({ showAlert: mockShowAlert })
+}))
+jest.mock('twake-i18n', () => ({ useI18n: () => ({ t: mockT }) }))
 
 const SERVER_URL = 'https://onlyoffice.example.org/'
 const SERVER_ORIGIN = 'https://onlyoffice.example.org'
@@ -107,6 +114,17 @@ describe('ScribeProvider', () => {
     receive('a text', { origin: SERVER_ORIGIN })
 
     expect(getState().isAvailable).toBe(false)
+  })
+
+  it('tells the user when the plugin wrote nothing of an answer', () => {
+    const { receive } = setup({ documentType: 'cell' })
+
+    receive({ type: 'twake-scribe:notApplied' })
+
+    expect(mockShowAlert).toHaveBeenCalledWith({
+      message: 'OnlyOffice.scribe.notApplied',
+      severity: 'secondary'
+    })
   })
 
   it('asks the plugin for the text, and opens when it comes', () => {
