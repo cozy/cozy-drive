@@ -99,6 +99,36 @@ function SharedDriveFolderActions({
   )
 }
 
+function SharedDriveFab() {
+  const { isFabDisplayed } = useContext(FabContext)
+  const { refresh } = useSharingContext()
+  const { displayedFolder } = useDisplayedFolder()
+  const { isSelectionBarVisible } = useSelectionContext()
+
+  if (!isFabDisplayed) return null
+
+  return (
+    <AddMenuProvider
+      componentsProps={{
+        AddMenu: {
+          anchorOrigin: {
+            vertical: 'top',
+            horizontal: 'left'
+          }
+        }
+      }}
+      canCreateFolder={true}
+      canUpload={true}
+      disabled={false}
+      refreshFolderContent={refresh}
+      displayedFolder={displayedFolder}
+      isSelectionBarVisible={isSelectionBarVisible}
+    >
+      <FabWithAddMenuContext />
+    </AddMenuProvider>
+  )
+}
+
 function SharedDriveFolderViewContent({ sharing, driveId, folderId }) {
   const client = useClient()
   const navigate = useNavigate()
@@ -113,24 +143,25 @@ function SharedDriveFolderViewContent({ sharing, driveId, folderId }) {
   const { showAlert } = useAlert()
   const dispatch = useDispatch()
   const isInRootOfSharedDrive = getFolderIdFromSharing(sharing) === folderId
-  const { isFabDisplayed, setIsFabDisplayed } = useContext(FabContext)
-  const { isSelectionBarVisible } = useSelectionContext()
+  const { setIsFabDisplayed } = useContext(FabContext)
 
   const { sharedDriveResult, fetchStatus, lastUpdate, hasMore, fetchMore } =
     useSharedDriveFolder({ driveId, folderId })
   useReportSpaceFiles(driveId, sharedDriveResult.folder, isInRootOfSharedDrive)
 
+  const files = sharedDriveResult.included ?? []
   const queryResults = [
     {
       fetchStatus,
       lastUpdate,
-      data: sharedDriveResult.included ?? [],
+      data: files,
       hasMore,
       fetchMore
     }
   ]
 
-  const canWriteToCurrentFolder = hasWriteAccess(folderId, driveId)
+  const canWriteToCurrentFolder =
+    fetchStatus !== 'failed' && hasWriteAccess(folderId, driveId)
 
   const { hasClipboardData } = useClipboardContext()
 
@@ -146,7 +177,7 @@ function SharedDriveFolderViewContent({ sharing, driveId, folderId }) {
   useKeyboardShortcuts({
     canPaste: hasClipboardData && canWriteToCurrentFolder,
     client,
-    items: sharedDriveResult?.included || [],
+    items: files,
     sharingContext,
     allowCut: canWriteToCurrentFolder,
     allowCopy: false,
@@ -216,8 +247,8 @@ function SharedDriveFolderViewContent({ sharing, driveId, folderId }) {
     [actionsOptions]
   )
 
-  const DropzoneComp =
-    flag('drive.virtualization.enabled') && !isMobile ? DropzoneDnD : Dropzone
+  const isVirtualized = flag('drive.virtualization.enabled') && !isMobile
+  const DropzoneComp = isVirtualized ? DropzoneDnD : Dropzone
 
   return (
     <FolderView>
@@ -235,7 +266,7 @@ function SharedDriveFolderViewContent({ sharing, driveId, folderId }) {
           />
         </FolderViewHeader>
 
-        {flag('drive.virtualization.enabled') && !isMobile ? (
+        {isVirtualized ? (
           <FolderViewBodyVz
             actions={actions}
             queryResults={queryResults}
@@ -258,26 +289,7 @@ function SharedDriveFolderViewContent({ sharing, driveId, folderId }) {
           />
         )}
         <Outlet />
-        {isFabDisplayed && (
-          <AddMenuProvider
-            componentsProps={{
-              AddMenu: {
-                anchorOrigin: {
-                  vertical: 'top',
-                  horizontal: 'left'
-                }
-              }
-            }}
-            canCreateFolder={true}
-            canUpload={true}
-            disabled={false}
-            refreshFolderContent={refresh}
-            displayedFolder={displayedFolder}
-            isSelectionBarVisible={isSelectionBarVisible}
-          >
-            <FabWithAddMenuContext />
-          </AddMenuProvider>
-        )}
+        <SharedDriveFab />
       </DropzoneComp>
     </FolderView>
   )

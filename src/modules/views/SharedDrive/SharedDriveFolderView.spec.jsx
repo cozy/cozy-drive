@@ -34,12 +34,12 @@ jest.mock('@/modules/shareddrives/components/SharedDriveBreadcrumb', () => ({
 jest.mock('@/modules/shareddrives/components/SharedDriveFolderBody', () => ({
   SharedDriveFolderBody: () => <div data-testid="shared-drive-content" />
 }))
-jest.mock(
-  '@/modules/drive/Toolbar',
-  () =>
-    ({ showShareButton }) =>
-      showShareButton ? <button>Share</button> : null
-)
+jest.mock('@/modules/drive/Toolbar', () => ({ showShareButton, canUpload }) => (
+  <>
+    {showShareButton ? <button>Share</button> : null}
+    {canUpload ? <button>Upload</button> : null}
+  </>
+))
 jest.mock(
   '@/modules/upload/Dropzone',
   () =>
@@ -110,6 +110,33 @@ describe('SharedDriveFolderView', () => {
 
     expect(screen.queryByTestId('sharing-loading')).toBe(null)
     expect(screen.queryByTestId('shared-drive-content')).toBeInTheDocument()
+  })
+
+  it('offers no upload in a folder that cannot be loaded', () => {
+    const WriterWrapper = ({ children }) => (
+      <AppLike
+        client={createMockClient({})}
+        sharingContextValue={{
+          hasWriteAccess: () => true,
+          getRecipients: () => [],
+          isOwner: () => false,
+          refresh: jest.fn(),
+          allLoaded: true
+        }}
+      >
+        {children}
+      </AppLike>
+    )
+    render(<SharedDriveFolderView />, { wrapper: WriterWrapper })
+    expect(screen.queryByRole('button', { name: 'Upload' })).toBeInTheDocument()
+
+    useSharedDriveFolder.mockReturnValue({
+      sharedDriveResult: { included: [] },
+      fetchStatus: 'failed'
+    })
+    render(<SharedDriveFolderView />, { wrapper: WriterWrapper })
+
+    expect(screen.getAllByRole('button', { name: 'Upload' })).toHaveLength(1)
   })
 
   it('does not show the root share button in a subfolder', () => {
