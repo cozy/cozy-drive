@@ -11,14 +11,14 @@ describe('computeOverlayRegion', () => {
 
   it('shows everything while a cozy-ui dialog is open', () => {
     document.body.innerHTML =
-      '<div class="MuiDialog-root"><div class="MuiBackdrop-root"></div></div>'
+      '<div role="presentation" class="MuiDialog-root-12"></div>'
 
     expect(computeOverlayRegion(document)).toBe('full')
   })
 
   it('shows nothing once the dialog is hidden', () => {
     document.body.innerHTML =
-      '<div class="MuiDialog-root" style="visibility: hidden"><div class="MuiBackdrop-root" style="visibility: hidden"></div></div>'
+      '<div role="presentation" class="MuiDialog-root-12" style="visibility: hidden"></div>'
 
     expect(computeOverlayRegion(document)).toEqual([])
   })

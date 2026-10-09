@@ -13,8 +13,7 @@ const CONNECT_TIMEOUT_MS = 5_000
 const LOOKUP_INTERVAL_MS = 100
 const REGION_DELAY_MS = 16
 const FOCUS_RETRY_MS = 50
-const BLOCKING_SELECTOR = '.MuiModal-root, .MuiBackdrop-root'
-const HIDDEN_SELECTOR = '.MuiModal-hidden'
+const MODAL_SELECTOR = '[role="presentation"]'
 
 let connection: { overlay: SpaceOverlay | null } | null = null
 
@@ -258,10 +257,8 @@ function followRegion(
 }
 
 function hasOpenModal(doc: Document, view: Window): boolean {
-  return Array.from(doc.body.querySelectorAll(BLOCKING_SELECTOR)).some(
-    element =>
-      element.closest(HIDDEN_SELECTOR) === null &&
-      view.getComputedStyle(element).visibility !== 'hidden'
+  return Array.from(doc.body.querySelectorAll(MODAL_SELECTOR)).some(
+    element => view.getComputedStyle(element).visibility !== 'hidden'
   )
 }
 
