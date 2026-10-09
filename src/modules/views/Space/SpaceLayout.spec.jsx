@@ -1,10 +1,33 @@
 import { act, render, screen } from '@testing-library/react'
 import React from 'react'
-import { HashRouter, Route, Routes, useLocation } from 'react-router-dom'
+import {
+  HashRouter,
+  MemoryRouter,
+  Route,
+  Routes,
+  useLocation
+} from 'react-router-dom'
 
-import { reportSpaceFiles, useTwakeSpace } from './SpaceLayout'
+import { useQuery } from 'cozy-client'
+
+import {
+  SpaceRootRedirect,
+  reportSpaceFiles,
+  useTwakeSpace
+} from './SpaceLayout'
 
 import { ROUTER_FUTURE_FLAGS } from '@/constants/config'
+
+jest.mock('cozy-client', () => ({
+  ...jest.requireActual('cozy-client'),
+  useQuery: jest.fn()
+}))
+jest.mock('@/modules/views/Folder/FolderView', () => ({
+  __esModule: true,
+  default: ({ isNotFound }) => (
+    <div data-testid={isNotFound ? 'not-found' : 'loading'} />
+  )
+}))
 
 const HOST = 'https://space.test'
 
@@ -106,5 +129,27 @@ describe('useTwakeSpace', () => {
     fromHost(parent, { type: 'twake-embed:hello' })
     expect(metadata()).toHaveLength(1)
     expect(metadata()[0]).toHaveLength(2)
+  })
+})
+
+describe('SpaceRootRedirect', () => {
+  it('shows the drive as not found when it cannot be fetched', () => {
+    useQuery.mockReturnValue({ fetchStatus: 'failed', data: null })
+
+    render(
+      <MemoryRouter
+        initialEntries={['/embed/sharings/unknown']}
+        future={ROUTER_FUTURE_FLAGS}
+      >
+        <Routes>
+          <Route
+            path="embed/sharings/:driveId"
+            element={<SpaceRootRedirect />}
+          />
+        </Routes>
+      </MemoryRouter>
+    )
+
+    expect(screen.getByTestId('not-found')).toBeInTheDocument()
   })
 })
