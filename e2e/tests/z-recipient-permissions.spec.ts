@@ -1,5 +1,10 @@
+import { copyFile } from 'fs/promises'
+import path from 'path'
+
+import type { Page } from '@playwright/test'
+
 import { USERS } from '../helpers/config'
-import { test, expect, stamp } from '../helpers/fixtures'
+import { test, expect, stamp, safeUnlink } from '../helpers/fixtures'
 import {
   createAndShareFolderWithBob,
   openOwnerFolder,
@@ -7,6 +12,7 @@ import {
   waitForSharingRow
 } from '../helpers/sharing'
 import { trashByName } from '../helpers/stack'
+import type { DrivePage } from '../pages/DrivePage'
 import { ShareModalPage } from '../pages/ShareModalPage'
 
 const READER_DRIVE = `Reader Members Drive ${stamp()}`
@@ -295,6 +301,29 @@ test.describe.serial('Recipient permissions & member controls', () => {
   // })
 })
 
+const FIXTURE_DIR = path.resolve(__dirname, '..', 'fixtures')
+const SAMPLE = path.join(FIXTURE_DIR, 'sample.txt')
+
+/** The Upload button is enabled before the drive permissions load, so only a
+ * real upload proves write access. Retried until a role change propagates. */
+const expectUploadSucceeds = async (
+  page: Page,
+  drive: DrivePage
+): Promise<void> => {
+  const fileName = `recipient-write-${stamp()}.txt`
+  const filePath = path.join(FIXTURE_DIR, fileName)
+  await copyFile(SAMPLE, filePath)
+  try {
+    await expect(async () => {
+      await page.reload()
+      await drive.uploadFiles(filePath)
+      await drive.row(fileName).waitVisible({ timeout: 5_000 })
+    }).toPass({ timeout: 30_000 })
+  } finally {
+    await safeUnlink(filePath)
+  }
+}
+
 const MANAGED_DRIVE = `Managed Members Drive ${stamp()}`
 const VIEWER_SELF_DRIVE = `Viewer Self Drive ${stamp()}`
 
@@ -377,7 +406,7 @@ test.describe.serial('Recipient edits himself and other members', () => {
     await expect(modal.memberRole('You')).toContainText(/editor/i)
     await modal.close()
 
-    await expect(bobDrive.uploadButton).toBeEnabled()
+    await expectUploadSucceeds(bobPage, bobDrive)
 
     await bobPage.reload()
     const reopened = await bobDrive.openShareFromToolbarRecipients()
@@ -436,10 +465,7 @@ test.describe.serial('Recipient edits himself and other members', () => {
       charlieDrive,
       MANAGED_DRIVE
     )
-    await expect(async () => {
-      await charliePage.reload()
-      await expect(charlieDrive.uploadButton).toBeEnabled({ timeout: 2_000 })
-    }).toPass({ timeout: 30_000 })
+    await expectUploadSucceeds(charliePage, charlieDrive)
   })
 
   test('Editor (Bob) removes Charlie and stays a member himself', async ({
@@ -455,7 +481,7 @@ test.describe.serial('Recipient edits himself and other members', () => {
     await expect(modal.memberRole('You')).toContainText(/editor/i)
     await modal.close()
 
-    await expect(bobDrive.uploadButton).toBeEnabled()
+    await expectUploadSucceeds(bobPage, bobDrive)
 
     await bobPage.reload()
     const reopened = await bobDrive.openShareFromToolbarRecipients()
