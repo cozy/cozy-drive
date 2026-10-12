@@ -45,6 +45,14 @@ const LEAVE_DRIVE = `Leave Members Drive ${stamp()}`
 // const NESTED_CHILD = `Nested Child ${stamp()}`
 
 test.describe.serial('Recipient permissions & member controls', () => {
+  // cozy/cozy-stack:latest crashes with "send on closed channel" on the shared
+  // drive realtime these flows exercise, taking down every following spec.
+  // Re-enable once CI runs a stack release shipping linagora/cozy-stack#4983.
+  test.fixme(
+    true,
+    'Waiting for a cozy-stack release with linagora/cozy-stack#4983'
+  )
+
   test.afterAll(async () => {
     await trashByName(USERS.alice.instance, READER_DRIVE)
     await trashByName(USERS.alice.instance, EDITOR_DRIVE)
@@ -326,6 +334,14 @@ const MANAGED_DRIVE = `Managed Members Drive ${stamp()}`
 const VIEWER_SELF_DRIVE = `Viewer Self Drive ${stamp()}`
 
 test.describe.serial('Recipient edits himself and other members', () => {
+  // cozy/cozy-stack:latest crashes with "send on closed channel" on the shared
+  // drive realtime these flows exercise, taking down every following spec.
+  // Re-enable once CI runs a stack release shipping linagora/cozy-stack#4983.
+  test.fixme(
+    true,
+    'Waiting for a cozy-stack release with linagora/cozy-stack#4983'
+  )
+
   test.afterAll(async () => {
     await trashByName(USERS.alice.instance, MANAGED_DRIVE)
     await trashByName(USERS.alice.instance, VIEWER_SELF_DRIVE)
