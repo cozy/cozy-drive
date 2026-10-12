@@ -79,9 +79,10 @@ jobs:
         if: steps.pr.outputs.head_repo == github.repository
         uses: ./.github/actions/opencode
         env:
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          AI_API_BASE_URL: ${{ secrets.AI_API_BASE_URL }}
+          AI_API_KEY: ${{ secrets.AI_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          model: ${{ vars.OPENCODE_VERIFY_MODEL || vars.OPENCODE_REVIEW_MODEL || 'openrouter/deepseek/deepseek-v4.1-flash' }}
+          model: ${{ vars.OPENCODE_VERIFY_MODEL || vars.OPENCODE_REVIEW_MODEL || 'linagora/deepseek-v4.1-flash' }}
           prompt: ${{ steps.prompt.outputs.text }}
