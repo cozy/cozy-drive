@@ -88,7 +88,9 @@ Each worker gets its own Alice, Bob and Charlie instances (`alice`, `bob`,
 `charlie` for the first worker, then `alice1`, `bob1`, `charlie1`, and so
 on), so specs that change instance state such as feature flags never collide.
 Specs keep using `USERS.alice` and the other fixtures unchanged. Files are
-spread across workers, and the tests of a file stay on the same worker.
+spread across workers, and the tests of a file stay on the same worker unless
+the file opts in with `test.describe.configure({ mode: 'parallel' })`, as
+`z-nested-sharing.spec.ts` does for its flag combinations.
 
 Each worktree gets its own Compose project and available host ports, so
 suites from different worktrees can run concurrently.
