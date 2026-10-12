@@ -9,7 +9,6 @@ import { usePushBannerContext } from './PushBannerProvider'
 import QuotaBanner from './QuotaBanner'
 import BannerClient from '../../components/pushClient/Banner'
 
-import { SHARINGS_VIEW_ROUTE } from '@/constants/config'
 import { isSpacePath } from '@/modules/routeUtils'
 
 /**
@@ -31,11 +30,7 @@ const PushBanner = () => {
     return <QuotaBanner />
   }
 
-  if (
-    !isFlagshipApp() &&
-    !pathname.startsWith(SHARINGS_VIEW_ROUTE) &&
-    !isSpacePath(pathname)
-  ) {
+  if (!isFlagshipApp() && !isSpacePath(pathname)) {
     return <BannerClient />
   }
 
