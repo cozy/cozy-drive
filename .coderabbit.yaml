@@ -2,10 +2,7 @@
 #
 # CodeRabbit owns: PR summary and walkthrough, security and supply chain
 # review, scanners, and the path-specific checks below.
-# It does not own: logic and architecture review (OpenCode, see
-# .github/prompts/code-review.md), code health (CodeScene), lint and tests
-# (CI/CD workflow). Keep path exclusions in sync with
-# .github/workflows/opencode-review.yml.
+# It does not own: code health (CodeScene), lint and tests (CI/CD workflow).
 
 inheritance: true
 language: en-US
@@ -68,8 +65,7 @@ reviews:
         Review resolved versions and integrity values: a package resolving to
         an unexpected registry or URL, a version that moved without a
         package.json change, and a new transitive dependency of a package
-        known for supply chain incidents. OpenCode skips this file, so a
-        lockfile-only pull request is reviewed here or nowhere.
+        known for supply chain incidents.
     - path: 'package.json'
       instructions: >-
         Flag a new dependency that is unmaintained, recently published under
