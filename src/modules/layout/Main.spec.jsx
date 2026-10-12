@@ -18,6 +18,11 @@ jest.mock('@/components/PushBanner', () => () => (
 jest.mock('@/modules/views/Sharings/SharingInvitations', () => () => (
   <div data-testid="sharing-invitations" />
 ))
+jest.mock('@/modules/shareddrives/hooks/useSharedDrives', () => ({
+  useSharedDrives: () => ({
+    sharedDrives: [{ _id: 'org-drive-id', org_drive: true }]
+  })
+}))
 jest.mock('@/components/Migration/MigrationProgressBanner', () => ({
   MigrationProgressBanner: () => <div data-testid="migration-banner" />
 }))
@@ -74,6 +79,26 @@ describe('Main', () => {
     expect(screen.queryByTestId('sharing-invitations')).toBeInTheDocument()
     expect(screen.queryByTestId('push-banner')).toBe(null)
     expect(screen.queryByTestId('migration-banner')).toBe(null)
+  })
+
+  it('only mounts the sharing invitations in a shared folder', () => {
+    renderAt(
+      <Main isPublic={false}>{[]}</Main>,
+      '/shareddrive/drive-id/folder-id'
+    )
+
+    expect(screen.queryByTestId('sharing-invitations')).toBeInTheDocument()
+    expect(screen.queryByTestId('push-banner')).toBe(null)
+  })
+
+  it('mounts every banner in an organization drive', () => {
+    renderAt(
+      <Main isPublic={false}>{[]}</Main>,
+      '/shareddrive/org-drive-id/folder-id'
+    )
+
+    expect(screen.queryByTestId('push-banner')).toBeInTheDocument()
+    expect(screen.queryByTestId('sharing-invitations')).toBeInTheDocument()
   })
 
   it('does not mount the migration banner when the flag is off', () => {

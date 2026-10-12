@@ -10,12 +10,13 @@ import styles from './main.styl'
 
 import { MigrationProgressBanner } from '@/components/Migration/MigrationProgressBanner'
 import PushBanner from '@/components/PushBanner'
-import { SHARINGS_VIEW_ROUTE } from '@/constants/config'
+import { useIsSharingsPath } from '@/modules/navigation/hooks/useIsSharingsPath'
 import SharingInvitations from '@/modules/views/Sharings/SharingInvitations'
 
 const Main = ({ children, isPublic = false }) => {
   const { pathname } = useLocation()
-  const isSharingsPage = pathname.startsWith(SHARINGS_VIEW_ROUTE)
+  const isSharingsPath = useIsSharingsPath()
+  const isSharingsPage = isSharingsPath(pathname)
 
   return (
     <MainUI>
