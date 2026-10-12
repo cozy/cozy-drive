@@ -103,16 +103,16 @@ describe('SharingInvitations', () => {
     expect(screen.queryByTestId('sharing-invitations')).toBe(null)
   })
 
-  it('shows the 4 oldest new invitations and hides the others', () => {
-    setup(['s5', 's4', 's3', 's2', 's1'].map(id => makeShortcut(id)))
+  it('shows only the oldest new invitation', () => {
+    setup(['s3', 's2', 's1'].map(id => makeShortcut(id)))
 
     expect(getDisplayedText()).toContain('SharingInvitations.text[s1]')
-    expect(getDisplayedText()).toContain('SharingInvitations.text[s4]')
-    expect(getDisplayedText()).not.toContain('SharingInvitations.text[s5]')
+    expect(getDisplayedText()).not.toContain('SharingInvitations.text[s2]')
+    expect(getDisplayedText()).not.toContain('SharingInvitations.text[s3]')
   })
 
   it('reveals the next invitation once a visible one is handled', () => {
-    const files = ['s1', 's2', 's3', 's4', 's5'].map(id => makeShortcut(id))
+    const files = ['s1', 's2', 's3'].map(id => makeShortcut(id))
     const { rerender } = setup(files)
 
     useSharingsQueryResult.mockReturnValue({
@@ -121,7 +121,7 @@ describe('SharingInvitations', () => {
     rerender(<SharingInvitations />)
 
     expect(getDisplayedText()).not.toContain('SharingInvitations.text[s1]')
-    expect(getDisplayedText()).toContain('SharingInvitations.text[s5]')
+    expect(getDisplayedText()).toContain('SharingInvitations.text[s2]')
   })
 
   it('shows the invitation text on mobile', () => {

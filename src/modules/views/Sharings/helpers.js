@@ -5,7 +5,7 @@ import { receiveMutationResult } from 'cozy-client/dist/store'
 import { DOCTYPE_FILES } from '@/lib/doctypes'
 import logger from '@/lib/logger'
 
-const MAX_VISIBLE_INVITATIONS = 4
+const MAX_VISIBLE_INVITATIONS = 1
 
 /**
  * @typedef {object} InvitationActionParams
