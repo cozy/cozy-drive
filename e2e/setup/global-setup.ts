@@ -193,7 +193,6 @@ interface AppSpec {
 }
 
 const DEFAULT_APPS: AppSpec[] = [
-  { slug: 'drive', source: 'file:///app/drive', label: 'Drive' },
   {
     slug: 'dataproxy',
     source: 'registry://dataproxy/stable',
