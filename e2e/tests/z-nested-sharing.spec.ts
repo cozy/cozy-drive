@@ -38,6 +38,11 @@ const comboFlags = (combo: FlagCombo): Record<string, boolean> => ({
 // are routed to the source sharing. With federated off, the legacy modal
 // keeps the banner surfaces and lists direct recipients only (shared-drive
 // itself never affects the modal).
+// Each combination sets and resets its flags in its own serial describe, so
+// the combinations can spread across workers and shards instead of forming
+// one long group.
+test.describe.configure({ mode: 'parallel' })
+
 for (const combo of COMBOS) {
   // federated=off + hide-cozy-to-cozy=on → the legacy modal renders
   // ShareDialogOnlyByLink for every document: contact sharing is impossible,
