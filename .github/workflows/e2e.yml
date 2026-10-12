@@ -9,7 +9,7 @@ on:
 
 jobs:
   e2e:
-    name: ${{ matrix.suite == 'scribe' && 'Scribe E2E' || 'Drive E2E' }}
+    name: ${{ matrix.suite == 'scribe' && 'Scribe E2E' || format('Drive E2E ({0}/4)', matrix.shard) }}
     if: >
       github.event_name != 'pull_request' ||
       contains(github.event.pull_request.labels.*.name, 'e2e') ||
@@ -19,11 +19,22 @@ jobs:
     permissions:
       contents: read
     # The cases of the scribe plugin run in a job of their own, so that each
-    # suite can be run alone: the label e2e-scribe runs only them
+    # suite can be run alone: the label e2e-scribe runs only them.
+    # The Drive suite is split into shards, each with its own stack: when its
+    # jobs get too long, add a shard here, to the exclusions and to the total
+    # in the job name and the test command
     strategy:
       fail-fast: false
       matrix:
         suite: ${{ fromJSON(github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'e2e') && '["scribe"]' || '["drive", "scribe"]') }}
+        shard: [1, 2, 3, 4]
+        exclude:
+          - suite: scribe
+            shard: 2
+          - suite: scribe
+            shard: 3
+          - suite: scribe
+            shard: 4
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -56,13 +67,13 @@ jobs:
         run: npx playwright install chromium
 
       - name: Run E2E tests
-        run: yarn e2e ${{ matrix.suite == 'scribe' && '--grep' || '--grep-invert' }} @e2e-scribe
+        run: yarn e2e ${{ matrix.suite == 'scribe' && '--grep @e2e-scribe' || format('--grep-invert @e2e-scribe --shard={0}/4', matrix.shard) }}
 
       - name: Upload test report
         if: failure()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
-          name: playwright-report-${{ matrix.suite }}
+          name: playwright-report-${{ matrix.suite }}-${{ matrix.shard }}
           path: playwright-report/
           retention-days: 14
 
@@ -70,6 +81,6 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
-          name: playwright-traces-${{ matrix.suite }}
+          name: playwright-traces-${{ matrix.suite }}-${{ matrix.shard }}
           path: test-results/
           retention-days: 14
