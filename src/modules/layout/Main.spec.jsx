@@ -1,9 +1,12 @@
 import { render, screen } from '@testing-library/react'
 import React from 'react'
+import { MemoryRouter } from 'react-router-dom'
 
 import flag from 'cozy-flags'
 
 import Main from './Main'
+
+import { ROUTER_FUTURE_FLAGS } from '@/constants/config'
 
 jest.mock('cozy-ui/transpiled/react/Layout', () => ({
   Main: ({ children }) => <div>{children}</div>
@@ -19,6 +22,14 @@ jest.mock('@/components/Migration/MigrationProgressBanner', () => ({
   MigrationProgressBanner: () => <div data-testid="migration-banner" />
 }))
 
+function renderAt(ui, pathname = '/folder') {
+  return render(
+    <MemoryRouter future={ROUTER_FUTURE_FLAGS} initialEntries={[pathname]}>
+      {ui}
+    </MemoryRouter>
+  )
+}
+
 describe('Main', () => {
   beforeEach(() => {
     flag.mockReturnValue(true)
@@ -29,19 +40,19 @@ describe('Main', () => {
     // public-share token cannot read it (403), and cozy-client's useQuery does
     // not catch that rejection. PushBanner renders null on
     // public anyway, so it must not be mounted there at all.
-    render(<Main isPublic>{[]}</Main>)
+    renderAt(<Main isPublic>{[]}</Main>)
 
     expect(screen.queryByTestId('push-banner')).toBeNull()
   })
 
   it('mounts PushBanner on the authenticated route', () => {
-    render(<Main isPublic={false}>{[]}</Main>)
+    renderAt(<Main isPublic={false}>{[]}</Main>)
 
     expect(screen.queryByTestId('push-banner')).not.toBeNull()
   })
 
   it('mounts the sharing invitations below the push banner', () => {
-    render(<Main isPublic={false}>{[]}</Main>)
+    renderAt(<Main isPublic={false}>{[]}</Main>)
 
     const pushBanner = screen.getByTestId('push-banner')
     const invitations = screen.getByTestId('sharing-invitations')
@@ -52,21 +63,29 @@ describe('Main', () => {
   })
 
   it('does not mount the sharing invitations on the public route', () => {
-    render(<Main isPublic>{[]}</Main>)
+    renderAt(<Main isPublic>{[]}</Main>)
 
     expect(screen.queryByTestId('sharing-invitations')).toBe(null)
+  })
+
+  it('only mounts the sharing invitations on sharings pages', () => {
+    renderAt(<Main isPublic={false}>{[]}</Main>, '/sharings/with-me')
+
+    expect(screen.queryByTestId('sharing-invitations')).toBeInTheDocument()
+    expect(screen.queryByTestId('push-banner')).toBe(null)
+    expect(screen.queryByTestId('migration-banner')).toBe(null)
   })
 
   it('does not mount the migration banner when the flag is off', () => {
     flag.mockReturnValue(false)
 
-    render(<Main isPublic={false}>{[]}</Main>)
+    renderAt(<Main isPublic={false}>{[]}</Main>)
 
     expect(screen.queryByTestId('migration-banner')).toBeNull()
   })
 
   it('mounts the migration banner when the flag is on', () => {
-    render(<Main isPublic={false}>{[]}</Main>)
+    renderAt(<Main isPublic={false}>{[]}</Main>)
 
     expect(screen.queryByTestId('migration-banner')).not.toBeNull()
   })

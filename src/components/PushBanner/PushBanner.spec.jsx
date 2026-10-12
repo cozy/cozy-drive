@@ -80,18 +80,6 @@ describe('PushBanner', () => {
       expect(screen.findByText('QuotaBanner')).toBeDefined()
     })
 
-    it('should hide client banner on sharings pages', () => {
-      isFlagshipApp.mockReturnValue(false)
-      setup(50, false, '/sharings/with-me/folder/folder-id')
-      expect(screen.queryByText('BannerClient')).toBe(null)
-    })
-
-    it('should keep the quota banner on sharings pages', () => {
-      isFlagshipApp.mockReturnValue(false)
-      setup(80, false, '/sharings/with-me')
-      expect(screen.queryByText('QuotaBanner')).toBeInTheDocument()
-    })
-
     it('should hide client banner on flagship app', () => {
       isFlagshipApp.mockReturnValue(true)
       const { container } = setup()
