@@ -1,19 +1,22 @@
 import { execFileSync } from 'child_process'
 import { pbkdf2Sync } from 'crypto'
 
+import type { FullConfig } from '@playwright/test'
+
 import { saveAuthState } from '../helpers/auth'
 import {
   ADMIN_PASSPHRASE,
   ADMIN_USER,
   applyConfigUpdate,
+  buildUsers,
   composeArgs,
   getAdminUrl,
   getStackUrl,
+  MAX_WORKERS,
   ORG_DOMAIN,
   ORG_ID,
   PERSIST,
   RESET,
-  USERS,
   User,
   stackExec
 } from '../helpers/config'
@@ -86,14 +89,17 @@ async function waitForStack(url: string, timeoutMs = 60_000): Promise<void> {
   throw new Error(`cozy-stack did not become ready within ${timeoutMs}ms`)
 }
 
-async function verifyOfficeNetwork(portsConfig: E2EPortsConfig): Promise<void> {
+async function verifyOfficeNetwork(
+  portsConfig: E2EPortsConfig,
+  users: User[]
+): Promise<void> {
   const officeUrl = `http://onlyoffice.${portsConfig.rootDomain}:${portsConfig.onlyofficePort}`
   const apiResponse = await fetch(`${officeUrl}/web-apps/apps/api/documents/api.js`)
   if (!apiResponse.ok) {
     throw new Error(`OnlyOffice browser API unavailable (${apiResponse.status})`)
   }
 
-  for (const user of Object.values(USERS)) {
+  for (const user of users) {
     execFileSync(
       'docker',
       composeArgs(
@@ -249,8 +255,8 @@ async function createContact(hostUser: User, peer: User): Promise<void> {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        fullname: peer.instance.split('.')[0],
-        name: { givenName: peer.instance.split('.')[0] },
+        fullname: peer.label,
+        name: { givenName: peer.label },
         email: [{ address: peer.email, primary: true }],
         cozy: [{ url: `http://${peer.instance}`, primary: true }]
       })
@@ -266,10 +272,9 @@ async function createContact(hostUser: User, peer: User): Promise<void> {
   }
 }
 
-async function syncContacts(): Promise<void> {
-  const entries = Object.values(USERS)
-  for (const host of entries) {
-    for (const peer of entries) {
+async function syncContacts(trio: User[]): Promise<void> {
+  for (const host of trio) {
+    for (const peer of trio) {
       if (peer.instance !== host.instance) {
         await createContact(host, peer)
       }
@@ -277,7 +282,10 @@ async function syncContacts(): Promise<void> {
   }
 }
 
-export async function setupStack(portsConfig: E2EPortsConfig): Promise<void> {
+export async function setupStack(
+  portsConfig: E2EPortsConfig,
+  workers = 1
+): Promise<void> {
   process.env.E2E_PROJECT_NAME = portsConfig.projectName
   process.env.COZY_E2E_ROOT_DOMAIN = portsConfig.rootDomain
   process.env.COZY_E2E_STACK_PORT = String(portsConfig.stackPort)
@@ -324,28 +332,41 @@ export async function setupStack(portsConfig: E2EPortsConfig): Promise<void> {
     '330'
   )
 
+  const trios = Array.from({ length: workers }, (_, parallelIndex) =>
+    Object.values(
+      buildUsers(portsConfig.rootDomain, portsConfig.stackPort, parallelIndex)
+    )
+  )
+
   console.log('[e2e] Waiting for cozy-stack...')
   await waitForStack(getStackUrl())
-  await verifyOfficeNetwork(portsConfig)
+  await verifyOfficeNetwork(portsConfig, trios.flat())
 
   const results: Array<
     [string, { domain: string; cookieName: string; cookieValue: string }]
   > = []
-  for (const user of Object.values(USERS)) {
+  for (const user of trios.flat()) {
     const cookie = await setupUser(user)
-    results.push([user.label, { domain: user.instance, ...cookie }])
+    results.push([user.instance, { domain: user.instance, ...cookie }])
   }
   saveAuthState(Object.fromEntries(results))
 
   console.log('[e2e] Cross-populating org contacts...')
-  await syncContacts()
+  for (const trio of trios) {
+    await syncContacts(trio)
+  }
 
   console.log('[e2e] Setup complete.')
 }
 
-export default async function globalSetup(): Promise<void> {
+export default async function globalSetup(config: FullConfig): Promise<void> {
+  if (config.workers > MAX_WORKERS) {
+    throw new Error(
+      `The E2E suite supports at most ${MAX_WORKERS} workers, got ${config.workers}`
+    )
+  }
   await withPortAllocationLock(async () => {
     const portsConfig = await resolveE2EPorts()
-    await setupStack(portsConfig)
+    await setupStack(portsConfig, config.workers)
   })
 }

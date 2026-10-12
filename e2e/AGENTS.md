@@ -41,3 +41,5 @@ FileViewer, FilePicker, …). Read the file for its methods.
 - Only `*.mobile.spec.ts` runs in the `mobile` project; everything else is
   desktop chromium.
 - Prefer `expect(...).toBeVisible()` / `toPass()` over `waitForTimeout()`.
+- Specs run on several workers, each with its own Alice/Bob/Charlie instances:
+  never hardcode an instance name, email or URL, always go through `USERS`.

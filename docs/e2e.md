@@ -77,9 +77,21 @@ The default lifecycle is destructive. It removes the E2E Compose runtime
 before the suite starts and after it finishes. Use it when a clean E2E state
 is wanted.
 
-The suite uses one Playwright worker because its scenarios share Alice and Bob
-fixture state. Each worktree gets its own Compose project and available host
-ports, so suites from different worktrees can run concurrently.
+Set `E2E_WORKERS` to run the suite on several Playwright workers against the
+same stack (at most 4, the default is 1):
+
+```sh
+E2E_WORKERS=2 yarn e2e
+```
+
+Each worker gets its own Alice, Bob and Charlie instances (`alice`, `bob`,
+`charlie` for the first worker, then `alice1`, `bob1`, `charlie1`, and so
+on), so specs that change instance state such as feature flags never collide.
+Specs keep using `USERS.alice` and the other fixtures unchanged. Files are
+spread across workers, and the tests of a file stay on the same worker.
+
+Each worktree gets its own Compose project and available host ports, so
+suites from different worktrees can run concurrently.
 
 ## Reuse a local runtime
 
