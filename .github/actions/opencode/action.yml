@@ -23,9 +23,21 @@ inputs:
 runs:
   using: composite
   steps:
+    # The gateway is a LiteLLM proxy: it only knows its own model names,
+    # so it is declared as a plain OpenAI-compatible provider.
     - name: Run OpenCode
       shell: bash
-      run: npx --yes "opencode-ai@$VERSION" github run
+      run: |
+        OPENCODE_CONFIG_CONTENT=$(jq -nc --arg model "${MODEL#*/}" '{
+          provider: {linagora: {
+            npm: "@ai-sdk/openai-compatible",
+            options: {baseURL: "{env:AI_API_BASE_URL}", apiKey: "{env:AI_API_KEY}"},
+            models: {($model): {}}
+          }},
+          small_model: env.MODEL
+        }')
+        export OPENCODE_CONFIG_CONTENT
+        npx --yes "opencode-ai@$VERSION" github run
       env:
         VERSION: ${{ inputs.version }}
         MODEL: ${{ inputs.model }}
