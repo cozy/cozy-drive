@@ -65,33 +65,47 @@ function computeInstancePortSuffix(port: number): string {
   return port === 80 ? '' : `:${port}`
 }
 
-export function buildUsers(
-  rootDomain = ROOT_DOMAIN,
-  stackPort = STACK_PORT
-): Record<UserLabel, User> {
+/** Upper bound of Playwright workers: each one needs its own Alice, Bob and
+ * Charlie instances, and the OnlyOffice network aliases in
+ * docker-compose.e2e.yml are declared for that many trios. */
+export const MAX_WORKERS = 4
+
+/** Playwright sets TEST_PARALLEL_INDEX in each worker process; the main
+ * process (global setup and teardown) runs as index 0. */
+export const PARALLEL_INDEX = parseInt(
+  process.env.TEST_PARALLEL_INDEX || '0',
+  10
+)
+
+const buildUser = (
+  label: UserLabel,
+  rootDomain: string,
+  stackPort: number,
+  parallelIndex: number
+): User => {
+  const name = parallelIndex === 0 ? label : `${label}${parallelIndex}`
   const suffix = computeInstancePortSuffix(stackPort)
   return {
-    alice: {
-      label: 'alice',
-      instance: `alice.${rootDomain}${suffix}`,
-      appUrl: `http://alice-drive.${rootDomain}${suffix}`,
-      email: `alice@${rootDomain}`,
-      passphrase: 'alice1234'
-    },
-    bob: {
-      label: 'bob',
-      instance: `bob.${rootDomain}${suffix}`,
-      appUrl: `http://bob-drive.${rootDomain}${suffix}`,
-      email: `bob@${rootDomain}`,
-      passphrase: 'bob1234'
-    },
-    charlie: {
-      label: 'charlie',
-      instance: `charlie.${rootDomain}${suffix}`,
-      appUrl: `http://charlie-drive.${rootDomain}${suffix}`,
-      email: `charlie@${rootDomain}`,
-      passphrase: 'charlie1234'
-    }
+    label,
+    instance: `${name}.${rootDomain}${suffix}`,
+    appUrl: `http://${name}-drive.${rootDomain}${suffix}`,
+    email: `${name}@${rootDomain}`,
+    passphrase: `${label}1234`
+  }
+}
+
+/** Users of one Playwright worker: worker 0 keeps the historical alice, bob
+ * and charlie instances, worker N gets aliceN, bobN and charlieN, so specs
+ * that change instance state (feature flags) never collide across workers. */
+export function buildUsers(
+  rootDomain = ROOT_DOMAIN,
+  stackPort = STACK_PORT,
+  parallelIndex = PARALLEL_INDEX
+): Record<UserLabel, User> {
+  return {
+    alice: buildUser('alice', rootDomain, stackPort, parallelIndex),
+    bob: buildUser('bob', rootDomain, stackPort, parallelIndex),
+    charlie: buildUser('charlie', rootDomain, stackPort, parallelIndex)
   }
 }
 

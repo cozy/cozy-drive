@@ -5,7 +5,8 @@ export default defineConfig({
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
-  workers: 1,
+  // Each worker runs on its own Alice/Bob/Charlie instances (see buildUsers).
+  workers: parseInt(process.env.E2E_WORKERS || '1', 10),
   reporter: process.env.CI ? 'html' : 'list',
   globalSetup: './setup/global-setup.ts',
   globalTeardown: './setup/global-teardown.ts',

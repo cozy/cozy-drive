@@ -77,10 +77,21 @@ services:
         aliases:
           - onlyoffice.${COZY_E2E_ROOT_DOMAIN:-cozy.localhost}
       office:
+        # One Alice/Bob/Charlie trio per Playwright worker, up to MAX_WORKERS
+        # in e2e/helpers/config.ts.
         aliases:
           - alice.${COZY_E2E_ROOT_DOMAIN:-cozy.localhost}
           - bob.${COZY_E2E_ROOT_DOMAIN:-cozy.localhost}
           - charlie.${COZY_E2E_ROOT_DOMAIN:-cozy.localhost}
+          - alice1.${COZY_E2E_ROOT_DOMAIN:-cozy.localhost}
+          - bob1.${COZY_E2E_ROOT_DOMAIN:-cozy.localhost}
+          - charlie1.${COZY_E2E_ROOT_DOMAIN:-cozy.localhost}
+          - alice2.${COZY_E2E_ROOT_DOMAIN:-cozy.localhost}
+          - bob2.${COZY_E2E_ROOT_DOMAIN:-cozy.localhost}
+          - charlie2.${COZY_E2E_ROOT_DOMAIN:-cozy.localhost}
+          - alice3.${COZY_E2E_ROOT_DOMAIN:-cozy.localhost}
+          - bob3.${COZY_E2E_ROOT_DOMAIN:-cozy.localhost}
+          - charlie3.${COZY_E2E_ROOT_DOMAIN:-cozy.localhost}
     healthcheck:
       test:
         [
