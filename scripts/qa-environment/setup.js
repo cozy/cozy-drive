@@ -32,7 +32,9 @@ const SEED = {
   }
 }
 
-async function createEntry(user, token, dirId, query, body, contentType) {
+// file ({ body, contentType }) is left out for a directory
+async function createEntry({ user, token, dirId }, query, file = {}) {
+  const { body, contentType } = file
   const res = await fetch(
     `http://${user.instance}/files/${dirId}?${new URLSearchParams(query)}`,
     {
@@ -47,7 +49,9 @@ async function createEntry(user, token, dirId, query, body, contentType) {
   )
   if (!res.ok) {
     throw new Error(
-      `Creating ${query.Name} on ${user.instance} failed (${res.status}): ${await res.text()}`
+      `Creating ${query.Name} on ${user.instance} failed (${
+        res.status
+      }): ${await res.text()}`
     )
   }
   return (await res.json()).data.id
@@ -63,19 +67,15 @@ async function seedFiles() {
       'io.cozy.files'
     )
     for (const [folder, files] of Object.entries(folders)) {
-      const dirId = await createEntry(user, token, ROOT_DIR_ID, {
-        Type: 'directory',
-        Name: folder
-      })
+      const dirId = await createEntry(
+        { user, token, dirId: ROOT_DIR_ID },
+        { Type: 'directory', Name: folder }
+      )
       for (const [name, contentType] of files) {
-        const content = fs.readFileSync(path.join(FIXTURES, name))
         await createEntry(
-          user,
-          token,
-          dirId,
+          { user, token, dirId },
           { Type: 'file', Name: name },
-          content,
-          contentType
+          { body: fs.readFileSync(path.join(FIXTURES, name)), contentType }
         )
       }
       console.log(`    ${label}: /${folder} (${files.length} files)`)
