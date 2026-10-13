@@ -62,6 +62,18 @@ describe('Breadcrumbs', () => {
       })
     })
 
+    it('should close once a folder of the path is clicked', () => {
+      const { container } = setup({
+        path: dummyPath,
+        onBreadcrumbClick: jest.fn()
+      })
+      fireEvent.click(container.querySelector('.fil-path-current'))
+
+      fireEvent.click(container.querySelector('.fil-path-link'))
+
+      expect(container.querySelector('.deployed')).toBe(null)
+    })
+
     it('should toggle deploy on click on current', () => {
       // Given
       document.addEventListener = jest.fn()
