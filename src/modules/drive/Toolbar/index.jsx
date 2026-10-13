@@ -21,6 +21,7 @@ import {
   getFolderIdFromSharing
 } from '@/modules/shareddrives/helpers'
 import { AssistantButton } from '@/modules/views/Drive/Assistant/AssistantButton'
+import { useAssistant } from '@/modules/views/Drive/Assistant/AssistantProvider'
 
 const Toolbar = ({
   folderId,
@@ -35,6 +36,7 @@ const Toolbar = ({
 }) => {
   const { displayedFolder } = useDisplayedFolder()
   const { isMobile } = useBreakpoints()
+  const assistant = useAssistant()
   const { showSelectionBar, isSelectionBarVisible } = useSelectionContext()
   const { allLoaded } = useSharingContext() // We need to wait for the sharing context to be completely loaded to avoid race conditions
 
@@ -65,7 +67,7 @@ const Toolbar = ({
       className={cx(styles['fil-toolbar-files'], 'u-flex-items-center')}
       role="toolbar"
     >
-      <AssistantButton />
+      <AssistantButton {...assistant} />
       <InsideRegularFolder
         displayedFolder={displayedFolder}
         folderId={folderId}
@@ -86,7 +88,12 @@ const Toolbar = ({
       </InsideRegularFolder>
       <ViewSwitcher className="u-mr-half" />
       <BarRightOnMobile>
-        {isMobile && <SearchButton />}
+        {isMobile && (
+          <>
+            <AssistantButton {...assistant} />
+            <SearchButton />
+          </>
+        )}
         {showMoreMenu && <MoreMenu {...moreMenuProps} />}
       </BarRightOnMobile>
     </div>
