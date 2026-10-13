@@ -1,4 +1,4 @@
-import { computeOverlayRegion } from './connectSpaceOverlay'
+import { computeOverlayRegion, mirrorStyles } from './connectSpaceOverlay'
 
 describe('computeOverlayRegion', () => {
   afterEach(() => {
@@ -21,5 +21,27 @@ describe('computeOverlayRegion', () => {
       '<div role="presentation" class="MuiDialog-root-12" style="visibility: hidden"></div>'
 
     expect(computeOverlayRegion(document)).toEqual([])
+  })
+})
+
+describe('mirrorStyles', () => {
+  it('copies a style filled while a menu opens without waiting a frame', () => {
+    const frame = document.createElement('iframe')
+    document.body.appendChild(frame)
+    const overlay = frame.contentDocument as Document
+    mirrorStyles(document, overlay)
+    const style = document.createElement('style')
+    document.head.appendChild(style)
+
+    style.textContent = '.menu-paper { position: absolute; }'
+
+    const mirror = overlay.querySelector<HTMLStyleElement>('style[data-mirror]')
+    const rules = Array.from(
+      mirror?.sheet?.cssRules ?? [],
+      rule => rule.cssText
+    )
+    expect(rules).toContainEqual(expect.stringContaining('.menu-paper'))
+    style.remove()
+    frame.remove()
   })
 })

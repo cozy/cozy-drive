@@ -99,7 +99,7 @@ function findOverlay(name: string): Document | null {
   return null
 }
 
-function mirrorStyles(source: Document, target: Document): void {
+export function mirrorStyles(source: Document, target: Document): void {
   const sourceWindow = source.defaultView
   if (sourceWindow === null) return
   const mirror = target.createElement('style')
@@ -161,6 +161,26 @@ function mirrorStyles(source: Document, target: Document): void {
     copyRule(this, args[0])
     schedule()
     return index
+  }
+  const textContent = Object.getOwnPropertyDescriptor(
+    sourceWindow.Node.prototype,
+    'textContent'
+  )
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  const setTextContent = textContent?.set
+  if (textContent && setTextContent) {
+    Object.defineProperty(sourceWindow.Node.prototype, 'textContent', {
+      ...textContent,
+      set(this: Node, value: string | null): void {
+        setTextContent.call(this, value)
+        if (!(this instanceof sourceWindow.HTMLStyleElement)) return
+        const sheet = this.sheet
+        if (this.parentNode !== source.head || sheet === null) return
+        for (const rule of Array.from(sheet.cssRules)) {
+          copyRule(sheet, rule.cssText)
+        }
+      }
+    })
   }
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const deleteRule = prototype.deleteRule
