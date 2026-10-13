@@ -63,6 +63,7 @@ const Breadcrumb = ({
                 className={styles['fil-path-link']}
                 onClick={e => {
                   e.stopPropagation()
+                  closeMenu()
                   onBreadcrumbClick(folder)
                 }}
                 key={index}

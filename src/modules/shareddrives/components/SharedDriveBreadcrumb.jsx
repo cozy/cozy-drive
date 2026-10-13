@@ -52,6 +52,7 @@ const SharedDriveBreadcrumb = ({ driveId, folderId }) => {
 
   return (
     <Breadcrumb
+      inBar={!isInSpace}
       path={
         isInSpace
           ? path

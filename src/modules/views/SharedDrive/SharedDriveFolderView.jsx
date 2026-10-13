@@ -62,6 +62,8 @@ function SharedDriveFolderActions({
   const { displayedFolder } = useDisplayedFolder()
   const isInSpace = isSpacePath(pathname)
 
+  if (isInSpace && isMobile) return null
+
   return (
     <>
       {isInSpace && !isMobile && (
@@ -96,6 +98,27 @@ function SharedDriveFolderActions({
         showMoreMenu={!isInSpace}
       />
     </>
+  )
+}
+
+function SharedDriveFolderHeader({
+  driveId,
+  folderId,
+  canWrite,
+  showShareButton
+}) {
+  const { pathname } = useLocation()
+
+  return (
+    <FolderViewHeader hideOnMobile={!isSpacePath(pathname)}>
+      <SharedDriveBreadcrumb driveId={driveId} folderId={folderId} />
+      <SharedDriveFolderActions
+        driveId={driveId}
+        folderId={folderId}
+        canWrite={canWrite}
+        showShareButton={showShareButton}
+      />
+    </FolderViewHeader>
   )
 }
 
@@ -256,15 +279,12 @@ function SharedDriveFolderViewContent({ sharing, driveId, folderId }) {
         disabled={!canWriteToCurrentFolder}
         displayedFolder={displayedFolder}
       >
-        <FolderViewHeader>
-          <SharedDriveBreadcrumb driveId={driveId} folderId={folderId} />
-          <SharedDriveFolderActions
-            driveId={driveId}
-            folderId={folderId}
-            canWrite={canWriteToCurrentFolder}
-            showShareButton={isInRootOfSharedDrive}
-          />
-        </FolderViewHeader>
+        <SharedDriveFolderHeader
+          driveId={driveId}
+          folderId={folderId}
+          canWrite={canWriteToCurrentFolder}
+          showShareButton={isInRootOfSharedDrive}
+        />
 
         {isVirtualized ? (
           <FolderViewBodyVz

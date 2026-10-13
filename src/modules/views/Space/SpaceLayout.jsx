@@ -87,7 +87,7 @@ const SpaceLayout = () => {
   )
 
   const layout = (
-    <LayoutUI monoColumn>
+    <LayoutUI monoColumn withTopBar={false}>
       <NewItemHighlightProvider>
         <UploadQueue />
         <FilesRealTimeQueries />
