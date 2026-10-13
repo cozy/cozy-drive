@@ -75,6 +75,31 @@ export const saveInvitationAsSeen = async ({ client, file, showAlert, t }) => {
 }
 
 /**
+ * Accepts a shared drive invitation in place, alerting the user on failure.
+ * The stack marks its shortcut as seen.
+ *
+ * @param {object} params
+ * @param {import('cozy-client').default} params.client
+ * @param {object} params.sharing - io.cozy.sharings of the shared drive
+ * @param {Function} params.showAlert - showAlert from the cozy-ui alert provider
+ * @param {Function} params.t - Translation function
+ * @returns {Promise<void>}
+ */
+export const acceptSharedDriveInvitation = async ({
+  client,
+  sharing,
+  showAlert,
+  t
+}) => {
+  try {
+    await client.collection('io.cozy.sharings').acceptSharedDrive(sharing)
+  } catch (error) {
+    logger.error(`Accepting shared drive ${sharing._id} failed`, error)
+    showAlert({ message: t('alert.try_again'), severity: 'error' })
+  }
+}
+
+/**
  * Permanently deletes the shortcut of a sharing invitation, alerting the user
  * on failure
  *

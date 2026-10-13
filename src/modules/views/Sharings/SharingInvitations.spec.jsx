@@ -56,17 +56,23 @@ function makeShortcut(id, { status = 'new' } = {}) {
 
 function setup(files, pathname = '/folder') {
   const deleteFilePermanently = jest.fn().mockResolvedValue({})
+  const acceptSharedDrive = jest.fn().mockResolvedValue({})
   const client = {
     save: jest.fn().mockResolvedValue({}),
-    collection: jest.fn(() => ({ deleteFilePermanently })),
+    collection: jest.fn(() => ({ acceptSharedDrive, deleteFilePermanently })),
     dispatch: jest.fn(),
     generateRandomId: jest.fn(() => 'random-id')
   }
   useClient.mockReturnValue(client)
+  const getSharingForSelf = jest.fn(() => ({
+    id: 'sharing-id',
+    attributes: { drive: false }
+  }))
   useSharingContext.mockReturnValue({
     allLoaded: true,
     byDocId: {},
-    getOwner: () => ({ public_name: 'Alice' })
+    getOwner: () => ({ public_name: 'Alice' }),
+    getSharingForSelf
   })
   useSharingsQueryResult.mockReturnValue({ data: files })
   useAlert.mockReturnValue({ showAlert: jest.fn() })
@@ -80,7 +86,14 @@ function setup(files, pathname = '/folder') {
       </MemoryRouter>
     )
   })
-  return { ...view, client, deleteFilePermanently, openLink }
+  return {
+    ...view,
+    client,
+    deleteFilePermanently,
+    acceptSharedDrive,
+    getSharingForSelf,
+    openLink
+  }
 }
 
 // MidEllipsis splits the name in two spans wrapped with left-to-right marks
@@ -150,13 +163,32 @@ describe('SharingInvitations', () => {
     )
   })
 
-  it('opens the sharing and marks it as seen when accepted', async () => {
+  it('opens a sharing that is not a drive and marks it as seen when accepted', async () => {
     const { client, openLink } = setup([makeShortcut('s1')])
 
     fireEvent.click(screen.getByText('SharingInvitations.accept'))
 
     expect(openLink).toHaveBeenCalled()
     await waitFor(() => expect(client.save).toHaveBeenCalled())
+  })
+
+  it('accepts a shared drive in place', async () => {
+    const { acceptSharedDrive, client, getSharingForSelf, openLink } = setup([
+      makeShortcut('s1')
+    ])
+    const driveSharing = {
+      _id: 'drive-sharing-id',
+      attributes: { drive: true }
+    }
+    getSharingForSelf.mockReturnValue(driveSharing)
+
+    fireEvent.click(screen.getByText('SharingInvitations.accept'))
+
+    await waitFor(() =>
+      expect(acceptSharedDrive).toHaveBeenCalledWith(driveSharing)
+    )
+    expect(openLink).not.toHaveBeenCalled()
+    expect(client.save).not.toHaveBeenCalled()
   })
 
   it('permanently deletes the shortcut and removes it from the store when declined', async () => {

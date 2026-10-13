@@ -13,7 +13,11 @@ import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 import { useI18n } from 'twake-i18n'
 
-import { declineInvitation, saveInvitationAsSeen } from './helpers'
+import {
+  acceptSharedDriveInvitation,
+  declineInvitation,
+  saveInvitationAsSeen
+} from './helpers'
 
 import { SharingShortcutIcon } from '@/modules/filelist/icons/SharingShortcutIcon'
 import { useFileLink } from '@/modules/navigation/hooks/useFileLink'
@@ -27,7 +31,7 @@ const SharingInvitation = ({ file }) => {
   const { isMobile } = useBreakpoints()
   const client = useClient()
   const { showAlert } = useAlert()
-  const { getOwner } = useSharingContext()
+  const { getOwner, getSharingForSelf } = useSharingContext()
   const { openLink } = useFileLink(file)
 
   const owner = getOwner(file._id)
@@ -39,6 +43,11 @@ const SharingInvitation = ({ file }) => {
   }).split(NAME_MARKER)
 
   const handleAccept = evt => {
+    const sharing = getSharingForSelf(file._id)
+    if (sharing?.attributes.drive) {
+      acceptSharedDriveInvitation({ client, sharing, showAlert, t })
+      return
+    }
     openLink(evt)
     saveInvitationAsSeen({ client, file, showAlert, t })
   }
