@@ -16,6 +16,11 @@ jest.mock('react-router-dom', () => ({
 }))
 
 jest.mock('cozy-client', () => ({
+  ...jest.requireActual('cozy-client'),
+  useClient: () => ({
+    getStackClient: () => ({ uri: 'https://bob.cozy.example' }),
+    getInstanceOptions: () => ({ subdomain: 'flat' })
+  }),
   useQuery: (...args) => mockUseQuery(...args)
 }))
 
@@ -81,5 +86,28 @@ describe('FilesViewerSharedDrive', () => {
 
     mockFilesViewer.mock.calls[0][0].onClose()
     expect(mockNavigate).toHaveBeenCalledWith('/shareddrive/drive-1/folder-1')
+    expect(mockFilesViewer.mock.calls[0][0].viewerProps.toolbarProps).toBe(
+      undefined
+    )
+  })
+
+  it('opens the file path folder of a space in Drive in a new tab', () => {
+    const open = jest.spyOn(window, 'open').mockImplementation(() => null)
+    mockUseLocation.mockReturnValue({
+      pathname: '/embed/sharings/drive-1/folder-1/file/file-1'
+    })
+
+    render(<FilesViewerSharedDrive />)
+
+    mockFilesViewer.mock.calls[0][0].viewerProps.toolbarProps.onFilePathClick({
+      dir_id: 'folder-2'
+    })
+    expect(open).toHaveBeenCalledWith(
+      'https://bob-drive.cozy.example/#/shareddrive/drive-1/folder-2',
+      '_blank',
+      'noopener,noreferrer'
+    )
+    expect(mockNavigate).not.toHaveBeenCalled()
+    open.mockRestore()
   })
 })

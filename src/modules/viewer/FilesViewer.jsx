@@ -200,13 +200,14 @@ const FilesViewer = ({ filesQuery, files, onClose, onChange, viewerProps }) => {
                       })
                 )
             },
+            ...viewerComponentProps,
             toolbarProps: {
               showFilePath: true,
-              onPaywallRedirect: redirectToPaywall
+              onPaywallRedirect: redirectToPaywall,
+              ...viewerComponentProps.toolbarProps
             },
-            ...(viewerComponentProps || {}),
             sharingActions: {
-              ...(viewerComponentProps?.sharingActions || {}),
+              ...viewerComponentProps.sharingActions,
               disabled: shouldHideSharingActions
             }
           }}

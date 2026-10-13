@@ -102,6 +102,24 @@ describe('FilesViewer', () => {
     )
   })
 
+  it('keeps its toolbar props when given more', async () => {
+    const onFilePathClick = jest.fn()
+    setup({ viewerProps: { toolbarProps: { onFilePathClick } } })
+
+    await screen.findByText('Viewer')
+
+    expect(mockViewer).toHaveBeenCalledWith(
+      expect.objectContaining({
+        componentsProps: expect.objectContaining({
+          toolbarProps: expect.objectContaining({
+            showFilePath: true,
+            onFilePathClick
+          })
+        })
+      })
+    )
+  })
+
   it('should fetch the file if necessary', async () => {
     const client = new CozyClient({})
     client.query = jest.fn().mockResolvedValue({
