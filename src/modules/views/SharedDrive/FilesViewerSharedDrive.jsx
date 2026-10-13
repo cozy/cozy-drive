@@ -1,7 +1,7 @@
 import React from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
-import { useQuery } from 'cozy-client'
+import { generateWebLink, useClient, useQuery } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
 
 import { FilesViewerLoading } from '@/components/FilesViewerLoading'
@@ -23,6 +23,7 @@ import { buildSharedDriveQuery } from '@/queries'
 
 const FilesViewerSharedDrive = () => {
   const navigate = useNavigate()
+  const client = useClient()
   const { pathname } = useLocation()
   const [sortOrder] = useFolderSort()
   const folderId = useCurrentFolderId()
@@ -76,7 +77,23 @@ const FilesViewerSharedDrive = () => {
         viewerProps={{
           panel: {
             sharing: { disabled: !hasWriteAccess(folderId, driveId) }
-          }
+          },
+          ...(isInSpace && {
+            toolbarProps: {
+              onFilePathClick: file =>
+                window.open(
+                  generateWebLink({
+                    slug: 'drive',
+                    cozyUrl: client.getStackClient().uri,
+                    subDomainType: client.getInstanceOptions().subdomain,
+                    pathname: '/',
+                    hash: getSharedDrivePath(driveId, file.dir_id)
+                  }),
+                  '_blank',
+                  'noopener,noreferrer'
+                )
+            }
+          })
         }}
       />
     )
