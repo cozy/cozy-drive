@@ -5,11 +5,12 @@ import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import Tooltip from 'cozy-ui/transpiled/react/Tooltip'
 import { useI18n } from 'twake-i18n'
 
-import { useAssistant } from '@/modules/views/Drive/Assistant/AssistantProvider'
-
-export const AssistantButton = () => {
+/**
+ * Takes the state of the assistant as props: on a phone the button is rendered
+ * in the bar, outside the AssistantProvider
+ */
+export const AssistantButton = ({ isAvailable, isOpen, open, close }) => {
   const { t } = useI18n()
-  const { isAvailable, isOpen, open, close } = useAssistant()
 
   // The Drive toolbar is also rendered by views without an AssistantProvider,
   // and the provider gives nothing without the flag

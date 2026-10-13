@@ -14,6 +14,7 @@ The scribe of the OnlyOffice editor is another use of the same intent, on a text
 ## For the user
 
 - The assistant button is in the toolbar of the file list, with the flag `cozy.assistant.enabled`. A click opens the assistant in a card beside the list; another click, or the close button of the assistant, closes it.
+- On a phone, the button is in the bar at the top, and the assistant takes the place of the list.
 - The assistant answers from the documents of the user, with their sources. The user can turn the documents off in the composer.
 
 ## Requirements
