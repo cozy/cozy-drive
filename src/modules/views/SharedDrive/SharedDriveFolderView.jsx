@@ -165,13 +165,12 @@ function SharedDriveFolderViewContent({ sharing, driveId, folderId }) {
   const { t } = useI18n()
   const { showAlert } = useAlert()
   const dispatch = useDispatch()
-  const rootFolderId = getFolderIdFromSharing(sharing)
-  const isInRootOfSharedDrive = rootFolderId === folderId
+  const isInRootOfSharedDrive = getFolderIdFromSharing(sharing) === folderId
   const { setIsFabDisplayed } = useContext(FabContext)
 
   const { sharedDriveResult, fetchStatus, lastUpdate, hasMore, fetchMore } =
     useSharedDriveFolder({ driveId, folderId })
-  useReportSpaceFiles(driveId, rootFolderId, lastUpdate)
+  useReportSpaceFiles(driveId, getFolderIdFromSharing(sharing), lastUpdate)
 
   const files = sharedDriveResult.included ?? []
   const queryResults = [
