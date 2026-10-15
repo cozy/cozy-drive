@@ -9,6 +9,8 @@ import {
   filePickerItemTypes,
   filePickerModes,
   filePickerSections,
+  filePickerViewTypes,
+  DEFAULT_FILE_PICKER_VIEW_TYPE,
   FILE_PICKER_RECENTS_ROOT_ID,
   FILE_PICKER_SHARINGS_ROOT_ID
 } from './constants'
@@ -114,6 +116,7 @@ function useCurrentFolderResolver({
 
 const FilePickerController = ({
   mode,
+  viewType,
   initialLocation,
   availableSections,
   displayedTypes,
@@ -248,6 +251,7 @@ const FilePickerController = ({
         <FilePickerBody
           key={location.section}
           mode={mode}
+          viewType={viewType}
           isSectionChanging={isSectionChanging}
           onSectionReady={handleSectionReady}
           sortOrder={sortOrder}
@@ -280,6 +284,7 @@ const FilePickerController = ({
 }
 
 FilePickerController.propTypes = {
+  viewType: PropTypes.oneOf(Object.values(filePickerViewTypes)),
   mode: PropTypes.oneOf(Object.values(filePickerModes)).isRequired,
   initialLocation: PropTypes.shape({
     section: PropTypes.oneOf(Object.values(filePickerSections)).isRequired,
@@ -332,6 +337,7 @@ export const FilePicker = ({ selectedItems, onSelectionChange, ...props }) => {
 }
 
 FilePicker.propTypes = {
+  viewType: PropTypes.oneOf(Object.values(filePickerViewTypes)),
   mode: PropTypes.oneOf(Object.values(filePickerModes)).isRequired,
   initialLocation: PropTypes.shape({
     section: PropTypes.oneOf(Object.values(filePickerSections)).isRequired,
@@ -369,6 +375,7 @@ FilePicker.propTypes = {
 }
 
 FilePicker.defaultProps = {
+  viewType: DEFAULT_FILE_PICKER_VIEW_TYPE,
   initialLocation: DEFAULT_LOCATION,
   availableSections: Object.values(filePickerSections),
   displayedTypes: Object.values(filePickerItemTypes),
