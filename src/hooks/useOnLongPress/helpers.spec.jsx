@@ -107,15 +107,6 @@ describe('handleClick', () => {
     MockDate.reset()
   })
 
-  // should create a real life test to replace toggle by final func
-  xit('should only toggle by default', () => {
-    const { params } = setup({})
-    handleClick(params)
-
-    expect(mockToggle).toHaveBeenCalledWith(ev)
-    expect(mockOpenLink).not.toHaveBeenCalled()
-  })
-
   describe('should do nothing if', () => {
     it('disabled is true', () => {
       const { params } = setup({ disabled: true })
