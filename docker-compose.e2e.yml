@@ -51,6 +51,8 @@ services:
       - ./plugins/onlyoffice-scribe/build:/var/www/onlyoffice/documentserver/sdkjs-plugins/twake-scribe:ro
     networks:
       - office
+    # Document Server ignores SIGTERM and would hold every stop for 10s
+    stop_grace_period: 0s
     healthcheck:
       test:
         ["CMD-SHELL", 'test "$(curl -fsS http://localhost/healthcheck)" = true']
