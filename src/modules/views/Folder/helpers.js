@@ -7,7 +7,7 @@ import { getDriveI18n } from '@/locales'
  * @returns {{r: number, g: number, b: number}|null} An object with r, g, b values (0-255), or null if input is invalid.
  */
 export const hexToRgb = hex => {
-  if (!hex) return null
+  if (typeof hex !== 'string') return null
   const normalized = hex.replace(/^#/, '')
   const long = /^(\w{2})(\w{2})(\w{2})$/i
   const match = normalized.match(long)

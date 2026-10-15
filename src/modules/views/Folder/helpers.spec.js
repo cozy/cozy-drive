@@ -14,6 +14,12 @@ describe('color helpers', () => {
     expect(hexToRgb('#1234')).toBeNull()
   })
 
+  test('hexToRgb returns null on non-string inputs', () => {
+    expect(hexToRgb(12345)).toBeNull()
+    expect(hexToRgb({ a: 1 })).toBeNull()
+    expect(hexToRgb(['#ff8800'])).toBeNull()
+  })
+
   test('hexToRgb parses 6-digit hex with or without #', () => {
     expect(hexToRgb('#ff8800')).toEqual({ r: 255, g: 136, b: 0 })
     expect(hexToRgb('ff8800')).toEqual({ r: 255, g: 136, b: 0 })
@@ -47,5 +53,6 @@ describe('color helpers', () => {
     expect(shadeColor('#00ff00', { to: 'black', factor: 0.5 })).toBe('#008000')
     // Fallback to input if base is invalid
     expect(shadeColor('zzz', { to: 'white', factor: 0.5 })).toBe('zzz')
+    expect(shadeColor(12345, { to: 'white', factor: 0.5 })).toBe(12345)
   })
 })
