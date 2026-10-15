@@ -3,6 +3,13 @@ export const filePickerModes = {
   CURRENT_FOLDER: 'current-folder'
 }
 
+export const filePickerViewTypes = {
+  LIST: 'list',
+  GRID: 'grid'
+}
+
+export const DEFAULT_FILE_PICKER_VIEW_TYPE = filePickerViewTypes.LIST
+
 export const filePickerSections = {
   DRIVE: 'drive',
   RECENTS: 'recents',
