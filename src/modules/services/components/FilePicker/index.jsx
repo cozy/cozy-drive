@@ -31,9 +31,11 @@ import { FilePicker as SharedFilePicker } from '@/components/FilePicker/FilePick
 import {
   filePickerItemTypes,
   filePickerModes,
-  filePickerSections
+  filePickerSections,
+  DEFAULT_FILE_PICKER_VIEW_TYPE
 } from '@/components/FilePicker/constants'
 import { getCompliantTypes, isValidFile } from '@/components/FilePicker/helpers'
+import { ViewSwitcherContext } from '@/lib/ViewSwitcherContext'
 
 const LinkAccessModal = lazy(() =>
   import('./LinkAccessModal').then(m => ({ default: m.LinkAccessModal }))
@@ -50,6 +52,11 @@ const FilePicker = ({
   canNavigateTo,
   validateSharingSelection
 }) => {
+  const [viewType, setViewType] = useState(DEFAULT_FILE_PICKER_VIEW_TYPE)
+  const viewSwitcherContextValue = useMemo(
+    () => ({ viewType, switchView: setViewType }),
+    [viewType]
+  )
   // Selection, action progress and business errors change the visible picker UI.
   const [error, setError] = useState(null)
   const [isLinkAccessOpen, setIsLinkAccessOpen] = useState(false)
@@ -211,7 +218,7 @@ const FilePicker = ({
   )
 
   return (
-    <>
+    <ViewSwitcherContext.Provider value={viewSwitcherContextValue}>
       <Paper
         className="u-h-100 u-w-100 u-flex u-flex-column"
         square
@@ -219,6 +226,7 @@ const FilePicker = ({
       >
         <SharedFilePicker
           mode={filePickerModes.SELECTION}
+          viewType={viewType}
           initialLocation={config.initialLocation}
           restrictedRoot={config.restrictedRoot}
           canNavigateTo={canNavigateTo}
@@ -283,7 +291,7 @@ const FilePicker = ({
           />
         </Suspense>
       )}
-    </>
+    </ViewSwitcherContext.Provider>
   )
 }
 
