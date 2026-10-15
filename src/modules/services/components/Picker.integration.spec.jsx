@@ -90,6 +90,19 @@ jest.mock('cozy-ui/transpiled/react/Table/Virtualized', () => {
   return { __esModule: true, default: VirtualizedTable }
 })
 
+jest.mock('cozy-ui/transpiled/react/GridList/Virtualized', () => ({
+  __esModule: true,
+  default: require('test/components/VirtualizedGridMock').VirtualizedGridMock
+}))
+
+async function switchView(viewType) {
+  fireEvent.click(
+    await screen.findByRole('button', {
+      name: viewType === 'grid' ? 'Grid view' : 'List view'
+    })
+  )
+}
+
 const root = {
   _id: ROOT_DIR_ID,
   id: ROOT_DIR_ID,
@@ -316,7 +329,7 @@ function setup(
 function getRow(id) {
   return (
     screen
-      .queryAllByTestId('list-item')
+      .queryAllByTestId(/^(list|grid)-item$/)
       .find(row => row.getAttribute('data-file-id') === id) ?? null
   )
 }
@@ -355,6 +368,84 @@ function provideExistingSharingLink(client) {
 
 describe('PICK intent integration', () => {
   afterEach(() => jest.clearAllMocks())
+
+  it('switches presentation without losing selection, folder, action filters or writing preferences', async () => {
+    const { service, writes } = setup({
+      ...onlyDocuments,
+      defaultDirId: 'projects',
+      documents: { accept: ['file'] }
+    })
+    fireEvent.click(await waitForRow('invoice'))
+    expect(
+      screen.queryByRole('columnheader', { name: 'Name' })
+    ).toBeInTheDocument()
+    await switchView('grid')
+    expect(screen.queryByRole('table')).toBe(null)
+    expect(getRow('invoice')).toHaveAttribute('aria-pressed', 'true')
+    expect(getRow('invoice')).toHaveAccessibleName('invoice.pdf')
+    expect(screen.getByTestId('documents-btn')).not.toBeDisabled()
+    expect(screen.getByTestId('file-picker-breadcrumb')).toHaveTextContent(
+      'Projects'
+    )
+    await switchView('list')
+    expect(
+      screen.queryByRole('columnheader', { name: 'Name' })
+    ).toBeInTheDocument()
+    expect(screen.getByTestId('documents-btn')).not.toBeDisabled()
+    await switchView('grid')
+    fireEvent.click(screen.getByTestId('documents-btn'))
+    await waitFor(() => expect(service.terminate).toHaveBeenCalledTimes(1))
+    expect(service.terminate.mock.calls[0][0]).toEqual([
+      { ...invoice, path: '/Projects/invoice.pdf' }
+    ])
+    expect(writes).toEqual([])
+  })
+
+  it('retains grid mode across folder and section navigation and returns to list without changing the folder', async () => {
+    setup(
+      { ...onlyDocuments, defaultDirId: 'projects' },
+      { recents: [invoice] }
+    )
+    await switchView('grid')
+    fireEvent.doubleClick(await waitForRow('child'))
+    expect(await waitForRow('nested')).toHaveAttribute('aria-pressed', 'false')
+    expect(screen.queryByTestId('list-item')).toBe(null)
+    await switchView('list')
+    expect(await waitForRow('nested')).toBeInTheDocument()
+    expect(screen.queryByTestId('grid-item')).toBe(null)
+    await switchView('grid')
+    fireEvent.click(screen.getByRole('tab', { name: 'Recents' }))
+    expect(await waitForRow('invoice')).toHaveAttribute('aria-pressed', 'false')
+    fireEvent.click(screen.getByRole('tab', { name: 'My Drive' }))
+    expect(await waitForRow('projects')).toHaveAttribute(
+      'aria-pressed',
+      'false'
+    )
+  })
+
+  it('extends the existing selection with grid keyboard arrows and confirms the actual range', async () => {
+    const { service } = setup({ ...onlyDocuments, defaultDirId: 'projects' })
+    fireEvent.click(await waitForRow('child'))
+    await switchView('grid')
+    fireEvent.keyDown(document, { key: 'ArrowRight', shiftKey: true })
+    expect(getRow('child')).toHaveAttribute('aria-pressed', 'true')
+    expect(getRow('invoice')).toHaveAttribute('aria-pressed', 'true')
+    fireEvent.click(screen.getByTestId('documents-btn'))
+    await waitFor(() => expect(service.terminate).toHaveBeenCalledTimes(1))
+    expect(service.terminate.mock.calls[0][0]).toEqual([
+      child,
+      { ...invoice, path: '/Projects/invoice.pdf' }
+    ])
+  })
+
+  it('opens a grid folder with Enter without Drive actions or a viewer', async () => {
+    setup({ ...onlyDocuments, defaultDirId: 'projects' })
+    await switchView('grid')
+    fireEvent.keyDown(await waitForRow('child'), { key: 'Enter' })
+    expect(await waitForRow('nested')).toBeInTheDocument()
+    expect(screen.queryByRole('menu')).toBe(null)
+    expect(screen.queryByRole('dialog')).toBe(null)
+  })
 
   it('preserves legacy default tabs and link actions, and cancellation has no result payload', async () => {
     const { service } = setup()
