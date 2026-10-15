@@ -40,6 +40,16 @@ export class FilePickerPage {
     await this.waitForPicker()
   }
 
+  /** Keep the launcher mounted when viewport changes hide the sidebar. */
+  async openDemo(): Promise<void> {
+    await this.page.goto(`${this.user.appUrl}/#/file-picker-demo`)
+    await this.page
+      .getByRole('main')
+      .getByRole('button', { name: /pick a file/i })
+      .click()
+    await this.waitForPicker()
+  }
+
   /** Open a demo preset with optional directory controls. */
   async openWithPreset(
     configName: string,
@@ -90,6 +100,115 @@ export class FilePickerPage {
     await frameLocator
       .getByTestId('file-picker-header')
       .waitFor({ state: 'visible' })
+  }
+
+  async showGrid(): Promise<void> {
+    await this.getFrameLocator()
+      .getByRole('button', { name: 'Grid view', exact: true })
+      .click()
+    await this.getFrameLocator()
+      .getByTestId('grid-item')
+      .first()
+      .waitFor({ state: 'visible' })
+  }
+
+  gridItem(name: string): Locator {
+    return this.getFrameLocator().getByRole('button', { name, exact: true })
+  }
+
+  async scrollToGridItem(name: string): Promise<void> {
+    const item: Locator = this.gridItem(name)
+    const scroller: Locator =
+      this.getFrameLocator().getByTestId('virtuoso-scroller')
+    await expect
+      .poll(
+        async (): Promise<number> => {
+          const count: number = await item.count()
+          if (count === 0) {
+            await scroller.evaluate((element: HTMLElement) => {
+              element.scrollTop = Math.min(
+                element.scrollTop + element.clientHeight,
+                element.scrollHeight - element.clientHeight
+              )
+            })
+          }
+          return count
+        },
+        { intervals: [100], timeout: 20_000 }
+      )
+      .toBeGreaterThan(0)
+    await item.scrollIntoViewIfNeeded()
+  }
+
+  async getGridColumnGaps(): Promise<number[]> {
+    return this.getFrameLocator()
+      .getByTestId('grid-item')
+      .evaluateAll((cards: Element[]): number[] => {
+        const bounds: DOMRect[] = cards.map(card =>
+          card.getBoundingClientRect()
+        )
+        const firstTop: number = Math.min(...bounds.map(rect => rect.top))
+        const firstRow: DOMRect[] = bounds
+          .filter(rect => Math.abs(rect.top - firstTop) < 1)
+          .sort((left, right) => left.left - right.left)
+        return firstRow
+          .slice(1)
+          .map((rect, index) => rect.left - firstRow[index].right)
+      })
+  }
+
+  async getGridFilenameAlignment(name: string): Promise<number> {
+    const card = this.getFrameLocator().getByRole('button', {
+      name,
+      exact: true
+    })
+    await card.scrollIntoViewIfNeeded()
+    return card.evaluate((element: HTMLElement): number => {
+      const icon: Element | null = element.querySelector('svg, img')
+      const label: Element | null =
+        element.querySelector('[data-testid="fil-file-filename-and-ext"]') ??
+        element.lastElementChild
+      if (!icon || !label) throw new Error('Missing grid icon or name')
+      const textRects: DOMRect[] = []
+      const walker: TreeWalker = document.createTreeWalker(
+        label,
+        NodeFilter.SHOW_TEXT
+      )
+      while (walker.nextNode()) {
+        if (!walker.currentNode.textContent?.replaceAll('\u200e', '').trim())
+          continue
+        const range: Range = document.createRange()
+        range.selectNodeContents(walker.currentNode)
+        textRects.push(...Array.from(range.getClientRects()))
+      }
+      if (textRects.length === 0) throw new Error('Empty grid filename')
+      const nameCenter: number =
+        (Math.min(...textRects.map(rect => rect.left)) +
+          Math.max(...textRects.map(rect => rect.right))) /
+        2
+      const iconBounds: DOMRect = icon.getBoundingClientRect()
+      return Math.abs(nameCenter - (iconBounds.left + iconBounds.right) / 2)
+    })
+  }
+
+  async getGridFilenameOverflows(): Promise<string[]> {
+    return this.getFrameLocator()
+      .getByTestId('grid-item')
+      .evaluateAll((cards: Element[]): string[] =>
+        cards.length === 0
+          ? ['No grid items rendered']
+          : cards.flatMap((card: Element): string[] => {
+              const name: Element | null = card.lastElementChild
+              if (!name)
+                return [card.getAttribute('aria-label') ?? 'Missing name']
+              const cardBounds: DOMRect = card.getBoundingClientRect()
+              const nameBounds: DOMRect = name.getBoundingClientRect()
+              return nameBounds.left < cardBounds.left - 1 ||
+                nameBounds.right > cardBounds.right + 1
+                ? [card.getAttribute('aria-label') ?? name.textContent ?? '']
+                : []
+            })
+      )
   }
 
   /** Whether the picker iframe is currently visible (picker is open). */

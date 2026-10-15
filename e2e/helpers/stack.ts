@@ -108,7 +108,7 @@ export function waitForVersionWindow(): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, MIN_VERSION_DELAY_MS + 100))
 }
 
-function filesToken(instance: string): string {
+export function makeFilesToken(instance: string): string {
   return stackExec('instances', 'token-cli', instance, 'io.cozy.files')
 }
 
@@ -123,20 +123,22 @@ export async function createFile({
   name,
   content,
   parentId = ROOT_DIR_ID,
-  contentType = 'text/plain'
+  contentType = 'text/plain',
+  token = makeFilesToken(instance)
 }: {
   instance: string
   name: string
   content: string | Uint8Array
   parentId?: string
   contentType?: string
+  token?: string
 }): Promise<string> {
   const res = await fetch(
     `http://${instance}/files/${parentId}?Type=file&Name=${encodeURIComponent(name)}`,
     {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${filesToken(instance)}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': contentType
       },
       body: content
@@ -157,7 +159,7 @@ export async function ensureRootFolder(
   name: string
 ): Promise<string> {
   const headers = {
-    Authorization: `Bearer ${filesToken(instance)}`,
+    Authorization: `Bearer ${makeFilesToken(instance)}`,
     Accept: 'application/json'
   }
   const listRes = await fetch(`http://${instance}/files/${ROOT_DIR_ID}`, {
@@ -193,7 +195,7 @@ export async function createFolder({
   parentId?: string
 }): Promise<string> {
   const headers = {
-    Authorization: `Bearer ${filesToken(instance)}`,
+    Authorization: `Bearer ${makeFilesToken(instance)}`,
     Accept: 'application/json'
   }
   const createRes = await fetch(
@@ -218,7 +220,7 @@ export async function overwriteFile({
   const res = await fetch(`http://${instance}/files/${fileId}`, {
     method: 'PUT',
     headers: {
-      Authorization: `Bearer ${filesToken(instance)}`,
+      Authorization: `Bearer ${makeFilesToken(instance)}`,
       'Content-Type': 'text/plain'
     },
     body: content
@@ -239,7 +241,7 @@ export async function trashByName(
 ): Promise<void> {
   const listRes = await fetch(`http://${instance}/files/${ROOT_DIR_ID}`, {
     headers: {
-      Authorization: `Bearer ${filesToken(instance)}`,
+      Authorization: `Bearer ${makeFilesToken(instance)}`,
       Accept: 'application/json'
     }
   })
@@ -255,7 +257,7 @@ export async function trashByName(
   if (!doc) return
   const delRes = await fetch(`http://${instance}/files/${doc.id}`, {
     method: 'DELETE',
-    headers: { Authorization: `Bearer ${filesToken(instance)}` }
+    headers: { Authorization: `Bearer ${makeFilesToken(instance)}` }
   })
   if (!delRes.ok) {
     throw new Error(
@@ -271,7 +273,7 @@ export async function trashById(
 ): Promise<void> {
   const delRes = await fetch(`http://${instance}/files/${fileId}`, {
     method: 'DELETE',
-    headers: { Authorization: `Bearer ${filesToken(instance)}` }
+    headers: { Authorization: `Bearer ${makeFilesToken(instance)}` }
   })
   if (!delRes.ok) {
     throw new Error(
@@ -286,7 +288,7 @@ export async function fetchFileContent({
   fileId
 }: FileRef): Promise<string> {
   const res = await fetch(`http://${instance}/files/download/${fileId}`, {
-    headers: { Authorization: `Bearer ${filesToken(instance)}` }
+    headers: { Authorization: `Bearer ${makeFilesToken(instance)}` }
   })
   if (!res.ok) {
     throw new Error(
@@ -303,7 +305,7 @@ export async function countFileVersions({
 }: FileRef): Promise<number> {
   const res = await fetch(`http://${instance}/files/${fileId}`, {
     headers: {
-      Authorization: `Bearer ${filesToken(instance)}`,
+      Authorization: `Bearer ${makeFilesToken(instance)}`,
       Accept: 'application/json'
     }
   })

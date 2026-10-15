@@ -5,8 +5,10 @@ import { USERS } from '../helpers/config'
 import { test, expect, safeUnlink, stamp } from '../helpers/fixtures'
 import {
   createFile,
+  createFolder,
   ensureRootFolder,
   findLinkPermission,
+  makeFilesToken,
   trashById
 } from '../helpers/stack'
 import { FilePickerPage } from '../pages/FilePickerPage'
@@ -70,6 +72,17 @@ test.describe('File Picker', () => {
       await safeUnlink(linkFreeTmpPath)
     }
 
+    const parentFolderId = await ensureRootFolder(
+      USERS.alice.instance,
+      parentFolder
+    )
+    await createFile({
+      instance: USERS.alice.instance,
+      parentId: parentFolderId,
+      name: 'a.txt',
+      content: 'Short filename for grid alignment'
+    })
+
     const photosFolderId = await ensureRootFolder(
       USERS.alice.instance,
       'Photos'
@@ -101,6 +114,91 @@ test.describe('File Picker', () => {
   test.beforeEach(async ({ alicePage }) => {
     // Every test starts from Drive root.
     await alicePage.goto(`${USERS.alice.appUrl}/#/folder`)
+  })
+
+  test('keeps grid spacing compact and names aligned at desktop and narrow widths', async ({
+    alicePage
+  }) => {
+    picker = new FilePickerPage(alicePage)
+    await picker.openDemo()
+    await picker.navigateToFolder(parentFolder)
+    await picker.showGrid()
+
+    for (const width of [1280, 600, 375]) {
+      await alicePage.setViewportSize({ width, height: 812 })
+      await expect.poll(() => picker.getGridFilenameOverflows()).toEqual([])
+      await expect
+        .poll(async (): Promise<boolean> => {
+          const gaps: number[] = await picker.getGridColumnGaps()
+          return gaps.length > 0 && gaps.every(gap => Math.abs(gap - 8) <= 0.5)
+        })
+        .toBe(true)
+      await expect
+        .poll(() => picker.getGridFilenameAlignment('a.txt'))
+        .toBeLessThanOrEqual(1)
+    }
+  })
+
+  test('selects a later-page file after scrolling a large folder in grid view', async ({
+    alicePage
+  }) => {
+    const folderName: string = `picker-pagination-${stamp()}`
+    const folderId: string = await createFolder({
+      instance: USERS.alice.instance,
+      name: folderName
+    })
+    const names: string[] = Array.from(
+      { length: 101 },
+      (_, index) => `file-${String(index).padStart(3, '0')}.txt`
+    )
+    const fileIds: string[] = []
+    try {
+      const token: string = makeFilesToken(USERS.alice.instance)
+      for (const name of names) {
+        fileIds.push(
+          await createFile({
+            instance: USERS.alice.instance,
+            parentId: folderId,
+            name,
+            content: name,
+            token
+          })
+        )
+      }
+      // Default date sorting puts the first-created file on the second page.
+      const laterPageName: string = names[0]
+      picker = new FilePickerPage(alicePage)
+      await picker.openWithPreset('Documents only', {
+        defaultDirId: folderId,
+        restrictToDefaultDir: true
+      })
+      await picker.showGrid()
+      await expect(picker.gridItem(names[names.length - 1])).toBeVisible()
+      await expect(picker.gridItem(laterPageName)).toHaveCount(0)
+
+      await picker.scrollToGridItem(laterPageName)
+      await expect(picker.gridItem(laterPageName)).toBeVisible()
+      await picker.gridItem(laterPageName).click()
+      await expect(picker.gridItem(laterPageName)).toHaveAttribute(
+        'aria-pressed',
+        'true'
+      )
+      await picker.clickDocumentsButton()
+      await picker.waitForClosed()
+
+      expect(await picker.getResultDocument()).toEqual([
+        expect.objectContaining({
+          id: fileIds[0],
+          name: laterPageName,
+          type: 'file',
+          dir_id: folderId,
+          path: `/${folderName}/${laterPageName}`
+        })
+      ])
+      await picker.closeConfirmation()
+    } finally {
+      await trashById(USERS.alice.instance, folderId)
+    }
   })
 
   test('forces the dark theme without relying on caller layout utilities', async ({
