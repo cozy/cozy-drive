@@ -62,27 +62,10 @@ const processEvents = async (client, mutationType) => {
   }
   if (bufferFiles.size === 0) return
 
-  const fileIdsToProcess = bufferFiles.keys()
-  let filesByFolder = {}
-  if (mutationType == 'deleted') {
-    filesByFolder['io.cozy.files.trash-dir'] = Array.from(
-      bufferFiles.values()
-    ).filter(file => file.dir_id === 'io.cozy.files.trash-dir')
-  } else {
-    filesByFolder = groupFilesByFolder(bufferFiles)
-  }
-
-  for (const folderId in filesByFolder) {
-    const files = []
-    const folder = await getParentFolder(client, folderId)
-    for (const file of filesByFolder[folderId]) {
-      const fileWithPath = ensureFilePath(file, folder)
-      files.push(fileWithPath)
-    }
-    if (files.length < 1) {
-      // No files to process, early return
-      return
-    }
+  // Snapshot the ids: events arriving while the parent folders are fetched
+  // stay in the buffer for the next run
+  const fileIdsToProcess = Array.from(bufferFiles.keys())
+  const dispatchMutation = files => {
     const mutation =
       files.length > 1 ? multipleMutationFn(files) : mutationFn(files[0])
 
@@ -95,8 +78,25 @@ const processEvents = async (client, mutationType) => {
       )
     )
   }
-  // Remove processed files from buffer
-  // Do not clear all at once in case pending events arrived during the processing
+
+  if (mutationType === 'deleted') {
+    // A file can be destroyed anywhere, not only from the trash (e.g. the
+    // shortcut of a shared drive the user leaves). Its parent folder is not
+    // fetched, as it may have been destroyed with it, and the _deleted flag
+    // is what takes the file out of the queries that would still match it.
+    dispatchMutation(
+      Array.from(bufferFiles.values(), file => ({ ...file, _deleted: true }))
+    )
+  } else {
+    const filesByFolder = groupFilesByFolder(bufferFiles)
+    for (const folderId in filesByFolder) {
+      const folder = await getParentFolder(client, folderId)
+      dispatchMutation(
+        filesByFolder[folderId].map(file => ensureFilePath(file, folder))
+      )
+    }
+  }
+
   for (const fileId of fileIdsToProcess) {
     bufferFiles.delete(fileId)
   }
