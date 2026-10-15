@@ -100,15 +100,28 @@ export const acceptSharedDriveInvitation = async ({
 }
 
 /**
- * Permanently deletes the shortcut of a sharing invitation, alerting the user
+ * Declines a sharing invitation and removes its shortcut, alerting the user
  * on failure
  *
- * @param {InvitationActionParams} params
+ * @param {InvitationActionParams & { sharing?: object }} params - sharing is
+ * the io.cozy.sharings of the invitation, when known
  * @returns {Promise<void>}
  */
-export const declineInvitation = async ({ client, file, showAlert, t }) => {
+export const declineInvitation = async ({
+  client,
+  file,
+  sharing,
+  showAlert,
+  t
+}) => {
   try {
-    await client.collection(DOCTYPE_FILES).deleteFilePermanently(file._id)
+    if (sharing?.attributes.drive) {
+      // Deleting the shortcut would leave the user a member of the drive.
+      // The stack removes the shortcut itself when the member leaves.
+      await client.collection('io.cozy.sharings').revokeSelf(sharing)
+    } else {
+      await client.collection(DOCTYPE_FILES).deleteFilePermanently(file._id)
+    }
     // FilesRealTimeQueries only forwards deletions from the trash, and a
     // permanent delete skips it, so the store must be told directly
     const deletedFile = { ...file, _deleted: true }

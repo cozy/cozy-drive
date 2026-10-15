@@ -39,6 +39,7 @@ jest.mock('./useSharingsQueryResult', () => ({
 jest.mock('@/modules/filelist/icons/SharingShortcutIcon', () => ({
   SharingShortcutIcon: () => null
 }))
+jest.mock('@/lib/logger', () => ({ error: jest.fn() }))
 
 function makeShortcut(id, { status = 'new' } = {}) {
   return {
@@ -57,9 +58,14 @@ function makeShortcut(id, { status = 'new' } = {}) {
 function setup(files, pathname = '/folder') {
   const deleteFilePermanently = jest.fn().mockResolvedValue({})
   const acceptSharedDrive = jest.fn().mockResolvedValue({})
+  const revokeSelf = jest.fn().mockResolvedValue({})
   const client = {
     save: jest.fn().mockResolvedValue({}),
-    collection: jest.fn(() => ({ acceptSharedDrive, deleteFilePermanently })),
+    collection: jest.fn(() => ({
+      acceptSharedDrive,
+      deleteFilePermanently,
+      revokeSelf
+    })),
     dispatch: jest.fn(),
     generateRandomId: jest.fn(() => 'random-id')
   }
@@ -75,7 +81,8 @@ function setup(files, pathname = '/folder') {
     getSharingForSelf
   })
   useSharingsQueryResult.mockReturnValue({ data: files })
-  useAlert.mockReturnValue({ showAlert: jest.fn() })
+  const showAlert = jest.fn()
+  useAlert.mockReturnValue({ showAlert })
   const openLink = jest.fn()
   useFileLink.mockReturnValue({ openLink })
 
@@ -91,8 +98,10 @@ function setup(files, pathname = '/folder') {
     client,
     deleteFilePermanently,
     acceptSharedDrive,
+    revokeSelf,
     getSharingForSelf,
-    openLink
+    openLink,
+    showAlert
   }
 }
 
@@ -204,5 +213,50 @@ describe('SharingInvitations', () => {
       )
     )
     expect(deleteFilePermanently).toHaveBeenCalledWith('s1')
+  })
+
+  it('leaves a shared drive and removes its shortcut from the store when declined', async () => {
+    const { client, deleteFilePermanently, getSharingForSelf, revokeSelf } =
+      setup([makeShortcut('s1')])
+    const driveSharing = {
+      _id: 'drive-sharing-id',
+      attributes: { drive: true }
+    }
+    getSharingForSelf.mockReturnValue(driveSharing)
+
+    fireEvent.click(screen.getByText('SharingInvitations.decline'))
+
+    await waitFor(() =>
+      expect(client.dispatch).toHaveBeenCalledWith(
+        expect.objectContaining({
+          response: {
+            data: expect.objectContaining({ _id: 's1', _deleted: true })
+          }
+        })
+      )
+    )
+    expect(revokeSelf).toHaveBeenCalledWith(driveSharing)
+    expect(deleteFilePermanently).not.toHaveBeenCalled()
+  })
+
+  it('keeps a shared drive invitation and alerts when leaving the drive fails', async () => {
+    const { client, getSharingForSelf, revokeSelf, showAlert } = setup([
+      makeShortcut('s1')
+    ])
+    getSharingForSelf.mockReturnValue({
+      _id: 'drive-sharing-id',
+      attributes: { drive: true }
+    })
+    revokeSelf.mockRejectedValue(new Error('network'))
+
+    fireEvent.click(screen.getByText('SharingInvitations.decline'))
+
+    await waitFor(() =>
+      expect(showAlert).toHaveBeenCalledWith({
+        message: 'alert.try_again',
+        severity: 'error'
+      })
+    )
+    expect(client.dispatch).not.toHaveBeenCalled()
   })
 })

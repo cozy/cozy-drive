@@ -72,7 +72,15 @@ const SharingInvitation = ({ file }) => {
             variant="text"
             color="default"
             label={t('SharingInvitations.decline')}
-            onClick={() => declineInvitation({ client, file, showAlert, t })}
+            onClick={() =>
+              declineInvitation({
+                client,
+                file,
+                sharing: getSharingForSelf(file._id),
+                showAlert,
+                t
+              })
+            }
           />
           <IconButton
             size="small"
