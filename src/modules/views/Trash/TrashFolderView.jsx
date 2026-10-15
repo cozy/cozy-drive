@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate, Outlet, useLocation } from 'react-router-dom'
+import { useNavigate, Navigate, Outlet, useLocation } from 'react-router-dom'
 
 import { useQuery, useClient } from 'cozy-client'
 import flag from 'cozy-flags'
@@ -16,6 +16,7 @@ import FolderViewBodyVz from '../Folder/virtualized/FolderViewBody'
 
 import useHead from '@/components/useHead'
 import { SORT_BY_UPDATE_DATE } from '@/config/sort'
+import { TRASH_DIR_PATH } from '@/constants/config'
 import { useCurrentFolderId, useDisplayedFolder, useFolderSort } from '@/hooks'
 import { restore, selectAllItems } from '@/modules/actions'
 import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
@@ -79,6 +80,14 @@ export const TrashFolderView = () => {
       ),
     isSelectAll
   })
+
+  // Trash actions would permanently delete the content of a live folder
+  if (
+    displayedFolder?.path &&
+    !displayedFolder.path.startsWith(TRASH_DIR_PATH)
+  ) {
+    return <Navigate to={`/folder/${displayedFolder.id}`} replace />
+  }
 
   return (
     <FolderView isNotFound={isNotFound}>
