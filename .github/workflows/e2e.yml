@@ -7,18 +7,22 @@ on:
   pull_request:
     types: [labeled, synchronize, reopened]
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
-
 jobs:
   # The Drive suite is split into shards, each with its own stack: when its
   # jobs get too long, add a shard to the matrix and to the total in E2E_ARGS
   drive:
     name: Drive E2E
+    # Adding another label to a labelled pull request does not run it again
     if: >
       github.event_name != 'pull_request' ||
+      (github.event.action != 'labeled' || github.event.label.name == 'e2e') &&
       contains(github.event.pull_request.labels.*.name, 'e2e')
+    # A new push to a labelled pull request cancels the run of the previous
+    # one. Job level, so that the skipped runs of the other events cancel
+    # nothing; nightly and manual runs each get their own group.
+    concurrency:
+      group: e2e-drive-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}-${{ matrix.shard }}
+      cancel-in-progress: true
     runs-on: ubuntu-latest
     timeout-minutes: 45
     permissions:
@@ -89,10 +93,19 @@ jobs:
   # be run alone: the label e2e-scribe runs only them
   scribe:
     name: Scribe E2E
+    # Runs again only when the first of its two labels is added
     if: >
       github.event_name != 'pull_request' ||
-      contains(github.event.pull_request.labels.*.name, 'e2e') ||
-      contains(github.event.pull_request.labels.*.name, 'e2e-scribe')
+      (github.event.action != 'labeled' ||
+        (github.event.label.name == 'e2e' &&
+          !contains(github.event.pull_request.labels.*.name, 'e2e-scribe')) ||
+        (github.event.label.name == 'e2e-scribe' &&
+          !contains(github.event.pull_request.labels.*.name, 'e2e'))) &&
+      (contains(github.event.pull_request.labels.*.name, 'e2e') ||
+        contains(github.event.pull_request.labels.*.name, 'e2e-scribe'))
+    concurrency:
+      group: e2e-scribe-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
+      cancel-in-progress: true
     runs-on: ubuntu-latest
     timeout-minutes: 45
     permissions:
