@@ -251,6 +251,20 @@ async function handleMessage(event) {
   }
 }
 
+// The api.js of the Document Server gives the editor the origin of the app
+// that shows it, in the address of its frame
+function findHostOrigin() {
+  try {
+    const parentOrigin = new URL(window.parent.location.href).searchParams.get(
+      'parentOrigin'
+    )
+    const { protocol, origin } = new URL(parentOrigin)
+    return ['https:', 'http:'].includes(protocol) ? origin : null
+  } catch {
+    return null
+  }
+}
+
 // The editor starts the plugin again each time the selection changes
 window.Asc.plugin.init = () => {
   if (isStarted) {
@@ -260,6 +274,7 @@ window.Asc.plugin.init = () => {
   isStarted = true
   window.addEventListener('message', handleMessage)
   watchUndoRedo()
-  // The app is not known yet: this first message holds nothing of the document
-  host.postMessage({ type: 'twake-scribe:ready' }, '*')
+  // Without the origin of the app, the plugin stays silent: no AI button
+  const origin = findHostOrigin()
+  if (origin) host.postMessage({ type: 'twake-scribe:ready' }, origin)
 }
