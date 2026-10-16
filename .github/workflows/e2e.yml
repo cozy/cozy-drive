@@ -8,34 +8,25 @@ on:
     types: [labeled, synchronize, reopened]
 
 jobs:
-  e2e:
-    name: ${{ matrix.suite == 'scribe' && 'Scribe E2E' || format('Drive E2E ({0}/4)', matrix.shard) }}
+  # The Drive suite is split into shards, each with its own stack: when its
+  # jobs get too long, add a shard to the matrix and to the total in E2E_ARGS
+  drive:
+    name: Drive E2E
     if: >
       github.event_name != 'pull_request' ||
-      contains(github.event.pull_request.labels.*.name, 'e2e') ||
-      contains(github.event.pull_request.labels.*.name, 'e2e-scribe')
+      contains(github.event.pull_request.labels.*.name, 'e2e')
     runs-on: ubuntu-latest
     timeout-minutes: 45
     permissions:
       contents: read
-    # The cases of the scribe plugin run in a job of their own, so that each
-    # suite can be run alone: the label e2e-scribe runs only them.
-    # The Drive suite is split into shards, each with its own stack: when its
-    # jobs get too long, add a shard here, to the exclusions and to the total
-    # in the job name and the test command
     strategy:
       fail-fast: false
       matrix:
-        suite: ${{ fromJSON(github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'e2e') && '["scribe"]' || '["drive", "scribe"]') }}
         shard: [1, 2, 3, 4]
-        exclude:
-          - suite: scribe
-            shard: 2
-          - suite: scribe
-            shard: 3
-          - suite: scribe
-            shard: 4
-    steps:
+    env:
+      E2E_ARGS: --grep-invert @e2e-scribe --shard=${{ matrix.shard }}/4
+      E2E_REPORT: drive-${{ matrix.shard }}
+    steps: &e2e-steps
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Enable Corepack
@@ -67,13 +58,13 @@ jobs:
         run: npx playwright install chromium
 
       - name: Run E2E tests
-        run: yarn e2e ${{ matrix.suite == 'scribe' && '--grep @e2e-scribe' || format('--grep-invert @e2e-scribe --shard={0}/4', matrix.shard) }}
+        run: yarn e2e ${{ env.E2E_ARGS }}
 
       - name: Upload test report
         if: failure()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
-          name: playwright-report-${{ matrix.suite }}-${{ matrix.shard }}
+          name: playwright-report-${{ env.E2E_REPORT }}
           path: playwright-report/
           retention-days: 14
 
@@ -81,6 +72,23 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
-          name: playwright-traces-${{ matrix.suite }}-${{ matrix.shard }}
+          name: playwright-traces-${{ env.E2E_REPORT }}
           path: test-results/
           retention-days: 14
+
+  # The cases of the scribe plugin run in a job of their own, so that they can
+  # be run alone: the label e2e-scribe runs only them
+  scribe:
+    name: Scribe E2E
+    if: >
+      github.event_name != 'pull_request' ||
+      contains(github.event.pull_request.labels.*.name, 'e2e') ||
+      contains(github.event.pull_request.labels.*.name, 'e2e-scribe')
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    env:
+      E2E_ARGS: --grep @e2e-scribe
+      E2E_REPORT: scribe
+    steps: *e2e-steps

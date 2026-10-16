@@ -191,7 +191,7 @@ yarn e2e --grep @e2e-scribe --project=chromium
 ```
 
 The E2E workflow runs them in a job of their own, `Scribe E2E`, and the rest
-with `--grep-invert @e2e-scribe`, split into shards (`Drive E2E (1/4)`, …),
+with `--grep-invert @e2e-scribe`, split into shards (`Drive E2E (1)`, …),
 each with its own stack.
 
 ## Debugging and reports
