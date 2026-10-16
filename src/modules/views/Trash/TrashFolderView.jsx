@@ -16,7 +16,6 @@ import FolderViewBodyVz from '../Folder/virtualized/FolderViewBody'
 
 import useHead from '@/components/useHead'
 import { SORT_BY_UPDATE_DATE } from '@/config/sort'
-import { TRASH_DIR_PATH } from '@/constants/config'
 import { useCurrentFolderId, useDisplayedFolder, useFolderSort } from '@/hooks'
 import { restore, selectAllItems } from '@/modules/actions'
 import AddMenuProvider from '@/modules/drive/AddMenu/AddMenuProvider'
@@ -25,6 +24,7 @@ import { useSelectionContext } from '@/modules/selection/SelectionProvider'
 import { TrashBreadcrumb } from '@/modules/trash/components/TrashBreadcrumb'
 import { TrashToolbar } from '@/modules/trash/components/TrashToolbar'
 import { destroy } from '@/modules/trash/components/actions/destroy'
+import { isInTrashDir } from '@/modules/trash/helpers'
 import { buildTrashQuery } from '@/queries'
 
 export const TrashFolderView = () => {
@@ -40,6 +40,7 @@ export const TrashFolderView = () => {
   useHead()
 
   const { displayedFolder, isNotFound } = useDisplayedFolder()
+  const isTrashFolder = isInTrashDir(displayedFolder?.path)
 
   const [sortOrder, setSortOrder, isSettingsLoaded] =
     useFolderSort(currentFolderId)
@@ -68,7 +69,9 @@ export const TrashFolderView = () => {
   const foldersResult = useQuery(folderQuery.definition, folderQuery.options)
   const filesResult = useQuery(fileQuery.definition, fileQuery.options)
 
-  const actions = makeActions([selectAllItems, restore, destroy], {
+  // A loading folder may be live, and live files must never be destroyed
+  const trashActions = isTrashFolder ? [selectAllItems, restore, destroy] : []
+  const actions = makeActions(trashActions, {
     client,
     t,
     refresh,
@@ -82,10 +85,7 @@ export const TrashFolderView = () => {
   })
 
   // Trash actions would permanently delete the content of a live folder
-  if (
-    displayedFolder?.path &&
-    !displayedFolder.path.startsWith(TRASH_DIR_PATH)
-  ) {
+  if (displayedFolder?.path && !isTrashFolder) {
     return <Navigate to={`/folder/${displayedFolder.id}`} replace />
   }
 

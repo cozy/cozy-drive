@@ -27,12 +27,16 @@ jest.mock('@/hooks', () => ({
 }))
 
 jest.mock('@/components/useHead', () => jest.fn())
-jest.mock('../Folder/FolderViewBody', () => () => (
-  <div data-testid="trash-content" />
-))
-jest.mock('../Folder/virtualized/FolderViewBody', () => () => (
-  <div data-testid="trash-content" />
-))
+const mockFolderViewBody = ({ actions }) => (
+  <div data-testid="trash-content">
+    {actions.map(action => Object.keys(action)[0]).join(',')}
+  </div>
+)
+jest.mock('../Folder/FolderViewBody', () => props => mockFolderViewBody(props))
+jest.mock(
+  '../Folder/virtualized/FolderViewBody',
+  () => props => mockFolderViewBody(props)
+)
 jest.mock('@/modules/trash/components/TrashBreadcrumb', () => ({
   TrashBreadcrumb: () => null
 }))
@@ -75,9 +79,9 @@ describe('TrashFolderView', () => {
 })
 
 describe('TrashFolderView redirection', () => {
-  const setup = async displayedFolder => {
+  const setup = async (displayedFolder, folderId = displayedFolder.id) => {
     useDisplayedFolder.mockReturnValue({ displayedFolder, isNotFound: false })
-    window.location.hash = `#/trash/${displayedFolder.id}`
+    window.location.hash = `#/trash/${folderId}`
     const { store, client } = setupStoreAndClient()
     client.plugins.realtime = { subscribe: jest.fn(), unsubscribe: jest.fn() }
     client.query = jest.fn().mockReturnValue({ data: [] })
@@ -90,17 +94,29 @@ describe('TrashFolderView redirection', () => {
     })
   }
 
-  it('opens a folder that is not in the trash in the drive instead', async () => {
-    await setup({ id: 'live-id', path: '/Projects' })
+  it.each(['/Projects', '/.cozy_trash_backup'])(
+    'opens the live folder %s in the drive instead',
+    async path => {
+      await setup({ id: 'live-id', path })
 
-    expect(window.location.hash).toBe('#/folder/live-id')
-    expect(screen.queryByTestId('trash-content')).toBe(null)
-  })
+      expect(window.location.hash).toBe('#/folder/live-id')
+      expect(screen.queryByTestId('trash-content')).toBe(null)
+    }
+  )
 
-  it('keeps a trashed folder in the trash', async () => {
-    await setup({ id: 'trashed-id', path: '/.cozy_trash/Projects' })
+  it.each(['/.cozy_trash', '/.cozy_trash/Projects'])(
+    'keeps %s in the trash with its trash actions',
+    async path => {
+      await setup({ id: 'trashed-id', path })
 
-    expect(window.location.hash).toBe('#/trash/trashed-id')
-    expect(screen.getByTestId('trash-content')).toBeInTheDocument()
+      expect(window.location.hash).toBe('#/trash/trashed-id')
+      expect(screen.getByTestId('trash-content')).toHaveTextContent('destroy')
+    }
+  )
+
+  it('offers no trash action while the folder is not known to be trashed', async () => {
+    await setup(null, 'pending-id')
+
+    expect(screen.getByTestId('trash-content')).toBeEmptyDOMElement()
   })
 })
