@@ -4,6 +4,7 @@ import flag from 'cozy-flags'
 
 import { TRASH_DIR_ID, SETTINGS_DIR_PATH } from '@/constants/config'
 import {
+  DOCTYPE_AI_CHAT_ASSISTANTS,
   DOCTYPE_ALBUMS,
   DOCTYPE_FILES_SETTINGS,
   DOCTYPE_FILES_VERSIONS,
@@ -280,6 +281,15 @@ export const buildAppsQuery: QueryBuilder = () => ({
   options: {
     as: `io.cozy.apps`,
     fetchPolicy: defaultFetchPolicy
+  }
+})
+
+export const buildAssistantsQuery: QueryBuilder = () => ({
+  definition: () => Q(DOCTYPE_AI_CHAT_ASSISTANTS),
+  options: {
+    as: DOCTYPE_AI_CHAT_ASSISTANTS,
+    fetchPolicy: defaultFetchPolicy,
+    enabled: !!flag('cozy.assistant.enabled')
   }
 })
 

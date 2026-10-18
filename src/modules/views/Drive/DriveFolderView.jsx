@@ -162,7 +162,7 @@ const DriveFolderView = () => {
       : Dropzone
 
   return (
-    <AssistantProvider>
+    <AssistantProvider folderId={currentFolderId}>
       <FolderView isNotFound={isNotFound}>
         <AssistantLayout>
           <DropzoneComp
