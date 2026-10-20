@@ -62,7 +62,7 @@ const userPageFixture =
         const text = msg.text()
         if (IGNORED_CONSOLE.some(re => re.test(text))) return
         const loc = msg.location()
-        consoleErrors.push(`[${user}] ${text}  (${loc.url}:${loc.lineNumber})`)
+        consoleErrors.push(`[${user}] ${text}  (${loc.url}:${loc.line})`)
       })
       page.on('pageerror', err => {
         pageErrors.push(
