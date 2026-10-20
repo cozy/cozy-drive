@@ -3,6 +3,7 @@ import React from 'react'
 
 import { Q, createMockClient } from 'cozy-client'
 
+import { FILE_PICKER_VIEW_TYPE_STORAGE_KEY } from './constants'
 import FilePicker from './index'
 import AppLike from 'test/components/AppLike'
 
@@ -142,18 +143,17 @@ function setup({
 } = {}) {
   window.innerWidth = isMobile ? 500 : 1024
 
-  return render(
-    <AppLike client={mockClient}>
-      <FilePicker
-        accept={accept}
-        filePickerConfig={filePickerConfig}
-        multiple={multiple}
-        onChange={mockOnChange}
-        onFileDoubleClick={mockOnFileDoubleClick}
-        onClose={mockOnClose}
-      />
-    </AppLike>
+  const picker = (
+    <FilePicker
+      accept={accept}
+      filePickerConfig={filePickerConfig}
+      multiple={multiple}
+      onChange={mockOnChange}
+      onFileDoubleClick={mockOnFileDoubleClick}
+      onClose={mockOnClose}
+    />
   )
+  return render(<AppLike client={mockClient}>{picker}</AppLike>)
 }
 
 function tap(row) {
@@ -170,7 +170,12 @@ function longPress(row) {
 }
 
 describe('FilePicker mobile navigation, list and actions', () => {
+  beforeEach(() => {
+    window.localStorage.removeItem(FILE_PICKER_VIEW_TYPE_STORAGE_KEY)
+  })
+
   afterEach(() => {
+    window.localStorage.removeItem(FILE_PICKER_VIEW_TYPE_STORAGE_KEY)
     jest.clearAllMocks()
     jest.useRealTimers()
   })

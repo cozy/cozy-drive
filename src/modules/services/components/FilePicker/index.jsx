@@ -26,13 +26,13 @@ import {
   getActionDisabledState,
   getDownloadLinkDisabledState
 } from './constraints'
+import { useFilePickerViewType } from './useFilePickerViewType'
 
 import { FilePicker as SharedFilePicker } from '@/components/FilePicker/FilePicker'
 import {
   filePickerItemTypes,
   filePickerModes,
-  filePickerSections,
-  DEFAULT_FILE_PICKER_VIEW_TYPE
+  filePickerSections
 } from '@/components/FilePicker/constants'
 import { getCompliantTypes, isValidFile } from '@/components/FilePicker/helpers'
 import { ViewSwitcherContext } from '@/lib/ViewSwitcherContext'
@@ -52,10 +52,10 @@ const FilePicker = ({
   canNavigateTo,
   validateSharingSelection
 }) => {
-  const [viewType, setViewType] = useState(DEFAULT_FILE_PICKER_VIEW_TYPE)
+  const [viewType, switchView] = useFilePickerViewType()
   const viewSwitcherContextValue = useMemo(
-    () => ({ viewType, switchView: setViewType }),
-    [viewType]
+    () => ({ viewType, switchView }),
+    [viewType, switchView]
   )
   // Selection, action progress and business errors change the visible picker UI.
   const [error, setError] = useState(null)

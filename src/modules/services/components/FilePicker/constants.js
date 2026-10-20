@@ -16,6 +16,9 @@ export const filePickerLinkModes = {
   TEMPORARY_DOWNLOAD_LINK: 'temporary-download-link'
 }
 
+export const FILE_PICKER_VIEW_TYPE_STORAGE_KEY =
+  'twake-drive:file-picker:view-type'
+
 export const filePickerThemes = ['light', 'dark']
 
 export const filePickerSharingLinkStatuses = {
