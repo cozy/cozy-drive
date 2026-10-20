@@ -32,8 +32,9 @@ jobs:
         && !github.event.pull_request.draft
         && github.event.pull_request.head.repo.full_name == github.repository)
       || (github.event_name != 'pull_request'
-        && github.event.issue.pull_request != null
+        && (github.event.issue.pull_request != null || github.event.pull_request != null)
         && (contains(github.event.comment.body, '/oc') || contains(github.event.comment.body, '/opencode'))
+        && !contains(github.event.comment.body, '/oc verify')
         && contains(fromJSON('["OWNER","MEMBER"]'), github.event.comment.author_association))
     # Job level so that skipped runs (any other PR comment) do not cancel it.
     # A push cancels the review of the previous push, which is stale; comment
