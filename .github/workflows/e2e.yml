@@ -43,12 +43,17 @@ jobs:
       - name: Build Drive app
         run: yarn build
 
+      # ImageOS is a runner variable, which the env context does not expose
+      - name: Read runner image
+        id: runner-image
+        run: echo "name=$ImageOS" >> "$GITHUB_OUTPUT"
+
       - name: Cache Playwright browsers
         id: playwright-cache
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          key: playwright-${{ steps.runner-image.outputs.name }}-${{ hashFiles('yarn.lock') }}
 
       - name: Install Playwright system dependencies
         run: npx playwright install-deps chromium
