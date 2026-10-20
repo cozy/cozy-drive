@@ -26,6 +26,7 @@ import Fallback from '@/modules/viewer/Fallback'
 import MoreMenu from '@/modules/viewer/MoreMenu'
 import { resolveShouldHideSharingActions } from '@/modules/viewer/shouldHideSharingActions'
 import {
+  canOpenPdfWithOnlyOffice,
   isOfficeEnabled,
   makeOnlyOfficeFileRoute
 } from '@/modules/views/OnlyOffice/helpers'
@@ -49,7 +50,9 @@ const FilesViewer = ({ filesQuery, files, onClose, onChange, viewerProps }) => {
   const navigate = useNavigate()
   const location = useLocation()
   const { driveId } = useParams()
-  const canEditPdfWithOnlyOffice = isOfficeEnabled(isDesktop)
+  const canEditPdfWithOnlyOffice = canOpenPdfWithOnlyOffice(
+    isOfficeEnabled(isDesktop)
+  )
 
   const handleOnClose = useCallback(() => {
     if (onClose) {

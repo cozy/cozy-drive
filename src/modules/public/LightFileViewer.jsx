@@ -22,6 +22,7 @@ import styles from '@/modules/viewer/barviewer.styl'
 import { FilesViewerLoading } from '@/components/FilesViewerLoading'
 import PublicToolbar from '@/modules/public/PublicToolbar'
 import {
+  canOpenPdfWithOnlyOffice,
   isOfficeEnabled,
   makeOnlyOfficeFileRoute
 } from '@/modules/views/OnlyOffice/helpers'
@@ -33,7 +34,9 @@ const LightFileViewer = ({ files, isPublic }) => {
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const { loading, isSharingShortcutCreated, addSharingLink } = sharingInfos
-  const canEditPdfWithOnlyOffice = isOfficeEnabled(isDesktop)
+  const canEditPdfWithOnlyOffice = canOpenPdfWithOnlyOffice(
+    isOfficeEnabled(isDesktop)
+  )
 
   const onlyOfficeOpener = useCallback(
     file => {

@@ -32,6 +32,7 @@ const flagsList = () => {
   flag('drive.excalidraw.collab')
   flag('drive.excalidraw.shortcut.enabled')
   flag('drive.pdf-editor.enabled')
+  flag('drive.onlyoffice.pdf-editing.enabled')
   flag('sharing.auto-open-settings.enabled')
   flag('sharing.generate-link-button.enabled')
   flag('drive.sign.enabled')

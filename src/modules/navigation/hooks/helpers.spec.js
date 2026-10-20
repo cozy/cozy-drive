@@ -1,3 +1,5 @@
+import flag from 'cozy-flags'
+
 import { computeFileType, computeApp, computePath } from './helpers'
 
 import { TRASH_DIR_ID, SHARED_DRIVES_DIR_ID } from '@/constants/config'
@@ -6,6 +8,7 @@ import { makeExcalidrawFileRoute } from '@/modules/views/Excalidraw/helpers'
 import { makeOnlyOfficeFileRoute } from '@/modules/views/OnlyOffice/helpers'
 
 jest.mock('modules/views/OnlyOffice/helpers', () => ({
+  ...jest.requireActual('modules/views/OnlyOffice/helpers'),
   makeOnlyOfficeFileRoute: jest.fn()
 }))
 jest.mock('modules/views/Excalidraw/helpers', () => ({
@@ -320,7 +323,10 @@ describe('computeFileType', () => {
     expect(computeFileType(file, { isOfficeEnabled: true })).toBe('onlyoffice')
   })
 
-  it('should return "onlyoffice" for PDFs when Office is enabled', () => {
+  it('should return "onlyoffice" for PDFs when Office and PDF editing flag are enabled', () => {
+    flag.mockImplementation(
+      name => name === 'drive.onlyoffice.pdf-editing.enabled'
+    )
     const file = {
       _id: 'pdf-1',
       _type: 'io.cozy.files',
@@ -333,7 +339,8 @@ describe('computeFileType', () => {
     expect(computeFileType(file, { isOfficeEnabled: true })).toBe('onlyoffice')
   })
 
-  it('should keep PDFs in the file viewer when Office is disabled', () => {
+  it('should keep PDFs in the file viewer when PDF editing flag is disabled', () => {
+    flag.mockReturnValue(false)
     const file = {
       _id: 'pdf-1',
       _type: 'io.cozy.files',
@@ -343,10 +350,14 @@ describe('computeFileType', () => {
       type: 'file'
     }
 
+    expect(computeFileType(file, { isOfficeEnabled: true })).toBe('file')
     expect(computeFileType(file, { isOfficeEnabled: false })).toBe('file')
   })
 
-  it('should route a shared-drive PDF through OnlyOffice', () => {
+  it('should route a shared-drive PDF through OnlyOffice when enabled', () => {
+    flag.mockImplementation(
+      name => name === 'drive.onlyoffice.pdf-editing.enabled'
+    )
     const file = {
       _id: 'pdf-1',
       _type: 'io.cozy.files',
@@ -371,7 +382,7 @@ describe('computeFileType', () => {
     ).toBe('/onlyoffice/drive-1/pdf-1')
   })
 
-  it('should route a file-root shared-drive PDF shortcut through OnlyOffice only when Office is enabled', () => {
+  it('should route a file-root shared-drive PDF shortcut through OnlyOffice only when Office and PDF editing flag are enabled', () => {
     const file = {
       driveId: 'sharing-1',
       _id: 'shortcut-1',
@@ -391,8 +402,16 @@ describe('computeFileType', () => {
       }
     }
 
+    flag.mockImplementation(
+      name => name === 'drive.onlyoffice.pdf-editing.enabled'
+    )
     expect(computeFileType(file, { isOfficeEnabled: true })).toBe('onlyoffice')
     expect(computeFileType(file, { isOfficeEnabled: false })).toBe(
+      'shared-drive-root-file'
+    )
+
+    flag.mockReturnValue(false)
+    expect(computeFileType(file, { isOfficeEnabled: true })).toBe(
       'shared-drive-root-file'
     )
   })

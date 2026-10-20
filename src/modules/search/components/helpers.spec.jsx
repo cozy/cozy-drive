@@ -193,6 +193,9 @@ describe('makeNormalizedFile', () => {
 
   it('should route a PDF search result to OnlyOffice only when Office is available', () => {
     const folders = [{ _id: 'folderId', path: 'folderPath' }]
+    flag.mockImplementation(
+      name => name === 'drive.onlyoffice.pdf-editing.enabled'
+    )
     const file = {
       _id: 'pdfId',
       id: 'pdfId',
@@ -211,9 +214,16 @@ describe('makeNormalizedFile', () => {
       '/onlyoffice/drive123/pdfId?redirectLink=drive%23%2Ffolder%2FfolderId'
     )
     expect(disabledFile.url).toBe('/folder/folderId/file/pdfId')
+
+    flag.mockReturnValue(false)
+    const flagDisabledFile = makeNormalizedFile(client, folders, file, true)
+    expect(flagDisabledFile.url).toBe('/folder/folderId/file/pdfId')
   })
 
   it('indexes PDF results with the Office availability of the current device', async () => {
+    flag.mockImplementation(
+      name => name === 'drive.onlyoffice.pdf-editing.enabled'
+    )
     const rows = [
       {
         id: 'folderId',

@@ -63,6 +63,7 @@ describe('FileOpenerExternal', () => {
   afterEach(() => {
     flag('drive.office.enabled', null)
     flag('drive.office.touchScreen.enabled', null)
+    flag('drive.onlyoffice.pdf-editing.enabled', null)
   })
 
   const setup = ({ file }) => {
@@ -90,11 +91,19 @@ describe('FileOpenerExternal', () => {
     expect(mockViewer).not.toHaveBeenCalled()
   })
 
-  it('redirects a PDF straight to OnlyOffice when Office is enabled', async () => {
+  it('redirects a PDF straight to OnlyOffice when PDF editing is explicitly enabled', async () => {
+    flag('drive.onlyoffice.pdf-editing.enabled', true)
+
     setup({ file: pdfFile })
 
     expect(await screen.findByText('OnlyOffice editor')).toBeInTheDocument()
     expect(mockViewer).not.toHaveBeenCalled()
+  })
+
+  it('renders the viewer for a PDF when PDF editing flag is absent or disabled', async () => {
+    setup({ file: pdfFile })
+
+    expect(await screen.findByText('Viewer')).toBeInTheDocument()
   })
 
   it('renders the viewer for a PDF when Office is disabled', async () => {

@@ -126,6 +126,9 @@ describe('useConfig', () => {
   })
 
   it('preserves the editable PDF payload returned by the stack', async () => {
+    flag.mockImplementation(
+      name => name === 'drive.onlyoffice.pdf-editing.enabled'
+    )
     const { result } = setup({ data: pdfOfficeDoc })
 
     await waitFor(() => expect(result.current.config).toBeDefined())
@@ -143,6 +146,15 @@ describe('useConfig', () => {
         })
       })
     )
+  })
+
+  it('selects the viewer when PDF editing via OnlyOffice is disabled', async () => {
+    flag.mockReturnValue(false)
+    const { result } = setup({ data: pdfOfficeDoc })
+
+    await waitFor(() => expect(result.current.status).toBe('viewer'))
+
+    expect(result.current.config).toBeUndefined()
   })
 
   it('leaves out the AI plugin of OnlyOffice when the assistant of Twake is on', async () => {

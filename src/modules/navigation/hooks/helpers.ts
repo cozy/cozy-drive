@@ -31,7 +31,10 @@ import {
   isExcalidraw,
   makeExcalidrawFileRoute
 } from '@/modules/views/Excalidraw/helpers'
-import { makeOnlyOfficeFileRoute } from '@/modules/views/OnlyOffice/helpers'
+import {
+  canOpenPdfWithOnlyOffice,
+  makeOnlyOfficeFileRoute
+} from '@/modules/views/OnlyOffice/helpers'
 import { isPdf } from '@/modules/views/Pdf/helpers'
 import {
   getSharingsSharedDrivePath,
@@ -108,12 +111,12 @@ export const computeFileType = (
       targetClass === 'slide'
     if (
       (isOfficeClass && isOfficeEnabled) ||
-      (targetClass === 'pdf' && isOfficeEnabled)
+      (targetClass === 'pdf' && canOpenPdfWithOnlyOffice(isOfficeEnabled))
     ) {
       return 'onlyoffice'
     }
     return 'shared-drive-root-file'
-  } else if (isPdf(file) && isOfficeEnabled) {
+  } else if (isPdf(file) && canOpenPdfWithOnlyOffice(isOfficeEnabled)) {
     return 'onlyoffice'
   } else if (shouldBeOpenedByOnlyOffice(file) && isOfficeEnabled) {
     // Load-bearing: this branch runs before `isFileRootSharedDrive` below, so

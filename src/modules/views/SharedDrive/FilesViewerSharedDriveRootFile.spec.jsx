@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react'
 import React from 'react'
 
+import flag from 'cozy-flags'
+
 const mockNavigate = jest.fn()
 const mockUseParams = jest.fn()
 const mockUseLocation = jest.fn()
@@ -191,8 +193,11 @@ describe('FilesViewerSharedDriveRootFile', () => {
       expect(screen.getByText('files-viewer')).toBeInTheDocument()
     })
 
-    it('opens a deep-linked PDF in OnlyOffice when office is enabled', () => {
+    it('opens a deep-linked PDF in OnlyOffice when office and PDF editing are enabled', () => {
       mockIsOfficeEnabled.mockReturnValue(true)
+      flag.mockImplementation(
+        name => name === 'drive.onlyoffice.pdf-editing.enabled'
+      )
 
       renderRootFileViewer({ fetchedFile: pdf })
 
@@ -204,8 +209,33 @@ describe('FilesViewerSharedDriveRootFile', () => {
       expect(screen.queryByText('files-viewer')).toBe(null)
     })
 
+    it('keeps the PDF viewer when PDF editing is disabled even with office enabled', () => {
+      mockIsOfficeEnabled.mockReturnValue(true)
+      flag.mockReturnValue(false)
+
+      renderRootFileViewer({ fetchedFile: pdf })
+
+      expect(screen.getByText('files-viewer')).toBeInTheDocument()
+      expect(screen.queryByText('navigate')).toBe(null)
+    })
+
+    it('opens non-PDF office files in OnlyOffice even when PDF editing is disabled', () => {
+      mockIsOfficeEnabled.mockReturnValue(true)
+      flag.mockReturnValue(false)
+
+      renderRootFileViewer({ fetchedFile: deck })
+
+      expect(screen.getByText('navigate')).toBeInTheDocument()
+      expect(mockNavigateElement).toHaveBeenCalledWith({
+        to: '/onlyoffice/drive-1/canonical-id?redirectLink=drive%23%2Fsharings%2Fdrives',
+        replace: true
+      })
+      expect(screen.queryByText('files-viewer')).toBe(null)
+    })
+
     it('keeps the PDF viewer when office is disabled', () => {
       mockIsOfficeEnabled.mockReturnValue(false)
+      flag.mockReturnValue(false)
 
       renderRootFileViewer({ fetchedFile: pdf })
 
