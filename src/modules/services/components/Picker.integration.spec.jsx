@@ -12,6 +12,7 @@ import { useDataProxy } from 'cozy-dataproxy-lib'
 import { SharingContext } from 'cozy-sharing'
 import { SharingProvider } from 'cozy-sharing/dist/SharingProvider'
 
+import { FILE_PICKER_VIEW_TYPE_STORAGE_KEY } from './FilePicker/constants'
 import IntentHandler from './IntentHandler'
 import { IntentLike } from 'test/components/IntentLike'
 
@@ -309,7 +310,7 @@ function setup(
     recents: async () => recents
   })
   window.innerWidth = 1024
-  render(
+  const rendered = render(
     <IntentLike client={client}>
       <SharingContext.Provider
         value={{
@@ -323,7 +324,15 @@ function setup(
       </SharingContext.Provider>
     </IntentLike>
   )
-  return { client, service, documents, requests, writes, permissions }
+  return {
+    ...rendered,
+    client,
+    service,
+    documents,
+    requests,
+    writes,
+    permissions
+  }
 }
 
 function getRow(id) {
@@ -367,9 +376,30 @@ function provideExistingSharingLink(client) {
 }
 
 describe('PICK intent integration', () => {
-  afterEach(() => jest.clearAllMocks())
+  beforeEach(() => {
+    window.localStorage.removeItem(FILE_PICKER_VIEW_TYPE_STORAGE_KEY)
+  })
 
-  it('switches presentation without losing selection, folder, action filters or writing preferences', async () => {
+  afterEach(() => {
+    window.localStorage.removeItem(FILE_PICKER_VIEW_TYPE_STORAGE_KEY)
+    jest.clearAllMocks()
+  })
+
+  it('restores the explicitly chosen view on the next PICK opening', async () => {
+    const first = setup({ ...onlyDocuments, defaultDirId: 'projects' })
+    await waitForRow('invoice')
+    expect(screen.queryByRole('table')).toBeInTheDocument()
+
+    await switchView('grid')
+    expect(screen.queryByRole('table')).toBe(null)
+    first.unmount()
+
+    setup({ ...onlyDocuments, defaultDirId: 'projects' })
+    expect(await waitForRow('invoice')).toHaveAttribute('aria-pressed', 'false')
+    expect(screen.queryByRole('table')).toBe(null)
+  })
+
+  it('switches presentation without losing selection, folder, action filters or writing Drive preferences', async () => {
     const { service, writes } = setup({
       ...onlyDocuments,
       defaultDirId: 'projects',
