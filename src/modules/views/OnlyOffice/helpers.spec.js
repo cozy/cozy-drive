@@ -3,6 +3,7 @@ import { FileTypePdf } from '@linagora/twake-icons'
 import flag from 'cozy-flags'
 
 import {
+  canOpenPdfWithOnlyOffice,
   isOfficeEnabled,
   makeOnlyOfficeIconByClass,
   shouldOpenWithOnlyOffice,
@@ -17,7 +18,19 @@ describe('PDF OnlyOffice support', () => {
     jest.clearAllMocks()
   })
 
-  it('opens PDFs with OnlyOffice only when Office is available', () => {
+  it('canOpenPdfWithOnlyOffice requires both officeEnabled and drive.onlyoffice.pdf-editing.enabled', () => {
+    flag.mockImplementation(
+      name => name === 'drive.onlyoffice.pdf-editing.enabled'
+    )
+    expect(canOpenPdfWithOnlyOffice(true)).toBe(true)
+    expect(canOpenPdfWithOnlyOffice(false)).toBe(false)
+
+    flag.mockReturnValue(false)
+    expect(canOpenPdfWithOnlyOffice(true)).toBe(false)
+    expect(canOpenPdfWithOnlyOffice(false)).toBe(false)
+  })
+
+  it('opens PDFs with OnlyOffice only when Office is available and PDF editing flag is enabled', () => {
     const file = {
       _type: 'io.cozy.files',
       type: 'file',
@@ -26,7 +39,27 @@ describe('PDF OnlyOffice support', () => {
       name: 'contract.pdf'
     }
 
+    flag.mockImplementation(
+      name => name === 'drive.onlyoffice.pdf-editing.enabled'
+    )
     expect(shouldOpenWithOnlyOffice(file, false)).toBe(false)
+    expect(shouldOpenWithOnlyOffice(file, true)).toBe(true)
+
+    flag.mockReturnValue(false)
+    expect(shouldOpenWithOnlyOffice(file, true)).toBe(false)
+    expect(shouldOpenWithOnlyOffice(file, false)).toBe(false)
+  })
+
+  it('opens standard Office documents with OnlyOffice even if PDF editing is disabled', () => {
+    const file = {
+      _type: 'io.cozy.files',
+      type: 'file',
+      class: 'text',
+      name: 'notes.docx'
+    }
+
+    flag.mockReturnValue(false)
+    expect(shouldOpenWithOnlyOffice(file, false)).toBe(true)
     expect(shouldOpenWithOnlyOffice(file, true)).toBe(true)
   })
 

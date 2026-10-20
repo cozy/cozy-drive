@@ -4,6 +4,7 @@ import { render, screen } from '@testing-library/react'
 import React from 'react'
 
 import { createMockClient } from 'cozy-client'
+import flag from 'cozy-flags'
 
 import AppRouter from './AppRouter'
 import AppLike from 'test/components/AppLike'
@@ -103,6 +104,9 @@ describe('Public AppRouter', () => {
   })
 
   it('should render OnlyOffice for a public PDF when Office is enabled', () => {
+    flag.mockImplementation(
+      name => name === 'drive.onlyoffice.pdf-editing.enabled'
+    )
     setupRouter({
       data: {
         id: 'pdf-id',

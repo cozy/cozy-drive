@@ -8,7 +8,11 @@ import useBreakpoints from 'cozy-ui/transpiled/react/providers/Breakpoints'
 
 import { changeLocation } from '@/hooks/helpers'
 import { useOnlyOfficeContext } from '@/modules/views/OnlyOffice/OnlyOfficeProvider'
-import { isOfficeEnabled } from '@/modules/views/OnlyOffice/helpers'
+import {
+  canOpenPdfWithOnlyOffice,
+  isOfficeEnabled
+} from '@/modules/views/OnlyOffice/helpers'
+import { isPdf } from '@/modules/views/Pdf/helpers'
 import {
   makePublicEditorUrl,
   shouldBeOpenedOnOtherInstance
@@ -72,7 +76,14 @@ const useConfig = () => {
       } else {
         const { attributes } = data.data
         const { onlyoffice } = attributes
-        if (!isOfficeEnabled(isDesktop)) {
+        const isPdfDoc =
+          isPdf(data.data) ||
+          onlyoffice?.documentType === 'pdf' ||
+          onlyoffice?.document?.fileType === 'pdf'
+        if (
+          !isOfficeEnabled(isDesktop) ||
+          (isPdfDoc && !canOpenPdfWithOnlyOffice(isOfficeEnabled(isDesktop)))
+        ) {
           setStatus('viewer')
           return
         }

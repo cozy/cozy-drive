@@ -8,6 +8,16 @@ import AppLike from 'test/components/AppLike'
 import { generateFile } from 'test/generate'
 
 import { useCurrentFileId } from '@/hooks'
+import {
+  isOfficeEnabled,
+  canOpenPdfWithOnlyOffice
+} from '@/modules/views/OnlyOffice/helpers'
+
+jest.mock('@/modules/views/OnlyOffice/helpers', () => ({
+  ...jest.requireActual('@/modules/views/OnlyOffice/helpers'),
+  isOfficeEnabled: jest.fn(() => true),
+  canOpenPdfWithOnlyOffice: jest.fn(() => false)
+}))
 
 jest.mock('cozy-client/dist/hooks/useQuery', () => jest.fn())
 jest.mock('lib/logger', () => ({
@@ -198,5 +208,29 @@ describe('FilesViewer', () => {
     const viewer = await screen.findByText('Viewer')
     expect(viewer).toBeInTheDocument()
     expect(fetchMore).toHaveBeenCalledTimes(1)
+  })
+
+  it('disables OnlyOffice as PDF editor when PDF editing flag is off while keeping office enabled for other formats', async () => {
+    isOfficeEnabled.mockReturnValue(true)
+    canOpenPdfWithOnlyOffice.mockReturnValue(false)
+
+    setup()
+
+    await screen.findByText('Viewer')
+    const { componentsProps } = mockViewer.mock.calls[0][0]
+    expect(componentsProps.PdfViewer.isPdfEditorEnabled).toBe(false)
+    expect(componentsProps.OnlyOfficeViewer.isEnabled).toBe(true)
+  })
+
+  it('enables OnlyOffice as PDF editor when PDF editing flag is explicitly on', async () => {
+    isOfficeEnabled.mockReturnValue(true)
+    canOpenPdfWithOnlyOffice.mockReturnValue(true)
+
+    setup()
+
+    await screen.findByText('Viewer')
+    const { componentsProps } = mockViewer.mock.calls[0][0]
+    expect(componentsProps.PdfViewer.isPdfEditorEnabled).toBe(true)
+    expect(componentsProps.OnlyOfficeViewer.isEnabled).toBe(true)
   })
 })

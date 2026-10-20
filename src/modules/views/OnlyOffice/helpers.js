@@ -75,8 +75,12 @@ export const isOfficeEditingEnabled = isDesktop => {
   return true
 }
 
+export const canOpenPdfWithOnlyOffice = (officeEnabled = false) =>
+  officeEnabled && flag('drive.onlyoffice.pdf-editing.enabled') === true
+
 export const shouldOpenWithOnlyOffice = (file, officeEnabled = false) =>
-  shouldBeOpenedByOnlyOffice(file) || (officeEnabled && isPdf(file))
+  shouldBeOpenedByOnlyOffice(file) ||
+  (canOpenPdfWithOnlyOffice(officeEnabled) && isPdf(file))
 
 /**
  * @typedef {Object} OnlyOfficeFileRouteOptions

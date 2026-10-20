@@ -11,6 +11,7 @@ import { FilesViewerLoading } from '@/components/FilesViewerLoading'
 import useHead from '@/components/useHead'
 import { useCurrentFolderId } from '@/hooks'
 import {
+  canOpenPdfWithOnlyOffice,
   isOfficeEnabled,
   makeOnlyOfficeFileRoute
 } from '@/modules/views/OnlyOffice/helpers'
@@ -22,7 +23,9 @@ const PublicFileViewer = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const { isDesktop } = useBreakpoints()
-  const canEditPdfWithOnlyOffice = isOfficeEnabled(isDesktop)
+  const canEditPdfWithOnlyOffice = canOpenPdfWithOnlyOffice(
+    isOfficeEnabled(isDesktop)
+  )
   useHead()
 
   const pdfOpener = useCallback(
