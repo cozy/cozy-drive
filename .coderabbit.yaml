@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=https://www.coderabbit.ai/integrations/schema.v2.json
 #
-# CodeRabbit owns: PR summary and walkthrough, security and supply chain
+# CodeRabbit owns: walkthrough, PR summary on request (write
+# "@coderabbitai summary" in the description), security and supply chain
 # review, scanners, and the path-specific checks below.
 # It does not own: logic and architecture review (OpenCode, see
 # .github/prompts/code-review.md), code health (CodeScene), lint and tests
@@ -13,7 +14,7 @@ tone_instructions: 'Be terse. Comment on security, on the rules below, and on sc
 
 reviews:
   profile: chill
-  high_level_summary: true
+  high_level_summary: false
   collapse_walkthrough: true
   sequence_diagrams: false
   poem: false
