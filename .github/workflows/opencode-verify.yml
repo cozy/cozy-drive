@@ -3,9 +3,9 @@ name: OpenCode verify findings
 # Audits what the other reviewers claimed, it does not review the code.
 # See .github/prompts/verify-findings.md.
 #
-# Runs once the findings stop arriving: every new review comment cancels the
-# waiting run and restarts the timer, so a burst of inline comments produces
-# a single verification.
+# Runs on request only: OpenCode requires the comment author to have write
+# access, which reviewer bots lack, and a comment posted with GITHUB_TOKEN
+# never starts a workflow.
 
 on:
   issue_comment:
@@ -15,19 +15,11 @@ on:
 
 jobs:
   verify:
-    # Reviewer bots start the debounce, an org member can ask for it directly.
-    # Never triggered by its own output, which uses a different heading.
     if: >-
       (github.event.issue.pull_request != null || github.event.pull_request != null)
-      && (
-        (contains(github.event.comment.body, '/oc verify')
-          && contains(fromJSON('["OWNER","MEMBER"]'), github.event.comment.author_association))
-        || (github.event.comment.user.login == 'coderabbitai[bot]'
-          && contains(github.event.comment.body, 'cr-indicator-types'))
-        || (github.event.comment.user.login == 'github-actions[bot]'
-          && contains(github.event.comment.body, '### OpenCode review'))
-      )
-    # A later comment cancels the run still waiting and starts a fresh delay.
+      && contains(github.event.comment.body, '/oc verify')
+      && contains(fromJSON('["OWNER","MEMBER"]'), github.event.comment.author_association)
+    # A new request replaces the verification still running.
     concurrency:
       group: opencode-verify-${{ github.event.issue.number || github.event.pull_request.number }}
       cancel-in-progress: true
@@ -55,15 +47,6 @@ jobs:
           if [ "$head_repo" != "$GITHUB_REPOSITORY" ]; then
             echo "::notice::skipping verification of fork pull request $head_repo"
           fi
-
-      # Cancelled by the next comment, which is what debounces the run.
-      - name: Wait for the findings to settle
-        if: >-
-          steps.pr.outputs.head_repo == github.repository
-          && !contains(github.event.comment.body, '/oc verify')
-        env:
-          DELAY: ${{ vars.OPENCODE_VERIFY_DELAY || 600 }}
-        run: sleep "$DELAY"
 
       - name: Load verification prompt
         if: steps.pr.outputs.head_repo == github.repository
