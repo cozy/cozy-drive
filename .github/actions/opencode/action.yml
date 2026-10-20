@@ -25,6 +25,8 @@ runs:
   steps:
     # The gateway is a LiteLLM proxy: it only knows its own model names,
     # so it is declared as a plain OpenAI-compatible provider.
+    # Nobody can answer a permission prompt on a runner: an "ask" waits until
+    # the job times out, so the permissions that default to it are denied.
     - name: Run OpenCode
       shell: bash
       run: |
@@ -34,7 +36,8 @@ runs:
             options: {baseURL: "{env:AI_API_BASE_URL}", apiKey: "{env:AI_API_KEY}"},
             models: {($model): {}}
           }},
-          small_model: env.MODEL
+          small_model: env.MODEL,
+          permission: {external_directory: "deny", doom_loop: "deny"}
         }')
         export OPENCODE_CONFIG_CONTENT
         npx --yes "opencode-ai@$VERSION" github run
