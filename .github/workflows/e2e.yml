@@ -7,6 +7,10 @@ on:
   pull_request:
     types: [labeled, synchronize, reopened]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   # The Drive suite is split into shards, each with its own stack: when its
   # jobs get too long, add a shard to the matrix and to the total in E2E_ARGS
