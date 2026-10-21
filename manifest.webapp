@@ -87,7 +87,8 @@
     "/public": {
       "folder": "/public",
       "index": "index.html",
-      "public": true
+      "public": true,
+      "opengraph": true
     },
     "/preview": {
       "folder": "/public",
