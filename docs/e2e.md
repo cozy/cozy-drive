@@ -19,6 +19,10 @@ including when starting the development runtime with `yarn stack up`.
 - A production build of Drive
 - Playwright Chromium installed
 
+File-drop tests use Chromium's DevTools Protocol to drag real fixture files.
+This exercises the drop handler with filesystem entries, which a scripted
+`DataTransfer` cannot provide, rather than bypassing it through the upload input.
+
 The default `cozy.localhost` names resolve to host loopback in the browser.
 Stack reaches its instance names on loopback. Document Server uses a separate
 Compose network where those names resolve to the proxy, which forwards source
