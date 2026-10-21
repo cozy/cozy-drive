@@ -8052,9 +8052,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cozy-app-publish@npm:^0.44.2":
-  version: 0.44.2
-  resolution: "cozy-app-publish@npm:0.44.2"
+"cozy-app-publish@npm:^0.44.3":
+  version: 0.44.3
+  resolution: "cozy-app-publish@npm:0.44.3"
   dependencies:
     argparse: "npm:^2.0.1"
     chalk: "npm:^2.4.2"
@@ -8066,7 +8066,7 @@ __metadata:
     verror: "npm:^1.10.1"
   bin:
     cozy-app-publish: ./src/cozy-app-publish.js
-  checksum: 10/66b1ee05362c0b84a91d2f8ae8c1939e74f15f443e360ad1f7be63d0353a1f03fe442d1f99183afdcc9e92c7e2ebef7c647badef3946e4833811e611ec92cec9
+  checksum: 10/ef80c6a9d0f5d25008e73520d593b8b6509b9e083d43d1130f552aeb3bba3a1dd4d7d30c67715e44b29310bd87365388c4cfc13df9bfa30e8471d8dbdcd130cb
   languageName: node
   linkType: hard
 
@@ -8213,7 +8213,7 @@ __metadata:
     "@welldone-software/why-did-you-render": "npm:^10.0.1"
     classnames: "npm:2.3.1"
     core-js: "npm:^3.50.0"
-    cozy-app-publish: "npm:^0.44.2"
+    cozy-app-publish: "npm:^0.44.3"
     cozy-bar: "npm:^36.1.4"
     cozy-client: "npm:^60.42.0"
     cozy-dataproxy-lib: "npm:^4.15.6"

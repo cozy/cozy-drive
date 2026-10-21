@@ -62,7 +62,7 @@
     "@types/react-redux": "7.1.26",
     "@welldone-software/why-did-you-render": "^10.0.1",
     "core-js": "^3.50.0",
-    "cozy-app-publish": "^0.44.2",
+    "cozy-app-publish": "^0.44.3",
     "cozy-tsconfig": "^1.8.1",
     "css-mediaquery": "0.1.2",
     "eslint": "10.0.2",
