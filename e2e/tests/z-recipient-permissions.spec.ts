@@ -92,7 +92,9 @@ test.describe.serial('Recipient permissions & member controls', () => {
 
     // 1. All members are visible to Reader
     const aliceItem = modal.memberItem(USERS.alice.email)
-    const bobItem = modal.memberItem('You').or(modal.memberItem(USERS.bob.email))
+    const bobItem = modal
+      .memberItem('You')
+      .or(modal.memberItem(USERS.bob.email))
     const charlieItem = modal.memberItem(USERS.charlie.email)
 
     await expect(aliceItem).toBeVisible()
@@ -166,11 +168,17 @@ test.describe.serial('Recipient permissions & member controls', () => {
     await expect(modal.memberRemoveButton(USERS.alice.email)).toHaveCount(0)
 
     // Bob (You) CAN see role and remove controls for himself
-    const bobSelf = modal.memberItem('You').or(modal.memberItem(USERS.bob.email))
+    const bobSelf = modal
+      .memberItem('You')
+      .or(modal.memberItem(USERS.bob.email))
     await expect(bobSelf).toBeVisible()
-    const bobSelfRole = modal.memberRole('You').or(modal.memberRole(USERS.bob.email))
+    const bobSelfRole = modal
+      .memberRole('You')
+      .or(modal.memberRole(USERS.bob.email))
     await expect(bobSelfRole).toBeVisible()
-    const bobSelfRemove = modal.memberRemoveButton('You').or(modal.memberRemoveButton(USERS.bob.email))
+    const bobSelfRemove = modal
+      .memberRemoveButton('You')
+      .or(modal.memberRemoveButton(USERS.bob.email))
     await expect(bobSelfRemove).toBeVisible()
 
     await modal.close()
@@ -244,7 +252,7 @@ test.describe.serial('Recipient permissions & member controls', () => {
     // Navigating back to Bob's sharings list. READER_DRIVE stays shared with
     // Bob: its row proves the list has loaded before asserting the absence.
     await waitForSharingRow(bobPage, USERS.bob, bobDrive, READER_DRIVE)
-    await expect(bobDrive.row(LEAVE_DRIVE).cell).toHaveCount(0)
+    await bobDrive.row(LEAVE_DRIVE).waitHidden()
   })
 
   // Disabled until cozy-stack lets a shared drive recipient create a
@@ -512,9 +520,7 @@ test.describe.serial('Recipient edits himself and other members', () => {
         charlieDrive,
         VIEWER_SELF_DRIVE
       )
-      await expect(charlieDrive.row(MANAGED_DRIVE).cell).toHaveCount(0, {
-        timeout: 2_000
-      })
+      await charlieDrive.row(MANAGED_DRIVE).waitHidden({ timeout: 2_000 })
     }).toPass({ timeout: 60_000 })
   })
 
