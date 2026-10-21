@@ -106,7 +106,11 @@ const useConfig = () => {
                 ? editorMode
                 : 'view',
             user: { name: author },
+            ...(isPdfDoc && {
+              coEditing: { ...serverEditorConfig?.coEditing, mode: 'fast' }
+            }),
             customization: {
+              ...(isPdfDoc && serverEditorConfig?.customization),
               reviewDisplay: 'markup'
             },
             // The AI plugin of the editor would sit beside the assistant of
