@@ -27,7 +27,7 @@ export function usePickerItemHandlers({
   }
 
   if (isMobile) {
-    // eslint-disable-next-line react-hooks/refs
+    // eslint-disable-next-line react-compiler/refs
     return makeMobileHandlers({
       timerId,
       disabled: isDisabled,

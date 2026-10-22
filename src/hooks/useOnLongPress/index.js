@@ -27,7 +27,7 @@ export const useLongPress = ({
   const { clearItems: clearHighlightedItems } = useNewItemHighlightContext()
 
   if (isDesktop) {
-    // eslint-disable-next-line react-hooks/refs
+    // eslint-disable-next-line react-compiler/refs
     return makeDesktopHandlers({
       file,
       timerId,
@@ -45,7 +45,7 @@ export const useLongPress = ({
     })
   }
 
-  // eslint-disable-next-line react-hooks/refs
+  // eslint-disable-next-line react-compiler/refs
   return makeMobileHandlers({
     timerId,
     disabled,

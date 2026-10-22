@@ -59,7 +59,7 @@ const PublicNoteRedirect: FC = () => {
   }, [search, fileId, driveId, client])
 
   if (noteUrl) {
-    // eslint-disable-next-line react-hooks/immutability
+    // eslint-disable-next-line react-compiler/immutability
     window.location.href = noteUrl
   }
 

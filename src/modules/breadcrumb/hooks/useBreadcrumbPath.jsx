@@ -41,7 +41,7 @@ export const useBreadcrumbPath = ({
 
   useEffect(() => {
     if (rootBreadcrumbPath && currentFolderId === rootBreadcrumbPath.id) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+      // eslint-disable-next-line react-compiler/set-state-in-effect
       setPaths([rootBreadcrumbPath])
       return
     }

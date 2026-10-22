@@ -31,7 +31,7 @@ export const ExternalRedirect = ({ t }) => {
   const hasFailed =
     fetchStatus === 'failed' || (isLoaded && (!url || !isNavigableUrl(url)))
   if (isLoaded && !hasFailed) {
-    // eslint-disable-next-line react-hooks/immutability
+    // eslint-disable-next-line react-compiler/immutability
     window.location.href = url
   }
 

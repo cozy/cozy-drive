@@ -46,7 +46,7 @@ const DesktopBreadcrumb = ({ onBreadcrumbClick, path }) => {
         trigger.removeEventListener('click', handleDropdownTriggerClick)
       }
     }
-  }, [anchorElRef.current]) // eslint-disable-line react-hooks/exhaustive-deps, react-hooks/refs
+  }, [anchorElRef.current]) // eslint-disable-line react-hooks/exhaustive-deps, react-compiler/refs
 
   const Separator = (
     <Icon icon={Right} className={styles['fil-path-separator']} />
@@ -87,7 +87,7 @@ const DesktopBreadcrumb = ({ onBreadcrumbClick, path }) => {
       {menuDisplayed && (
         <ActionsMenu
           open
-          // eslint-disable-next-line react-hooks/refs
+          // eslint-disable-next-line react-compiler/refs
           ref={anchorElRef}
           onClose={closeMenu}
           actions={[]}

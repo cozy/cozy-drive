@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/refs */
+/* eslint-disable react-compiler/refs */
 import {
   useCallback,
   useEffect,
