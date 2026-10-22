@@ -66,7 +66,10 @@ describe('MoveIntentDemoView', () => {
     })
   })
 
-  afterEach(() => jest.restoreAllMocks())
+  afterEach(() => {
+    jest.useRealTimers()
+    jest.restoreAllMocks()
+  })
 
   async function selectDocuments(label, documents) {
     fireEvent.click(screen.getByRole('button', { name: label }))
