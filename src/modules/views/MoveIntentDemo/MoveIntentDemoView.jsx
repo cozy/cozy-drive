@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Alert from 'cozy-ui/transpiled/react/Alert'
 import { Content } from 'cozy-ui/transpiled/react/Layout'
 import Typography from 'cozy-ui/transpiled/react/Typography'
+import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
 import { useI18n } from 'twake-i18n'
 
 import { MoveIntentDemoExecution } from './MoveIntentDemoExecution'
@@ -58,6 +59,7 @@ function isValidDirectorySelection(documents) {
 
 export function MoveIntentDemoView() {
   const { t } = useI18n()
+  const { showAlert } = useAlert()
   const [form, setForm] = useState({
     restrictToDefaultDir: false,
     tabs: 'default',
@@ -115,6 +117,13 @@ export function MoveIntentDemoView() {
       documents: result.document
     }))
     setSelectedSources([])
+    showAlert({
+      message: t('MoveIntentDemo.completed', {
+        smart_count: result.document?.length ?? 0
+      }),
+      severity: 'success',
+      duration: 4000
+    })
   }
   const handleDismiss = () =>
     setOutcome(previous => ({ ...previous, status: 'cancelled' }))

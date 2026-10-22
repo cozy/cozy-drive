@@ -362,7 +362,7 @@ export function useMoveOperation({
     event?.stopPropagation()
     if (moveInProgressRef.current) return
     if (successfulEntries.length > 0) {
-      onSuccess(folderSelected, successfulEntries, successfulTrashedFiles)
+      onSuccess?.(folderSelected, successfulEntries, successfulTrashedFiles)
     }
     onClose()
   }

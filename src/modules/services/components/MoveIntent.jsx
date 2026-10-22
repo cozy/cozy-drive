@@ -3,8 +3,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useClient } from 'cozy-client'
 import Divider from 'cozy-ui/transpiled/react/Divider'
 import Paper from 'cozy-ui/transpiled/react/Paper'
-import { useAlert } from 'cozy-ui/transpiled/react/providers/Alert'
-import { useI18n } from 'twake-i18n'
 
 import { filePickerErrorCodes } from './FilePicker/constants'
 import { fetchMoveIntentResults } from './MoveIntent/results'
@@ -17,31 +15,15 @@ import { useMoveOperation } from '@/modules/move/hooks/useMoveOperation'
 
 export function MoveIntent({ service, moveIntentConfig, onReadyToUse }) {
   const client = useClient()
-  const { t } = useI18n()
-  const { showAlert } = useAlert()
   const [resultError, setResultError] = useState(null)
   const [isFinalizing, setFinalizing] = useState(false)
   // Finalization can be retried, but cannot overlap or outlive a terminal message.
   const finalizingRef = useRef(false)
   const terminatedRef = useRef(false)
-  const notifiedSuccessCountRef = useRef(0)
   const canNavigateTo = moveIntentConfig.restrictToDefaultDir
     ? folder =>
         canNavigateToPickerFolder(client, folder, moveIntentConfig.defaultDirId)
     : null
-
-  const notifyMoveSuccess = (folder, entries) => {
-    if (entries.length <= notifiedSuccessCountRef.current) return
-    notifiedSuccessCountRef.current = entries.length
-    showAlert({
-      message: t('Move.success', {
-        smart_count: entries.length,
-        subject: entries.length === 1 ? entries[0].name : '',
-        target: folder.name || t('breadcrumb.title_drive')
-      }),
-      severity: 'success'
-    })
-  }
 
   const handleFinalize = async (folder, results) => {
     if (finalizingRef.current || terminatedRef.current) return
@@ -61,13 +43,6 @@ export function MoveIntent({ service, moveIntentConfig, onReadyToUse }) {
     }
   }
 
-  const handleComplete = async (folder, results) => {
-    notifyMoveSuccess(
-      folder,
-      results.map(result => result.source)
-    )
-    await handleFinalize(folder, results)
-  }
   const handleClose = () => {
     if (finalizingRef.current || terminatedRef.current) return
     terminatedRef.current = true
@@ -76,8 +51,7 @@ export function MoveIntent({ service, moveIntentConfig, onReadyToUse }) {
   const operation = useMoveOperation({
     entries: moveIntentConfig.entries,
     onClose: handleClose,
-    onSuccess: notifyMoveSuccess,
-    onComplete: handleComplete,
+    onComplete: handleFinalize,
     validateDestination: folder =>
       destinationPicker.fetchValidatedDestination(folder)
   })
