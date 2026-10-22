@@ -7,6 +7,7 @@ module.exports = {
     '.(png|gif|jpe?g)$': '<rootDir>/jestHelpers/mocks/fileMock.js',
     '.svg$': '<rootDir>/jestHelpers/mocks/iconMock.js',
     '^@excalidraw/excalidraw$': '<rootDir>/jestHelpers/mocks/excalidrawMock.js',
+    '^lottie-react$': '<rootDir>/jestHelpers/mocks/lottieReactMock.js',
     '\\?raw$': '<rootDir>/jestHelpers/mocks/svgRawMock.js',
     '.styl$': 'identity-obj-proxy',
     '\\.(css|less)$': 'identity-obj-proxy',
