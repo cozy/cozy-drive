@@ -1298,30 +1298,66 @@ describe('MOVE intent navigation integration', () => {
     return { ...context, failedIds }
   }
 
-  it('reuses folders-only browsing, canonical Drive/Sharings tabs and payload-free cancellation without mutating', async () => {
-    const { service, documents, writes } = setupMove({
-      tabs: ['sharings', 'drive', 'sharings']
+  it.each(['Cancel', 'Close'])(
+    'reuses folders-only browsing and cancels via %s without mutating',
+    async closeLabel => {
+      const { service, documents, writes } = setupMove({
+        tabs: ['sharings', 'drive', 'sharings']
+      })
+      await waitForRow('projects')
+      expect(screen.queryByTestId('move-intent')).toBeInTheDocument()
+      expect(screen.getAllByRole('tab').map(tab => tab.textContent)).toEqual([
+        'My Drive',
+        'Sharings'
+      ])
+      expect(screen.getByRole('button', { name: 'Move' })).not.toBeDisabled()
+      expect(
+        screen.queryByRole('button', { name: /create folder/i })
+      ).toBeInTheDocument()
+      fireEvent.doubleClick(getRow('projects'))
+      await waitForRow('child')
+      expect(getRow('invoice')).toBe(null)
+      expect(screen.getByRole('button', { name: 'Move' })).not.toBeDisabled()
+      expect(documents.get('invoice').dir_id).toBe('projects')
+      expect(writes).toEqual([])
+      expect(service.terminate).not.toHaveBeenCalled()
+      expect(service.notifyReadyToUse).toHaveBeenCalledTimes(1)
+      fireEvent.click(
+        within(screen.getByTestId('move-intent')).getByRole('button', {
+          name: closeLabel
+        })
+      )
+      expect(service.cancel).toHaveBeenCalledWith()
+    }
+  )
+
+  it('disables its close cross during destination validation', async () => {
+    let blockValidation = false
+    let resolveValidation
+    const validation = new Promise(resolve => {
+      resolveValidation = resolve
     })
+    const { service, documents } = setupMove(
+      {},
+      {
+        beforeRead: id =>
+          blockValidation && id === ROOT_DIR_ID ? validation : null
+      }
+    )
     await waitForRow('projects')
-    expect(screen.queryByTestId('move-intent')).toBeInTheDocument()
-    expect(screen.getAllByRole('tab').map(tab => tab.textContent)).toEqual([
-      'My Drive',
-      'Sharings'
-    ])
-    expect(screen.getByRole('button', { name: 'Move' })).not.toBeDisabled()
-    expect(
-      screen.queryByRole('button', { name: /create folder/i })
-    ).toBeInTheDocument()
-    fireEvent.doubleClick(getRow('projects'))
-    await waitForRow('child')
-    expect(getRow('invoice')).toBe(null)
-    expect(screen.getByRole('button', { name: 'Move' })).not.toBeDisabled()
+    await waitFor(() =>
+      expect(screen.getByRole('button', { name: 'Close' })).toBeEnabled()
+    )
+    blockValidation = true
+    fireEvent.click(screen.getByRole('button', { name: 'Move' }))
+    const closeButton = screen.getByRole('button', { name: 'Close' })
+    expect(closeButton).toBeDisabled()
+    fireEvent.click(closeButton)
+    expect(service.cancel).not.toHaveBeenCalled()
     expect(documents.get('invoice').dir_id).toBe('projects')
-    expect(writes).toEqual([])
-    expect(service.terminate).not.toHaveBeenCalled()
-    expect(service.notifyReadyToUse).toHaveBeenCalledTimes(1)
-    fireEvent.click(screen.getByRole('button', { name: 'Cancel' }))
-    expect(service.cancel).toHaveBeenCalledWith()
+    resolveValidation()
+    await waitFor(() => expect(service.terminate).toHaveBeenCalledTimes(1))
+    expect(documents.get('invoice').dir_id).toBe(ROOT_DIR_ID)
   })
 
   it('warns for a later shared source parent even when the first source is private', async () => {
@@ -1465,20 +1501,27 @@ describe('MOVE intent navigation integration', () => {
     ])
   })
 
-  it('cancels after a partial move without returning results or undoing the successful file', async () => {
-    const { service, documents, failedIds } = setupMove({
-      fileIds: ['invoice', 'nested']
-    })
-    failedIds.add('nested')
-    await waitForRow('projects')
-    fireEvent.click(screen.getByRole('button', { name: 'Move' }))
-    await screen.findByText('Moved: 1. Failed: 1.')
-    fireEvent.click(screen.getByRole('button', { name: 'Cancel' }))
-    expect(service.cancel).toHaveBeenCalledWith()
-    expect(service.terminate).not.toHaveBeenCalled()
-    expect(documents.get('invoice').dir_id).toBe(ROOT_DIR_ID)
-    expect(documents.get('nested').dir_id).toBe('child')
-  })
+  it.each(['Cancel', 'Close'])(
+    'cancels via %s after a partial move without undoing the successful file',
+    async closeLabel => {
+      const { service, documents, failedIds } = setupMove({
+        fileIds: ['invoice', 'nested']
+      })
+      failedIds.add('nested')
+      await waitForRow('projects')
+      fireEvent.click(screen.getByRole('button', { name: 'Move' }))
+      await screen.findByText('Moved: 1. Failed: 1.')
+      fireEvent.click(
+        within(screen.getByTestId('move-intent')).getByRole('button', {
+          name: closeLabel
+        })
+      )
+      expect(service.cancel).toHaveBeenCalledWith()
+      expect(service.terminate).not.toHaveBeenCalled()
+      expect(documents.get('invoice').dir_id).toBe(ROOT_DIR_ID)
+      expect(documents.get('nested').dir_id).toBe('child')
+    }
+  )
 
   it('waits for the current folder resolver even when the listing is already usable', async () => {
     let resolveRoot
