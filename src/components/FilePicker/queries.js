@@ -3,11 +3,11 @@ import { Q, fetchPolicies } from 'cozy-client'
 import { filePickerItemTypes } from './constants'
 
 import { DEFAULT_SORT, SORTABLE_ATTRIBUTES } from '@/config/sort'
+import { getFolderContentPartialFilter } from '@/queries/getFolderContentPartialFilter'
 
 const FILES_DOCTYPE = 'io.cozy.files'
 
 const defaultFetchPolicy = fetchPolicies.olderThan(30 * 1000)
-const TRASH_DIR_ID = `${FILES_DOCTYPE}.trash-dir`
 
 const getQueryAlias = (as, sortOrder) =>
   sortOrder.attribute === DEFAULT_SORT.attribute &&
@@ -30,11 +30,7 @@ const buildFolderQuery = (dirId, type, as, limit, sortOrder = DEFAULT_SORT) => {
           type,
           [validSortOrder.attribute]: { $gt: null }
         })
-        .partialIndex({
-          _id: {
-            $nin: [TRASH_DIR_ID]
-          }
-        })
+        .partialIndex(getFolderContentPartialFilter())
         .indexFields(['dir_id', 'type', validSortOrder.attribute])
         .sortBy([
           { dir_id: validSortOrder.order },
