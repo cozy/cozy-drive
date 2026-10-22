@@ -237,13 +237,12 @@ test.describe.serial('Recipient permissions & member controls', () => {
     // Bob clicks remove on himself ("You")
     await modal.memberRemoveButton('You').click()
 
-    // The modal indicates the sharing has been cancelled for Bob
-    await expect(modal.dialog).toContainText(/cancelled sharing/i)
-    await modal.close()
+    await expect(modal.dialog).toBeHidden()
+    await expect(bobPage).toHaveURL(`${USERS.bob.appUrl}/#/sharings/with-me`)
 
-    // Navigating back to Bob's sharings list. READER_DRIVE stays shared with
-    // Bob: its row proves the list has loaded before asserting the absence.
-    await waitForSharingRow(bobPage, USERS.bob, bobDrive, READER_DRIVE)
+    // READER_DRIVE stays shared with Bob: its row proves the list has loaded
+    // before asserting the departed drive is absent, without forcing navigation.
+    await expect(bobDrive.row(READER_DRIVE).cell).toBeVisible()
     await expect(bobDrive.row(LEAVE_DRIVE).cell).toHaveCount(0)
   })
 
