@@ -59,7 +59,7 @@ const useSearch = (searchTerm, { limit = 10 } = {}) => {
     if (debouncedSearchTerm !== '') {
       fetchSuggestions(debouncedSearchTerm)
     } else {
-      // eslint-disable-next-line react-hooks/immutability
+      // eslint-disable-next-line react-compiler/immutability
       clearSuggestions()
     }
   }, [client, debouncedSearchTerm, fuzzy, limit, officeEnabled])

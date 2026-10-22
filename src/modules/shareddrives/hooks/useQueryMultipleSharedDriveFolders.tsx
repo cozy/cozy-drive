@@ -58,7 +58,7 @@ const useQueryMultipleSharedDriveFolders = ({
   useEffect(() => {
     let cancelled = false
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    // eslint-disable-next-line react-compiler/set-state-in-effect
     setSharedDriveResults(null)
 
     const fetch = async (): Promise<void> => {

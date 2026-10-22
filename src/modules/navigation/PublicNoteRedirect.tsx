@@ -1,7 +1,7 @@
-import { Icon, SadCozy } from '@linagora/twake-icons'
 import React, { FC, useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 
+import { Icon, SadCozy } from '@linagora/twake-icons'
 import { useClient } from 'cozy-client'
 import { fetchURL } from 'cozy-client/dist/models/note'
 import Empty from 'cozy-ui/transpiled/react/Empty'
@@ -59,7 +59,7 @@ const PublicNoteRedirect: FC = () => {
   }, [search, fileId, driveId, client])
 
   if (noteUrl) {
-    // eslint-disable-next-line react-hooks/immutability
+    // eslint-disable-next-line react-compiler/immutability
     window.location.href = noteUrl
   }
 

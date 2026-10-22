@@ -74,7 +74,7 @@ const FileOpener = props => {
   useEffect(() => {
     const requestedFileId = fileId ?? props.fileId
     if (requestedFileId) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+      // eslint-disable-next-line react-compiler/set-state-in-effect
       loadFileInfo(requestedFileId)
     }
   }, [fileId, props.fileId, loadFileInfo])

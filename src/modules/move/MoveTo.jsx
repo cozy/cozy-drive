@@ -1,7 +1,7 @@
-import { FolderOutlined, Icon } from '@linagora/twake-icons'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
+import { FolderOutlined, Icon } from '@linagora/twake-icons'
 import { fetchPolicies, useClient } from 'cozy-client'
 import { useSharingContext } from 'cozy-sharing'
 import Buttons from 'cozy-ui/transpiled/react/Buttons'
