@@ -2,7 +2,9 @@ import CozyClient, { Q, QueryDefinition } from 'cozy-client'
 import { QueryOptions } from 'cozy-client/types/types'
 import flag from 'cozy-flags'
 
-import { TRASH_DIR_ID, SETTINGS_DIR_PATH } from '@/constants/config'
+import { getFolderContentPartialFilter } from './getFolderContentPartialFilter'
+
+import { TRASH_DIR_ID } from '@/constants/config'
 import {
   DOCTYPE_AI_CHAT_ASSISTANTS,
   DOCTYPE_ALBUMS,
@@ -40,40 +42,21 @@ export const buildDriveQuery: QueryBuilder<buildDriveQueryParams> = ({
   sortAttribute,
   sortOrder
 }) => ({
-  definition: (): QueryDefinition => {
-    const shouldHideSettingsFolder = flag(
-      'home.wallpaper-personalization.enabled'
-    )
-    const partialIndexFilters: {
-      _id: { $nin: string[] }
-      path?: Record<string, unknown>
-    } = {
-      _id: {
-        $nin: [TRASH_DIR_ID]
-      }
-    }
-
-    if (shouldHideSettingsFolder) {
-      partialIndexFilters.path = {
-        $or: [{ $exists: false }, { $nin: [SETTINGS_DIR_PATH] }]
-      }
-    }
-
-    return Q('io.cozy.files')
+  definition: (): QueryDefinition =>
+    Q('io.cozy.files')
       .where({
         dir_id: currentFolderId,
         type,
         [sortAttribute]: { $gt: null }
       })
-      .partialIndex(partialIndexFilters)
+      .partialIndex(getFolderContentPartialFilter())
       .indexFields(['dir_id', 'type', sortAttribute])
       .sortBy([
         { dir_id: sortOrder },
         { type: sortOrder },
         { [sortAttribute]: sortOrder }
       ])
-      .limitBy(100)
-  },
+      .limitBy(100),
   options: {
     as: formatFolderQueryId(type, currentFolderId, sortAttribute, sortOrder),
     fetchPolicy: defaultFetchPolicy
