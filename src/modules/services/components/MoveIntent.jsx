@@ -1,8 +1,11 @@
+import { Cross, Icon } from '@linagora/twake-icons'
 import React, { useEffect, useRef, useState } from 'react'
 
 import { useClient } from 'cozy-client'
 import Divider from 'cozy-ui/transpiled/react/Divider'
+import IconButton from 'cozy-ui/transpiled/react/IconButton'
 import Paper from 'cozy-ui/transpiled/react/Paper'
+import { useI18n } from 'twake-i18n'
 
 import { filePickerErrorCodes } from './FilePicker/constants'
 import { fetchMoveIntentResults } from './MoveIntent/results'
@@ -15,6 +18,7 @@ import { useMoveOperation } from '@/modules/move/hooks/useMoveOperation'
 
 export function MoveIntent({ service, moveIntentConfig, onReadyToUse }) {
   const client = useClient()
+  const { t } = useI18n()
   const [resultError, setResultError] = useState(null)
   const [isFinalizing, setFinalizing] = useState(false)
   // Finalization can be retried, but cannot overlap or outlive a terminal message.
@@ -85,7 +89,19 @@ export function MoveIntent({ service, moveIntentConfig, onReadyToUse }) {
         className="u-h-100 u-w-100 u-flex u-flex-column"
         data-testid="move-intent"
       >
-        <FolderPickerHeader entries={moveIntentConfig.entries} />
+        <header className="u-flex u-flex-items-center">
+          <div className="u-flex-auto u-ov-hidden">
+            <FolderPickerHeader entries={moveIntentConfig.entries} />
+          </div>
+          <IconButton
+            className="u-mr-2"
+            onClick={operation.onClose}
+            disabled={destinationPicker.isBrowserBusy}
+            aria-label={t('FilePicker.close')}
+          >
+            <Icon icon={Cross} />
+          </IconButton>
+        </header>
         <Divider />
         {destinationPicker.content}
         <Divider />

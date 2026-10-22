@@ -181,7 +181,7 @@ Invalid configuration and fatal initialization errors terminate through the exis
 
 ## Cancel result
 
-User cancellation uses the generic intent `cancel` channel, without a Move-specific payload or `CANCELLED` error code. After partial success, the picker shows the moved/failed summary and remains open for retry or cancellation; successful moves remain in place, while the files reported as failed remain pending for retry. Closing does not return partial results to the caller or roll back any moves. The caller cannot infer which files moved from a payload-free cancellation. The service's Cancel button is disabled during destination validation, folder creation, move execution and result finalization. The service also sends `hideCross` while busy and `showCross` when interactive again; the caller must prevent its own close controls from bypassing that protection.
+User cancellation uses the generic intent `cancel` channel, without a Move-specific payload or `CANCELLED` error code. After partial success, the picker shows the moved/failed summary and remains open for retry or cancellation; successful moves remain in place, while the files reported as failed remain pending for retry. Closing does not return partial results to the caller or roll back any moves. The caller cannot infer which files moved from a payload-free cancellation. The service renders its own close cross in the header, like PICK. Both the cross and the Cancel button use the same cancellation handler and are disabled during destination validation, folder creation, move execution and result finalization. The service also sends `hideCross` while busy and `showCross` when interactive again; the caller must prevent its own close controls from bypassing that protection.
 
 ### Calling with IntentDialogOpener
 
@@ -205,7 +205,7 @@ For `cozy-ui-plus`'s `IntentDialogOpener`, use `closable={false}` so the service
 
 Display the final success notification in the caller's completion handler, not inside the intent iframe: the opener closes that iframe when the service terminates. Partial-failure feedback stays inside the open picker. Cancellation does not trigger a final success notification.
 
-The qualified `cozy-ui-plus` 14.0.1 `IntentDialogOpener` does not forward `hideCross` / `showCross` to its own close button. Its default `closable={true}` leaves the caller's cross and Escape dismissal available even while MOVE is busy. Setting only `showCloseButton={false}` hides the cross but does not disable other host dismissal paths. `closable={false}` prevents those host dismissals; the picker still offers Cancel whenever safe. Custom callers that offer a cross must consume the busy signals themselves. Closing the browser or forcibly removing the iframe cannot be prevented by the service and is not a rollback mechanism.
+The qualified `cozy-ui-plus` 14.0.1 `IntentDialogOpener` does not forward `hideCross` / `showCross` to its own close button. Its default `closable={true}` leaves the caller's cross and Escape dismissal available even while MOVE is busy. Setting only `showCloseButton={false}` hides the cross but does not disable other host dismissal paths. `closable={false}` prevents those host dismissals; the picker still offers its own cross and Cancel button whenever safe. Custom callers that offer a cross must consume the busy signals themselves. Closing the browser or forcibly removing the iframe cannot be prevented by the service and is not a rollback mechanism.
 
 ## `readyToUse` signal
 
