@@ -8,6 +8,7 @@
       "insert": "إدراج",
       "replace": "استبدال",
       "insertSlide": "إدراج الشريحة",
+      "selectionMenu": "قائمة Scribe",
       "suggestions": {
         "newSlide": "شريحة جديدة",
         "newSlideMessage": "أضف شريحة جديدة بعد هذه الشريحة، حول النص",
