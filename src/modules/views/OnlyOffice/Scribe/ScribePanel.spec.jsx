@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
 
 import { createMockClient } from 'cozy-client'
@@ -13,10 +13,14 @@ jest.mock('@/modules/views/OnlyOffice/Scribe/ScribeProvider', () => ({
 }))
 
 const mockIntentIframe = jest.fn()
-jest.mock('cozy-ui-plus/dist/Intent/IntentIframe', () => ({
-  __esModule: true,
-  default: props => {
+const mockIntentMount = jest.fn()
+jest.mock('cozy-ui-plus/dist/Intent/IntentIframe', () => {
+  const { useEffect } = jest.requireActual('react')
+  const IntentIframe = props => {
     mockIntentIframe(props)
+    useEffect(() => {
+      mockIntentMount()
+    }, [])
     return (
       <>
         <button
@@ -41,7 +45,8 @@ jest.mock('cozy-ui-plus/dist/Intent/IntentIframe', () => ({
       </>
     )
   }
-}))
+  return { __esModule: true, default: IntentIframe }
+})
 
 const setup = (scribe = {}) => {
   const close = jest.fn()
@@ -51,6 +56,10 @@ const setup = (scribe = {}) => {
     content: 'Un **texte**',
     target: 'selection',
     documentType: 'word',
+    source: 'toolbar',
+    draft: null,
+    conversation: null,
+    handOverId: null,
     close,
     applyResult,
     ...scribe
@@ -67,7 +76,20 @@ const setup = (scribe = {}) => {
 
 const getIntentProps = () => mockIntentIframe.mock.calls.at(-1)[0]
 
+const WINDOW_WIDTH = window.innerWidth
+
 describe('ScribePanel', () => {
+  // jsdom has no PointerEvent: without it, the events lose their clientX
+  beforeAll(() => {
+    window.PointerEvent = window.MouseEvent
+  })
+  afterAll(() => {
+    delete window.PointerEvent
+  })
+  afterEach(() => {
+    window.innerWidth = WINDOW_WIDTH
+  })
+
   it('shows nothing while the scribe is closed', () => {
     setup({ isOpen: false })
 
@@ -87,8 +109,53 @@ describe('ScribePanel', () => {
           { name: 'insert', label: 'Insert' },
           { name: 'replace', label: 'Replace' }
         ],
-        theme: { type: 'light' }
+        theme: { type: 'light' },
+        layout: 'panel',
+        source: 'toolbar'
       }
+    })
+    expect(getIntentProps().data).not.toHaveProperty('draft')
+    expect(getIntentProps().data).not.toHaveProperty('conversation')
+  })
+
+  it('opens the assistant on the draft and the conversation handed over by the popover', () => {
+    setup({
+      source: 'popover',
+      draft: 'Plus court',
+      conversation: 'c1',
+      handOverId: 1
+    })
+
+    expect(getIntentProps().data).toMatchObject({
+      layout: 'panel',
+      source: 'popover',
+      draft: 'Plus court',
+      conversation: 'c1'
+    })
+  })
+
+  it('opens a new intent for each hand-over, never the open one', () => {
+    mockIntentMount.mockClear()
+    const { rerender } = setup()
+    expect(mockIntentMount).toHaveBeenCalledTimes(1)
+
+    useScribe.mockReturnValue({
+      ...useScribe(),
+      source: 'popover',
+      draft: 'Plus court',
+      conversation: 'c1',
+      handOverId: 1
+    })
+    rerender(
+      <AppLike client={createMockClient({})}>
+        <ScribePanel />
+      </AppLike>
+    )
+
+    expect(mockIntentMount).toHaveBeenCalledTimes(2)
+    expect(getIntentProps().data).toMatchObject({
+      draft: 'Plus court',
+      conversation: 'c1'
     })
   })
 
@@ -210,11 +277,14 @@ describe('ScribePanel', () => {
 
     fireEvent.click(screen.getByTestId('intent-iframe'))
 
-    expect(applyResult).toHaveBeenCalledWith({
-      answerAction: 'insert',
-      text: 'Bonjour',
-      format: 'markdown'
-    })
+    expect(applyResult).toHaveBeenCalledWith(
+      {
+        answerAction: 'insert',
+        text: 'Bonjour',
+        format: 'markdown'
+      },
+      'panel'
+    )
     expect(close).not.toHaveBeenCalled()
   })
 
@@ -223,11 +293,132 @@ describe('ScribePanel', () => {
 
     fireEvent.click(screen.getByTestId('intent-capability'))
 
-    expect(applyResult).toHaveBeenCalledWith({
-      capability: 'insert_slide',
-      params: { title: 'Budget', bullets: ['Dépenses'] }
-    })
+    expect(applyResult).toHaveBeenCalledWith(
+      {
+        capability: 'insert_slide',
+        params: { title: 'Budget', bullets: ['Dépenses'] }
+      },
+      'panel'
+    )
     expect(close).not.toHaveBeenCalled()
+  })
+
+  it('shows how many cells were skipped', () => {
+    const dismissSkippedCells = jest.fn()
+    setup({ skippedCells: { surface: 'panel', count: 2 }, dismissSkippedCells })
+
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      'Table: 2 selected cells were left unchanged'
+    )
+
+    fireEvent.click(screen.getByRole('button', { name: 'Close' }))
+    expect(dismissSkippedCells).toHaveBeenCalledTimes(1)
+  })
+
+  it('says a single skipped cell in the singular', () => {
+    setup({ skippedCells: { surface: 'panel', count: 1 } })
+
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      'Table: 1 selected cell was left unchanged'
+    )
+  })
+
+  it('leaves the cells skipped by an answer of the popover to the popover', () => {
+    setup({ skippedCells: { surface: 'popover', count: 2 } })
+
+    expect(screen.queryByRole('alert')).toBe(null)
+  })
+
+  it('resizes the panel from the handle, without a jump where it is grabbed', () => {
+    window.innerWidth = 1280
+    setup()
+    const panel = screen.getByRole('complementary', { name: 'Help me write' })
+    const handle = screen.getByRole('separator', { name: 'Resize the panel' })
+    handle.getBoundingClientRect = () => ({ left: 880 })
+    expect(panel).toHaveStyle({ width: '400px' })
+
+    fireEvent.pointerDown(handle, { clientX: 886, pointerId: 1 })
+    fireEvent.pointerMove(handle, { clientX: 887, pointerId: 1 })
+    expect(panel).toHaveStyle({ width: '399px' })
+
+    fireEvent.pointerMove(handle, { clientX: 786, pointerId: 1 })
+    expect(panel).toHaveStyle({ width: '500px' })
+
+    fireEvent.pointerMove(handle, { clientX: 106, pointerId: 1 })
+    expect(panel).toHaveStyle({ width: '768px' })
+
+    fireEvent.pointerMove(handle, { clientX: 1206, pointerId: 1 })
+    expect(panel).toHaveStyle({ width: '280px' })
+
+    fireEvent.pointerMove(handle, { clientX: 686, pointerId: 1 })
+    fireEvent.pointerUp(handle, { clientX: 686, pointerId: 1 })
+    fireEvent.pointerMove(handle, { clientX: 506, pointerId: 1 })
+    expect(panel).toHaveStyle({ width: '600px' })
+  })
+
+  it('resizes the panel from the keyboard', () => {
+    window.innerWidth = 1280
+    setup()
+    const panel = screen.getByRole('complementary', { name: 'Help me write' })
+    const handle = screen.getByRole('separator', { name: 'Resize the panel' })
+
+    fireEvent.keyDown(handle, { key: 'ArrowLeft' })
+    expect(panel).toHaveStyle({ width: '416px' })
+    expect(handle).toHaveAttribute('aria-valuenow', '416')
+
+    fireEvent.keyDown(handle, { key: 'ArrowLeft', shiftKey: true })
+    expect(panel).toHaveStyle({ width: '480px' })
+
+    fireEvent.keyDown(handle, { key: 'ArrowRight' })
+    expect(panel).toHaveStyle({ width: '464px' })
+
+    fireEvent.keyDown(handle, { key: 'End' })
+    expect(panel).toHaveStyle({ width: '768px' })
+
+    fireEvent.keyDown(handle, { key: 'Home' })
+    expect(panel).toHaveStyle({ width: '280px' })
+
+    fireEvent.keyDown(handle, { key: 'ArrowRight' })
+    expect(panel).toHaveStyle({ width: '280px' })
+  })
+
+  it('resizes the panel from the keyboard after the window changed, the panel not', () => {
+    window.innerWidth = 1280
+    setup()
+    const panel = screen.getByRole('complementary', { name: 'Help me write' })
+    const handle = screen.getByRole('separator', { name: 'Resize the panel' })
+
+    window.innerWidth = 1000
+    act(() => {
+      window.dispatchEvent(new Event('resize'))
+    })
+    expect(panel).toHaveStyle({ width: '400px' })
+    expect(handle).toHaveAttribute('aria-valuemax', '600')
+
+    fireEvent.keyDown(handle, { key: 'ArrowLeft' })
+    expect(panel).toHaveStyle({ width: '416px' })
+  })
+
+  it('keeps the panel within 60% of a window that shrinks', () => {
+    window.innerWidth = 1280
+    setup()
+    const panel = screen.getByRole('complementary', { name: 'Help me write' })
+
+    window.innerWidth = 600
+    act(() => {
+      window.dispatchEvent(new Event('resize'))
+    })
+
+    expect(panel).toHaveStyle({ width: '360px' })
+  })
+
+  it('takes the whole of a window too narrow for the panel and the document', () => {
+    window.innerWidth = 400
+    setup()
+
+    expect(
+      screen.getByRole('complementary', { name: 'Help me write' })
+    ).toHaveStyle({ width: '400px' })
   })
 
   it('closes when the assistant cancels the intent', () => {

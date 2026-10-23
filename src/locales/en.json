@@ -660,6 +660,11 @@
       "insert": "Insert",
       "replace": "Replace",
       "insertSlide": "Insert the slide",
+      "selectionMenu": "Scribe Menu",
+      "panel": "Scribe Panel",
+      "resizeHandle": "Resize the panel",
+      "skippedCells": "Table: %{smart_count} selected cell was left unchanged |||| Table: %{smart_count} selected cells were left unchanged",
+      "closeNotice": "Close",
       "suggestions": {
         "newSlide": "New slide",
         "newSlideMessage": "Add a new slide after this one, about the text",
